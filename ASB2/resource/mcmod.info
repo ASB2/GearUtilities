@@ -1,0 +1,26 @@
+[
+{
+  "modid": "ASB2_TechCraft",
+  
+  "name": "TechCraft",
+  
+  "description": "A resulting cross of technology and magic",
+  
+  "version": "0.0.1",
+  
+  "credits": "Created by ASB2, textures by proswhere, ideas by iOverpowered",
+  
+  "logoFile": "/assets/techcraft/blank/gear.png",
+  
+  "mcversion": "1.5.1",
+  
+  "url": "",
+  "updateUrl": "",
+  "authors": [ "ASB2"],
+  "parent":"",
+  "screenshots": [],
+  "dependencies": [
+     "mod_MinecraftForge"
+  ]
+}
+]
