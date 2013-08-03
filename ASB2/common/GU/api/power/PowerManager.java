@@ -1,11 +1,14 @@
 package GU.api.power;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
+import cpw.mods.fml.common.ITickHandler;
+import cpw.mods.fml.common.TickType;
 
-public class PowerManager {
+public class PowerManager implements ITickHandler {
 
     public static PowerManager instance = new PowerManager();
 
@@ -72,5 +75,28 @@ public class PowerManager {
                 powerProviders.remove(i);
             }
         }
+    }
+    
+    @Override
+    public void tickStart(EnumSet<TickType> type, Object... tickData) {
+
+    }
+
+    @Override
+    public void tickEnd(EnumSet<TickType> type, Object... tickData) {
+
+        this.updatePowerProviders();
+    }
+
+    @Override
+    public EnumSet<TickType> ticks() {
+
+        return EnumSet.of(TickType.SERVER);
+    }
+
+    @Override
+    public String getLabel() {
+
+        return "Power Ticker";
     }
 }

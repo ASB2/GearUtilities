@@ -4,11 +4,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+public class ItemWaterCrystalShard extends ItemBase {
 
-public class ItemGarnet extends ItemBase {
-
-    public ItemGarnet(int id) {
-        super(id);
+    public ItemWaterCrystalShard(int par1) {
+        super(par1);
         
     }
 

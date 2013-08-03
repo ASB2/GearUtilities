@@ -5,13 +5,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 
-public class ItemGarnet extends ItemBase {
+public class ItemEnergyCrystalShard extends ItemBase {
 
-    public ItemGarnet(int id) {
+    public ItemEnergyCrystalShard(int id) {
         super(id);
-        
     }
-
+    
     public boolean onItemUseFirst(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
         return super.onItemUseFirst(itemStack, player, world, x, y, z, side, hitX, hitY, hitZ);

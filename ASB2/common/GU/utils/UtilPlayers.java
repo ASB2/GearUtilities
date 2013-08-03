@@ -1,7 +1,9 @@
 package GU.utils;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -14,7 +16,7 @@ public class UtilPlayers {
     private static String[] specialPlayers = new String[] {"ASB2", "Proswhere", "iOverpowered"};
 
     public static double[] getPlayerCursorCoords(World world, EntityPlayer entityplayer) {
-        
+
         float f = 1.0F;
         float f1 = entityplayer.prevRotationPitch + (entityplayer.rotationPitch - entityplayer.prevRotationPitch) * f;
         float f2 = entityplayer.prevRotationYaw + (entityplayer.rotationYaw - entityplayer.prevRotationYaw) * f;
@@ -32,9 +34,9 @@ public class UtilPlayers {
         double d3 = 5000D;
         Vec3 vec3d1 = vec3d.addVector((double)f7 * d3, (double)f8 * d3, (double)f9 * d3);
         MovingObjectPosition movingobjectposition = world.rayTraceBlocks_do_do(vec3d, vec3d1, false, true);
-        
+
         if (!(movingobjectposition == null)) {
-            
+
             if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
             {
                 int i = movingobjectposition.blockX;
@@ -44,8 +46,22 @@ public class UtilPlayers {
                 return new double[] {i, j, k};
             }
         }        
+
+        return null;
+    }
+
+    public static void damagePlayer(World world, int x, int y, int z, Entity entity, DamageSource source, int damage) {
         
-        return new double[] {entityplayer.prevPosX, entityplayer.prevPosY, entityplayer.prevPosZ};
+        if(entity instanceof EntityPlayer) {
+
+            if(!(UtilPlayers.isSpecialPlayer(((EntityPlayer)entity).username))) {
+
+                entity.attackEntityFrom(source, damage); 
+            }
+        }
+        else {
+            entity.attackEntityFrom(source, damage); 
+        }
     }
     
     public static boolean hasItemStack(EntityPlayer player, ItemStack itemStack) {
@@ -106,7 +122,10 @@ public class UtilPlayers {
     }
 
     public static void sendChatToPlayer(EntityPlayer player, String message) {
-        
-        player.addChatMessage(message);
+
+        if(player.worldObj.isRemote) {
+
+            player.addChatMessage(message);
+        }
     }
 }

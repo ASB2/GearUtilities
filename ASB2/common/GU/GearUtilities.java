@@ -2,10 +2,19 @@ package GU;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
-import GU.packets.GUPacketHandler;
-import GU.proxy.CommonProxy;
 import GU.info.Reference;
 import GU.info.Variables;
+import GU.packets.GUPacketHandler;
+import GU.proxy.CommonProxy;
+import GU.worldGen.WorldGenBlockAirCrystalOre;
+import GU.worldGen.WorldGenBlockBurningFlower;
+import GU.worldGen.WorldGenBlockEarthCrystalOre;
+import GU.worldGen.WorldGenBlockEnergyCrystalOre;
+import GU.worldGen.WorldGenBlockFalseBlock;
+import GU.worldGen.WorldGenBlockFireCrystalOre;
+import GU.worldGen.WorldGenBlockFreezingFlower;
+import GU.worldGen.WorldGenBlockGarnetOre;
+import GU.worldGen.WorldGenBlockWaterCrystalOre;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -15,6 +24,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Reference.MODDID, name = Reference.NAME, version = Reference.VERSION)
 
@@ -53,6 +63,16 @@ public final class GearUtilities {
         proxy.register();
         NetworkRegistry.instance().registerGuiHandler(this, GearUtilities.proxy);
 
+        GameRegistry.registerWorldGenerator(new WorldGenBlockAirCrystalOre());
+        GameRegistry.registerWorldGenerator(new WorldGenBlockEarthCrystalOre());
+        GameRegistry.registerWorldGenerator(new WorldGenBlockFireCrystalOre());
+        GameRegistry.registerWorldGenerator(new WorldGenBlockWaterCrystalOre());
+        GameRegistry.registerWorldGenerator(new WorldGenBlockFreezingFlower());
+        GameRegistry.registerWorldGenerator(new WorldGenBlockBurningFlower());
+        GameRegistry.registerWorldGenerator(new WorldGenBlockEnergyCrystalOre());
+        GameRegistry.registerWorldGenerator(new WorldGenBlockGarnetOre());                 
+        GameRegistry.registerWorldGenerator(new WorldGenBlockFalseBlock());
+        
         //        GameRegistry.registerTileEntity(TileTCEnergySphere.class, "TileTCEnergySphere");
         //        GameRegistry.registerWorldGenerator(new WorldGenBlockAirCrystalOre());
         //        MinecraftForge.addGrassPlant(BlockRegistry.BlockBurningFlower,0,20);

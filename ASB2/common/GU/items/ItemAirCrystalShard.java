@@ -4,12 +4,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+public class ItemAirCrystalShard extends ItemBase {
 
-public class ItemGarnet extends ItemBase {
-
-    public ItemGarnet(int id) {
-        super(id);
-        
+    public ItemAirCrystalShard(int par1) {
+        super(par1);
     }
 
     public boolean onItemUseFirst(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)

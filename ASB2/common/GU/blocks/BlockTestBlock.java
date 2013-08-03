@@ -6,6 +6,7 @@ public class BlockTestBlock extends BlockBase {
 
     public BlockTestBlock(int id, Material material) {
         super(id, material);
+        this.useDefaultTexture = true;
     }
 
 }

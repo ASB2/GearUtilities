@@ -2,7 +2,6 @@ package GU.items;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -10,7 +9,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import GU.utils.UtilItemStack;
 import GU.utils.UtilPlayers;
-
 
 public class ItemTeleporter extends ItemBase {
 
@@ -24,12 +22,6 @@ public class ItemTeleporter extends ItemBase {
         super(par1);
         setMaxStackSize(1);
         setMaxDamage(10);
-    }
-
-    @Override
-    public void registerIcons(IconRegister iconRegister) {
-        
-        itemIcon = iconRegister.registerIcon("TechCraft:ItemTeleporter");
     }
 
     public void onCreated(ItemStack par1ItemStack, World par2World, EntityPlayer player) {
