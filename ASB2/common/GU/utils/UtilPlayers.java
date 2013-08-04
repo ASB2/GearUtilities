@@ -123,7 +123,7 @@ public class UtilPlayers {
 
     public static void sendChatToPlayer(EntityPlayer player, String message) {
 
-        if(player.worldObj.isRemote) {
+        if(!player.worldObj.isRemote) {
 
             player.addChatMessage(message);
         }

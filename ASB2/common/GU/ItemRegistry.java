@@ -27,6 +27,7 @@ public class ItemRegistry {
     public static ItemBase ItemTeleporter;
     public static ItemBase ItemTradeStick;
     public static ItemBase ItemGearReader;
+    public static ItemBase ItemLinker;
     
     private static int id = 5000;
 
@@ -87,6 +88,10 @@ public class ItemRegistry {
         ItemGearReader = new ItemGearReader(config.getItem("ItemGearReader", ItemRegistry.getNextBaseID()).getInt());
         ItemGearReader.setItemName("ItemGearReader");
         LanguageRegistry.addName(ItemGearReader, "Gear Reader");
+        
+        ItemLinker = new ItemLinker(config.getItem("ItemLinker", ItemRegistry.getNextBaseID()).getInt());
+        ItemLinker.setItemName("ItemLinker");
+        LanguageRegistry.addName(ItemLinker, "Linker");
     }
     
     public static int getNextBaseID() {

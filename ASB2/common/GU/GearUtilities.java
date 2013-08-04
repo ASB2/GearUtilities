@@ -2,6 +2,7 @@ package GU;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 import GU.info.Reference;
 import GU.info.Variables;
 import GU.packets.GUPacketHandler;
@@ -63,6 +64,9 @@ public final class GearUtilities {
         proxy.register();
         NetworkRegistry.instance().registerGuiHandler(this, GearUtilities.proxy);
 
+        MinecraftForge.addGrassPlant(BlockRegistry.BlockBurningFlower,0,20);
+        MinecraftForge.addGrassPlant(BlockRegistry.BlockFreezingFlower,0,20);
+        
         GameRegistry.registerWorldGenerator(new WorldGenBlockAirCrystalOre());
         GameRegistry.registerWorldGenerator(new WorldGenBlockEarthCrystalOre());
         GameRegistry.registerWorldGenerator(new WorldGenBlockFireCrystalOre());
@@ -72,10 +76,8 @@ public final class GearUtilities {
         GameRegistry.registerWorldGenerator(new WorldGenBlockEnergyCrystalOre());
         GameRegistry.registerWorldGenerator(new WorldGenBlockGarnetOre());                 
         GameRegistry.registerWorldGenerator(new WorldGenBlockFalseBlock());
-        
-        //        GameRegistry.registerTileEntity(TileTCEnergySphere.class, "TileTCEnergySphere");
+
         //        GameRegistry.registerWorldGenerator(new WorldGenBlockAirCrystalOre());
-        //        MinecraftForge.addGrassPlant(BlockRegistry.BlockBurningFlower,0,20);
         //        GameRegistry.registerPlayerTracker(new TechCraftPlayerTracker ());
         //        GameRegistry.registerPlayerTracker(new TechCraftPlayerTracker ());
         //        MinecraftForge.EVENT_BUS.register(new TechCraftForgeEvents());

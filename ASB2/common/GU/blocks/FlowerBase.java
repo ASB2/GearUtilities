@@ -6,8 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.BonemealEvent;
+import cpw.mods.fml.common.Mod.EventHandler;
 
 public class FlowerBase extends BlockBase {
 
@@ -21,7 +21,7 @@ public class FlowerBase extends BlockBase {
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
     }
 
-    @ForgeSubscribe
+    @EventHandler
     public void onUseBonemeal(BonemealEvent event) {
 
         this.managGrowth(event, event.world, event.X, event.Y, event.Z, new Random());

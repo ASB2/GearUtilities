@@ -26,7 +26,6 @@ public class ItemLinker extends ItemBase {
             this.setDimentionIDCoord(itemStack, player.dimension);
             this.setCoodsSet(itemStack, true);
 
-            if(!world.isRemote)
                UtilPlayers.sendChatToPlayer(player, "Coordinates set to X: "+ x +" Y: "+ y +" Z: " + z);
         }
 
