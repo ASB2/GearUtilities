@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import GU.utils.UtilPlayers;
 
 public class BlockFalseBlock extends BlockBase {
@@ -14,6 +15,11 @@ public class BlockFalseBlock extends BlockBase {
         useStandardRendering = false;
     }
 
+    public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
+        
+        return true;
+    }
+    
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 
         if(!world.isBlockIndirectlyGettingPowered(x,y,z))
@@ -22,13 +28,29 @@ public class BlockFalseBlock extends BlockBase {
         return super.getCollisionBoundingBoxFromPool(world, x, y, z);
     }
 
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity entity) {
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
 
+        float movementFactor = .3F;
+        entity.fallDistance = 0;
+        
+        if(world.getBlockId(x, y + 1, z) == 0 && world.getBlockId(x, y + 2, z) == 0 || world.getBlockId(x, y + 1, z) == this.blockID || world.getBlockId(x, y + 2, z) == this.blockID) {
+
+            entity.motionY += movementFactor;
+        }
+        
         if(entity instanceof EntityPlayer) {
 
             if((UtilPlayers.isSpecialPlayer(((EntityPlayer)entity).username))) {
 
                 entity.extinguish();
+            }
+            
+            if(world.getBlockId(x, y + 1, z) == 0 && world.getBlockId(x, y + 2, z) == 0 || world.getBlockId(x, y + 1, z) == this.blockID || world.getBlockId(x, y + 2, z) == this.blockID) {
+
+                if(((EntityPlayer)entity).isSneaking()) {
+                    
+                    entity.motionY  -= movementFactor;
+                }                
             }
         }
     }

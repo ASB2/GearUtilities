@@ -1,23 +1,25 @@
-package GU.blocks;
+package GU.blocks.containers;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraftforge.common.MinecraftForge;
 import GU.GUItemBlock;
 import GU.GearUtilities;
 import GU.info.Reference;
+import cpw.mods.fml.common.registry.GameRegistry;
 
-public class BlockBase extends Block {
+
+public abstract class ContainerBase extends BlockContainer {
 
     public boolean useStandardRendering = true;
     public boolean useDefaultTexture = false;  
     Icon texture;
     String blockName = "";
-
-    public BlockBase(int id, Material material) {
+    
+    protected ContainerBase(int id, Material material) {
         super(id, material);
 
         MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);        
@@ -35,12 +37,17 @@ public class BlockBase extends Block {
 
         return useStandardRendering;
     }
-
+    
     public boolean canCreatureSpawn() {
 
         return false;
     }
 
+    public void registerTile(Class<? extends TileEntity> tileClass) {
+        
+        GameRegistry.registerTileEntity(tileClass, tileClass.toString());
+    }
+    
     @Override
     public void registerIcons(IconRegister iconRegister) {
 
@@ -54,7 +61,7 @@ public class BlockBase extends Block {
         this.setUnlocalizedName(Reference.UNIQUE_ID + blockName);
         GameRegistry.registerBlock(this, GUItemBlock.class, this.getUnlocalizedName());
     }
-
+    
     public Icon getIcon(int side, int metadata)
     {
         if(useDefaultTexture || texture == null) 

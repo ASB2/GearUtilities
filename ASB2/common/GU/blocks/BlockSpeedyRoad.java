@@ -1,13 +1,16 @@
 package GU.blocks;
 
+import java.util.Random;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import GU.info.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -24,8 +27,8 @@ public class BlockSpeedyRoad extends BlockBase {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister) {
 
-        top = par1IconRegister.registerIcon("TechCraft:BlockSpeedyRoadTop");  
-        side = par1IconRegister.registerIcon("TechCraft:BlockSpeedyRoadSide2");
+        top = par1IconRegister.registerIcon(Reference.MODDID + ":BlockSpeedyRoadTop");  
+        side = par1IconRegister.registerIcon(Reference.MODDID + ":BlockSpeedyRoadSide2");
     }
 
     @Override
@@ -41,23 +44,27 @@ public class BlockSpeedyRoad extends BlockBase {
 
     }
 
+    public void updateTick(World world, int x, int y, int z, Random random) {
+    }
+
+    @Override
     public void onEntityWalking(World world, int x, int y, int z, Entity entity) {
-        
+
         if(!world.isBlockIndirectlyGettingPowered(x, y, z)) {
-            
-            if(entity instanceof EntityLiving) {
 
-                ((EntityLiving)entity).addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 10, 3));
-                ((EntityLiving)entity).addPotionEffect(new PotionEffect(Potion.jump.id, 10, 3));
+            if(entity instanceof EntityLivingBase) {
 
-                if(((EntityLiving)entity).isBurning()) {
+                ((EntityLivingBase)entity).addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 10, 3));
+                ((EntityLivingBase)entity).addPotionEffect(new PotionEffect(Potion.jump.id, 10, 3));
 
-                    ((EntityLiving)entity).addPotionEffect(new PotionEffect(Potion.fireResistance.id, 10, 4));
+                if(((EntityLivingBase)entity).isBurning()) {
+
+                    ((EntityLivingBase)entity).addPotionEffect(new PotionEffect(Potion.fireResistance.id, 10, 4));
                 }
 
-                if(((EntityLiving)entity).isInWater()) {
+                if(((EntityLivingBase)entity).isInWater()) {
 
-                    ((EntityLiving)entity).addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 10, 4));
+                    ((EntityLivingBase)entity).addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 10, 4));
                 }
             }
         }

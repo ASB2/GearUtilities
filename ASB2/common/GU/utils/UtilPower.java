@@ -3,24 +3,12 @@ package GU.utils;
 import GU.api.power.IPowerMisc;
 
 public class UtilPower {
-
-    public static int LOW_POWER = 1;
-    public static int MID_POWER = 10;
-    public static int HIGH_POWER = 100;
     
     public static int TICKSTOPOWER = 10;
 
     public static boolean transferPower(IPowerMisc powerSource, IPowerMisc powerSink) {
 
-        int amountOfPower = 0;
-
-        switch(powerSource.getPowerProvider().getPowerClass()) {
-
-            case LOW: amountOfPower = LOW_POWER; break;
-            case MID: amountOfPower = MID_POWER; break;
-            case HIGH: amountOfPower = HIGH_POWER; break;
-            default: amountOfPower = 1;
-        }
+        int amountOfPower = powerSource.getPowerProvider().getPowerClass().getPowerValue();
 
         if (powerSink.getPowerProvider() != null && powerSource.getPowerProvider() != null) {
 
@@ -28,9 +16,9 @@ public class UtilPower {
 
                 if(powerSource.getPowerProvider().canUsePower(amountOfPower)) {
                     
-                    if(powerSink.getPowerProvider().gainPower(amountOfPower, UtilDirection.translateDirectionToOpposite(powerSource.getOrientation()))) {
+                    if(powerSink.getPowerProvider().gainPower(amountOfPower)) {
 
-                        powerSource.getPowerProvider().usePower(amountOfPower, powerSource.getOrientation());
+                        powerSource.getPowerProvider().usePower(amountOfPower);
 
                         return true;
                     }
@@ -48,9 +36,9 @@ public class UtilPower {
 
                 if(powerSource.getPowerProvider().canUsePower(amountOfPower)) {
                     
-                    if(powerSink.getPowerProvider().gainPower(amountOfPower, UtilDirection.translateDirectionToOpposite(powerSource.getOrientation()))) {
+                    if(powerSink.getPowerProvider().gainPower(amountOfPower)) {
 
-                        powerSource.getPowerProvider().usePower(amountOfPower, powerSource.getOrientation());
+                        powerSource.getPowerProvider().usePower(amountOfPower);
 
                         return true;
                     }

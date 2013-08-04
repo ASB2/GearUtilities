@@ -60,13 +60,13 @@ public class ItemRegistry {
         ItemCrystalCasing.setItemName("ItemCrystalCasing");
         LanguageRegistry.addName(ItemCrystalCasing, "Crystal Casing");
         
-        ItemBasicDestructionCatalyst = new ItemBasicDestructionCatalyst(config.getItem("ItemBasicDestructionCatalyst", ItemRegistry.getNextBaseID()).getInt());
-        ItemBasicDestructionCatalyst.setItemName("ItemBasicDestructionCatalyst");
-        LanguageRegistry.addName(ItemBasicDestructionCatalyst, "Basic Destruction Catalyst");
+        ItemBasicDestructionCatalyst = new ItemBasicDestructionCatalyst(config.getItem("ItemContritioSimplexCatalyst", ItemRegistry.getNextBaseID()).getInt());
+        ItemBasicDestructionCatalyst.setItemName("ItemContritioSimplexCatalyst");
+        LanguageRegistry.addName(ItemBasicDestructionCatalyst, "Contritio Simplex Catalyst");
         
-        ItemEnhancedDestructionCatalyst = new ItemEnhancedDestructionCatalyst(config.getItem("ItemEnhancedDestructionCatalyst", ItemRegistry.getNextBaseID()).getInt());
-        ItemEnhancedDestructionCatalyst.setItemName("ItemEnhancedDestructionCatalyst");
-        LanguageRegistry.addName(ItemEnhancedDestructionCatalyst, "Enhanced Destruction Catalyst");
+        ItemEnhancedDestructionCatalyst = new ItemEnhancedDestructionCatalyst(config.getItem("ItemContritioConsecteturCatalyst", ItemRegistry.getNextBaseID()).getInt());
+        ItemEnhancedDestructionCatalyst.setItemName("ItemContritioConsecteturCatalyst");
+        LanguageRegistry.addName(ItemEnhancedDestructionCatalyst, "Contritio Consectetur Catalyst");
         
         ItemLifeStealingBludgeoningStick = new ItemLifeStealingBludgeoningStick(config.getItem("ItemLifeStealingBludgeoningStick", ItemRegistry.getNextBaseID()).getInt());
         ItemLifeStealingBludgeoningStick.setItemName("ItemLifeStealingBludgeoningStick");

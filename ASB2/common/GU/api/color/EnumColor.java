@@ -1,4 +1,4 @@
-package GU.api;
+package GU.api.color;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
@@ -84,5 +84,55 @@ public enum EnumColor {
             }
         }
         return EnumColor.NONE;        
+    }
+    
+    public static EnumColor translateNumberToColor(int numb) {
+
+        switch(numb) {
+
+            case 0: return EnumColor.WHITE;
+            case 1:return EnumColor.ORANGE;
+            case 2:return EnumColor.MAGENTA;
+            case 3:return EnumColor.LIGHT_BLUE;
+            case 4:return EnumColor.YELLOW;
+            case 5:return EnumColor.LIME;
+            case 6:return EnumColor.PINK;
+            case 7:return EnumColor.GRAY;
+            case 8:return EnumColor.LIGHT_GREY;
+            case 9:return EnumColor.CYAN;
+            case 10:return EnumColor.PURPLE;
+            case 11:return EnumColor.BLUE;
+            case 12:return EnumColor.BROWN;
+            case 13:return EnumColor.GREEN;
+            case 14:return EnumColor.RED;
+            case 15:return EnumColor.BLACK;
+            default: return EnumColor.NONE;
+        }
+    }
+
+    public static int translateColorToNumber(EnumColor color) {
+
+        switch(color) {
+
+            case WHITE: return 0;       
+            case ORANGE: return 1;                
+            case MAGENTA: return 2;
+            case LIGHT_BLUE: return 3;            
+            case YELLOW: return 4;            
+            case LIME: return 5;            
+            case PINK: return 6;
+            case GRAY: return 7;
+            case LIGHT_GREY: return 8;
+            case CYAN: return 9;                
+            case PURPLE: return 10;                
+            case BLUE: return 11;
+            case BROWN: return 12;
+            case GREEN: return 13;
+            case RED: return 14;
+            case BLACK: return 15;
+
+            case NONE: return -1;
+            default: return -1;
+        }
     }
 }

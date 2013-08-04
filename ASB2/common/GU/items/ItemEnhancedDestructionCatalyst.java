@@ -65,8 +65,7 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) 
-    {
+    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
         super.addInformation(itemStack, player, info, var1);
         info.add("Idea Source: EE2");
     }

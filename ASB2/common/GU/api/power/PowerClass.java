@@ -11,5 +11,10 @@ public enum PowerClass {
         powerValue = power;
     }
 
-    int powerValue;
+    int powerValue = 0;
+    
+    public int getPowerValue() {
+        
+        return powerValue;
+    }
 }

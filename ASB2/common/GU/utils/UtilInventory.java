@@ -6,14 +6,32 @@ import net.minecraft.item.ItemStack;
 
 public class UtilInventory {
 
-    @SuppressWarnings("unused")
     public static boolean addItemStackToInventory(IInventory destination, ItemStack itemStack) {
 
         if(itemStack != null) {
 
             for(int i = 0; i < destination.getSizeInventory(); i++) {
 
-                return UtilInventory.increaseSlotContents(destination, itemStack, i, itemStack.stackSize);
+                ItemStack stack = destination.getStackInSlot(i);
+
+                if(stack == null) {
+
+                    destination.setInventorySlotContents(i, itemStack);
+                    return true;
+                }
+                else {
+
+                    if(stack.isItemEqual(itemStack)) {
+
+                        int stackSizeAdded = stack.stackSize + itemStack.stackSize;
+
+                        if(stackSizeAdded <= destination.getInventoryStackLimit()) {
+
+                            stack.stackSize = stackSizeAdded;
+                            return true;
+                        }
+                    }
+                }
             }
         }
         return false;
@@ -37,7 +55,7 @@ public class UtilInventory {
         return false;
     }
 
-    public static boolean removeItemStackToInventory(IInventory destination, ItemStack itemStack) {
+    public static boolean removeItemStackFromInventory(IInventory destination, ItemStack itemStack, int amount) {
 
         if(itemStack != null) {
 
@@ -45,21 +63,15 @@ public class UtilInventory {
 
                 ItemStack slotStack = destination.getStackInSlot(i);
 
-                if(slotStack == null) {
-
-                    destination.setInventorySlotContents(i, itemStack);
-                    return true;
-                }
-                else {
+                if(slotStack != null) {
 
                     if(slotStack.isItemEqual(itemStack)) {
-                        ItemStack temp = slotStack.copy();
-                        temp.stackSize += itemStack.stackSize;
 
-                        if(temp.stackSize <= destination.getInventoryStackLimit()) {
+                        slotStack.stackSize -= amount;
 
-                            destination.setInventorySlotContents(i, temp);
-                            return true;
+                        if(slotStack.stackSize <= 0) {
+
+                            destination.setInventorySlotContents(i, null);
                         }
                     }
                 }
@@ -67,6 +79,7 @@ public class UtilInventory {
         }
         return false;
     }
+
     public static void moveAllInventorySlots(IInventory tileToTakeFrom, IInventory tileToMoveTo) {
 
         for(int i = 0; i < tileToTakeFrom.getSizeInventory(); i++) {

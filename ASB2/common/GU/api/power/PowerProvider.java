@@ -17,6 +17,7 @@ public abstract class PowerProvider {
     int x;
     int y;
     int z;
+    
     TileEntity tile;
 
     protected int powerStored = 0;
@@ -156,7 +157,7 @@ public abstract class PowerProvider {
         return currentState;
     }
 
-    public boolean gainPower(int PowerGained, ForgeDirection direction) {
+    public boolean gainPower(int PowerGained) {
 
         if(this.getPowerMax() - this.getPowerStored() >= PowerGained) {
 
@@ -167,7 +168,7 @@ public abstract class PowerProvider {
         return false;
     }
 
-    public boolean usePower(int PowerUsed, ForgeDirection direction) {
+    public boolean usePower(int PowerUsed) {
 
         if(this.getPowerStored() >= PowerUsed) {
 

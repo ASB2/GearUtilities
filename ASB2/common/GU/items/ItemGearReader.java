@@ -6,7 +6,10 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import GU.api.IDirectionSpecific;
+import GU.api.color.IColorable;
 import GU.api.power.IPowerMisc;
+import GU.info.Variables;
 import GU.utils.UtilDirection;
 import GU.utils.UtilPlayers;
 
@@ -24,18 +27,31 @@ public class ItemGearReader extends ItemBase {
 
         if(tile != null) {
 
+            if(tile instanceof IDirectionSpecific) {
+
+                IDirectionSpecific mTile = (IDirectionSpecific)tile;
+
+                UtilPlayers.sendChatToPlayer(player,"Block is at orientation: " + UtilDirection.translateDirectionToString(mTile.getOrientation()));
+            }
+
+            if(tile instanceof IColorable) {
+
+                IColorable mTile = (IColorable)tile;
+
+                UtilPlayers.sendChatToPlayer(player,"Block has color: " + mTile.getColorEnum().toString());
+            }
+
             if(tile instanceof IPowerMisc) {
 
-                IPowerMisc mTile = (IPowerMisc) world.getBlockTileEntity(x, y, z);
+                IPowerMisc mTile = (IPowerMisc)tile;
 
                 if(mTile.getPowerProvider() != null) {
 
-                    if(player.isSneaking())
-                        mTile.getPowerProvider().gainPower(10, UtilDirection.translateNumberToDirection(side));
+                    if(player.isSneaking() && Variables.TESTING_MODE)
+                        mTile.getPowerProvider().gainPower(10);
 
                     UtilPlayers.sendChatToPlayer(player, mTile.getName()+" has "+mTile.getPowerProvider().getPowerStored()+" out of "+mTile.getPowerProvider().getPowerMax() + " TCU Stored");
-                    UtilPlayers.sendChatToPlayer(player, mTile.getName()+ " State: " + mTile.getPowerProvider().getCurrentState()); 
-                    UtilPlayers.sendChatToPlayer(player, mTile.getName()+ " is at orientation: " + UtilDirection.translateDirectionToString(mTile.getOrientation()));
+                    UtilPlayers.sendChatToPlayer(player, mTile.getName()+ " State: " + mTile.getPowerProvider().getCurrentState());
                 }
             }
 
@@ -48,7 +64,7 @@ public class ItemGearReader extends ItemBase {
                 UtilPlayers.sendChatToPlayer(player, "Accessible Slots From Side: " + mTile.getAccessibleSlotsFromSide(side).length);
                 UtilPlayers.sendChatToPlayer(player, "Inventory stack limit is: " + mTile.getInventoryStackLimit());
             }
-            
+
             else if(tile instanceof IInventory) {
 
                 IInventory mTile = (IInventory)tile;

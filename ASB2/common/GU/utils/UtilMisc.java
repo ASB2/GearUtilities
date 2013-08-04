@@ -15,4 +15,15 @@ public class UtilMisc {
         }
         return false;
     }
+
+    public int getAmountScaled(int scale, int amount, int max) {
+
+        int internal = amount * scale / max;
+
+        if(internal > scale) {
+
+            internal = scale;
+        }
+        return 0;
+    }
 }
