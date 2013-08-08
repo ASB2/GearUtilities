@@ -22,6 +22,8 @@ public class BlockTestTank extends ContainerBase {
 
     private Icon[] icons = new Icon[16];
     private Icon top;
+    private Icon bottom;
+
     private String folder = ":testConnectedTexture";
 
     public BlockTestTank(int id, Material material) {
@@ -36,6 +38,18 @@ public class BlockTestTank extends ContainerBase {
         return true;
     }
 
+    public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
+        
+        if(side == 0) {
+            
+            if(blockAccess.getBlockId(x, y - 1, z) != this.blockID) {
+             
+                return true;
+            }
+        }                
+        return super.shouldSideBeRendered(blockAccess, x, y, z, side);
+    }
+    
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
 
@@ -68,21 +82,35 @@ public class BlockTestTank extends ContainerBase {
     @Override
     public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
 
+        if(side == 0) {
+
+            if(!(blockAccess.getBlockId(x, y - 1, z) == this.blockID)) {
+
+                return bottom;
+            }
+        }
+
         if(side == 1) {
-            
+
             if(!(blockAccess.getBlockId(x, y + 1, z) == this.blockID)) {
-                
+
                 return top;
             }
         }
+
         return UtilRender.renderConnectedTexture(blockAccess, icons, this.blockID, x, y, z, side);
     }
 
 
     public Icon getIcon(int side, int metadata) {
 
+        if(side == 0) {
+
+            return bottom;
+        }
+
         if(side == 1) {
-            
+
             return top;
         }
         return icons[0];
@@ -92,6 +120,7 @@ public class BlockTestTank extends ContainerBase {
     public void registerIcons (IconRegister iconRegistry) {
 
         top = iconRegistry.registerIcon(Reference.MODDID + ":BlockTestTankTop");
+        bottom = iconRegistry.registerIcon(Reference.MODDID + ":BlockTestTankBottom");
         icons[0] = iconRegistry.registerIcon(Reference.MODDID + folder + "/tankRegular");
         icons[1] = iconRegistry.registerIcon(Reference.MODDID + folder + "/tank_1_d");
         icons[2] = iconRegistry.registerIcon(Reference.MODDID + folder + "/tank_1_u");
