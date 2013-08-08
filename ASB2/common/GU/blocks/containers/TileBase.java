@@ -197,7 +197,7 @@ public abstract class TileBase extends TileEntity implements IPowerMisc, IColora
     @Override
     public boolean shouldTick(int id) {
 
-        return true;
+        return !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
     }
 
     @Override
