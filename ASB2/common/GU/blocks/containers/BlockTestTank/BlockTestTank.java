@@ -9,8 +9,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
 import GU.utils.UtilInventory;
@@ -28,6 +30,11 @@ public class BlockTestTank extends ContainerBase {
         useStandardRendering = false;
     }
 
+    public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
+
+        return true;
+    }
+
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
 
@@ -35,9 +42,18 @@ public class BlockTestTank extends ContainerBase {
 
             TileTestTank tileTank = (TileTestTank) world.getBlockTileEntity(x, y, z);
 
-            if(tileTank.getFluid() != null) {
-                
-                return Block.lightValue[tileTank.getFluid().getFluid().getBlockID()];
+            for(ForgeDirection direction: ForgeDirection.values()) {
+
+                for(FluidTankInfo info: tileTank.getTankInfo(direction)) {
+
+                    if(info != null) {
+
+                        if(info.fluid != null && info.fluid.getFluid() != null) {
+
+                            return Block.lightValue[info.fluid.getFluid().getBlockID()];
+                        }
+                    }
+                }
             }
         }
         return 0;
@@ -93,7 +109,7 @@ public class BlockTestTank extends ContainerBase {
 
             if (fluid != null) {
 
-                int amount = tank.fill(fluid, true);
+                int amount = tank.fluidTank.fill(fluid, true);
 
                 if (amount != 0 && !entityplayer.capabilities.isCreativeMode) {
 
@@ -105,22 +121,22 @@ public class BlockTestTank extends ContainerBase {
 
                 if(FluidContainerRegistry.isEmptyContainer(current)) {
 
-                    if(tank.getFluid() != null) {
+                    if(tank.fluidTank.getFluid() != null) {
 
-                        ItemStack filled = FluidContainerRegistry.fillFluidContainer(tank.getFluid(), current);
+                        ItemStack filled = FluidContainerRegistry.fillFluidContainer(tank.fluidTank.getFluid(), current);
 
-                        if(FluidContainerRegistry.getFluidForFilledItem(filled).amount <= tank.getFluidAmount()) {
+                        if(FluidContainerRegistry.getFluidForFilledItem(filled).amount <= tank.fluidTank.getFluidAmount()) {
 
                             if(!entityplayer.capabilities.isCreativeMode) {
 
                                 if(UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, x, y, z) && UtilInventory.consumeItemStack(entityplayer.inventory, current, 1)) {
 
-                                    tank.drain(FluidContainerRegistry.getFluidForFilledItem(filled).amount, true);
+                                    tank.fluidTank.drain(FluidContainerRegistry.getFluidForFilledItem(filled).amount, true);
                                 }
                             }
                             else {
 
-                                tank.drain(FluidContainerRegistry.getFluidForFilledItem(filled).amount, true);
+                                tank.fluidTank.drain(FluidContainerRegistry.getFluidForFilledItem(filled).amount, true);
                             }
                         }
                     }

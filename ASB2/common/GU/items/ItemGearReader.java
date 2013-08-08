@@ -6,7 +6,8 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 import GU.api.IDirectionSpecific;
 import GU.api.color.IColorable;
 import GU.api.power.IPowerMisc;
@@ -75,18 +76,31 @@ public class ItemGearReader extends ItemBase {
                 UtilPlayers.sendChatToPlayer(player, "Inventory stack limit is: " + mTile.getInventoryStackLimit());
             }
 
-            if(tile instanceof IFluidTank) {
+            if(tile instanceof IFluidHandler) {
 
-                IFluidTank mTile = (IFluidTank)tile;
+                IFluidHandler mTile = (IFluidHandler)tile;
 
-                if(mTile.getFluid() != null) {
-                    UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + mTile.getFluid().getFluid().getName().toUpperCase());
+                int loop = 0;
+
+                for(FluidTankInfo info: mTile.getTankInfo(UtilDirection.translateDirectionToOpposite(UtilDirection.translateNumberToDirection(side)))) {
+
+                    loop++;
+
+                    if(info != null) {
+
+                        UtilPlayers.sendChatToPlayer(player, "Tanks For Direction: " + loop); 
+                        if(info.fluid != null) {
+                            UtilPlayers.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount); 
+                            UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + info.fluid.getFluid().getName().toUpperCase());
+                            UtilPlayers.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount); 
+                        }
+                        else {
+                            UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + info.fluid);
+                        }
+
+                        UtilPlayers.sendChatToPlayer(player, "Capasity: " + info.capacity);
+                    }
                 }
-                else {
-                    UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + mTile.getFluid());
-                }
-                UtilPlayers.sendChatToPlayer(player, "Fluid Stored: " + mTile.getFluidAmount());                
-                UtilPlayers.sendChatToPlayer(player, "Capasity: " + mTile.getCapacity());
             }
         }
 

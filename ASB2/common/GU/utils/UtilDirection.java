@@ -7,103 +7,6 @@ import GU.api.power.IPowerMisc;
 
 public class UtilDirection {
 
-    public static IPowerMisc findConductor(ForgeDirection side, World worldObj, int distance,int x, int y, int z) {
-
-        for(int i = 0; i <= distance; i++) {
-
-            if(i > 0) {
-
-                if(!(side.offsetX == 0)) {
-
-                    if(side.offsetX > 0) {
-
-                        TileEntity tile = worldObj.getBlockTileEntity(x + i, y, z);
-
-                        if(tile != null) {
-
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
-
-                                return (IPowerMisc)tile;
-                            }  
-                        }
-                    }
-
-                    if(side.offsetX < 0) {
-
-                        TileEntity tile = worldObj.getBlockTileEntity(x - i, y, z);
-
-                        if(tile != null) {
-
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
-
-                                return (IPowerMisc)tile;
-                            }  
-                        }
-                    }
-                }
-
-                if(!(side.offsetY == 0)) {
-
-                    if(side.offsetY > 0) {
-
-                        TileEntity tile = worldObj.getBlockTileEntity(x, y + i, z);
-
-                        if(tile != null) {
-
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
-
-                                return (IPowerMisc)tile;
-                            }  
-                        }
-                    }
-
-                    if(side.offsetY < 0) {
-
-                        TileEntity tile = worldObj.getBlockTileEntity(x, y - i, z);
-
-                        if(tile != null) {
-
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
-
-                                return (IPowerMisc)tile;
-                            }  
-                        }
-                    }
-                }
-
-                if(!(side.offsetZ == 0)) {
-
-                    if(side.offsetZ > 0) {
-
-                        TileEntity tile = worldObj.getBlockTileEntity(x, y, z + i);
-
-                        if(tile != null) {
-
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
-
-                                return (IPowerMisc)tile;
-                            }   
-                        }
-                    }
-
-                    if(side.offsetZ < 0) {
-
-                        TileEntity tile = worldObj.getBlockTileEntity(x, y, z - i);
-
-                        if(tile != null) {
-
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
-
-                                return (IPowerMisc)tile;
-                            }   
-                        }
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
     public static int[] translateDirectionToCoords(ForgeDirection direction, TileEntity tile) {
 
         switch(direction) {
@@ -163,6 +66,7 @@ public class UtilDirection {
 
         return new int[]{xCoord,yCoord,zCoord};
     }
+    
     public static ForgeDirection translateDirectionToOpposite(ForgeDirection direction) {
 
         switch(direction) {

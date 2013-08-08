@@ -25,18 +25,18 @@ public class TestTankRenderer implements ISimpleBlockRenderingHandler  {
 
         TileTestTank tile = (TileTestTank)world.getBlockTileEntity(x, y, z);
 
-        if (tile.getFluid() != null) {
+        if (tile.fluidTank.getFluid() != null) {
 
-            if(!(tile.getCapacity() == tile.getFluidAmount())) { 
+            if(!(tile.fluidTank.getCapacity() == tile.fluidTank.getFluidAmount())) { 
                 
-                renderer.setRenderBounds(0.01F, 0.01F, 0.01F, 0.99F, UtilMisc.getAmountScaled(0.99, tile.getFluidAmount(), tile.getCapacity()), 0.99F);
+                renderer.setRenderBounds(0.01F, 0.01F, 0.01F, 0.99F, UtilMisc.getAmountScaled(0.99, tile.fluidTank.getFluidAmount(), tile.fluidTank.getCapacity()), 0.99F);
             }
             else {
 
                 renderer.setRenderBounds(0.01F, 0.01F, 0.01F, 0.99F, 0.99, 0.99F);
             }
             
-            UtilRender.renderFakeBlock(tile.getFluid().getFluid().getIcon(), x, y, z, renderer, world);
+            UtilRender.renderFakeBlock(tile.fluidTank.getFluid().getFluid().getIcon(), x, y, z, renderer, world);
         }
         return true;
     }
