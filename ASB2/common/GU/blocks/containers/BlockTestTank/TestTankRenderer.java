@@ -7,14 +7,6 @@ import GU.utils.UtilMisc;
 import GU.utils.UtilRender;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.Icon;
-import net.minecraft.world.IBlockAccess;
 
 public class TestTankRenderer implements ISimpleBlockRenderingHandler  {
 
@@ -43,6 +35,7 @@ public class TestTankRenderer implements ISimpleBlockRenderingHandler  {
 
                 renderer.setRenderBounds(0.01F, 0.01F, 0.01F, 0.99F, 0.99, 0.99F);
             }
+            
             UtilRender.renderFakeBlock(tile.getFluid().getFluid().getIcon(), x, y, z, renderer, world);
         }
         return true;

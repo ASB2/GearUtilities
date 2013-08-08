@@ -2,7 +2,7 @@ package GU.api.wait;
 
 public interface IWaitTrigger {
 
-    public void trigger();
+    public void trigger(int id);
     
-    public boolean shouldTick();
+    public boolean shouldTick(int id);
 }

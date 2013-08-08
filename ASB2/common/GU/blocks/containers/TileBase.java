@@ -190,14 +190,14 @@ public abstract class TileBase extends TileEntity implements IPowerMisc, IColora
         return true;
     } 
 
-    public void trigger() {
+    public void trigger(int id) {
 
     }
 
     @Override
-    public boolean shouldTick() {
+    public boolean shouldTick(int id) {
 
-        return !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
+        return true;
     }
 
     @Override
@@ -283,13 +283,13 @@ public abstract class TileBase extends TileEntity implements IPowerMisc, IColora
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
 
+        fluidTank.readFromNBT(tag);
+
         if(color == EnumColor.NONE || color == null)
             color = EnumColor.translateNumberToColor(tag.getInteger("color"));
 
         if(this.getPowerProvider() != null)
             this.getPowerProvider().readFromNBT(tag);
-
-        fluidTank.readFromNBT(tag);
 
         NBTTagList nbttaglist = tag.getTagList("Items");
 
@@ -311,13 +311,13 @@ public abstract class TileBase extends TileEntity implements IPowerMisc, IColora
     public void writeToNBT(NBTTagCompound tag){
         super.writeToNBT(tag); 
 
+        fluidTank.writeToNBT(tag);
+        
         if(this.getColorEnum() != EnumColor.NONE)
             tag.setInteger("color", EnumColor.translateColorToNumber(this.getColorEnum()));
 
         if(this.getPowerProvider() != null)
             this.getPowerProvider().writeToNBT(tag);
-
-        fluidTank.writeToNBT(tag);
 
         NBTTagList nbttaglist = new NBTTagList();
 

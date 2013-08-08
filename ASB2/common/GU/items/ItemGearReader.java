@@ -80,10 +80,10 @@ public class ItemGearReader extends ItemBase {
                 IFluidTank mTile = (IFluidTank)tile;
 
                 if(mTile.getFluid() != null) {
-                    UtilPlayers.sendChatToPlayer(player, "Fluid conained: " + mTile.getFluid().getFluid().getName().toUpperCase());
+                    UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + mTile.getFluid().getFluid().getName().toUpperCase());
                 }
                 else {
-                    UtilPlayers.sendChatToPlayer(player, "Fluid conained: " + mTile.getFluid());
+                    UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + mTile.getFluid());
                 }
                 UtilPlayers.sendChatToPlayer(player, "Fluid Stored: " + mTile.getFluidAmount());                
                 UtilPlayers.sendChatToPlayer(player, "Capasity: " + mTile.getCapacity());

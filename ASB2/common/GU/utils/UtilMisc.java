@@ -1,7 +1,6 @@
 package GU.utils;
 
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.fluids.IFluidTank;
 
 public class UtilMisc {
 

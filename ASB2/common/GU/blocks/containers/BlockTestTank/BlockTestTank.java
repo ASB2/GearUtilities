@@ -1,5 +1,6 @@
 package GU.blocks.containers.BlockTestTank;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,6 +26,21 @@ public class BlockTestTank extends ContainerBase {
 
         this.registerTile(TileTestTank.class);
         useStandardRendering = false;
+    }
+
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z) {
+
+        if (world.getBlockTileEntity(x, y, z) instanceof TileTestTank) {
+
+            TileTestTank tileTank = (TileTestTank) world.getBlockTileEntity(x, y, z);
+
+            if(tileTank.getFluid() != null) {
+                
+                return Block.lightValue[tileTank.getFluid().getFluid().getBlockID()];
+            }
+        }
+        return 0;
     }
 
     public int getRenderType() {
@@ -96,14 +112,14 @@ public class BlockTestTank extends ContainerBase {
                         if(FluidContainerRegistry.getFluidForFilledItem(filled).amount <= tank.getFluidAmount()) {
 
                             if(!entityplayer.capabilities.isCreativeMode) {
-                                
+
                                 if(UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, x, y, z) && UtilInventory.consumeItemStack(entityplayer.inventory, current, 1)) {
 
                                     tank.drain(FluidContainerRegistry.getFluidForFilledItem(filled).amount, true);
                                 }
                             }
                             else {
-                                
+
                                 tank.drain(FluidContainerRegistry.getFluidForFilledItem(filled).amount, true);
                             }
                         }

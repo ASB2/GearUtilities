@@ -10,13 +10,15 @@ public class Wait implements ISubTickHandler {
 
     long timeKeeper;
     long timeToWait;
+    int id;
     IWaitTrigger thingToTrigger;
 
-    public Wait(long timeToWait, IWaitTrigger thingToTrigger) {
+    public Wait(long timeToWait, IWaitTrigger thingToTrigger, int id) {
 
         GearUtilities.proxy.guTickHandler.thingsToTick.add(this);
         this.timeToWait = timeToWait;
         this.thingToTrigger = thingToTrigger;
+        this.id = id;
     }
 
     @Override
@@ -24,7 +26,7 @@ public class Wait implements ISubTickHandler {
 
         if(thingToTrigger != null) {
 
-            if(thingToTrigger.shouldTick()) {
+            if(thingToTrigger.shouldTick(id)) {
 
                 timeKeeper++;
             }            
@@ -38,7 +40,7 @@ public class Wait implements ISubTickHandler {
 
             if(thingToTrigger != null) {
 
-                thingToTrigger.trigger(); 
+                thingToTrigger.trigger(id); 
                 timeKeeper = 0;
             }            
         }
