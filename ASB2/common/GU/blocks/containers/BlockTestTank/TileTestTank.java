@@ -25,9 +25,9 @@ public class TileTestTank extends TileBase {
     public void updateEntity() {
 
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-            
+
             if (!moveFluidBelow())
-            this.moveAround();
+                this.moveAround();
 
         }
         worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
@@ -37,13 +37,18 @@ public class TileTestTank extends TileBase {
 
         int amount = 0;
 
-        for(TileEntity tile : UtilDirection.getArrayTilesAround(worldObj, this)) {
+        for(ForgeDirection direction: ForgeDirection.values()) {
 
-            if(tile != null && tile instanceof IFluidHandler) {
+            if(direction != ForgeDirection.DOWN && direction != ForgeDirection.UP) {
+                
+                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
-                amount ++;
-            }
-        }              
+                if(tile != null && tile instanceof TileTestTank) {
+
+                    amount ++;
+                }
+            }       
+        }
         return amount;
     }
 
@@ -62,8 +67,8 @@ public class TileTestTank extends TileBase {
     }
 
     public boolean moveAround() {
-        
-        int amountDivided = FluidContainerRegistry.BUCKET_VOLUME;
+
+        int amountDivided = FluidContainerRegistry.BUCKET_VOLUME / getFluidHandlersAround();
 
         for(ForgeDirection direction: ForgeDirection.values()) {
 
