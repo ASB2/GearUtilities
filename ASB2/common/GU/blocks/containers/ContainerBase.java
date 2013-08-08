@@ -1,10 +1,16 @@
 package GU.blocks.containers;
 
+import java.util.Random;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import GU.GUItemBlock;
 import GU.GearUtilities;
@@ -18,14 +24,14 @@ public abstract class ContainerBase extends BlockContainer {
     public boolean useDefaultTexture = false;  
     Icon texture;
     String blockName = "";
-    
-    protected ContainerBase(int id, Material material) {
+
+    public ContainerBase(int id, Material material) {
         super(id, material);
 
         MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);        
         this.setCreativeTab(GearUtilities.tabGUBlocks);
-        setHardness(3.5f);
-        setResistance(1.0F);
+        setHardness(100f);
+        setResistance(100F);
     }
 
     public boolean renderAsNormalBlock() {
@@ -37,17 +43,77 @@ public abstract class ContainerBase extends BlockContainer {
 
         return useStandardRendering;
     }
+
+    public int getRenderType() {
+        
+        if(!useStandardRendering)
+        return -1;
+    
+        return 0;
+    }
     
     public boolean canCreatureSpawn() {
 
         return false;
     }
 
+    @Override
+    public int onBlockPlaced(World world, int x, int y, int z, int sideHit, float hitX, float hitY, float hitZ, int metaData) {
+
+        return sideHit;
+    }
+
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metaData) {
+
+        //TileEntity tile = world.getBlockTileEntity(x, y, z);
+
+
+        this.dropItems(world, x, y, z);
+        super.onBlockDestroyedByPlayer(world, x, y, z, metaData);
+    }
+
+    public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
+
+        //TileEntity tile = world.getBlockTileEntity(x, y, z);
+
+        this.dropItems(world, x, y, z);
+        super.breakBlock(world, x, y, z, par5, par6);
+    }
+
+    private void dropItems(World world, int x, int y, int z) {
+
+        Random prng = new Random();
+
+        if(world.getBlockTileEntity(x, y, z) instanceof IInventory) {
+
+            IInventory tileEntity = (IInventory)world.getBlockTileEntity(x, y, z);
+
+            if(tileEntity == null)
+                return;
+
+            for(int slot = 0; slot < tileEntity.getSizeInventory(); slot++)
+            {
+                ItemStack item = tileEntity.getStackInSlot(slot);
+
+                if(item != null && item.stackSize > 0)
+                {
+                    float rx = prng.nextFloat() * 0.8f + 0.1f;
+                    float ry = prng.nextFloat() * 0.8f + 0.1f;
+                    float rz = prng.nextFloat() * 0.8f + 0.1f;
+
+                    EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, item.copy());
+                    world.spawnEntityInWorld(entityItem);
+                    item.stackSize = 0;
+                }
+            }
+        }
+    }
+
     public void registerTile(Class<? extends TileEntity> tileClass) {
-        
+
         GameRegistry.registerTileEntity(tileClass, tileClass.toString());
     }
-    
+
     @Override
     public void registerIcons(IconRegister iconRegister) {
 
@@ -55,18 +121,20 @@ public abstract class ContainerBase extends BlockContainer {
         texture = iconRegister.registerIcon(Reference.MODDID + ":" + blockName);
     }
 
+    public Icon getIcon(int side, int metadata) {
+        
+        if(useDefaultTexture || texture == null) 
+            return this.blockIcon;
+
+        return texture;
+    }
+    
     public void setBlockName(String texture) {
 
         this.blockName = texture;
         this.setUnlocalizedName(Reference.UNIQUE_ID + blockName);
         GameRegistry.registerBlock(this, GUItemBlock.class, this.getUnlocalizedName());
     }
-    
-    public Icon getIcon(int side, int metadata)
-    {
-        if(useDefaultTexture || texture == null) 
-            return this.blockIcon;
 
-        return texture;
-    }
+
 }

@@ -5,10 +5,10 @@ import java.util.EnumSet;
 import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
-import cpw.mods.fml.common.ITickHandler;
+import GU.tickHandler.ISubTickHandler;
 import cpw.mods.fml.common.TickType;
 
-public class PowerManager implements ITickHandler {
+public class PowerManager implements ISubTickHandler {
 
     public static PowerManager instance = new PowerManager();
 
@@ -16,6 +16,10 @@ public class PowerManager implements ITickHandler {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public List<PowerProvider> powerProviders = new ArrayList();
+
+    public PowerManager() {
+
+    }
 
     public void addPowerProvider(PowerProvider provider) {
 
@@ -61,9 +65,9 @@ public class PowerManager implements ITickHandler {
             }
         }
     }
-    
+
     public void writeToNBT(NBTTagCompound tag) {
-    
+
         for(int i = 0; i < this.powerProviders.size(); i++) {
 
             if(powerProviders.get(i) != null) {
@@ -76,7 +80,7 @@ public class PowerManager implements ITickHandler {
             }
         }
     }
-    
+
     @Override
     public void tickStart(EnumSet<TickType> type, Object... tickData) {
 
@@ -86,17 +90,5 @@ public class PowerManager implements ITickHandler {
     public void tickEnd(EnumSet<TickType> type, Object... tickData) {
 
         this.updatePowerProviders();
-    }
-
-    @Override
-    public EnumSet<TickType> ticks() {
-
-        return EnumSet.of(TickType.SERVER);
-    }
-
-    @Override
-    public String getLabel() {
-
-        return "Power Ticker";
     }
 }

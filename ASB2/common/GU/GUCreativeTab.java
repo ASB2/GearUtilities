@@ -1,5 +1,6 @@
 package GU;
 
+import GU.info.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
@@ -18,8 +19,11 @@ public class GUCreativeTab extends CreativeTabs {
     @SideOnly(Side.CLIENT)
     public int getTabIconItemIndex() {
 
-        return 1;
-        // return ItemRegistry.ItemEnergyCrystalShard.itemID;
+        if(name.equalsIgnoreCase(Reference.NAME + ": Blocks")) {
+            
+            return BlockRegistry.BlockSpeedyRoad.blockID;
+        }
+        return ItemRegistry.ItemGearReader.itemID;
     }
 
     @Override

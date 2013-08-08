@@ -5,6 +5,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import GU.utils.UtilBlock;
+import GU.utils.UtilInventory;
 import GU.utils.UtilItemStack;
 import GU.utils.UtilPlayers;
 
@@ -44,15 +46,12 @@ public class ItemTradeStick extends ItemBase {
 
             UtilPlayers.sendChatToPlayer(player, "Block ID set to: " + world.getBlockId(x,y,z));
             this.setBlockIDAndMeta(itemStack, world.getBlockId(x,y,z), world.getBlockMetadata(x, y, z));
-
-            return true;
         }
 
         else {
 
             if(this.getBlockID(itemStack)[0] > 0) {
 
-                //this.cycle2DBlock(player, world, sideF, x, y, z, 1, 1, this.getBlockID(itemStack));            
                 this.breakBlock(world, player, x, y, z, this.getBlockID(itemStack)[0], this.getBlockID(itemStack)[1]);
             }
         }
@@ -63,37 +62,22 @@ public class ItemTradeStick extends ItemBase {
 
         if(world.blockExists(x, y, z)) {
 
-            if(blockToBreak != Block.bedrock.blockID && world.getBlockId(x,y,z) != Block.bedrock.blockID) { 
+            if(Block.blocksList[blockToBreak].equals(Block.bedrock)) {
 
-                if(world.getBlockTileEntity(x, y,  z) == null) {
+                if(Block.blocksList[world.getBlockId(x,y,z)].getBlockHardness(world, x, y, z) != -1) { 
 
-                    if(world.getBlockId(x, y, z) != blockToBreak) {
+                    if(world.getBlockTileEntity(x, y,  z) == null) {
 
-                        int id = world.getBlockId(x, y, z);
+                        if(world.getBlockId(x, y, z) != blockToBreak) {
 
-                        int meta = world.getBlockMetadata(x, y, z);
+                            ItemStack blockToSet = new ItemStack(blockToBreak, 1, blockmeta);
 
-                        ItemStack blockToSet = new ItemStack(blockToBreak, 1, blockmeta);
+                            if(UtilInventory.consumeItemStack(player.inventory, blockToSet, 1)) {
 
-                        if(player.inventory.hasItemStack(blockToSet)) {
+                                if(UtilItemStack.damageItem(player, player.inventory.getCurrentItem(), 1)) {
 
-                            player.inventory.getCurrentItem().damageItem(1, player);
-                            world.playAuxSFX(2001, x, y, z, id + (meta << 12));
-
-                            Block.blocksList[id].dropBlockAsItem(world, (int)player.posX, (int)player.posY, (int)player.posZ, meta, 0);
-                            world.setBlockToAir(x, y, z);
-                            world.setBlock(x, y, z, blockToBreak);
-
-                            for(int i = 0; i < player.inventory.getSizeInventory(); i++) {
-
-                                if(player.inventory.getStackInSlot(i) != null) {
-
-                                    if(player.inventory.getStackInSlot(i).isItemEqual(blockToSet)) {
-
-                                        if(!player.capabilities.isCreativeMode)
-                                            player.inventory.decrStackSize(i, 1);
-                                        break;
-                                    }
+                                    UtilBlock.breakAndAddToInventory(player.inventory, world, x, y, z, 1, true);
+                                    world.setBlock(x, y, z, blockToBreak, blockmeta, 3);                                                             
                                 }
                             }
                         }

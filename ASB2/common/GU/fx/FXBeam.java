@@ -74,7 +74,7 @@ public class FXBeam extends EntityFX {
         {
             visibleDistance = 25;
         }
-        if (renderentity.getDistance(this.posX, this.posY, this.posZ) > visibleDistance)
+        if (renderentity != null && renderentity.getDistance(this.posX, this.posY, this.posZ) > visibleDistance)
         {
             this.particleMaxAge = 0;
         }

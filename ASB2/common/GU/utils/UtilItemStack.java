@@ -1,9 +1,39 @@
 package GU.utils;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class UtilItemStack {
+
+    public static boolean damageItem(EntityLivingBase entity, ItemStack item, int damage) {
+
+        if (!item.isItemStackDamageable())
+            return false;
+
+        if(entity instanceof EntityPlayer && ((EntityPlayer)entity).capabilities.isCreativeMode) 
+            return true;
+
+        if(item.getMaxDamage() - item.getItemDamage() >= damage) {
+
+            item.setItemDamage(item.getItemDamage() + damage);
+            return true;
+        }
+        else {
+
+            if(item.getMaxDamage() - item.getItemDamage() == 0) {
+
+                --item.stackSize;
+
+                if (item.stackSize < 0) {
+
+                    item.stackSize = 0;
+                }
+            }
+        }
+        return false;
+    }
 
     public static NBTTagCompound getTAGfromItemstack(ItemStack itemStack) {
 
@@ -32,12 +62,12 @@ public class UtilItemStack {
         NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(itemStack);
 
         if(nbtTagCompound != null) {
-            
+
             return nbtTagCompound.getInteger(tag);
         }
         return 0;
     }
-    
+
     public static void setNBTTagDouble(ItemStack itemStack, String tag, int value) {
 
         NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(itemStack);
@@ -49,7 +79,7 @@ public class UtilItemStack {
         NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(itemStack);
 
         if(nbtTagCompound != null) {
-            
+
             return nbtTagCompound.getDouble(tag);
         }
         return 0;

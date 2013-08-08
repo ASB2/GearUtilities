@@ -1,9 +1,11 @@
 package GU.blocks;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.utils.UtilPlayers;
@@ -14,7 +16,17 @@ public class BlockFalseBlock extends BlockBase {
         super(par1, par3Material);
         useStandardRendering = false;
     }
+    
+    public int getRenderType() {
 
+        return 0;
+    }
+    
+    public Icon getIcon(int side, int metadata) {        
+
+        return Block.blocksList[1].getIcon(side,metadata);
+    }
+    
     public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
         
         return true;

@@ -3,8 +3,18 @@ package GU.utils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 public class UtilInventory {
+
+    public static boolean addItemStackToInventoryAndSpawnExcess(World world, IInventory destination, ItemStack itemStack, int x, int y, int z) {
+
+        if(!UtilInventory.addItemStackToInventory(destination, itemStack)) {
+
+            UtilBlock.spawnItemStackEntity(world, x, y, z, itemStack, 0);
+        }        
+        return true;
+    }
 
     public static boolean addItemStackToInventory(IInventory destination, ItemStack itemStack) {
 
@@ -27,8 +37,12 @@ public class UtilInventory {
 
                         if(stackSizeAdded <= destination.getInventoryStackLimit()) {
 
-                            stack.stackSize = stackSizeAdded;
-                            return true;
+                            if(stackSizeAdded <= stack.getMaxStackSize()) {
+
+                                stack.stackSize = stackSizeAdded;
+                                return true;
+                            }
+
                         }
                     }
                 }
@@ -37,7 +51,7 @@ public class UtilInventory {
         return false;
     }
 
-    public static boolean inventoryHasStack(IInventory inventory, ItemStack stack) {
+    public static boolean doesInventoryHasStack(IInventory inventory, ItemStack stack) {
 
         if(stack != null) {
 
@@ -55,24 +69,19 @@ public class UtilInventory {
         return false;
     }
 
-    public static boolean removeItemStackFromInventory(IInventory destination, ItemStack itemStack, int amount) {
+    public static boolean consumeItemStack(IInventory inventory, ItemStack itemStack, int amount) {
 
         if(itemStack != null) {
 
-            for(int i = 0; i < destination.getSizeInventory(); i++) {
+            for(int i = 0; i < inventory.getSizeInventory(); i++) {
 
-                ItemStack slotStack = destination.getStackInSlot(i);
+                ItemStack slotStack = inventory.getStackInSlot(i);
 
                 if(slotStack != null) {
 
                     if(slotStack.isItemEqual(itemStack)) {
 
-                        slotStack.stackSize -= amount;
-
-                        if(slotStack.stackSize <= 0) {
-
-                            destination.setInventorySlotContents(i, null);
-                        }
+                        return UtilInventory.decreaseSlotContents(inventory, i, amount);
                     }
                 }
             }
@@ -186,7 +195,7 @@ public class UtilInventory {
 
                 itemStack.stackSize = itemStack.stackSize - amount;
 
-                if(!(itemStack.stackSize < 0)) {
+                if(itemStack.stackSize > 0) {
 
                     inventory.setInventorySlotContents(slotToChange, itemStack);
                     return true;

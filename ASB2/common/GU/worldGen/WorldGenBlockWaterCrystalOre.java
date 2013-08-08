@@ -8,26 +8,20 @@ import GU.BlockRegistry;
 import cpw.mods.fml.common.IWorldGenerator;
 
 public class WorldGenBlockWaterCrystalOre implements IWorldGenerator {
+
     @Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
-    {
-     switch (world.provider.dimensionId)
-     {
-      case -1: generateNether(world, random, chunkX*16, chunkZ*16);
-      case 0: generateSurface(world, random, chunkX*16, chunkZ*16);
-     }
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+
+        if(!world.provider.isHellWorld)
+            generateSurface(world, random, chunkX*16, chunkZ*16);
     }
 
-     private void generateSurface(World world, Random random, int blockX, int blockZ)
-    {// Adds a Block
-     int Xcoord = blockX + random.nextInt(16);
-     int Ycoord = random.nextInt(256);
-     int Zcoord = blockZ + random.nextInt(16);
+    private void generateSurface(World world, Random random, int blockX, int blockZ) {
 
-     (new WorldGenWaterCrystal(BlockRegistry.BlockWaterCrystalOre.blockID, 20)).generate(world, random, Xcoord, Ycoord, Zcoord);
-    }
+        int Xcoord = blockX + random.nextInt(16);
+        int Ycoord = random.nextInt(256);
+        int Zcoord = blockZ + random.nextInt(16);
 
-    private void generateNether(World world, Random random, int blockX, int blockZ)
-    {
+        (new WorldGenWaterCrystal(BlockRegistry.BlockWaterCrystalOre.blockID, 20)).generate(world, random, Xcoord, Ycoord, Zcoord);
     }
-   }
+}

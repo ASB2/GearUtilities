@@ -3,15 +3,20 @@ package GU.proxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.Side;
+import GU.tickHandler.*;
 
 public class CommonProxy implements IGuiHandler {
 
+    public GUTickHandler guTickHandler = new GUTickHandler();
+    
     public void register() {
-        // TODO Auto-generated method stub
         
+        TickRegistry.registerTickHandler(guTickHandler, Side.SERVER);        
     }
     
-    public static int addArmor(String string) {
+    public int addArmor(String string) {
 
         return 0;
     }

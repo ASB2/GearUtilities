@@ -6,6 +6,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.IFluidTank;
 import GU.api.IDirectionSpecific;
 import GU.api.color.IColorable;
 import GU.api.power.IPowerMisc;
@@ -21,7 +22,7 @@ public class ItemGearReader extends ItemBase {
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10){
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10){
 
         TileEntity tile = world.getBlockTileEntity(x,y,z);
 
@@ -73,10 +74,24 @@ public class ItemGearReader extends ItemBase {
                 UtilPlayers.sendChatToPlayer(player, "Size of inventory is: " + mTile.getSizeInventory());
                 UtilPlayers.sendChatToPlayer(player, "Inventory stack limit is: " + mTile.getInventoryStackLimit());
             }
+
+            if(tile instanceof IFluidTank) {
+
+                IFluidTank mTile = (IFluidTank)tile;
+
+                if(mTile.getFluid() != null) {
+                    UtilPlayers.sendChatToPlayer(player, "Fluid conained: " + mTile.getFluid().getFluid().getName().toUpperCase());
+                }
+                else {
+                    UtilPlayers.sendChatToPlayer(player, "Fluid conained: " + mTile.getFluid());
+                }
+                UtilPlayers.sendChatToPlayer(player, "Fluid Stored: " + mTile.getFluidAmount());                
+                UtilPlayers.sendChatToPlayer(player, "Capasity: " + mTile.getCapacity());
+            }
         }
+
         UtilPlayers.sendChatToPlayer(player, "Block" + " has metadata: " + world.getBlockMetadata(x, y, z));
         UtilPlayers.sendChatToPlayer(player, "--------");
-        return true;        
-
+        return true;
     }
 }

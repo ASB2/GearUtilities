@@ -13,12 +13,13 @@ import GU.utils.UtilPlayers;
 
 public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockCycle {
 
-    public ItemEnhancedDestructionCatalyst(int par1) {
-        super(par1);
+    public ItemEnhancedDestructionCatalyst(int id) {
+        super(id);
         this.setMaxDamage(300);
         this.setMaxStackSize(1);
     }
 
+    @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 
         if(player.isSneaking()) {
@@ -37,16 +38,17 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
         return itemStack;
     }
 
+    @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz){
 
         ForgeDirection sideF = UtilDirection.translateNumberToDirection(side);
 
         UtilItemStack.setNBTTagInt(itemStack, "id", world.getBlockId(x, y, z));
 
-        boolean isSucesful = UtilBlock.cycle3DBlock(player, world, x, y, z, sideF, 1,UtilItemStack.getNBTTagInt(itemStack, "length"), this, 0);
+        UtilBlock.cycle3DBlock(player, world, x, y, z, sideF, 1,UtilItemStack.getNBTTagInt(itemStack, "length"), this, 0);
 
         UtilItemStack.setNBTTagInt(itemStack, "id", 0);  
-        return isSucesful;        
+        return true;        
     }
 
     public void decrementLength(EntityPlayer player) {
@@ -81,18 +83,11 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
 
                 if(world.getBlockTileEntity(x, y,  z) == null) {
 
-                    if(world.getBlockId(x, y, z) == blockToBreak) {
-
-                        int id = world.getBlockId(x, y, z);
-
-                        if (id > 0) {
-
-                            int meta = world.getBlockMetadata(x, y, z);
-
-                            player.inventory.getCurrentItem().damageItem(1, player);
-                            world.playAuxSFX(2001, x, y, z, id + (meta << 12));
-                            Block.blocksList[id].dropBlockAsItem(world, (int)player.posX, (int)player.posY, (int)player.posZ, meta, 0);
-                            world.setBlockToAir(x, y, z);
+                    if(world.getBlockId(x, y, z) == blockToBreak || (world.getBlockId(x, y, z) == Block.oreRedstone.blockID && blockToBreak == Block.oreRedstoneGlowing.blockID)) {
+                        
+                        if(UtilItemStack.damageItem(player, player.inventory.getCurrentItem(), 1)) {
+                            
+                            UtilBlock.breakAndAddToInventory(player.inventory, world, x, y, z, 5, true);
                             return true;
                         }
                     }

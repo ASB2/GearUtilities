@@ -7,8 +7,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-public class WorldGenWaterCrystal extends WorldGenerator
-{
+public class WorldGenWaterCrystal extends WorldGenerator {
+    
     /** The block ID of the ore to be placed using this generator. */
     private int minableBlockId;
     private int minableBlockMeta = 0;
@@ -17,20 +17,20 @@ public class WorldGenWaterCrystal extends WorldGenerator
     private int numberOfBlocks;
     private int field_94523_c;
 
-    public WorldGenWaterCrystal(int par1, int par2)
-    {
+    public WorldGenWaterCrystal(int par1, int par2) {
+        
         this(par1, par2, Block.waterStill.blockID);
     }
 
-    public WorldGenWaterCrystal(int par1, int par2, int par3)
-    {
+    public WorldGenWaterCrystal(int par1, int par2, int par3) {
+        
         this.minableBlockId = par1;
         this.numberOfBlocks = par2;
         this.field_94523_c = par3;
     }
 
-    public WorldGenWaterCrystal(int id, int meta, int number, int target)
-    {
+    public WorldGenWaterCrystal(int id, int meta, int number, int target) {
+        
         this(id, number, target);
         minableBlockMeta = meta;
     }

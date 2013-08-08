@@ -1,14 +1,15 @@
 package GU.blocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import GU.GUItemBlock;
 import GU.GearUtilities;
 import GU.info.Reference;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockBase extends Block {
 
@@ -36,9 +37,23 @@ public class BlockBase extends Block {
         return useStandardRendering;
     }
 
+    public int getRenderType() {
+
+        if(!useStandardRendering)
+            return -1;
+
+        return 0;
+    }
+
     public boolean canCreatureSpawn() {
 
         return false;
+    }
+
+    @Override
+    public int onBlockPlaced(World world, int x, int y, int z, int sideHit, float hitX, float hitY, float hitZ, int metaData) {
+
+        return sideHit;
     }
 
     @Override

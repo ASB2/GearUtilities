@@ -41,8 +41,8 @@ public final class GearUtilities {
 
     public static CommonProxy proxy;
 
-    public static CreativeTabs tabGUBlocks = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + " Blocks");
-    public static CreativeTabs tabGUItems = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + " Items");
+    public static CreativeTabs tabGUBlocks = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Blocks");
+    public static CreativeTabs tabGUItems = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Items");
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -64,8 +64,8 @@ public final class GearUtilities {
         proxy.register();
         NetworkRegistry.instance().registerGuiHandler(this, GearUtilities.proxy);
 
-        MinecraftForge.addGrassPlant(BlockRegistry.BlockBurningFlower,0,20);
-        MinecraftForge.addGrassPlant(BlockRegistry.BlockFreezingFlower,0,20);
+        MinecraftForge.addGrassPlant(BlockRegistry.BlockBurningFlower, 0, 20);
+        MinecraftForge.addGrassPlant(BlockRegistry.BlockFreezingFlower, 0, 20);
         
         GameRegistry.registerWorldGenerator(new WorldGenBlockAirCrystalOre());
         GameRegistry.registerWorldGenerator(new WorldGenBlockEarthCrystalOre());

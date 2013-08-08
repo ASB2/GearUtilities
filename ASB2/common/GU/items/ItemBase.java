@@ -4,10 +4,12 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import GU.GearUtilities;
 import GU.info.Reference;
+import GU.utils.*;
 
 public class ItemBase extends Item {
 
@@ -25,7 +27,7 @@ public class ItemBase extends Item {
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) 
     {
-        info.add("From: " + Reference.NAME);
+        info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "From: " + Reference.NAME);
     }
 
     @Override
