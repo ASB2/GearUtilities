@@ -15,7 +15,7 @@ import GU.utils.UtilFluid;
 
 public class TileTestTank extends TileBase {
 
-    private int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 100;
+    private int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 64;
 
     public TileTestTank() {
 

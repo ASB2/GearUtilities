@@ -29,11 +29,11 @@ public class TestTankRenderer implements ISimpleBlockRenderingHandler  {
 
             if(!(tile.fluidTank.getCapacity() == tile.fluidTank.getFluidAmount())) { 
                 
-                renderer.setRenderBounds(0.01F, 0.01F, 0.01F, 0.99F, UtilMisc.getAmountScaled(0.99, tile.fluidTank.getFluidAmount(), tile.fluidTank.getCapacity()), 0.99F);
+                renderer.setRenderBounds(0.0001F, 0.0001F, 0.0001F, 0.9999F, UtilMisc.getAmountScaled(0.9999, tile.fluidTank.getFluidAmount(), tile.fluidTank.getCapacity()), 0.9999F);
             }
             else {
 
-                renderer.setRenderBounds(0.01F, 0.01F, 0.01F, 0.99F, 0.99, 0.99F);
+                renderer.setRenderBounds(0.0001F, 0.0001F, 0.0001F, 0.9999F, 0.9999, 0.9999F);
             }
             
             UtilRender.renderFakeBlock(tile.fluidTank.getFluid().getFluid().getIcon(), x, y, z, renderer, world);

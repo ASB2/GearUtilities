@@ -90,9 +90,9 @@ public class ItemGearReader extends ItemBase {
 
                         UtilPlayers.sendChatToPlayer(player, "Tanks For Direction: " + loop); 
                         if(info.fluid != null) {
+                            
                             UtilPlayers.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount); 
                             UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + info.fluid.getFluid().getName().toUpperCase());
-                            UtilPlayers.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount); 
                         }
                         else {
                             UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + info.fluid);

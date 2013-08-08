@@ -21,6 +21,7 @@ import GU.utils.UtilRender;
 public class BlockTestTank extends ContainerBase {
 
     private Icon[] icons = new Icon[16];
+    private Icon top;
     private String folder = ":testConnectedTexture";
 
     public BlockTestTank(int id, Material material) {
@@ -65,20 +66,32 @@ public class BlockTestTank extends ContainerBase {
     }
 
     @Override
-    public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int par5) {
+    public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
 
-        return UtilRender.renderConnectedTexture(blockAccess, icons, this.blockID, x, y, z, par5);
+        if(side == 1) {
+            
+            if(!(blockAccess.getBlockId(x, y + 1, z) == this.blockID)) {
+                
+                return top;
+            }
+        }
+        return UtilRender.renderConnectedTexture(blockAccess, icons, this.blockID, x, y, z, side);
     }
 
 
     public Icon getIcon(int side, int metadata) {
 
+        if(side == 1) {
+            
+            return top;
+        }
         return icons[0];
     }
 
     @Override
     public void registerIcons (IconRegister iconRegistry) {
 
+        top = iconRegistry.registerIcon(Reference.MODDID + ":BlockTestTankTop");
         icons[0] = iconRegistry.registerIcon(Reference.MODDID + folder + "/tankRegular");
         icons[1] = iconRegistry.registerIcon(Reference.MODDID + folder + "/tank_1_d");
         icons[2] = iconRegistry.registerIcon(Reference.MODDID + folder + "/tank_1_u");
