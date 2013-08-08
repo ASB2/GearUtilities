@@ -2,7 +2,9 @@ package GU.blocks.containers.BlockTestTank;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
@@ -13,7 +15,7 @@ import GU.utils.UtilFluid;
 
 public class TileTestTank extends TileBase {
 
-    private int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 10;
+    private int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 100;
 
     public TileTestTank() {
 
@@ -40,7 +42,7 @@ public class TileTestTank extends TileBase {
         for(ForgeDirection direction: ForgeDirection.values()) {
 
             if(direction != ForgeDirection.DOWN && direction != ForgeDirection.UP) {
-                
+
                 TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
                 if(tile != null && tile instanceof TileTestTank) {
@@ -107,11 +109,50 @@ public class TileTestTank extends TileBase {
         return false;
     }
 
+    @Override
+    public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+
+        if(fluidTank.getCapacity() == fluidTank.getFluidAmount()) {
+
+            if(this.getTankAbove() != null) {
+
+                return this.getTankAbove().fill(from, resource, doFill);
+            }
+        }
+
+        return fluidTank.fill(resource, doFill);
+    }
+
+    @Override
+    public boolean canFill(ForgeDirection from, Fluid fluid) {
+
+        if(fluid != null) {
+
+            if(fluidTank.getFluid() != null) {
+
+                if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
+
+                    return true;
+                } 
+            }
+            else {
+
+                return true;
+            }
+        }
+
+        if(this.getTankAbove() != null) {
+
+            return this.getTankAbove().canFill(from, fluid);
+        }
+        return false;
+    }
+
     public IFluidHandler getTankBelow() {
 
         TileEntity below = worldObj.getBlockTileEntity(xCoord, yCoord - 1, zCoord);
 
-        if (below instanceof IFluidHandler) {
+        if (below instanceof TileTestTank) {
 
             return (IFluidHandler) below;
         }
@@ -122,7 +163,7 @@ public class TileTestTank extends TileBase {
 
         TileEntity below = worldObj.getBlockTileEntity(xCoord, yCoord + 1, zCoord);
 
-        if (below instanceof IFluidHandler) {
+        if (below instanceof TileTestTank) {
 
             return (IFluidHandler) below;
         }
