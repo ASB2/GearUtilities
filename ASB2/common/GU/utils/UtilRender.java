@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
@@ -27,6 +28,88 @@ public final class UtilRender {
         if(FMLClientHandler.instance().getClient() != null) {
 
             Minecraft.getMinecraft().effectRenderer.addEffect(fx); 
+        }
+    }
+
+    public static void renderByOrientation(double x, double y, double z, ForgeDirection direction) {
+
+        switch (UtilDirection.translateDirectionToOpposite(direction)) {
+
+            case DOWN: {//Down
+                GL11.glTranslatef((float) x + 0.5F, (float) y + -.5F, (float) z + .5F);
+                break;
+            }            
+            case UP: {//Up
+                GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + .5F);
+                GL11.glRotatef(180F, 1F, 0F, 0F);
+                break;
+            }
+
+            case NORTH: {//South
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z - 0.5F);
+                GL11.glRotatef(90F, 1F, 0F, 0F);
+                break;
+            }
+            case SOUTH: {//North
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + 1.5F);
+                GL11.glRotatef(-90F, 1F, 0F, 0F);
+                break;
+            }
+            case EAST: {//West
+                GL11.glTranslatef((float) x + 1.5F, (float) y + .5F, (float) z + .5F);
+                GL11.glRotatef(90F, 0F, 0F, 1F);
+                break;
+            }
+            case WEST: {//East
+                GL11.glTranslatef((float) x - .5F, (float) y + .5F, (float) z + .5F);
+                GL11.glRotatef(-90F, 0F, 0F, 1F);
+                break;
+            }
+            default: {//Other
+                break;
+            }
+        }
+    }
+
+    public static void renderByOrientation(double x, double y, double z, int metadata) {
+
+        GL11.glScalef(1.0F, 1.0F, 1.0F);
+
+        switch (metadata) {
+
+            case 0: {//Down
+                GL11.glTranslatef((float) x + 0.5F, (float) y + -.5F, (float) z + .5F);
+                break;
+            }            
+            case 1: {//Up
+                GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + .5F);
+                GL11.glRotatef(180F, 1F, 0F, 0F);
+                break;
+            }
+
+            case 2: {//South
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z - 0.5F);
+                GL11.glRotatef(90F, 1F, 0F, 0F);
+                break;
+            }
+            case 3: {//North
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + 1.5F);
+                GL11.glRotatef(-90F, 1F, 0F, 0F);
+                break;
+            }
+            case 5: {//West
+                GL11.glTranslatef((float) x + 1.5F, (float) y + .5F, (float) z + .5F);
+                GL11.glRotatef(90F, 0F, 0F, 1F);
+                break;
+            }
+            case 4: {//East
+                GL11.glTranslatef((float) x - .5F, (float) y + .5F, (float) z + .5F);
+                GL11.glRotatef(-90F, 0F, 0F, 1F);
+                break;
+            }
+            default: {//Other
+                break;
+            }
         }
     }
 
@@ -897,7 +980,7 @@ public final class UtilRender {
 
         return flag;
     }
-    
+
     public static Icon renderConnectedTexture(IBlockAccess blockAccess, Icon[] icons, int id, int x, int y, int z, int side) {
 
         boolean isOpenUp = false, isOpenDown = false, isOpenLeft = false, isOpenRight = false;
@@ -1088,7 +1171,7 @@ public final class UtilRender {
 
                     return icons[15];
                 }
-                
+
                 if (UtilRender.shouldConnectToBlock(blockAccess, id, x, y, z, blockAccess.getBlockId(x, y - 1, z), blockAccess.getBlockMetadata(x, y - 1, z)))
                 {
                     isOpenDown = true;
@@ -1172,12 +1255,12 @@ public final class UtilRender {
                 break;
 
             case 3:
-                
+
                 if(UtilRender.shouldConnectToBlock(blockAccess, id, x, y, z, blockAccess.getBlockId(x, y, z + 1), blockAccess.getBlockMetadata(x, y, z + 1))) {
 
                     return icons[15];
                 }
-                
+
                 if (UtilRender.shouldConnectToBlock(blockAccess, id, x, y, z, blockAccess.getBlockId(x, y - 1, z), blockAccess.getBlockMetadata(x, y - 1, z)))
                 {
                     isOpenDown = true;
@@ -1261,12 +1344,12 @@ public final class UtilRender {
                 break;
 
             case 4:
-                
+
                 if(UtilRender.shouldConnectToBlock(blockAccess, id, x, y, z, blockAccess.getBlockId(x - 1, y, z), blockAccess.getBlockMetadata(x - 1, y, z))) {
 
                     return icons[15];
                 }
-                
+
                 if (UtilRender.shouldConnectToBlock(blockAccess, id, x, y, z, blockAccess.getBlockId(x, y - 1, z), blockAccess.getBlockMetadata(x, y - 1, z)))
                 {
                     isOpenDown = true;
@@ -1350,12 +1433,12 @@ public final class UtilRender {
                 break;
 
             case 5:
-                
+
                 if(UtilRender.shouldConnectToBlock(blockAccess, id, x, y, z, blockAccess.getBlockId(x + 1, y, z), blockAccess.getBlockMetadata(x + 1, y, z))) {
 
                     return icons[15];
                 }
-                
+
                 if (UtilRender.shouldConnectToBlock(blockAccess, id, x, y, z, blockAccess.getBlockId(x, y - 1, z), blockAccess.getBlockMetadata(x, y - 1, z)))
                 {
                     isOpenDown = true;
@@ -1446,7 +1529,7 @@ public final class UtilRender {
 
         return id == idToMatch;
     }
-    
+
     public static boolean renderFakeBlock (Icon texture, int x, int y, int z, RenderBlocks renderer, IBlockAccess world)
     {
         Block block = Block.stone;

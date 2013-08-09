@@ -16,6 +16,7 @@ import GU.blocks.BlockSpeedyRoad;
 import GU.blocks.BlockTestBlock;
 import GU.blocks.BlockWaterCrystalOre;
 import GU.blocks.containers.ContainerBase;
+import GU.blocks.containers.BlockConduit.BlockConduit;
 import GU.blocks.containers.BlockTestTank.BlockTestTank;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -36,6 +37,8 @@ public class BlockRegistry {
     public static BlockBase BlockFalseBlock;
     public static BlockBase BlockSpeedyRoad;
     public static ContainerBase BlockTestTank;
+    public static ContainerBase BlockConduit;
+    
     
     private static int id = 500;
 
@@ -96,6 +99,10 @@ public class BlockRegistry {
         BlockTestTank = new BlockTestTank(config.getBlock("BlockTestTank", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockTestTank.setBlockName("BlockTestTank");
         LanguageRegistry.addName(BlockTestTank, "Test Tank");
+        
+        BlockConduit = new BlockConduit(config.getBlock("BlockCable", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockConduit.setBlockName("BlockConduit");
+        LanguageRegistry.addName(BlockConduit, "Multi-Conduit");
     }
 
     public static int getNextBaseID() {        

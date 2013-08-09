@@ -4,7 +4,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelPowerConduit extends ModelBase {
+public class ModelConduit extends ModelBase {
     
     ModelRenderer Center_Square;
     ModelRenderer WireLeft;
@@ -20,7 +20,7 @@ public class ModelPowerConduit extends ModelBase {
     ModelRenderer RingLeft;
     ModelRenderer RingRight;
   
-  public ModelPowerConduit() {
+  public ModelConduit() {
       
     textureWidth = 128;
     textureHeight = 64;
