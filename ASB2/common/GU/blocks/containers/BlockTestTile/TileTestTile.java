@@ -10,6 +10,7 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
+import GU.api.power.IPowerMisc;
 import GU.blocks.containers.TileBase;
 import GU.fx.FXBeam;
 import GU.utils.IBlockCycle;
@@ -18,6 +19,7 @@ import GU.utils.UtilFluid;
 import GU.utils.UtilInventory;
 import GU.utils.UtilRender;
 import GU.vector.Vector3;
+import GU.*;
 
 public class TileTestTile extends TileBase implements IBlockCycle {
 
@@ -36,12 +38,25 @@ public class TileTestTile extends TileBase implements IBlockCycle {
 
                     if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
-                        UtilFluid.addFluidToTank(fTile, direction, new FluidStack(FluidRegistry.LAVA, 1000));
+                        UtilFluid.addFluidToTank(fTile, direction, new FluidStack(MiscRegistry.FluidGUPower, 1000));
                     }
                     else {
 
-                        UtilFluid.removeFluidToTank(fTile, direction, new FluidStack(FluidRegistry.LAVA, 1000));
+                        UtilFluid.removeFluidToTank(fTile, direction, new FluidStack(MiscRegistry.FluidGUPower, 1000));
                     }
+                }
+                
+                if(tile instanceof IPowerMisc) {
+                    
+                    IPowerMisc pTile = (IPowerMisc)tile;
+                    
+                    if(pTile.getPowerProvider() != null) {
+                     
+                        if(pTile.getPowerProvider().canGainPower(pTile.getPowerProvider().getPowerClass().getPowerValue())){
+                         
+                            pTile.getPowerProvider().gainPower(pTile.getPowerProvider().getPowerClass().getPowerValue());
+                        }
+                    }                            
                 }
             }
         }

@@ -12,6 +12,7 @@ public class BlockFreezingFlower extends FlowerBase {
         super(par1, par3Material);
     }
     
+    @Override
     public void onEntityCollidedWithBlock(World par1World, int x, int y, int z, Entity entity) {
        
         if(entity instanceof EntityPlayer) {

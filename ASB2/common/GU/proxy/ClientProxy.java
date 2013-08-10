@@ -2,7 +2,6 @@ package GU.proxy;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import GU.BlockRegistry;
 import GU.blocks.containers.BlockConduit.ConduitRenderer;
@@ -13,12 +12,13 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
 
+    @Override
     public void register() {
 
         RenderingRegistry.registerBlockHandler(new TestTankRenderer());
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileConduit.class, new ConduitRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockConduit.blockID, (IItemRenderer)new ConduitRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockConduit.blockID, new ConduitRenderer());
     }
 
     @Override

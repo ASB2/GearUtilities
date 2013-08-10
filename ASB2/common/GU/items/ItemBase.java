@@ -37,6 +37,7 @@ public class ItemBase extends Item {
         texture = iconRegister.registerIcon(Reference.MODDID + ":" + itemName);
     }
 
+    @Override
     public boolean onItemUseFirst(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
         return false;

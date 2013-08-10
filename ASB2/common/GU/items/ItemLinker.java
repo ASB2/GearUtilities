@@ -16,6 +16,7 @@ public class ItemLinker extends ItemBase {
         setMaxStackSize(1);
     }
 
+    @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int hitX, float hitY, float hitZ, float par10)
     {
         if(!this.isCoodsSet(itemStack)) {

@@ -26,6 +26,7 @@ public class ItemBasicDestructionCatalyst extends ItemBase implements IBlockCycl
         info.add("Idea Source: EE2");
     }
 
+    @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz){
 
         ForgeDirection sideF = UtilDirection.translateNumberToDirection(side);

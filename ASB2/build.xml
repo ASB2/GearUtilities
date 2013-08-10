@@ -6,7 +6,7 @@
 
 	<target name="clean">
 		<delete file="${build.dir.development}\Minecraft\mcp\forge\mcp\src\minecraft\mcmod.info" />
-		<delete dir="${build.dir.development}\Minecraft\mcp\forge\mcp\src\minecraft\GearUtilities" />
+		<delete dir="${build.dir.development}\Minecraft\mcp\forge\mcp\src\minecraft\GU" />
 		<delete dir="${build.dir.development}\Minecraft\mcp\forge\mcp\reobf\minecraft" />
 	</target>
 

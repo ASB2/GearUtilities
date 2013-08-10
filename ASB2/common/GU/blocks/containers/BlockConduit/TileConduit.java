@@ -6,22 +6,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.IFluidHandler;
-import GU.api.conduit.ConduitInfo;
-import GU.api.conduit.EnumConduitType;
+import GU.api.conduit.ConduitLogic;
 import GU.api.conduit.IConduitNetwork;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
-import GU.utils.*;
+import GU.utils.UtilDirection;
 
 public class TileConduit extends TileBase implements IConduitNetwork {
 
-    ConduitInfo conduitInfo;
+    ConduitLogic conduitInfo;
     
     public TileConduit() {
 
         this.tileItemStacks = new ItemStack[1];
         
-        conduitInfo = new ConduitInfo(this, EnumConduitType.OTHER, color);
+        //conduitInfo = new ConduitLogic(color, new ItemStack[0], null, null);
         waitTimer = new Wait(10, this, 0);
     }
 
@@ -29,15 +28,12 @@ public class TileConduit extends TileBase implements IConduitNetwork {
     public void updateEntity() {
 
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-          
-            for(TileEntity tile: UtilDirection.getArrayTilesAround(worldObj, this)) {
-                
-            }
+            
         }
     }
 
     @Override
-    public ConduitInfo getConduitInfo() {
+    public ConduitLogic getConduitInfo() {
         
         return conduitInfo;
     }
@@ -71,6 +67,7 @@ public class TileConduit extends TileBase implements IConduitNetwork {
         return false;
     }
 
+    @Override
     public void trigger(int id) {
     }
 }

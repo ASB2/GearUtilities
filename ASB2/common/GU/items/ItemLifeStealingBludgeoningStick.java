@@ -19,6 +19,7 @@ public class ItemLifeStealingBludgeoningStick extends ItemBase {
         return true;
     }
     
+    @Override
     public boolean isFull3D() {
         
         return true;

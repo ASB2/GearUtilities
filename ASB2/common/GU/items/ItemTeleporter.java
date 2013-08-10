@@ -24,6 +24,7 @@ public class ItemTeleporter extends ItemBase {
         setMaxDamage(10);
     }
 
+    @Override
     public void onCreated(ItemStack par1ItemStack, World par2World, EntityPlayer player) {
 
         this.setXCoord(par1ItemStack,player.posX);
@@ -33,6 +34,7 @@ public class ItemTeleporter extends ItemBase {
         setCoodsSet(par1ItemStack, true);
     }
 
+    @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer player)
     {
         if(isCoodsSet(par1ItemStack)) {

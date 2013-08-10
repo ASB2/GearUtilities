@@ -12,12 +12,14 @@ public class BlockWaterCrystalOre extends BlockBase {
 		super(par1, par3Material);
 	}
 
-	public int idDropped(int par1, Random par2Random, int par3) {
+	@Override
+    public int idDropped(int par1, Random par2Random, int par3) {
 	    
         return ItemRegistry.ItemWaterCrystalShard.itemID;
     }
 	
-	public int quantityDropped(Random par1Random) {
+	@Override
+    public int quantityDropped(Random par1Random) {
 	    
         return par1Random.nextInt(5) + 1;
     }

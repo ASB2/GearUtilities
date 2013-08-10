@@ -1,12 +1,7 @@
 package GU.api.wait;
 
-import java.util.EnumSet;
 
-import cpw.mods.fml.common.TickType;
-import GU.tickHandler.*;
-import GU.*;
-
-public class Wait implements ISubTickHandler {
+public class Wait{
 
     long timeKeeper;
     long timeToWait;
@@ -15,14 +10,12 @@ public class Wait implements ISubTickHandler {
 
     public Wait(long timeToWait, IWaitTrigger thingToTrigger, int id) {
 
-        GearUtilities.proxy.guTickHandler.thingsToTick.add(this);
         this.timeToWait = timeToWait;
         this.thingToTrigger = thingToTrigger;
         this.id = id;
     }
 
-    @Override
-    public void tickStart(EnumSet<TickType> type, Object... tickData) {
+    public void update() {
 
         if(thingToTrigger != null) {
 
@@ -31,10 +24,6 @@ public class Wait implements ISubTickHandler {
                 timeKeeper++;
             }            
         }
-    }
-
-    @Override
-    public void tickEnd(EnumSet<TickType> type, Object... tickData) {
 
         if(timeKeeper >= timeToWait) {
 

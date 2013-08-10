@@ -17,7 +17,7 @@ public abstract class PowerProvider {
     int x;
     int y;
     int z;
-    
+
     TileEntity tile;
 
     protected int powerStored = 0;
@@ -28,7 +28,6 @@ public abstract class PowerProvider {
         powerClass = pClass;
         this.tile = tile;
         this.powerMax = powerMax;
-        PowerManager.getInstance().addPowerProvider(this);
     }
 
     public void updateProvider() {
@@ -90,9 +89,9 @@ public abstract class PowerProvider {
     }
 
     public boolean getShouldWork() {
-        
+
         if(tile != null && tile.worldObj != null) {
-            
+
             return !tile.worldObj.isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
         }
         return false;

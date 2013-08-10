@@ -12,11 +12,13 @@ public class BlockFireCrystalOre extends BlockBase {
     }
 
 
+    @Override
     public int idDropped(int par1, Random par2Random, int par3) {
 
         return ItemRegistry.ItemFireCrystalShard.itemID;
     }
 
+    @Override
     public int quantityDropped(Random par1Random) {
         return par1Random.nextInt(5) + 1;
     }

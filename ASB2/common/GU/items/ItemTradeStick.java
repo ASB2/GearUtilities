@@ -40,6 +40,7 @@ public class ItemTradeStick extends ItemBase {
         return new int[] {nbtTagCompound.getInteger("id"), nbtTagCompound.getInteger("meta")};
     }
 
+    @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz){
 
         if(player.isSneaking()) {

@@ -11,11 +11,13 @@ public class BlockAirCrystalOre extends BlockBase {
         super(id, material);
     }
 
+    @Override
     public int idDropped(int par1, Random par2Random, int par3) {
 
         return ItemRegistry.ItemAirCrystalShard.itemID;
     }
 
+    @Override
     public int quantityDropped(Random par1Random) {
 
         return par1Random.nextInt(5) + 1;

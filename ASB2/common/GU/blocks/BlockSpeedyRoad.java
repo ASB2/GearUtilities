@@ -24,6 +24,7 @@ public class BlockSpeedyRoad extends BlockBase {
         setLightValue(1.0F);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister) {
 
@@ -44,6 +45,7 @@ public class BlockSpeedyRoad extends BlockBase {
 
     }
 
+    @Override
     public void updateTick(World world, int x, int y, int z, Random random) {
     }
 

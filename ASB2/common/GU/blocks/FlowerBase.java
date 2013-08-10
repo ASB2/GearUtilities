@@ -31,26 +31,31 @@ public class FlowerBase extends BlockBase {
 
     }
 
+    @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 
         return null;
     }
 
+    @Override
     public boolean canBlockStay(World world, int x, int y, int z) {
 
         return world.getBlockId(x, y - 1, z) == Block.grass.blockID || world.getBlockId(x, y - 1, z) == Block.dirt.blockID;
     }
 
+    @Override
     public boolean isOpaqueCube() {
 
         return false;
     }
 
+    @Override
     public boolean renderAsNormalBlock() {
 
         return false;
     }
 
+    @Override
     public int getRenderType() {
 
         return 1;

@@ -27,16 +27,19 @@ public class BlockBase extends Block {
         setResistance(1.0F);
     }
 
+    @Override
     public boolean renderAsNormalBlock() {
 
         return useStandardRendering;
     }
 
+    @Override
     public boolean isOpaqueCube() {
 
         return useStandardRendering;
     }
 
+    @Override
     public int getRenderType() {
 
         if(!useStandardRendering)
@@ -70,6 +73,7 @@ public class BlockBase extends Block {
         GameRegistry.registerBlock(this, GUItemBlock.class, this.getUnlocalizedName());
     }
 
+    @Override
     public Icon getIcon(int side, int metadata)
     {
         if(useDefaultTexture || texture == null) 

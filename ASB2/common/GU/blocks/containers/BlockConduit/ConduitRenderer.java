@@ -25,16 +25,16 @@ public class ConduitRenderer  extends TileEntitySpecialRenderer implements IItem
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
         if(tileentity instanceof TileConduit) {
-            
+
             TileConduit tile = (TileConduit)tileentity;
-            
+
             GL11.glPushMatrix();
             GL11.glTranslatef((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
             GL11.glScalef(1.0F, -1F, -1F);
             GL11.glRotatef(0F, 0F, 0F, 0F);
 
             UtilRender.renderTexture(Textures.CONDUIT);
-            
+
             model.renderCenter();
 
             if(tile.renderDirection(ForgeDirection.DOWN)) {
@@ -83,19 +83,25 @@ public class ConduitRenderer  extends TileEntitySpecialRenderer implements IItem
 
             case ENTITY: {
 
-                renderItemSwitched(0f, 0f - 1, 0f, 1);
+                renderItemSwitched(type, 0f, 0f - 1, 0f, 1);
                 return;
             }
 
             case EQUIPPED: {
 
-                renderItemSwitched(0f, 0f - 1, 0f, 1);
+                renderItemSwitched(type, 0f, 0f - .9F, 0f, 1);
                 return;
             }
 
             case INVENTORY: {
 
-                renderItemSwitched(0f, 0f - 1, 0f, 1);
+                renderItemSwitched(type, 0f, 0f - 1, 0f, 1);
+                return;
+            }
+
+            case EQUIPPED_FIRST_PERSON: {
+
+                renderItemSwitched(type, 0f - .5F, 0f, 0f + .5F, 1);
                 return;
             }
 
@@ -103,21 +109,27 @@ public class ConduitRenderer  extends TileEntitySpecialRenderer implements IItem
         }
     }
 
-    private void renderItemSwitched(float x, float y, float z, float scale) {
-        
+    private void renderItemSwitched(ItemRenderType type, float x, float y, float z, float scale) {
+
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
 
         GL11.glTranslatef(x,  y,  z);
         GL11.glScalef(scale, scale, scale);
-        
-        UtilRender.renderTexture(Textures.CONDUIT);
-        
-        model.renderCenter();
-        
-        model.renderWireEAST();
-        model.renderWireWEST();
 
+        UtilRender.renderTexture(Textures.CONDUIT);
+
+        model.renderCenter();
+
+        if(type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
+            model.renderWireNORTH();
+            model.renderWireSOUTH();
+        }
+        else {
+            
+            model.renderWireEAST();
+            model.renderWireWEST();
+        }
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }

@@ -53,7 +53,10 @@ public final class GearUtilities {
         Variables.updateVariables(config);
         ItemRegistry.init(config);
         BlockRegistry.init(config);
-
+        
+        MinecraftForge.EVENT_BUS.register(new MiscRegistry());
+        MiscRegistry.init(config);
+        
         config.save();
         instance = this;
     }
@@ -64,9 +67,9 @@ public final class GearUtilities {
         proxy.register();
         NetworkRegistry.instance().registerGuiHandler(this, GearUtilities.proxy);
 
-        MinecraftForge.addGrassPlant(BlockRegistry.BlockBurningFlower, 0, 20);
-        MinecraftForge.addGrassPlant(BlockRegistry.BlockFreezingFlower, 0, 20);
-        
+        MinecraftForge.addGrassPlant(BlockRegistry.BlockBurningFlower, 0, 100);
+        MinecraftForge.addGrassPlant(BlockRegistry.BlockFreezingFlower, 0, 100);
+
         GameRegistry.registerWorldGenerator(new WorldGenBlockAirCrystalOre());
         GameRegistry.registerWorldGenerator(new WorldGenBlockEarthCrystalOre());
         GameRegistry.registerWorldGenerator(new WorldGenBlockFireCrystalOre());
@@ -76,7 +79,8 @@ public final class GearUtilities {
         GameRegistry.registerWorldGenerator(new WorldGenBlockEnergyCrystalOre());
         GameRegistry.registerWorldGenerator(new WorldGenBlockGarnetOre());                 
         GameRegistry.registerWorldGenerator(new WorldGenBlockFalseBlock());
-
+        
+        //        OreDictionary.registerOre("bioMass", Item.seeds);
         //        GameRegistry.registerWorldGenerator(new WorldGenBlockAirCrystalOre());
         //        GameRegistry.registerPlayerTracker(new TechCraftPlayerTracker ());
         //        GameRegistry.registerPlayerTracker(new TechCraftPlayerTracker ());

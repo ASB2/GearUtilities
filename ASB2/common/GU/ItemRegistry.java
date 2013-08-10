@@ -3,13 +3,22 @@ package GU;
 import net.minecraftforge.common.Configuration;
 import GU.items.ItemAirCrystalShard;
 import GU.items.ItemBase;
+import GU.items.ItemBasicDestructionCatalyst;
+import GU.items.ItemCrystalCasing;
 import GU.items.ItemEarthCrystalShard;
 import GU.items.ItemEnergyCrystalShard;
+import GU.items.ItemEnhancedDestructionCatalyst;
 import GU.items.ItemFireCrystalShard;
 import GU.items.ItemGarnet;
+import GU.items.ItemGearReader;
+import GU.items.ItemGearTinkerer;
+import GU.items.ItemLifeStealingBludgeoningStick;
+import GU.items.ItemLinker;
+import GU.items.ItemRainBGone;
+import GU.items.ItemTeleporter;
+import GU.items.ItemTradeStick;
 import GU.items.ItemWaterCrystalShard;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import GU.items.*;
 
 public class ItemRegistry {
 
@@ -28,6 +37,7 @@ public class ItemRegistry {
     public static ItemBase ItemTradeStick;
     public static ItemBase ItemGearReader;
     public static ItemBase ItemLinker;
+    public static ItemBase ItemGearTinkerer;
     
     private static int id = 5000;
 
@@ -92,6 +102,10 @@ public class ItemRegistry {
         ItemLinker = new ItemLinker(config.getItem("ItemLinker", ItemRegistry.getNextBaseID()).getInt());
         ItemLinker.setItemName("ItemLinker");
         LanguageRegistry.addName(ItemLinker, "Linker");
+        
+        ItemGearTinkerer = new ItemGearTinkerer(config.getItem("ItemGearTinkerer", ItemRegistry.getNextBaseID()).getInt());
+        ItemGearTinkerer.setItemName("ItemGearTinkerer");
+        LanguageRegistry.addName(ItemGearTinkerer, "Gear Tinkerer");
     }
     
     public static int getNextBaseID() {

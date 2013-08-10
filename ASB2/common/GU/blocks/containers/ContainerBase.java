@@ -20,8 +20,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public abstract class ContainerBase extends BlockContainer {
 
-    public boolean useStandardRendering = true;
-    public boolean useDefaultTexture = false;  
+    protected boolean useStandardRendering = true;
+    protected boolean useDefaultTexture = false;  
     Icon texture;
     String blockName = "";
 
@@ -34,16 +34,19 @@ public abstract class ContainerBase extends BlockContainer {
         setResistance(100F);
     }
 
+    @Override
     public boolean renderAsNormalBlock() {
 
         return useStandardRendering;
     }
 
+    @Override
     public boolean isOpaqueCube() {
 
         return useStandardRendering;
     }
 
+    @Override
     public int getRenderType() {
         
         if(!useStandardRendering)
@@ -63,6 +66,7 @@ public abstract class ContainerBase extends BlockContainer {
         return sideHit;
     }
 
+    @Override
     public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metaData) {
 
         //TileEntity tile = world.getBlockTileEntity(x, y, z);
@@ -72,6 +76,7 @@ public abstract class ContainerBase extends BlockContainer {
         super.onBlockDestroyedByPlayer(world, x, y, z, metaData);
     }
 
+    @Override
     public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
 
         //TileEntity tile = world.getBlockTileEntity(x, y, z);
@@ -121,6 +126,7 @@ public abstract class ContainerBase extends BlockContainer {
         texture = iconRegister.registerIcon(Reference.MODDID + ":" + blockName);
     }
 
+    @Override
     public Icon getIcon(int side, int metadata) {
         
         if(useDefaultTexture || texture == null) 

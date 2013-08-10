@@ -13,6 +13,7 @@ public class TCPowerProvider extends PowerProvider {
         this.currentState = state;
     }
 
+    @Override
     public State getCurrentState() {
         
         if(currentState == null) {

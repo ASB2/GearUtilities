@@ -189,6 +189,7 @@ public abstract class TileBase extends TileEntity implements IPowerMisc, IColora
         return true;
     } 
 
+    @Override
     public void trigger(int id) {
 
     }
@@ -243,11 +244,14 @@ public abstract class TileBase extends TileEntity implements IPowerMisc, IColora
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
 
-        if(fluidTank.getFluidAmount() > 0) {
+        if(this.fluidTank.getFluid() != null) {
+            
+            if(fluidTank.getFluidAmount() > 0) {
 
-            if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
+                if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
 
-                return true;
+                    return true;
+                }
             }
         }
         return false;

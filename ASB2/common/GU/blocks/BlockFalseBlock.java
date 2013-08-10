@@ -17,21 +17,25 @@ public class BlockFalseBlock extends BlockBase {
         useStandardRendering = false;
     }
     
+    @Override
     public int getRenderType() {
 
         return 0;
     }
     
+    @Override
     public Icon getIcon(int side, int metadata) {        
 
         return Block.blocksList[1].getIcon(side,metadata);
     }
     
+    @Override
     public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
         
         return true;
     }
     
+    @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 
         if(!world.isBlockIndirectlyGettingPowered(x,y,z))
@@ -40,6 +44,7 @@ public class BlockFalseBlock extends BlockBase {
         return super.getCollisionBoundingBoxFromPool(world, x, y, z);
     }
 
+    @Override
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
 
         float movementFactor = .3F;

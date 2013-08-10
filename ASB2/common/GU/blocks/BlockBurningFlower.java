@@ -12,6 +12,7 @@ public class BlockBurningFlower extends FlowerBase {
         super(par1, par3Material);
     }
     
+    @Override
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
 
         UtilPlayers.damagePlayer(world, x, y, z, entity, DamageSource.onFire, 1);

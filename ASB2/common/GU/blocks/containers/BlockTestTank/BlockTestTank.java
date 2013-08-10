@@ -1,5 +1,7 @@
 package GU.blocks.containers.BlockTestTank;
 
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -17,6 +19,7 @@ import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
 import GU.utils.UtilInventory;
 import GU.utils.UtilRender;
+import GU.utils.*;
 
 public class BlockTestTank extends ContainerBase {
 
@@ -33,23 +36,28 @@ public class BlockTestTank extends ContainerBase {
         useStandardRendering = false;
     }
 
+    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
+
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
+
+        if(tile != null) {
+
+        }
+        return super.getBlockDropped(world, x, y, z, metadata, fortune);
+    }
+
+    @Override
     public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
 
         return true;
     }
 
+    @Override
     public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
-        
-        if(side == 0) {
-            
-            if(blockAccess.getBlockId(x, y - 1, z) != this.blockID) {
-             
-                return true;
-            }
-        }                
-        return super.shouldSideBeRendered(blockAccess, x, y, z, side);
+
+        return true;
     }
-    
+
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
 
@@ -65,7 +73,7 @@ public class BlockTestTank extends ContainerBase {
 
                         if(info.fluid != null && info.fluid.getFluid() != null) {
 
-                            return Block.lightValue[info.fluid.getFluid().getBlockID()];
+                            return info.fluid.getFluid().getLuminosity();
                         }
                     }
                 }
@@ -74,6 +82,7 @@ public class BlockTestTank extends ContainerBase {
         return 0;
     }
 
+    @Override
     public int getRenderType() {
 
         return TestTankRenderer.tankModelID;
@@ -102,6 +111,7 @@ public class BlockTestTank extends ContainerBase {
     }
 
 
+    @Override
     public Icon getIcon(int side, int metadata) {
 
         if(side == 0) {
@@ -117,7 +127,7 @@ public class BlockTestTank extends ContainerBase {
     }
 
     @Override
-    public void registerIcons (IconRegister iconRegistry) {
+    public void registerIcons(IconRegister iconRegistry) {
 
         top = iconRegistry.registerIcon(Reference.MODDID + ":BlockTestTankTop");
         bottom = iconRegistry.registerIcon(Reference.MODDID + ":BlockTestTankBottom");
@@ -183,6 +193,23 @@ public class BlockTestTank extends ContainerBase {
                         }
                     }
                 }
+            }
+        }
+        else {
+
+            TileTestTank tank = (TileTestTank) world.getBlockTileEntity(x, y, z);
+
+            if(entityplayer.isSneaking()) {
+
+                tank.throughtPut -= 1000;
+                UtilPlayers.sendChatToPlayer(entityplayer, "Tank Throughput Equals: " + tank.throughtPut);
+                return true;
+            }
+            else {
+
+                tank.throughtPut += 1000;
+                UtilPlayers.sendChatToPlayer(entityplayer, "Tank Throughput Equals: " + tank.throughtPut);
+                return true;
             }
         }
         return false;
