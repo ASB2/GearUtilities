@@ -18,7 +18,7 @@ public class TestTankPacket extends GUPacketBase {
     int liquidId;
     int liquidAmount;
     boolean itWorked = false;
-    
+
     public TestTankPacket(int x, int y, int z, int liquidId, int liquidAmount) {
 
         this.x = x;
@@ -72,6 +72,8 @@ public class TestTankPacket extends GUPacketBase {
                 if(liquidId == 0) {
 
                     tank.fluidTank.setFluid(null);
+                    player.worldObj.markBlockForRenderUpdate(x, y, z);
+                    return;
                 }
                 tank.fluidTank.setFluid(new FluidStack(FluidRegistry.getFluid(liquidId), liquidAmount));
                 player.worldObj.markBlockForRenderUpdate(x, y, z);
