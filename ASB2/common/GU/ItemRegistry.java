@@ -19,6 +19,7 @@ import GU.items.ItemTeleporter;
 import GU.items.ItemTradeStick;
 import GU.items.ItemWaterCrystalShard;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import GU.items.*;
 
 public class ItemRegistry {
 
@@ -38,6 +39,7 @@ public class ItemRegistry {
     public static ItemBase ItemGearReader;
     public static ItemBase ItemLinker;
     public static ItemBase ItemGearTinkerer;
+    public static ItemBase ItemTestItem;
     
     private static int id = 5000;
 
@@ -66,6 +68,10 @@ public class ItemRegistry {
         ItemGarnet = new ItemGarnet(config.getItem("ItemGarnet", ItemRegistry.getNextBaseID()).getInt());
         ItemGarnet.setItemName("ItemGarnet");
         LanguageRegistry.addName(ItemGarnet, "Garnet");
+        
+        ItemTestItem = new ItemTestItem(config.getItem("ItemTestItem", ItemRegistry.getNextBaseID()).getInt());
+        ItemTestItem.setItemName("ItemTestItem");
+        LanguageRegistry.addName(ItemTestItem, "Test Item");
         
         ItemCrystalCasing = new ItemCrystalCasing(config.getItem("ItemCrystalCasing", ItemRegistry.getNextBaseID()).getInt());
         ItemCrystalCasing.setItemName("ItemCrystalCasing");

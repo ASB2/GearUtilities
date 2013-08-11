@@ -2,7 +2,6 @@ package GU.blocks.containers.BlockTestTank;
 
 import java.util.ArrayList;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +18,6 @@ import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
 import GU.utils.UtilInventory;
 import GU.utils.UtilRender;
-import GU.utils.*;
 
 public class BlockTestTank extends ContainerBase {
 
@@ -193,23 +191,6 @@ public class BlockTestTank extends ContainerBase {
                         }
                     }
                 }
-            }
-        }
-        else {
-
-            TileTestTank tank = (TileTestTank) world.getBlockTileEntity(x, y, z);
-
-            if(entityplayer.isSneaking()) {
-
-                tank.throughtPut -= 1000;
-                UtilPlayers.sendChatToPlayer(entityplayer, "Tank Throughput Equals: " + tank.throughtPut);
-                return true;
-            }
-            else {
-
-                tank.throughtPut += 1000;
-                UtilPlayers.sendChatToPlayer(entityplayer, "Tank Throughput Equals: " + tank.throughtPut);
-                return true;
             }
         }
         return false;

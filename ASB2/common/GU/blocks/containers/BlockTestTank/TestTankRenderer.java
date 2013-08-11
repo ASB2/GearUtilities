@@ -37,7 +37,12 @@ public class TestTankRenderer implements ISimpleBlockRenderingHandler  {
             }
 
             if(tile.fluidTank.getFluid().getFluid().getIcon() != null) {
+                
                 UtilRender.renderFakeBlock(tile.fluidTank.getFluid().getFluid().getIcon(), x, y, z, renderer, world);
+            }
+            else {
+                
+                UtilRender.renderFakeBlock(block.getIcon(0, 0), x, y, z, renderer, world);
             }
         }
         return true;

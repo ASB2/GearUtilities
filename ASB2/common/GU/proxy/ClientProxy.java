@@ -9,12 +9,14 @@ import GU.blocks.containers.BlockConduit.TileConduit;
 import GU.blocks.containers.BlockTestTank.TestTankRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import GU.entity.EntityTest.*;
 
 public class ClientProxy extends CommonProxy {
 
     @Override
     public void register() {
 
+        RenderingRegistry.registerEntityRenderingHandler(EntityTest.class, new EntityTestRenderer());
         RenderingRegistry.registerBlockHandler(new TestTankRenderer());
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileConduit.class, new ConduitRenderer());

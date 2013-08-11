@@ -20,6 +20,7 @@ public class ModelSphere extends ModelBase {
     }
 
     public void render() {
+
         modelTutBox.renderAll();
     }
 
@@ -28,7 +29,6 @@ public class ModelSphere extends ModelBase {
 
     public void render(double x, double y, double z) {
         
-        GL11.glPushMatrix();
         Random rand = new Random();
 
         updown = (int) (rand.nextFloat() * 360);
@@ -38,8 +38,8 @@ public class ModelSphere extends ModelBase {
         GL11.glScalef(0.5f, 0.5f, 0.5f);
 
         GL11.glRotatef(updown, updown, updown, updown);
+        
         this.render();
-        GL11.glPopMatrix();
     }
 
     public int rotate() {

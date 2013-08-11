@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
+import GU.MiscRegistry;
 import GU.api.power.IPowerMisc;
 import GU.blocks.containers.TileBase;
 import GU.fx.FXBeam;
@@ -19,7 +19,6 @@ import GU.utils.UtilFluid;
 import GU.utils.UtilInventory;
 import GU.utils.UtilRender;
 import GU.vector.Vector3;
-import GU.*;
 
 public class TileTestTile extends TileBase implements IBlockCycle {
 

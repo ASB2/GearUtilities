@@ -14,6 +14,7 @@ import com.google.common.io.ByteStreams;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
+import GU.info.*;
 
 public class GUPacketHandler implements IPacketHandler {
 
@@ -24,6 +25,7 @@ public class GUPacketHandler implements IPacketHandler {
 
             EntityPlayer entityPlayer = (EntityPlayer)player;
             ByteArrayDataInput in = ByteStreams.newDataInput(packet.data);
+            
             // Assuming your packetId is between 0 (inclusive) and 256 (exclusive). If you need more you need to change this
             int packetId = in.readUnsignedByte();
             GUPacketBase demoPacket = GUPacketBase.constructPacket(packetId);
@@ -36,7 +38,7 @@ public class GUPacketHandler implements IPacketHandler {
             if (player instanceof EntityPlayerMP) {
 
                 ((EntityPlayerMP) player).playerNetServerHandler.kickPlayerFromServer("Protocol Exception!");
-                Logger.getLogger("TechCraft").warning("Player " + ((EntityPlayer)player).username + " caused a Protocol Exception!");
+                Logger.getLogger(Reference.NAME).warning("Player " + ((EntityPlayer)player).username + " caused a Protocol Exception!");
             }                    
         } 
         catch (ReflectiveOperationException e) {

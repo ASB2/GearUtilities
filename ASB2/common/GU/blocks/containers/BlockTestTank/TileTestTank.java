@@ -1,5 +1,6 @@
 package GU.blocks.containers.BlockTestTank;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -13,15 +14,15 @@ import GU.blocks.containers.TileBase;
 import GU.utils.UtilDirection;
 import GU.utils.UtilFluid;
 import GU.api.wait.*;
+import GU.packets.*;
 
 public class TileTestTank extends TileBase {
 
     private int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 64;
-    public int throughtPut = 1000;
-    
+
     public TileTestTank() {
 
-        this.waitTimer = new Wait(20, this, 1);
+        this.waitTimer = new Wait(40, this, 1);
         fluidTank = new FluidTank(maxLiquid);
     }
 
@@ -37,8 +38,10 @@ public class TileTestTank extends TileBase {
                 UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000));
             }
 
-            if(!moveFluidBelow())
+            if(!this.moveFluidBelow())
                 this.moveAround();
+
+            worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
         }
     }
 
@@ -49,20 +52,17 @@ public class TileTestTank extends TileBase {
 
         for(ForgeDirection direction: ForgeDirection.values()) {
 
-            if(direction != ForgeDirection.DOWN && direction != ForgeDirection.UP) {
+            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
-                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+            if(tile != null && tile instanceof TileTestTank) {
 
-                if(tile != null && tile instanceof TileTestTank) {
+                TileTestTank tileC = (TileTestTank)tile;
 
-                    TileTestTank tileC = (TileTestTank)tile;
+                if(!(tileC.fluidTank.getCapacity() == tileC.fluidTank.getFluidAmount())) {
 
-                    if(!(tileC.fluidTank.getCapacity() == tileC.fluidTank.getFluidAmount())) {
-
-                        amount ++;
-                    }                    
-                }
-            }       
+                    amount ++;
+                }                    
+            }   
         }
         return amount;
     }
@@ -71,11 +71,26 @@ public class TileTestTank extends TileBase {
 
         if(fluidTank.getFluid() != null) {
 
-            IFluidHandler below = getTankBelow();
+            IFluidHandler below = getTankBelow(this);
 
             if (below != null) {
 
-                return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, throughtPut);
+                if(fluidTank.getFluidAmount() >= 5000) 
+                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 5000);
+
+                if(fluidTank.getFluidAmount() >= 4000) 
+                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 4000);
+
+                if(fluidTank.getFluidAmount() >= 3000) 
+                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 3000);
+
+                if(fluidTank.getFluidAmount() >= 2000) 
+                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 2000);
+
+                if(fluidTank.getFluidAmount() >= 1000) 
+                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 1000);
+
+                return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, fluidTank.getFluidAmount());
             }
         }
         return false;
@@ -85,16 +100,28 @@ public class TileTestTank extends TileBase {
 
         boolean itWorked = false;
 
-        int amountDivided = throughtPut;
+        int amountDivided = 1000;
+
+        if(fluidTank.getFluidAmount() >= 5000) 
+            amountDivided = 5000;
+
+        if(fluidTank.getFluidAmount() >= 4000) 
+            amountDivided = 4000;
+
+        if(fluidTank.getFluidAmount() >= 3000) 
+            amountDivided = 3000;
+
+        if(fluidTank.getFluidAmount() >= 2000) 
+            amountDivided = 2000;
 
         if(this.getFluidHandlersAround() != 0) {
 
-            amountDivided = throughtPut / this.getFluidHandlersAround();
+            amountDivided = 1000 / this.getFluidHandlersAround();
         }
 
         for(ForgeDirection direction: ForgeDirection.values()) {
 
-            if(direction != ForgeDirection.UP && direction != ForgeDirection.DOWN) {
+            if(direction != ForgeDirection.UP) {
 
                 TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
@@ -118,7 +145,7 @@ public class TileTestTank extends TileBase {
                             }
                             else {
 
-                                itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided);
+                                itWorked =UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided);
                             }
                         }
                     }
@@ -134,12 +161,11 @@ public class TileTestTank extends TileBase {
 
         if(fluidTank.getCapacity() == fluidTank.getFluidAmount()) {
 
-            if(this.getTankAbove() != null) {
+            if(this.getTankAbove(this) != null) {
 
-                return this.getTankAbove().fill(from, resource, doFill);
+                return this.getTankAbove(this).fill(from, resource, doFill);
             }
         }
-
         return fluidTank.fill(resource, doFill);
     }
 
@@ -150,7 +176,7 @@ public class TileTestTank extends TileBase {
 
             if(fluidTank.getFluid() != null) {
 
-                if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
+                if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
 
                     return true;
                 } 
@@ -161,16 +187,16 @@ public class TileTestTank extends TileBase {
             }
         }
 
-        if(this.getTankAbove() != null) {
+        if(this.getTankAbove(this) != null) {
 
-            return this.getTankAbove().canFill(from, fluid);
+            return this.getTankAbove(this).canFill(from, fluid);
         }
         return false;
     }
 
-    public TileTestTank getTankBelow() {
+    public TileTestTank getTankBelow(TileEntity tile) {
 
-        TileEntity below = worldObj.getBlockTileEntity(xCoord, yCoord - 1, zCoord);
+        TileEntity below = worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord - 1, tile.zCoord);
 
         if (below instanceof TileTestTank) {
 
@@ -179,9 +205,9 @@ public class TileTestTank extends TileBase {
         return null;
     }
 
-    public TileTestTank getTankAbove() {
+    public TileTestTank getTankAbove(TileEntity tile) {
 
-        TileEntity below = worldObj.getBlockTileEntity(xCoord, yCoord + 1, zCoord);
+        TileEntity below = worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord + 1, tile.zCoord);
 
         if (below instanceof TileTestTank) {
 
@@ -194,6 +220,15 @@ public class TileTestTank extends TileBase {
     @Override
     public void trigger(int id) {
 
-        worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+        if(id == 1) {
+            if(fluidTank.getFluid() != null) {
+
+                PacketDispatcher.sendPacketToAllAround(xCoord,yCoord, zCoord, 20, worldObj.provider.dimensionId, new TestTankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
+            }
+            else {
+
+                PacketDispatcher.sendPacketToAllAround(xCoord,yCoord, zCoord, 20, worldObj.provider.dimensionId, new TestTankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
+            }
+        }
     }
 }
