@@ -53,7 +53,7 @@ public class ItemGearReader extends ItemBase {
                     if(player.isSneaking() && Variables.TESTING_MODE)
                         mTile.getPowerProvider().gainPower(10);
 
-                    UtilPlayers.sendChatToPlayer(player, mTile.getName()+" has "+mTile.getPowerProvider().getPowerStored()+" out of "+mTile.getPowerProvider().getPowerMax() + Reference.POWER_NAME + " Stored");
+                    UtilPlayers.sendChatToPlayer(player, mTile.getName()+" has "+mTile.getPowerProvider().getPowerStored()+" out of "+mTile.getPowerProvider().getPowerMax() + " " + Reference.POWER_NAME + " Stored");
                     UtilPlayers.sendChatToPlayer(player, mTile.getName()+ " State: " + mTile.getPowerProvider().getCurrentState());
                 }
             }

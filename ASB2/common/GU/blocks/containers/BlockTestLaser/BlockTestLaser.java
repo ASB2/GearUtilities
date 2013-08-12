@@ -45,8 +45,6 @@ public class BlockTestLaser extends ContainerBase {
 
             world.setBlockMetadataWithNotify(x, y, z, 3, 2);
         }
-
-
     }
 
     @Override

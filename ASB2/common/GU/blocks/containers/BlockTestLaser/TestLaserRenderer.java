@@ -32,8 +32,6 @@ public class TestLaserRenderer extends TileEntitySpecialRenderer implements IIte
             GL11.glScalef(1.0F, -1F, -1F);            
 
             UtilRender.renderTexture(Textures.TEST_LASER);
-
-            model.renderBase();
             
             switch(tile.getOrientation()) {
                 
@@ -43,6 +41,8 @@ public class TestLaserRenderer extends TileEntitySpecialRenderer implements IIte
                 case EAST : GL11.glRotatef(450F, 0F, -90F, 0F); break;
                 default : GL11.glRotatef(0F, 0F, 0F, 0F); break;
             }
+
+            model.renderBase();
             model.renderHead();
 
             GL11.glPopMatrix();

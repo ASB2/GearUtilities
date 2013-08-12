@@ -1,19 +1,17 @@
 package GU.fx;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
+import GU.info.Particles;
+import GU.utils.UtilRender;
+import GU.vector.Vector3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import GU.vector.*;
-import GU.utils.*;
-import GU.info.*;
 
 /**
  * Based off Thaumcraft's Beam Renderer.
@@ -62,22 +60,6 @@ public class FXBeam extends EntityFX {
         this.prevPitch = this.rotPitch;
 
         this.particleMaxAge = age;
-
-        /**
-         * Sets the particle age based on distance.
-         */
-        EntityLivingBase renderentity = Minecraft.getMinecraft().renderViewEntity;
-
-        int visibleDistance = 50;
-
-        if (!Minecraft.getMinecraft().gameSettings.fancyGraphics)
-        {
-            visibleDistance = 25;
-        }
-        if (renderentity != null && renderentity.getDistance(this.posX, this.posY, this.posZ) > visibleDistance)
-        {
-            this.particleMaxAge = 0;
-        }
     }
 
     @Override
@@ -198,7 +180,5 @@ public class FXBeam extends EntityFX {
 
         tessellator.startDrawingQuads();
         this.prevSize = size;
-
-        UtilRender.renderTexture(Particles.BEAM_FX);
     }
 }

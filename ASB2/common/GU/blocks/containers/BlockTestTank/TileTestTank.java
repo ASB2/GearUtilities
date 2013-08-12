@@ -16,7 +16,7 @@ import GU.utils.UtilFluid;
 import GU.api.wait.*;
 import GU.packets.*;
 
-public class TileTestTank extends TileBase {
+public class TileTestTank extends TileBase implements IFluidHandler {
 
     private int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 64;
 
@@ -36,11 +36,11 @@ public class TileTestTank extends TileBase {
             if(fluidTank.getFluid() != null && fluidTank.getFluid().getFluid() == FluidRegistry.WATER && fluidTank.getFluidAmount() >= 2000) {
 
                 if(fluidTank.getCapacity() - fluidTank.getFluidAmount() >= 1000) {
-                    
+
                     UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000));
                 }
                 else {
-                 
+
                     UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, fluidTank.getCapacity() - fluidTank.getFluidAmount()));
                 }
             }
@@ -120,12 +120,12 @@ public class TileTestTank extends TileBase {
 
         if(fluidTank.getFluidAmount() >= 2000) 
             amountDivided = 2000;
-        
+
         if(this.getFluidHandlersAround() != 0) {
 
             amountDivided = 1000 / this.getFluidHandlersAround();
         }
-        
+
         if(fluidTank.getFluidAmount() < 1000) 
             amountDivided = fluidTank.getFluidAmount();
 
@@ -190,6 +190,44 @@ public class TileTestTank extends TileBase {
             }
         }
         return false;
+    }
+
+    @Override
+    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+
+        if (resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
+
+            return null;
+        }
+        return fluidTank.drain(resource.amount, doDrain);
+    }
+
+    @Override
+    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+
+        return fluidTank.drain(maxDrain, doDrain);
+    }
+
+    @Override
+    public boolean canDrain(ForgeDirection from, Fluid fluid) {
+
+        if(this.fluidTank.getFluid() != null) {
+
+            if(fluidTank.getFluidAmount() > 0) {
+
+                if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
+
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+
+        return new FluidTankInfo[] {fluidTank.getInfo()};
     }
 
     public TileTestTank getTankBelow(TileEntity tile) {
