@@ -7,55 +7,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public final class UtilFluid {
 
-    public static boolean emptyTank(IFluidHandler source, ForgeDirection from, IFluidHandler destination) {
-
-        int amount = 1000;
-
-        ForgeDirection oppositeDirection = UtilDirection.translateDirectionToOpposite(from);
-
-        boolean isSuccessful = false;
-
-        if(source != null && destination != null) {
-
-            for(FluidTankInfo info: source.getTankInfo(from)) {
-
-                if(info.fluid != null) {
-
-                    FluidStack fluidStack = info.fluid.copy();
-
-                    if(fluidStack.amount >= amount) {
-
-                        fluidStack.amount = amount;
-
-                        if(destination.canFill(oppositeDirection, fluidStack.getFluid())) {
-
-                            if(source.canDrain(from, fluidStack.getFluid())) {
-
-                                int loop = 0;
-                                while(destination.fill(oppositeDirection, fluidStack, true) == 0) {
-                                    loop++;
-                                    amount = UtilMisc.getNumberDivided(amount, 2);
-                                    
-                                    if(loop >= 500) {
-                                        break;
-                                    }
-                                }
-                                source.drain(from, fluidStack, true);
-                                isSuccessful = true;
-                            }
-                            else {
-
-                                isSuccessful = false;
-                            }
-                        }
-                    }
-                }
-            }
-        } 
-        return isSuccessful;
-    }
-
-    public static boolean moveFluid(IFluidHandler source, ForgeDirection from, IFluidHandler destination, int amount) {
+    public static boolean moveFluid(IFluidHandler source, ForgeDirection from, IFluidHandler destination, int amount, boolean fillExtra) {
 
         ForgeDirection oppositeDirection = UtilDirection.translateDirectionToOpposite(from);
 
@@ -85,6 +37,32 @@ public final class UtilFluid {
                                 else {
 
                                     isSuccessful = false;
+                                }
+                            }
+                        }
+                        
+                        else if(fillExtra) {
+                            
+                            FluidStack stackTwo = fluidStack.copy();
+                            
+                            if(stackTwo.amount >= info.capacity - info.fluid.amount) {
+                                
+                                stackTwo.amount = info.capacity - info.fluid.amount;
+                                
+                                if(destination.canFill(oppositeDirection, stackTwo.getFluid())) {
+
+                                    if(source.canDrain(from, stackTwo.getFluid())) {
+
+                                        if (destination.fill(oppositeDirection, stackTwo, true) != 0) {
+
+                                            source.drain(from, stackTwo, true);
+                                            isSuccessful = true;
+                                        }
+                                        else {
+
+                                            isSuccessful = false;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -140,7 +118,7 @@ public final class UtilFluid {
         return itWorked;
     }
 
-    public static boolean removeFluidToTank(IFluidHandler destination, ForgeDirection from, FluidStack fluid) {
+    public static boolean removeFluidFromTank(IFluidHandler destination, ForgeDirection from, FluidStack fluid) {
 
         ForgeDirection oppositeDirection = UtilDirection.translateDirectionToOpposite(from);
 

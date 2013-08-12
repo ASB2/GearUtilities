@@ -3,7 +3,7 @@ package GU.api.conduit;
 public enum EnumConduitType {
 
     ITEM,
-    TCU,
+    GUU,
     LIQUID,
     OTHER
 }

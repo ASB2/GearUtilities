@@ -1,9 +1,6 @@
 package GU.blocks.containers.BlockTestTile;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -11,19 +8,30 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 import GU.MiscRegistry;
 import GU.api.power.IPowerMisc;
+import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
-import GU.fx.FXBeam;
+import GU.fx.TestEffect;
 import GU.utils.IBlockCycle;
+import GU.utils.UtilBlock;
 import GU.utils.UtilDirection;
 import GU.utils.UtilFluid;
-import GU.utils.UtilInventory;
 import GU.utils.UtilRender;
-import GU.vector.Vector3;
+import GU.vector.*;
 
 public class TileTestTile extends TileBase implements IBlockCycle {
 
+    public TileTestTile() {
+
+        waitTimer = new Wait(1, this, 0);
+    }
+
     @Override
     public void updateEntity() {
+
+
+
+        UtilBlock.cycle2DBlock(null, worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, 10, this, 0);
+        waitTimer.update();
 
         for(ForgeDirection direction: ForgeDirection.values()) {
 
@@ -41,18 +49,18 @@ public class TileTestTile extends TileBase implements IBlockCycle {
                     }
                     else {
 
-                        UtilFluid.removeFluidToTank(fTile, direction, new FluidStack(MiscRegistry.FluidGUPower, 1000));
+                        UtilFluid.removeFluidFromTank(fTile, direction, new FluidStack(MiscRegistry.FluidGUPower, 1000));
                     }
                 }
-                
+
                 if(tile instanceof IPowerMisc) {
-                    
+
                     IPowerMisc pTile = (IPowerMisc)tile;
-                    
+
                     if(pTile.getPowerProvider() != null) {
-                     
+
                         if(pTile.getPowerProvider().canGainPower(pTile.getPowerProvider().getPowerClass().getPowerValue())){
-                         
+
                             pTile.getPowerProvider().gainPower(pTile.getPowerProvider().getPowerClass().getPowerValue());
                         }
                     }                            
@@ -61,20 +69,19 @@ public class TileTestTile extends TileBase implements IBlockCycle {
         }
     }
 
+    public void trigger(int id) {
+    }
+
     @Override
     public boolean execute(EntityPlayer player, World world, int x, int y, int z, ForgeDirection side, int id) {
 
-        TileEntity tile = world.getBlockTileEntity(x, y, z);
+        Vector3 vector = new Vector3(x + .5, y + .5, z + .5);
+        
+        if(world.isRemote) {
+            TestEffect test = new TestEffect(worldObj, vector, vector);
 
-        if(tile != null) {
-
-            UtilRender.renderFX(new FXBeam(worldObj, new Vector3(xCoord +.5, yCoord +.5, zCoord+.5), new Vector3(tile.xCoord +.5, tile.yCoord +.5, tile.zCoord+.5), 1, 1, 1, 20));
-
-            if(tile instanceof IInventory) {
-
-                UtilInventory.addItemStackToInventory((IInventory)tile, new ItemStack(Item.diamond, 1, 0));
-            }
+            UtilRender.renderFX(test);
         }
-        return false;
+        return true;
     }
 }

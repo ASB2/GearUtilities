@@ -22,7 +22,7 @@ public class TileTestTank extends TileBase {
 
     public TileTestTank() {
 
-        this.waitTimer = new Wait(40, this, 1);
+        this.waitTimer = new Wait(20, this, 1);
         fluidTank = new FluidTank(maxLiquid);
     }
 
@@ -33,9 +33,16 @@ public class TileTestTank extends TileBase {
 
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
-            if(fluidTank.getFluid() != null && fluidTank.getFluid().getFluid() == FluidRegistry.WATER && fluidTank.getFluid().amount >= 2000) {
+            if(fluidTank.getFluid() != null && fluidTank.getFluid().getFluid() == FluidRegistry.WATER && fluidTank.getFluidAmount() >= 2000) {
 
-                UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000));
+                if(fluidTank.getCapacity() - fluidTank.getFluidAmount() >= 1000) {
+                    
+                    UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000));
+                }
+                else {
+                 
+                    UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, fluidTank.getCapacity() - fluidTank.getFluidAmount()));
+                }
             }
 
             if(!this.moveFluidBelow())
@@ -76,21 +83,21 @@ public class TileTestTank extends TileBase {
             if (below != null) {
 
                 if(fluidTank.getFluidAmount() >= 5000) 
-                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 5000);
+                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 5000, true);
 
                 if(fluidTank.getFluidAmount() >= 4000) 
-                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 4000);
+                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 4000, true);
 
                 if(fluidTank.getFluidAmount() >= 3000) 
-                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 3000);
+                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 3000, true);
 
                 if(fluidTank.getFluidAmount() >= 2000) 
-                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 2000);
+                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 2000, true);
 
                 if(fluidTank.getFluidAmount() >= 1000) 
-                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 1000);
+                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 1000, true);
 
-                return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, fluidTank.getFluidAmount());
+                return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, fluidTank.getFluidAmount(), true);
             }
         }
         return false;
@@ -113,11 +120,14 @@ public class TileTestTank extends TileBase {
 
         if(fluidTank.getFluidAmount() >= 2000) 
             amountDivided = 2000;
-
+        
         if(this.getFluidHandlersAround() != 0) {
 
             amountDivided = 1000 / this.getFluidHandlersAround();
         }
+        
+        if(fluidTank.getFluidAmount() < 1000) 
+            amountDivided = fluidTank.getFluidAmount();
 
         for(ForgeDirection direction: ForgeDirection.values()) {
 
@@ -139,13 +149,13 @@ public class TileTestTank extends TileBase {
 
                                     if(info.fluid.amount <= this.fluidTank.getFluidAmount()) {
 
-                                        itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided);
+                                        itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided, true);
                                     }
                                 }
                             }
                             else {
 
-                                itWorked =UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided);
+                                itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided, true);
                             }
                         }
                     }
@@ -159,13 +169,6 @@ public class TileTestTank extends TileBase {
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 
-        if(fluidTank.getCapacity() == fluidTank.getFluidAmount()) {
-
-            if(this.getTankAbove(this) != null) {
-
-                return this.getTankAbove(this).fill(from, resource, doFill);
-            }
-        }
         return fluidTank.fill(resource, doFill);
     }
 
@@ -185,11 +188,6 @@ public class TileTestTank extends TileBase {
 
                 return true;
             }
-        }
-
-        if(this.getTankAbove(this) != null) {
-
-            return this.getTankAbove(this).canFill(from, fluid);
         }
         return false;
     }

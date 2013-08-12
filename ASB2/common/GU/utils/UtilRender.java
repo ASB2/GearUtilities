@@ -19,8 +19,11 @@ public final class UtilRender {
 
     public static void renderTexture(ResourceLocation texture) {
 
-        if(FMLClientHandler.instance().getClient() != null)
-            FMLClientHandler.instance().getClient().renderEngine.func_110577_a(texture);
+        if(texture != null) {
+
+            if(FMLClientHandler.instance().getClient() != null)
+                FMLClientHandler.instance().getClient().renderEngine.func_110577_a(texture);
+        }
     }
 
     public static void renderFX(EntityFX fx) {

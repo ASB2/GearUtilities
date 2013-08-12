@@ -5,20 +5,23 @@ import java.util.EnumSet;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidTank;
 import GU.api.color.EnumColor;
 import GU.api.power.PowerProvider;
 
 public abstract class ConduitLogic {
-    
+
+    TileEntity tile;
     EnumColor color;    
 
     ItemStack[] tileItemStacks;    
     FluidTank fluidTank;
     PowerProvider powerProvider;
 
-    public ConduitLogic(EnumColor color, ItemStack[] tileItemStacks, FluidTank fluidTank, PowerProvider powerProvider) {
+    public ConduitLogic(TileEntity t, EnumColor color, ItemStack[] tileItemStacks, FluidTank fluidTank, PowerProvider powerProvider) {
 
+        tile = t;
         this.color = color;
 
         this.tileItemStacks = tileItemStacks;
@@ -34,6 +37,10 @@ public abstract class ConduitLogic {
     EnumColor getColorEnum() {
 
         return color;
+    }
+
+    public void updateConduit() {
+
     }
 
     public void readFromNBT(NBTTagCompound tag) {

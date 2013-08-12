@@ -11,6 +11,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import GU.api.IDirectionSpecific;
 import GU.api.color.IColorable;
 import GU.api.power.IPowerMisc;
+import GU.info.Reference;
 import GU.info.Variables;
 import GU.utils.UtilDirection;
 import GU.utils.UtilPlayers;
@@ -52,7 +53,7 @@ public class ItemGearReader extends ItemBase {
                     if(player.isSneaking() && Variables.TESTING_MODE)
                         mTile.getPowerProvider().gainPower(10);
 
-                    UtilPlayers.sendChatToPlayer(player, mTile.getName()+" has "+mTile.getPowerProvider().getPowerStored()+" out of "+mTile.getPowerProvider().getPowerMax() + " TCU Stored");
+                    UtilPlayers.sendChatToPlayer(player, mTile.getName()+" has "+mTile.getPowerProvider().getPowerStored()+" out of "+mTile.getPowerProvider().getPowerMax() + Reference.POWER_NAME + " Stored");
                     UtilPlayers.sendChatToPlayer(player, mTile.getName()+ " State: " + mTile.getPowerProvider().getCurrentState());
                 }
             }
