@@ -4,13 +4,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import GU.entity.*;
 
-public class EntityTest extends EntityBase {
+public class EntityTestEntity extends EntityBase {
 
-    public EntityTest(World world) {
+    public EntityTestEntity(World world) {
         super(world);
         this.setSize(.7F, .7F);
     }
 
+    @Override
     public void onEntityUpdate() {
         super.onEntityUpdate();
 

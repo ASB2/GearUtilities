@@ -68,6 +68,7 @@ public class TileTestTile extends TileBase implements IBlockCycle, ILaserRecieve
         }
     }
 
+    @Override
     public void trigger(int id) {
     }
 

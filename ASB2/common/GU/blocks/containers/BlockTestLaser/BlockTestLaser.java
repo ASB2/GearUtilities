@@ -17,9 +17,10 @@ public class BlockTestLaser extends ContainerBase {
         useStandardRendering = false;
     }
 
+    @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
 
-        int roatation = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int roatation = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
         //South 0 = rotation
         //West 1 = rotation

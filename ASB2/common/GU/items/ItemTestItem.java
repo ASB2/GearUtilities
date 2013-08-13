@@ -18,7 +18,7 @@ public class ItemTestItem extends ItemBase {
 
             if(!player.isSneaking()) {
                 
-                EntityTest testEntity = new EntityTest(world);
+                EntityTestEntity testEntity = new EntityTestEntity(world);
 
                 testEntity.setPosition(x, y + 1, z);
                 world.spawnEntityInWorld(testEntity);

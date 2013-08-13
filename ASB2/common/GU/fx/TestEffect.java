@@ -38,7 +38,7 @@ public class TestEffect extends EntityFX {
             this.setDead();
         }
 
-        this.motionY -= 0.04D * (double)this.particleGravity;
+        this.motionY -= 0.04D * this.particleGravity;
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
         this.motionX *= 0.9800000190734863D;
         this.motionY *= 0.9800000190734863D;
@@ -54,9 +54,9 @@ public class TestEffect extends EntityFX {
     @Override
     public void renderParticle(Tessellator tessellator, float par2, float par3, float par4, float par5, float par6, float par7){
 
-        float f6 = (float)this.particleTextureIndexX / 16.0F;
+        float f6 = this.particleTextureIndexX / 16.0F;
         float f7 = f6 + 0.0624375F;
-        float f8 = (float)this.particleTextureIndexY / 16.0F;
+        float f8 = this.particleTextureIndexY / 16.0F;
         float f9 = f8 + 0.0624375F;
         float f10 = 0.1F * this.particleScale;
 
@@ -68,14 +68,14 @@ public class TestEffect extends EntityFX {
             f9 = this.particleIcon.getMaxV();
         }
 
-        float f11 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)par2 - interpPosX);
-        float f12 = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)par2 - interpPosY);
-        float f13 = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)par2 - interpPosZ);
+        float f11 = (float)(this.prevPosX + (this.posX - this.prevPosX) * par2 - interpPosX);
+        float f12 = (float)(this.prevPosY + (this.posY - this.prevPosY) * par2 - interpPosY);
+        float f13 = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * par2 - interpPosZ);
         float f14 = 1.0F;
         tessellator.setColorRGBA_F(this.particleRed * f14, this.particleGreen * f14, this.particleBlue * f14, this.particleAlpha);
-        tessellator.addVertexWithUV((double)(f11 - par3 * f10 - par6 * f10), (double)(f12 - par4 * f10), (double)(f13 - par5 * f10 - par7 * f10), (double)f7, (double)f9);
-        tessellator.addVertexWithUV((double)(f11 - par3 * f10 + par6 * f10), (double)(f12 + par4 * f10), (double)(f13 - par5 * f10 + par7 * f10), (double)f7, (double)f8);
-        tessellator.addVertexWithUV((double)(f11 + par3 * f10 + par6 * f10), (double)(f12 + par4 * f10), (double)(f13 + par5 * f10 + par7 * f10), (double)f6, (double)f8);
-        tessellator.addVertexWithUV((double)(f11 + par3 * f10 - par6 * f10), (double)(f12 - par4 * f10), (double)(f13 + par5 * f10 - par7 * f10), (double)f6, (double)f9);
+        tessellator.addVertexWithUV(f11 - par3 * f10 - par6 * f10, f12 - par4 * f10, f13 - par5 * f10 - par7 * f10, f7, f9);
+        tessellator.addVertexWithUV(f11 - par3 * f10 + par6 * f10, f12 + par4 * f10, f13 - par5 * f10 + par7 * f10, f7, f8);
+        tessellator.addVertexWithUV(f11 + par3 * f10 + par6 * f10, f12 + par4 * f10, f13 + par5 * f10 + par7 * f10, f6, f8);
+        tessellator.addVertexWithUV(f11 + par3 * f10 - par6 * f10, f12 - par4 * f10, f13 + par5 * f10 - par7 * f10, f6, f9);
     }
 }

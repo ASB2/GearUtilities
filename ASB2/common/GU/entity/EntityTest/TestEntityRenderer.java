@@ -10,11 +10,11 @@ import GU.info.Textures;
 import GU.models.ModelSphere;
 import GU.utils.*;
 
-public class EntityTestRenderer extends Render {
+public class TestEntityRenderer extends Render {
 
     ModelSphere model;
 
-    public EntityTestRenderer() {
+    public TestEntityRenderer() {
 
         model = new ModelSphere();
     }

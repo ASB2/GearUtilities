@@ -5,7 +5,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import GU.entity.EntityTest.EntityTest;
+import GU.entity.EntityTest.EntityTestEntity;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class MiscRegistry {
@@ -27,7 +27,7 @@ public class MiscRegistry {
 
     public static void initEntitys() {
 
-        EntityRegistry.registerModEntity(EntityTest.class, "Entity Test", 0, GearUtilities.instance, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityTestEntity.class, "Test Entity", 0, GearUtilities.instance, 80, 3, true);
     }
 
     @ForgeSubscribe

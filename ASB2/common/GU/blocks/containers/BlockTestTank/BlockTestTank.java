@@ -34,6 +34,7 @@ public class BlockTestTank extends ContainerBase {
         useStandardRendering = false;
     }
 
+    @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);

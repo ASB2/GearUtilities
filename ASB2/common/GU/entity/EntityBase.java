@@ -16,6 +16,7 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
         super(world);
     }
     
+    @Override
     public void onEntityUpdate() {
         super.onEntityUpdate();
     
@@ -56,21 +57,25 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
         
     }
 
+    @Override
     public AxisAlignedBB getBoundingBox() {
 
         return boundingBox;
     }
 
+    @Override
     public AxisAlignedBB getCollisionBox(Entity entity) {
 
         return entity.boundingBox;
     }
 
+    @Override
     public boolean canBeCollidedWith() {
 
         return !isDead;
     }
     
+    @Override
     public boolean func_130002_c(EntityPlayer player) {
         
         if(!worldObj.isRemote && riddenByEntity == null) {

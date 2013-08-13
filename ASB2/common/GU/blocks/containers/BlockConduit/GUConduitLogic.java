@@ -16,11 +16,13 @@ public class GUConduitLogic extends ConduitLogic {
         super(tile, color, tileItemStacks, fluidTank, powerProvider);
     }
 
+    @Override
     public EnumSet<EnumConduitType> getConductorType() {
 
         return EnumSet.of(EnumConduitType.ITEM, EnumConduitType.GUU, EnumConduitType.LIQUID);
     }
     
+    @Override
     public void updateConduit() {
         
         

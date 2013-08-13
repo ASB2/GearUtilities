@@ -17,7 +17,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void register() {
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityTest.class, new EntityTestRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(EntityTestEntity.class, new TestEntityRenderer());
         RenderingRegistry.registerBlockHandler(new TestTankRenderer());
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileConduit.class, new ConduitRenderer());

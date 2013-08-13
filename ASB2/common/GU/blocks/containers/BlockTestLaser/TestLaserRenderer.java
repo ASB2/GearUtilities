@@ -8,16 +8,16 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import GU.info.Textures;
-import GU.models.ModelLaser;
+import GU.models.ModeLaser2;
 import GU.utils.UtilRender;
 
 public class TestLaserRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
-    private ModelLaser model;
+    private ModeLaser2 model;
 
     public TestLaserRenderer() {
 
-        model = new ModelLaser();
+        model = new ModeLaser2();
     }
 
     @Override
@@ -25,16 +25,16 @@ public class TestLaserRenderer extends TileEntitySpecialRenderer implements IIte
 
         if(tileentity instanceof TileTestLaser) {
 
-                        TileTestLaser tile = (TileTestLaser)tileentity;
+            TileTestLaser tile = (TileTestLaser)tileentity;
 
             GL11.glPushMatrix();
             GL11.glTranslatef((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
             GL11.glScalef(1.0F, -1F, -1F);            
 
-            UtilRender.renderTexture(Textures.TEST_LASER);
-            
+            UtilRender.renderTexture(Textures.TEST_LASER2);
+
             switch(tile.getOrientation()) {
-                
+
                 case SOUTH: GL11.glRotatef(0F, 0F, 0F, 0F); break;
                 case WEST : GL11.glRotatef(450F, 0F, 90F, 0F); break;
                 case NORTH: GL11.glRotatef(180F, 0F, 180F, 0F); break;
@@ -42,8 +42,7 @@ public class TestLaserRenderer extends TileEntitySpecialRenderer implements IIte
                 default : GL11.glRotatef(0F, 0F, 0F, 0F); break;
             }
 
-            model.renderBase();
-            model.renderHead();
+            model.renderLaser();
 
             GL11.glPopMatrix();
         }
@@ -102,11 +101,10 @@ public class TestLaserRenderer extends TileEntitySpecialRenderer implements IIte
         GL11.glTranslatef(x,  y,  z);
         GL11.glScalef(scale, scale, scale);
 
-        UtilRender.renderTexture(Textures.TEST_LASER);
+        GL11.glRotatef(180F, 0F, 180F, 0F);
+        UtilRender.renderTexture(Textures.TEST_LASER2);
 
-        model.renderHead();
-        model.renderBase();
-
+        model.renderLaser();
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
