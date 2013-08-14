@@ -1,6 +1,6 @@
 package GU.api.color;
 
-public interface IColorable {
+public interface IVinillaColorable {
 
     /**
      * Used for markings. Does NOT refer to the texture color of the block

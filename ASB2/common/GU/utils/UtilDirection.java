@@ -66,100 +66,38 @@ public class UtilDirection {
 
         return new int[]{xCoord,yCoord,zCoord};
     }
-    
-    public static ForgeDirection translateDirectionToOpposite(ForgeDirection direction) {
-
-        switch(direction) {
-
-            case DOWN: {
-                return ForgeDirection.UP;
-            }
-            case UP: {
-                return ForgeDirection.DOWN;
-            }
-            case NORTH: {
-                return ForgeDirection.SOUTH;
-            }
-            case SOUTH: {
-                return ForgeDirection.NORTH;
-            }
-            case WEST: {
-                return ForgeDirection.EAST;
-            }
-            case EAST: {
-                return ForgeDirection.WEST;
-            }
-            case UNKNOWN:{
-                return ForgeDirection.UNKNOWN;
-            }
-        }
-
-        return ForgeDirection.UNKNOWN;
-    }
 
     public static int translateDirectionToNumber(ForgeDirection direction) {
-
-        int var1 = -1;
-
+        
         switch(direction) {
 
             case DOWN: {
-                var1 = 0;
-                return var1;
+                
+                return 0;
             }
             case UP: {
-                var1 = 1;
-                return var1;
+                
+                return 1;
             }
             case NORTH: {
-                var1 = 2;
-                return var1;
+                
+                return 2;
             }                       
             case SOUTH: {
-                var1 = 3;
-                return var1;
+                
+                return 3;
             }
             case WEST: {
-                var1 = 5;
-                return var1;
+                
+                return 4;
             }
             case EAST: {
-                var1 = 4;
-                return var1;
+                
+                return 5;
             }
             default:{
-                return var1;
-            }
-        }
-    }
-
-    public static ForgeDirection translateNumberToDirection(int direction) {
-
-        switch(direction) {
-
-            case 0: {
-                return ForgeDirection.DOWN;
-            }
-            case 1: {
-                return ForgeDirection.UP;
-            }
-            case 2: {
-                return ForgeDirection.NORTH;
-            }
-            case 3: {
-                return ForgeDirection.SOUTH;
-            }
-            case 5: {
-                return ForgeDirection.WEST;
-            }
-            case 4: {
-                return ForgeDirection.EAST;
-            }
-            case -1: {
-                return ForgeDirection.UNKNOWN;
-            }
-            default: {
-                return ForgeDirection.UNKNOWN;
+                
+                return -1;
             }
         }
     }

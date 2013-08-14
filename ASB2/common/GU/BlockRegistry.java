@@ -17,10 +17,11 @@ import GU.blocks.BlockTestBlock;
 import GU.blocks.BlockWaterCrystalOre;
 import GU.blocks.containers.ContainerBase;
 import GU.blocks.containers.BlockConduit.BlockConduit;
+import GU.blocks.containers.BlockLamp.BlockLamp;
+import GU.blocks.containers.BlockTestLaser.BlockTestLaser;
 import GU.blocks.containers.BlockTestTank.BlockTestTank;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import GU.blocks.containers.BlockTestLaser.*;
 
 public class BlockRegistry {
 
@@ -40,6 +41,7 @@ public class BlockRegistry {
     public static ContainerBase BlockTestTank;
     public static ContainerBase BlockConduit;
     public static ContainerBase BlockTestLaser;
+    public static ContainerBase BlockLamp;
     
     private static int id = 500;
 
@@ -108,6 +110,10 @@ public class BlockRegistry {
         BlockTestLaser = new BlockTestLaser(config.getBlock("BlockTestLaser", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockTestLaser.setBlockName("BlockTestLaser");
         LanguageRegistry.addName(BlockTestLaser, "Test Laser");
+        
+        BlockLamp = new BlockLamp(config.getBlock("BlockLamp", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockLamp.setBlockName("BlockLamp");
+        LanguageRegistry.addName(BlockLamp, "Lamp");
     }
 
     public static int getNextBaseID() {        

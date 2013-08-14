@@ -7,7 +7,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.utils.IBlockCycle;
 import GU.utils.UtilBlock;
-import GU.utils.UtilDirection;
 import GU.utils.UtilItemStack;
 
 public class ItemBasicDestructionCatalyst extends ItemBase implements IBlockCycle {
@@ -29,7 +28,7 @@ public class ItemBasicDestructionCatalyst extends ItemBase implements IBlockCycl
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz){
 
-        ForgeDirection sideF = UtilDirection.translateNumberToDirection(side);
+        ForgeDirection sideF = ForgeDirection.getOrientation(side);
 
         UtilItemStack.setNBTTagInt(itemStack, "id", world.getBlockId(x, y, z));        
         UtilBlock.cycle2DBlock(player, world, x, y, z, sideF, 1, this, 0); 

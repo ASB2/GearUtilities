@@ -1,20 +1,22 @@
 package GU.blocks.containers;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
 import GU.api.IDirectionSpecific;
+import GU.api.IWrenchable;
 import GU.api.color.EnumColor;
-import GU.api.color.IColorable;
+import GU.api.color.IVinillaColorable;
 import GU.api.power.PowerProvider;
 import GU.api.wait.IWaitTrigger;
 import GU.api.wait.Wait;
-import GU.utils.UtilDirection;
 
-public abstract class TileBase extends TileEntity implements IColorable, IDirectionSpecific, IWaitTrigger {
+public abstract class TileBase extends TileEntity implements IVinillaColorable, IDirectionSpecific, IWaitTrigger, IWrenchable {
 
     protected PowerProvider powerProvider;
     protected ForgeDirection orientation;    
@@ -36,25 +38,8 @@ public abstract class TileBase extends TileEntity implements IColorable, IDirect
 
     @Override
     public ForgeDirection getOrientation() {
-
-        if(!(orientation == UtilDirection.translateNumberToDirection(getBlockMetadata()))) {
-
-            this.orientation = UtilDirection.translateNumberToDirection(getBlockMetadata());
-        }
-
-        if(orientation == ForgeDirection.SOUTH) {
-            return UtilDirection.translateDirectionToOpposite(orientation);
-        }
-        if(orientation == ForgeDirection.NORTH) {
-            return UtilDirection.translateDirectionToOpposite(orientation);
-        }
-        if(orientation == ForgeDirection.UP) {
-            return UtilDirection.translateDirectionToOpposite(orientation);
-        }
-        if(orientation == ForgeDirection.DOWN) {
-            return UtilDirection.translateDirectionToOpposite(orientation);
-        }
-        return orientation;
+        
+        return ForgeDirection.getOrientation(getBlockMetadata());
     }
 
     @Override
@@ -82,7 +67,17 @@ public abstract class TileBase extends TileEntity implements IColorable, IDirect
         return !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
     }
 
-    
+    @Override
+    public void triggerBlock(World world, EntityLivingBase player, ItemStack itemStack, int x, int y, int z, int side) {
+     // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
+        // TODO Auto-generated method stub
+        
+    }
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {

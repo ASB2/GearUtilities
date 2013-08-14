@@ -7,7 +7,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.utils.IBlockCycle;
 import GU.utils.UtilBlock;
-import GU.utils.UtilDirection;
 import GU.utils.UtilItemStack;
 import GU.utils.UtilPlayers;
 
@@ -41,7 +40,7 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz){
 
-        ForgeDirection sideF = UtilDirection.translateNumberToDirection(side);
+        ForgeDirection sideF = ForgeDirection.getOrientation(side).getOpposite();
 
         UtilItemStack.setNBTTagInt(itemStack, "id", world.getBlockId(x, y, z));
 

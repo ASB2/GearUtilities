@@ -63,12 +63,19 @@ public class UtilBlock {
 
                 if (world.rand.nextFloat() <= fortune) {
 
-                    if(!UtilInventory.addItemStackToInventory(inventory, item)) {
+                    if(inventory != null) {
+                        
+                        if(!UtilInventory.addItemStackToInventory(inventory, item)) {
 
-                        if(dropExtra) {
+                            if(dropExtra) {
 
-                            UtilBlock.spawnItemStackEntity(world, x, y, z, item, 0);
+                                UtilBlock.spawnItemStackEntity(world, x, y, z, item, 0);
+                            }
                         }
+                    }
+                    else if(dropExtra) {
+                        
+                        UtilBlock.spawnItemStackEntity(world, x, y, z, item, 0);
                     }
                 }
             }

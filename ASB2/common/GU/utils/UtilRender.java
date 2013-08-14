@@ -36,7 +36,7 @@ public final class UtilRender {
 
     public static void renderByOrientation(double x, double y, double z, ForgeDirection direction) {
 
-        switch (UtilDirection.translateDirectionToOpposite(direction)) {
+        switch (direction.getOpposite()) {
 
             case DOWN: {//Down
                 GL11.glTranslatef((float) x + 0.5F, (float) y + -.5F, (float) z + .5F);

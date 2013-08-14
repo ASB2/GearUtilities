@@ -141,7 +141,7 @@ public class TileTestTank extends TileBase implements IFluidHandler {
 
                         IFluidHandler fTile = (IFluidHandler)tile;
 
-                        for(FluidTankInfo info: fTile.getTankInfo(UtilDirection.translateDirectionToOpposite(direction))) {
+                        for(FluidTankInfo info: fTile.getTankInfo(direction.getOpposite())) {
 
                             if(info.fluid != null) {
 

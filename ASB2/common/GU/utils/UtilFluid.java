@@ -9,7 +9,7 @@ public final class UtilFluid {
 
     public static boolean moveFluid(IFluidHandler source, ForgeDirection from, IFluidHandler destination, int amount, boolean fillExtra) {
 
-        ForgeDirection oppositeDirection = UtilDirection.translateDirectionToOpposite(from);
+        ForgeDirection oppositeDirection = from.getOpposite();
 
         boolean isSuccessful = false;
 
@@ -77,7 +77,7 @@ public final class UtilFluid {
 
         boolean itWorked = false;
 
-        ForgeDirection oppositeDirection = UtilDirection.translateDirectionToOpposite(from);
+        ForgeDirection oppositeDirection = from.getOpposite();
 
         if(fluid != null && destination != null) {
 
@@ -120,7 +120,7 @@ public final class UtilFluid {
 
     public static boolean removeFluidFromTank(IFluidHandler destination, ForgeDirection from, FluidStack fluid) {
 
-        ForgeDirection oppositeDirection = UtilDirection.translateDirectionToOpposite(from);
+        ForgeDirection oppositeDirection = from.getOpposite();
 
         if(fluid != null && destination != null) {
 

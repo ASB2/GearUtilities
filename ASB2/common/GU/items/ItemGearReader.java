@@ -6,10 +6,11 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import GU.api.IDirectionSpecific;
-import GU.api.color.IColorable;
+import GU.api.color.IVinillaColorable;
 import GU.api.power.IPowerMisc;
 import GU.info.Reference;
 import GU.info.Variables;
@@ -37,9 +38,9 @@ public class ItemGearReader extends ItemBase {
                 UtilPlayers.sendChatToPlayer(player,"Block is at orientation: " + UtilDirection.translateDirectionToString(mTile.getOrientation()));
             }
 
-            if(tile instanceof IColorable) {
+            if(tile instanceof IVinillaColorable) {
 
-                IColorable mTile = (IColorable)tile;
+                IVinillaColorable mTile = (IVinillaColorable)tile;
 
                 UtilPlayers.sendChatToPlayer(player,"Block has color: " + mTile.getColorEnum().toString());
             }
@@ -83,7 +84,7 @@ public class ItemGearReader extends ItemBase {
 
                 int loop = 0;
 
-                for(FluidTankInfo info: mTile.getTankInfo(UtilDirection.translateDirectionToOpposite(UtilDirection.translateNumberToDirection(side)))) {
+                for(FluidTankInfo info: mTile.getTankInfo(ForgeDirection.getOrientation(side).getOpposite())) {
 
                     loop++;
 

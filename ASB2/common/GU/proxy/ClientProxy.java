@@ -11,6 +11,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import GU.entity.EntityTest.*;
 import GU.blocks.containers.BlockTestLaser.*;
+import GU.blocks.containers.BlockLamp.*;
 
 public class ClientProxy extends CommonProxy {
 
@@ -25,6 +26,10 @@ public class ClientProxy extends CommonProxy {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileTestLaser.class, new TestLaserRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockTestLaser.blockID, new TestLaserRenderer());
+    
+        ClientRegistry.bindTileEntitySpecialRenderer(TileLamp.class, new LampRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockLamp.blockID, new LampRenderer());
+        
     }
 
     @Override
