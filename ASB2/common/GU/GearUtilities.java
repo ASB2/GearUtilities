@@ -1,5 +1,8 @@
 package GU;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,6 +19,7 @@ import GU.worldGen.WorldGenBlockFireCrystalOre;
 import GU.worldGen.WorldGenBlockFreezingFlower;
 import GU.worldGen.WorldGenBlockGarnetOre;
 import GU.worldGen.WorldGenBlockWaterCrystalOre;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -36,7 +40,8 @@ public final class GearUtilities {
     @Instance(Reference.MODDID)
 
     public static GearUtilities instance;
-
+    public static Logger logger = Logger.getLogger(Reference.MODDID);
+    
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.COMMON_PROXY)
 
     public static CommonProxy proxy;
@@ -46,7 +51,10 @@ public final class GearUtilities {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-
+        
+        logger.setParent(FMLLog.getLogger());
+        logger.log(Level.INFO, "Hi");
+        
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
 

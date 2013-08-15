@@ -5,11 +5,11 @@ import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import GU.info.Models;
 
-public class ModelTest extends ModelBase {
+public class ModelCrystal extends ModelBase {
 
     private IModelCustom model;
 
-    public ModelTest() {
+    public ModelCrystal() {
 
         model = AdvancedModelLoader.loadModel(Models.CRYSTAL_ITEM);
     }

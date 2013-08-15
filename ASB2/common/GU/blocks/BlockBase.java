@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import GU.GUItemBlock;
@@ -27,6 +28,12 @@ public class BlockBase extends Block {
         setResistance(1.0F);
     }
 
+    @Override
+    public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
+        
+        return true;
+    }
+    
     @Override
     public boolean renderAsNormalBlock() {
 

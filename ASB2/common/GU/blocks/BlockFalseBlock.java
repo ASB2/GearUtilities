@@ -26,7 +26,7 @@ public class BlockFalseBlock extends BlockBase {
     @Override
     public Icon getIcon(int side, int metadata) {        
 
-        return Block.blocksList[1].getIcon(side,metadata);
+        return Block.stone.getIcon(side,metadata);
     }
     
     @Override

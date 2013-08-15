@@ -99,25 +99,25 @@ public class LampRenderer extends TileEntitySpecialRenderer implements IItemRend
 
             case ENTITY: {
 
-                renderItemSwitched(type, 0f, 0f - 1, 0f, 1);
+                renderItemSwitched(type, 0f, 1f, 0f, 1F);
                 return;
             }
 
             case EQUIPPED: {
 
-                renderItemSwitched(type, 0f, 0f - .9F, 0f, 1);
+                renderItemSwitched(type, 0f, 0f + 1, 0f, .7F);
                 return;
             }
 
             case INVENTORY: {
 
-                renderItemSwitched(type, 0f, 0f - 1, 0f, 1);
+                renderItemSwitched(type, 0f, 0f, 0f, .6F);
                 return;
             }
 
             case EQUIPPED_FIRST_PERSON: {
 
-                renderItemSwitched(type, 0f - .5F, 0f, 0f + .5F, 1);
+                renderItemSwitched(type, 0f - .5F, 0f, 0f + .5F, .5F);
                 return;
             }
 

@@ -1,10 +1,10 @@
-package GU.items;
+package GU.items.ItemCrystalShards;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemEarthCrystalShard extends ItemBase {
+public class ItemEarthCrystalShard extends ItemCrystal {
 
     public ItemEarthCrystalShard(int par1) {
         super(par1);

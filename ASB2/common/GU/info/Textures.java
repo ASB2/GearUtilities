@@ -4,7 +4,7 @@ import net.minecraft.util.ResourceLocation;
 
 public final class Textures {
 
-    public static final ResourceLocation BLANK = new ResourceLocation(Reference.MODDID + ":textures/blocks/White.png");
+    public static final ResourceLocation BLANK = new ResourceLocation(Reference.MODDID + ":textures/blocks/GearBlock.png");
     public static final ResourceLocation BLACK = new ResourceLocation(Reference.MODDID + ":textures/blocks/ColoredBlack.png");
     public static final ResourceLocation TEST = new ResourceLocation(Reference.MODDID + ":textures/blocks/Colored.png");
 
@@ -14,5 +14,14 @@ public final class Textures {
     public static final ResourceLocation TEST_LASER = new ResourceLocation(Reference.MODDID + ":textures/blank/ModelLaser.png");
     public static final ResourceLocation TEST_LASER2 = new ResourceLocation(Reference.MODDID + ":textures/blank/ModelLaser2.png");
 
-    public static final ResourceLocation LAMP = new ResourceLocation(Reference.MODDID + ":textures/blank/ModelLamp.png");
+    public static final ResourceLocation LAMP = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelLamp.png");
+    public static final ResourceLocation CREATION_TABLE = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelTable.png");
+    
+    public static final ResourceLocation CRYSTAL_ITEM = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
+    
+    public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
+    public static final ResourceLocation CRYSTAL_EARTH = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
+    public static final ResourceLocation CRYSTAL_FIRE = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
+    public static final ResourceLocation CRYSTAL_WATER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
+    public static final ResourceLocation CRYSTAL_ENERGY = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
 }

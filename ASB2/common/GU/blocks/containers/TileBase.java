@@ -1,6 +1,7 @@
 package GU.blocks.containers;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -15,6 +16,8 @@ import GU.api.color.IVinillaColorable;
 import GU.api.power.PowerProvider;
 import GU.api.wait.IWaitTrigger;
 import GU.api.wait.Wait;
+import GU.utils.UtilBlock;
+import GU.utils.UtilDirection;
 
 public abstract class TileBase extends TileEntity implements IVinillaColorable, IDirectionSpecific, IWaitTrigger, IWrenchable {
 
@@ -69,14 +72,50 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
 
     @Override
     public void triggerBlock(World world, EntityLivingBase player, ItemStack itemStack, int x, int y, int z, int side) {
-     // TODO Auto-generated method stub
-        
+
+        if(player.isSneaking()) {
+
+            if(player instanceof EntityPlayer) {
+                UtilBlock.breakAndAddToInventory(((EntityPlayer)player).inventory, worldObj, x, y, z, 0, true);
+            }
+            else {
+                
+                UtilBlock.breakAndAddToInventory(null, worldObj, x, y, z, 0, true);
+            }
+        }
+
+        switch(getOrientation()) {
+
+            case DOWN : worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.UP), 3); return;
+            case UP: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.SOUTH), 3); return;
+            case SOUTH: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.WEST), 3); return;
+            case WEST: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.NORTH), 3); return;
+            case NORTH: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.EAST), 3); return;
+            case EAST: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.DOWN), 3); return;
+
+            default : worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3); return;
+        }        
     }
 
     @Override
     public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
-        // TODO Auto-generated method stub
-        
+
+        if(isSneaking) {
+
+            UtilBlock.breakAndAddToInventory(null, worldObj, x, y, z, 0, true);
+        }
+
+        switch(getOrientation()) {
+
+            case DOWN : worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.UP), 3); return;
+            case UP: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.SOUTH), 3); return;
+            case SOUTH: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.WEST), 3); return;
+            case WEST: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.NORTH), 3); return;
+            case NORTH: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.EAST), 3); return;
+            case EAST: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.DOWN), 3); return;
+
+            default : worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3); return;
+        }        
     }
 
     @Override

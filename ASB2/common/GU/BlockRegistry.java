@@ -22,6 +22,9 @@ import GU.blocks.containers.BlockTestLaser.BlockTestLaser;
 import GU.blocks.containers.BlockTestTank.BlockTestTank;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import GU.blocks.containers.BlockCreationTable.*;
+import GU.blocks.containers.BlockTestRender.*;
+import GU.info.*;
 
 public class BlockRegistry {
 
@@ -42,18 +45,12 @@ public class BlockRegistry {
     public static ContainerBase BlockConduit;
     public static ContainerBase BlockTestLaser;
     public static ContainerBase BlockLamp;
-    
+    public static ContainerBase BlockCreationTable;
+    public static ContainerBase BlockTestRender;
+
     private static int id = 500;
 
     public static void init(Configuration config) {
-
-        BlockTestBlock = new BlockTestBlock(config.getBlock("BlockTestBlock", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockTestBlock.setBlockName("BlockTestBlock");
-        LanguageRegistry.addName(BlockTestBlock, "Test Block");
-
-        BlockTestTile = new BlockTestTile(config.getBlock("BlockTestTile", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockTestTile.setBlockName("BlockTestTile");
-        LanguageRegistry.addName(BlockTestTile, "Test Tile Block");
 
         BlockAirCrystalOre = new BlockAirCrystalOre(config.getBlock("BlockAirCrystalOre", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockAirCrystalOre.setBlockName("BlockAirCrystalOre");
@@ -98,22 +95,46 @@ public class BlockRegistry {
         BlockSpeedyRoad = new BlockSpeedyRoad(config.getBlock("BlockSpeedyRoad", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockSpeedyRoad.setBlockName("BlockSpeedyRoad");
         LanguageRegistry.addName(BlockSpeedyRoad, "Speedy Road");
-        
-        BlockTestTank = new BlockTestTank(config.getBlock("BlockTestTank", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockTestTank.setBlockName("BlockTestTank");
-        LanguageRegistry.addName(BlockTestTank, "Test Tank");
-        
+
         BlockConduit = new BlockConduit(config.getBlock("BlockCable", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockConduit.setBlockName("BlockConduit");
         LanguageRegistry.addName(BlockConduit, "Multi-Conduit");
-    
-        BlockTestLaser = new BlockTestLaser(config.getBlock("BlockTestLaser", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockTestLaser.setBlockName("BlockTestLaser");
-        LanguageRegistry.addName(BlockTestLaser, "Test Laser");
-        
+
         BlockLamp = new BlockLamp(config.getBlock("BlockLamp", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockLamp.setBlockName("BlockLamp");
         LanguageRegistry.addName(BlockLamp, "Lamp");
+
+        BlockCreationTable = new BlockCreationTable(config.getBlock("BlockCreationTable", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockCreationTable.setBlockName("BlockCreationTable");
+        LanguageRegistry.addName(BlockCreationTable, "Creation Table");
+
+        BlockRegistry.initTestBlocks(config);
+    }
+
+    public static void initTestBlocks(Configuration config) {
+
+        if(Variables.TESTING_MODE) {
+            
+            BlockTestBlock = new BlockTestBlock(config.getBlock("BlockTestBlock", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+            BlockTestBlock.setBlockName("BlockTestBlock");
+            LanguageRegistry.addName(BlockTestBlock, "Test Block");
+
+            BlockTestTile = new BlockTestTile(config.getBlock("BlockTestTile", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+            BlockTestTile.setBlockName("BlockTestTile");
+            LanguageRegistry.addName(BlockTestTile, "Test Tile Block");
+
+            BlockTestTank = new BlockTestTank(config.getBlock("BlockTestTank", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+            BlockTestTank.setBlockName("BlockTestTank");
+            LanguageRegistry.addName(BlockTestTank, "Test Tank");
+
+            BlockTestLaser = new BlockTestLaser(config.getBlock("BlockTestLaser", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+            BlockTestLaser.setBlockName("BlockTestLaser");
+            LanguageRegistry.addName(BlockTestLaser, "Test Laser");
+
+            BlockTestRender = new BlockTestRender(config.getBlock("BlockTestRender", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+            BlockTestRender.setBlockName("BlockTestRender");
+            LanguageRegistry.addName(BlockTestRender, "Test Render Block");
+        }
     }
 
     public static int getNextBaseID() {        

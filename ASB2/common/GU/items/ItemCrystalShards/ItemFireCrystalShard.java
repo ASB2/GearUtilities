@@ -1,13 +1,13 @@
-package GU.items;
+package GU.items.ItemCrystalShards;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemAirCrystalShard extends ItemBase {
+public class ItemFireCrystalShard extends ItemCrystal {
 
-    public ItemAirCrystalShard(int par1) {
-        super(par1);
+    public ItemFireCrystalShard(int id) {
+        super(id);
     }
 
     @Override

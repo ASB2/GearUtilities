@@ -5,13 +5,13 @@ import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import GU.info.Models;
 
-public class ModelTest extends ModelBase {
+public class ModelCreationTable extends ModelBase {
 
     private IModelCustom model;
 
-    public ModelTest() {
+    public ModelCreationTable() {
 
-        model = AdvancedModelLoader.loadModel(Models.CRYSTAL_ITEM);
+        model = AdvancedModelLoader.loadModel(Models.CREATION_TABLE);
     }
 
     public void render() {

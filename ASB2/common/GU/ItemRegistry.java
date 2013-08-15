@@ -1,14 +1,10 @@
 package GU;
 
 import net.minecraftforge.common.Configuration;
-import GU.items.ItemAirCrystalShard;
 import GU.items.ItemBase;
 import GU.items.ItemBasicDestructionCatalyst;
 import GU.items.ItemCrystalCasing;
-import GU.items.ItemEarthCrystalShard;
-import GU.items.ItemEnergyCrystalShard;
 import GU.items.ItemEnhancedDestructionCatalyst;
-import GU.items.ItemFireCrystalShard;
 import GU.items.ItemGarnet;
 import GU.items.ItemGearReader;
 import GU.items.ItemGearTinkerer;
@@ -16,10 +12,14 @@ import GU.items.ItemLifeStealingBludgeoningStick;
 import GU.items.ItemLinker;
 import GU.items.ItemRainBGone;
 import GU.items.ItemTeleporter;
+import GU.items.ItemTestItem;
 import GU.items.ItemTradeStick;
-import GU.items.ItemWaterCrystalShard;
+import GU.items.ItemCrystalShards.ItemAirCrystalShard;
+import GU.items.ItemCrystalShards.ItemEarthCrystalShard;
+import GU.items.ItemCrystalShards.ItemEnergyCrystalShard;
+import GU.items.ItemCrystalShards.ItemFireCrystalShard;
+import GU.items.ItemCrystalShards.ItemWaterCrystalShard;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import GU.items.*;
 
 public class ItemRegistry {
 
