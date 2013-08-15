@@ -9,8 +9,7 @@ public class BlockCreationTable extends ContainerBase {
 
     public BlockCreationTable(int id, Material material) {
         super(id, material);
-
-        setLightValue(1.0F);
+        
         this.registerTile(TileCreationTable.class);
         useStandardRendering = false;
     }

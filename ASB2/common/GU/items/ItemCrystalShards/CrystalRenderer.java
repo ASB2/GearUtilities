@@ -22,7 +22,7 @@ public class CrystalRenderer implements IItemRenderer {
 
             case ENTITY: {
 
-                renderItemSwitched(type, 0f, 0f - 1, 0f, .7F, item);
+                renderItemSwitched(type, 0f, 0f + 1, 0f, .4F, item);
                 return;
             }
 
@@ -34,13 +34,13 @@ public class CrystalRenderer implements IItemRenderer {
 
             case INVENTORY: {
 
-                renderItemSwitched(type, 0f + .4F, 0f, 0f, .7F, item);
+                renderItemSwitched(type, 0f, 0f, 0f, .5F, item);
                 return;
             }
 
             case EQUIPPED_FIRST_PERSON: {
 
-                renderItemSwitched(type, 0f - .5F, 0f, 0f + .5F, .5F, item);
+                renderItemSwitched(type, 0f - .5F, 0f + 1f, 0f + .5F, .5F, item);
                 return;
             }
 
@@ -55,8 +55,7 @@ public class CrystalRenderer implements IItemRenderer {
 
         GL11.glTranslatef(x,  y,  z);
         GL11.glScalef(scale, scale, scale);
-        GL11.glRotatef(45, 0F, 0F, 0F);
-        
+        GL11.glRotatef(45f, 0f, 10f, 0f);
         UtilRender.renderTexture(getTexture(stack));
         model.render();
 
@@ -72,7 +71,7 @@ public class CrystalRenderer implements IItemRenderer {
         if(stack.itemID == ItemRegistry.ItemWaterCrystalShard.itemID) return Textures.CRYSTAL_WATER;
         if(stack.itemID == ItemRegistry.ItemEnergyCrystalShard.itemID) return Textures.CRYSTAL_ENERGY;
 
-        return Textures.CRYSTAL_ITEM;
+        return Textures.CRYSTAL_BLANK;
     }
 
     @Override

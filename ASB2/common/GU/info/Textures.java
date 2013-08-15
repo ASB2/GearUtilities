@@ -15,13 +15,13 @@ public final class Textures {
     public static final ResourceLocation TEST_LASER2 = new ResourceLocation(Reference.MODDID + ":textures/blank/ModelLaser2.png");
 
     public static final ResourceLocation LAMP = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelLamp.png");
-    public static final ResourceLocation CREATION_TABLE = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelTable.png");
+    public static final ResourceLocation CREATION_TABLE = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCreationTable.png");
     
-    public static final ResourceLocation CRYSTAL_ITEM = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
+    public static final ResourceLocation CRYSTAL_BLANK = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalBlank.png");
     
-    public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
-    public static final ResourceLocation CRYSTAL_EARTH = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
-    public static final ResourceLocation CRYSTAL_FIRE = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
-    public static final ResourceLocation CRYSTAL_WATER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
-    public static final ResourceLocation CRYSTAL_ENERGY = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCrystal4.png");
+    public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalAir.png");
+    public static final ResourceLocation CRYSTAL_EARTH = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalEarth.png");
+    public static final ResourceLocation CRYSTAL_FIRE = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalFire.png");
+    public static final ResourceLocation CRYSTAL_WATER = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalWater.png");
+    public static final ResourceLocation CRYSTAL_ENERGY = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalEnergy.png");
 }
