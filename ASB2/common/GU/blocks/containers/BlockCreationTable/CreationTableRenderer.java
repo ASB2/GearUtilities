@@ -8,22 +8,14 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import GU.info.Textures;
-import GU.models.ModelCreationTable;
 import GU.utils.UtilRender;
 
 public class CreationTableRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
-    private ModelCreationTable model;
-
-    public CreationTableRenderer() {
-
-        model = new ModelCreationTable();
-    }
-
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
-        if(tileentity instanceof TileCreationTable) {
+        if(!(tileentity instanceof TileCreationTable)) {
 
             GL11.glPushMatrix();      
             GL11.glDisable(GL11.GL_LIGHTING);
@@ -31,7 +23,8 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
 
             GL11.glTranslated(x + .5f,  y + .37f,  z + .5f);
 
-            model.render();
+//            Models.ModelCreationTable.render();
+            
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();
         }
@@ -92,7 +85,7 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
 
         UtilRender.renderTexture(Textures.CREATION_TABLE);
 
-        model.render();
+//        Models.ModelCreationTable.render();
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();

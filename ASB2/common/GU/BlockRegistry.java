@@ -16,15 +16,14 @@ import GU.blocks.BlockSpeedyRoad;
 import GU.blocks.BlockTestBlock;
 import GU.blocks.BlockWaterCrystalOre;
 import GU.blocks.containers.ContainerBase;
-import GU.blocks.containers.BlockConduit.BlockConduit;
+import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
 import GU.blocks.containers.BlockLamp.BlockLamp;
 import GU.blocks.containers.BlockTestLaser.BlockTestLaser;
+import GU.blocks.containers.BlockTestRender.BlockTestRender;
 import GU.blocks.containers.BlockTestTank.BlockTestTank;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
+import GU.info.Variables;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import GU.blocks.containers.BlockCreationTable.*;
-import GU.blocks.containers.BlockTestRender.*;
-import GU.info.*;
 
 public class BlockRegistry {
 
@@ -42,7 +41,6 @@ public class BlockRegistry {
     public static BlockBase BlockFalseBlock;
     public static BlockBase BlockSpeedyRoad;
     public static ContainerBase BlockTestTank;
-    public static ContainerBase BlockConduit;
     public static ContainerBase BlockTestLaser;
     public static ContainerBase BlockLamp;
     public static ContainerBase BlockCreationTable;
@@ -95,10 +93,6 @@ public class BlockRegistry {
         BlockSpeedyRoad = new BlockSpeedyRoad(config.getBlock("BlockSpeedyRoad", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockSpeedyRoad.setBlockName("BlockSpeedyRoad");
         LanguageRegistry.addName(BlockSpeedyRoad, "Speedy Road");
-
-        BlockConduit = new BlockConduit(config.getBlock("BlockCable", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockConduit.setBlockName("BlockConduit");
-        LanguageRegistry.addName(BlockConduit, "Multi-Conduit");
 
         BlockLamp = new BlockLamp(config.getBlock("BlockLamp", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockLamp.setBlockName("BlockLamp");

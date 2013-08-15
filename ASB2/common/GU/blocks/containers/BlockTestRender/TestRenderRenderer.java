@@ -1,16 +1,11 @@
 package GU.blocks.containers.BlockTestRender;
 
-import org.lwjgl.opengl.GL11;
-
-import GU.info.Textures;
-import GU.utils.UtilRender;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+import GU.models.ModelTest;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import GU.models.*;
 
 public class TestRenderRenderer implements ISimpleBlockRenderingHandler  {
 

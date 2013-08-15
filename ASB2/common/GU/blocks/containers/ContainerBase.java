@@ -141,6 +141,4 @@ public abstract class ContainerBase extends BlockContainer {
         this.setUnlocalizedName(Reference.UNIQUE_ID + blockName);
         GameRegistry.registerBlock(this, GUItemBlock.class, this.getUnlocalizedName());
     }
-
-
 }

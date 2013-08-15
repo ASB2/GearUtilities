@@ -129,7 +129,7 @@ public class BlockTestTank extends ContainerBase {
     public void registerIcons(IconRegister iconRegistry) {
 
         top = iconRegistry.registerIcon(Reference.MODDID + ":BlockTestTankTop");
-        bottom = iconRegistry.registerIcon(Reference.MODDID + ":BlockTestTankBottom");
+        bottom = iconRegistry.registerIcon(Reference.MODDID + ":DefaultTexture");
         icons[0] = iconRegistry.registerIcon(Reference.MODDID + folder + "/tankRegular");
         icons[1] = iconRegistry.registerIcon(Reference.MODDID + folder + "/tank_1_d");
         icons[2] = iconRegistry.registerIcon(Reference.MODDID + folder + "/tank_1_u");

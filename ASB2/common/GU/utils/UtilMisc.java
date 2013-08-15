@@ -31,7 +31,7 @@ public class UtilMisc {
 
         return startNumber / divisionAmoun;
     }
-    
+
     public static double getNumberDivided(double startNumber, double divisionAmoun) {
 
         return startNumber / divisionAmoun;
@@ -39,13 +39,17 @@ public class UtilMisc {
 
     public static int getAmountScaled(int scale, int amount, int max) {
 
-        int internal = amount * scale / max;
+        if(max != 0) {
 
-        if(internal > scale) {
+            int internal = amount * scale / max;
 
-            internal = scale;
+            if(internal > scale) {
+
+                internal = scale;
+            }
+            return internal;
         }
-        return internal;
+        return 0;
     }
 
     public static double getAmountScaled(double scale, double amount, double max) {

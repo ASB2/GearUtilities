@@ -10,13 +10,13 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class MiscRegistry {
 
-    public static Fluid FluidGUPower;
-
     public static void init(Configuration config) {
 
         initFluids();
         initEntitys();
     }
+
+    public static Fluid FluidGUPower;
 
     public static void initFluids() {
 
@@ -43,19 +43,4 @@ public class MiscRegistry {
         //event.manager.addSound("mod_id:hit1.ogg");
         //event.manager.addSound("mod_id:hit2.ogg");
     }
-
-
-
-    //    public static Enchantment airtime = new EnchantmentAirtime(52, 1);
-
-    /*
-     * Creates a new trade entry where the gunpowder is the trade item, .5 is the chance of the
-     * trade occurring, the false tells the game the villager will be selling the item true for
-     * buying, and the last two arguments are the minimum and maximum amount of emeralds the item
-     * will cost.
-     */
-    //    TradeEntry test = new TradeEntry(Item.gunpowder.itemID, 0.5f, false, 2, 4);
-
-
-    //        ModLoader.addTrade(1, test); adds the trade, the 1 is the profession in this case librarian and the test is our trade.
 }

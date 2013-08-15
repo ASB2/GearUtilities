@@ -8,17 +8,10 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import GU.info.Textures;
-import GU.models.ModelLamp;
 import GU.utils.UtilRender;
+import GU.info.*;
 
 public class LampRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
-
-    private ModelLamp model;
-
-    public LampRenderer() {
-
-        model = new ModelLamp();
-    }
 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
@@ -73,8 +66,9 @@ public class LampRenderer extends TileEntitySpecialRenderer implements IItemRend
                 }
             }
 
-            GL11.glScalef(.5F, .5F, .5F);      
-            model.render();
+            GL11.glScalef(.5F, .5F, .5F);
+            
+            Models.ModelLamp.renderAll();
 
             GL11.glPopMatrix();
         }
@@ -137,7 +131,7 @@ public class LampRenderer extends TileEntitySpecialRenderer implements IItemRend
 
         UtilRender.renderTexture(Textures.LAMP);
 
-        model.render();
+        Models.ModelLamp.renderAll();
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();

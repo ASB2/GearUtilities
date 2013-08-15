@@ -1,19 +1,23 @@
 package GU.proxy;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import GU.GUTickHandler;
+import GU.blocks.containers.BlockCreationTable.ContainerCreationTable;
+import GU.info.Gui;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
-import GU.*;
+import GU.blocks.containers.BlockCreationTable.*;
 
 public class CommonProxy implements IGuiHandler {
-    
+
     public void register() {
-        
+
         TickRegistry.registerTickHandler(new GUTickHandler(), Side.SERVER);        
     }
-    
+
     public int addArmor(String string) {
 
         return 0;
@@ -21,7 +25,13 @@ public class CommonProxy implements IGuiHandler {
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        // TODO Auto-generated method stub
+
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
+        
+        switch(ID) {
+
+            case Gui.CREATION_TABLE: return new ContainerCreationTable(player.inventory, (TileCreationTable)tile);
+        }
         return null;
     }
 

@@ -6,14 +6,12 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
+import GU.ItemRegistry;
+import GU.info.Models;
 import GU.info.Textures;
-import GU.models.ModelCrystal;
 import GU.utils.UtilRender;
-import GU.*;
 
 public class CrystalRenderer implements IItemRenderer {
-
-    private ModelCrystal model = new ModelCrystal();
 
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
@@ -57,7 +55,8 @@ public class CrystalRenderer implements IItemRenderer {
         GL11.glScalef(scale, scale, scale);
         GL11.glRotatef(45f, 0f, 10f, 0f);
         UtilRender.renderTexture(getTexture(stack));
-        model.render();
+        
+        Models.ModelCrystalItem.renderAll();
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
