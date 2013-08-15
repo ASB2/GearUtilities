@@ -1,11 +1,6 @@
 package GU.api.power;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import GU.utils.UtilDirection;
-import GU.utils.UtilPower;
 
 public abstract class PowerProvider {
 
@@ -14,101 +9,25 @@ public abstract class PowerProvider {
     protected State currentState;
     protected PowerClass powerClass;
 
-    int x;
-    int y;
-    int z;
-
-    TileEntity tile;
-
     protected int powerStored = 0;
     protected int powerMax;
 
-    public PowerProvider(TileEntity tile, int powerMax, PowerClass pClass) {
+    public PowerProvider(int maximumPower, PowerClass powerClass) {
 
-        powerClass = pClass;
-        this.tile = tile;
-        this.powerMax = powerMax;
+        this.powerClass = powerClass;
+        this.powerMax = maximumPower;
     }
 
     public void updateProvider() {
 
-        this.movePowerByDirection(ForgeDirection.DOWN);
-        this.movePowerByDirection(ForgeDirection.UP);
-
-        this.movePowerByDirection(ForgeDirection.EAST);
-        this.movePowerByDirection(ForgeDirection.WEST);
-
-        this.movePowerByDirection(ForgeDirection.NORTH);
-        this.movePowerByDirection(ForgeDirection.SOUTH);
+        
     }
 
-    public void movePowerByDirection(ForgeDirection direction) {
-
-        World worldObj = tile.worldObj;
-
-        int[] coords = UtilDirection.translateDirectionToCoords(direction, tile);
-
-        if(worldObj.blockExists(coords[0], coords[1], coords[2])) {
-
-            TileEntity tileToAffect = UtilDirection.translateDirectionToTile(tile, tile.worldObj, direction);
-
-            if(tileToAffect != null) {
-
-                if(tileToAffect instanceof IPowerMisc) {
-
-                    IPowerMisc tileToAffectCasted = ((IPowerMisc)tileToAffect);
-
-                    if(tileToAffectCasted.getPowerProvider() != null) {
-
-                        switch(this.getCurrentState()) {
-
-                            case SINK: {
-
-                                if(tileToAffectCasted.getPowerProvider().getCurrentState() == State.SOURCE) {
-
-                                    UtilPower.transferPower(tileToAffectCasted, (IPowerMisc)tile);
-                                }
-                            }
-                            break;
-
-                            case SOURCE: {
-
-                                if(tileToAffectCasted.getPowerProvider().getCurrentState() == State.SINK) {
-
-                                    UtilPower.transferPower((IPowerMisc)tile, tileToAffectCasted);
-                                }
-                            }
-                            break;
-
-                            case OTHER: break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public boolean getShouldWork() {
-
-        if(tile != null && tile.worldObj != null) {
-
-            return !tile.worldObj.isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
-        }
-        return false;
-    }
-    /**
-     * Get the amount of power stored in the block
-     * @return Amount of power stored
-     */
     public int getPowerStored() {
 
-        //this.readFromNBT(ntbTag);
         return powerStored;
     }
 
-    /**
-     * Get maximum power capacity of the block
-     */
     public int getPowerMax() {
 
         return powerMax;
@@ -181,6 +100,11 @@ public abstract class PowerProvider {
     public void setPower(int newPower) {        
 
         this.powerStored = newPower;
+    }
+
+    public void setMaxPower(int newMaxPower) {
+
+        this.powerMax = newMaxPower;
     }
 
     public boolean requestingPower() {

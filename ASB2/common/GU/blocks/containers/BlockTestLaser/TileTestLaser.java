@@ -16,7 +16,7 @@ import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.fx.TestEffect;
-import GU.power.GCPowerProvider;
+import GU.power.GUPowerProvider;
 import GU.utils.UtilRender;
 import GU.vector.Vector3;
 
@@ -24,7 +24,7 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
 
     public TileTestLaser() {
 
-        powerProvider = new GCPowerProvider(this, 1000, PowerClass.LOW, State.SINK);
+        powerProvider = new GUPowerProvider(1000, PowerClass.LOW, State.SINK);
         orientation = ForgeDirection.SOUTH;
         waitTimer = new Wait(10, this, 0);
     }

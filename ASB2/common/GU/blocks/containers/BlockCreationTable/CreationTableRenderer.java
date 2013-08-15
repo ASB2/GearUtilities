@@ -29,7 +29,7 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
             GL11.glDisable(GL11.GL_LIGHTING);
             UtilRender.renderTexture(Textures.CREATION_TABLE);
 
-            GL11.glTranslated(x + .5f,  y + .4f,  z + .5f);
+            GL11.glTranslated(x + .5f,  y + .37f,  z + .5f);
 
             model.render();
             GL11.glDisable(GL11.GL_LIGHTING);
@@ -68,7 +68,7 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
 
             case INVENTORY: {
 
-                renderItemSwitched(type, 0f, 0f, 0f, .6F);
+                renderItemSwitched(type, 0f, 0f, 0f, 1F);
                 return;
             }
 
