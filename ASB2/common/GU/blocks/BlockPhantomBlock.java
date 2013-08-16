@@ -2,7 +2,6 @@ package GU.blocks;
 
 import java.util.Random;
 
-import GU.ItemRegistry;
 import net.minecraft.block.material.Material;
 
 public class BlockPhantomBlock extends BlockBase {
