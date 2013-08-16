@@ -24,6 +24,8 @@ import GU.blocks.containers.BlockTestTank.BlockTestTank;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
 import GU.info.Variables;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import GU.blocks.containers.BlockFluidProvider.*;
+import GU.blocks.*;
 
 public class BlockRegistry {
 
@@ -45,7 +47,9 @@ public class BlockRegistry {
     public static ContainerBase BlockLamp;
     public static ContainerBase BlockCreationTable;
     public static ContainerBase BlockTestRender;
-
+    public static ContainerBase BlockFluidProvider;
+    public static BlockBase BlockPhantomBlock;
+    
     private static int id = 500;
 
     public static void init(Configuration config) {
@@ -102,11 +106,10 @@ public class BlockRegistry {
         BlockCreationTable.setBlockName("BlockCreationTable");
         LanguageRegistry.addName(BlockCreationTable, "Creation Table");
 
-        BlockRegistry.initTestBlocks(config);
-    }
-
-    public static void initTestBlocks(Configuration config) {
-
+        BlockFluidProvider = new BlockFluidProvider(config.getBlock("BlockFluidProvider", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockFluidProvider.setBlockName("BlockFluidProvider");
+        LanguageRegistry.addName(BlockFluidProvider, "Fluid Provider");
+        
         if(Variables.TESTING_MODE) {
             
             BlockTestBlock = new BlockTestBlock(config.getBlock("BlockTestBlock", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
@@ -129,6 +132,15 @@ public class BlockRegistry {
             BlockTestRender.setBlockName("BlockTestRender");
             LanguageRegistry.addName(BlockTestRender, "Test Render Block");
         }
+    
+        BlockPhantomBlock = new BlockPhantomBlock(config.getBlock("BlockPhantomBlock", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockPhantomBlock.setBlockName("BlockPhantomBlock");
+        LanguageRegistry.addName(BlockPhantomBlock, "Phantom Block");
+    }
+
+    public static void initTestBlocks(Configuration config) {
+
+        
     }
 
     public static int getNextBaseID() {        

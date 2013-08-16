@@ -52,6 +52,7 @@ public abstract class GuiBase extends GuiContainer {
             addSlot(posX + container.slotList.get(i).xDisplayPosition - 1, posY + container.slotList.get(i).yDisplayPosition - 1);
         }
     }
+        
     public void addSlot(int x, int y) {
 
         drawTexturedModalRect(x, y, 176, 32, 18, 18);

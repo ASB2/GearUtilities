@@ -19,7 +19,9 @@ import GU.items.ItemCrystalShards.ItemEarthCrystalShard;
 import GU.items.ItemCrystalShards.ItemEnergyCrystalShard;
 import GU.items.ItemCrystalShards.ItemFireCrystalShard;
 import GU.items.ItemCrystalShards.ItemWaterCrystalShard;
+import GU.items.ItemStorageCrystal.ItemStorageCrystal;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import GU.items.*;
 
 public class ItemRegistry {
 
@@ -40,6 +42,8 @@ public class ItemRegistry {
     public static ItemBase ItemLinker;
     public static ItemBase ItemGearTinkerer;
     public static ItemBase ItemTestItem;
+    public static ItemBase ItemStorageCrystal;
+    public static ItemBase ItemPhantomPlacer;
     
     private static int id = 5000;
 
@@ -112,6 +116,14 @@ public class ItemRegistry {
         ItemGearTinkerer = new ItemGearTinkerer(config.getItem("ItemGearTinkerer", ItemRegistry.getNextBaseID()).getInt());
         ItemGearTinkerer.setItemName("ItemGearTinkerer");
         LanguageRegistry.addName(ItemGearTinkerer, "Gear Tinkerer");
+    
+        ItemStorageCrystal = new ItemStorageCrystal(config.getItem("ItemStorageCrystal", ItemRegistry.getNextBaseID()).getInt());
+        ItemStorageCrystal.setItemName("ItemStorageCrystal");
+        LanguageRegistry.addName(ItemStorageCrystal, "Storage Crystal");
+        
+        ItemPhantomPlacer = new ItemPhantomPlacer(config.getItem("ItemPhantomPlacer", ItemRegistry.getNextBaseID()).getInt());
+        ItemPhantomPlacer.setItemName("ItemPhantomPlacer");
+        LanguageRegistry.addName(ItemPhantomPlacer, "Phantom Placer");
     }
     
     public static int getNextBaseID() {

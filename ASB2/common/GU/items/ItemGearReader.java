@@ -84,23 +84,28 @@ public class ItemGearReader extends ItemBase {
 
                 int loop = 0;
 
-                for(FluidTankInfo info: mTile.getTankInfo(ForgeDirection.getOrientation(side).getOpposite())) {
+                if(mTile.getTankInfo(ForgeDirection.getOrientation(side).getOpposite()) != null) {
 
-                    loop++;
+                    for(FluidTankInfo info: mTile.getTankInfo(ForgeDirection.getOrientation(side).getOpposite())) {
 
-                    if(info != null) {
+                        loop++;
 
-                        UtilPlayers.sendChatToPlayer(player, "Tanks For Direction: " + loop); 
-                        if(info.fluid != null) {
-                            
-                            UtilPlayers.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount); 
-                            UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + info.fluid.getFluid().getName().toUpperCase());
+                        if(info != null) {
+
+                            UtilPlayers.sendChatToPlayer(player, "Tanks For Direction: " + loop); 
+
+                            if(info.fluid != null && info.fluid.getFluid() != null) {
+
+                                UtilPlayers.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount); 
+                                UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + info.fluid.getFluid().getName().toUpperCase());
+                            }
+                            else {
+
+                                UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + info.fluid);
+                            }
+
+                            UtilPlayers.sendChatToPlayer(player, "Capasity: " + info.capacity);
                         }
-                        else {
-                            UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + info.fluid);
-                        }
-
-                        UtilPlayers.sendChatToPlayer(player, "Capasity: " + info.capacity);
                     }
                 }
             }

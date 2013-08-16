@@ -4,9 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidHandler;
-import GU.MiscRegistry;
 import GU.api.laser.ILaserReciever;
 import GU.api.power.IPowerMisc;
 import GU.api.wait.Wait;
@@ -14,7 +11,6 @@ import GU.blocks.containers.TileBase;
 import GU.fx.TestEffect;
 import GU.utils.IBlockCycle;
 import GU.utils.UtilDirection;
-import GU.utils.UtilFluid;
 import GU.utils.UtilRender;
 import GU.vector.Vector3;
 
@@ -37,20 +33,6 @@ public class TileTestTile extends TileBase implements IBlockCycle, ILaserRecieve
             TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
             if(tile != null) {
-
-                if(tile instanceof IFluidHandler) {
-
-                    IFluidHandler fTile = (IFluidHandler)tile;
-
-                    if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-
-                        UtilFluid.addFluidToTank(fTile, direction, new FluidStack(MiscRegistry.FluidGUPower, 1000));
-                    }
-                    else {
-
-                        UtilFluid.removeFluidFromTank(fTile, direction, new FluidStack(MiscRegistry.FluidGUPower, 1000));
-                    }
-                }
 
                 if(tile instanceof IPowerMisc) {
 

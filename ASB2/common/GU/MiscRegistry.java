@@ -3,26 +3,14 @@ package GU;
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import GU.entity.EntityTest.EntityTestEntity;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class MiscRegistry {
 
     public static void init(Configuration config) {
-
-        initFluids();
+        
         initEntitys();
-    }
-
-    public static Fluid FluidGUPower;
-
-    public static void initFluids() {
-
-        FluidGUPower = new Fluid("Gear Utilities Power").setLuminosity(10).setUnlocalizedName("FluidGUPower");
-        FluidRegistry.registerFluid(FluidGUPower);
-        //FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("oil", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(bucketOil), new ItemStack(Item.bucketEmpty));
     }
 
     public static void initEntitys() {

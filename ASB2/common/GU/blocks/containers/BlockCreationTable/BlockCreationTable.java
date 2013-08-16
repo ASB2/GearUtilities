@@ -22,10 +22,11 @@ public class BlockCreationTable extends ContainerBase {
         super(id, material);
 
         this.registerTile(TileCreationTable.class);
+        useStandardRendering = true;
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) 
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitX, float hitY, float hitZ, float par9) 
     {
         if(!player.isSneaking()) {
 
@@ -52,11 +53,11 @@ public class BlockCreationTable extends ContainerBase {
             default: return sides;
         }
     }
-
+    
     @Override
     public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side) {
 
-        return getIcon(side, world.getBlockMetadata(x, y, z));
+        return super.getBlockTexture(world, x, y, z, side);
     }
 
     @Override

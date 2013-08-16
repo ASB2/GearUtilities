@@ -5,9 +5,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import GU.BlockRegistry;
-import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
+import GU.ItemRegistry;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
-import GU.blocks.containers.BlockCreationTable.TileCreationTable;
 import GU.blocks.containers.BlockLamp.LampRenderer;
 import GU.blocks.containers.BlockLamp.TileLamp;
 import GU.blocks.containers.BlockTestLaser.TestLaserRenderer;
@@ -19,6 +18,7 @@ import GU.entity.EntityTest.TestEntityRenderer;
 import GU.info.Gui;
 import GU.info.Models;
 import GU.info.Variables;
+import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -34,9 +34,10 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileLamp.class, new LampRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockLamp.blockID, new LampRenderer());
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class, new CreationTableRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());
+//        ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class, new CreationTableRenderer());
+//        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());
 
+        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
         if(Variables.TESTING_MODE) {
 
             RenderingRegistry.registerBlockHandler(new TestTankRenderer());

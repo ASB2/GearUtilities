@@ -39,32 +39,7 @@ public class UtilDirection {
 
     public static int[] translateDirectionToCoords(ForgeDirection direction, int xCoord, int yCoord, int zCoord) {
 
-        switch(direction) {
-
-            case DOWN: {
-                return new int[]{xCoord,yCoord-1,zCoord};
-            }
-            case UP: {
-                return new int[]{xCoord,yCoord+1,zCoord};
-            }
-            case NORTH: {
-                return new int[]{xCoord,yCoord,zCoord-1};
-            }
-            case SOUTH: {
-                return new int[]{xCoord,yCoord,zCoord+1};
-            }
-            case WEST: {
-                return new int[]{xCoord-1,yCoord,zCoord};
-            }
-            case EAST: {
-                return new int[]{xCoord+1,yCoord,zCoord};
-            }
-            case UNKNOWN:{
-                return new int[]{xCoord,yCoord,zCoord};
-            }
-        }
-
-        return new int[]{xCoord,yCoord,zCoord};
+        return new int[]{xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ};
     }
 
     public static int translateDirectionToNumber(ForgeDirection direction) {

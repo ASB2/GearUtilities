@@ -14,6 +14,8 @@ import net.minecraftforge.common.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public final class UtilRender {
 
@@ -116,6 +118,20 @@ public final class UtilRender {
         }
     }
 
+    @SideOnly(Side.CLIENT)
+    /*     */   public static void renderTexturedQuad(int par1, int par2, int par3, int par4, int par5, int par6, float zLevel)
+    /*     */   {
+    /*  35 */     float var7 = 0.0039063F;
+    /*  36 */     float var8 = 0.0039063F;
+    /*  37 */     Tessellator var9 = Tessellator.instance;
+    /*  38 */     var9.startDrawingQuads();
+    /*  39 */     var9.addVertexWithUV(par1 + 0, par2 + par6, zLevel, (par3 + 0) * var7, (par4 + par6) * var8);
+    /*  40 */     var9.addVertexWithUV(par1 + par5, par2 + par6, zLevel, (par3 + par5) * var7, (par4 + par6) * var8);
+    /*  41 */     var9.addVertexWithUV(par1 + par5, par2 + 0, zLevel, (par3 + par5) * var7, (par4 + 0) * var8);
+    /*  42 */     var9.addVertexWithUV(par1 + 0, par2 + 0, zLevel, (par3 + 0) * var7, (par4 + 0) * var8);
+    /*  43 */     var9.draw();
+    /*     */   }
+    
     public static void renderStandardInvBlock (RenderBlocks renderblocks, Block block, int meta) {
 
         Tessellator tessellator = Tessellator.instance;

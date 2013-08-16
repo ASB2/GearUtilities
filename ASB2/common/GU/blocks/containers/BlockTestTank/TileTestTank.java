@@ -47,8 +47,6 @@ public class TileTestTank extends TileBase implements IFluidHandler {
 
             if(!this.moveFluidBelow())
                 this.moveAround();
-
-            worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
         }
     }
 
@@ -141,21 +139,24 @@ public class TileTestTank extends TileBase implements IFluidHandler {
 
                         IFluidHandler fTile = (IFluidHandler)tile;
 
-                        for(FluidTankInfo info: fTile.getTankInfo(direction.getOpposite())) {
+                        if(fTile.getTankInfo(direction.getOpposite()) != null) {
 
-                            if(info.fluid != null) {
+                            for(FluidTankInfo info: fTile.getTankInfo(direction.getOpposite())) {
 
-                                if(info.fluid.isFluidEqual(this.fluidTank.getFluid())) {
+                                if(info.fluid != null) {
 
-                                    if(info.fluid.amount <= this.fluidTank.getFluidAmount()) {
+                                    if(info.fluid.isFluidEqual(this.fluidTank.getFluid())) {
 
-                                        itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided, true);
+                                        if(info.fluid.amount <= this.fluidTank.getFluidAmount()) {
+
+                                            itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided, true);
+                                        }
                                     }
                                 }
-                            }
-                            else {
+                                else {
 
-                                itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided, true);
+                                    itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided, true);
+                                }
                             }
                         }
                     }
@@ -169,24 +170,28 @@ public class TileTestTank extends TileBase implements IFluidHandler {
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 
+        worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
         return fluidTank.fill(resource, doFill);
     }
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
 
-        if(fluid != null) {
+        if(fluidTank != null) {
+            
+            if(fluid != null) {
 
-            if(fluidTank.getFluid() != null) {
+                if(fluidTank.getFluid() != null) {
 
-                if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
+                    if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
+
+                        return true;
+                    } 
+                }
+                else {
 
                     return true;
-                } 
-            }
-            else {
-
-                return true;
+                }
             }
         }
         return false;
@@ -199,6 +204,8 @@ public class TileTestTank extends TileBase implements IFluidHandler {
 
             return null;
         }
+
+        worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
         return fluidTank.drain(resource.amount, doDrain);
     }
 

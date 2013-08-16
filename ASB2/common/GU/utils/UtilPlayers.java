@@ -9,6 +9,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import GU.info.*;
 
 public class UtilPlayers {
@@ -50,8 +51,34 @@ public class UtilPlayers {
         return null;
     }
 
+    public static ForgeDirection getEntityDirection(EntityPlayer entity) {
+
+        int roatation = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+
+        if(entity.isSneaking()) {
+
+
+
+            if(entity.rotationPitch >= 90 && entity.rotationPitch <= 180) {
+
+                return ForgeDirection.DOWN;
+            }
+            else if(entity.rotationPitch <= 90) {
+
+                return ForgeDirection.UP;
+            }
+        }
+        switch (roatation) {
+
+            case 0: return ForgeDirection.SOUTH;
+            case 1: return ForgeDirection.WEST;
+            case 2: return ForgeDirection.NORTH;
+            case 3: return ForgeDirection.EAST;
+        }
+        return ForgeDirection.UNKNOWN;
+    }
     public static void damagePlayer(World world, int x, int y, int z, Entity entity, DamageSource source, int damage) {
-        
+
         if(entity instanceof EntityPlayer) {
 
             if(!(UtilPlayers.isSpecialPlayer(((EntityPlayer)entity).username))) {
@@ -63,7 +90,7 @@ public class UtilPlayers {
             entity.attackEntityFrom(source, damage); 
         }
     }
-    
+
     public static boolean hasItemStack(EntityPlayer player, ItemStack itemStack) {
 
         if(itemStack != null) {
