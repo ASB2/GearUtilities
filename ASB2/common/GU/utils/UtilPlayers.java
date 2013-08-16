@@ -51,13 +51,11 @@ public class UtilPlayers {
         return null;
     }
 
-    public static ForgeDirection getEntityDirection(EntityPlayer entity) {
+    public static ForgeDirection getEntityDirection(Entity entity, boolean useYaw) {
 
         int roatation = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
-        if(entity.isSneaking()) {
-
-
+        if(!useYaw) {
 
             if(entity.rotationPitch >= 90 && entity.rotationPitch <= 180) {
 
