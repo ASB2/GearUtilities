@@ -51,6 +51,33 @@ public class UtilPlayers {
         return null;
     }
 
+    public static int[] getPayerCoords(Entity entity) {
+
+        Double x = entity.posX;
+        Double y = entity.posY;
+        Double z = entity.posZ;
+
+        int xCoord = (int)x.intValue();
+        int yCoord = (int)y.intValue();
+        int zCoord = (int)z.intValue();
+
+        if(x.doubleValue() >= .7) {
+
+            xCoord = (int)x.intValue() + 1;
+        }
+
+        if(y.doubleValue() >= .7) {
+
+            yCoord = (int)y.intValue() + 1;
+        }
+
+        if(z.doubleValue() >= .7) {
+
+            zCoord = (int)z.intValue() + 1;
+        }
+        return new int[] {xCoord, yCoord, zCoord};
+    }
+
     public static ForgeDirection getEntityDirection(Entity entity, boolean useYaw) {
 
         int roatation = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
