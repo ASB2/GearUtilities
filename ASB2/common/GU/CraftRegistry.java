@@ -34,6 +34,16 @@ public class CraftRegistry {
             'Q', Block.blockNetherQuartz,
             'I', Item.ingotIron
         });
+        
+        GameRegistry.addRecipe(new ItemStack(ItemRegistry.ItemPhantomPlacer, 1), new Object[] {
+            "QIQ",
+            " S ",
+            " S ",
+            'S', Item.stick,
+            'Q', Block.blockNetherQuartz,
+            'I', Item.ingotIron
+        });
+        
 //        CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(new ItemStack(file.bioMass), new Object[]{"XXX", "XXX", "XXX", Character.valueOf('X'), "bioMass"}));
         GameRegistry.addShapelessRecipe(new ItemStack(Item.seeds),new ItemStack(Item.wheat));
         GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ItemTeleporter),new ItemStack(ItemRegistry.ItemTeleporter));

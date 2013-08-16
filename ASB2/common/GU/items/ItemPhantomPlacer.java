@@ -1,14 +1,14 @@
 package GU.items;
 
-import java.util.Random;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.BlockRegistry;
 import GU.utils.UtilBlock;
 import GU.utils.UtilDirection;
+import GU.utils.UtilMisc;
 import GU.utils.UtilPlayers;
 
 public class ItemPhantomPlacer extends ItemBase {
@@ -17,9 +17,12 @@ public class ItemPhantomPlacer extends ItemBase {
         super(id);
     }
 
-    public int idDropped(int par1, Random random, int par3)
-    {
-        return -1;
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {        
+        super.addInformation(itemStack, player, info, var1);
+        
+        info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Hold shift to place above or below you");
     }
 
     @Override
