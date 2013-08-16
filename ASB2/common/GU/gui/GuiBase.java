@@ -114,7 +114,7 @@ public abstract class GuiBase extends GuiContainer {
 
             if(isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
 
-                drawBarTooltip("Energy", "TCU", tileEntity.getPowerProvider().getPowerStored(), tileEntity.getPowerProvider().getPowerMax(), mouseX, mouseY);
+                drawBarTooltip("Energy", "TCU", (int)tileEntity.getPowerProvider().getPowerStored(), (int)tileEntity.getPowerProvider().getPowerMax(), mouseX, mouseY);
             }
         }
     } 

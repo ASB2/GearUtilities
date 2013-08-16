@@ -48,11 +48,11 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
         this.powerProvider.setPower(this.powerProvider.getPowerMax());
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
-            if(this.findLaserConnection(getOrientation(), 100) != null && this.powerProvider.canUsePower(10)) {
+            if(this.findLaserConnection(getOrientation(), 100) != null && this.powerProvider.canUsePower(10, ForgeDirection.UNKNOWN)) {
 
                 TileEntity tile = this.findLaserConnection(getOrientation(), 100);
 
-                this.powerProvider.usePower(10);
+                this.powerProvider.usePower(10, ForgeDirection.UNKNOWN);
                 TestEffect beam = new TestEffect(worldObj, new Vector3(xCoord + .5, yCoord + .9, zCoord + .5), new Vector3(tile.xCoord + .5, tile.yCoord + .5, tile.zCoord + .5));
                 UtilRender.renderFX(beam);
             }

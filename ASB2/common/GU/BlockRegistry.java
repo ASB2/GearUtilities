@@ -26,6 +26,8 @@ import GU.info.Variables;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import GU.blocks.containers.BlockFluidProvider.*;
 import GU.blocks.*;
+import GU.blocks.containers.BlockGeothermalGenerator.*;
+import GU.blocks.containers.BlockSpeedyFurnace.*;
 
 public class BlockRegistry {
 
@@ -49,6 +51,8 @@ public class BlockRegistry {
     public static ContainerBase BlockTestRender;
     public static ContainerBase BlockFluidProvider;
     public static BlockBase BlockPhantomBlock;
+    public static ContainerBase BlockSpeedyFurnace;
+    public static ContainerBase BlockGeothermalGenerator;
     
     private static int id = 500;
 
@@ -136,6 +140,14 @@ public class BlockRegistry {
         BlockPhantomBlock = new BlockPhantomBlock(config.getBlock("BlockPhantomBlock", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockPhantomBlock.setBlockName("BlockPhantomBlock");
         LanguageRegistry.addName(BlockPhantomBlock, "Phantom Block");
+        
+        BlockSpeedyFurnace = new BlockSpeedyFurnace(config.getBlock("BlockSpeedyFurance", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockSpeedyFurnace.setBlockName("BlockSpeedyFurnace");
+        LanguageRegistry.addName(BlockSpeedyFurnace, "Speedy Furnace");
+        
+        BlockGeothermalGenerator = new BlockGeothermalGenerator(config.getBlock("BlockGeothermalGenerator", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockGeothermalGenerator.setBlockName("BlockGeothermalGenerator");
+        LanguageRegistry.addName(BlockGeothermalGenerator, "Geothermal Generator");
     }
 
     public static void initTestBlocks(Configuration config) {

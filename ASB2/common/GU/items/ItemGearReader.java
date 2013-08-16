@@ -13,7 +13,6 @@ import GU.api.IDirectionSpecific;
 import GU.api.color.IVinillaColorable;
 import GU.api.power.IPowerMisc;
 import GU.info.Reference;
-import GU.info.Variables;
 import GU.utils.UtilDirection;
 import GU.utils.UtilPlayers;
 
@@ -50,9 +49,6 @@ public class ItemGearReader extends ItemBase {
                 IPowerMisc mTile = (IPowerMisc)tile;
 
                 if(mTile.getPowerProvider() != null) {
-
-                    if(player.isSneaking() && Variables.TESTING_MODE)
-                        mTile.getPowerProvider().gainPower(10);
 
                     UtilPlayers.sendChatToPlayer(player, mTile.getName()+" has "+mTile.getPowerProvider().getPowerStored()+" out of "+mTile.getPowerProvider().getPowerMax() + " " + Reference.POWER_NAME + " Stored");
                     UtilPlayers.sendChatToPlayer(player, mTile.getName()+ " State: " + mTile.getPowerProvider().getCurrentState());

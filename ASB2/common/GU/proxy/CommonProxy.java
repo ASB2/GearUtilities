@@ -5,11 +5,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import GU.GUTickHandler;
 import GU.blocks.containers.BlockCreationTable.ContainerCreationTable;
+import GU.blocks.containers.BlockCreationTable.TileCreationTable;
+import GU.blocks.containers.BlockGeothermalGenerator.ContainerGeothermalGenerator;
+import GU.blocks.containers.BlockGeothermalGenerator.TileGeothermalGenerator;
+import GU.blocks.containers.BlockSpeedyFurnace.ContainerSpeedyFurnace;
+import GU.blocks.containers.BlockSpeedyFurnace.TileSpeedyFurnace;
 import GU.info.Gui;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
-import GU.blocks.containers.BlockCreationTable.*;
 
 public class CommonProxy implements IGuiHandler {
 
@@ -31,6 +35,8 @@ public class CommonProxy implements IGuiHandler {
         switch(ID) {
 
             case Gui.CREATION_TABLE: return new ContainerCreationTable(player.inventory, (TileCreationTable)tile);
+            case Gui.SPEEDY_FURNACE: return new ContainerSpeedyFurnace(player.inventory, (TileSpeedyFurnace)tile);          
+            case Gui.GEOTHERMAL_GENERATOR: return new ContainerGeothermalGenerator(player.inventory, (TileGeothermalGenerator)tile);  
         }
         return null;
     }

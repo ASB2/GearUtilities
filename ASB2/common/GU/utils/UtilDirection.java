@@ -9,39 +9,14 @@ public class UtilDirection {
 
     public static int[] translateDirectionToCoords(ForgeDirection direction, TileEntity tile) {
 
-        switch(direction) {
-
-            case DOWN: {
-                return new int[]{tile.xCoord,tile.yCoord - 1,tile.zCoord};
-            }
-            case UP: {
-                return new int[]{tile.xCoord,tile.yCoord + 1,tile.zCoord};
-            }
-            case NORTH: {
-                return new int[]{tile.xCoord,tile.yCoord,tile.zCoord - 1};
-            }
-            case SOUTH: {
-                return new int[]{tile.xCoord,tile.yCoord,tile.zCoord + 1};
-            }
-            case WEST: {
-                return new int[]{tile.xCoord - 1,tile.yCoord,tile.zCoord};
-            }
-            case EAST: {
-                return new int[]{tile.xCoord + 1,tile.yCoord,tile.zCoord};
-            }
-            case UNKNOWN:{
-                return new int[]{tile.xCoord,tile.yCoord,tile.zCoord};
-            }
-        }
-
-        return new int[]{tile.xCoord,tile.yCoord,tile.zCoord};
+        return new int[]{tile.xCoord + direction.offsetX, tile.yCoord + direction.offsetY, tile.zCoord + direction.offsetZ};
     }
 
     public static int[] translateDirectionToCoords(ForgeDirection direction, int xCoord, int yCoord, int zCoord) {
 
         return new int[]{xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ};
     }
-
+    
     public static int translateDirectionToNumber(ForgeDirection direction) {
         
         switch(direction) {

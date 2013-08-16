@@ -40,9 +40,9 @@ public class TileTestTile extends TileBase implements IBlockCycle, ILaserRecieve
 
                     if(pTile.getPowerProvider() != null) {
 
-                        if(pTile.getPowerProvider().canGainPower(pTile.getPowerProvider().getPowerClass().getPowerValue())){
+                        if(pTile.getPowerProvider().canGainPower(pTile.getPowerProvider().getPowerClass().getPowerValue(), direction.getOpposite())){
 
-                            pTile.getPowerProvider().gainPower(pTile.getPowerProvider().getPowerClass().getPowerValue());
+                            pTile.getPowerProvider().gainPower(pTile.getPowerProvider().getPowerClass().getPowerValue(), direction.getOpposite());
                         }
                     }                            
                 }

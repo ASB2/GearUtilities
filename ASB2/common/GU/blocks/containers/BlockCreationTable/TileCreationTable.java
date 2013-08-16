@@ -28,7 +28,7 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
 
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
-
+            waitTimer.update();
         }
     }
 
@@ -78,7 +78,7 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     public ItemStack decrStackSize(int i, int j) {
 
         if(UtilInventory.decreaseSlotContents(this, i, j)) {
-            
+
             return this.getStackInSlot(i);
         }
         return null;
@@ -92,7 +92,7 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
-        
+
         tileItemStacks[i] = itemStack;        
     }
 
@@ -123,13 +123,13 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     @Override
     public void openChest() {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void closeChest() {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override

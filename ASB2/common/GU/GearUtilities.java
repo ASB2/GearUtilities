@@ -49,9 +49,10 @@ public final class GearUtilities {
 
     public GearUtilities() {
 
+        System.out.println("["+Reference.NAME + "] Beginning destruction of known world");
         if(Loader.isModLoaded("Natura") || Loader.isModLoaded("TConstruct")) {
 
-            System.out.println("Joining destruction of know world");
+            System.out.println("["+Reference.NAME + "] Joining mods in world desturction");
         }
     }
 

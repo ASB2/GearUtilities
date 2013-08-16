@@ -1,6 +1,7 @@
 package GU.api.power;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.ForgeDirection;
 
 public abstract class PowerProvider {
 
@@ -9,8 +10,8 @@ public abstract class PowerProvider {
     protected State currentState;
     protected PowerClass powerClass;
 
-    protected int powerStored = 0;
-    protected int powerMax;
+    protected float powerStored = 0;
+    protected float powerMax;
 
     public PowerProvider(int maximumPower, PowerClass powerClass) {
 
@@ -23,12 +24,12 @@ public abstract class PowerProvider {
         
     }
 
-    public int getPowerStored() {
+    public float getPowerStored() {
 
         return powerStored;
     }
 
-    public int getPowerMax() {
+    public float getPowerMax() {
 
         return powerMax;
     }
@@ -75,7 +76,7 @@ public abstract class PowerProvider {
         return currentState;
     }
 
-    public boolean gainPower(int PowerGained) {
+    public boolean gainPower(float PowerGained, ForgeDirection direction) {
 
         if(this.getPowerMax() - this.getPowerStored() >= PowerGained) {
 
@@ -86,7 +87,7 @@ public abstract class PowerProvider {
         return false;
     }
 
-    public boolean usePower(int PowerUsed) {
+    public boolean usePower(float PowerUsed, ForgeDirection direction) {
 
         if(this.getPowerStored() >= PowerUsed) {
 
@@ -97,12 +98,12 @@ public abstract class PowerProvider {
         return false;
     }
 
-    public void setPower(int newPower) {        
+    public void setPower(float newPower) {        
 
         this.powerStored = newPower;
     }
 
-    public void setMaxPower(int newMaxPower) {
+    public void setMaxPower(float newMaxPower) {
 
         this.powerMax = newMaxPower;
     }
@@ -123,7 +124,7 @@ public abstract class PowerProvider {
         return false;
     }
 
-    public boolean canGainPower(int power) {
+    public boolean canGainPower(float power, ForgeDirection direction) {
 
         if(this.getPowerMax() - this.getPowerStored() >= power) {
 
@@ -132,7 +133,7 @@ public abstract class PowerProvider {
         return false; 
     }
 
-    public boolean canUsePower(int power) {
+    public boolean canUsePower(float power, ForgeDirection direction) {
 
         if(this.getPowerStored() >= power) {
 
@@ -143,13 +144,13 @@ public abstract class PowerProvider {
 
     public void readFromNBT(NBTTagCompound tagCompound) {
 
-        powerStored = tagCompound.getInteger("powerStored");
-        powerMax = tagCompound.getInteger("powerMax");
+        powerStored = tagCompound.getFloat("powerStored");
+        powerMax = tagCompound.getFloat("powerMax");
     }
 
     public void writeToNBT(NBTTagCompound tagCompound) {
 
-        tagCompound.setInteger("powerStored", powerStored);
-        tagCompound.setInteger("powerMax", powerMax);
+        tagCompound.setFloat("powerStored", powerStored);
+        tagCompound.setFloat("powerMax", powerMax);
     }
 }

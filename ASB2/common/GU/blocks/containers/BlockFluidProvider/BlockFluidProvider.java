@@ -38,7 +38,7 @@ public class BlockFluidProvider extends ContainerBase {
 
             TileFluidProvider tank = (TileFluidProvider) world.getBlockTileEntity(x, y, z);
             
-            if(tank.fluidStack != null) {
+            if(tank.fluidTank.getFluid() != null) {
                 
                 UtilPlayers.sendChatToPlayer(entityplayer, "Current Fluids is: " + tank.fluidStack.getFluid().getLocalizedName());
             }

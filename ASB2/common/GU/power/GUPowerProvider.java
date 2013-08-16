@@ -44,7 +44,7 @@ public class GUPowerProvider extends PowerProvider {
 
                                     if(tileToAffectCasted.getPowerProvider().getCurrentState() == State.SOURCE) {
 
-                                        UtilPower.transferPower(tileToAffectCasted, (IPowerMisc)tile);
+                                        UtilPower.transferPower(tileToAffectCasted, direction, (IPowerMisc)tile);
                                     }
                                 }
                                 break;
@@ -53,7 +53,7 @@ public class GUPowerProvider extends PowerProvider {
 
                                     if(tileToAffectCasted.getPowerProvider().getCurrentState() == State.SINK) {
 
-                                        UtilPower.transferPower((IPowerMisc)tile, tileToAffectCasted);
+                                        UtilPower.transferPower((IPowerMisc)tile, direction, tileToAffectCasted);
                                     }
                                 }
                                 break;

@@ -4,6 +4,8 @@ import net.minecraftforge.common.Configuration;
 
 public class Variables {
 
+    public static int GEOTHERMAL_GENERATOR_POWER_PER_BUCKET = 100;
+    
     public static boolean MODDER_APPRECATION = true;
     public static boolean TESTING_MODE = true;
 

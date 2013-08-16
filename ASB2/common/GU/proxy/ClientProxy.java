@@ -7,8 +7,10 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import GU.BlockRegistry;
 import GU.ItemRegistry;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
+import GU.blocks.containers.BlockGeothermalGenerator.GuiGeothermalGenerator;
 import GU.blocks.containers.BlockLamp.LampRenderer;
 import GU.blocks.containers.BlockLamp.TileLamp;
+import GU.blocks.containers.BlockSpeedyFurnace.GuiSpeedyFurnace;
 import GU.blocks.containers.BlockTestLaser.TestLaserRenderer;
 import GU.blocks.containers.BlockTestLaser.TileTestLaser;
 import GU.blocks.containers.BlockTestRender.TestRenderRenderer;
@@ -58,6 +60,8 @@ public class ClientProxy extends CommonProxy {
             switch(ID) {
 
                 case Gui.CREATION_TABLE: return new GuiCreationTable(player.inventory, tile);
+                case Gui.SPEEDY_FURNACE: return new GuiSpeedyFurnace(player.inventory, tile);
+                case Gui.GEOTHERMAL_GENERATOR: return new GuiGeothermalGenerator(player.inventory, tile);
             }
         }
         return null;

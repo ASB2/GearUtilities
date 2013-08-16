@@ -9,19 +9,21 @@ public class UtilPower {
     
     public static int TICKSTOPOWER = 10;
 
-    public static boolean transferPower(IPowerMisc powerSource, IPowerMisc powerSink) {
+    public static boolean transferPower(IPowerMisc powerSource, ForgeDirection direction, IPowerMisc powerSink) {
 
+        ForgeDirection opposite = direction.getOpposite();
+        
         int amountOfPower = powerSource.getPowerProvider().getPowerClass().getPowerValue();
 
         if (powerSink.getPowerProvider() != null && powerSource.getPowerProvider() != null) {
 
-            if(powerSink.getPowerProvider().canGainPower(amountOfPower)) {
+            if(powerSink.getPowerProvider().canGainPower(amountOfPower, direction)) {
 
-                if(powerSource.getPowerProvider().canUsePower(amountOfPower)) {
+                if(powerSource.getPowerProvider().canUsePower(amountOfPower, opposite)) {
                     
-                    if(powerSink.getPowerProvider().gainPower(amountOfPower)) {
+                    if(powerSink.getPowerProvider().gainPower(amountOfPower, direction)) {
 
-                        powerSource.getPowerProvider().usePower(amountOfPower);
+                        powerSource.getPowerProvider().usePower(amountOfPower, opposite);
 
                         return true;
                     }
@@ -31,17 +33,19 @@ public class UtilPower {
         return false;
     }
     
-    public static boolean transferPower(IPowerMisc powerSource, IPowerMisc powerSink, int amountOfPower) {
+    public static boolean transferPower(IPowerMisc powerSource, ForgeDirection direction, IPowerMisc powerSink, float amountOfPower) {
 
+        ForgeDirection opposite = direction.getOpposite();
+        
         if (powerSink.getPowerProvider() != null && powerSource.getPowerProvider() != null) {
 
-            if(powerSink.getPowerProvider().canGainPower(amountOfPower)) {
+            if(powerSink.getPowerProvider().canGainPower(amountOfPower, direction)) {
 
-                if(powerSource.getPowerProvider().canUsePower(amountOfPower)) {
+                if(powerSource.getPowerProvider().canUsePower(amountOfPower, opposite)) {
                     
-                    if(powerSink.getPowerProvider().gainPower(amountOfPower)) {
+                    if(powerSink.getPowerProvider().gainPower(amountOfPower, direction)) {
 
-                        powerSource.getPowerProvider().usePower(amountOfPower);
+                        powerSource.getPowerProvider().usePower(amountOfPower, opposite);
 
                         return true;
                     }

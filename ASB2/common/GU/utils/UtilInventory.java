@@ -51,6 +51,25 @@ public class UtilInventory {
         return false;
     }
 
+    public static boolean addItemStackToSlot(IInventory inventory, ItemStack stack, int slot) {
+        
+        if(stack != null && inventory != null) {
+            
+            if(inventory.getStackInSlot(slot) == null && stack.isItemEqual(inventory.getStackInSlot(slot))) {
+                
+                ItemStack temp = stack.copy();
+                
+                temp.stackSize =+ inventory.getStackInSlot(slot).stackSize;
+                
+                if(temp.stackSize <= inventory.getInventoryStackLimit() && temp.stackSize <= temp.getMaxStackSize()) {
+                    
+                    inventory.setInventorySlotContents(slot, temp);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public static boolean doesInventoryHasStack(IInventory inventory, ItemStack stack) {
 
         if(stack != null) {

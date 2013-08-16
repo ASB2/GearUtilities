@@ -79,7 +79,7 @@ public final class UtilFluid {
 
         ForgeDirection oppositeDirection = from.getOpposite();
 
-        if(fluid != null && destination != null) {
+        if(fluid != null && destination != null && fluid != null) {
 
             for(FluidTankInfo info: destination.getTankInfo(from)) {
 
