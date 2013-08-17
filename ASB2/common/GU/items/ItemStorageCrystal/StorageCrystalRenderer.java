@@ -1,11 +1,10 @@
 package GU.items.ItemStorageCrystal;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
@@ -33,7 +32,7 @@ public class StorageCrystalRenderer implements IItemRenderer {
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
         ItemStorageCrystal crystal = (ItemStorageCrystal)item.getItem();
-        Tessellator tess = Tessellator.instance;
+        Tessellator t = Tessellator.instance;
 
         switch(type) {
 
@@ -50,13 +49,29 @@ public class StorageCrystalRenderer implements IItemRenderer {
                     FluidStack fluid = crystal.getFluidStack(item);
 
                     if(fluid.getFluid().getIcon() != null) {
+
+                        Icon texture = fluid.getFluid().getIcon();
+
+                        double uMin = texture.getInterpolatedU(0.0D);
+                        double uMax = texture.getInterpolatedU(16.0D);
+                        double vMin = texture.getInterpolatedV(0.0D);
+                        double vMax = texture.getInterpolatedV(16.0D);
                         
-                        TextureManager engine = Minecraft.getMinecraft().renderEngine;
+                        double vHeight = vMax - vMin;
                         
-                        ItemRenderer.renderItemIn2D(tess, 1, 1, 1, 1, 1, 1, .5f);
+                        t.startDrawingQuads();
+                        t.addVertexWithUV(0, 0, 0, uMax, vMin);
+                        t.addVertexWithUV(1, 0, 0, uMin, vMin);
+                        t.addVertexWithUV(0, 1, 0, uMin, vMin + vHeight * 1);
+                        t.addVertexWithUV(1, 1, 1, uMax, vMin + vHeight * 1);
+                        t.draw();
                     }
                 }
-
+                else {
+                    
+                    crystal.setFluidStack(item, new FluidStack(FluidRegistry.WATER, 1000));
+                }
+                //                TileEntityRenderer.instance.renderTileEntityAt(this.teTank, 0.0D, 0.0D, 0.0D, 0.0F);
                 GL11.glEnable(GL11.GL_LIGHTING);
                 GL11.glPopMatrix();
                 return;
@@ -64,19 +79,19 @@ public class StorageCrystalRenderer implements IItemRenderer {
 
             case EQUIPPED: {    
 
-//                renderItemSwitched(type, 0f, 0f + 1, 0f, .7F);
+                //                renderItemSwitched(type, 0f, 0f + 1, 0f, .7F);
                 return;
             }
 
             case INVENTORY: {
 
-//                renderItemSwitched(type, 0f, 0f, 0f, .6F);
+                //                renderItemSwitched(type, 0f, 0f, 0f, .6F);
                 return;
             }
 
             case EQUIPPED_FIRST_PERSON: {
 
-//                renderItemSwitched(type, 0f - .5F, 0f, 0f + .5F, .5F);
+                //                renderItemSwitched(type, 0f - .5F, 0f, 0f + .5F, .5F);
                 return;
             }
 

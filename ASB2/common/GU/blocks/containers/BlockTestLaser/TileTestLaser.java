@@ -258,7 +258,7 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
     @Override
     public String getInvName() {
 
-        return "Not Set";
+        return "Test Laser";
     }
 
     @Override

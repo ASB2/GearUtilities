@@ -187,6 +187,20 @@ public class UtilDirection {
         return world.getBlockId(coords[0], coords[1], coords[2]);
     }
 
+    public static int translateDirectionToBlockMeta(World world, ForgeDirection direction, int xCoord, int yCoord, int zCoord) {
+
+        int[] coords = UtilDirection.translateDirectionToCoords(direction, xCoord, yCoord, zCoord);
+
+        return world.getBlockMetadata(coords[0], coords[1], coords[2]);
+    }
+
+    public static int translateDirectionToBlockMeta(World world, ForgeDirection direction, TileEntity tile) {
+
+        int[] coords = UtilDirection.translateDirectionToCoords(direction, tile.xCoord, tile.yCoord, tile.zCoord);
+
+        return world.getBlockMetadata(coords[0], coords[1], coords[2]);
+    }
+    
     public static boolean translateDirectionToIsBlockSolid(World world, ForgeDirection direction, int xCoord, int yCoord, int zCoord) {
 
         int[] coords = UtilDirection.translateDirectionToCoords(direction, xCoord, yCoord, zCoord);

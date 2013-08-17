@@ -4,12 +4,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.util.Icon;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import GU.api.power.IPowerMisc;
 import GU.info.Gui;
+import GU.info.Reference;
 import GU.utils.UtilRender;
 
 public abstract class GuiBase extends GuiContainer {
@@ -19,7 +22,7 @@ public abstract class GuiBase extends GuiContainer {
     public final int xSizeOfTexture = 176;
     public final int ySizeOfTexture = 166;
     public final int powerBarScale = 75;
-    
+
     protected int posX = (width - xSizeOfTexture) / 2;
     protected int posY = (height - ySizeOfTexture) / 2;
 
@@ -52,60 +55,81 @@ public abstract class GuiBase extends GuiContainer {
             addSlot(posX + container.slotList.get(i).xDisplayPosition - 1, posY + container.slotList.get(i).yDisplayPosition - 1);
         }
     }
-        
-    public void addSlot(int x, int y) {
 
+    public void addSlot(int x, int y) {
+        
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 176, 32, 18, 18);
     }
 
     public void renderBigSlot(int x, int y) {
-
+        
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 226, 4, 26, 26);
     }
 
     public void renderFlame(int x, int y) {
-
+        
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 191, 0, 14, 14);
     }
 
     public void renderBurningFlame(int x, int y) {
-
+        
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 176, 0, 14, 14);
     }
 
     public void scaleFlame(int x, int y,int scale) {
-
+        
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y + 14 - scale, 191, 0, 14, scale);
     }
 
     public void scaleBurningFlame(int x, int y,int scale) {
-
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y + 14 - scale, 176, 0 , 14, scale);
     }
 
     public void addTank(int x, int y) {
-
+        
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 176, 123, 18, 71);
     }
 
-    public void renderRightArrow(int x, int y) {
+    public void scaleLiquid(int x, int y, int scale, Icon icon) {
+        
+//        Tessellator tessellator = Tessellator.instance;
+//        tessellator.startDrawingQuads();
+//        tessellator.addVertexWithUV((double) (par1 + 0), (double) (par2 + par5), (double) this.zLevel, (double) par3Icon.getMinU(), (double) par3Icon.getMaxV());
+//        tessellator.addVertexWithUV((double) (par1 + par4), (double) (par2 + par5), (double) this.zLevel, (double) par3Icon.getMaxU(), (double) par3Icon.getMaxV());
+//        tessellator.addVertexWithUV((double) (par1 + par4), (double) (par2 + 0), (double) this.zLevel, (double) par3Icon.getMaxU(), (double) par3Icon.getMinV());
+//        tessellator.addVertexWithUV((double) (par1 + 0), (double) (par2 + 0), (double) this.zLevel, (double) par3Icon.getMinU(), (double) par3Icon.getMinV());
+//        tessellator.draw();
+    }
 
+    public void renderRightArrow(int x, int y) {
+        
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 200, 14, 24, 17);
     }
 
     public void renderLeftArrow(int x, int y) {
-
+        
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 195, 32, 24, 17);
     }
 
     public void addPowerTank(int x, int y) {
-
+        
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 176, 51, 18, 71);
     }
 
     public void scalePower(int x, int y, int scale) {
 
-        drawTexturedModalRect(x, y + 71 - scale, 194, 51, 18, scale);
+        UtilRender.renderTexture(new ResourceLocation(""));
+        drawTexturedModalRect(x, y + 71 - scale + 4, 194, 51, 18, scale);
     }
 
     protected void drawTooltips(IPowerMisc tileEntity, int mouseX, int mouseY, int coordX, int coordY, int maxX, int maxY) {
@@ -118,6 +142,14 @@ public abstract class GuiBase extends GuiContainer {
             }
         }
     } 
+
+    protected void drawTooltips(int fluidMax, int fluidAmount, String fluidName, int mouseX, int mouseY, int coordX, int coordY, int maxX, int maxY) {
+
+        if(isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
+
+            drawBarTooltip("Fluid: " + fluidName, "mB", fluidAmount, fluidMax, mouseX, mouseY);
+        }
+    }
 
     protected void drawBarTooltip(String name, String unit, int value, int max, int x, int y) {
 

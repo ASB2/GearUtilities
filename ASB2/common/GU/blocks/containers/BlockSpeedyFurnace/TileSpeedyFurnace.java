@@ -20,7 +20,9 @@ public class TileSpeedyFurnace extends TileBase implements IInventory {
 
     public void updateEntity() {
 
-        if(this.getInputSlot()!= null && FurnaceRecipes.smelting().getSmeltingResult(this.getInputSlot()) != null) {
+        UtilInventory.decreaseSlotContents(this, 0, 1);
+        
+        if(this.getInputSlot() != null && FurnaceRecipes.smelting().getSmeltingResult(this.getInputSlot()) != null) {
 
             if(burnTime >= 200) {
 
@@ -36,7 +38,10 @@ public class TileSpeedyFurnace extends TileBase implements IInventory {
 
                 if(this.getFuelSlot() != null && TileEntityFurnace.getItemBurnTime(this.getFuelSlot()) > 0) {
 
-                    burnTime = TileEntityFurnace.getItemBurnTime(this.getFuelSlot());
+                    if(UtilInventory.decreaseSlotContents(this, 2, 1)) {
+
+                        burnTime = TileEntityFurnace.getItemBurnTime(this.getFuelSlot());
+                    }   
                 }
             }
         }

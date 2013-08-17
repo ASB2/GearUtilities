@@ -54,7 +54,10 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
 
         ItemStack cItem = player.inventory.getCurrentItem();
 
-        UtilItemStack.setNBTTagInt(cItem, "length", UtilItemStack.getNBTTagInt(cItem, "length") - 1);
+        if( UtilItemStack.getNBTTagInt(cItem, "length") > 0) {
+            
+            UtilItemStack.setNBTTagInt(cItem, "length", UtilItemStack.getNBTTagInt(cItem, "length") - 1);
+        }
     }
 
     public void incrementLength(EntityPlayer player) {
@@ -83,9 +86,9 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
                 if(world.getBlockTileEntity(x, y,  z) == null) {
 
                     if(world.getBlockId(x, y, z) == blockToBreak || (world.getBlockId(x, y, z) == Block.oreRedstone.blockID && blockToBreak == Block.oreRedstoneGlowing.blockID)) {
-                        
+
                         if(UtilItemStack.damageItem(player, player.inventory.getCurrentItem(), 1)) {
-                            
+
                             UtilBlock.breakAndAddToInventory(player.inventory, world, x, y, z, 5, true);
                             return true;
                         }

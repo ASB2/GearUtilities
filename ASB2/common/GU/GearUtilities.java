@@ -71,6 +71,8 @@ public final class GearUtilities {
         Variables.updateVariables(config);
         ItemRegistry.init(config);
         BlockRegistry.init(config);
+        
+        MinecraftForge.EVENT_BUS.register(new FluidRegistry());
         FluidRegistry.initFluids();
         
         MinecraftForge.EVENT_BUS.register(new MiscRegistry());

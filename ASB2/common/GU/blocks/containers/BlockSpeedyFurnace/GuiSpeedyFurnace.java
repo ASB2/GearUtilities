@@ -18,5 +18,7 @@ public class GuiSpeedyFurnace extends GuiBase {
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
 
         this.renderDefaultGui();
+        this.renderBigSlot(posX + 111, posY + 27);
+        this.renderRightArrow(posX + 79, posY + 32);
     }
 }

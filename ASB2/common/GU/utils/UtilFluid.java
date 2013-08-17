@@ -40,15 +40,15 @@ public final class UtilFluid {
                                 }
                             }
                         }
-                        
+
                         else if(fillExtra) {
-                            
+
                             FluidStack stackTwo = fluidStack.copy();
-                            
+
                             if(stackTwo.amount >= info.capacity - info.fluid.amount) {
-                                
+
                                 stackTwo.amount = info.capacity - info.fluid.amount;
-                                
+
                                 if(destination.canFill(oppositeDirection, stackTwo.getFluid())) {
 
                                     if(source.canDrain(from, stackTwo.getFluid())) {
@@ -124,16 +124,19 @@ public final class UtilFluid {
 
         if(fluid != null && destination != null) {
 
-            for(FluidTankInfo info: destination.getTankInfo(from)) {
+            if(destination.getTankInfo(from) != null) {
+                
+                for(FluidTankInfo info: destination.getTankInfo(from)) {
 
-                if(info.fluid != null) {
+                    if(info.fluid != null) {
 
-                    if(info.fluid.isFluidEqual(fluid)) {
+                        if(info.fluid.isFluidEqual(fluid)) {
 
-                        if(destination.canDrain(oppositeDirection, fluid.getFluid())) {
+                            if(destination.canDrain(oppositeDirection, fluid.getFluid())) {
 
-                            destination.drain(oppositeDirection, fluid, true);
-                            return true;
+                                destination.drain(oppositeDirection, fluid, true);
+                                return true;
+                            }
                         }
                     }
                 }

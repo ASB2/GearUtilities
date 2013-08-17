@@ -3,6 +3,7 @@ package GU.items.ItemStorageCrystal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.Icon;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import GU.items.ItemBase;
@@ -15,6 +16,12 @@ public class ItemStorageCrystal extends ItemBase {
         super(id);
     }
 
+    @Override
+    public Icon getIconFromDamage(int damage) {
+        
+        return GU.FluidRegistry.LiquidDiamond.getIcon();
+    }
+    
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
