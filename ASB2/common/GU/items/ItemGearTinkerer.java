@@ -21,7 +21,7 @@ public class ItemGearTinkerer extends ItemBase {
 
         if(tile != null && tile instanceof IWrenchable) {
 
-            ((IWrenchable)tile).triggerBlock(world, player, itemStack, x, y, z, side);
+            ((IWrenchable)tile).triggerBlock(world, player.isSneaking(), itemStack, x, y, z, side);
             return true;
         }
         else { 
@@ -30,7 +30,7 @@ public class ItemGearTinkerer extends ItemBase {
             
             if(block instanceof IWrenchable) {
                 
-                ((IWrenchable)block).triggerBlock(world, player, itemStack, x, y, z, side);
+                ((IWrenchable)block).triggerBlock(world, player.isSneaking(), itemStack, x, y, z, side);
                 return true;
             }
         }

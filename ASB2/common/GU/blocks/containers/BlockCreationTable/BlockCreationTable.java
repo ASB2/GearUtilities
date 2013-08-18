@@ -1,6 +1,5 @@
 package GU.blocks.containers.BlockCreationTable;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,9 +7,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import GU.GearUtilities;
 import GU.blocks.containers.ContainerBase;
-import GU.info.*;
-import GU.*;
+import GU.info.Gui;
+import GU.info.Reference;
 
 public class BlockCreationTable extends ContainerBase {
 
@@ -22,12 +22,12 @@ public class BlockCreationTable extends ContainerBase {
         super(id, material);
 
         this.registerTile(TileCreationTable.class);
-        useStandardRendering = true;
+        useStandardRendering = false;
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitX, float hitY, float hitZ, float par9) 
-    {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitX, float hitY, float hitZ, float par9) {
+        
         if(!player.isSneaking()) {
 
             player.openGui(GearUtilities.instance, Gui.CREATION_TABLE, world, x, y, z);
@@ -39,6 +39,7 @@ public class BlockCreationTable extends ContainerBase {
     @Override
     public void registerIcons(IconRegister iconRegistry) {
 
+        top = iconRegistry.registerIcon(Reference.MODDID + ":BlockCreationTableTop");
         sides = iconRegistry.registerIcon(Reference.MODDID + ":BlockCreationTableSide");
         bottom = iconRegistry.registerIcon(Reference.MODDID + ":DefaultTexture");
     }
@@ -49,7 +50,7 @@ public class BlockCreationTable extends ContainerBase {
         switch(side) {
 
             case 0: return bottom;
-            case 1: return Block.workbench.getIcon(side, metadata);
+            case 1: return top;
             default: return sides;
         }
     }

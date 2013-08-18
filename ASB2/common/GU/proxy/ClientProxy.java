@@ -23,6 +23,7 @@ import GU.info.Variables;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import GU.blocks.containers.BlockCreationTable.*;
 
 public class ClientProxy extends CommonProxy {
 
@@ -36,8 +37,8 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileLamp.class, new LampRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockLamp.blockID, new LampRenderer());
 
-//        ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class, new CreationTableRenderer());
-//        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class, new CreationTableRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());
 
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
         if(Variables.TESTING_MODE) {

@@ -1,10 +1,8 @@
 package GU.blocks.containers.BlockCreationTable;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
@@ -12,7 +10,7 @@ import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.power.GUPowerProvider;
-import GU.utils.*;
+import GU.utils.UtilInventory;
 
 public class TileCreationTable extends TileBase implements IPowerMisc, IInventory {
 
@@ -36,18 +34,6 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     public void trigger(int id) {
 
         ((GUPowerProvider)this.getPowerProvider()).movePower(worldObj, xCoord, yCoord, zCoord);
-    }
-
-    @Override
-    public void triggerBlock(World world, EntityLivingBase player, ItemStack itemStack, int x, int y, int z, int side) {
-
-        super.triggerBlock(world, player, itemStack, side, side, side, side);     
-    }
-
-    @Override
-    public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
-
-        super.triggerBlock(world, isSneaking, itemStack, side, side, side, side);            
     }
 
     @Override

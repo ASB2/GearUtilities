@@ -7,6 +7,7 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
+import GU.info.Models;
 import GU.info.Textures;
 import GU.utils.UtilRender;
 
@@ -15,16 +16,17 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
-        if(!(tileentity instanceof TileCreationTable)) {
+        if(tileentity instanceof TileCreationTable) {
 
             GL11.glPushMatrix();      
             GL11.glDisable(GL11.GL_LIGHTING);
-            UtilRender.renderTexture(Textures.CREATION_TABLE);
-
-            GL11.glTranslated(x + .5f,  y + .37f,  z + .5f);
-
-//            Models.ModelCreationTable.render();
             
+            GL11.glTranslated(x + .5f,  y + .5f,  z + .5f);       
+            GL11.glScalef(.5f, .5f, .5f);
+
+            UtilRender.renderTexture(Textures.CREATION_TABLE);     
+            Models.ModelCreationTable.renderAll();
+
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();
         }
@@ -61,7 +63,7 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
 
             case INVENTORY: {
 
-                renderItemSwitched(type, 0f, 0f, 0f, 1F);
+                renderItemSwitched(type, 0f, 0f, 0f, .6F);
                 return;
             }
 
@@ -79,13 +81,12 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
-        
+
         GL11.glTranslatef(x,  y,  z);
         GL11.glScalef(scale, scale, scale);
 
         UtilRender.renderTexture(Textures.CREATION_TABLE);
-
-//        Models.ModelCreationTable.render();
+        Models.ModelCreationTable.renderAll();
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
