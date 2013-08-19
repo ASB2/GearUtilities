@@ -111,6 +111,7 @@ public final class GearUtilities {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
 
+        FluidRegistry.registerFluidContainers();
         CraftRegistry.init();
     }
 }

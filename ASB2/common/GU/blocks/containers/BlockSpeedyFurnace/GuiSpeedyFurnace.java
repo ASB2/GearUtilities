@@ -6,6 +6,7 @@ import GU.gui.GuiBase;
 
 public class GuiSpeedyFurnace extends GuiBase {
 
+    @SuppressWarnings("unused")
     private TileSpeedyFurnace tileEntity;
 
     public GuiSpeedyFurnace(InventoryPlayer inventory, TileEntity tile) {

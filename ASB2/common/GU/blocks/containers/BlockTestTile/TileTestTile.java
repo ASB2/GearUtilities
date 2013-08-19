@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import GU.api.laser.ILaserReciever;
 import GU.api.power.IPowerMisc;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
@@ -14,7 +13,7 @@ import GU.utils.UtilDirection;
 import GU.utils.UtilRender;
 import GU.vector.Vector3;
 
-public class TileTestTile extends TileBase implements IBlockCycle, ILaserReciever {
+public class TileTestTile extends TileBase implements IBlockCycle {
 
     public TileTestTile() {
 

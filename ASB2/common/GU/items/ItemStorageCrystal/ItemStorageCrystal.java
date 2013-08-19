@@ -1,5 +1,6 @@
 package GU.items.ItemStorageCrystal;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -16,12 +17,20 @@ public class ItemStorageCrystal extends ItemBase {
         super(id);
     }
 
-    @Override
-    public Icon getIconFromDamage(int damage) {
-        
-        return GU.FluidRegistry.LiquidDiamond.getIcon();
+    public Icon getIcon(ItemStack stack, int pass) {
+
+        if(this.getFluidStack(stack) != null) {
+
+            if(this.getFluidStack(stack).getFluid().getIcon() != null) {
+
+                if(pass == 0)
+                return this.getFluidStack(stack).getFluid().getStillIcon();
+            }
+        }
+
+        return super.getIcon(stack, pass);
     }
-    
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
@@ -30,11 +39,11 @@ public class ItemStorageCrystal extends ItemBase {
 
         if(this.getFluidStack(itemStack) != null) {
 
-            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Stored: " + this.getFluidStack(itemStack).getFluid().getName());
-            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Amount: " + this.getFluidStack(itemStack).amount);
+            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Stored: " + UtilMisc.capitilizeFirst(this.getFluidStack(itemStack).getFluid().getName()));
+            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Amount: " + UtilMisc.capitilizeFirst(Integer.toString(this.getFluidStack(itemStack).amount)));
         }
         else {
-
+            
             info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Stored: None");
             info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Amount: 0");
         }
@@ -72,7 +81,7 @@ public class ItemStorageCrystal extends ItemBase {
             }
         }
         else {
-            
+
             UtilItemStack.getTAGfromItemstack(itemStack).setInteger("fluidAmount", 0);
             UtilItemStack.getTAGfromItemstack(itemStack).setString("fluidName", "");
         }

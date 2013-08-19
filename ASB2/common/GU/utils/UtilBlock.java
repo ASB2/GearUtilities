@@ -69,13 +69,13 @@ public class UtilBlock {
 
                             if(dropExtra) {
 
-                                UtilBlock.spawnItemStackEntity(world, x, y, z, item, 0);
+                                UtilBlock.spawnItemStackEntity(world, x, y, z, item, 1);
                             }
                         }
                     }
                     else if(dropExtra) {
                         
-                        UtilBlock.spawnItemStackEntity(world, x, y, z, item, 0);
+                        UtilBlock.spawnItemStackEntity(world, x, y, z, item, 1);
                     }
                 }
             }

@@ -19,7 +19,6 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
         if(tileentity instanceof TileCreationTable) {
 
             GL11.glPushMatrix();      
-            GL11.glDisable(GL11.GL_LIGHTING);
             
             GL11.glTranslated(x + .5f,  y + .5f,  z + .5f);       
             GL11.glScalef(.5f, .5f, .5f);
@@ -27,7 +26,6 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
             UtilRender.renderTexture(Textures.CREATION_TABLE);     
             Models.ModelCreationTable.renderAll();
 
-            GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();
         }
     }

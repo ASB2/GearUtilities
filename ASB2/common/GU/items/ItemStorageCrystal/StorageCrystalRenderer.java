@@ -18,14 +18,14 @@ public class StorageCrystalRenderer implements IItemRenderer {
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
         // TODO Auto-generated method stub
-        return true;
+        return false;
     }
 
     @Override
     public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
             ItemRendererHelper helper) {
         // TODO Auto-generated method stub
-        return true;
+        return false;
     }
 
     @Override
@@ -52,19 +52,7 @@ public class StorageCrystalRenderer implements IItemRenderer {
 
                         Icon texture = fluid.getFluid().getIcon();
 
-                        double uMin = texture.getInterpolatedU(0.0D);
-                        double uMax = texture.getInterpolatedU(16.0D);
-                        double vMin = texture.getInterpolatedV(0.0D);
-                        double vMax = texture.getInterpolatedV(16.0D);
                         
-                        double vHeight = vMax - vMin;
-                        
-                        t.startDrawingQuads();
-                        t.addVertexWithUV(0, 0, 0, uMax, vMin);
-                        t.addVertexWithUV(1, 0, 0, uMin, vMin);
-                        t.addVertexWithUV(0, 1, 0, uMin, vMin + vHeight * 1);
-                        t.addVertexWithUV(1, 1, 1, uMax, vMin + vHeight * 1);
-                        t.draw();
                     }
                 }
                 else {

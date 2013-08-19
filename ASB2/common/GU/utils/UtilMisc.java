@@ -13,6 +13,13 @@ public class UtilMisc {
      * Side 5 == Side facing East = Left
      */
 
+    public static String capitilizeFirst(String string) {
+        
+        char first = string.toCharArray()[0];
+        string.toCharArray()[0] = Character.toUpperCase(first);
+        return string;
+    }
+    
     public static boolean isValueInArray(Object[] object, Object value) {
 
         for(int i = 0; i < object.length; i++) {

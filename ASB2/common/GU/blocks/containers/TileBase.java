@@ -1,7 +1,5 @@
 package GU.blocks.containers;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -9,7 +7,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
-import GU.api.IDirectionSpecific;
 import GU.api.IWrenchable;
 import GU.api.color.EnumColor;
 import GU.api.color.IVinillaColorable;
@@ -19,7 +16,7 @@ import GU.api.wait.Wait;
 import GU.utils.UtilBlock;
 import GU.utils.UtilDirection;
 
-public abstract class TileBase extends TileEntity implements IVinillaColorable, IDirectionSpecific, IWaitTrigger, IWrenchable {
+public abstract class TileBase extends TileEntity implements IVinillaColorable, IWaitTrigger, IWrenchable {
 
     protected PowerProvider powerProvider;
     protected ForgeDirection orientation;    
@@ -39,9 +36,8 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
         fluidTank = new FluidTank(0);
     }
 
-    @Override
     public ForgeDirection getOrientation() {
-        
+
         return ForgeDirection.getOrientation(getBlockMetadata());
     }
 
@@ -57,7 +53,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
         this.color = color;
     }
 
-    
+
 
     @Override
     public void trigger(int id) {

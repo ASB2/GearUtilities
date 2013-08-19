@@ -9,11 +9,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import GU.api.IDirectionSpecific;
 import GU.api.color.IVinillaColorable;
 import GU.api.power.IPowerMisc;
 import GU.info.Reference;
-import GU.utils.UtilDirection;
 import GU.utils.UtilPlayers;
 
 public class ItemGearReader extends ItemBase {
@@ -29,13 +27,6 @@ public class ItemGearReader extends ItemBase {
         TileEntity tile = world.getBlockTileEntity(x,y,z);
 
         if(tile != null) {
-
-            if(tile instanceof IDirectionSpecific) {
-
-                IDirectionSpecific mTile = (IDirectionSpecific)tile;
-
-                UtilPlayers.sendChatToPlayer(player,"Block is at orientation: " + UtilDirection.translateDirectionToString(mTile.getOrientation()));
-            }
 
             if(tile instanceof IVinillaColorable) {
 

@@ -12,14 +12,28 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.blocks.containers.ContainerBase;
+import GU.info.Reference;
 
 public class BlockTestRender extends ContainerBase {
+
+    public Icon inner;
 
     public BlockTestRender(int id, Material material) {
         super(id, material);
 
         this.registerTile(TileTestRender.class);
         useStandardRendering = false;
+        this.setLightOpacity(100);
+    }
+
+    public static boolean isNormalCube(int par0)
+    {
+        return true;
+    }
+    
+    public boolean isBlockNormalCube(World world, int x, int y, int z) {
+
+        return true;
     }
 
     @Override
@@ -30,12 +44,6 @@ public class BlockTestRender extends ContainerBase {
 
     @Override
     public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
-
-        return true;
-    }
-
-    @Override
-    public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
 
         return true;
     }
@@ -55,8 +63,6 @@ public class BlockTestRender extends ContainerBase {
     @Override
     public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side) {
 
-
-
         return super.getBlockTexture(world, x, y, z, side);
     }
 
@@ -68,15 +74,15 @@ public class BlockTestRender extends ContainerBase {
     }
 
     @Override
-    public void registerIcons(IconRegister iconRegistry) {
-
-
+    public void registerIcons(IconRegister iconRegister) {
+        super.registerIcons(iconRegister);
+        inner = iconRegister.registerIcon(Reference.MODDID + ":BlockTestRender2");
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityplayer, int par6, float par7, float par8, float par9) 
     {
-
+        world.markBlockForRenderUpdate(x, y, z);
         return false;
     }
 

@@ -5,14 +5,12 @@ import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.Icon;
-import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import GU.api.power.IPowerMisc;
 import GU.info.Gui;
-import GU.info.Reference;
 import GU.utils.UtilRender;
 
 public abstract class GuiBase extends GuiContainer {
@@ -128,7 +126,7 @@ public abstract class GuiBase extends GuiContainer {
 
     public void scalePower(int x, int y, int scale) {
 
-        UtilRender.renderTexture(new ResourceLocation(""));
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y + 71 - scale + 4, 194, 51, 18, scale);
     }
 

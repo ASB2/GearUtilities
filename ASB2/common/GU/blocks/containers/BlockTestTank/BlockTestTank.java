@@ -187,7 +187,10 @@ public class BlockTestTank extends ContainerBase {
                             }
                             else {
 
-                                tank.fluidTank.drain(FluidContainerRegistry.getFluidForFilledItem(filled).amount, true);
+                                if(UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, x, y, z)) {
+
+                                    tank.fluidTank.drain(FluidContainerRegistry.getFluidForFilledItem(filled).amount, true);
+                                }
                             }
                         }
                     }

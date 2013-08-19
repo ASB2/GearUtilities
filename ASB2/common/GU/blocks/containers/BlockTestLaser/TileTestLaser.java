@@ -1,14 +1,11 @@
 package GU.blocks.containers.BlockTestLaser;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.api.IWrenchable;
-import GU.api.laser.ILaserReciever;
 import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
@@ -69,10 +66,10 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
 
                     TileEntity tile = worldObj.getBlockTileEntity(xCoord + i, yCoord, zCoord);
 
-                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-
-                        return tile;
-                    }
+//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
+//
+//                        return tile;
+//                    }
 
                     if(worldObj.isBlockSolidOnSide(xCoord + i, yCoord, zCoord, direction.getOpposite())) {
 
@@ -84,10 +81,10 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
 
                     TileEntity tile = worldObj.getBlockTileEntity(xCoord - i, yCoord, zCoord);
 
-                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-
-                        return tile;
-                    }
+//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
+//
+//                        return tile;
+//                    }
 
                     if(worldObj.isBlockSolidOnSide(xCoord - i, yCoord, zCoord, direction.getOpposite())) {
 
@@ -102,10 +99,10 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
 
                     TileEntity tile = worldObj.getBlockTileEntity(xCoord, yCoord + i, zCoord);
 
-                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-
-                        return tile;
-                    }
+//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
+//
+//                        return tile;
+//                    }
 
                     if(worldObj.isBlockSolidOnSide(xCoord, yCoord + i, zCoord, direction.getOpposite())) {
 
@@ -118,10 +115,10 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
 
                     TileEntity tile = worldObj.getBlockTileEntity(xCoord, yCoord - i, zCoord);
 
-                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-
-                        return tile;
-                    }
+//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
+//
+//                        return tile;
+//                    }
 
                     if(worldObj.isBlockSolidOnSide(xCoord, yCoord - i, zCoord, direction.getOpposite())) {
 
@@ -136,10 +133,10 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
 
                     TileEntity tile = worldObj.getBlockTileEntity(xCoord, yCoord, zCoord + i);
 
-                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-
-                        return tile;
-                    }
+//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
+//
+//                        return tile;
+//                    }
 
                     if(worldObj.isBlockSolidOnSide(xCoord, yCoord, zCoord + i, direction.getOpposite())) {
 
@@ -151,10 +148,10 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
 
                     TileEntity tile = worldObj.getBlockTileEntity(xCoord, yCoord, zCoord - i);
 
-                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-
-                        return tile;
-                    }
+//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
+//
+//                        return tile;
+//                    }
 
                     if(worldObj.isBlockSolidOnSide(xCoord, yCoord, zCoord - i, direction.getOpposite())) {
 
@@ -169,20 +166,6 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
     @Override
     public void trigger(int id) {
 
-    }
-    
-    @Override
-    public void triggerBlock(World world, EntityLivingBase player, ItemStack itemStack, int x, int y, int z, int side) {
-
-        switch(getOrientation()) {
-
-            case SOUTH: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3); return;
-            case WEST: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 2, 3); return;
-            case NORTH: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 3, 3); return;       
-            case EAST: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3); return;    
-
-            default : worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3); return;
-        }
     }
 
     @Override

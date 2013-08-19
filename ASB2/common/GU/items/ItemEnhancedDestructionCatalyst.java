@@ -40,8 +40,11 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz){
 
-        ForgeDirection sideF = ForgeDirection.getOrientation(side).getOpposite();
+        ForgeDirection sideF = ForgeDirection.getOrientation(side);
 
+        if(sideF == ForgeDirection.EAST)
+            sideF = sideF.getOpposite();
+        
         UtilItemStack.setNBTTagInt(itemStack, "id", world.getBlockId(x, y, z));
 
         UtilBlock.cycle3DBlock(player, world, x, y, z, sideF, 1,UtilItemStack.getNBTTagInt(itemStack, "length"), this, 0);

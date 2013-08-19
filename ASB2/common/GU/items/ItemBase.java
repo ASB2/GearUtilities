@@ -1,5 +1,7 @@
 package GU.items;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -23,6 +25,12 @@ public class ItemBase extends Item {
         this.setCreativeTab(GearUtilities.tabGUItems);
     }
 
+    @SideOnly(Side.CLIENT)
+    public boolean requiresMultipleRenderPasses()
+    {
+        return true;
+    }
+    
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) 
@@ -56,9 +64,8 @@ public class ItemBase extends Item {
         this.setUnlocalizedName(Reference.UNIQUE_ID + itemName);
     }
     
-    @Override
-    public Icon getIconFromDamage(int damage) {
-
+    public Icon getIcon(ItemStack stack, int pass) {
+        
         if(useDefaultTexture || texture == null) 
             return this.itemIcon;
 
