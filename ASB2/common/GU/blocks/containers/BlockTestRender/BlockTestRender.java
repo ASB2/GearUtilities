@@ -23,10 +23,9 @@ public class BlockTestRender extends ContainerBase {
 
         this.registerTile(TileTestRender.class);
         useStandardRendering = false;
-        this.setLightOpacity(100);
     }
 
-    public static boolean isNormalCube(int par0)
+    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
     {
         return true;
     }
@@ -36,6 +35,11 @@ public class BlockTestRender extends ContainerBase {
         return true;
     }
 
+    public int getLightOpacity(World world, int x, int y, int z)
+    {
+        return 255;
+    }
+    
     @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 
