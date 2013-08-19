@@ -1,43 +1,36 @@
 package GU;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
-import GU.blocks.BlockAirCrystalOre;
 import GU.blocks.BlockBase;
 import GU.blocks.BlockBurningFlower;
-import GU.blocks.BlockEarthCrystalOre;
-import GU.blocks.BlockEnergyCrystalOre;
 import GU.blocks.BlockFalseBlock;
-import GU.blocks.BlockFireCrystalOre;
 import GU.blocks.BlockFreezingFlower;
 import GU.blocks.BlockGarnetBlock;
 import GU.blocks.BlockGarnetOre;
+import GU.blocks.BlockMetadataOre.BlockMetadataOre;
+import GU.blocks.BlockPhantomBlock;
 import GU.blocks.BlockSpeedyRoad;
 import GU.blocks.BlockTestBlock;
-import GU.blocks.BlockWaterCrystalOre;
 import GU.blocks.containers.ContainerBase;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
+import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
+import GU.blocks.containers.BlockGeothermalGenerator.BlockGeothermalGenerator;
 import GU.blocks.containers.BlockLamp.BlockLamp;
+import GU.blocks.containers.BlockSpeedyFurnace.BlockSpeedyFurnace;
 import GU.blocks.containers.BlockTestLaser.BlockTestLaser;
 import GU.blocks.containers.BlockTestRender.BlockTestRender;
 import GU.blocks.containers.BlockTestTank.BlockTestTank;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
 import GU.info.Variables;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import GU.blocks.containers.BlockFluidProvider.*;
-import GU.blocks.*;
-import GU.blocks.containers.BlockGeothermalGenerator.*;
-import GU.blocks.containers.BlockSpeedyFurnace.*;
 
 public class BlockRegistry {
 
+    public static BlockMetadataOre BlockMetadataOre;    
     public static BlockBase BlockTestBlock;
     public static ContainerBase BlockTestTile;
-    public static BlockBase BlockAirCrystalOre;
-    public static BlockBase BlockEarthCrystalOre;
-    public static BlockBase BlockFireCrystalOre;
-    public static BlockBase BlockWaterCrystalOre;
-    public static BlockBase BlockEnergyCrystalOre;
     public static BlockBase BlockGarnetOre;
     public static BlockBase BlockGarnetBlock;
     public static BlockBase BlockBurningFlower;
@@ -57,27 +50,15 @@ public class BlockRegistry {
     private static int id = 500;
 
     public static void init(Configuration config) {
-
-        BlockAirCrystalOre = new BlockAirCrystalOre(config.getBlock("BlockAirCrystalOre", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockAirCrystalOre.setBlockName("BlockAirCrystalOre");
-        LanguageRegistry.addName(BlockAirCrystalOre, "Air Crystal Ore");
-
-        BlockEarthCrystalOre = new BlockEarthCrystalOre(config.getBlock("BlockEarthCrystalOre", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockEarthCrystalOre.setBlockName("BlockEarthCrystalOre");
-        LanguageRegistry.addName(BlockEarthCrystalOre, "Earth Crystal Ore");
-
-        BlockFireCrystalOre = new BlockFireCrystalOre(config.getBlock("BlockFireCrystalOre", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockFireCrystalOre.setBlockName("BlockFireCrystalOre");
-        LanguageRegistry.addName(BlockFireCrystalOre, "Fire Crystal Ore");
-
-        BlockWaterCrystalOre = new BlockWaterCrystalOre(config.getBlock("BlockWaterCrystalOre", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockWaterCrystalOre.setBlockName("BlockWaterCrystalOre");
-        LanguageRegistry.addName(BlockWaterCrystalOre, "Water Crystal Ore");
-
-        BlockEnergyCrystalOre = new BlockEnergyCrystalOre(config.getBlock("BlockEnergyCrystalOre", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockEnergyCrystalOre.setBlockName("BlockEnergyCrystalOre");
-        LanguageRegistry.addName(BlockEnergyCrystalOre, "Energy Crystal Ore");
-
+        
+        BlockMetadataOre = new BlockMetadataOre(config.getBlock("Metadata Ores", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockMetadataOre.setBlockName("BlockMetadataOre");
+        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 0), "Air Crystal Ore");
+        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 1), "Earth Crystal Ore");
+        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 2), "Fire Crystal Ore");
+        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 3), "Water Crystal Ore");
+        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 4), "Energy Crystal Ore");
+        
         BlockGarnetOre = new BlockGarnetOre(config.getBlock("BlockGarnetOre", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockGarnetOre.setBlockName("BlockGarnetOre");
         LanguageRegistry.addName(BlockGarnetOre, "Garnet Ore");

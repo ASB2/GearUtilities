@@ -17,14 +17,14 @@ public class BlockBase extends Block {
     public boolean useStandardRendering = true;
     public boolean useDefaultTexture = false;  
     Icon texture;
-    String blockName = "";
+    public String blockName = "";
 
     public BlockBase(int id, Material material) {
         super(id, material);
 
         MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);        
         this.setCreativeTab(GearUtilities.tabGUBlocks);
-        setHardness(3.5f);
+        setHardness(1.5f);
         setResistance(1.0F);
     }
 

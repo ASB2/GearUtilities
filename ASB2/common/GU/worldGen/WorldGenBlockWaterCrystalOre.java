@@ -2,6 +2,7 @@ package GU.worldGen;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import GU.BlockRegistry;
@@ -22,6 +23,6 @@ public class WorldGenBlockWaterCrystalOre implements IWorldGenerator {
         int Ycoord = random.nextInt(256);
         int Zcoord = blockZ + random.nextInt(16);
 
-        (new WorldGenWaterCrystal(BlockRegistry.BlockWaterCrystalOre.blockID, 20)).generate(world, random, Xcoord, Ycoord, Zcoord);
+        (new WorldGenWaterCrystal(BlockRegistry.BlockMetadataOre.blockID, 3, 20, Block.waterStill.blockID)).generate(world, random, Xcoord, Ycoord, Zcoord);
     }
 }
