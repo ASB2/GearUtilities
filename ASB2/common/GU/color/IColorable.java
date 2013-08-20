@@ -1,9 +1,12 @@
 package GU.color;
 
-public class IColorable {
+import net.minecraftforge.common.ForgeDirection;
 
-    public IColorable() {
-        // TODO Auto-generated constructor stub
-    }
+public interface IColorable {
+    
+    public int getAnimationBrightness(ForgeDirection direction);
 
+    public void setColor(Color color, ForgeDirection direction);
+    
+    public Color getColor(ForgeDirection direction);
 }
