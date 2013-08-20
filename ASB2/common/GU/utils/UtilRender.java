@@ -13,8 +13,6 @@ import net.minecraftforge.common.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
-import GU.BlockRegistry;
-import GU.blocks.containers.BlockTestRender.BlockTestRender;
 import cpw.mods.fml.client.FMLClientHandler;
 
 public final class UtilRender {
@@ -125,14 +123,14 @@ public final class UtilRender {
         tess.setBrightness(brightness);
         tess.setColorRGBA_F(red, green, blue, alfa);
         
-        renderer.renderFaceXNeg(block, x, y, z, ((BlockTestRender)BlockRegistry.BlockTestRender).inner);
-        renderer.renderFaceXPos(block, x, y, z, ((BlockTestRender)BlockRegistry.BlockTestRender).inner);
+        renderer.renderFaceXNeg(block, x, y, z, icon);
+        renderer.renderFaceXPos(block, x, y, z, icon);
 
-        renderer.renderFaceYNeg(block, x, y, z, ((BlockTestRender)BlockRegistry.BlockTestRender).inner);
-        renderer.renderFaceYPos(block, x, y, z, ((BlockTestRender)BlockRegistry.BlockTestRender).inner);
+        renderer.renderFaceYNeg(block, x, y, z, icon);
+        renderer.renderFaceYPos(block, x, y, z, icon);
 
-        renderer.renderFaceZNeg(block, x, y, z, ((BlockTestRender)BlockRegistry.BlockTestRender).inner);
-        renderer.renderFaceZPos(block, x, y, z, ((BlockTestRender)BlockRegistry.BlockTestRender).inner);
+        renderer.renderFaceZNeg(block, x, y, z, icon);
+        renderer.renderFaceZPos(block, x, y, z, icon);
     }
     
     public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, int meta) {

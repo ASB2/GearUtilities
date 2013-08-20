@@ -7,19 +7,19 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidTank;
-import GU.api.color.EnumColor;
+import GU.color.EnumVinillaColor;
 import GU.api.power.PowerProvider;
 
 public abstract class ConduitLogic {
 
     TileEntity tile;
-    EnumColor color;    
+    EnumVinillaColor color;    
 
     ItemStack[] tileItemStacks;    
     FluidTank fluidTank;
     PowerProvider powerProvider;
 
-    public ConduitLogic(TileEntity t, EnumColor color, ItemStack[] tileItemStacks, FluidTank fluidTank, PowerProvider powerProvider) {
+    public ConduitLogic(TileEntity t, EnumVinillaColor color, ItemStack[] tileItemStacks, FluidTank fluidTank, PowerProvider powerProvider) {
 
         tile = t;
         this.color = color;
@@ -34,7 +34,7 @@ public abstract class ConduitLogic {
         return EnumSet.of(EnumConduitType.OTHER);
     }
 
-    EnumColor getColorEnum() {
+    EnumVinillaColor getColorEnum() {
 
         return color;
     }

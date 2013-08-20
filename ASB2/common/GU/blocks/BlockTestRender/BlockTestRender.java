@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockTestRender;
+package GU.blocks.BlockTestRender;
 
 import java.util.ArrayList;
 
@@ -6,22 +6,20 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
+import GU.blocks.*;
 
-public class BlockTestRender extends ContainerBase {
+public class BlockTestRender extends BlockBase {
 
     public Icon inner;
 
     public BlockTestRender(int id, Material material) {
         super(id, material);
-
-        this.registerTile(TileTestRender.class);
+        
         useStandardRendering = false;
     }
 
@@ -88,11 +86,5 @@ public class BlockTestRender extends ContainerBase {
     {
         world.markBlockForRenderUpdate(x, y, z);
         return false;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World world) {
-
-        return new TileTestRender();
     }
 }

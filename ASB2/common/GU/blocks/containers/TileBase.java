@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
 import GU.api.IWrenchable;
-import GU.api.color.EnumColor;
-import GU.api.color.IVinillaColorable;
+import GU.color.EnumVinillaColor;
+import GU.color.IVinillaColorable;
 import GU.api.power.PowerProvider;
 import GU.api.wait.IWaitTrigger;
 import GU.api.wait.Wait;
@@ -20,7 +20,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
 
     protected PowerProvider powerProvider;
     protected ForgeDirection orientation;    
-    protected EnumColor color;
+    protected EnumVinillaColor color;
     protected ItemStack[] tileItemStacks = new ItemStack[0];
     public FluidTank fluidTank;
     protected Wait waitTimer;
@@ -28,7 +28,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
     public TileBase() {
 
         if(color == null)
-            color = EnumColor.NONE;
+            color = EnumVinillaColor.NONE;
 
         if(orientation == null)
             orientation = ForgeDirection.DOWN;
@@ -42,13 +42,13 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
     }
 
     @Override
-    public EnumColor getColorEnum() {
+    public EnumVinillaColor getColorEnum() {
 
         return color;
     }
 
     @Override
-    public void setColor(EnumColor color) {
+    public void setColor(EnumVinillaColor color) {
 
         this.color = color;
     }
@@ -93,8 +93,8 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
 
         fluidTank.readFromNBT(tag);
 
-        if(color == EnumColor.NONE || color == null)
-            color = EnumColor.translateNumberToColor(tag.getInteger("color"));
+        if(color == EnumVinillaColor.NONE || color == null)
+            color = EnumVinillaColor.translateNumberToColor(tag.getInteger("color"));
 
         if(this.powerProvider != null)
             this.powerProvider.readFromNBT(tag);
@@ -121,8 +121,8 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
 
         fluidTank.writeToNBT(tag);
 
-        if(this.getColorEnum() != EnumColor.NONE)
-            tag.setInteger("color", EnumColor.translateColorToNumber(this.getColorEnum()));
+        if(this.getColorEnum() != EnumVinillaColor.NONE)
+            tag.setInteger("color", EnumVinillaColor.translateColorToNumber(this.getColorEnum()));
 
         if(this.powerProvider != null)
             this.powerProvider.writeToNBT(tag);

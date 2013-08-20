@@ -1,14 +1,14 @@
-package GU.api.color;
+package GU.color;
 
 public interface IVinillaColorable {
 
     /**
      * Used for markings. Does NOT refer to the texture color of the block
      */
-    EnumColor getColorEnum();
+    EnumVinillaColor getColorEnum();
 
     /**
      * Sets the color of the block
      */
-    void setColor(EnumColor color);
+    void setColor(EnumVinillaColor color);
 }

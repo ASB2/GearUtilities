@@ -6,14 +6,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import GU.BlockRegistry;
 import GU.ItemRegistry;
+import GU.blocks.BlockTestRender.TestRenderRenderer;
+import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
+import GU.blocks.containers.BlockCreationTable.TileCreationTable;
 import GU.blocks.containers.BlockGeothermalGenerator.GuiGeothermalGenerator;
 import GU.blocks.containers.BlockLamp.LampRenderer;
 import GU.blocks.containers.BlockLamp.TileLamp;
 import GU.blocks.containers.BlockSpeedyFurnace.GuiSpeedyFurnace;
 import GU.blocks.containers.BlockTestLaser.TestLaserRenderer;
 import GU.blocks.containers.BlockTestLaser.TileTestLaser;
-import GU.blocks.containers.BlockTestRender.TestRenderRenderer;
 import GU.blocks.containers.BlockTestTank.TestTankRenderer;
 import GU.entity.EntityTest.EntityTestEntity;
 import GU.entity.EntityTest.TestEntityRenderer;
@@ -23,7 +25,6 @@ import GU.info.Variables;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import GU.blocks.containers.BlockCreationTable.*;
 
 public class ClientProxy extends CommonProxy {
 

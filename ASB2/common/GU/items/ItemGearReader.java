@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import GU.api.color.IVinillaColorable;
+import GU.color.IVinillaColorable;
 import GU.api.power.IPowerMisc;
 import GU.info.Reference;
 import GU.utils.UtilPlayers;
