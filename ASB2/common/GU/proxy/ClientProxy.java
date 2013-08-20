@@ -7,6 +7,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import GU.BlockRegistry;
 import GU.ItemRegistry;
 import GU.blocks.BlockTestRender.TestRenderRenderer;
+import GU.blocks.containers.BlockCanvas.CanvasRenderer;
 import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
@@ -21,7 +22,6 @@ import GU.entity.EntityTest.EntityTestEntity;
 import GU.entity.EntityTest.TestEntityRenderer;
 import GU.info.Gui;
 import GU.info.Models;
-import GU.info.Variables;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -42,14 +42,13 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());
 
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
-        if(Variables.TESTING_MODE) {
 
-            RenderingRegistry.registerBlockHandler(new TestTankRenderer());
-            RenderingRegistry.registerBlockHandler(new TestRenderRenderer());
-
-            ClientRegistry.bindTileEntitySpecialRenderer(TileTestLaser.class, new TestLaserRenderer());
-            MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockTestLaser.blockID, new TestLaserRenderer());
-        }
+        RenderingRegistry.registerBlockHandler(new TestTankRenderer());
+        RenderingRegistry.registerBlockHandler(new TestRenderRenderer());
+        RenderingRegistry.registerBlockHandler(new CanvasRenderer());
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileTestLaser.class, new TestLaserRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockTestLaser.blockID, new TestLaserRenderer());
     }
 
     @Override
@@ -58,7 +57,7 @@ public class ClientProxy extends CommonProxy {
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         if(tile != null) {
-            
+
             switch(ID) {
 
                 case Gui.CREATION_TABLE: return new GuiCreationTable(player.inventory, tile);

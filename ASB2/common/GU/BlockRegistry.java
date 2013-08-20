@@ -15,6 +15,7 @@ import GU.blocks.BlockTestBlock;
 import GU.blocks.BlockMetadataOre.BlockMetadataOre;
 import GU.blocks.BlockTestRender.BlockTestRender;
 import GU.blocks.containers.ContainerBase;
+import GU.blocks.containers.BlockCanvas.BlockCanvas;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockGeothermalGenerator.BlockGeothermalGenerator;
@@ -45,7 +46,8 @@ public class BlockRegistry {
     public static BlockBase BlockPhantomBlock;
     public static ContainerBase BlockSpeedyFurnace;
     public static ContainerBase BlockGeothermalGenerator;
-
+    public static ContainerBase BlockCanvas;
+    
     private static int id = 500;
 
     public static void init(Configuration config) {
@@ -125,6 +127,10 @@ public class BlockRegistry {
         BlockGeothermalGenerator = new BlockGeothermalGenerator(config.getBlock("BlockGeothermalGenerator", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockGeothermalGenerator.setBlockName("BlockGeothermalGenerator");
         LanguageRegistry.addName(BlockGeothermalGenerator, "Geothermal Generator");
+        
+        BlockCanvas = new BlockCanvas(config.getBlock("BlockCanvas", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockCanvas.setBlockName("BlockCanvas");
+        LanguageRegistry.addName(BlockCanvas, "Canvas");
     }
 
     public static void initTestBlocks(Configuration config) {

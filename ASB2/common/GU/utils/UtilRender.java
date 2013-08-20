@@ -121,6 +121,7 @@ public final class UtilRender {
         Tessellator tess = Tessellator.instance;
         
         tess.setBrightness(brightness);
+        GL11.glColor3f(red, green, blue);
         tess.setColorRGBA_F(red, green, blue, alfa);
         
         renderer.renderFaceXNeg(block, x, y, z, icon);

@@ -26,7 +26,6 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
     protected Wait waitTimer;
 
     public TileBase() {
-
         if(color == null)
             color = EnumVinillaColor.NONE;
 

@@ -9,10 +9,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import GU.color.IVinillaColorable;
 import GU.api.power.IPowerMisc;
+import GU.color.IVinillaColorable;
 import GU.info.Reference;
 import GU.utils.UtilPlayers;
+import GU.color.*;
 
 public class ItemGearReader extends ItemBase {
 
@@ -96,8 +97,20 @@ public class ItemGearReader extends ItemBase {
                     }
                 }
             }
-        }
 
+            if(tile instanceof IColorable) {
+
+                IColorable mTile = (IColorable)tile;
+
+                if(mTile.getColor(ForgeDirection.getOrientation(side)) != null) {
+
+                    UtilPlayers.sendChatToPlayer(player, "Red: " + mTile.getColor(ForgeDirection.getOrientation(side)).getRed());
+                    UtilPlayers.sendChatToPlayer(player, "Green: " + mTile.getColor(ForgeDirection.getOrientation(side)).getGreen());
+                    UtilPlayers.sendChatToPlayer(player, "Blue: " + mTile.getColor(ForgeDirection.getOrientation(side)).getBlue());
+                    UtilPlayers.sendChatToPlayer(player, "Alpha: " + mTile.getColor(ForgeDirection.getOrientation(side)).getAlpha());
+                }
+            }
+        }
         UtilPlayers.sendChatToPlayer(player, "Block" + " has metadata: " + world.getBlockMetadata(x, y, z));
         UtilPlayers.sendChatToPlayer(player, "--------");
         return true;
