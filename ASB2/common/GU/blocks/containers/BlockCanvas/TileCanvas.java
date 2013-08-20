@@ -7,7 +7,7 @@ import GU.color.IColorable;
 
 public class TileCanvas extends TileBase implements IColorable {
 
-    Color currentColor = new Color(1,1,1,1);
+    Color currentColor = new Color(1, 1, 1, 1);
 
     @Override
     public boolean setColor(Color color, ForgeDirection direction) {
@@ -27,7 +27,7 @@ public class TileCanvas extends TileBase implements IColorable {
     public boolean changeRed(float amount, ForgeDirection side) {
 
         currentColor.setRed(currentColor.getRed() + amount);
-        
+
         return true;
     }
 

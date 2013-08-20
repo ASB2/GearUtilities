@@ -23,27 +23,35 @@ public class TileTestTile extends TileBase implements IBlockCycle {
     @Override
     public void updateEntity() {
 
-        //UtilBlock.cycle2DBlock(null, worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN, 10, this, 0);
-        
+        // UtilBlock.cycle2DBlock(null, worldObj, xCoord, yCoord, zCoord,
+        // ForgeDirection.DOWN, 10, this, 0);
+
         waitTimer.update();
 
-        for(ForgeDirection direction: ForgeDirection.values()) {
+        for (ForgeDirection direction : ForgeDirection.values()) {
 
-            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+            TileEntity tile = UtilDirection.translateDirectionToTile(this,
+                    worldObj, direction);
 
-            if(tile != null) {
+            if (tile != null) {
 
-                if(tile instanceof IPowerMisc) {
+                if (tile instanceof IPowerMisc) {
 
-                    IPowerMisc pTile = (IPowerMisc)tile;
+                    IPowerMisc pTile = (IPowerMisc) tile;
 
-                    if(pTile.getPowerProvider() != null) {
+                    if (pTile.getPowerProvider() != null) {
 
-                        if(pTile.getPowerProvider().canGainPower(pTile.getPowerProvider().getPowerClass().getPowerValue(), direction.getOpposite())){
+                        if (pTile.getPowerProvider().canGainPower(
+                                pTile.getPowerProvider().getPowerClass()
+                                        .getPowerValue(),
+                                direction.getOpposite())) {
 
-                            pTile.getPowerProvider().gainPower(pTile.getPowerProvider().getPowerClass().getPowerValue(), direction.getOpposite());
+                            pTile.getPowerProvider().gainPower(
+                                    pTile.getPowerProvider().getPowerClass()
+                                            .getPowerValue(),
+                                    direction.getOpposite());
                         }
-                    }                            
+                    }
                 }
             }
         }
@@ -54,11 +62,12 @@ public class TileTestTile extends TileBase implements IBlockCycle {
     }
 
     @Override
-    public boolean execute(EntityPlayer player, World world, int x, int y, int z, ForgeDirection side, int id) {
+    public boolean execute(EntityPlayer player, World world, int x, int y,
+            int z, ForgeDirection side, int id) {
 
         Vector3 vector = new Vector3(x + .5, y + .5, z + .5);
-        
-        if(world.isRemote) {
+
+        if (world.isRemote) {
             TestEffect test = new TestEffect(worldObj, vector, vector);
 
             UtilRender.renderFX(test);

@@ -25,7 +25,7 @@ public class TestTankPacket extends GUPacketBase {
         this.y = y;
         this.z = z;
         this.liquidId = liquidId;
-        this.liquidAmount = liquidAmount;  
+        this.liquidAmount = liquidAmount;
     }
 
     public TestTankPacket() {
@@ -52,32 +52,35 @@ public class TestTankPacket extends GUPacketBase {
             liquidId = in.readInt();
             liquidAmount = in.readInt();
             itWorked = true;
-        }
-        catch (IllegalStateException e) {
+        } catch (IllegalStateException e) {
 
-            //e.printStackTrace();
+            // e.printStackTrace();
             return;
         }
     }
 
     @Override
-    protected void execute(EntityPlayer player, Side side) throws ProtocolException {
+    protected void execute(EntityPlayer player, Side side)
+            throws ProtocolException {
 
-        if(itWorked && side == Side.CLIENT) {
+        if (itWorked && side == Side.CLIENT) {
 
-            if(player.worldObj.getBlockTileEntity(x, y, z) != null && player.worldObj.getBlockTileEntity(x, y, z) instanceof TileTestTank) {
+            if (player.worldObj.getBlockTileEntity(x, y, z) != null
+                    && player.worldObj.getBlockTileEntity(x, y, z) instanceof TileTestTank) {
 
-                TileTestTank tank = (TileTestTank)player.worldObj.getBlockTileEntity(x, y, z);
+                TileTestTank tank = (TileTestTank) player.worldObj
+                        .getBlockTileEntity(x, y, z);
 
-                if(liquidId == 0) {
+                if (liquidId == 0) {
 
                     tank.fluidTank.setFluid(null);
                     player.worldObj.markBlockForRenderUpdate(x, y, z);
                     return;
                 }
-                tank.fluidTank.setFluid(new FluidStack(FluidRegistry.getFluid(liquidId), liquidAmount));
+                tank.fluidTank.setFluid(new FluidStack(FluidRegistry
+                        .getFluid(liquidId), liquidAmount));
                 player.worldObj.markBlockForRenderUpdate(x, y, z);
             }
         }
-    }    
+    }
 }

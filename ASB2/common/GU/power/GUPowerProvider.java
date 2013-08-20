@@ -20,45 +20,94 @@ public class GUPowerProvider extends PowerProvider {
 
     public void movePower(World world, int x, int y, int z) {
 
-        TileEntity tile = world.getBlockTileEntity(x,y,z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS) {
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
-            int[] coords = UtilDirection.translateDirectionToCoords(direction, tile);
+            int[] coords = UtilDirection.translateDirectionToCoords(direction,
+                    tile);
 
-            if(world.blockExists(coords[0], coords[1], coords[2])) {
+            if (world.blockExists(coords[0], coords[1], coords[2])) {
 
-                TileEntity tileToAffect = UtilDirection.translateDirectionToTile(tile, tile.worldObj, direction);
+                TileEntity tileToAffect = UtilDirection
+                        .translateDirectionToTile(tile, tile.worldObj,
+                                direction);
 
-                if(tileToAffect != null) {
+                if (tileToAffect != null) {
 
-                    if(tileToAffect instanceof IPowerMisc) {
+                    if (tileToAffect instanceof IPowerMisc) {
 
-                        IPowerMisc tileToAffectCasted = ((IPowerMisc)tileToAffect);
+                        IPowerMisc tileToAffectCasted = ((IPowerMisc) tileToAffect);
 
-                        if(tileToAffectCasted.getPowerProvider() != null) {
+                        if (tileToAffectCasted.getPowerProvider() != null) {
 
-                            switch(this.getCurrentState()) {
+                            switch (this.getCurrentState()) {
 
                                 case SINK: {
 
-                                    if(tileToAffectCasted.getPowerProvider().getCurrentState() == State.SOURCE) {
+                                    if (tileToAffectCasted.getPowerProvider()
+                                            .getCurrentState() == State.SOURCE) {
 
-                                        UtilPower.transferPower(tileToAffectCasted, direction, (IPowerMisc)tile);
+                                        UtilPower.transferPower(
+                                                tileToAffectCasted, direction,
+                                                (IPowerMisc) tile);
                                     }
                                 }
-                                break;
+                                    break;
 
                                 case SOURCE: {
 
-                                    if(tileToAffectCasted.getPowerProvider().getCurrentState() == State.SINK) {
+                                    if (tileToAffectCasted.getPowerProvider()
+                                            .getCurrentState() == State.SINK) {
 
-                                        UtilPower.transferPower((IPowerMisc)tile, direction, tileToAffectCasted);
+                                        UtilPower.transferPower(
+                                                (IPowerMisc) tile, direction,
+                                                tileToAffectCasted);
                                     }
                                 }
-                                break;
+                                    break;
 
-                                case OTHER: break;
+                                case OTHER:
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void movePower(World world, int x, int y, int z, boolean source) {
+
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
+
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+
+            int[] coords = UtilDirection.translateDirectionToCoords(direction,
+                    tile);
+
+            if (world.blockExists(coords[0], coords[1], coords[2])) {
+
+                TileEntity tileToAffect = UtilDirection
+                        .translateDirectionToTile(tile, tile.worldObj,
+                                direction);
+
+                if (tileToAffect != null) {
+
+                    if (tileToAffect instanceof IPowerMisc) {
+
+                        IPowerMisc tileToAffectCasted = ((IPowerMisc) tileToAffect);
+
+                        if (tileToAffectCasted.getPowerProvider() != null) {
+
+                            if (source) {
+
+                                UtilPower.transferPower((IPowerMisc) tile,
+                                        direction, tileToAffectCasted);
+                            } else {
+
+                                UtilPower.transferPower(tileToAffectCasted,
+                                        direction, (IPowerMisc) tile);
                             }
                         }
                     }
@@ -70,10 +119,10 @@ public class GUPowerProvider extends PowerProvider {
     @Override
     public State getCurrentState() {
 
-        if(currentState == null) {
+        if (currentState == null) {
 
             currentState = State.SINK;
         }
-        return currentState;        
+        return currentState;
     }
 }

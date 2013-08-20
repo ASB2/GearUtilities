@@ -19,31 +19,36 @@ public class BlockFluidProvider extends ContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityplayer, int par6, float par7, float par8, float par9) 
-    {
+    public boolean onBlockActivated(World world, int x, int y, int z,
+            EntityPlayer entityplayer, int par6, float par7, float par8,
+            float par9) {
         ItemStack current = entityplayer.inventory.getCurrentItem();
 
-        if (current != null && FluidContainerRegistry.getFluidForFilledItem(current) != null) {
+        if (current != null
+                && FluidContainerRegistry.getFluidForFilledItem(current) != null) {
 
-            FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(current);
-            TileFluidProvider tank = (TileFluidProvider) world.getBlockTileEntity(x, y, z);
+            FluidStack fluid = FluidContainerRegistry
+                    .getFluidForFilledItem(current);
+            TileFluidProvider tank = (TileFluidProvider) world
+                    .getBlockTileEntity(x, y, z);
 
             if (fluid != null) {
 
                 tank.fluidStack = fluid;
                 return true;
-            } 
-        }
-        else {
-
-            TileFluidProvider tank = (TileFluidProvider) world.getBlockTileEntity(x, y, z);
-            
-            if(tank.fluidTank.getFluid() != null) {
-                
-                UtilPlayers.sendChatToPlayer(entityplayer, "Current Fluids is: " + tank.fluidStack.getFluid().getLocalizedName());
             }
-            else {
-                
+        } else {
+
+            TileFluidProvider tank = (TileFluidProvider) world
+                    .getBlockTileEntity(x, y, z);
+
+            if (tank.fluidTank.getFluid() != null) {
+
+                UtilPlayers
+                        .sendChatToPlayer(entityplayer, "Current Fluids is: "
+                                + tank.fluidStack.getFluid().getLocalizedName());
+            } else {
+
                 UtilPlayers.sendChatToPlayer(entityplayer, "No Fluid");
                 return true;
             }

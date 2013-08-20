@@ -16,7 +16,7 @@ public class CrystalRenderer implements IItemRenderer {
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
-        switch(type) {
+        switch (type) {
 
             case ENTITY: {
 
@@ -42,20 +42,22 @@ public class CrystalRenderer implements IItemRenderer {
                 return;
             }
 
-            default:return;
+            default:
+                return;
         }
     }
 
-    private void renderItemSwitched(ItemRenderType type, float x, float y, float z, float scale, ItemStack stack) {
+    private void renderItemSwitched(ItemRenderType type, float x, float y,
+            float z, float scale, ItemStack stack) {
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
 
-        GL11.glTranslatef(x,  y,  z);
+        GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
         GL11.glRotatef(45f, 0f, 10f, 0f);
         UtilRender.renderTexture(getTexture(stack));
-        
+
         Models.ModelCrystalItem.renderAll();
 
         GL11.glEnable(GL11.GL_LIGHTING);
@@ -64,11 +66,16 @@ public class CrystalRenderer implements IItemRenderer {
 
     public ResourceLocation getTexture(ItemStack stack) {
 
-        if(stack.itemID == ItemRegistry.ItemAirCrystalShard.itemID) return Textures.CRYSTAL_AIR;
-        if(stack.itemID == ItemRegistry.ItemEarthCrystalShard.itemID) return Textures.CRYSTAL_EARTH;
-        if(stack.itemID == ItemRegistry.ItemFireCrystalShard.itemID) return Textures.CRYSTAL_FIRE;
-        if(stack.itemID == ItemRegistry.ItemWaterCrystalShard.itemID) return Textures.CRYSTAL_WATER;
-        if(stack.itemID == ItemRegistry.ItemEnergyCrystalShard.itemID) return Textures.CRYSTAL_ENERGY;
+        if (stack.itemID == ItemRegistry.ItemAirCrystalShard.itemID)
+            return Textures.CRYSTAL_AIR;
+        if (stack.itemID == ItemRegistry.ItemEarthCrystalShard.itemID)
+            return Textures.CRYSTAL_EARTH;
+        if (stack.itemID == ItemRegistry.ItemFireCrystalShard.itemID)
+            return Textures.CRYSTAL_FIRE;
+        if (stack.itemID == ItemRegistry.ItemWaterCrystalShard.itemID)
+            return Textures.CRYSTAL_WATER;
+        if (stack.itemID == ItemRegistry.ItemEnergyCrystalShard.itemID)
+            return Textures.CRYSTAL_ENERGY;
 
         return Textures.CRYSTAL_BLANK;
     }
@@ -80,7 +87,8 @@ public class CrystalRenderer implements IItemRenderer {
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
+            ItemRendererHelper helper) {
         // TODO Auto-generated method stub
         return true;
     }

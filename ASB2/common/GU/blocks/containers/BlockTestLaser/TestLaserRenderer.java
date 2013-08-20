@@ -11,7 +11,8 @@ import GU.info.Textures;
 import GU.models.ModeLaser2;
 import GU.utils.UtilRender;
 
-public class TestLaserRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
+public class TestLaserRenderer extends TileEntitySpecialRenderer implements
+        IItemRenderer {
 
     private ModeLaser2 model;
 
@@ -21,25 +22,37 @@ public class TestLaserRenderer extends TileEntitySpecialRenderer implements IIte
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
+    public void renderTileEntityAt(TileEntity tileentity, double x, double y,
+            double z, float f) {
 
-        if(tileentity instanceof TileTestLaser) {
+        if (tileentity instanceof TileTestLaser) {
 
-            TileTestLaser tile = (TileTestLaser)tileentity;
+            TileTestLaser tile = (TileTestLaser) tileentity;
 
             GL11.glPushMatrix();
-            GL11.glTranslatef((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
-            GL11.glScalef(1.0F, -1F, -1F);            
+            GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F,
+                    (float) z + 0.5F);
+            GL11.glScalef(1.0F, -1F, -1F);
 
             UtilRender.renderTexture(Textures.TEST_LASER2);
 
-            switch(tile.getOrientation()) {
+            switch (tile.getOrientation()) {
 
-                case SOUTH: GL11.glRotatef(0F, 0F, 0F, 0F); break;
-                case WEST : GL11.glRotatef(450F, 0F, 90F, 0F); break;
-                case NORTH: GL11.glRotatef(180F, 0F, 180F, 0F); break;
-                case EAST : GL11.glRotatef(450F, 0F, -90F, 0F); break;
-                default : GL11.glRotatef(0F, 0F, 0F, 0F); break;
+                case SOUTH:
+                    GL11.glRotatef(0F, 0F, 0F, 0F);
+                    break;
+                case WEST:
+                    GL11.glRotatef(450F, 0F, 90F, 0F);
+                    break;
+                case NORTH:
+                    GL11.glRotatef(180F, 0F, 180F, 0F);
+                    break;
+                case EAST:
+                    GL11.glRotatef(450F, 0F, -90F, 0F);
+                    break;
+                default:
+                    GL11.glRotatef(0F, 0F, 0F, 0F);
+                    break;
             }
 
             model.renderLaser();
@@ -55,7 +68,8 @@ public class TestLaserRenderer extends TileEntitySpecialRenderer implements IIte
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
+            ItemRendererHelper helper) {
 
         return true;
     }
@@ -63,7 +77,7 @@ public class TestLaserRenderer extends TileEntitySpecialRenderer implements IIte
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
-        switch(type) {
+        switch (type) {
 
             case ENTITY: {
 
@@ -89,16 +103,18 @@ public class TestLaserRenderer extends TileEntitySpecialRenderer implements IIte
                 return;
             }
 
-            default:return;
+            default:
+                return;
         }
     }
 
-    private void renderItemSwitched(ItemRenderType type, float x, float y, float z, float scale) {
+    private void renderItemSwitched(ItemRenderType type, float x, float y,
+            float z, float scale) {
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
 
-        GL11.glTranslatef(x,  y,  z);
+        GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
         GL11.glRotatef(180F, 0F, 180F, 0F);
@@ -110,4 +126,3 @@ public class TestLaserRenderer extends TileEntitySpecialRenderer implements IIte
         GL11.glPopMatrix();
     }
 }
-

@@ -17,7 +17,8 @@ import GU.power.GUPowerProvider;
 import GU.utils.UtilRender;
 import GU.vector.Vector3;
 
-public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, IInventory {
+public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc,
+        IInventory {
 
     public TileTestLaser() {
 
@@ -29,13 +30,18 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
     @Override
     public ForgeDirection getOrientation() {
 
-        switch(this.getBlockMetadata()) {
+        switch (this.getBlockMetadata()) {
 
-            case 0: return ForgeDirection.SOUTH;
-            case 1: return ForgeDirection.WEST;
-            case 2: return ForgeDirection.NORTH;
-            case 3: return ForgeDirection.EAST;
-            default: return ForgeDirection.SOUTH;
+            case 0:
+                return ForgeDirection.SOUTH;
+            case 1:
+                return ForgeDirection.WEST;
+            case 2:
+                return ForgeDirection.NORTH;
+            case 3:
+                return ForgeDirection.EAST;
+            default:
+                return ForgeDirection.SOUTH;
         }
     }
 
@@ -43,14 +49,19 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
     public void updateEntity() {
 
         this.powerProvider.setPower(this.powerProvider.getPowerMax());
-        if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
-            if(this.findLaserConnection(getOrientation(), 100) != null && this.powerProvider.canUsePower(10, ForgeDirection.UNKNOWN)) {
+            if (this.findLaserConnection(getOrientation(), 100) != null
+                    && this.powerProvider.canUsePower(10,
+                            ForgeDirection.UNKNOWN)) {
 
-                TileEntity tile = this.findLaserConnection(getOrientation(), 100);
+                TileEntity tile = this.findLaserConnection(getOrientation(),
+                        100);
 
                 this.powerProvider.usePower(10, ForgeDirection.UNKNOWN);
-                TestEffect beam = new TestEffect(worldObj, new Vector3(xCoord + .5, yCoord + .9, zCoord + .5), new Vector3(tile.xCoord + .5, tile.yCoord + .5, tile.zCoord + .5));
+                TestEffect beam = new TestEffect(worldObj, new Vector3(
+                        xCoord + .5, yCoord + .9, zCoord + .5), new Vector3(
+                        tile.xCoord + .5, tile.yCoord + .5, tile.zCoord + .5));
                 UtilRender.renderFX(beam);
             }
         }
@@ -58,102 +69,119 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
 
     public TileEntity findLaserConnection(ForgeDirection direction, int distance) {
 
-        for(int i = 0; i < distance; i++) {
+        for (int i = 0; i < distance; i++) {
 
-            if(direction.offsetX != 0) {
+            if (direction.offsetX != 0) {
 
-                if(direction.offsetX > 0) {
+                if (direction.offsetX > 0) {
 
-                    TileEntity tile = worldObj.getBlockTileEntity(xCoord + i, yCoord, zCoord);
+                    TileEntity tile = worldObj.getBlockTileEntity(xCoord + i,
+                            yCoord, zCoord);
 
-//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-//
-//                        return tile;
-//                    }
+                    // if(tile != null && tile instanceof ILaserReciever && tile
+                    // != this) {
+                    //
+                    // return tile;
+                    // }
 
-                    if(worldObj.isBlockSolidOnSide(xCoord + i, yCoord, zCoord, direction.getOpposite())) {
-
-                        return null;
-                    }
-                }
-
-                if(direction.offsetX < 0) {
-
-                    TileEntity tile = worldObj.getBlockTileEntity(xCoord - i, yCoord, zCoord);
-
-//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-//
-//                        return tile;
-//                    }
-
-                    if(worldObj.isBlockSolidOnSide(xCoord - i, yCoord, zCoord, direction.getOpposite())) {
-
-                        return null;
-                    }
-                }
-            }
-
-            if(direction.offsetY != 0) {
-
-                if(direction.offsetY > 0) {
-
-                    TileEntity tile = worldObj.getBlockTileEntity(xCoord, yCoord + i, zCoord);
-
-//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-//
-//                        return tile;
-//                    }
-
-                    if(worldObj.isBlockSolidOnSide(xCoord, yCoord + i, zCoord, direction.getOpposite())) {
+                    if (worldObj.isBlockSolidOnSide(xCoord + i, yCoord, zCoord,
+                            direction.getOpposite())) {
 
                         return null;
                     }
                 }
 
+                if (direction.offsetX < 0) {
 
-                if(direction.offsetY < 0) {
+                    TileEntity tile = worldObj.getBlockTileEntity(xCoord - i,
+                            yCoord, zCoord);
 
-                    TileEntity tile = worldObj.getBlockTileEntity(xCoord, yCoord - i, zCoord);
+                    // if(tile != null && tile instanceof ILaserReciever && tile
+                    // != this) {
+                    //
+                    // return tile;
+                    // }
 
-//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-//
-//                        return tile;
-//                    }
-
-                    if(worldObj.isBlockSolidOnSide(xCoord, yCoord - i, zCoord, direction.getOpposite())) {
+                    if (worldObj.isBlockSolidOnSide(xCoord - i, yCoord, zCoord,
+                            direction.getOpposite())) {
 
                         return null;
                     }
                 }
             }
 
-            if(direction.offsetZ != 0) {
+            if (direction.offsetY != 0) {
 
-                if(direction.offsetZ > 0) {
+                if (direction.offsetY > 0) {
 
-                    TileEntity tile = worldObj.getBlockTileEntity(xCoord, yCoord, zCoord + i);
+                    TileEntity tile = worldObj.getBlockTileEntity(xCoord,
+                            yCoord + i, zCoord);
 
-//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-//
-//                        return tile;
-//                    }
+                    // if(tile != null && tile instanceof ILaserReciever && tile
+                    // != this) {
+                    //
+                    // return tile;
+                    // }
 
-                    if(worldObj.isBlockSolidOnSide(xCoord, yCoord, zCoord + i, direction.getOpposite())) {
+                    if (worldObj.isBlockSolidOnSide(xCoord, yCoord + i, zCoord,
+                            direction.getOpposite())) {
 
                         return null;
                     }
                 }
 
-                if(direction.offsetZ < 0) {
+                if (direction.offsetY < 0) {
 
-                    TileEntity tile = worldObj.getBlockTileEntity(xCoord, yCoord, zCoord - i);
+                    TileEntity tile = worldObj.getBlockTileEntity(xCoord,
+                            yCoord - i, zCoord);
 
-//                    if(tile != null && tile instanceof ILaserReciever && tile != this) {
-//
-//                        return tile;
-//                    }
+                    // if(tile != null && tile instanceof ILaserReciever && tile
+                    // != this) {
+                    //
+                    // return tile;
+                    // }
 
-                    if(worldObj.isBlockSolidOnSide(xCoord, yCoord, zCoord - i, direction.getOpposite())) {
+                    if (worldObj.isBlockSolidOnSide(xCoord, yCoord - i, zCoord,
+                            direction.getOpposite())) {
+
+                        return null;
+                    }
+                }
+            }
+
+            if (direction.offsetZ != 0) {
+
+                if (direction.offsetZ > 0) {
+
+                    TileEntity tile = worldObj.getBlockTileEntity(xCoord,
+                            yCoord, zCoord + i);
+
+                    // if(tile != null && tile instanceof ILaserReciever && tile
+                    // != this) {
+                    //
+                    // return tile;
+                    // }
+
+                    if (worldObj.isBlockSolidOnSide(xCoord, yCoord, zCoord + i,
+                            direction.getOpposite())) {
+
+                        return null;
+                    }
+                }
+
+                if (direction.offsetZ < 0) {
+
+                    TileEntity tile = worldObj.getBlockTileEntity(xCoord,
+                            yCoord, zCoord - i);
+
+                    // if(tile != null && tile instanceof ILaserReciever && tile
+                    // != this) {
+                    //
+                    // return tile;
+                    // }
+
+                    if (worldObj.isBlockSolidOnSide(xCoord, yCoord, zCoord - i,
+                            direction.getOpposite())) {
 
                         return null;
                     }
@@ -175,12 +203,6 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
     }
 
     @Override
-    public String getName() {
-
-        return "Test Laser";
-    }
-
-    @Override
     public int getSizeInventory() {
         // TODO Auto-generated method stub
         return tileItemStacks.length;
@@ -189,7 +211,7 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
     @Override
     public ItemStack getStackInSlot(int slot) {
 
-        if(slot <= tileItemStacks.length) {
+        if (slot <= tileItemStacks.length) {
 
             return tileItemStacks[slot];
         }
@@ -207,8 +229,7 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
             if (stack.stackSize <= amt) {
 
                 setInventorySlotContents(slot, null);
-            } 
-            else {
+            } else {
 
                 stack = stack.splitStack(amt);
                 if (stack.stackSize == 0) {
@@ -259,7 +280,9 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player) {
 
-        return worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
+        return worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) == this
+                && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
+                        zCoord + 0.5) < 64;
     }
 
     @Override
@@ -278,5 +301,5 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc, 
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
 
         return true;
-    } 
+    }
 }

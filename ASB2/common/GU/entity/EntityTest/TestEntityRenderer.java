@@ -8,14 +8,14 @@ import GU.info.Textures;
 public class TestEntityRenderer extends Render {
 
     @Override
-    public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTick) {
+    public void doRender(Entity entity, double x, double y, double z,
+            float yaw, float partialTick) {
 
-       
     }
 
     @Override
     protected ResourceLocation func_110775_a(Entity entity) {
 
         return Textures.BLANK;
-    } 
+    }
 }

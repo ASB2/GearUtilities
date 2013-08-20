@@ -23,28 +23,30 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public abstract class ContainerBase extends BlockContainer {
 
     protected boolean useStandardRendering = true;
-    protected boolean useDefaultTexture = false;  
+    protected boolean useDefaultTexture = false;
     Icon texture;
     String blockName = "";
 
     public ContainerBase(int id, Material material) {
         super(id, material);
 
-        MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);        
+        MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);
         this.setCreativeTab(GearUtilities.tabGUBlocks);
         setHardness(100f);
         setResistance(100F);
     }
 
-    public boolean rotate(ItemStack itemStack, World world, int x, int y, int z, boolean shifting, int side) {
+    public boolean rotate(ItemStack itemStack, World world, int x, int y,
+            int z, boolean shifting, int side) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        if(tile != null && tile instanceof IWrenchable) {
+        if (tile != null && tile instanceof IWrenchable) {
 
-            if(itemStack.getItem() == Item.stick) {
+            if (itemStack.getItem() == Item.stick) {
 
-                ((IWrenchable)tile).triggerBlock(world, shifting, itemStack, x, y, z, side);
+                ((IWrenchable) tile).triggerBlock(world, shifting, itemStack,
+                        x, y, z, side);
                 return true;
             }
         }
@@ -52,11 +54,13 @@ public abstract class ContainerBase extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        
-        return rotate(player.getCurrentEquippedItem(), world, x, y, z, player.isSneaking(), side);
+    public boolean onBlockActivated(World world, int x, int y, int z,
+            EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+
+        return rotate(player.getCurrentEquippedItem(), world, x, y, z,
+                player.isSneaking(), side);
     }
-    
+
     @Override
     public boolean renderAsNormalBlock() {
 
@@ -72,7 +76,7 @@ public abstract class ContainerBase extends BlockContainer {
     @Override
     public int getRenderType() {
 
-        if(!useStandardRendering)
+        if (!useStandardRendering)
             return -1;
 
         return 0;
@@ -84,16 +88,17 @@ public abstract class ContainerBase extends BlockContainer {
     }
 
     @Override
-    public int onBlockPlaced(World world, int x, int y, int z, int sideHit, float hitX, float hitY, float hitZ, int metaData) {
+    public int onBlockPlaced(World world, int x, int y, int z, int sideHit,
+            float hitX, float hitY, float hitZ, int metaData) {
 
         return sideHit;
     }
 
     @Override
-    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metaData) {
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z,
+            int metaData) {
 
-        //TileEntity tile = world.getBlockTileEntity(x, y, z);
-
+        // TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         this.dropItems(world, x, y, z);
         super.onBlockDestroyedByPlayer(world, x, y, z, metaData);
@@ -102,7 +107,7 @@ public abstract class ContainerBase extends BlockContainer {
     @Override
     public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
 
-        //TileEntity tile = world.getBlockTileEntity(x, y, z);
+        // TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         this.dropItems(world, x, y, z);
         super.breakBlock(world, x, y, z, par5, par6);
@@ -112,24 +117,24 @@ public abstract class ContainerBase extends BlockContainer {
 
         Random prng = new Random();
 
-        if(world.getBlockTileEntity(x, y, z) instanceof IInventory) {
+        if (world.getBlockTileEntity(x, y, z) instanceof IInventory) {
 
-            IInventory tileEntity = (IInventory)world.getBlockTileEntity(x, y, z);
+            IInventory tileEntity = (IInventory) world.getBlockTileEntity(x, y,
+                    z);
 
-            if(tileEntity == null)
+            if (tileEntity == null)
                 return;
 
-            for(int slot = 0; slot < tileEntity.getSizeInventory(); slot++)
-            {
+            for (int slot = 0; slot < tileEntity.getSizeInventory(); slot++) {
                 ItemStack item = tileEntity.getStackInSlot(slot);
 
-                if(item != null && item.stackSize > 0)
-                {
+                if (item != null && item.stackSize > 0) {
                     float rx = prng.nextFloat() * 0.8f + 0.1f;
                     float ry = prng.nextFloat() * 0.8f + 0.1f;
                     float rz = prng.nextFloat() * 0.8f + 0.1f;
 
-                    EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, item.copy());
+                    EntityItem entityItem = new EntityItem(world, x + rx, y
+                            + ry, z + rz, item.copy());
                     world.spawnEntityInWorld(entityItem);
                     item.stackSize = 0;
                 }
@@ -152,7 +157,7 @@ public abstract class ContainerBase extends BlockContainer {
     @Override
     public Icon getIcon(int side, int metadata) {
 
-        if(useDefaultTexture || texture == null) 
+        if (useDefaultTexture || texture == null)
             return this.blockIcon;
 
         return texture;
@@ -162,6 +167,7 @@ public abstract class ContainerBase extends BlockContainer {
 
         this.blockName = texture;
         this.setUnlocalizedName(Reference.UNIQUE_ID + blockName);
-        GameRegistry.registerBlock(this, GUItemBlock.class, this.getUnlocalizedName());
+        GameRegistry.registerBlock(this, GUItemBlock.class,
+                this.getUnlocalizedName());
     }
 }

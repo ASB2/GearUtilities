@@ -10,11 +10,11 @@ public class GUFuelHandler implements IFuelHandler {
 
         int id = fuel.itemID;
 
-        if(id == (ItemRegistry.ItemFireCrystalShard.itemID)) {            
+        if (id == (ItemRegistry.ItemFireCrystalShard.itemID)) {
 
             return 1600;
         }
-        
+
         return 0;
     }
 

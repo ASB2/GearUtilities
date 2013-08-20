@@ -19,8 +19,8 @@ public class GUCreativeTab extends CreativeTabs {
     @SideOnly(Side.CLIENT)
     public int getTabIconItemIndex() {
 
-        if(name.equalsIgnoreCase(Reference.NAME + ": Blocks")) {
-            
+        if (name.equalsIgnoreCase(Reference.NAME + ": Blocks")) {
+
             return BlockRegistry.BlockSpeedyRoad.blockID;
         }
         return ItemRegistry.ItemGearReader.itemID;

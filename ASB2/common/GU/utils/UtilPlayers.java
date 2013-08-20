@@ -14,19 +14,28 @@ import GU.info.*;
 
 public class UtilPlayers {
 
-    private static String[] specialPlayers = new String[] {"ASB2", "Proswhere", "iOverpowered"};
+    private static String[] specialPlayers = new String[] { "ASB2",
+            "Proswhere", "iOverpowered" };
 
-    public static double[] getPlayerCursorCoords(World world, EntityPlayer entityplayer) {
+    public static double[] getPlayerCursorCoords(World world,
+            EntityPlayer entityplayer) {
 
         float f = 1.0F;
-        float f1 = entityplayer.prevRotationPitch + (entityplayer.rotationPitch - entityplayer.prevRotationPitch) * f;
-        float f2 = entityplayer.prevRotationYaw + (entityplayer.rotationYaw - entityplayer.prevRotationYaw) * f;
-        double d = entityplayer.prevPosX + (entityplayer.posX - entityplayer.prevPosX) * f;
-        double d1 = (entityplayer.prevPosY + (entityplayer.posY - entityplayer.prevPosY) * f + 1.6200000000000001D) - entityplayer.yOffset;
-        double d2 = entityplayer.prevPosZ + (entityplayer.posZ - entityplayer.prevPosZ) * f;
+        float f1 = entityplayer.prevRotationPitch
+                + (entityplayer.rotationPitch - entityplayer.prevRotationPitch)
+                * f;
+        float f2 = entityplayer.prevRotationYaw
+                + (entityplayer.rotationYaw - entityplayer.prevRotationYaw) * f;
+        double d = entityplayer.prevPosX
+                + (entityplayer.posX - entityplayer.prevPosX) * f;
+        double d1 = (entityplayer.prevPosY
+                + (entityplayer.posY - entityplayer.prevPosY) * f + 1.6200000000000001D)
+                - entityplayer.yOffset;
+        double d2 = entityplayer.prevPosZ
+                + (entityplayer.posZ - entityplayer.prevPosZ) * f;
         Vec3 vec3d = Vec3.createVectorHelper(d, d1, d2);
-        float f3 = MathHelper.cos(-f2 * 0.01745329F - (float)Math.PI);
-        float f4 = MathHelper.sin(-f2 * 0.01745329F - (float)Math.PI);
+        float f3 = MathHelper.cos(-f2 * 0.01745329F - (float) Math.PI);
+        float f4 = MathHelper.sin(-f2 * 0.01745329F - (float) Math.PI);
         float f5 = -MathHelper.cos(-f1 * 0.01745329F);
         float f6 = MathHelper.sin(-f1 * 0.01745329F);
         float f7 = f4 * f5;
@@ -34,19 +43,19 @@ public class UtilPlayers {
         float f9 = f3 * f5;
         double d3 = 5000D;
         Vec3 vec3d1 = vec3d.addVector(f7 * d3, f8 * d3, f9 * d3);
-        MovingObjectPosition movingobjectposition = world.rayTraceBlocks_do_do(vec3d, vec3d1, false, true);
+        MovingObjectPosition movingobjectposition = world.rayTraceBlocks_do_do(
+                vec3d, vec3d1, false, true);
 
         if (!(movingobjectposition == null)) {
 
-            if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
-            {
+            if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
                 int i = movingobjectposition.blockX;
                 int j = movingobjectposition.blockY;
                 int k = movingobjectposition.blockZ;
 
-                return new double[] {i, j, k};
+                return new double[] { i, j, k };
             }
-        }        
+        }
 
         return null;
     }
@@ -57,74 +66,80 @@ public class UtilPlayers {
         Double y = entity.posY;
         Double z = entity.posZ;
 
-        int xCoord = (int)x.intValue();
-        int yCoord = (int)y.intValue();
-        int zCoord = (int)z.intValue();
+        int xCoord = (int) x.intValue();
+        int yCoord = (int) y.intValue();
+        int zCoord = (int) z.intValue();
 
-        if(x.doubleValue() >= .7) {
+        if (x.doubleValue() >= .7) {
 
-            xCoord = (int)x.intValue() + 1;
+            xCoord = (int) x.intValue() + 1;
         }
 
-        if(y.doubleValue() >= .7) {
+        if (y.doubleValue() >= .7) {
 
-            yCoord = (int)y.intValue() + 1;
+            yCoord = (int) y.intValue() + 1;
         }
 
-        if(z.doubleValue() >= .7) {
+        if (z.doubleValue() >= .7) {
 
-            zCoord = (int)z.intValue() + 1;
+            zCoord = (int) z.intValue() + 1;
         }
-        return new int[] {xCoord, yCoord, zCoord};
+        return new int[] { xCoord, yCoord, zCoord };
     }
 
-    public static ForgeDirection getEntityDirection(Entity entity, boolean useYaw) {
+    public static ForgeDirection getEntityDirection(Entity entity,
+            boolean useYaw) {
 
-        int roatation = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+        int roatation = MathHelper
+                .floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
-        if(!useYaw) {
+        if (!useYaw) {
 
-            if(entity.rotationPitch >= 90 && entity.rotationPitch <= 180) {
+            if (entity.rotationPitch >= 90 && entity.rotationPitch <= 180) {
 
                 return ForgeDirection.DOWN;
-            }
-            else if(entity.rotationPitch <= 90) {
+            } else if (entity.rotationPitch <= 90) {
 
                 return ForgeDirection.UP;
             }
         }
         switch (roatation) {
 
-            case 0: return ForgeDirection.SOUTH;
-            case 1: return ForgeDirection.WEST;
-            case 2: return ForgeDirection.NORTH;
-            case 3: return ForgeDirection.EAST;
+            case 0:
+                return ForgeDirection.SOUTH;
+            case 1:
+                return ForgeDirection.WEST;
+            case 2:
+                return ForgeDirection.NORTH;
+            case 3:
+                return ForgeDirection.EAST;
         }
         return ForgeDirection.UNKNOWN;
     }
-    public static void damagePlayer(World world, int x, int y, int z, Entity entity, DamageSource source, int damage) {
 
-        if(entity instanceof EntityPlayer) {
+    public static void damagePlayer(World world, int x, int y, int z,
+            Entity entity, DamageSource source, int damage) {
 
-            if(!(UtilPlayers.isSpecialPlayer(((EntityPlayer)entity).username))) {
+        if (entity instanceof EntityPlayer) {
 
-                entity.attackEntityFrom(source, damage); 
+            if (!(UtilPlayers.isSpecialPlayer(((EntityPlayer) entity).username))) {
+
+                entity.attackEntityFrom(source, damage);
             }
-        }
-        else {
-            entity.attackEntityFrom(source, damage); 
+        } else {
+            entity.attackEntityFrom(source, damage);
         }
     }
 
     public static boolean hasItemStack(EntityPlayer player, ItemStack itemStack) {
 
-        if(itemStack != null) {
+        if (itemStack != null) {
 
-            for(int i = 0; i < player.inventory.getSizeInventory(); i++ ) {
+            for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
 
-                if(player.inventory.getStackInSlot(i) != null) {
+                if (player.inventory.getStackInSlot(i) != null) {
 
-                    if(player.inventory.getStackInSlot(i).equals(itemStack)) {
+                    if (player.inventory.getStackInSlot(i).equals(itemStack)) {
 
                         return true;
                     }
@@ -136,13 +151,13 @@ public class UtilPlayers {
 
     public static int slotWithItem(EntityPlayer player, ItemStack itemStack) {
 
-        if(itemStack != null) {
+        if (itemStack != null) {
 
-            for(int i = 0; i < player.inventory.getSizeInventory(); i++ ) {
+            for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
 
-                if(player.inventory.getStackInSlot(i) != null) {
+                if (player.inventory.getStackInSlot(i) != null) {
 
-                    if(player.inventory.getStackInSlot(i).equals(itemStack)) {
+                    if (player.inventory.getStackInSlot(i).equals(itemStack)) {
 
                         return i;
                     }
@@ -155,27 +170,27 @@ public class UtilPlayers {
     @SuppressWarnings("unused")
     public static boolean isSpecialPlayer(String player) {
 
-        if(Variables.MODDER_APPRECATION) {
+        if (Variables.MODDER_APPRECATION) {
 
-            for(int p = 0; p < UtilPlayers.specialPlayers.length; p++) {
+            for (int p = 0; p < UtilPlayers.specialPlayers.length; p++) {
 
-                if(UtilPlayers.specialPlayers[p].equals(player)) {    
+                if (UtilPlayers.specialPlayers[p].equals(player)) {
 
                     return true;
-                }   
+                }
 
                 else {
 
                     return false;
                 }
-            }        
+            }
         }
         return false;
     }
 
     public static void sendChatToPlayer(EntityPlayer player, String message) {
 
-        if(!player.worldObj.isRemote) {
+        if (!player.worldObj.isRemote) {
 
             player.addChatMessage(message);
         }

@@ -12,7 +12,8 @@ import GU.blocks.containers.TileBase;
 import GU.power.GUPowerProvider;
 import GU.utils.UtilInventory;
 
-public class TileCreationTable extends TileBase implements IPowerMisc, IInventory {
+public class TileCreationTable extends TileBase implements IPowerMisc,
+        IInventory {
 
     public TileCreationTable() {
 
@@ -24,7 +25,7 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     @Override
     public void updateEntity() {
 
-        if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
             waitTimer.update();
         }
@@ -33,13 +34,8 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     @Override
     public void trigger(int id) {
 
-        ((GUPowerProvider)this.getPowerProvider()).movePower(worldObj, xCoord, yCoord, zCoord);
-    }
-
-    @Override
-    public String getName() {
-
-        return "Creation Table";
+        ((GUPowerProvider) this.getPowerProvider()).movePower(worldObj, xCoord,
+                yCoord, zCoord);
     }
 
     @Override
@@ -63,7 +59,7 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     @Override
     public ItemStack decrStackSize(int i, int j) {
 
-        if(UtilInventory.decreaseSlotContents(this, i, j)) {
+        if (UtilInventory.decreaseSlotContents(this, i, j)) {
 
             return this.getStackInSlot(i);
         }
@@ -79,13 +75,7 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
 
-        tileItemStacks[i] = itemStack;        
-    }
-
-    @Override
-    public String getInvName() {
-        // TODO Auto-generated method stub
-        return getName();
+        tileItemStacks[i] = itemStack;
     }
 
     @Override
@@ -122,5 +112,11 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     public boolean isItemValidForSlot(int i, ItemStack itemstack) {
         // TODO Auto-generated method stub
         return true;
+    }
+
+    @Override
+    public String getInvName() {
+        // TODO Auto-generated method stub
+        return "Creation Table";
     }
 }

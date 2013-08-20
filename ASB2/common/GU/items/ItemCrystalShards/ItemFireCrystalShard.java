@@ -14,21 +14,21 @@ public class ItemFireCrystalShard extends ItemCrystal {
     }
 
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
-    {
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player,
+            World world, int x, int y, int z, int side, float hitX, float hitY,
+            float hitZ) {
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        if(tile instanceof IColorable) {
+        if (tile instanceof IColorable) {
 
-            IColorable colorAble = ((IColorable)tile);
+            IColorable colorAble = ((IColorable) tile);
 
-            if(!player.isSneaking()) {
-                
+            if (!player.isSneaking()) {
+
                 colorAble.changeRed(1, ForgeDirection.getOrientation(side));
                 return true;
-            }
-            else {
-                
+            } else {
+
                 colorAble.changeRed(-1, ForgeDirection.getOrientation(side));
                 return true;
             }

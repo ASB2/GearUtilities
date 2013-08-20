@@ -15,12 +15,12 @@ public class EntityTestEntity extends EntityBase {
     public void onEntityUpdate() {
         super.onEntityUpdate();
 
-        this.updateMovement();    
+        this.updateMovement();
     }
-    
+
     @Override
     protected void entityInit() {
-        
+
     }
 
     @Override

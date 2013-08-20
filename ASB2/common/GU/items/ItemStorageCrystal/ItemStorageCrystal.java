@@ -1,6 +1,5 @@
 package GU.items.ItemStorageCrystal;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -19,12 +18,12 @@ public class ItemStorageCrystal extends ItemBase {
 
     public Icon getIcon(ItemStack stack, int pass) {
 
-        if(this.getFluidStack(stack) != null) {
+        if (this.getFluidStack(stack) != null) {
 
-            if(this.getFluidStack(stack).getFluid().getIcon() != null) {
+            if (this.getFluidStack(stack).getFluid().getIcon() != null) {
 
-                if(pass == 0)
-                return this.getFluidStack(stack).getFluid().getStillIcon();
+                if (pass == 0)
+                    return this.getFluidStack(stack).getFluid().getStillIcon();
             }
         }
 
@@ -33,57 +32,75 @@ public class ItemStorageCrystal extends ItemBase {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
+    public void addInformation(ItemStack itemStack, EntityPlayer player,
+            java.util.List info, boolean var1) {
         super.addInformation(itemStack, player, info, var1);
 
+        if (this.getFluidStack(itemStack) != null) {
 
-        if(this.getFluidStack(itemStack) != null) {
+            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD)
+                    + "Fluid Stored: "
+                    + UtilMisc.capitilizeFirst(this.getFluidStack(itemStack)
+                            .getFluid().getName()));
+            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD)
+                    + "Fluid Amount: "
+                    + UtilMisc.capitilizeFirst(Integer.toString(this
+                            .getFluidStack(itemStack).amount)));
+        } else {
 
-            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Stored: " + UtilMisc.capitilizeFirst(this.getFluidStack(itemStack).getFluid().getName()));
-            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Amount: " + UtilMisc.capitilizeFirst(Integer.toString(this.getFluidStack(itemStack).amount)));
-        }
-        else {
-            
-            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Stored: None");
-            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Amount: 0");
+            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD)
+                    + "Fluid Stored: None");
+            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD)
+                    + "Fluid Amount: 0");
         }
     }
 
     public FluidStack getFluidStack(ItemStack itemStack) {
 
-        if(FluidRegistry.getFluid(UtilItemStack.getTAGfromItemstack(itemStack).getString("fluidName")) != null && UtilItemStack.getTAGfromItemstack(itemStack).getInteger("fluidAmount") != 0) {
+        if (FluidRegistry.getFluid(UtilItemStack.getTAGfromItemstack(itemStack)
+                .getString("fluidName")) != null
+                && UtilItemStack.getTAGfromItemstack(itemStack).getInteger(
+                        "fluidAmount") != 0) {
 
-            return new FluidStack(FluidRegistry.getFluid(UtilItemStack.getTAGfromItemstack(itemStack).getString("fluidName")), UtilItemStack.getTAGfromItemstack(itemStack).getInteger("fluidAmount"));
+            return new FluidStack(FluidRegistry.getFluid(UtilItemStack
+                    .getTAGfromItemstack(itemStack).getString("fluidName")),
+                    UtilItemStack.getTAGfromItemstack(itemStack).getInteger(
+                            "fluidAmount"));
         }
         return null;
     }
 
     public boolean setFluidStack(ItemStack itemStack, FluidStack fluid) {
 
-        if(fluid != null) {
-            if(this.getFluidStack(itemStack) != null) {
+        if (fluid != null) {
+            if (this.getFluidStack(itemStack) != null) {
 
-                if(this.getFluidStack(itemStack).isFluidEqual(fluid)) {
+                if (this.getFluidStack(itemStack).isFluidEqual(fluid)) {
 
-                    if(this.getFluidStack(itemStack).amount + fluid.amount <= this.getCapasity(itemStack)) {
+                    if (this.getFluidStack(itemStack).amount + fluid.amount <= this
+                            .getCapasity(itemStack)) {
 
-                        UtilItemStack.getTAGfromItemstack(itemStack).setInteger("fluidAmount", fluid.amount);
-                        UtilItemStack.getTAGfromItemstack(itemStack).setString("fluidName", fluid.getFluid().getName());
+                        UtilItemStack.getTAGfromItemstack(itemStack)
+                                .setInteger("fluidAmount", fluid.amount);
+                        UtilItemStack.getTAGfromItemstack(itemStack).setString(
+                                "fluidName", fluid.getFluid().getName());
                         return true;
                     }
                 }
-            }
-            else {
+            } else {
 
-                UtilItemStack.getTAGfromItemstack(itemStack).setInteger("fluidAmount", fluid.amount);
-                UtilItemStack.getTAGfromItemstack(itemStack).setString("fluidName", fluid.getFluid().getName());
+                UtilItemStack.getTAGfromItemstack(itemStack).setInteger(
+                        "fluidAmount", fluid.amount);
+                UtilItemStack.getTAGfromItemstack(itemStack).setString(
+                        "fluidName", fluid.getFluid().getName());
                 return true;
             }
-        }
-        else {
+        } else {
 
-            UtilItemStack.getTAGfromItemstack(itemStack).setInteger("fluidAmount", 0);
-            UtilItemStack.getTAGfromItemstack(itemStack).setString("fluidName", "");
+            UtilItemStack.getTAGfromItemstack(itemStack).setInteger(
+                    "fluidAmount", 0);
+            UtilItemStack.getTAGfromItemstack(itemStack).setString("fluidName",
+                    "");
         }
         return false;
     }

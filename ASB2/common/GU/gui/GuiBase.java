@@ -48,78 +48,87 @@ public abstract class GuiBase extends GuiContainer {
 
     public void renderSlotsInContainer() {
 
-        for(int i = 0; i < container.slotList.size(); i++) {
+        for (int i = 0; i < container.slotList.size(); i++) {
 
-            addSlot(posX + container.slotList.get(i).xDisplayPosition - 1, posY + container.slotList.get(i).yDisplayPosition - 1);
+            addSlot(posX + container.slotList.get(i).xDisplayPosition - 1, posY
+                    + container.slotList.get(i).yDisplayPosition - 1);
         }
     }
 
     public void addSlot(int x, int y) {
-        
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 176, 32, 18, 18);
     }
 
     public void renderBigSlot(int x, int y) {
-        
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 226, 4, 26, 26);
     }
 
     public void renderFlame(int x, int y) {
-        
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 191, 0, 14, 14);
     }
 
     public void renderBurningFlame(int x, int y) {
-        
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 176, 0, 14, 14);
     }
 
-    public void scaleFlame(int x, int y,int scale) {
-        
+    public void scaleFlame(int x, int y, int scale) {
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y + 14 - scale, 191, 0, 14, scale);
     }
 
-    public void scaleBurningFlame(int x, int y,int scale) {
+    public void scaleBurningFlame(int x, int y, int scale) {
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(x, y + 14 - scale, 176, 0 , 14, scale);
+        drawTexturedModalRect(x, y + 14 - scale, 176, 0, 14, scale);
     }
 
     public void addTank(int x, int y) {
-        
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 176, 123, 18, 71);
     }
 
     public void scaleLiquid(int x, int y, int scale, Icon icon) {
-        
-//        Tessellator tessellator = Tessellator.instance;
-//        tessellator.startDrawingQuads();
-//        tessellator.addVertexWithUV((double) (par1 + 0), (double) (par2 + par5), (double) this.zLevel, (double) par3Icon.getMinU(), (double) par3Icon.getMaxV());
-//        tessellator.addVertexWithUV((double) (par1 + par4), (double) (par2 + par5), (double) this.zLevel, (double) par3Icon.getMaxU(), (double) par3Icon.getMaxV());
-//        tessellator.addVertexWithUV((double) (par1 + par4), (double) (par2 + 0), (double) this.zLevel, (double) par3Icon.getMaxU(), (double) par3Icon.getMinV());
-//        tessellator.addVertexWithUV((double) (par1 + 0), (double) (par2 + 0), (double) this.zLevel, (double) par3Icon.getMinU(), (double) par3Icon.getMinV());
-//        tessellator.draw();
+
+        // Tessellator tessellator = Tessellator.instance;
+        // tessellator.startDrawingQuads();
+        // tessellator.addVertexWithUV((double) (par1 + 0), (double) (par2 +
+        // par5), (double) this.zLevel, (double) par3Icon.getMinU(), (double)
+        // par3Icon.getMaxV());
+        // tessellator.addVertexWithUV((double) (par1 + par4), (double) (par2 +
+        // par5), (double) this.zLevel, (double) par3Icon.getMaxU(), (double)
+        // par3Icon.getMaxV());
+        // tessellator.addVertexWithUV((double) (par1 + par4), (double) (par2 +
+        // 0), (double) this.zLevel, (double) par3Icon.getMaxU(), (double)
+        // par3Icon.getMinV());
+        // tessellator.addVertexWithUV((double) (par1 + 0), (double) (par2 + 0),
+        // (double) this.zLevel, (double) par3Icon.getMinU(), (double)
+        // par3Icon.getMinV());
+        // tessellator.draw();
     }
 
     public void renderRightArrow(int x, int y) {
-        
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 200, 14, 24, 17);
     }
 
     public void renderLeftArrow(int x, int y) {
-        
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 195, 32, 24, 17);
     }
 
     public void addPowerTank(int x, int y) {
-        
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 176, 51, 18, 71);
     }
@@ -130,26 +139,33 @@ public abstract class GuiBase extends GuiContainer {
         drawTexturedModalRect(x, y + 71 - scale + 4, 194, 51, 18, scale);
     }
 
-    protected void drawTooltips(IPowerMisc tileEntity, int mouseX, int mouseY, int coordX, int coordY, int maxX, int maxY) {
+    protected void drawTooltips(IPowerMisc tileEntity, int mouseX, int mouseY,
+            int coordX, int coordY, int maxX, int maxY) {
 
-        if(tileEntity != null && tileEntity.getPowerProvider() != null) {
+        if (tileEntity != null && tileEntity.getPowerProvider() != null) {
 
-            if(isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
+            if (isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
 
-                drawBarTooltip("Energy", "TCU", (int)tileEntity.getPowerProvider().getPowerStored(), (int)tileEntity.getPowerProvider().getPowerMax(), mouseX, mouseY);
+                drawBarTooltip("Energy", "TCU", (int) tileEntity
+                        .getPowerProvider().getPowerStored(), (int) tileEntity
+                        .getPowerProvider().getPowerMax(), mouseX, mouseY);
             }
-        }
-    } 
-
-    protected void drawTooltips(int fluidMax, int fluidAmount, String fluidName, int mouseX, int mouseY, int coordX, int coordY, int maxX, int maxY) {
-
-        if(isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
-
-            drawBarTooltip("Fluid: " + fluidName, "mB", fluidAmount, fluidMax, mouseX, mouseY);
         }
     }
 
-    protected void drawBarTooltip(String name, String unit, int value, int max, int x, int y) {
+    protected void drawTooltips(int fluidMax, int fluidAmount,
+            String fluidName, int mouseX, int mouseY, int coordX, int coordY,
+            int maxX, int maxY) {
+
+        if (isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
+
+            drawBarTooltip("Fluid: " + fluidName, "mB", fluidAmount, fluidMax,
+                    mouseX, mouseY);
+        }
+    }
+
+    protected void drawBarTooltip(String name, String unit, int value, int max,
+            int x, int y) {
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -165,12 +181,10 @@ public abstract class GuiBase extends GuiContainer {
         int xStart;
         int yStart;
 
-        for(int i = 0; i < stringList.size(); i++)
-        {
+        for (int i = 0; i < stringList.size(); i++) {
             tempWidth = this.fontRenderer.getStringWidth(stringList.get(i));
 
-            if(tempWidth > tooltipWidth)
-            {
+            if (tempWidth > tooltipWidth) {
                 tooltipWidth = tempWidth;
             }
         }
@@ -179,48 +193,52 @@ public abstract class GuiBase extends GuiContainer {
         yStart = y - 12;
         int tooltipHeight = 8;
 
-        if(stringList.size() > 1)
-        {
+        if (stringList.size() > 1) {
             tooltipHeight += 2 + (stringList.size() - 1) * 10;
         }
 
-        if(this.guiTop + yStart + tooltipHeight + 6 > this.height)
-        {
+        if (this.guiTop + yStart + tooltipHeight + 6 > this.height) {
             yStart = this.height - tooltipHeight - this.guiTop - 6;
         }
 
         this.zLevel = 300.0F;
         itemRenderer.zLevel = 300.0F;
         int color1 = -267386864;
-        this.drawGradientRect(xStart - 3, yStart - 4, xStart + tooltipWidth + 3, yStart - 3, color1, color1);
-        this.drawGradientRect(xStart - 3, yStart + tooltipHeight + 3, xStart + tooltipWidth + 3, yStart + tooltipHeight + 4, color1, color1);
-        this.drawGradientRect(xStart - 3, yStart - 3, xStart + tooltipWidth + 3, yStart + tooltipHeight + 3, color1, color1);
-        this.drawGradientRect(xStart - 4, yStart - 3, xStart - 3, yStart + tooltipHeight + 3, color1, color1);
-        this.drawGradientRect(xStart + tooltipWidth + 3, yStart - 3, xStart + tooltipWidth + 4, yStart + tooltipHeight + 3, color1, color1);
+        this.drawGradientRect(xStart - 3, yStart - 4,
+                xStart + tooltipWidth + 3, yStart - 3, color1, color1);
+        this.drawGradientRect(xStart - 3, yStart + tooltipHeight + 3, xStart
+                + tooltipWidth + 3, yStart + tooltipHeight + 4, color1, color1);
+        this.drawGradientRect(xStart - 3, yStart - 3,
+                xStart + tooltipWidth + 3, yStart + tooltipHeight + 3, color1,
+                color1);
+        this.drawGradientRect(xStart - 4, yStart - 3, xStart - 3, yStart
+                + tooltipHeight + 3, color1, color1);
+        this.drawGradientRect(xStart + tooltipWidth + 3, yStart - 3, xStart
+                + tooltipWidth + 4, yStart + tooltipHeight + 3, color1, color1);
         int color2 = 1347420415;
         int color3 = (color2 & 16711422) >> 1 | color2 & -16777216;
-        this.drawGradientRect(xStart - 3, yStart - 3 + 1, xStart - 3 + 1, yStart + tooltipHeight + 3 - 1, color2, color3);
-        this.drawGradientRect(xStart + tooltipWidth + 2, yStart - 3 + 1, xStart + tooltipWidth + 3, yStart + tooltipHeight + 3 - 1, color2, color3);
-        this.drawGradientRect(xStart - 3, yStart - 3, xStart + tooltipWidth + 3, yStart - 3 + 1, color2, color2);
-        this.drawGradientRect(xStart - 3, yStart + tooltipHeight + 2, xStart + tooltipWidth + 3, yStart + tooltipHeight + 3, color3, color3);
+        this.drawGradientRect(xStart - 3, yStart - 3 + 1, xStart - 3 + 1,
+                yStart + tooltipHeight + 3 - 1, color2, color3);
+        this.drawGradientRect(xStart + tooltipWidth + 2, yStart - 3 + 1, xStart
+                + tooltipWidth + 3, yStart + tooltipHeight + 3 - 1, color2,
+                color3);
+        this.drawGradientRect(xStart - 3, yStart - 3,
+                xStart + tooltipWidth + 3, yStart - 3 + 1, color2, color2);
+        this.drawGradientRect(xStart - 3, yStart + tooltipHeight + 2, xStart
+                + tooltipWidth + 3, yStart + tooltipHeight + 3, color3, color3);
 
-        for(int stringIndex = 0; stringIndex < stringList.size(); ++stringIndex)
-        {
+        for (int stringIndex = 0; stringIndex < stringList.size(); ++stringIndex) {
             String line = stringList.get(stringIndex);
 
-            if(stringIndex == 0)
-            {
+            if (stringIndex == 0) {
                 line = "\u00a7" + Integer.toHexString(15) + line;
-            }
-            else
-            {
+            } else {
                 line = "\u00a77" + line;
             }
 
             this.fontRenderer.drawStringWithShadow(line, xStart, yStart, -1);
 
-            if(stringIndex == 0)
-            {
+            if (stringIndex == 0) {
                 yStart += 2;
             }
 

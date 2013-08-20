@@ -11,16 +11,18 @@ import GU.info.Models;
 import GU.info.Textures;
 import GU.utils.UtilRender;
 
-public class LampRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
+public class LampRenderer extends TileEntitySpecialRenderer implements
+        IItemRenderer {
 
     @Override
-    public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
+    public void renderTileEntityAt(TileEntity tileentity, double x, double y,
+            double z, float f) {
 
-        if(tileentity instanceof TileLamp) {
+        if (tileentity instanceof TileLamp) {
 
-            TileLamp tile = (TileLamp)tileentity;
+            TileLamp tile = (TileLamp) tileentity;
 
-            GL11.glPushMatrix();      
+            GL11.glPushMatrix();
 
             UtilRender.renderTexture(Textures.LAMP);
 
@@ -28,36 +30,42 @@ public class LampRenderer extends TileEntitySpecialRenderer implements IItemRend
 
                 case UP: {
 
-                    GL11.glTranslatef((float)x + 0.5F, (float)y + .5F - .38F, (float)z + 0.5F);
+                    GL11.glTranslatef((float) x + 0.5F, (float) y + .5F - .38F,
+                            (float) z + 0.5F);
                     break;
                 }
                 case DOWN: {
 
-                    GL11.glTranslatef((float)x + 0.5F, (float)y + .5F + .38F, (float)z + 0.5F);
+                    GL11.glTranslatef((float) x + 0.5F, (float) y + .5F + .38F,
+                            (float) z + 0.5F);
                     GL11.glRotatef(180F, 1F, 0F, 0F);
                     break;
                 }
                 case NORTH: {
 
-                    GL11.glTranslatef((float)x + 0.5F, (float)y + .5F, (float)z + .8F + .08F);
+                    GL11.glTranslatef((float) x + 0.5F, (float) y + .5F,
+                            (float) z + .8F + .08F);
                     GL11.glRotatef(-90F, 1F, 0F, 0F);
                     break;
                 }
                 case SOUTH: {
 
-                    GL11.glTranslatef((float)x + 0.5F, (float)y + .5F, (float)z + .2F - .08F);
+                    GL11.glTranslatef((float) x + 0.5F, (float) y + .5F,
+                            (float) z + .2F - .08F);
                     GL11.glRotatef(90F, 1F, 0F, 0F);
                     break;
                 }
                 case WEST: {
 
-                    GL11.glTranslatef((float)x + 0.7F + .18F - .001F, (float)y + .5F, (float)z + 0.5F);
+                    GL11.glTranslatef((float) x + 0.7F + .18F - .001F,
+                            (float) y + .5F, (float) z + 0.5F);
                     GL11.glRotatef(90F, 0F, 0F, 1F);
                     break;
                 }
                 case EAST: {
 
-                    GL11.glTranslatef((float)x + .12F, (float)y + .5F, (float)z + 0.5F);
+                    GL11.glTranslatef((float) x + .12F, (float) y + .5F,
+                            (float) z + 0.5F);
                     GL11.glRotatef(-90F, 0F, 0F, 1F);
                     break;
                 }
@@ -67,7 +75,7 @@ public class LampRenderer extends TileEntitySpecialRenderer implements IItemRend
             }
 
             GL11.glScalef(.5F, .5F, .5F);
-            
+
             Models.ModelLamp.renderAll();
 
             GL11.glPopMatrix();
@@ -81,7 +89,8 @@ public class LampRenderer extends TileEntitySpecialRenderer implements IItemRend
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
+            ItemRendererHelper helper) {
 
         return true;
     }
@@ -89,7 +98,7 @@ public class LampRenderer extends TileEntitySpecialRenderer implements IItemRend
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
-        switch(type) {
+        switch (type) {
 
             case ENTITY: {
 
@@ -115,16 +124,18 @@ public class LampRenderer extends TileEntitySpecialRenderer implements IItemRend
                 return;
             }
 
-            default:return;
+            default:
+                return;
         }
     }
 
-    private void renderItemSwitched(ItemRenderType type, float x, float y, float z, float scale) {
+    private void renderItemSwitched(ItemRenderType type, float x, float y,
+            float z, float scale) {
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
 
-        GL11.glTranslatef(x,  y,  z);
+        GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
         GL11.glRotatef(180F, 0F, 180F, 0F);
@@ -137,4 +148,3 @@ public class LampRenderer extends TileEntitySpecialRenderer implements IItemRend
         GL11.glPopMatrix();
     }
 }
-

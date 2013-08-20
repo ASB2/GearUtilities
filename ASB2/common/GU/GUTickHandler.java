@@ -9,7 +9,7 @@ import cpw.mods.fml.common.TickType;
 public class GUTickHandler implements ITickHandler {
 
     @Override
-    public void tickStart(EnumSet<TickType> type, Object... tickData) {       
+    public void tickStart(EnumSet<TickType> type, Object... tickData) {
     }
 
     @Override

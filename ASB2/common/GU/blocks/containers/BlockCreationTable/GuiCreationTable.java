@@ -10,8 +10,8 @@ public class GuiCreationTable extends GuiBase {
     private TileCreationTable tileEntity;
 
     public GuiCreationTable(InventoryPlayer inventory, TileEntity tile) {
-        super(new ContainerCreationTable(inventory, (TileCreationTable)tile));
-        
+        super(new ContainerCreationTable(inventory, (TileCreationTable) tile));
+
         tileEntity = (TileCreationTable) tile;
     }
 
@@ -20,7 +20,9 @@ public class GuiCreationTable extends GuiBase {
 
         this.renderDefaultGui();
         this.addPowerTank(posX + 8, posY + 6);
-        this.scalePower(posX + 7, posY + 5, UtilMisc.getAmountScaled(75, (int)tileEntity.getPowerProvider().getPowerStored(), (int)tileEntity.getPowerProvider().getPowerMax()));
+        this.scalePower(posX + 7, posY + 5, UtilMisc.getAmountScaled(75,
+                (int) tileEntity.getPowerProvider().getPowerStored(),
+                (int) tileEntity.getPowerProvider().getPowerMax()));
     }
 
 }

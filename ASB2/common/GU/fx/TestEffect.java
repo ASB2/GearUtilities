@@ -9,16 +9,16 @@ public class TestEffect extends EntityFX {
 
     Vector3 position = new Vector3();
     Vector3 end = new Vector3();
-    
+
     public TestEffect(World world, Vector3 position, Vector3 end) {
         super(world, position.x, position.y, position.z);
-        
+
         this.end = end;
         this.init();
     }
 
     public void init() {
-        
+
         particleMaxAge = 1;
         this.particleGravity = 1;
         this.multipleParticleScaleBy(5);
@@ -33,8 +33,7 @@ public class TestEffect extends EntityFX {
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
 
-        if (this.particleAge++ >= this.particleMaxAge)
-        {
+        if (this.particleAge++ >= this.particleMaxAge) {
             this.setDead();
         }
 
@@ -52,7 +51,8 @@ public class TestEffect extends EntityFX {
     }
 
     @Override
-    public void renderParticle(Tessellator tessellator, float par2, float par3, float par4, float par5, float par6, float par7){
+    public void renderParticle(Tessellator tessellator, float par2, float par3,
+            float par4, float par5, float par6, float par7) {
 
         float f6 = this.particleTextureIndexX / 16.0F;
         float f7 = f6 + 0.0624375F;
@@ -68,14 +68,19 @@ public class TestEffect extends EntityFX {
             f9 = this.particleIcon.getMaxV();
         }
 
-        float f11 = (float)(this.prevPosX + (this.posX - this.prevPosX) * par2 - interpPosX);
-        float f12 = (float)(this.prevPosY + (this.posY - this.prevPosY) * par2 - interpPosY);
-        float f13 = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * par2 - interpPosZ);
+        float f11 = (float) (this.prevPosX + (this.posX - this.prevPosX) * par2 - interpPosX);
+        float f12 = (float) (this.prevPosY + (this.posY - this.prevPosY) * par2 - interpPosY);
+        float f13 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * par2 - interpPosZ);
         float f14 = 1.0F;
-        tessellator.setColorRGBA_F(this.particleRed * f14, this.particleGreen * f14, this.particleBlue * f14, this.particleAlpha);
-        tessellator.addVertexWithUV(f11 - par3 * f10 - par6 * f10, f12 - par4 * f10, f13 - par5 * f10 - par7 * f10, f7, f9);
-        tessellator.addVertexWithUV(f11 - par3 * f10 + par6 * f10, f12 + par4 * f10, f13 - par5 * f10 + par7 * f10, f7, f8);
-        tessellator.addVertexWithUV(f11 + par3 * f10 + par6 * f10, f12 + par4 * f10, f13 + par5 * f10 + par7 * f10, f6, f8);
-        tessellator.addVertexWithUV(f11 + par3 * f10 - par6 * f10, f12 - par4 * f10, f13 + par5 * f10 - par7 * f10, f6, f9);
+        tessellator.setColorRGBA_F(this.particleRed * f14, this.particleGreen
+                * f14, this.particleBlue * f14, this.particleAlpha);
+        tessellator.addVertexWithUV(f11 - par3 * f10 - par6 * f10, f12 - par4
+                * f10, f13 - par5 * f10 - par7 * f10, f7, f9);
+        tessellator.addVertexWithUV(f11 - par3 * f10 + par6 * f10, f12 + par4
+                * f10, f13 - par5 * f10 + par7 * f10, f7, f8);
+        tessellator.addVertexWithUV(f11 + par3 * f10 + par6 * f10, f12 + par4
+                * f10, f13 + par5 * f10 + par7 * f10, f6, f8);
+        tessellator.addVertexWithUV(f11 + par3 * f10 - par6 * f10, f12 - par4
+                * f10, f13 + par5 * f10 - par7 * f10, f6, f9);
     }
 }

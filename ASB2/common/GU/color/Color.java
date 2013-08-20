@@ -1,6 +1,5 @@
 package GU.color;
 
-
 public class Color {
 
     float red;
@@ -38,7 +37,7 @@ public class Color {
         this.blue = color.getBlue();
         this.alpha = color.getAlpha();
     }
-    
+
     public void setRed(float red) {
 
         this.red = red / 10;
@@ -48,7 +47,7 @@ public class Color {
 
         this.green = green / 10;
     }
-    
+
     public void setBlue(float blue) {
 
         this.blue = blue / 10;
@@ -58,7 +57,7 @@ public class Color {
 
         this.alpha = alpha / 10;
     }
-    
+
     public float getRed() {
 
         return red;
@@ -78,9 +77,9 @@ public class Color {
 
         return alpha;
     }
-    
+
     public Color copy() {
-        
+
         Color color = new Color(this);
         return color;
     }

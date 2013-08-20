@@ -15,12 +15,11 @@ public abstract class ContainerBase extends Container {
 
     InventoryPlayer inventory;
     List<Slot> slotList = new ArrayList<Slot>();
-    
+
     public ContainerBase(InventoryPlayer inventory) {
 
         this.inventory = inventory;
 
-        
         this.addInventorySlots();
     }
 
@@ -29,13 +28,14 @@ public abstract class ContainerBase extends Container {
         this.gui = gui;
     }
 
-    public void addInventorySlots() {        
+    public void addInventorySlots() {
 
         for (int i = 0; i < 3; i++) {
 
             for (int k = 0; k < 9; k++) {
 
-                addSlotToContainer(new Slot(inventory, k + i * 9 + 9, 8 + k * 18, 84 + i * 18));
+                addSlotToContainer(new Slot(inventory, k + i * 9 + 9,
+                        8 + k * 18, 84 + i * 18));
             }
         }
 

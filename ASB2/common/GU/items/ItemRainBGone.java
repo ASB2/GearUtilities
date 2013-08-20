@@ -14,14 +14,16 @@ public class ItemRainBGone extends ItemBase {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack itemStack, World world,
+            EntityPlayer player) {
 
-        if(world.isRaining()) {
+        if (world.isRaining()) {
 
             world.toggleRain();
             itemStack.damageItem(1, player);
 
-            UtilPlayers.sendChatToPlayer(player, "The rain will soon be dispursed");
+            UtilPlayers.sendChatToPlayer(player,
+                    "The rain will soon be dispursed");
         }
         return itemStack;
     }

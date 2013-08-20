@@ -20,66 +20,75 @@ public class BlockLamp extends ContainerBase {
         this.registerTile(TileLamp.class);
         useStandardRendering = false;
     }
-    
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
+
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x,
+            int y, int z) {
 
         this.setBlockBoundsBasedOnState(world, x, y, z);
         return super.getCollisionBoundingBoxFromPool(world, x, y, z);
     }
 
     @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z) {
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x,
+            int y, int z) {
 
         this.setBlockBoundsBasedOnState(world, x, y, z);
         return super.getSelectedBoundingBoxFromPool(world, x, y, z);
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y,
+            int z) {
 
         float minWidth = 0, minHeight = 0;
 
-        float maxWidth = 1 ,maxHeight = .25F;
+        float maxWidth = 1, maxHeight = .25F;
 
-        switch(ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z))) {
+        switch (ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z))) {
 
             case DOWN: {
 
-                this.setBlockBounds(minWidth, 1 - maxHeight, minWidth, maxWidth, 1, maxWidth);
+                this.setBlockBounds(minWidth, 1 - maxHeight, minWidth,
+                        maxWidth, 1, maxWidth);
                 return;
             }
 
             case UP: {
 
-                this.setBlockBounds(minWidth, minHeight, minWidth, maxWidth, maxHeight, maxWidth);
+                this.setBlockBounds(minWidth, minHeight, minWidth, maxWidth,
+                        maxHeight, maxWidth);
                 break;
             }
 
             case NORTH: {
 
-                this.setBlockBounds(minWidth, minWidth, 1 - maxHeight, maxWidth, maxWidth, maxWidth);
+                this.setBlockBounds(minWidth, minWidth, 1 - maxHeight,
+                        maxWidth, maxWidth, maxWidth);
                 break;
             }
 
             case SOUTH: {
 
-                this.setBlockBounds(minWidth, minWidth, minWidth, maxWidth, maxWidth, maxHeight);
+                this.setBlockBounds(minWidth, minWidth, minWidth, maxWidth,
+                        maxWidth, maxHeight);
                 break;
             }
 
-            case WEST : {
+            case WEST: {
 
-                this.setBlockBounds(1 - maxHeight, minWidth, minWidth, maxWidth, maxWidth ,maxWidth);
+                this.setBlockBounds(1 - maxHeight, minWidth, minWidth,
+                        maxWidth, maxWidth, maxWidth);
                 break;
             }
 
             case EAST: {
 
-                this.setBlockBounds(minWidth, minWidth, minWidth, maxHeight, maxWidth ,maxWidth);
+                this.setBlockBounds(minWidth, minWidth, minWidth, maxHeight,
+                        maxWidth, maxWidth);
                 break;
             }
 
-            default : {
+            default: {
 
                 this.setBlockBounds(0, 0, 0, 1, 1, 1);
                 break;
@@ -88,7 +97,8 @@ public class BlockLamp extends ContainerBase {
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z,
+            Entity entity) {
         super.onEntityCollidedWithBlock(world, x, y, z, entity);
     }
 

@@ -15,26 +15,29 @@ public class ItemGearTinkerer extends ItemBase {
     }
 
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10){
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player,
+            World world, int x, int y, int z, int side, float par8, float par9,
+            float par10) {
 
-        TileEntity tile = world.getBlockTileEntity(x,y,z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        if(tile != null && tile instanceof IWrenchable) {
+        if (tile != null && tile instanceof IWrenchable) {
 
-            ((IWrenchable)tile).triggerBlock(world, player.isSneaking(), itemStack, x, y, z, side);
+            ((IWrenchable) tile).triggerBlock(world, player.isSneaking(),
+                    itemStack, x, y, z, side);
             return true;
-        }
-        else { 
-            
-            Block block = Block.blocksList[world.getBlockId(x,y,z)];
-            
-            if(block instanceof IWrenchable) {
-                
-                ((IWrenchable)block).triggerBlock(world, player.isSneaking(), itemStack, x, y, z, side);
+        } else {
+
+            Block block = Block.blocksList[world.getBlockId(x, y, z)];
+
+            if (block instanceof IWrenchable) {
+
+                ((IWrenchable) block).triggerBlock(world, player.isSneaking(),
+                        itemStack, x, y, z, side);
                 return true;
             }
         }
-       
+
         return true;
     }
 }

@@ -1,7 +1,6 @@
 package GU.api.wait;
 
-
-public class Wait{
+public class Wait {
 
     long timeKeeper;
     long timeToWait;
@@ -17,21 +16,21 @@ public class Wait{
 
     public void update() {
 
-        if(thingToTrigger != null) {
+        if (thingToTrigger != null) {
 
-            if(thingToTrigger.shouldTick(id)) {
+            if (thingToTrigger.shouldTick(id)) {
 
                 timeKeeper++;
-            }            
+            }
         }
 
-        if(timeKeeper >= timeToWait) {
+        if (timeKeeper >= timeToWait) {
 
-            if(thingToTrigger != null) {
+            if (thingToTrigger != null) {
 
-                thingToTrigger.trigger(id); 
+                thingToTrigger.trigger(id);
                 timeKeeper = 0;
-            }            
+            }
         }
     }
 }

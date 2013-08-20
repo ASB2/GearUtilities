@@ -18,23 +18,24 @@ public abstract class GUPacketBase {
     private static final BiMap<Integer, Class<? extends GUPacketBase>> idMap;
 
     static {
-        ImmutableBiMap.Builder<Integer, Class<? extends GUPacketBase>> builder = ImmutableBiMap.builder();
+        ImmutableBiMap.Builder<Integer, Class<? extends GUPacketBase>> builder = ImmutableBiMap
+                .builder();
 
         builder.put(Integer.valueOf(0), TestTankPacket.class);
 
         idMap = builder.build();
     }
 
-    public static GUPacketBase constructPacket(int packetId) throws ProtocolException, ReflectiveOperationException 
-    {
+    public static GUPacketBase constructPacket(int packetId)
+            throws ProtocolException, ReflectiveOperationException {
 
-        Class<? extends GUPacketBase> clazz = idMap.get(Integer.valueOf(packetId));
+        Class<? extends GUPacketBase> clazz = idMap.get(Integer
+                .valueOf(packetId));
 
         if (clazz == null) {
 
             throw new ProtocolException("Unknown Packet Id!");
-        } 
-        else {
+        } else {
 
             return clazz.newInstance();
         }
@@ -45,21 +46,21 @@ public abstract class GUPacketBase {
         if (idMap.inverse().containsKey(getClass())) {
 
             return idMap.inverse().get(getClass()).intValue();
-        } 
-        else {
+        } else {
 
-            throw new RuntimeException("Packet " + getClass().getSimpleName() + " is missing a mapping!");
+            throw new RuntimeException("Packet " + getClass().getSimpleName()
+                    + " is missing a mapping!");
         }
     }
 
     public final Packet makePacket() {
-        
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeByte(getPacketId());
         write(out);
-        return PacketDispatcher.getPacket(Reference.MOD_CHANNEL, out.toByteArray());
+        return PacketDispatcher.getPacket(Reference.MOD_CHANNEL,
+                out.toByteArray());
     }
-
 
     @SuppressWarnings("serial")
     public static class ProtocolException extends Exception {
@@ -79,9 +80,12 @@ public abstract class GUPacketBase {
             super(cause);
         }
     }
+
     protected abstract void write(ByteArrayDataOutput out);
 
-    protected abstract void read(ByteArrayDataInput in) throws ProtocolException;
+    protected abstract void read(ByteArrayDataInput in)
+            throws ProtocolException;
 
-    protected abstract void execute(EntityPlayer player, Side side) throws ProtocolException;
+    protected abstract void execute(EntityPlayer player, Side side)
+            throws ProtocolException;
 }

@@ -6,24 +6,31 @@ import net.minecraftforge.common.ForgeDirection;
 import GU.api.power.IPowerMisc;
 
 public class UtilPower {
-    
+
     public static int TICKSTOPOWER = 10;
 
-    public static boolean transferPower(IPowerMisc powerSource, ForgeDirection direction, IPowerMisc powerSink) {
+    public static boolean transferPower(IPowerMisc powerSource,
+            ForgeDirection direction, IPowerMisc powerSink) {
 
         ForgeDirection opposite = direction.getOpposite();
-        
-        int amountOfPower = powerSource.getPowerProvider().getPowerClass().getPowerValue();
 
-        if (powerSink.getPowerProvider() != null && powerSource.getPowerProvider() != null) {
+        int amountOfPower = powerSource.getPowerProvider().getPowerClass()
+                .getPowerValue();
 
-            if(powerSink.getPowerProvider().canGainPower(amountOfPower, direction)) {
+        if (powerSink.getPowerProvider() != null
+                && powerSource.getPowerProvider() != null) {
 
-                if(powerSource.getPowerProvider().canUsePower(amountOfPower, opposite)) {
-                    
-                    if(powerSink.getPowerProvider().gainPower(amountOfPower, direction)) {
+            if (powerSink.getPowerProvider().canGainPower(amountOfPower,
+                    direction)) {
 
-                        powerSource.getPowerProvider().usePower(amountOfPower, opposite);
+                if (powerSource.getPowerProvider().canUsePower(amountOfPower,
+                        opposite)) {
+
+                    if (powerSink.getPowerProvider().gainPower(amountOfPower,
+                            direction)) {
+
+                        powerSource.getPowerProvider().usePower(amountOfPower,
+                                opposite);
 
                         return true;
                     }
@@ -32,20 +39,26 @@ public class UtilPower {
         }
         return false;
     }
-    
-    public static boolean transferPower(IPowerMisc powerSource, ForgeDirection direction, IPowerMisc powerSink, float amountOfPower) {
+
+    public static boolean transferPower(IPowerMisc powerSource,
+            ForgeDirection direction, IPowerMisc powerSink, float amountOfPower) {
 
         ForgeDirection opposite = direction.getOpposite();
-        
-        if (powerSink.getPowerProvider() != null && powerSource.getPowerProvider() != null) {
 
-            if(powerSink.getPowerProvider().canGainPower(amountOfPower, direction)) {
+        if (powerSink.getPowerProvider() != null
+                && powerSource.getPowerProvider() != null) {
 
-                if(powerSource.getPowerProvider().canUsePower(amountOfPower, opposite)) {
-                    
-                    if(powerSink.getPowerProvider().gainPower(amountOfPower, direction)) {
+            if (powerSink.getPowerProvider().canGainPower(amountOfPower,
+                    direction)) {
 
-                        powerSource.getPowerProvider().usePower(amountOfPower, opposite);
+                if (powerSource.getPowerProvider().canUsePower(amountOfPower,
+                        opposite)) {
+
+                    if (powerSink.getPowerProvider().gainPower(amountOfPower,
+                            direction)) {
+
+                        powerSource.getPowerProvider().usePower(amountOfPower,
+                                opposite);
 
                         return true;
                     }
@@ -54,96 +67,109 @@ public class UtilPower {
         }
         return false;
     }
-    
-    public static IPowerMisc findConductor(ForgeDirection side, World worldObj, int distance,int x, int y, int z) {
 
-        for(int i = 0; i <= distance; i++) {
+    public static IPowerMisc findConductor(ForgeDirection side, World worldObj,
+            int distance, int x, int y, int z) {
 
-            if(i > 0) {
+        for (int i = 0; i <= distance; i++) {
 
-                if(!(side.offsetX == 0)) {
+            if (i > 0) {
 
-                    if(side.offsetX > 0) {
+                if (!(side.offsetX == 0)) {
 
-                        TileEntity tile = worldObj.getBlockTileEntity(x + i, y, z);
+                    if (side.offsetX > 0) {
 
-                        if(tile != null) {
+                        TileEntity tile = worldObj.getBlockTileEntity(x + i, y,
+                                z);
 
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
+                        if (tile != null) {
 
-                                return (IPowerMisc)tile;
-                            }  
+                            if (tile instanceof IPowerMisc
+                                    && ((IPowerMisc) tile).getPowerProvider() != null) {
+
+                                return (IPowerMisc) tile;
+                            }
                         }
                     }
 
-                    if(side.offsetX < 0) {
+                    if (side.offsetX < 0) {
 
-                        TileEntity tile = worldObj.getBlockTileEntity(x - i, y, z);
+                        TileEntity tile = worldObj.getBlockTileEntity(x - i, y,
+                                z);
 
-                        if(tile != null) {
+                        if (tile != null) {
 
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
+                            if (tile instanceof IPowerMisc
+                                    && ((IPowerMisc) tile).getPowerProvider() != null) {
 
-                                return (IPowerMisc)tile;
-                            }  
-                        }
-                    }
-                }
-
-                if(!(side.offsetY == 0)) {
-
-                    if(side.offsetY > 0) {
-
-                        TileEntity tile = worldObj.getBlockTileEntity(x, y + i, z);
-
-                        if(tile != null) {
-
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
-
-                                return (IPowerMisc)tile;
-                            }  
-                        }
-                    }
-
-                    if(side.offsetY < 0) {
-
-                        TileEntity tile = worldObj.getBlockTileEntity(x, y - i, z);
-
-                        if(tile != null) {
-
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
-
-                                return (IPowerMisc)tile;
-                            }  
+                                return (IPowerMisc) tile;
+                            }
                         }
                     }
                 }
 
-                if(!(side.offsetZ == 0)) {
+                if (!(side.offsetY == 0)) {
 
-                    if(side.offsetZ > 0) {
+                    if (side.offsetY > 0) {
 
-                        TileEntity tile = worldObj.getBlockTileEntity(x, y, z + i);
+                        TileEntity tile = worldObj.getBlockTileEntity(x, y + i,
+                                z);
 
-                        if(tile != null) {
+                        if (tile != null) {
 
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
+                            if (tile instanceof IPowerMisc
+                                    && ((IPowerMisc) tile).getPowerProvider() != null) {
 
-                                return (IPowerMisc)tile;
-                            }   
+                                return (IPowerMisc) tile;
+                            }
                         }
                     }
 
-                    if(side.offsetZ < 0) {
+                    if (side.offsetY < 0) {
 
-                        TileEntity tile = worldObj.getBlockTileEntity(x, y, z - i);
+                        TileEntity tile = worldObj.getBlockTileEntity(x, y - i,
+                                z);
 
-                        if(tile != null) {
+                        if (tile != null) {
 
-                            if(tile instanceof IPowerMisc && ((IPowerMisc)tile).getPowerProvider() != null) {
+                            if (tile instanceof IPowerMisc
+                                    && ((IPowerMisc) tile).getPowerProvider() != null) {
 
-                                return (IPowerMisc)tile;
-                            }   
+                                return (IPowerMisc) tile;
+                            }
+                        }
+                    }
+                }
+
+                if (!(side.offsetZ == 0)) {
+
+                    if (side.offsetZ > 0) {
+
+                        TileEntity tile = worldObj.getBlockTileEntity(x, y, z
+                                + i);
+
+                        if (tile != null) {
+
+                            if (tile instanceof IPowerMisc
+                                    && ((IPowerMisc) tile).getPowerProvider() != null) {
+
+                                return (IPowerMisc) tile;
+                            }
+                        }
+                    }
+
+                    if (side.offsetZ < 0) {
+
+                        TileEntity tile = worldObj.getBlockTileEntity(x, y, z
+                                - i);
+
+                        if (tile != null) {
+
+                            if (tile instanceof IPowerMisc
+                                    && ((IPowerMisc) tile).getPowerProvider() != null) {
+
+                                return (IPowerMisc) tile;
+                            }
                         }
                     }
                 }

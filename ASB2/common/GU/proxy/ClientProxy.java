@@ -11,10 +11,8 @@ import GU.blocks.containers.BlockCanvas.CanvasRenderer;
 import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
-import GU.blocks.containers.BlockGeothermalGenerator.GuiGeothermalGenerator;
 import GU.blocks.containers.BlockLamp.LampRenderer;
 import GU.blocks.containers.BlockLamp.TileLamp;
-import GU.blocks.containers.BlockSpeedyFurnace.GuiSpeedyFurnace;
 import GU.blocks.containers.BlockTestLaser.TestLaserRenderer;
 import GU.blocks.containers.BlockTestLaser.TileTestLaser;
 import GU.blocks.containers.BlockTestTank.TestTankRenderer;
@@ -33,36 +31,46 @@ public class ClientProxy extends CommonProxy {
 
         Models.initModels();
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityTestEntity.class, new TestEntityRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(
+                EntityTestEntity.class, new TestEntityRenderer());
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileLamp.class, new LampRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockLamp.blockID, new LampRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileLamp.class,
+                new LampRenderer());
+        MinecraftForgeClient.registerItemRenderer(
+                BlockRegistry.BlockLamp.blockID, new LampRenderer());
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class, new CreationTableRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class,
+                new CreationTableRenderer());
+        MinecraftForgeClient.registerItemRenderer(
+                BlockRegistry.BlockCreationTable.blockID,
+                new CreationTableRenderer());
 
-        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
+        MinecraftForgeClient.registerItemRenderer(
+                ItemRegistry.ItemStorageCrystal.itemID,
+                new StorageCrystalRenderer());
 
         RenderingRegistry.registerBlockHandler(new TestTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());
         RenderingRegistry.registerBlockHandler(new CanvasRenderer());
-        
-        ClientRegistry.bindTileEntitySpecialRenderer(TileTestLaser.class, new TestLaserRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockTestLaser.blockID, new TestLaserRenderer());
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileTestLaser.class,
+                new TestLaserRenderer());
+        MinecraftForgeClient.registerItemRenderer(
+                BlockRegistry.BlockTestLaser.blockID, new TestLaserRenderer());
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world,
+            int x, int y, int z) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        if(tile != null) {
+        if (tile != null) {
 
-            switch(ID) {
+            switch (ID) {
 
-                case Gui.CREATION_TABLE: return new GuiCreationTable(player.inventory, tile);
-                case Gui.SPEEDY_FURNACE: return new GuiSpeedyFurnace(player.inventory, tile);
-                case Gui.GEOTHERMAL_GENERATOR: return new GuiGeothermalGenerator(player.inventory, tile);
+                case Gui.CREATION_TABLE:
+                    return new GuiCreationTable(player.inventory, tile);
             }
         }
         return null;

@@ -5,28 +5,25 @@ import net.minecraft.util.EnumChatFormatting;
 public class UtilMisc {
 
     /*
-     * Side 0 == Down = Bottom
-     * Side 1 == Top = Top
-     * Side 2 == Side facing North = Front
-     * Side 3 == Side facing South = Back
-     * Side 4 == Side facing West = Right
-     * Side 5 == Side facing East = Left
+     * Side 0 == Down = Bottom Side 1 == Top = Top Side 2 == Side facing North =
+     * Front Side 3 == Side facing South = Back Side 4 == Side facing West =
+     * Right Side 5 == Side facing East = Left
      */
 
     public static String capitilizeFirst(String string) {
-        
+
         char first = string.toCharArray()[0];
         string.toCharArray()[0] = Character.toUpperCase(first);
         return string;
     }
-    
+
     public static boolean isValueInArray(Object[] object, Object value) {
 
-        for(int i = 0; i < object.length; i++) {
+        for (int i = 0; i < object.length; i++) {
 
             Object temp = object[i];
 
-            if(temp.equals(value)) {
+            if (temp.equals(value)) {
 
                 return true;
             }
@@ -39,18 +36,19 @@ public class UtilMisc {
         return startNumber / divisionAmoun;
     }
 
-    public static double getNumberDivided(double startNumber, double divisionAmoun) {
+    public static double getNumberDivided(double startNumber,
+            double divisionAmoun) {
 
         return startNumber / divisionAmoun;
     }
 
     public static int getAmountScaled(int scale, int amount, int max) {
 
-        if(max != 0) {
+        if (max != 0) {
 
             int internal = amount * scale / max;
 
-            if(internal > scale) {
+            if (internal > scale) {
 
                 internal = scale;
             }
@@ -63,7 +61,7 @@ public class UtilMisc {
 
         double internal = amount * scale / max;
 
-        if(internal > scale) {
+        if (internal > scale) {
 
             internal = scale;
         }

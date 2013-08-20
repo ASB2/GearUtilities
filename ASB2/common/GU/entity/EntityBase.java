@@ -10,18 +10,19 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-public abstract class EntityBase extends Entity implements IEntityAdditionalSpawnData {
-    
+public abstract class EntityBase extends Entity implements
+        IEntityAdditionalSpawnData {
+
     public EntityBase(World world) {
         super(world);
     }
-    
+
     @Override
     public void onEntityUpdate() {
         super.onEntityUpdate();
-    
+
     }
-    
+
     @Override
     protected void entityInit() {
         // TODO Auto-generated method stub
@@ -29,10 +30,10 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
     }
 
     public void updateMovement() {
-        
+
         this.setPosition(posX + motionX, posY + motionY, posZ + motionZ);
     }
-    
+
     @Override
     protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
         // TODO Auto-generated method stub
@@ -48,13 +49,13 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
     @Override
     public void writeSpawnData(ByteArrayDataOutput data) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void readSpawnData(ByteArrayDataInput data) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -74,13 +75,13 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
 
         return !isDead;
     }
-    
+
     @Override
     public boolean func_130002_c(EntityPlayer player) {
-        
-        if(!worldObj.isRemote && riddenByEntity == null) {
-            
-            //player.mountEntity(this);
+
+        if (!worldObj.isRemote && riddenByEntity == null) {
+
+            // player.mountEntity(this);
         }
         return false;
     }

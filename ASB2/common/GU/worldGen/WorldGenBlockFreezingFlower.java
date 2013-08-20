@@ -10,21 +10,25 @@ import cpw.mods.fml.common.IWorldGenerator;
 
 public class WorldGenBlockFreezingFlower implements IWorldGenerator {
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+    public void generate(Random random, int chunkX, int chunkZ, World world,
+            IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 
-        if(!world.provider.isHellWorld)
-            generateSurface(world, random, chunkX*16, chunkZ*16);
+        if (!world.provider.isHellWorld)
+            generateSurface(world, random, chunkX * 16, chunkZ * 16);
     }
 
-    private void generateSurface(World world, Random random, int blockX, int blockZ) {
+    private void generateSurface(World world, Random random, int blockX,
+            int blockZ) {
 
-        for(int j = 0; j < 1; j++) {
+        for (int j = 0; j < 1; j++) {
 
-            int XCoordinate=blockX + random.nextInt(16);
-            int ZCoordinate=blockZ + random.nextInt(16);
-            int YCoordinate=random.nextInt(256);
+            int XCoordinate = blockX + random.nextInt(16);
+            int ZCoordinate = blockZ + random.nextInt(16);
+            int YCoordinate = random.nextInt(256);
 
-            (new WorldGenFlowers(BlockRegistry.BlockFreezingFlower.blockID)).generate(world, random, XCoordinate,YCoordinate,ZCoordinate);
+            (new WorldGenFlowers(BlockRegistry.BlockFreezingFlower.blockID))
+                    .generate(world, random, XCoordinate, YCoordinate,
+                            ZCoordinate);
         }
     }
 }

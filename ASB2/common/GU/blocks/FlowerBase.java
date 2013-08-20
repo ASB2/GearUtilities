@@ -18,21 +18,25 @@ public class FlowerBase extends BlockBase {
         setResistance(0F);
         this.setTickRandomly(true);
         float f = 0.4F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
+        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F,
+                0.5F + f);
     }
 
     @EventHandler
     public void onUseBonemeal(BonemealEvent event) {
 
-        this.managGrowth(event, event.world, event.X, event.Y, event.Z, new Random());
+        this.managGrowth(event, event.world, event.X, event.Y, event.Z,
+                new Random());
     }
 
-    private void managGrowth(BonemealEvent event, World world, int x, int y, int z, Random random) {
+    private void managGrowth(BonemealEvent event, World world, int x, int y,
+            int z, Random random) {
 
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x,
+            int y, int z) {
 
         return null;
     }
@@ -40,7 +44,8 @@ public class FlowerBase extends BlockBase {
     @Override
     public boolean canBlockStay(World world, int x, int y, int z) {
 
-        return world.getBlockId(x, y - 1, z) == Block.grass.blockID || world.getBlockId(x, y - 1, z) == Block.dirt.blockID;
+        return world.getBlockId(x, y - 1, z) == Block.grass.blockID
+                || world.getBlockId(x, y - 1, z) == Block.dirt.blockID;
     }
 
     @Override

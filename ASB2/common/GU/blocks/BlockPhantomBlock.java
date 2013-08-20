@@ -10,9 +10,10 @@ public class BlockPhantomBlock extends BlockBase {
         super(id, Material.vine);
         this.setHardness(0);
     }
+
     @Override
     public int idDropped(int par1, Random par2Random, int par3) {
-        
+
         return -1;
     }
 }

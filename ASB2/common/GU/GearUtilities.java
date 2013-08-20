@@ -33,31 +33,31 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Reference.MODDID, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:Forge@[7.7.1.829,)")
-
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {Reference.MOD_CHANNEL}, packetHandler = GUPacketHandler.class)
-
+@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { Reference.MOD_CHANNEL }, packetHandler = GUPacketHandler.class)
 public final class GearUtilities {
 
     @Instance(Reference.MODDID)
-
     public static GearUtilities instance;
     public static Logger logger = Logger.getLogger(Reference.MODDID);
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.COMMON_PROXY)
-
     public static CommonProxy proxy;
 
     public GearUtilities() {
 
-        System.out.println("["+Reference.NAME + "] Beginning destruction of known world");
-        if(Loader.isModLoaded("Natura") || Loader.isModLoaded("TConstruct")) {
+        System.out.println("[" + Reference.NAME
+                + "] Beginning destruction of known world");
+        if (Loader.isModLoaded("Natura") || Loader.isModLoaded("TConstruct")) {
 
-            System.out.println("["+Reference.NAME + "] Joining mods in world desturction");
+            System.out.println("[" + Reference.NAME
+                    + "] Joining mods in world desturction");
         }
     }
 
-    public static CreativeTabs tabGUBlocks = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Blocks");
-    public static CreativeTabs tabGUItems = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Items");
+    public static CreativeTabs tabGUBlocks = new GUCreativeTab(
+            CreativeTabs.getNextID(), Reference.NAME + ": Blocks");
+    public static CreativeTabs tabGUItems = new GUCreativeTab(
+            CreativeTabs.getNextID(), Reference.NAME + ": Items");
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -65,16 +65,17 @@ public final class GearUtilities {
         logger.setParent(FMLLog.getLogger());
         logger.log(Level.INFO, "Hi");
 
-        Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+        Configuration config = new Configuration(
+                event.getSuggestedConfigurationFile());
         config.load();
 
         Variables.updateVariables(config);
         ItemRegistry.init(config);
         BlockRegistry.init(config);
-        
+
         MinecraftForge.EVENT_BUS.register(new FluidRegistry());
         FluidRegistry.initFluids();
-        
+
         MinecraftForge.EVENT_BUS.register(new MiscRegistry());
         MiscRegistry.init(config);
 
@@ -86,7 +87,8 @@ public final class GearUtilities {
     public void mainInit(FMLInitializationEvent event) {
 
         proxy.register();
-        NetworkRegistry.instance().registerGuiHandler(this, GearUtilities.proxy);
+        NetworkRegistry.instance()
+                .registerGuiHandler(this, GearUtilities.proxy);
 
         MinecraftForge.addGrassPlant(BlockRegistry.BlockBurningFlower, 0, 100);
         MinecraftForge.addGrassPlant(BlockRegistry.BlockFreezingFlower, 0, 100);
@@ -98,14 +100,15 @@ public final class GearUtilities {
         GameRegistry.registerWorldGenerator(new WorldGenBlockFreezingFlower());
         GameRegistry.registerWorldGenerator(new WorldGenBlockBurningFlower());
         GameRegistry.registerWorldGenerator(new WorldGenBlockEnergyCrystalOre());
-        GameRegistry.registerWorldGenerator(new WorldGenBlockGarnetOre());                 
+        GameRegistry.registerWorldGenerator(new WorldGenBlockGarnetOre());
         GameRegistry.registerWorldGenerator(new WorldGenBlockFalseBlock());
 
-        //        OreDictionary.registerOre("bioMass", Item.seeds);
-        //        GameRegistry.registerWorldGenerator(new WorldGenBlockAirCrystalOre());
-        //        GameRegistry.registerPlayerTracker(new TechCraftPlayerTracker ());
-        //        GameRegistry.registerPlayerTracker(new TechCraftPlayerTracker ());
-        //        MinecraftForge.EVENT_BUS.register(new TechCraftForgeEvents());
+        // OreDictionary.registerOre("bioMass", Item.seeds);
+        // GameRegistry.registerWorldGenerator(new
+        // WorldGenBlockAirCrystalOre());
+        // GameRegistry.registerPlayerTracker(new TechCraftPlayerTracker ());
+        // GameRegistry.registerPlayerTracker(new TechCraftPlayerTracker ());
+        // MinecraftForge.EVENT_BUS.register(new TechCraftForgeEvents());
     }
 
     @EventHandler

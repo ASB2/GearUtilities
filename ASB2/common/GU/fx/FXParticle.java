@@ -12,14 +12,14 @@ public class FXParticle extends EntityFX {
     float green;
     float blue;
 
-
-    public FXParticle(World world, double x, double y, double z, ResourceLocation texture, float red, float green, float blue) {
+    public FXParticle(World world, double x, double y, double z,
+            ResourceLocation texture, float red, float green, float blue) {
         super(world, x, y, z);
     }
 
-    public void renderParticle(Tessellator tessellator, float f, float f1, float f2, float f3, float f4, float f5) {
+    public void renderParticle(Tessellator tessellator, float f, float f1,
+            float f2, float f3, float f4, float f5) {
 
-        
     }
 
 }

@@ -6,5 +6,6 @@ import net.minecraftforge.common.ForgeDirection;
 
 public interface IBlockCycle {
 
-    public boolean execute(EntityPlayer player, World world, int x, int y, int z, ForgeDirection side, int id);
+    public boolean execute(EntityPlayer player, World world, int x, int y,
+            int z, ForgeDirection side, int id);
 }

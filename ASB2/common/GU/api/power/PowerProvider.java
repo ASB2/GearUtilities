@@ -21,7 +21,6 @@ public abstract class PowerProvider {
 
     public void updateProvider() {
 
-        
     }
 
     public float getPowerStored() {
@@ -41,14 +40,14 @@ public abstract class PowerProvider {
 
     public State getCurrentState() {
 
-        if(currentState == null) {
+        if (currentState == null) {
 
-            if(this.outputtingPower()) {
+            if (this.outputtingPower()) {
 
                 currentState = State.SOURCE;
             }
 
-            else if(this.requestingPower()) {
+            else if (this.requestingPower()) {
 
                 currentState = State.SINK;
             }
@@ -59,12 +58,12 @@ public abstract class PowerProvider {
             }
         }
 
-        if(this.outputtingPower()) {
+        if (this.outputtingPower()) {
 
             currentState = State.SOURCE;
         }
 
-        else if(this.requestingPower()) {
+        else if (this.requestingPower()) {
 
             currentState = State.SINK;
         }
@@ -78,7 +77,7 @@ public abstract class PowerProvider {
 
     public boolean gainPower(float PowerGained, ForgeDirection direction) {
 
-        if(this.getPowerMax() - this.getPowerStored() >= PowerGained) {
+        if (this.getPowerMax() - this.getPowerStored() >= PowerGained) {
 
             this.setPower(this.getPowerStored() + PowerGained);
 
@@ -89,7 +88,7 @@ public abstract class PowerProvider {
 
     public boolean usePower(float PowerUsed, ForgeDirection direction) {
 
-        if(this.getPowerStored() >= PowerUsed) {
+        if (this.getPowerStored() >= PowerUsed) {
 
             this.setPower(this.getPowerStored() - PowerUsed);
 
@@ -98,7 +97,7 @@ public abstract class PowerProvider {
         return false;
     }
 
-    public void setPower(float newPower) {        
+    public void setPower(float newPower) {
 
         this.powerStored = newPower;
     }
@@ -110,7 +109,7 @@ public abstract class PowerProvider {
 
     public boolean requestingPower() {
 
-        if(getPowerStored() < getPowerMax())
+        if (getPowerStored() < getPowerMax())
             return true;
 
         return false;
@@ -118,7 +117,7 @@ public abstract class PowerProvider {
 
     public boolean outputtingPower() {
 
-        if(getPowerStored() > 0)
+        if (getPowerStored() > 0)
             return true;
 
         return false;
@@ -126,16 +125,16 @@ public abstract class PowerProvider {
 
     public boolean canGainPower(float power, ForgeDirection direction) {
 
-        if(this.getPowerMax() - this.getPowerStored() >= power) {
+        if (this.getPowerMax() - this.getPowerStored() >= power) {
 
             return true;
         }
-        return false; 
+        return false;
     }
 
     public boolean canUsePower(float power, ForgeDirection direction) {
 
-        if(this.getPowerStored() >= power) {
+        if (this.getPowerStored() >= power) {
 
             return true;
         }

@@ -11,18 +11,18 @@ public class BlockFreezingFlower extends FlowerBase {
     public BlockFreezingFlower(int par1, Material par3Material) {
         super(par1, par3Material);
     }
-    
+
     @Override
-    public void onEntityCollidedWithBlock(World par1World, int x, int y, int z, Entity entity) {
-       
-        if(entity instanceof EntityPlayer) {
+    public void onEntityCollidedWithBlock(World par1World, int x, int y, int z,
+            Entity entity) {
 
-            if(!(UtilPlayers.isSpecialPlayer(((EntityPlayer)entity).username))) {
+        if (entity instanceof EntityPlayer) {
 
-                entity.setInWeb();  
+            if (!(UtilPlayers.isSpecialPlayer(((EntityPlayer) entity).username))) {
+
+                entity.setInWeb();
             }
-        }
-        else {
+        } else {
             entity.setInWeb();
         }
     }

@@ -43,17 +43,24 @@ public class FluidRegistry {
 
         if (event.map.textureType == 0) {
 
-            LiquidDiamond.setIcon(event.map.registerIcon(Reference.MODDID + ":FluidDiamond"));
+            LiquidDiamond.setIcon(event.map.registerIcon(Reference.MODDID
+                    + ":FluidDiamond"));
         }
     }
 
     public static void registerFluidContainers() {
 
-        for(Fluid fluid : net.minecraftforge.fluids.FluidRegistry.getRegisteredFluids().values()) {
+        for (Fluid fluid : net.minecraftforge.fluids.FluidRegistry
+                .getRegisteredFluids().values()) {
 
-            ItemStack filled = new ItemStack(ItemRegistry.ItemStorageCrystal, 1, fluid.getID());
-            FluidContainerRegistry.registerFluidContainer(fluid, filled, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0));
-            ((ItemStorageCrystal)filled.getItem()).setFluidStack(filled, new FluidStack(fluid, ((ItemStorageCrystal)filled.getItem()).getCapasity(filled)));
+            ItemStack filled = new ItemStack(ItemRegistry.ItemStorageCrystal,
+                    1, fluid.getID());
+            FluidContainerRegistry.registerFluidContainer(fluid, filled,
+                    new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0));
+            ((ItemStorageCrystal) filled.getItem()).setFluidStack(
+                    filled,
+                    new FluidStack(fluid, ((ItemStorageCrystal) filled
+                            .getItem()).getCapasity(filled)));
         }
     }
 }

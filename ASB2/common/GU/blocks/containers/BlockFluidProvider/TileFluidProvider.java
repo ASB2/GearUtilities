@@ -24,27 +24,30 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
 
     public void updateEntity() {
 
-        if(fluidStack != null) {
+        if (fluidStack != null) {
 
             fluidTank.setFluid(fluidStack);
 
-            for(ForgeDirection direction: ForgeDirection.values()) {
+            for (ForgeDirection direction : ForgeDirection.values()) {
 
-                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+                TileEntity tile = UtilDirection.translateDirectionToTile(this,
+                        worldObj, direction);
 
-                if(tile != null) {
+                if (tile != null) {
 
-                    if(tile instanceof IFluidHandler) {
+                    if (tile instanceof IFluidHandler) {
 
-                        IFluidHandler fTile = (IFluidHandler)tile;
+                        IFluidHandler fTile = (IFluidHandler) tile;
 
-                        if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+                        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord,
+                                yCoord, zCoord)) {
 
-                            UtilFluid.addFluidToTank(fTile, direction, fluidStack);
-                        }
-                        else {
+                            UtilFluid.addFluidToTank(fTile, direction,
+                                    fluidStack);
+                        } else {
 
-                            UtilFluid.removeFluidFromTank(fTile, direction, fluidStack);
+                            UtilFluid.removeFluidFromTank(fTile, direction,
+                                    fluidStack);
                         }
                     }
                 }
@@ -62,18 +65,18 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
 
-        if(fluidTank != null) {
+        if (fluidTank != null) {
 
-            if(fluid != null) {
+            if (fluid != null) {
 
-                if(fluidTank.getFluid() != null) {
+                if (fluidTank.getFluid() != null) {
 
-                    if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
+                    if (this.fluidTank.getFluid().isFluidEqual(
+                            new FluidStack(fluid, 0))) {
 
                         return true;
-                    } 
-                }
-                else {
+                    }
+                } else {
 
                     return true;
                 }
@@ -83,7 +86,8 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+    public FluidStack drain(ForgeDirection from, FluidStack resource,
+            boolean doDrain) {
 
         if (resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
 
@@ -103,11 +107,12 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
 
-        if(this.fluidTank.getFluid() != null) {
+        if (this.fluidTank.getFluid() != null) {
 
-            if(fluidTank.getFluidAmount() > 0) {
+            if (fluidTank.getFluidAmount() > 0) {
 
-                if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
+                if (this.fluidTank.getFluid().isFluidEqual(
+                        new FluidStack(fluid, 1))) {
 
                     return true;
                 }
@@ -119,12 +124,13 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
 
-        return new FluidTankInfo[] {fluidTank.getInfo()};
+        return new FluidTankInfo[] { fluidTank.getInfo() };
     }
 
     public TileTestTank getTankBelow(TileEntity tile) {
 
-        TileEntity below = worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord - 1, tile.zCoord);
+        TileEntity below = worldObj.getBlockTileEntity(tile.xCoord,
+                tile.yCoord - 1, tile.zCoord);
 
         if (below instanceof TileTestTank) {
 
@@ -135,7 +141,8 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
 
     public TileTestTank getTankAbove(TileEntity tile) {
 
-        TileEntity below = worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord + 1, tile.zCoord);
+        TileEntity below = worldObj.getBlockTileEntity(tile.xCoord,
+                tile.yCoord + 1, tile.zCoord);
 
         if (below instanceof TileTestTank) {
 
@@ -144,6 +151,7 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
 
         return null;
     }
+
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
@@ -151,7 +159,7 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag){
+    public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
     }
 }

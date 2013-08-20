@@ -2,9 +2,7 @@ package GU.api.power;
 
 public enum PowerClass {
 
-    LOW(1),
-    MID(10),
-    HIGH(100);
+    LOW(1), MID(10), HIGH(100);
 
     PowerClass(int power) {
 
@@ -12,9 +10,9 @@ public enum PowerClass {
     }
 
     int powerValue = 0;
-    
+
     public int getPowerValue() {
-        
+
         return powerValue;
     }
 }

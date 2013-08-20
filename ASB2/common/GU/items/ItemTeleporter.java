@@ -25,34 +25,40 @@ public class ItemTeleporter extends ItemBase {
     }
 
     @Override
-    public void onCreated(ItemStack par1ItemStack, World par2World, EntityPlayer player) {
+    public void onCreated(ItemStack par1ItemStack, World par2World,
+            EntityPlayer player) {
 
-        this.setXCoord(par1ItemStack,player.posX);
-        this.setYCoord(par1ItemStack,player.posY);
-        this.setZCoord(par1ItemStack,player.posZ);        
-        this.setDimentionIDCoord(par1ItemStack,player.dimension);
+        this.setXCoord(par1ItemStack, player.posX);
+        this.setYCoord(par1ItemStack, player.posY);
+        this.setZCoord(par1ItemStack, player.posZ);
+        this.setDimentionIDCoord(par1ItemStack, player.dimension);
         setCoodsSet(par1ItemStack, true);
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer player)
-    {
-        if(isCoodsSet(par1ItemStack)) {
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer player) {
+        if (isCoodsSet(par1ItemStack)) {
 
-            if(player instanceof EntityPlayerMP) {
+            if (player instanceof EntityPlayerMP) {
 
-                for(int i = 0; i < 2; i++) {
+                for (int i = 0; i < 2; i++) {
 
-                    if (player.dimension != this.getDimentionIDCoord(par1ItemStack)) {
+                    if (player.dimension != this
+                            .getDimentionIDCoord(par1ItemStack)) {
 
                         par1ItemStack.damageItem(1, player);
-                        player.travelToDimension(this.getDimentionIDCoord(par1ItemStack));
+                        player.travelToDimension(this
+                                .getDimentionIDCoord(par1ItemStack));
                     }
 
                     else {
 
                         par1ItemStack.damageItem(1, player);
-                        player.setPositionAndUpdate(this.getXCoord(par1ItemStack), this.getYCoord(par1ItemStack), this.getZCoord(par1ItemStack));
+                        player.setPositionAndUpdate(
+                                this.getXCoord(par1ItemStack),
+                                this.getYCoord(par1ItemStack),
+                                this.getZCoord(par1ItemStack));
                     }
                 }
             }
@@ -60,10 +66,10 @@ public class ItemTeleporter extends ItemBase {
 
         else {
 
-            this.setXCoord(par1ItemStack,player.posX);
-            this.setYCoord(par1ItemStack,player.posY);
-            this.setZCoord(par1ItemStack,player.posZ);
-            this.setDimentionIDCoord(par1ItemStack,player.dimension);
+            this.setXCoord(par1ItemStack, player.posX);
+            this.setYCoord(par1ItemStack, player.posY);
+            this.setZCoord(par1ItemStack, player.posZ);
+            this.setDimentionIDCoord(par1ItemStack, player.dimension);
             setCoodsSet(par1ItemStack, true);
 
             UtilPlayers.sendChatToPlayer(player, "Link Set");
@@ -72,28 +78,28 @@ public class ItemTeleporter extends ItemBase {
         return par1ItemStack;
     }
 
-
     @SuppressWarnings("unchecked")
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer player,@SuppressWarnings("rawtypes") List info, boolean b){
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer player,
+            @SuppressWarnings("rawtypes") List info, boolean b) {
 
-        if(isCoodsSet(par1ItemStack)) {
+        if (isCoodsSet(par1ItemStack)) {
 
-            info.add("Destination X: " + (int)this.getXCoord(par1ItemStack)+" Y: " + (int)this.getYCoord(par1ItemStack) + " Z: " + (int)this.getZCoord(par1ItemStack));
+            info.add("Destination X: " + (int) this.getXCoord(par1ItemStack)
+                    + " Y: " + (int) this.getYCoord(par1ItemStack) + " Z: "
+                    + (int) this.getZCoord(par1ItemStack));
             info.add("Dimention ID: " + this.getDimentionIDCoord(par1ItemStack));
         }
 
-        if(!isCoodsSet(par1ItemStack)) {
+        if (!isCoodsSet(par1ItemStack)) {
 
             info.add("Link not set.");
         }
     }
 
-
-
     public int getDimentionIDCoord(ItemStack item) {
         NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(item);
-        if (nbtTagCompound != null){
+        if (nbtTagCompound != null) {
             return nbtTagCompound.getInteger("dimentionID");
         }
         return 0;
@@ -108,20 +114,20 @@ public class ItemTeleporter extends ItemBase {
     public boolean isCoodsSet(ItemStack item) {
 
         NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(item);
-        if (nbtTagCompound != null){
+        if (nbtTagCompound != null) {
             return nbtTagCompound.getBoolean("coodsSet");
         }
         return coodsSet;
     }
 
-    public void setCoodsSet(ItemStack item,boolean coodsSet) {
+    public void setCoodsSet(ItemStack item, boolean coodsSet) {
         NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(item);
-        nbtTagCompound.setBoolean("coodsSet", coodsSet);        
+        nbtTagCompound.setBoolean("coodsSet", coodsSet);
     }
 
     public double getXCoord(ItemStack item) {
         NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(item);
-        if (nbtTagCompound != null){
+        if (nbtTagCompound != null) {
             return nbtTagCompound.getDouble("X");
         }
         return 0;
@@ -135,7 +141,7 @@ public class ItemTeleporter extends ItemBase {
 
     public double getYCoord(ItemStack item) {
         NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(item);
-        if (nbtTagCompound != null){
+        if (nbtTagCompound != null) {
             return nbtTagCompound.getDouble("Y");
         }
         return 0;
@@ -149,7 +155,7 @@ public class ItemTeleporter extends ItemBase {
 
     public double getZCoord(ItemStack item) {
         NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(item);
-        if (nbtTagCompound != null){
+        if (nbtTagCompound != null) {
             return nbtTagCompound.getDouble("Z");
         }
         return 0;

@@ -16,7 +16,7 @@ public class BlockCreationTable extends ContainerBase {
 
     Icon top;
     Icon sides;
-    Icon bottom; 
+    Icon bottom;
 
     public BlockCreationTable(int id, Material material) {
         super(id, material);
@@ -26,11 +26,13 @@ public class BlockCreationTable extends ContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitX, float hitY, float hitZ, float par9) {
-        
-        if(!player.isSneaking()) {
+    public boolean onBlockActivated(World world, int x, int y, int z,
+            EntityPlayer player, int hitX, float hitY, float hitZ, float par9) {
 
-            player.openGui(GearUtilities.instance, Gui.CREATION_TABLE, world, x, y, z);
+        if (!player.isSneaking()) {
+
+            player.openGui(GearUtilities.instance, Gui.CREATION_TABLE, world,
+                    x, y, z);
             return true;
         }
         return false;
@@ -39,24 +41,31 @@ public class BlockCreationTable extends ContainerBase {
     @Override
     public void registerIcons(IconRegister iconRegistry) {
 
-        top = iconRegistry.registerIcon(Reference.MODDID + ":BlockCreationTableTop");
-        sides = iconRegistry.registerIcon(Reference.MODDID + ":BlockCreationTableSide");
-        bottom = iconRegistry.registerIcon(Reference.MODDID + ":DefaultTexture");
+        top = iconRegistry.registerIcon(Reference.MODDID
+                + ":BlockCreationTableTop");
+        sides = iconRegistry.registerIcon(Reference.MODDID
+                + ":BlockCreationTableSide");
+        bottom = iconRegistry
+                .registerIcon(Reference.MODDID + ":DefaultTexture");
     }
 
     @Override
     public Icon getIcon(int side, int metadata) {
 
-        switch(side) {
+        switch (side) {
 
-            case 0: return bottom;
-            case 1: return top;
-            default: return sides;
+            case 0:
+                return bottom;
+            case 1:
+                return top;
+            default:
+                return sides;
         }
     }
-    
+
     @Override
-    public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side) {
+    public Icon getBlockTexture(IBlockAccess world, int x, int y, int z,
+            int side) {
 
         return super.getBlockTexture(world, x, y, z, side);
     }

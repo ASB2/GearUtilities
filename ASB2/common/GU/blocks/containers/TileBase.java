@@ -16,20 +16,21 @@ import GU.api.wait.Wait;
 import GU.utils.UtilBlock;
 import GU.utils.UtilDirection;
 
-public abstract class TileBase extends TileEntity implements IVinillaColorable, IWaitTrigger, IWrenchable {
+public abstract class TileBase extends TileEntity implements IVinillaColorable,
+        IWaitTrigger, IWrenchable {
 
     protected PowerProvider powerProvider;
-    protected ForgeDirection orientation;    
+    protected ForgeDirection orientation;
     protected EnumVinillaColor color;
     protected ItemStack[] tileItemStacks = new ItemStack[0];
     public FluidTank fluidTank;
     protected Wait waitTimer;
 
     public TileBase() {
-        if(color == null)
+        if (color == null)
             color = EnumVinillaColor.NONE;
 
-        if(orientation == null)
+        if (orientation == null)
             orientation = ForgeDirection.DOWN;
 
         fluidTank = new FluidTank(0);
@@ -52,8 +53,6 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
         this.color = color;
     }
 
-
-
     @Override
     public void trigger(int id) {
 
@@ -62,28 +61,78 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
     @Override
     public boolean shouldTick(int id) {
 
-        return !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
+        return !worldObj
+                .isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
     }
 
     @Override
-    public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
+    public void triggerBlock(World world, boolean isSneaking,
+            ItemStack itemStack, int x, int y, int z, int side) {
 
-        if(isSneaking) {
+        if (isSneaking) {
 
             UtilBlock.breakAndAddToInventory(null, worldObj, x, y, z, 0, true);
         }
 
-        switch(getOrientation()) {
+        switch (getOrientation()) {
 
-            case DOWN : worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.UP), 3); return;
-            case UP: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.SOUTH), 3); return;
-            case SOUTH: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.WEST), 3); return;
-            case WEST: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.NORTH), 3); return;
-            case NORTH: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.EAST), 3); return;
-            case EAST: worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.DOWN), 3); return;
+            case DOWN:
+                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord,
+                        UtilDirection
+                                .translateDirectionToNumber(ForgeDirection.UP),
+                        3);
+                return;
+            case UP:
+                worldObj.setBlockMetadataWithNotify(
+                        xCoord,
+                        yCoord,
+                        zCoord,
+                        UtilDirection
+                                .translateDirectionToNumber(ForgeDirection.SOUTH),
+                        3);
+                return;
+            case SOUTH:
+                worldObj.setBlockMetadataWithNotify(
+                        xCoord,
+                        yCoord,
+                        zCoord,
+                        UtilDirection
+                                .translateDirectionToNumber(ForgeDirection.WEST),
+                        3);
+                return;
+            case WEST:
+                worldObj.setBlockMetadataWithNotify(
+                        xCoord,
+                        yCoord,
+                        zCoord,
+                        UtilDirection
+                                .translateDirectionToNumber(ForgeDirection.NORTH),
+                        3);
+                return;
+            case NORTH:
+                worldObj.setBlockMetadataWithNotify(
+                        xCoord,
+                        yCoord,
+                        zCoord,
+                        UtilDirection
+                                .translateDirectionToNumber(ForgeDirection.EAST),
+                        3);
+                return;
+            case EAST:
+                worldObj.setBlockMetadataWithNotify(
+                        xCoord,
+                        yCoord,
+                        zCoord,
+                        UtilDirection
+                                .translateDirectionToNumber(ForgeDirection.DOWN),
+                        3);
+                return;
 
-            default : worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3); return;
-        }        
+            default:
+                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0,
+                        3);
+                return;
+        }
     }
 
     @Override
@@ -92,48 +141,48 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
 
         fluidTank.readFromNBT(tag);
 
-        if(color == EnumVinillaColor.NONE || color == null)
-            color = EnumVinillaColor.translateNumberToColor(tag.getInteger("color"));
+        if (color == EnumVinillaColor.NONE || color == null)
+            color = EnumVinillaColor.translateNumberToColor(tag
+                    .getInteger("color"));
 
-        if(this.powerProvider != null)
+        if (this.powerProvider != null)
             this.powerProvider.readFromNBT(tag);
 
         NBTTagList nbttaglist = tag.getTagList("Items");
 
         tileItemStacks = new ItemStack[tileItemStacks.length];
 
-        for (int i = 0; i < nbttaglist.tagCount(); i++)
-        {
-            NBTTagCompound nbttagcompound = (NBTTagCompound)nbttaglist.tagAt(i);
+        for (int i = 0; i < nbttaglist.tagCount(); i++) {
+            NBTTagCompound nbttagcompound = (NBTTagCompound) nbttaglist
+                    .tagAt(i);
             byte byte0 = nbttagcompound.getByte("Slot");
 
-            if (byte0 >= 0 && byte0 < tileItemStacks.length)
-            {
-                tileItemStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound);
+            if (byte0 >= 0 && byte0 < tileItemStacks.length) {
+                tileItemStacks[byte0] = ItemStack
+                        .loadItemStackFromNBT(nbttagcompound);
             }
         }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag){
-        super.writeToNBT(tag); 
+    public void writeToNBT(NBTTagCompound tag) {
+        super.writeToNBT(tag);
 
         fluidTank.writeToNBT(tag);
 
-        if(this.getColorEnum() != EnumVinillaColor.NONE)
-            tag.setInteger("color", EnumVinillaColor.translateColorToNumber(this.getColorEnum()));
+        if (this.getColorEnum() != EnumVinillaColor.NONE)
+            tag.setInteger("color", EnumVinillaColor
+                    .translateColorToNumber(this.getColorEnum()));
 
-        if(this.powerProvider != null)
+        if (this.powerProvider != null)
             this.powerProvider.writeToNBT(tag);
 
         NBTTagList nbttaglist = new NBTTagList();
 
-        for (int i = 0; i < tileItemStacks.length; i++)
-        {
-            if (tileItemStacks[i] != null)
-            {
+        for (int i = 0; i < tileItemStacks.length; i++) {
+            if (tileItemStacks[i] != null) {
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setByte("Slot", (byte)i);
+                nbttagcompound.setByte("Slot", (byte) i);
                 tileItemStacks[i].writeToNBT(nbttagcompound);
                 nbttaglist.appendTag(nbttagcompound);
             }

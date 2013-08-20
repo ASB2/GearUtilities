@@ -11,19 +11,21 @@ import GU.info.Models;
 import GU.info.Textures;
 import GU.utils.UtilRender;
 
-public class CreationTableRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
+public class CreationTableRenderer extends TileEntitySpecialRenderer implements
+        IItemRenderer {
 
     @Override
-    public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
+    public void renderTileEntityAt(TileEntity tileentity, double x, double y,
+            double z, float f) {
 
-        if(tileentity instanceof TileCreationTable) {
+        if (tileentity instanceof TileCreationTable) {
 
-            GL11.glPushMatrix();      
-            
-            GL11.glTranslated(x + .5f,  y + .5f,  z + .5f);       
+            GL11.glPushMatrix();
+
+            GL11.glTranslated(x + .5f, y + .5f, z + .5f);
             GL11.glScalef(.5f, .5f, .5f);
 
-            UtilRender.renderTexture(Textures.CREATION_TABLE);     
+            UtilRender.renderTexture(Textures.CREATION_TABLE);
             Models.ModelCreationTable.renderAll();
 
             GL11.glPopMatrix();
@@ -37,7 +39,8 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
+            ItemRendererHelper helper) {
 
         return true;
     }
@@ -45,7 +48,7 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
-        switch(type) {
+        switch (type) {
 
             case ENTITY: {
 
@@ -71,16 +74,18 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
                 return;
             }
 
-            default:return;
+            default:
+                return;
         }
     }
 
-    private void renderItemSwitched(ItemRenderType type, float x, float y, float z, float scale) {
+    private void renderItemSwitched(ItemRenderType type, float x, float y,
+            float z, float scale) {
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
 
-        GL11.glTranslatef(x,  y,  z);
+        GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
         UtilRender.renderTexture(Textures.CREATION_TABLE);
@@ -90,4 +95,3 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
         GL11.glPopMatrix();
     }
 }
-
