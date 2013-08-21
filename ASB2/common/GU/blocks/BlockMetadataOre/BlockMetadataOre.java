@@ -25,6 +25,7 @@ public class BlockMetadataOre extends BlockBase {
         super(id, material);
     }
 
+    @Override
     public void setBlockName(String texture) {
 
         this.blockName = texture;

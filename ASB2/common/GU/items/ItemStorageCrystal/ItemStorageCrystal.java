@@ -16,6 +16,7 @@ public class ItemStorageCrystal extends ItemBase {
         super(id);
     }
 
+    @Override
     public Icon getIcon(ItemStack stack, int pass) {
 
         if (this.getFluidStack(stack) != null) {

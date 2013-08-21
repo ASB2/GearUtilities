@@ -19,6 +19,7 @@ public class TileVortexControler extends TileBase implements IPowerMisc {
         powerProvider = new GUPowerProvider(1000, PowerClass.HIGH, State.SINK);
     }
 
+    @Override
     public void updateEntity() {
 
         if (canCreateVortex()) {

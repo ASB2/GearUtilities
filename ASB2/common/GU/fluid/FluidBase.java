@@ -25,11 +25,13 @@ public class FluidBase extends Fluid {
         return this;
     }
 
+    @Override
     public Icon getIcon() {
 
         return texture;
     }
 
+    @Override
     public int getColor() {
 
         return colorHex;

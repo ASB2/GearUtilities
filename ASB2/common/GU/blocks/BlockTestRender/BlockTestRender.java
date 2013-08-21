@@ -23,16 +23,19 @@ public class BlockTestRender extends BlockBase {
         useStandardRendering = false;
     }
 
+    @Override
     public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess,
             int par2, int par3, int par4, int par5) {
         return true;
     }
 
+    @Override
     public boolean isBlockNormalCube(World world, int x, int y, int z) {
 
         return true;
     }
 
+    @Override
     public int getLightOpacity(World world, int x, int y, int z) {
         return 255;
     }

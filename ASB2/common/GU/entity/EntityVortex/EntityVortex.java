@@ -24,6 +24,7 @@ public class EntityVortex extends Entity {
 
     }
 
+    @Override
     public void onEntityUpdate() {
 
     }

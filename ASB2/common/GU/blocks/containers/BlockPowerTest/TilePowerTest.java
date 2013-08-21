@@ -12,6 +12,7 @@ public class TilePowerTest extends TileBase implements IPowerMisc {
                 State.OTHER);
     }
 
+    @Override
     public void updateEntity() {
         this.getPowerProvider().setPower(this.getPowerProvider().getPowerMax());
         ((GUPowerProvider) this.getPowerProvider()).movePower(worldObj, xCoord,

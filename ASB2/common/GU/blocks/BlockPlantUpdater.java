@@ -13,6 +13,7 @@ public class BlockPlantUpdater extends BlockBase {
         super(id, material);
     }
 
+    @Override
     public void updateTick(World world, int x, int y, int z, Random random) {
         super.updateTick(world, x, y, z, random);
 

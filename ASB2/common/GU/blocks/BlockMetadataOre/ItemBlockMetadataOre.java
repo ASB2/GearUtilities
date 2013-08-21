@@ -19,6 +19,7 @@ public class ItemBlockMetadataOre extends GUItemBlock {
         return damageValue;
     }
 
+    @Override
     public String getUnlocalizedName(ItemStack itemStack) {
 
         switch (itemStack.getItemDamage()) {

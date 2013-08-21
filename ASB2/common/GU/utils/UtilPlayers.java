@@ -66,23 +66,23 @@ public class UtilPlayers {
         Double y = entity.posY;
         Double z = entity.posZ;
 
-        int xCoord = (int) x.intValue();
-        int yCoord = (int) y.intValue();
-        int zCoord = (int) z.intValue();
+        int xCoord = x.intValue();
+        int yCoord = y.intValue();
+        int zCoord = z.intValue();
 
         if (x.doubleValue() >= .7) {
 
-            xCoord = (int) x.intValue() + 1;
+            xCoord = x.intValue() + 1;
         }
 
         if (y.doubleValue() >= .7) {
 
-            yCoord = (int) y.intValue() + 1;
+            yCoord = y.intValue() + 1;
         }
 
         if (z.doubleValue() >= .7) {
 
-            zCoord = (int) z.intValue() + 1;
+            zCoord = z.intValue() + 1;
         }
         return new int[] { xCoord, yCoord, zCoord };
     }

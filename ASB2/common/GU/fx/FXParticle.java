@@ -17,6 +17,7 @@ public class FXParticle extends EntityFX {
         super(world, x, y, z);
     }
 
+    @Override
     public void renderParticle(Tessellator tessellator, float f, float f1,
             float f2, float f3, float f4, float f5) {
 

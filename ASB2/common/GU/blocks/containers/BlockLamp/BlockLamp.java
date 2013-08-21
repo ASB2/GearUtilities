@@ -21,6 +21,7 @@ public class BlockLamp extends ContainerBase {
         useStandardRendering = false;
     }
 
+    @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x,
             int y, int z) {
 
@@ -28,6 +29,7 @@ public class BlockLamp extends ContainerBase {
         return super.getCollisionBoundingBoxFromPool(world, x, y, z);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x,
             int y, int z) {

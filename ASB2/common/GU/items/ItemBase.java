@@ -25,6 +25,7 @@ public class ItemBase extends Item {
         this.setCreativeTab(GearUtilities.tabGUItems);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean requiresMultipleRenderPasses() {
         return true;
@@ -66,6 +67,7 @@ public class ItemBase extends Item {
         this.setUnlocalizedName(Reference.UNIQUE_ID + itemName);
     }
 
+    @Override
     public Icon getIcon(ItemStack stack, int pass) {
 
         if (useDefaultTexture || texture == null)
