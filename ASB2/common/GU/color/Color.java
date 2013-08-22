@@ -39,6 +39,16 @@ public class Color {
         this.alpha = color.getAlpha();
     }
 
+    public Color(EnumVinillaColor color) {
+    
+        Color vinillaColor = EnumVinillaColor.getRGBValue(color);
+        
+        this.red = vinillaColor.getRed();
+        this.green = vinillaColor.getGreen();
+        this.blue = vinillaColor.getBlue();
+        this.alpha = vinillaColor.getAlpha();
+    }
+    
     public void setRed(int red) {
 
         this.red = red;

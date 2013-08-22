@@ -29,7 +29,7 @@ public class CanvasRenderer implements ISimpleBlockRenderingHandler {
         UtilRender.renderStandardInvBlock(renderer, block, meta);
 
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
-        UtilRender.renderStandardInvBlock(renderer, block, ((BlockCanvas)BlockRegistry.BlockCanvas).inner, 1, 1, 1, 1);
+        UtilRender.renderStandardInvBlock(renderer, block, ((BlockCanvas)BlockRegistry.BlockCanvas).inner, 255, 255, 255, 255);
 
     }
 
@@ -46,7 +46,7 @@ public class CanvasRenderer implements ISimpleBlockRenderingHandler {
             UtilRender.renderFakeBlock(renderer, block, x, y, z, block.getIcon(0, 0), color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha(), block.getMixedBrightnessForBlock(world, x, y, z));
             
             renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
-            this.renderFakeBlock(world, renderer, block, x, y, z, ((BlockCanvas)BlockRegistry.BlockCanvas).inner, 1, 1, 1, 1, 255);
+            this.renderFakeBlock(world, renderer, block, x, y, z, ((BlockCanvas)BlockRegistry.BlockCanvas).inner, 255, 255, 255, 255, 255);
         }
         return true;
     }

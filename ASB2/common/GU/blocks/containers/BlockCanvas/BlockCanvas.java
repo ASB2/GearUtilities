@@ -6,8 +6,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import GU.blocks.containers.ContainerBase;
+import GU.color.EnumVinillaColor;
 import GU.info.Reference;
+import GU.color.*;
 
 public class BlockCanvas extends ContainerBase {
 
@@ -24,6 +27,15 @@ public class BlockCanvas extends ContainerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
+        
+        if(player.getHeldItem() != null) {
+            
+            if(tile != null && tile instanceof IColorable) {
+                
+                ((IColorable)tile).setColor(EnumVinillaColor.getRGBValue(EnumVinillaColor.getItemColorValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
+            }
+        }
         return false;
     }
 

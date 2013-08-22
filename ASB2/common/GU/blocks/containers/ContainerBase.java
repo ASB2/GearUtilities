@@ -6,9 +6,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
@@ -16,7 +14,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import GU.GUItemBlock;
 import GU.GearUtilities;
-import GU.api.IWrenchable;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -34,31 +31,6 @@ public abstract class ContainerBase extends BlockContainer {
         this.setCreativeTab(GearUtilities.tabGUBlocks);
         setHardness(100f);
         setResistance(100F);
-    }
-
-    public boolean rotate(ItemStack itemStack, World world, int x, int y,
-            int z, boolean shifting, int side) {
-
-        TileEntity tile = world.getBlockTileEntity(x, y, z);
-
-        if (tile != null && tile instanceof IWrenchable) {
-
-            if (itemStack.getItem() == Item.stick) {
-
-                ((IWrenchable) tile).triggerBlock(world, shifting, itemStack,
-                        x, y, z, side);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z,
-            EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-
-        return rotate(player.getCurrentEquippedItem(), world, x, y, z,
-                player.isSneaking(), side);
     }
 
     @Override

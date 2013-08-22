@@ -7,7 +7,7 @@ import GU.color.IColorable;
 
 public class TileCanvas extends TileBase implements IColorable {
 
-    Color currentColor = new Color(1, 1, 1, 1);
+    Color currentColor = new Color();
 
     @Override
     public Color getColor(ForgeDirection direction) {

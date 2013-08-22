@@ -7,9 +7,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import GU.api.IWrenchable;
 
-public class ItemGearTinkerer extends ItemBase {
+public class ItemAdvancedStick extends ItemBase {
 
-    public ItemGearTinkerer(int id) {
+    public ItemAdvancedStick(int id) {
         super(id);
         this.setMaxStackSize(1);
     }

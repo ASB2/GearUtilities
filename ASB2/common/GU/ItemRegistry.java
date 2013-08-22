@@ -1,15 +1,16 @@
 package GU;
 
 import net.minecraftforge.common.Configuration;
+import GU.items.ItemAdvancedStick;
 import GU.items.ItemBase;
 import GU.items.ItemBasicDestructionCatalyst;
 import GU.items.ItemCrystalCasing;
 import GU.items.ItemEnhancedDestructionCatalyst;
 import GU.items.ItemGarnet;
 import GU.items.ItemGearReader;
-import GU.items.ItemGearTinkerer;
 import GU.items.ItemLifeStealingBludgeoningStick;
 import GU.items.ItemLinker;
+import GU.items.ItemPhantomPlacer;
 import GU.items.ItemRainBGone;
 import GU.items.ItemTeleporter;
 import GU.items.ItemTestItem;
@@ -21,7 +22,6 @@ import GU.items.ItemCrystalShards.ItemFireCrystalShard;
 import GU.items.ItemCrystalShards.ItemWaterCrystalShard;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import GU.items.*;
 
 public class ItemRegistry {
 
@@ -40,7 +40,7 @@ public class ItemRegistry {
     public static ItemBase ItemTradeStick;
     public static ItemBase ItemGearReader;
     public static ItemBase ItemLinker;
-    public static ItemBase ItemGearTinkerer;
+    public static ItemBase ItemAdvancedStick;
     public static ItemBase ItemTestItem;
     public static ItemBase ItemStorageCrystal;
     public static ItemBase ItemPhantomPlacer;
@@ -49,109 +49,79 @@ public class ItemRegistry {
 
     public static void init(Configuration config) {
 
-        ItemAirCrystalShard = new ItemAirCrystalShard(config.getItem(
-                "ItemAirCrystalShard", ItemRegistry.getNextBaseID()).getInt());
+        ItemAirCrystalShard = new ItemAirCrystalShard(config.getItem("ItemAirCrystalShard", ItemRegistry.getNextBaseID()).getInt());
         ItemAirCrystalShard.setItemName("ItemAirCrystalShard");
         LanguageRegistry.addName(ItemAirCrystalShard, "Air Crystal Shard");
 
-        ItemEarthCrystalShard = new ItemEarthCrystalShard(config.getItem(
-                "ItemEarthCrystalShard", ItemRegistry.getNextBaseID()).getInt());
+        ItemEarthCrystalShard = new ItemEarthCrystalShard(config.getItem("ItemEarthCrystalShard", ItemRegistry.getNextBaseID()).getInt());
         ItemEarthCrystalShard.setItemName("ItemEarthCrystalShard");
         LanguageRegistry.addName(ItemEarthCrystalShard, "Earth Crystal Shard");
 
-        ItemFireCrystalShard = new ItemFireCrystalShard(config.getItem(
-                "ItemFireCrystalShard", ItemRegistry.getNextBaseID()).getInt());
+        ItemFireCrystalShard = new ItemFireCrystalShard(config.getItem("ItemFireCrystalShard", ItemRegistry.getNextBaseID()).getInt());
         ItemFireCrystalShard.setItemName("ItemFireCrystalShard");
         LanguageRegistry.addName(ItemFireCrystalShard, "Fire Crystal Shard");
 
-        ItemWaterCrystalShard = new ItemWaterCrystalShard(config.getItem(
-                "ItemWaterCrystalShard", ItemRegistry.getNextBaseID()).getInt());
+        ItemWaterCrystalShard = new ItemWaterCrystalShard(config.getItem("ItemWaterCrystalShard", ItemRegistry.getNextBaseID()).getInt());
         ItemWaterCrystalShard.setItemName("ItemWaterCrystalShard");
         LanguageRegistry.addName(ItemWaterCrystalShard, "Water Crystal Shard");
 
-        ItemEnergyCrystalShard = new ItemEnergyCrystalShard(config.getItem(
-                "ItemEnergyCrystalShard", ItemRegistry.getNextBaseID())
-                .getInt());
+        ItemEnergyCrystalShard = new ItemEnergyCrystalShard(config.getItem("ItemEnergyCrystalShard", ItemRegistry.getNextBaseID()).getInt());
         ItemEnergyCrystalShard.setItemName("ItemEnergyCrystalShard");
-        LanguageRegistry
-                .addName(ItemEnergyCrystalShard, "Energy Crystal Shard");
+        LanguageRegistry.addName(ItemEnergyCrystalShard, "Energy Crystal Shard");
 
-        ItemGarnet = new ItemGarnet(config.getItem("ItemGarnet",
-                ItemRegistry.getNextBaseID()).getInt());
+        ItemGarnet = new ItemGarnet(config.getItem("ItemGarnet",ItemRegistry.getNextBaseID()).getInt());
         ItemGarnet.setItemName("ItemGarnet");
         LanguageRegistry.addName(ItemGarnet, "Garnet");
 
-        ItemTestItem = new ItemTestItem(config.getItem("ItemTestItem",
-                ItemRegistry.getNextBaseID()).getInt());
+        ItemTestItem = new ItemTestItem(config.getItem("ItemTestItem",ItemRegistry.getNextBaseID()).getInt());
         ItemTestItem.setItemName("ItemTestItem");
         LanguageRegistry.addName(ItemTestItem, "Test Item");
 
-        ItemCrystalCasing = new ItemCrystalCasing(config.getItem(
-                "ItemCrystalCasing", ItemRegistry.getNextBaseID()).getInt());
+        ItemCrystalCasing = new ItemCrystalCasing(config.getItem("ItemCrystalCasing", ItemRegistry.getNextBaseID()).getInt());
         ItemCrystalCasing.setItemName("ItemCrystalCasing");
         LanguageRegistry.addName(ItemCrystalCasing, "Crystal Casing");
 
-        ItemBasicDestructionCatalyst = new ItemBasicDestructionCatalyst(config
-                .getItem("ItemContritioSimplexCatalyst",
-                        ItemRegistry.getNextBaseID()).getInt());
-        ItemBasicDestructionCatalyst
-                .setItemName("ItemContritioSimplexCatalyst");
-        LanguageRegistry.addName(ItemBasicDestructionCatalyst,
-                "Contritio Simplex Catalyst");
+        ItemBasicDestructionCatalyst = new ItemBasicDestructionCatalyst(config.getItem("ItemContritioSimplexCatalyst", ItemRegistry.getNextBaseID()).getInt());
+        ItemBasicDestructionCatalyst .setItemName("ItemContritioSimplexCatalyst");
+        LanguageRegistry.addName(ItemBasicDestructionCatalyst, "Contritio Simplex Catalyst");
 
-        ItemEnhancedDestructionCatalyst = new ItemEnhancedDestructionCatalyst(
-                config.getItem("ItemContritioConsecteturCatalyst",
-                        ItemRegistry.getNextBaseID()).getInt());
-        ItemEnhancedDestructionCatalyst
-                .setItemName("ItemContritioConsecteturCatalyst");
-        LanguageRegistry.addName(ItemEnhancedDestructionCatalyst,
-                "Contritio Consectetur Catalyst");
+        ItemEnhancedDestructionCatalyst = new ItemEnhancedDestructionCatalyst(config.getItem("ItemContritioConsecteturCatalyst", ItemRegistry.getNextBaseID()).getInt());
+        ItemEnhancedDestructionCatalyst.setItemName("ItemContritioConsecteturCatalyst");
+        LanguageRegistry.addName(ItemEnhancedDestructionCatalyst, "Contritio Consectetur Catalyst");
 
-        ItemLifeStealingBludgeoningStick = new ItemLifeStealingBludgeoningStick(
-                config.getItem("ItemLifeStealingBludgeoningStick",
-                        ItemRegistry.getNextBaseID()).getInt());
-        ItemLifeStealingBludgeoningStick
-                .setItemName("ItemLifeStealingBludgeoningStick");
-        LanguageRegistry.addName(ItemLifeStealingBludgeoningStick,
-                "Life Stealing Bludgeoning Stick");
+        ItemLifeStealingBludgeoningStick = new ItemLifeStealingBludgeoningStick(config.getItem("ItemLifeStealingBludgeoningStick", ItemRegistry.getNextBaseID()).getInt());
+        ItemLifeStealingBludgeoningStick.setItemName("ItemLifeStealingBludgeoningStick");
+        LanguageRegistry.addName(ItemLifeStealingBludgeoningStick, "Life Stealing Bludgeoning Stick");
 
-        ItemRainBGone = new ItemRainBGone(config.getItem("ItemRainBGone",
-                ItemRegistry.getNextBaseID()).getInt());
+        ItemRainBGone = new ItemRainBGone(config.getItem("ItemRainBGone", ItemRegistry.getNextBaseID()).getInt());
         ItemRainBGone.setItemName("ItemRainBGone");
         LanguageRegistry.addName(ItemRainBGone, "Rain B Gone");
 
-        ItemTeleporter = new ItemTeleporter(config.getItem("ItemTeleporter",
-                ItemRegistry.getNextBaseID()).getInt());
+        ItemTeleporter = new ItemTeleporter(config.getItem("ItemTeleporter", ItemRegistry.getNextBaseID()).getInt());
         ItemTeleporter.setItemName("ItemTeleporter");
         LanguageRegistry.addName(ItemTeleporter, "Teleporter");
 
-        ItemTradeStick = new ItemTradeStick(config.getItem("ItemTradeStick",
-                ItemRegistry.getNextBaseID()).getInt());
+        ItemTradeStick = new ItemTradeStick(config.getItem("ItemTradeStick", ItemRegistry.getNextBaseID()).getInt());
         ItemTradeStick.setItemName("ItemTradeStick");
         LanguageRegistry.addName(ItemTradeStick, "Trade Stick");
 
-        ItemGearReader = new ItemGearReader(config.getItem("ItemGearReader",
-                ItemRegistry.getNextBaseID()).getInt());
+        ItemGearReader = new ItemGearReader(config.getItem("ItemGearReader", ItemRegistry.getNextBaseID()).getInt());
         ItemGearReader.setItemName("ItemGearReader");
         LanguageRegistry.addName(ItemGearReader, "Gear Reader");
 
-        ItemLinker = new ItemLinker(config.getItem("ItemLinker",
-                ItemRegistry.getNextBaseID()).getInt());
+        ItemLinker = new ItemLinker(config.getItem("ItemLinker", ItemRegistry.getNextBaseID()).getInt());
         ItemLinker.setItemName("ItemLinker");
         LanguageRegistry.addName(ItemLinker, "Linker");
 
-        ItemGearTinkerer = new ItemGearTinkerer(config.getItem(
-                "ItemGearTinkerer", ItemRegistry.getNextBaseID()).getInt());
-        ItemGearTinkerer.setItemName("ItemGearTinkerer");
-        LanguageRegistry.addName(ItemGearTinkerer, "Gear Tinkerer");
+        ItemAdvancedStick = new ItemAdvancedStick(config.getItem( "ItemAdvancedStick", ItemRegistry.getNextBaseID()).getInt());
+        ItemAdvancedStick.setItemName("ItemAdvancedStick");
+        LanguageRegistry.addName(ItemAdvancedStick, "Advanced Stick");
 
-        ItemStorageCrystal = new ItemStorageCrystal(config.getItem(
-                "ItemStorageCrystal", ItemRegistry.getNextBaseID()).getInt());
+        ItemStorageCrystal = new ItemStorageCrystal(config.getItem( "ItemStorageCrystal", ItemRegistry.getNextBaseID()).getInt());
         ItemStorageCrystal.setItemName("ItemStorageCrystal");
         LanguageRegistry.addName(ItemStorageCrystal, "Storage Crystal");
 
-        ItemPhantomPlacer = new ItemPhantomPlacer(config.getItem(
-                "ItemPhantomPlacer", ItemRegistry.getNextBaseID()).getInt());
+        ItemPhantomPlacer = new ItemPhantomPlacer(config.getItem("ItemPhantomPlacer", ItemRegistry.getNextBaseID()).getInt());
         ItemPhantomPlacer.setItemName("ItemPhantomPlacer");
         LanguageRegistry.addName(ItemPhantomPlacer, "Phantom Placer");
     }
