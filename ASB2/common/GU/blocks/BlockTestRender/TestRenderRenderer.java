@@ -12,14 +12,12 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class TestRenderRenderer implements ISimpleBlockRenderingHandler {
 
-    public static int testRenderID = RenderingRegistry
-            .getNextAvailableRenderId();
+    public static int testRenderID = RenderingRegistry.getNextAvailableRenderId();
 
     Random random = new Random();
 
     @Override
-    public void renderInventoryBlock(Block block, int meta, int modelID,
-            RenderBlocks renderer) {
+    public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
 
         renderer.setRenderBounds(0.001, 0.001, 0.001, .999, .999, .999);
         UtilRender.renderStandardInvBlock(renderer, block, ((BlockTestRender) BlockRegistry.BlockTestRender).inner, random.nextInt(255), random.nextInt(255), random.nextInt(255), 255);

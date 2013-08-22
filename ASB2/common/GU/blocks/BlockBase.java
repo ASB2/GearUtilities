@@ -29,6 +29,12 @@ public class BlockBase extends Block {
     }
 
     @Override
+    public int getLightOpacity(World world, int x, int y, int z) {
+        
+        return 255;
+    }
+    
+    @Override
     public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
 
         return true;

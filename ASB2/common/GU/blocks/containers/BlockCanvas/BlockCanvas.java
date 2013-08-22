@@ -25,14 +25,26 @@ public class BlockCanvas extends ContainerBase {
     }
 
     @Override
+    public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
+
+        return true;
+    }
+
+    @Override
+    public boolean isBlockNormalCube(World world, int x, int y, int z) {
+
+        return true;
+    }
+
+    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
-        
-        if(player.getHeldItem() != null && EnumVinillaColor.isItemDye(player.getHeldItem())) {
-            
-            if(tile != null && tile instanceof IColorable) {
-                
+
+        if(tile != null && tile instanceof IColorable) {
+
+            if(player.getHeldItem() != null && EnumVinillaColor.isItemDye(player.getHeldItem())) {
+
                 ((IColorable)tile).setColor(EnumVinillaColor.getRGBValue(EnumVinillaColor.getItemColorValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
             }
         }
