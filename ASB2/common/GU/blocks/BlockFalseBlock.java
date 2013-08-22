@@ -30,15 +30,13 @@ public class BlockFalseBlock extends BlockBase {
     }
 
     @Override
-    public boolean isBlockSolidOnSide(World world, int x, int y, int z,
-            ForgeDirection side) {
+    public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
 
         return true;
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x,
-            int y, int z) {
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 
         if (!world.isBlockIndirectlyGettingPowered(x, y, z))
             return null;

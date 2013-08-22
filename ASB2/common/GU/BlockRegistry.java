@@ -6,6 +6,7 @@ import net.minecraftforge.common.Configuration;
 import GU.blocks.BlockBase;
 import GU.blocks.BlockBurningFlower;
 import GU.blocks.BlockConnectedGlass;
+import GU.blocks.BlockEtherealConnectedGlass;
 import GU.blocks.BlockFalseBlock;
 import GU.blocks.BlockFreezingFlower;
 import GU.blocks.BlockGarnetBlock;
@@ -47,6 +48,7 @@ public class BlockRegistry {
     public static ContainerBase BlockCanvas;
     public static ContainerBase BlockPowerTest;
     public static BlockBase BlockConnectedGlass;
+    public static BlockBase BlockEtherealConnectedGlass;
     
     private static int id = 500;
 
@@ -131,6 +133,10 @@ public class BlockRegistry {
         BlockConnectedGlass = new BlockConnectedGlass(config.getBlock("BlockConnectedGlass", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockConnectedGlass.setBlockName("BlockConnectedGlass");
         LanguageRegistry.addName(BlockConnectedGlass, "Connected Glass");
+        
+        BlockEtherealConnectedGlass = new BlockEtherealConnectedGlass(config.getBlock("BlockEtherealConnectedGlass", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockEtherealConnectedGlass.setBlockName("BlockEtherealConnectedGlass");
+        LanguageRegistry.addName(BlockEtherealConnectedGlass, "Ethereal Connected Glass");
     }
 
     public static void initTestBlocks(Configuration config) {
