@@ -3,11 +3,13 @@ package GU.blocks.containers.BlockCanvas;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.ForgeDirection;
 import GU.BlockRegistry;
 import GU.color.Color;
@@ -39,16 +41,19 @@ public class CanvasRenderer implements ISimpleBlockRenderingHandler {
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         if (tile != null && tile instanceof IColorable) {
-
-            renderer.setRenderBounds(0.0001, 0.0001, 0.0001, .9999, .9999, .9999);
             
-            for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS) {
+                renderer.setRenderBounds(0.0001, 0.0001, 0.0001, .9999, .9999, .9999);
                 
-                Color color = ((IColorable) tile).getColor(direction);
+            for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS) {
 
-                UtilRender.renderFakeBlock(renderer, block, direction, x, y, z, block.getIcon(0, 0), color.getRed(), color.getGreen(), color.getBlue(), 50, block.getMixedBrightnessForBlock(world, x, y, z));
+                if(block.shouldSideBeRendered(world, x, y, z, direction.ordinal())) {
+
+                    Color color = ((IColorable) tile).getColor(direction);
+
+                    UtilRender.renderFakeBlock(renderer, block, direction, x, y, z, block.getIcon(0, 0), color.getRed(), color.getGreen(), color.getBlue(), 50, block.getMixedBrightnessForBlock(world, x, y, z));
+                }
             }
-            
+
             renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
             this.renderFakeBlock(world, renderer, block, x, y, z, ((BlockCanvas)BlockRegistry.BlockCanvas).inner, 255, 255, 255, 255, 255);
         }
@@ -66,7 +71,7 @@ public class CanvasRenderer implements ISimpleBlockRenderingHandler {
 
         return canvasRenderID;
     }
-    
+
     public void renderFakeBlock(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, Icon icon, float red, float green, float blue, float alfa, int brightness) {
 
         Tessellator tess = Tessellator.instance;

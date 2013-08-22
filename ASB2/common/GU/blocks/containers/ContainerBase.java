@@ -139,7 +139,6 @@ public abstract class ContainerBase extends BlockContainer {
 
         this.blockName = texture;
         this.setUnlocalizedName(Reference.UNIQUE_ID + blockName);
-        GameRegistry.registerBlock(this, GUItemBlock.class,
-                this.getUnlocalizedName());
+        GameRegistry.registerBlock(this, GUItemBlock.class, this.getUnlocalizedName());
     }
 }
