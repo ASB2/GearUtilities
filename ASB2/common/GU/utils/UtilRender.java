@@ -82,8 +82,7 @@ public final class UtilRender {
         }
     }
 
-    public static void renderByOrientation(double x, double y, double z,
-            int metadata) {
+    public static void renderByOrientation(double x, double y, double z, int metadata) {
 
         GL11.glScalef(1.0F, 1.0F, 1.0F);
 
@@ -131,14 +130,12 @@ public final class UtilRender {
         }
     }
 
-    public static void renderFakeBlock(RenderBlocks renderer, Block block,
-            int x, int y, int z, Icon icon, float red, float green, float blue,
-            float alfa, int brightness) {
+    public static void renderFakeBlock(RenderBlocks renderer, Block block, int x, int y, int z, Icon icon, int red, int green, int blue, int alfa, int brightness) {
 
         Tessellator tess = Tessellator.instance;
 
         tess.setBrightness(brightness);
-        tess.setColorRGBA_F(red, green, blue, alfa);
+        tess.setColorRGBA(red, green, blue, alfa);
 
         renderer.renderFaceXNeg(block, x, y, z, icon);
         renderer.renderFaceXPos(block, x, y, z, icon);
@@ -150,8 +147,7 @@ public final class UtilRender {
         renderer.renderFaceZPos(block, x, y, z, icon);
     }
 
-    public static void renderStandardInvBlock(RenderBlocks renderblocks,
-            Block block, int meta) {
+    public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, int meta) {
 
         Tessellator tessellator = Tessellator.instance;
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
@@ -188,8 +184,7 @@ public final class UtilRender {
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }
 
-    public static void renderStandardInvBlock(RenderBlocks renderblocks,
-            Block block, Icon icon) {
+    public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, Icon icon) {
 
         Tessellator tessellator = Tessellator.instance;
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
@@ -220,47 +215,45 @@ public final class UtilRender {
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }
 
-    public static void renderStandardInvBlock(RenderBlocks renderblocks,
-            Block block, Icon icon, float red, float green, float blue,
-            float alfa) {
+    public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, Icon icon, int red, int green, int blue, int alfa) {
 
         Tessellator tessellator = Tessellator.instance;
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
         tessellator.startDrawingQuads();
-        tessellator.setColorRGBA_F(red, green, blue, alfa);
+        tessellator.setColorRGBA(red, green, blue, alfa);
         tessellator.setNormal(0.0F, -1F, 0.0F);
         renderblocks.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, icon);
         tessellator.draw();
         tessellator.startDrawingQuads();
-        tessellator.setColorRGBA_F(red, green, blue, alfa);
+        tessellator.setColorRGBA(red, green, blue, alfa);
         tessellator.setNormal(0.0F, 1.0F, 0.0F);
         renderblocks.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, icon);
         tessellator.draw();
         tessellator.startDrawingQuads();
-        tessellator.setColorRGBA_F(red, green, blue, alfa);
+        tessellator.setColorRGBA(red, green, blue, alfa);
         tessellator.setNormal(0.0F, 0.0F, -1F);
         renderblocks.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, icon);
         tessellator.draw();
         tessellator.startDrawingQuads();
-        tessellator.setColorRGBA_F(red, green, blue, alfa);
+        tessellator.setColorRGBA(red, green, blue, alfa);
         tessellator.setNormal(0.0F, 0.0F, 1.0F);
         renderblocks.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, icon);
         tessellator.draw();
         tessellator.startDrawingQuads();
-        tessellator.setColorRGBA_F(red, green, blue, alfa);
+        tessellator.setColorRGBA(red, green, blue, alfa);
         tessellator.setNormal(-1F, 0.0F, 0.0F);
         renderblocks.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, icon);
         tessellator.draw();
         tessellator.startDrawingQuads();
-        tessellator.setColorRGBA_F(red, green, blue, alfa);
+        tessellator.setColorRGBA(red, green, blue, alfa);
         tessellator.setNormal(1.0F, 0.0F, 0.0F);
         renderblocks.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, icon);
         tessellator.draw();
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }
 
-    public static boolean renderMetadataBlock(Block block, int metadata, int x,
-            int y, int z, RenderBlocks renderer, IBlockAccess world) {
+    public static boolean renderMetadataBlock(Block block, int metadata, int x, int y, int z, RenderBlocks renderer, IBlockAccess world) {
+        
         int var5 = block.colorMultiplier(world, x, y, z);
         float var6 = (var5 >> 16 & 255) / 255.0F;
         float var7 = (var5 >> 8 & 255) / 255.0F;
@@ -276,16 +269,11 @@ public final class UtilRender {
         }
 
         return Minecraft.isAmbientOcclusionEnabled()
-                && Block.lightValue[block.blockID] == 0 ? renderMetadataBlockWithAmbientOcclusion(
-                block, metadata, x, y, z, var6, var7, var8, renderer, world)
-                : renderMetadataBlockWithColorMultiplier(block, metadata, x, y,
-                        z, var6, var7, var8, renderer, world);
+                && Block.lightValue[block.blockID] == 0 ? renderMetadataBlockWithAmbientOcclusion( block, metadata, x, y, z, var6, var7, var8, renderer, world)
+                : renderMetadataBlockWithColorMultiplier(block, metadata, x, y, z, var6, var7, var8, renderer, world);
     }
 
-    static boolean renderMetadataBlockWithAmbientOcclusion(Block block,
-            int metadata, int xPos, int yPos, int zPos, float colorRed,
-            float colorGreen, float colorBlue, RenderBlocks render,
-            IBlockAccess world) {
+    static boolean renderMetadataBlockWithAmbientOcclusion(Block block, int metadata, int xPos, int yPos, int zPos, float colorRed, float colorGreen, float colorBlue, RenderBlocks render, IBlockAccess world) {
         render.enableAO = true;
         boolean flag = false;
         float f3 = 0.0F;

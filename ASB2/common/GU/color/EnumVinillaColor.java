@@ -184,4 +184,47 @@ public enum EnumVinillaColor {
                 return -1;
         }
     }
+    
+    public static Color getRGBValue(EnumVinillaColor color) {
+     
+        switch (color) {
+
+            case WHITE:
+                return new Color(255, 255, 255);
+            case ORANGE:
+                return new Color(255, 165, 0);
+            case MAGENTA:
+                return new Color(139, 0, 139);
+            case LIGHT_BLUE:
+                return new Color(173, 216, 230);
+            case YELLOW:
+                return new Color(255, 255, 0);
+            case LIME:
+                return new Color(0, 255, 0);
+            case PINK:
+                return new Color(255, 192, 203);
+            case GRAY:
+                return new Color(128, 128, 128);
+            case LIGHT_GREY:
+                return new Color(211, 211, 211);
+            case CYAN:
+                return new Color(0, 255, 255);
+            case PURPLE:
+                return new Color(128, 0, 128);
+            case BLUE:
+                return new Color(0, 0, 255);
+            case BROWN:
+                return new Color(165, 42, 42);
+            case GREEN:
+                return new Color(0, 255, 0);
+            case RED:
+                return new Color(255, 0, 0);
+            case BLACK:
+                return new Color(0, 0, 0);
+            case NONE:
+                return new Color(255, 255, 255);
+            default:
+                return new Color(255, 255, 255);
+        }
+    }
 }

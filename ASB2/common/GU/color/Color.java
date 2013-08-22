@@ -2,27 +2,28 @@ package GU.color;
 
 public class Color {
 
-    float red;
-    float green;
-    float blue;
-    float alpha;
+    int red = 255;
+    int green = 255;
+    int blue = 255;
+    int alpha = 255;
 
+    int redAdjustment = 0;
+    int greenAdjustment = 0;
+    int blueAdjustment = 0;
+    int alphaAdjustment = 0;
+    
     public Color() {
-        red = 1;
-        green = 1;
-        blue = 1;
-        alpha = 1;
+
     }
 
-    public Color(float red, float green, float blue) {
+    public Color(int red, int green, int blue) {
 
         this.red = red;
         this.green = green;
         this.blue = blue;
-        this.alpha = 1;
     }
 
-    public Color(float red, float green, float blue, float alpha) {
+    public Color(int red, int green, int blue, int alpha) {
 
         this.red = red;
         this.green = green;
@@ -38,49 +39,94 @@ public class Color {
         this.alpha = color.getAlpha();
     }
 
-    public void setRed(float red) {
+    public void setRed(int red) {
 
-        this.red = red / 10;
+        this.red = red;
     }
 
-    public void setGreen(float green) {
+    public void setGreen(int green) {
 
-        this.green = green / 10;
+        this.green = green;
     }
 
-    public void setBlue(float blue) {
+    public void setBlue(int blue) {
 
-        this.blue = blue / 10;
+        this.blue = blue;
     }
 
-    public void setAlpha(float alpha) {
+    public void setAlpha(int alpha) {
 
-        this.alpha = alpha / 10;
+        this.alpha = alpha;
     }
 
-    public float getRed() {
+    
+    public int getRed() {
 
         return red;
     }
 
-    public float getGreen() {
+    public int getGreen() {
 
         return green;
     }
 
-    public float getBlue() {
+    public int getBlue() {
 
         return blue;
     }
 
-    public float getAlpha() {
+    public int getAlpha() {
 
         return alpha;
     }
 
+    public void setRedAdjustment(int red) {
+
+        this.redAdjustment = red;
+    }
+
+    public void setGreenAdjustment(int green) {
+
+        this.greenAdjustment = green;
+    }
+
+    public void setBlueAdjustment(int blue) {
+
+        this.blueAdjustment = blue;
+    }
+
+    public void setAlphaAdjustment(int alpha) {
+
+        this.alphaAdjustment = alpha;
+    }
+
+    public int getRedAdjustment() {
+
+        return redAdjustment;
+    }
+
+    public int getGreenAdjustment() {
+
+        return greenAdjustment;
+    }
+
+    public int getBlueAdjustment() {
+
+        return blueAdjustment;
+    }
+
+    public int getAlphaAdjustment() {
+
+        return alphaAdjustment;
+    }
+    
+    public Color getColorAdjusted() {
+
+        return new Color(this.getRed() - this.getRedAdjustment(), this.getGreen() - this.getGreenAdjustment(), this.getBlue() - this.getBlueAdjustment(), this.getAlpha() - this.getAlphaAdjustment());
+    }
+
     public Color copy() {
 
-        Color color = new Color(this);
-        return color;
+        return new Color(this);
     }
 }

@@ -10,8 +10,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class TestTankRenderer implements ISimpleBlockRenderingHandler {
 
-    public static int tankModelID = RenderingRegistry
-            .getNextAvailableRenderId();
+    public static int tankModelID = RenderingRegistry .getNextAvailableRenderId();
 
     @Override
     public void renderInventoryBlock(Block block, int meta, int modelID,
@@ -38,13 +37,10 @@ public class TestTankRenderer implements ISimpleBlockRenderingHandler {
                         0.0001F,
                         0.0001F,
                         0.999F,
-                        UtilMisc.getAmountScaled(0.9999,
-                                tile.fluidTank.getFluidAmount(),
-                                tile.fluidTank.getCapacity()), 0.999F);
+                        UtilMisc.getAmountScaled(0.9999, tile.fluidTank.getFluidAmount(), tile.fluidTank.getCapacity()), 0.999F);
             } else {
 
-                renderer.setRenderBounds(0.001F, 0.001F, 0.001F, 0.999F, 0.999,
-                        0.999F);
+                renderer.setRenderBounds(0.001F, 0.001F, 0.001F, 0.999F, 0.999, 0.999F);
             }
 
             if (tile.fluidTank.getFluid().getFluid().getIcon() != null) {

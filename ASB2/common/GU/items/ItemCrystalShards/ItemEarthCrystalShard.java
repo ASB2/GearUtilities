@@ -4,8 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import GU.color.*;
+import GU.color.IColorable;
 
 public class ItemEarthCrystalShard extends ItemCrystal {
 
@@ -13,6 +12,7 @@ public class ItemEarthCrystalShard extends ItemCrystal {
         super(par1);
     }
 
+    @SuppressWarnings("unused")
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player,
             World world, int x, int y, int z, int side, float hitX, float hitY,
@@ -22,16 +22,6 @@ public class ItemEarthCrystalShard extends ItemCrystal {
         if (tile instanceof IColorable) {
 
             IColorable colorAble = ((IColorable) tile);
-
-            if (!player.isSneaking()) {
-
-                colorAble.changeGreen(1, ForgeDirection.getOrientation(side));
-                return true;
-            } else {
-
-                colorAble.changeGreen(-1, ForgeDirection.getOrientation(side));
-                return true;
-            }
         }
         return false;
     }

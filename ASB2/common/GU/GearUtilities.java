@@ -34,6 +34,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Reference.MODDID, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:Forge@[7.7.1.829,)")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { Reference.MOD_CHANNEL }, packetHandler = GUPacketHandler.class)
+
 public final class GearUtilities {
 
     @Instance(Reference.MODDID)
@@ -44,29 +45,26 @@ public final class GearUtilities {
     public static CommonProxy proxy;
 
     public GearUtilities() {
-
-        System.out.println("[" + Reference.NAME
-                + "] Beginning destruction of known world");
-        if (Loader.isModLoaded("Natura") || Loader.isModLoaded("TConstruct")) {
-
-            System.out.println("[" + Reference.NAME
-                    + "] Joining mods in world desturction");
-        }
+        
     }
 
-    public static CreativeTabs tabGUBlocks = new GUCreativeTab(
-            CreativeTabs.getNextID(), Reference.NAME + ": Blocks");
-    public static CreativeTabs tabGUItems = new GUCreativeTab(
-            CreativeTabs.getNextID(), Reference.NAME + ": Items");
+    public static CreativeTabs tabGUBlocks = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Blocks");
+    public static CreativeTabs tabGUItems = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Items");
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
 
         logger.setParent(FMLLog.getLogger());
-        logger.log(Level.INFO, "Hi");
 
-        Configuration config = new Configuration(
-                event.getSuggestedConfigurationFile());
+        System.out.println("[" + Reference.NAME + "] Beginning destruction of known world");
+
+        if (Loader.isModLoaded("Natura") || Loader.isModLoaded("TConstruct")) {
+
+            logger.log(Level.INFO, "[" + Reference.NAME + "] Joining mods in world desturction");
+        }
+
+
+        Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
 
         Variables.updateVariables(config);

@@ -67,6 +67,7 @@ public class TileTestLaser extends TileBase implements IWrenchable, IPowerMisc,
         }
     }
 
+    @SuppressWarnings("unused")
     public TileEntity findLaserConnection(ForgeDirection direction, int distance) {
 
         for (int i = 0; i < distance; i++) {

@@ -4,7 +4,9 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.ForgeDirection;
 import GU.BlockRegistry;
@@ -16,55 +18,35 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class CanvasRenderer implements ISimpleBlockRenderingHandler {
 
-    public static int canvasRenderID = RenderingRegistry
-            .getNextAvailableRenderId();
+    public static int canvasRenderID = RenderingRegistry.getNextAvailableRenderId();
 
     Random random = new Random();
 
     @Override
-    public void renderInventoryBlock(Block block, int meta, int modelID,
-            RenderBlocks renderer) {
+    public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
 
         renderer.setRenderBounds(0.01, 0.01, 0.01, .99, .99, .99);
         UtilRender.renderStandardInvBlock(renderer, block, meta);
 
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
-        UtilRender.renderStandardInvBlock(renderer, block,
-                ((BlockCanvas) BlockRegistry.BlockCanvas).inner, 1, 1, 1, 1);
+        UtilRender.renderStandardInvBlock(renderer, block, ((BlockCanvas)BlockRegistry.BlockCanvas).inner, 1, 1, 1, 1);
 
     }
 
     @Override
-    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z,
-            Block block, int modelId, RenderBlocks renderer) {
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         if (tile != null && tile instanceof IColorable) {
 
-            Color color = ((IColorable) tile).getColor(ForgeDirection.UNKNOWN);
-
-            renderer.setRenderBounds(0.01, 0.01, 0.01, .99, .99, .99);
-            UtilRender.renderFakeBlock(renderer, block, x, y, z,
-                    block.getIcon(0, 0), color.getRed(), color.getGreen(),
-                    color.getBlue(), color.getAlpha(),
-                    block.getMixedBrightnessForBlock(world, x, y, z));
-
-            renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
-            UtilRender.renderFakeBlock(renderer, block, x, y, z,
-                    ((BlockCanvas) BlockRegistry.BlockCanvas).inner, 1, 1, 1,
-                    1, block.getMixedBrightnessForBlock(world, x, y, z));
-        } else {
+            Color color = ((IColorable) tile).getColor(ForgeDirection.UNKNOWN).getColorAdjusted();
 
             renderer.setRenderBounds(0.001, 0.001, 0.001, .999, .999, .999);
-            UtilRender.renderFakeBlock(renderer, block, x, y, z,
-                    block.getIcon(0, 0), 1, 1, 1, 1,
-                    block.getMixedBrightnessForBlock(world, x, y, z));
-
+            UtilRender.renderFakeBlock(renderer, block, x, y, z, block.getIcon(0, 0), color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha(), block.getMixedBrightnessForBlock(world, x, y, z));
+            
             renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
-            UtilRender.renderFakeBlock(renderer, block, x, y, z,
-                    ((BlockCanvas) BlockRegistry.BlockCanvas).inner, 1F, 1, 1,
-                    1, block.getMixedBrightnessForBlock(world, x, y, z));
+            this.renderFakeBlock(world, renderer, block, x, y, z, ((BlockCanvas)BlockRegistry.BlockCanvas).inner, 1, 1, 1, 1, 255);
         }
         return true;
     }
@@ -79,5 +61,22 @@ public class CanvasRenderer implements ISimpleBlockRenderingHandler {
     public int getRenderId() {
 
         return canvasRenderID;
+    }
+    
+    public void renderFakeBlock(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, Icon icon, float red, float green, float blue, float alfa, int brightness) {
+
+        Tessellator tess = Tessellator.instance;
+
+        tess.setBrightness(brightness);
+        tess.setColorRGBA_F(red, green, blue, alfa);
+
+        renderer.renderFaceXNeg(block, x, y, z, UtilRender.renderConnectedTexture(world, ((BlockCanvas)BlockRegistry.BlockCanvas).icons, block.blockID, x, y, z, 4));
+        renderer.renderFaceXPos(block, x, y, z, UtilRender.renderConnectedTexture(world, ((BlockCanvas)BlockRegistry.BlockCanvas).icons, block.blockID, x, y, z, 5));
+
+        renderer.renderFaceYNeg(block, x, y, z, UtilRender.renderConnectedTexture(world, ((BlockCanvas)BlockRegistry.BlockCanvas).icons, block.blockID, x, y, z, 0));
+        renderer.renderFaceYPos(block, x, y, z, UtilRender.renderConnectedTexture(world, ((BlockCanvas)BlockRegistry.BlockCanvas).icons, block.blockID, x, y, z, 1));
+
+        renderer.renderFaceZNeg(block, x, y, z, UtilRender.renderConnectedTexture(world, ((BlockCanvas)BlockRegistry.BlockCanvas).icons, block.blockID, x, y, z, 2));
+        renderer.renderFaceZPos(block, x, y, z, UtilRender.renderConnectedTexture(world, ((BlockCanvas)BlockRegistry.BlockCanvas).icons, block.blockID, x, y, z, 3));
     }
 }

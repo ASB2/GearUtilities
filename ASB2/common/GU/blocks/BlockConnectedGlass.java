@@ -54,38 +54,22 @@ public class BlockConnectedGlass extends BlockBase {
     @Override
     public void registerIcons(IconRegister iconRegistry) {
 
-        icons[0] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tankRegular");
-        icons[1] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_1_d");
-        icons[2] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_1_u");
-        icons[3] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_1_l");
-        icons[4] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_1_r");
-        icons[5] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_2_h");
-        icons[6] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_2_v");
-        icons[7] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_2_dl");
-        icons[8] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_2_dr");
-        icons[9] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_2_ul");
-        icons[10] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_2_ur");
-        icons[11] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_3_d");
-        icons[12] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_3_u");
-        icons[13] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_3_l");
-        icons[14] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/tank_3_r");
-        icons[15] = iconRegistry.registerIcon(Reference.MODDID + folder
-                + "/blank");
+        icons[0] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connectedRegular");
+        icons[1] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_1_d");
+        icons[2] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_1_u");
+        icons[3] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_1_l");
+        icons[4] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_1_r");
+        icons[5] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_2_h");
+        icons[6] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_2_v");
+        icons[7] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_2_dl");
+        icons[8] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_2_dr");
+        icons[9] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_2_ul");
+        icons[10] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_2_ur");
+        icons[11] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_3_d");
+        icons[12] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_3_u");
+        icons[13] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_3_l");
+        icons[14] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_3_r");
+        icons[15] = iconRegistry.registerIcon(Reference.MODDID + folder + "/blank");
     }
 
     @Override
