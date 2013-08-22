@@ -147,6 +147,34 @@ public final class UtilRender {
         renderer.renderFaceZPos(block, x, y, z, icon);
     }
 
+    public static void renderFakeBlock(RenderBlocks renderer, Block block, ForgeDirection direction, int x, int y, int z, Icon icon, int red, int green, int blue, int alfa, int brightness) {
+    
+        Tessellator tess = Tessellator.instance;
+
+        tess.setBrightness(brightness);
+        tess.setColorRGBA(red, green, blue, alfa);
+        
+        switch(direction) {
+            
+            case DOWN: renderer.renderFaceYNeg(block, x, y, z, icon);
+                break;
+            case UP: renderer.renderFaceYPos(block, x, y, z, icon);
+                break;
+            case NORTH: renderer.renderFaceZNeg(block, x, y, z, icon);
+                break;
+            case SOUTH: renderer.renderFaceZPos(block, x, y, z, icon);
+                break;
+            case WEST: renderer.renderFaceXNeg(block, x, y, z, icon);
+                break;
+            case EAST: renderer.renderFaceXPos(block, x, y, z, icon);
+                break;
+            default:
+                break;
+            
+        }
+        
+    }
+    
     public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, int meta) {
 
         Tessellator tessellator = Tessellator.instance;

@@ -18,12 +18,12 @@ import GU.blocks.BlockMetadataOre.BlockMetadataOre;
 import GU.blocks.BlockTestRender.BlockTestRender;
 import GU.blocks.containers.ContainerBase;
 import GU.blocks.containers.BlockCanvas.BlockCanvas;
+import GU.blocks.containers.BlockConnectableTank.BlockConnectableTank;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockLamp.BlockLamp;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockTestLaser.BlockTestLaser;
-import GU.blocks.containers.BlockTestTank.BlockTestTank;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -38,7 +38,7 @@ public class BlockRegistry {
     public static BlockBase BlockFreezingFlower;
     public static BlockBase BlockFalseBlock;
     public static BlockBase BlockSpeedyRoad;
-    public static ContainerBase BlockTestTank;
+    public static ContainerBase BlockConnectableTank;
     public static ContainerBase BlockTestLaser;
     public static ContainerBase BlockLamp;
     public static ContainerBase BlockCreationTable;
@@ -106,9 +106,9 @@ public class BlockRegistry {
         BlockTestTile.setBlockName("BlockTestTile");
         LanguageRegistry.addName(BlockTestTile, "Test Tile Block");
 
-        BlockTestTank = new BlockTestTank(config.getBlock("BlockTestTank", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockTestTank.setBlockName("BlockTestTank");
-        LanguageRegistry.addName(BlockTestTank, "Test Tank");
+        BlockConnectableTank = new BlockConnectableTank(config.getBlock("BlockConnectableTank", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockConnectableTank.setBlockName("BlockConnectableTank");
+        LanguageRegistry.addName(BlockConnectableTank, "Connectable Tank");
 
         BlockTestLaser = new BlockTestLaser(config.getBlock("BlockTestLaser", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockTestLaser.setBlockName("BlockTestLaser");

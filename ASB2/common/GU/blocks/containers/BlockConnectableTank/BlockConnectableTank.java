@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockTestTank;
+package GU.blocks.containers.BlockConnectableTank;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ import GU.info.Reference;
 import GU.utils.UtilInventory;
 import GU.utils.UtilRender;
 
-public class BlockTestTank extends ContainerBase {
+public class BlockConnectableTank extends ContainerBase {
 
     private Icon[] icons = new Icon[16];
     private Icon top;
@@ -27,10 +27,10 @@ public class BlockTestTank extends ContainerBase {
 
     private String folder = ":tankConnected";
 
-    public BlockTestTank(int id, Material material) {
+    public BlockConnectableTank(int id, Material material) {
         super(id, material);
 
-        this.registerTile(TileTestTank.class);
+        this.registerTile(TileConnectableTank.class);
         useStandardRendering = false;
     }
 
@@ -63,9 +63,9 @@ public class BlockTestTank extends ContainerBase {
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
 
-        if (world.getBlockTileEntity(x, y, z) instanceof TileTestTank) {
+        if (world.getBlockTileEntity(x, y, z) instanceof TileConnectableTank) {
 
-            TileTestTank tileTank = (TileTestTank) world.getBlockTileEntity(x,
+            TileConnectableTank tileTank = (TileConnectableTank) world.getBlockTileEntity(x,
                     y, z);
 
             for (ForgeDirection direction : ForgeDirection.values()) {
@@ -88,7 +88,7 @@ public class BlockTestTank extends ContainerBase {
     @Override
     public int getRenderType() {
 
-        return TestTankRenderer.tankModelID;
+        return ConnectableTankRenderer.tankModelID;
     }
 
     @Override
@@ -160,10 +160,8 @@ public class BlockTestTank extends ContainerBase {
 
         if (current != null) {
 
-            FluidStack fluid = FluidContainerRegistry
-                    .getFluidForFilledItem(current);
-            TileTestTank tank = (TileTestTank) world
-                    .getBlockTileEntity(x, y, z);
+            FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(current);
+            TileConnectableTank tank = (TileConnectableTank) world.getBlockTileEntity(x, y, z);
 
             if (fluid != null) {
 
@@ -228,6 +226,6 @@ public class BlockTestTank extends ContainerBase {
     @Override
     public TileEntity createNewTileEntity(World world) {
 
-        return new TileTestTank();
+        return new TileConnectableTank();
     }
 }

@@ -19,8 +19,7 @@ import GU.info.*;
 public class GUPacketHandler implements IPacketHandler {
 
     @Override
-    public void onPacketData(INetworkManager manager,
-            Packet250CustomPayload packet, Player player) {
+    public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
 
         try {
 
@@ -32,25 +31,19 @@ public class GUPacketHandler implements IPacketHandler {
             int packetId = in.readUnsignedByte();
             GUPacketBase demoPacket = GUPacketBase.constructPacket(packetId);
             demoPacket.read(in);
-            demoPacket.execute(entityPlayer,
-                    entityPlayer.worldObj.isRemote ? Side.CLIENT : Side.SERVER);
+            demoPacket.execute(entityPlayer, entityPlayer.worldObj.isRemote ? Side.CLIENT : Side.SERVER);
         }
 
         catch (ProtocolException e) {
 
             if (player instanceof EntityPlayerMP) {
 
-                ((EntityPlayerMP) player).playerNetServerHandler
-                        .kickPlayerFromServer("Protocol Exception!");
-                Logger.getLogger(Reference.NAME).warning(
-                        "Player " + ((EntityPlayer) player).username
-                                + " caused a Protocol Exception!");
+                ((EntityPlayerMP) player).playerNetServerHandler.kickPlayerFromServer("Protocol Exception!");
+                Logger.getLogger(Reference.NAME).warning( "Player " + ((EntityPlayer) player).username + " caused a Protocol Exception!");
             }
         } catch (ReflectiveOperationException e) {
 
-            throw new RuntimeException(
-                    "Unexpected Reflection exception during Packet construction!",
-                    e);
+            throw new RuntimeException( "Unexpected Reflection exception during Packet construction!", e);
         }
     }
 }

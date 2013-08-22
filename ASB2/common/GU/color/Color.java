@@ -6,11 +6,6 @@ public class Color {
     int green = 255;
     int blue = 255;
     int alpha = 255;
-
-    int redAdjustment = 0;
-    int greenAdjustment = 0;
-    int blueAdjustment = 0;
-    int alphaAdjustment = 0;
     
     public Color() {
 
@@ -89,52 +84,7 @@ public class Color {
 
         return alpha;
     }
-
-    public void setRedAdjustment(int red) {
-
-        this.redAdjustment = red;
-    }
-
-    public void setGreenAdjustment(int green) {
-
-        this.greenAdjustment = green;
-    }
-
-    public void setBlueAdjustment(int blue) {
-
-        this.blueAdjustment = blue;
-    }
-
-    public void setAlphaAdjustment(int alpha) {
-
-        this.alphaAdjustment = alpha;
-    }
-
-    public int getRedAdjustment() {
-
-        return redAdjustment;
-    }
-
-    public int getGreenAdjustment() {
-
-        return greenAdjustment;
-    }
-
-    public int getBlueAdjustment() {
-
-        return blueAdjustment;
-    }
-
-    public int getAlphaAdjustment() {
-
-        return alphaAdjustment;
-    }
     
-    public Color getColorAdjusted() {
-
-        return new Color(this.getRed() - this.getRedAdjustment(), this.getGreen() - this.getGreenAdjustment(), this.getBlue() - this.getBlueAdjustment(), this.getAlpha() - this.getAlphaAdjustment());
-    }
-
     public Color copy() {
 
         return new Color(this);

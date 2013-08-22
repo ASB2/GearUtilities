@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockTestTank;
+package GU.blocks.containers.BlockConnectableTank;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -8,7 +8,7 @@ import GU.utils.UtilRender;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
-public class TestTankRenderer implements ISimpleBlockRenderingHandler {
+public class ConnectableTankRenderer implements ISimpleBlockRenderingHandler {
 
     public static int tankModelID = RenderingRegistry .getNextAvailableRenderId();
 
@@ -25,12 +25,11 @@ public class TestTankRenderer implements ISimpleBlockRenderingHandler {
 
         UtilRender.renderMetadataBlock(block, 0, x, y, z, renderer, world);
 
-        TileTestTank tile = (TileTestTank) world.getBlockTileEntity(x, y, z);
+        TileConnectableTank tile = (TileConnectableTank) world.getBlockTileEntity(x, y, z);
 
         if (tile.fluidTank.getFluid() != null) {
 
-            if (!(tile.fluidTank.getCapacity() == tile.fluidTank
-                    .getFluidAmount())) {
+            if (!(tile.fluidTank.getCapacity() == tile.fluidTank .getFluidAmount())) {
 
                 renderer.setRenderBounds(
                         0.001F,

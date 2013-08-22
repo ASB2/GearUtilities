@@ -18,11 +18,11 @@ public abstract class GUPacketBase {
     private static final BiMap<Integer, Class<? extends GUPacketBase>> idMap;
 
     static {
-        ImmutableBiMap.Builder<Integer, Class<? extends GUPacketBase>> builder = ImmutableBiMap
-                .builder();
+        ImmutableBiMap.Builder<Integer, Class<? extends GUPacketBase>> builder = ImmutableBiMap.builder();
 
-        builder.put(Integer.valueOf(0), TestTankPacket.class);
-
+        builder.put(Integer.valueOf(0), ConnectableTankPacket.class);
+        builder.put(Integer.valueOf(1), ColorPacket.class);
+        
         idMap = builder.build();
     }
 
@@ -48,8 +48,7 @@ public abstract class GUPacketBase {
             return idMap.inverse().get(getClass()).intValue();
         } else {
 
-            throw new RuntimeException("Packet " + getClass().getSimpleName()
-                    + " is missing a mapping!");
+            throw new RuntimeException("Packet " + getClass().getSimpleName() + " is missing a mapping!");
         }
     }
 

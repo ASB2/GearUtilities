@@ -6,15 +6,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class UtilItemStack {
-
-    public static boolean damageItem(EntityLivingBase entity, ItemStack item,
-            int damage) {
+    
+    public static boolean damageItem(EntityLivingBase entity, ItemStack item, int damage) {
 
         if (!item.isItemStackDamageable())
             return false;
 
-        if (entity instanceof EntityPlayer
-                && ((EntityPlayer) entity).capabilities.isCreativeMode)
+        if (entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.isCreativeMode)
             return true;
 
         if (item.getMaxDamage() - item.getItemDamage() >= damage) {
@@ -54,15 +52,13 @@ public class UtilItemStack {
 
     public static void setNBTTagInt(ItemStack itemStack, String tag, int value) {
 
-        NBTTagCompound nbtTagCompound = UtilItemStack
-                .getTAGfromItemstack(itemStack);
+        NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(itemStack);
         nbtTagCompound.setInteger(tag, value);
     }
 
     public static int getNBTTagInt(ItemStack itemStack, String tag) {
 
-        NBTTagCompound nbtTagCompound = UtilItemStack
-                .getTAGfromItemstack(itemStack);
+        NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(itemStack);
 
         if (nbtTagCompound != null) {
 
@@ -74,15 +70,13 @@ public class UtilItemStack {
     public static void setNBTTagDouble(ItemStack itemStack, String tag,
             int value) {
 
-        NBTTagCompound nbtTagCompound = UtilItemStack
-                .getTAGfromItemstack(itemStack);
+        NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(itemStack);
         nbtTagCompound.setDouble(tag, value);
     }
 
     public static double getNBTTagDouble(ItemStack itemStack, String tag) {
 
-        NBTTagCompound nbtTagCompound = UtilItemStack
-                .getTAGfromItemstack(itemStack);
+        NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(itemStack);
 
         if (nbtTagCompound != null) {
 

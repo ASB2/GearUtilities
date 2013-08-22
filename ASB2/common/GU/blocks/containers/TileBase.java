@@ -17,7 +17,7 @@ import GU.utils.UtilBlock;
 import GU.utils.UtilDirection;
 
 public abstract class TileBase extends TileEntity implements IVinillaColorable,
-        IWaitTrigger, IWrenchable {
+IWaitTrigger, IWrenchable {
 
     protected PowerProvider powerProvider;
     protected ForgeDirection orientation;
@@ -79,7 +79,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable,
             case DOWN:
                 worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord,
                         UtilDirection
-                                .translateDirectionToNumber(ForgeDirection.UP),
+                        .translateDirectionToNumber(ForgeDirection.UP),
                         3);
                 return;
             case UP:
@@ -88,7 +88,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable,
                         yCoord,
                         zCoord,
                         UtilDirection
-                                .translateDirectionToNumber(ForgeDirection.SOUTH),
+                        .translateDirectionToNumber(ForgeDirection.SOUTH),
                         3);
                 return;
             case SOUTH:
@@ -97,7 +97,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable,
                         yCoord,
                         zCoord,
                         UtilDirection
-                                .translateDirectionToNumber(ForgeDirection.WEST),
+                        .translateDirectionToNumber(ForgeDirection.WEST),
                         3);
                 return;
             case WEST:
@@ -106,7 +106,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable,
                         yCoord,
                         zCoord,
                         UtilDirection
-                                .translateDirectionToNumber(ForgeDirection.NORTH),
+                        .translateDirectionToNumber(ForgeDirection.NORTH),
                         3);
                 return;
             case NORTH:
@@ -115,7 +115,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable,
                         yCoord,
                         zCoord,
                         UtilDirection
-                                .translateDirectionToNumber(ForgeDirection.EAST),
+                        .translateDirectionToNumber(ForgeDirection.EAST),
                         3);
                 return;
             case EAST:
@@ -124,7 +124,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable,
                         yCoord,
                         zCoord,
                         UtilDirection
-                                .translateDirectionToNumber(ForgeDirection.DOWN),
+                        .translateDirectionToNumber(ForgeDirection.DOWN),
                         3);
                 return;
 
@@ -158,8 +158,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable,
             byte byte0 = nbttagcompound.getByte("Slot");
 
             if (byte0 >= 0 && byte0 < tileItemStacks.length) {
-                tileItemStacks[byte0] = ItemStack
-                        .loadItemStackFromNBT(nbttagcompound);
+                tileItemStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound);
             }
         }
     }
@@ -171,8 +170,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable,
         fluidTank.writeToNBT(tag);
 
         if (this.getColorEnum() != EnumVinillaColor.NONE)
-            tag.setInteger("color", EnumVinillaColor
-                    .translateColorToNumber(this.getColorEnum()));
+            tag.setInteger("color", EnumVinillaColor.translateColorToNumber(this.getColorEnum()));
 
         if (this.powerProvider != null)
             this.powerProvider.writeToNBT(tag);

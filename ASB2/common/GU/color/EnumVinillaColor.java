@@ -4,17 +4,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 
-/**
- * An enum to standardize the coloring of my mod's colors
- */
 public enum EnumVinillaColor {
 
-    WHITE, ORANGE, MAGENTA, LIGHT_BLUE, YELLOW, LIME, PINK, GRAY, LIGHT_GREY, CYAN, PURPLE, BLUE, BROWN, GREEN, RED, BLACK, NONE;
+    BLACK, RED, GREEN, BROWN, BLUE, PURPLE, CYAN, LIGHT_GREY, GREY, PINK, LIME, YELLOW, LIGHT_BLUE, MAGENTA, ORANGE, WHITE, NONE;
 
     public static ItemStack getVinillaDye(EnumVinillaColor color) {
 
         switch (color) {
-
+            
+            case BLACK:
+                return new ItemStack(Item.dyePowder.itemID, 1, 0);
             case RED:
                 return new ItemStack(Item.dyePowder.itemID, 1, 1);
             case GREEN:
@@ -29,7 +28,7 @@ public enum EnumVinillaColor {
                 return new ItemStack(Item.dyePowder.itemID, 2, 6);
             case LIGHT_GREY:
                 return new ItemStack(Item.dyePowder.itemID, 1, 7);
-            case GRAY:
+            case GREY:
                 return new ItemStack(Item.dyePowder.itemID, 2, 8);
             case PINK:
                 return new ItemStack(Item.dyePowder.itemID, 1, 9);
@@ -63,6 +62,8 @@ public enum EnumVinillaColor {
 
                     switch (item.getItemDamage()) {
 
+                        case 0:
+                            return EnumVinillaColor.BLACK;
                         case 1:
                             return EnumVinillaColor.RED;
                         case 2:
@@ -78,7 +79,7 @@ public enum EnumVinillaColor {
                         case 7:
                             return EnumVinillaColor.LIGHT_GREY;
                         case 8:
-                            return EnumVinillaColor.GRAY;
+                            return EnumVinillaColor.GREY;
                         case 9:
                             return EnumVinillaColor.PINK;
                         case 10:
@@ -100,89 +101,34 @@ public enum EnumVinillaColor {
         return EnumVinillaColor.NONE;
     }
 
+    public static boolean isItemDye(ItemStack item) {
+
+        if (item != null) {
+
+            if (item.getItem() != null) {
+
+                Item itemI = item.getItem();
+
+                if (itemI instanceof ItemDye) {
+
+                    if(item.getItemDamage() <= 16) {
+                        
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
     public static EnumVinillaColor translateNumberToColor(int numb) {
 
-        switch (numb) {
-
-            case 0:
-                return EnumVinillaColor.WHITE;
-            case 1:
-                return EnumVinillaColor.ORANGE;
-            case 2:
-                return EnumVinillaColor.MAGENTA;
-            case 3:
-                return EnumVinillaColor.LIGHT_BLUE;
-            case 4:
-                return EnumVinillaColor.YELLOW;
-            case 5:
-                return EnumVinillaColor.LIME;
-            case 6:
-                return EnumVinillaColor.PINK;
-            case 7:
-                return EnumVinillaColor.GRAY;
-            case 8:
-                return EnumVinillaColor.LIGHT_GREY;
-            case 9:
-                return EnumVinillaColor.CYAN;
-            case 10:
-                return EnumVinillaColor.PURPLE;
-            case 11:
-                return EnumVinillaColor.BLUE;
-            case 12:
-                return EnumVinillaColor.BROWN;
-            case 13:
-                return EnumVinillaColor.GREEN;
-            case 14:
-                return EnumVinillaColor.RED;
-            case 15:
-                return EnumVinillaColor.BLACK;
-            default:
-                return EnumVinillaColor.NONE;
-        }
+        return EnumVinillaColor.values()[numb];
     }
 
     public static int translateColorToNumber(EnumVinillaColor color) {
 
-        switch (color) {
-
-            case WHITE:
-                return 0;
-            case ORANGE:
-                return 1;
-            case MAGENTA:
-                return 2;
-            case LIGHT_BLUE:
-                return 3;
-            case YELLOW:
-                return 4;
-            case LIME:
-                return 5;
-            case PINK:
-                return 6;
-            case GRAY:
-                return 7;
-            case LIGHT_GREY:
-                return 8;
-            case CYAN:
-                return 9;
-            case PURPLE:
-                return 10;
-            case BLUE:
-                return 11;
-            case BROWN:
-                return 12;
-            case GREEN:
-                return 13;
-            case RED:
-                return 14;
-            case BLACK:
-                return 15;
-
-            case NONE:
-                return -1;
-            default:
-                return -1;
-        }
+        return color.ordinal();
     }
     
     public static Color getRGBValue(EnumVinillaColor color) {
@@ -203,7 +149,7 @@ public enum EnumVinillaColor {
                 return new Color(0, 255, 0);
             case PINK:
                 return new Color(255, 192, 203);
-            case GRAY:
+            case GREY:
                 return new Color(128, 128, 128);
             case LIGHT_GREY:
                 return new Color(211, 211, 211);

@@ -29,7 +29,7 @@ public class BlockCanvas extends ContainerBase {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
         
-        if(player.getHeldItem() != null) {
+        if(player.getHeldItem() != null && EnumVinillaColor.isItemDye(player.getHeldItem())) {
             
             if(tile != null && tile instanceof IColorable) {
                 

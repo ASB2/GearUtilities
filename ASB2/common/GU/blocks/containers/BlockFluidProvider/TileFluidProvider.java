@@ -9,7 +9,6 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import GU.blocks.containers.TileBase;
-import GU.blocks.containers.BlockTestTank.TileTestTank;
 import GU.utils.UtilDirection;
 import GU.utils.UtilFluid;
 
@@ -126,31 +125,6 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
 
         return new FluidTankInfo[] { fluidTank.getInfo() };
-    }
-
-    public TileTestTank getTankBelow(TileEntity tile) {
-
-        TileEntity below = worldObj.getBlockTileEntity(tile.xCoord,
-                tile.yCoord - 1, tile.zCoord);
-
-        if (below instanceof TileTestTank) {
-
-            return (TileTestTank) below;
-        }
-        return null;
-    }
-
-    public TileTestTank getTankAbove(TileEntity tile) {
-
-        TileEntity below = worldObj.getBlockTileEntity(tile.xCoord,
-                tile.yCoord + 1, tile.zCoord);
-
-        if (below instanceof TileTestTank) {
-
-            return (TileTestTank) below;
-        }
-
-        return null;
     }
 
     @Override

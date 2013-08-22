@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockTestTank;
+package GU.blocks.containers.BlockConnectableTank;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.tileentity.TileEntity;
@@ -16,11 +16,11 @@ import GU.utils.UtilFluid;
 import GU.api.wait.*;
 import GU.packets.*;
 
-public class TileTestTank extends TileBase implements IFluidHandler {
+public class TileConnectableTank extends TileBase implements IFluidHandler {
 
     private int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 64;
 
-    public TileTestTank() {
+    public TileConnectableTank() {
 
         this.waitTimer = new Wait(20, this, 1);
         fluidTank = new FluidTank(maxLiquid);
@@ -43,14 +43,7 @@ public class TileTestTank extends TileBase implements IFluidHandler {
                             new FluidStack(FluidRegistry.WATER, 1000));
                 } else {
 
-                    UtilFluid
-                            .addFluidToTank(
-                                    this,
-                                    ForgeDirection.UNKNOWN,
-                                    new FluidStack(FluidRegistry.WATER,
-                                            fluidTank.getCapacity()
-                                                    - fluidTank
-                                                            .getFluidAmount()));
+                    UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, fluidTank.getCapacity() - fluidTank.getFluidAmount()));
                 }
             }
 
@@ -68,9 +61,9 @@ public class TileTestTank extends TileBase implements IFluidHandler {
             TileEntity tile = UtilDirection.translateDirectionToTile(this,
                     worldObj, direction);
 
-            if (tile != null && tile instanceof TileTestTank) {
+            if (tile != null && tile instanceof TileConnectableTank) {
 
-                TileTestTank tileC = (TileTestTank) tile;
+                TileConnectableTank tileC = (TileConnectableTank) tile;
 
                 if (!(tileC.fluidTank.getCapacity() == tileC.fluidTank
                         .getFluidAmount())) {
@@ -263,26 +256,26 @@ public class TileTestTank extends TileBase implements IFluidHandler {
         return new FluidTankInfo[] { fluidTank.getInfo() };
     }
 
-    public TileTestTank getTankBelow(TileEntity tile) {
+    public TileConnectableTank getTankBelow(TileEntity tile) {
 
         TileEntity below = worldObj.getBlockTileEntity(tile.xCoord,
                 tile.yCoord - 1, tile.zCoord);
 
-        if (below instanceof TileTestTank) {
+        if (below instanceof TileConnectableTank) {
 
-            return (TileTestTank) below;
+            return (TileConnectableTank) below;
         }
         return null;
     }
 
-    public TileTestTank getTankAbove(TileEntity tile) {
+    public TileConnectableTank getTankAbove(TileEntity tile) {
 
         TileEntity below = worldObj.getBlockTileEntity(tile.xCoord,
                 tile.yCoord + 1, tile.zCoord);
 
-        if (below instanceof TileTestTank) {
+        if (below instanceof TileConnectableTank) {
 
-            return (TileTestTank) below;
+            return (TileConnectableTank) below;
         }
 
         return null;
@@ -294,20 +287,11 @@ public class TileTestTank extends TileBase implements IFluidHandler {
         if (id == 1) {
             if (fluidTank.getFluid() != null) {
 
-                PacketDispatcher.sendPacketToAllAround(
-                        xCoord,
-                        yCoord,
-                        zCoord,
-                        20,
-                        worldObj.provider.dimensionId,
-                        new TestTankPacket(xCoord, yCoord, zCoord, fluidTank
-                                .getFluid().getFluid().getID(), fluidTank
-                                .getFluid().amount).makePacket());
+                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new ConnectableTankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
             } else {
 
                 PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord,
-                        20, worldObj.provider.dimensionId, new TestTankPacket(
-                                xCoord, yCoord, zCoord, 0, 0).makePacket());
+                        20, worldObj.provider.dimensionId, new ConnectableTankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
             }
         }
     }

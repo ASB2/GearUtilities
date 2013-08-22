@@ -3,14 +3,14 @@ package GU.packets;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import GU.blocks.containers.BlockTestTank.TileTestTank;
+import GU.blocks.containers.BlockConnectableTank.TileConnectableTank;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
 import cpw.mods.fml.relauncher.Side;
 
-public class TestTankPacket extends GUPacketBase {
+public class ConnectableTankPacket extends GUPacketBase {
 
     int x;
     int y;
@@ -19,7 +19,7 @@ public class TestTankPacket extends GUPacketBase {
     int liquidAmount;
     boolean itWorked = false;
 
-    public TestTankPacket(int x, int y, int z, int liquidId, int liquidAmount) {
+    public ConnectableTankPacket(int x, int y, int z, int liquidId, int liquidAmount) {
 
         this.x = x;
         this.y = y;
@@ -28,7 +28,7 @@ public class TestTankPacket extends GUPacketBase {
         this.liquidAmount = liquidAmount;
     }
 
-    public TestTankPacket() {
+    public ConnectableTankPacket() {
 
     }
 
@@ -65,11 +65,9 @@ public class TestTankPacket extends GUPacketBase {
 
         if (itWorked && side == Side.CLIENT) {
 
-            if (player.worldObj.getBlockTileEntity(x, y, z) != null
-                    && player.worldObj.getBlockTileEntity(x, y, z) instanceof TileTestTank) {
+            if (player.worldObj.getBlockTileEntity(x, y, z) != null && player.worldObj.getBlockTileEntity(x, y, z) instanceof TileConnectableTank) {
 
-                TileTestTank tank = (TileTestTank) player.worldObj
-                        .getBlockTileEntity(x, y, z);
+                TileConnectableTank tank = (TileConnectableTank) player.worldObj.getBlockTileEntity(x, y, z);
 
                 if (liquidId == 0) {
 
@@ -77,8 +75,7 @@ public class TestTankPacket extends GUPacketBase {
                     player.worldObj.markBlockForRenderUpdate(x, y, z);
                     return;
                 }
-                tank.fluidTank.setFluid(new FluidStack(FluidRegistry
-                        .getFluid(liquidId), liquidAmount));
+                tank.fluidTank.setFluid(new FluidStack(FluidRegistry.getFluid(liquidId), liquidAmount));
                 player.worldObj.markBlockForRenderUpdate(x, y, z);
             }
         }
