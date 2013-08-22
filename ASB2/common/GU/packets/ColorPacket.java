@@ -56,7 +56,7 @@ public class ColorPacket extends GUPacketBase {
             y = in.readInt();
             z = in.readInt();
             
-            color = new Color(in.readInt(), in.readInt(), in.readInt());
+            color = new Color(in.readInt(), in.readInt(), in.readInt(), in.readInt());
             
             side = in.readInt();
             
