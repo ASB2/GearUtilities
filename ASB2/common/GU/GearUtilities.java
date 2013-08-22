@@ -87,8 +87,7 @@ public final class GearUtilities {
     public void mainInit(FMLInitializationEvent event) {
 
         proxy.register();
-        NetworkRegistry.instance()
-                .registerGuiHandler(this, GearUtilities.proxy);
+        NetworkRegistry.instance().registerGuiHandler(this, GearUtilities.proxy);
 
         MinecraftForge.addGrassPlant(BlockRegistry.BlockBurningFlower, 0, 100);
         MinecraftForge.addGrassPlant(BlockRegistry.BlockFreezingFlower, 0, 100);
