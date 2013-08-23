@@ -1,6 +1,5 @@
 package GU.blocks.containers.BlockConnectableTank;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -33,6 +32,7 @@ public class ItemBlockConnectableTank extends GUItemBlock {
 
         return itWorked;
     }
+    
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
