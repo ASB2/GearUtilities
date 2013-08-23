@@ -12,6 +12,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import GU.api.power.IPowerMisc;
 import GU.color.IVinillaColorable;
 import GU.info.Reference;
+import GU.utils.UtilMisc;
 import GU.utils.UtilPlayers;
 import GU.color.*;
 
@@ -20,12 +21,11 @@ public class ItemGearReader extends ItemBase {
     public ItemGearReader(int id) {
         super(id);
         setMaxStackSize(1);
+        this.setFull3D();
     }
 
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player,
-            World world, int x, int y, int z, int side, float par8, float par9,
-            float par10) {
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
@@ -45,13 +45,8 @@ public class ItemGearReader extends ItemBase {
 
                 if (mTile.getPowerProvider() != null) {
 
-                    UtilPlayers.sendChatToPlayer(player, "Tile has "
-                            + mTile.getPowerProvider().getPowerStored()
-                            + " out of "
-                            + mTile.getPowerProvider().getPowerMax() + " "
-                            + Reference.POWER_NAME + " Stored");
-                    UtilPlayers.sendChatToPlayer(player, "Tile state: "
-                            + mTile.getPowerProvider().getCurrentState());
+                    UtilPlayers.sendChatToPlayer(player, "Tile has " + mTile.getPowerProvider().getPowerStored() + " out of " + mTile.getPowerProvider().getPowerMax() + " " + Reference.POWER_NAME + " Stored");
+                    UtilPlayers.sendChatToPlayer(player, "Tile state: " + mTile.getPowerProvider().getCurrentState());
                 }
             }
 
@@ -59,33 +54,19 @@ public class ItemGearReader extends ItemBase {
 
                 ISidedInventory mTile = (ISidedInventory) tile;
 
-                UtilPlayers.sendChatToPlayer(player, "Inventory name is: "
-                        + mTile.getInvName());
-                UtilPlayers.sendChatToPlayer(player, "Size of inventory is: "
-                        + mTile.getSizeInventory());
-                UtilPlayers
-                        .sendChatToPlayer(
-                                player,
-                                "Accessible Slots From Side: "
-                                        + mTile.getAccessibleSlotsFromSide(side).length);
-                UtilPlayers.sendChatToPlayer(
-                        player,
-                        "Inventory stack limit is: "
-                                + mTile.getInventoryStackLimit());
+                UtilPlayers.sendChatToPlayer(player, "Inventory name is: " + mTile.getInvName());
+                UtilPlayers.sendChatToPlayer(player, "Size of inventory is: " + mTile.getSizeInventory());
+                UtilPlayers.sendChatToPlayer(player, "Accessible Slots From Side: " + mTile.getAccessibleSlotsFromSide(side).length);
+                UtilPlayers.sendChatToPlayer(player, "Inventory stack limit is: " + mTile.getInventoryStackLimit());
             }
 
             else if (tile instanceof IInventory) {
 
                 IInventory mTile = (IInventory) tile;
 
-                UtilPlayers.sendChatToPlayer(player, "Inventory name is: "
-                        + mTile.getInvName());
-                UtilPlayers.sendChatToPlayer(player, "Size of inventory is: "
-                        + mTile.getSizeInventory());
-                UtilPlayers.sendChatToPlayer(
-                        player,
-                        "Inventory stack limit is: "
-                                + mTile.getInventoryStackLimit());
+                UtilPlayers.sendChatToPlayer(player, "Inventory name is: " + mTile.getInvName());
+                UtilPlayers.sendChatToPlayer(player, "Size of inventory is: " + mTile.getSizeInventory());
+                UtilPlayers.sendChatToPlayer(player, "Inventory stack limit is: " + mTile.getInventoryStackLimit());
             }
 
             if (tile instanceof IFluidHandler) {
@@ -94,37 +75,26 @@ public class ItemGearReader extends ItemBase {
 
                 int loop = 0;
 
-                if (mTile.getTankInfo(ForgeDirection.getOrientation(side)
-                        .getOpposite()) != null) {
+                if (mTile.getTankInfo(ForgeDirection.getOrientation(side) .getOpposite()) != null) {
 
-                    for (FluidTankInfo info : mTile.getTankInfo(ForgeDirection
-                            .getOrientation(side).getOpposite())) {
+                    for (FluidTankInfo info : mTile.getTankInfo(ForgeDirection .getOrientation(side).getOpposite())) {
 
                         loop++;
 
                         if (info != null) {
 
-                            UtilPlayers.sendChatToPlayer(player,
-                                    "Tanks For Direction: " + loop);
+                            UtilPlayers.sendChatToPlayer(player, "Tanks For Direction: " + loop);
 
-                            if (info.fluid != null
-                                    && info.fluid.getFluid() != null) {
+                            if (info.fluid != null && info.fluid.getFluid() != null) {
 
-                                UtilPlayers.sendChatToPlayer(player,
-                                        "Fluid Stored: " + info.fluid.amount);
-                                UtilPlayers.sendChatToPlayer(player,
-                                        "Fluid Conained: "
-                                                + info.fluid.getFluid()
-                                                        .getName()
-                                                        .toUpperCase());
+                                UtilPlayers.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount);
+                                UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + UtilMisc.capitilizeFirst(info.fluid.getFluid().getName()));
                             } else {
 
-                                UtilPlayers.sendChatToPlayer(player,
-                                        "Fluid Conained: " + info.fluid);
+                                UtilPlayers.sendChatToPlayer(player, "Fluid Conained: " + info.fluid);
                             }
 
-                            UtilPlayers.sendChatToPlayer(player, "Capasity: "
-                                    + info.capacity);
+                            UtilPlayers.sendChatToPlayer(player, "Capasity: " + info.capacity);
                         }
                     }
                 }
@@ -136,43 +106,14 @@ public class ItemGearReader extends ItemBase {
 
                 if (mTile.getColor(ForgeDirection.getOrientation(side)) != null) {
 
-                    UtilPlayers
-                            .sendChatToPlayer(
-                                    player,
-                                    "Red: "
-                                            + mTile.getColor(
-                                                    ForgeDirection
-                                                            .getOrientation(side))
-                                                    .getRed());
-                    UtilPlayers
-                            .sendChatToPlayer(
-                                    player,
-                                    "Green: "
-                                            + mTile.getColor(
-                                                    ForgeDirection
-                                                            .getOrientation(side))
-                                                    .getGreen());
-                    UtilPlayers
-                            .sendChatToPlayer(
-                                    player,
-                                    "Blue: "
-                                            + mTile.getColor(
-                                                    ForgeDirection
-                                                            .getOrientation(side))
-                                                    .getBlue());
-                    UtilPlayers
-                            .sendChatToPlayer(
-                                    player,
-                                    "Alpha: "
-                                            + mTile.getColor(
-                                                    ForgeDirection
-                                                            .getOrientation(side))
-                                                    .getAlpha());
+                    UtilPlayers.sendChatToPlayer(player, "Red: " + mTile.getColor(ForgeDirection.getOrientation(side)).getRed());
+                    UtilPlayers.sendChatToPlayer(player, "Green: " + mTile.getColor(ForgeDirection.getOrientation(side)).getGreen());
+                    UtilPlayers.sendChatToPlayer(player, "Blue: " + mTile.getColor(ForgeDirection.getOrientation(side)).getBlue());
+                    UtilPlayers.sendChatToPlayer(player, "Alpha: " + mTile.getColor(ForgeDirection.getOrientation(side)).getAlpha());
                 }
             }
         }
-        UtilPlayers.sendChatToPlayer(player, "Block" + " has metadata: "
-                + world.getBlockMetadata(x, y, z));
+        UtilPlayers.sendChatToPlayer(player, "Block" + " has metadata: " + world.getBlockMetadata(x, y, z));
         UtilPlayers.sendChatToPlayer(player, "--------");
         return true;
     }

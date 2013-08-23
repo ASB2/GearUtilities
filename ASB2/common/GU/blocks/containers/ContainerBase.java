@@ -22,7 +22,7 @@ public abstract class ContainerBase extends BlockContainer {
     protected boolean useStandardRendering = true;
     protected boolean useDefaultTexture = false;
     Icon texture;
-    String blockName = "";
+    protected String blockName = "";
 
     public ContainerBase(int id, Material material) {
         super(id, material);

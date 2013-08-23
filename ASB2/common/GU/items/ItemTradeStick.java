@@ -16,12 +16,12 @@ public class ItemTradeStick extends ItemBase {
         super(par1);
         this.setMaxDamage(150);
         this.setMaxStackSize(1);
+        this.setFull3D();
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player,
-            java.util.List info, boolean var1) {
+    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
         super.addInformation(itemStack, player, info, var1);
         info.add("Idea Source: Thaumcraft 3");
     }
@@ -59,32 +59,26 @@ public class ItemTradeStick extends ItemBase {
 
             if (this.getBlockID(itemStack)[0] > 0) {
 
-                this.breakBlock(world, player, x, y, z,
-                        this.getBlockID(itemStack)[0],
-                        this.getBlockID(itemStack)[1]);
+                this.breakBlock(world, player, x, y, z, this.getBlockID(itemStack)[0], this.getBlockID(itemStack)[1]);
                 return true;
             }
         }
         return false;
     }
 
-    public void breakBlock(World world, EntityPlayer player, int x, int y,
-            int z, int blockToPlace, int blockMeta) {
+    public void breakBlock(World world, EntityPlayer player, int x, int y, int z, int blockToPlace, int blockMeta) {
 
         if (world.blockExists(x, y, z)) {
 
             if (!(Block.blocksList[blockToPlace].equals(Block.bedrock))) {
 
-                if (Block.blocksList[world.getBlockId(x, y, z)]
-                        .getBlockHardness(world, x, y, z) != -1) {
+                if (Block.blocksList[world.getBlockId(x, y, z)].getBlockHardness(world, x, y, z) != -1) {
 
                     if (world.getBlockTileEntity(x, y, z) == null) {
 
-                        if (world.getBlockId(x, y, z) != blockToPlace
-                                || world.getBlockMetadata(x, y, z) != blockMeta) {
+                        if (world.getBlockId(x, y, z) != blockToPlace || world.getBlockMetadata(x, y, z) != blockMeta) {
 
-                            ItemStack blockToSet = new ItemStack(blockToPlace,
-                                    1, blockMeta);
+                            ItemStack blockToSet = new ItemStack(blockToPlace, 1, blockMeta);
 
                             if (!player.capabilities.isCreativeMode) {
 
@@ -102,17 +96,9 @@ public class ItemTradeStick extends ItemBase {
                                     }
                                 }
                             } else {
-                                world.playAuxSFX(
-                                        2001,
-                                        x,
-                                        y,
-                                        z,
-                                        world.getBlockId(x, y, z)
-                                                + (world.getBlockMetadata(x, y,
-                                                        z) << 12));
+                                world.playAuxSFX( 2001, x, y, z, world.getBlockId(x, y, z) + (world.getBlockMetadata(x, y, z) << 12));
                                 world.setBlockToAir(x, y, z);
-                                world.setBlock(x, y, z, blockToPlace,
-                                        blockMeta, 3);
+                                world.setBlock(x, y, z, blockToPlace, blockMeta, 3);
                             }
                         }
                     }

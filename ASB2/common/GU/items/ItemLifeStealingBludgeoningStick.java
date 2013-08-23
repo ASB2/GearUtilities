@@ -10,6 +10,7 @@ public class ItemLifeStealingBludgeoningStick extends ItemBase {
         super(par1);
         this.setMaxDamage(50);
         this.setMaxStackSize(1);
+        this.setFull3D();
     }
 
     public boolean hitEntity(ItemStack itemStack,
@@ -17,12 +18,6 @@ public class ItemLifeStealingBludgeoningStick extends ItemBase {
 
         entityWhoHit.heal(1);
         itemStack.damageItem(1, entityWhoHit);
-        return true;
-    }
-
-    @Override
-    public boolean isFull3D() {
-
         return true;
     }
 

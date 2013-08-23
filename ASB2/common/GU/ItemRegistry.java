@@ -44,7 +44,6 @@ public class ItemRegistry {
     public static ItemBase ItemTestItem;
     public static ItemBase ItemStorageCrystal;
     public static ItemBase ItemPhantomPlacer;
-
     private static int id = 5000;
 
     public static void init(Configuration config) {

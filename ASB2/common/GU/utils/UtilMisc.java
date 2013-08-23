@@ -12,9 +12,18 @@ public class UtilMisc {
 
     public static String capitilizeFirst(String string) {
 
-        char first = string.toCharArray()[0];
-        string.toCharArray()[0] = Character.toUpperCase(first);
-        return string;
+        char[] characters = string.toCharArray();
+        char first = characters[0];
+        
+        characters[0] = Character.toUpperCase(first);
+        
+        String temp = "";
+        
+        for(char character: characters) {
+            
+            temp = temp + Character.toString(character);
+        }
+        return temp;
     }
 
     public static boolean isValueInArray(Object[] object, Object value) {

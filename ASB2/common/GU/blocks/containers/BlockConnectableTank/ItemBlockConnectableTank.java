@@ -1,36 +1,38 @@
-package GU.items.ItemStorageCrystal;
+package GU.blocks.containers.BlockConnectableTank;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.Icon;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import GU.items.ItemBase;
+import GU.GUItemBlock;
 import GU.utils.UtilItemStack;
 import GU.utils.UtilMisc;
 
-public class ItemStorageCrystal extends ItemBase {
+public class ItemBlockConnectableTank extends GUItemBlock {
 
-    public ItemStorageCrystal(int id) {
+    public ItemBlockConnectableTank(int id) {
         super(id);
     }
 
-    @Override
-    public Icon getIcon(ItemStack stack, int pass) {
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
+    {
+        boolean itWorked = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
 
-        if (this.getFluidStack(stack) != null) {
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-            if (this.getFluidStack(stack).getFluid().getIcon() != null) {
+        if(tile != null && tile instanceof TileConnectableTank) {
 
-                if (pass == 0)
-                    return this.getFluidStack(stack).getFluid().getStillIcon();
-            }
+            TileConnectableTank tank = (TileConnectableTank)tile;
+
+            tank.fluidTank.setFluid(this.getFluidStack(stack));
         }
 
-        return super.getIcon(stack, pass);
+        return itWorked;
     }
-
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
@@ -51,8 +53,7 @@ public class ItemStorageCrystal extends ItemBase {
 
         if (FluidRegistry.getFluid(UtilItemStack.getTAGfromItemstack(itemStack).getString("fluidName")) != null && UtilItemStack.getTAGfromItemstack(itemStack).getInteger("fluidAmount") != 0) {
 
-            return new FluidStack(FluidRegistry.getFluid(UtilItemStack.getTAGfromItemstack(itemStack).getString("fluidName")),
-                    UtilItemStack.getTAGfromItemstack(itemStack).getInteger("fluidAmount"));
+            return new FluidStack(FluidRegistry.getFluid(UtilItemStack.getTAGfromItemstack(itemStack).getString("fluidName")), UtilItemStack.getTAGfromItemstack(itemStack).getInteger("fluidAmount"));
         }
         return null;
     }
@@ -60,7 +61,7 @@ public class ItemStorageCrystal extends ItemBase {
     public boolean setFluidStack(ItemStack itemStack, FluidStack fluid) {
 
         if (fluid != null) {
-            
+
             if (this.getFluidStack(itemStack) != null) {
 
                 if (this.getFluidStack(itemStack).isFluidEqual(fluid)) {
@@ -88,6 +89,6 @@ public class ItemStorageCrystal extends ItemBase {
 
     public int getCapasity(ItemStack itemStack) {
 
-        return 1600;
+        return TileConnectableTank.maxLiquid;
     }
 }

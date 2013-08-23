@@ -18,7 +18,7 @@ import GU.packets.*;
 
 public class TileConnectableTank extends TileBase implements IFluidHandler {
 
-    private int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 64;
+    public static int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 64;
 
     public TileConnectableTank() {
 

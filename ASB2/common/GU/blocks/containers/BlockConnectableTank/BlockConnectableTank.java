@@ -18,6 +18,7 @@ import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
 import GU.utils.UtilInventory;
 import GU.utils.UtilRender;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockConnectableTank extends ContainerBase {
 
@@ -34,14 +35,28 @@ public class BlockConnectableTank extends ContainerBase {
         useStandardRendering = false;
     }
 
+    public void setBlockName(String texture) {
+
+        this.blockName = texture;
+        this.setUnlocalizedName(Reference.UNIQUE_ID + blockName);
+        GameRegistry.registerBlock(this, ItemBlockConnectableTank.class, this.getUnlocalizedName());
+    }
+    
     @Override
-    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y,
-            int z, int metadata, int fortune) {
+    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        if (tile != null) {
+        if (tile != null && tile instanceof TileConnectableTank) {
 
+            TileConnectableTank tileIn = (TileConnectableTank)tile;
+            
+            ItemStack stack = new ItemStack(this, 1, 0);
+            ((ItemBlockConnectableTank)stack.getItem()).setFluidStack(stack, tileIn.fluidTank.getFluid());
+            
+            ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+            list.add(stack);
+            return list;
         }
         return super.getBlockDropped(world, x, y, z, metadata, fortune);
     }

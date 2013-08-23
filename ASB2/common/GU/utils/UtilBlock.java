@@ -59,15 +59,13 @@ public class UtilBlock {
         }
     }
 
-    public static void breakAndAddToInventory(IInventory inventory,
-            World world, int x, int y, int z, int fortune, boolean dropExtra) {
+    public static void breakAndAddToInventory(IInventory inventory, World world, int x, int y, int z, int fortune, boolean dropExtra) {
 
         if (world.getBlockId(x, y, z) != 0) {
 
             Block block = Block.blocksList[world.getBlockId(x, y, z)];
 
-            ArrayList<ItemStack> items = block.getBlockDropped(world, x, y, z,
-                    world.getBlockMetadata(x, y, z), fortune);
+            ArrayList<ItemStack> items = block.getBlockDropped(world, x, y, z, world.getBlockMetadata(x, y, z), fortune);
 
             for (ItemStack item : items) {
 
@@ -75,37 +73,28 @@ public class UtilBlock {
 
                     if (inventory != null) {
 
-                        if (!UtilInventory.addItemStackToInventory(inventory,
-                                item)) {
+                        if (!UtilInventory.addItemStackToInventory(inventory, item)) {
 
                             if (dropExtra) {
 
-                                UtilBlock.spawnItemStackEntity(world, x, y, z,
-                                        item, 1);
+                                UtilBlock.spawnItemStackEntity(world, x, y, z, item, 1);
                             }
                         }
-                    } else if (dropExtra) {
+                    } else if(dropExtra) {
 
                         UtilBlock.spawnItemStackEntity(world, x, y, z, item, 1);
                     }
                 }
             }
 
-            world.playAuxSFX(
-                    2001,
-                    x,
-                    y,
-                    z,
-                    world.getBlockId(x, y, z)
-                            + (world.getBlockMetadata(x, y, z) << 12));
+            world.playAuxSFX( 2001, x, y, z, world.getBlockId(x, y, z) + (world.getBlockMetadata(x, y, z) << 12));
             world.setBlockToAir(x, y, z);
         }
     }
 
-    public static void spawnItemStackEntity(World world, int x, int y, int z,
-            ItemStack item, int delayforPickup) {
+    public static void spawnItemStackEntity(World world, int x, int y, int z, ItemStack item, int delayforPickup) {
 
-        if (world.getGameRules().getGameRuleBooleanValue("doTileDrops")) {
+        if (world.getGameRules().getGameRuleBooleanValue("doTileDrops") && !world.isRemote) {
 
             float f = 0.7F;
             double d0 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;

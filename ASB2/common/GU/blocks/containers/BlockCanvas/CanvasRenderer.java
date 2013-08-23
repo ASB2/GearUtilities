@@ -30,7 +30,6 @@ public class CanvasRenderer implements ISimpleBlockRenderingHandler {
 
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderStandardInvBlock(renderer, block, ((BlockCanvas)BlockRegistry.BlockCanvas).inner, 255, 255, 255, 255);
-
     }
 
     @Override

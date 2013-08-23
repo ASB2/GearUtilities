@@ -16,10 +16,8 @@ public class GUItemBlock extends ItemBlock {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player,
-            java.util.List info, boolean unknown) {
+    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean unknown) {
 
-        info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "From: "
-                + Reference.NAME);
+        info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "From: " + Reference.NAME);
     }
 }
