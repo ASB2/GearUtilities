@@ -4,15 +4,28 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public abstract class PotionEffect {
+public class PotionEffect {
 
+    IngredientType type = IngredientType.OTHER;
+    int cookChange;
+    int durationChange;
+    int strengthChange;
+    
+    public PotionEffect(IngredientType type, int cookChange, int durationChange, int strengthChange) {
+    
+        this.type = type;
+        this.cookChange = cookChange;
+        this.durationChange = durationChange;
+        this.strengthChange = strengthChange;
+    }
+    
     /*
      * How the ingredient affects the potion's cook time.
      * Negative number decrease duration positive increase it. 
      */
     public IngredientType getIngredientType(ItemStack stack) {
 
-        return IngredientType.OTHER;
+        return type;
     }
 
     /*
@@ -21,7 +34,7 @@ public abstract class PotionEffect {
      */
     public int getCookChange(ItemStack stack) {
 
-        return 0;
+        return cookChange;
     }
 
     /*
@@ -30,7 +43,7 @@ public abstract class PotionEffect {
      */
     public int getDurationChange(ItemStack stack) {
 
-        return 0;
+        return durationChange;
     }
 
     /*
@@ -39,7 +52,7 @@ public abstract class PotionEffect {
      */
     public int getStrengthChange(ItemStack stack) {
 
-        return 0;
+        return strengthChange;
     }
 
     public void onEntityDrinkPotion(World world, ItemStack potion, EntityLivingBase entity) {

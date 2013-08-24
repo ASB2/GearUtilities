@@ -200,8 +200,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
                 if (fluidTank.getFluid() != null) {
 
-                    if (this.fluidTank.getFluid().isFluidEqual(
-                            new FluidStack(fluid, 0))) {
+                    if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
 
                         return true;
                     }
@@ -240,8 +239,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
             if (fluidTank.getFluidAmount() > 0) {
 
-                if (this.fluidTank.getFluid().isFluidEqual(
-                        new FluidStack(fluid, 1))) {
+                if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
 
                     return true;
                 }

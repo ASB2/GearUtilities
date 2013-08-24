@@ -8,26 +8,29 @@ import GU.color.Color;
 import GU.color.IColorable;
 import GU.packets.ColorPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
+import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.ILuaContext;
+import dan200.computer.api.IPeripheral;
 
-public class TileCanvas extends TileBase implements IColorable {
+public class TileCanvas extends TileBase implements IColorable, IPeripheral {
 
     Color[] coloredSides = new Color[7];
 
     public TileCanvas() {
-    
+
         waitTimer = new Wait(60, this, 0);
-        
+
         for(int i = 0; i < coloredSides.length; i++) {
-            
+
             coloredSides[i] = new Color();
         }
     }
-    
+
     public void updateEntity() {    
-    
+
         waitTimer.update();
     }
-    
+
     @Override
     public Color getColor(ForgeDirection direction) {
 
@@ -47,7 +50,7 @@ public class TileCanvas extends TileBase implements IColorable {
         super.readFromNBT(tag);
 
         for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS) {
-            
+
             coloredSides[direction.ordinal()] = new Color( tag.getInteger("red" + direction.ordinal()), tag.getInteger("green" + direction.ordinal()), tag.getInteger("blue" + direction.ordinal()), tag.getInteger("alpha" + direction.ordinal()));
         }
     }
@@ -57,7 +60,7 @@ public class TileCanvas extends TileBase implements IColorable {
         super.writeToNBT(tag);
 
         for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS) {
-            
+
 
             tag.setInteger("red" + direction.ordinal(), coloredSides[direction.ordinal()].getRed());
             tag.setInteger("green" + direction.ordinal(), coloredSides[direction.ordinal()].getGreen());
@@ -65,12 +68,76 @@ public class TileCanvas extends TileBase implements IColorable {
             tag.setInteger("alpha" + direction.ordinal(), coloredSides[direction.ordinal()].getAlpha());
         }
     }
-    
+
     public void trigger(int id) {
-        
+
         for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS){
-            
+
             PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new ColorPacket(xCoord, yCoord, zCoord, coloredSides[direction.ordinal()], direction.ordinal()).makePacket());
         }
+    }
+
+    @Override
+    public String getType() {
+
+        return "Colorable Canvas";
+    }
+
+    @Override
+    public String[] getMethodNames() {
+
+        return new String[] {"getColor()", "setColor"};
+    }
+
+    @Override
+    public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception {
+
+        if(method == 0) {
+
+            if(arguments.length == 1) {
+
+                if(arguments[0] instanceof Double) {
+
+                    ForgeDirection direction = ForgeDirection.getOrientation(((Double)arguments[0]).intValue());
+
+                    return new Object[]{"Red ", this.getColor(direction).getRed(), "Green ", this.getColor(direction).getGreen(), "Blue ",this.getColor(direction).getBlue()};
+                }
+            }
+            return new String[]{"Incorrect input. Expected int side"};
+        }
+
+        if(method == 1) {
+            
+            if(arguments.length == 4) {
+
+                if(arguments[0] instanceof Double && arguments[1] instanceof Double && arguments[2] instanceof Double && arguments[3] instanceof Double) {
+
+                    ForgeDirection direction = ForgeDirection.getOrientation(((Double)arguments[0]).intValue());
+
+                    return new Boolean[]{this.setColor(new Color(((Double)arguments[1]).intValue(), ((Double)arguments[2]).intValue(), ((Double)arguments[3]).intValue()), direction)};
+                }
+                return new String[]{"Incorrect input. Expected int side, int red value, int green value, int blue value"};
+            }
+        }
+        
+        return new String[]{"Paramaters Requires 4 Integers"};
+    }
+
+    @Override
+    public boolean canAttachToSide(int side) {
+
+        return true;
+    }
+
+    @Override
+    public void attach(IComputerAccess computer) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void detach(IComputerAccess computer) {
+        // TODO Auto-generated method stub
+
     }
 }
