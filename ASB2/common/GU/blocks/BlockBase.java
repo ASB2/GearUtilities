@@ -30,10 +30,13 @@ public class BlockBase extends Block {
 
     @Override
     public int getLightOpacity(World world, int x, int y, int z) {
-        
-        return 255;
+
+        if(useStandardRendering)
+            return super.getLightOpacity(world, x, y, z);
+
+        return 0;
     }
-    
+
     @Override
     public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
 

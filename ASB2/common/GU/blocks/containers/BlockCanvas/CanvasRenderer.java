@@ -38,16 +38,16 @@ public class CanvasRenderer implements ISimpleBlockRenderingHandler {
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         if (tile != null && tile instanceof IColorable) {
-            
-                renderer.setRenderBounds(0.0001, 0.0001, 0.0001, .9999, .9999, .9999);
-                
+
+            renderer.setRenderBounds(0.0001, 0.0001, 0.0001, .9999, .9999, .9999);
+
             for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS) {
 
                 if(block.shouldSideBeRendered(world, x, y, z, direction.ordinal())) {
 
                     Color color = ((IColorable) tile).getColor(direction);
 
-                    UtilRender.renderFakeBlock(renderer, block, direction, x, y, z, block.getIcon(0, 0), color.getRed(), color.getGreen(), color.getBlue(), 50, block.getMixedBrightnessForBlock(world, x, y, z));
+                    UtilRender.renderFakeSide(renderer, block, direction, x, y, z, block.getIcon(0, 0), color.getRed(), color.getGreen(), color.getBlue(), 50, block.getMixedBrightnessForBlock(world, x, y, z));
                 }
             }
 

@@ -2,11 +2,11 @@ package GU.color;
 
 public class Color {
 
-    int red = 255;
-    int green = 255;
-    int blue = 255;
-    int alpha = 255;
-    
+    private int red = 255;
+    private int green = 255;
+    private int blue = 255;
+    private int alpha = 255;
+
     public Color() {
 
     }
@@ -35,15 +35,15 @@ public class Color {
     }
 
     public Color(EnumVinillaColor color) {
-    
+
         Color vinillaColor = EnumVinillaColor.getRGBValue(color);
-        
+
         this.red = vinillaColor.getRed();
         this.green = vinillaColor.getGreen();
         this.blue = vinillaColor.getBlue();
         this.alpha = vinillaColor.getAlpha();
     }
-    
+
     public void setRed(int red) {
 
         this.red = red;
@@ -64,7 +64,7 @@ public class Color {
         this.alpha = alpha;
     }
 
-    
+
     public int getRed() {
 
         return red;
@@ -84,9 +84,29 @@ public class Color {
 
         return alpha;
     }
-    
+
     public Color copy() {
 
         return new Color(this);
+    }
+
+    public void changeRed(int change) {
+
+        this.red += change;
+    }
+
+    public void changeGreen(int change) {
+
+        this.green += change;
+    }
+
+    public void changeBlue(int change) {
+
+        this.blue += change;
+    }
+
+    public void changeAlpha(int change) {
+
+        this.alpha += change;
     }
 }

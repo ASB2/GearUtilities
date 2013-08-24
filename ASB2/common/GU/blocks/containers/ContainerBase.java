@@ -60,15 +60,13 @@ public abstract class ContainerBase extends BlockContainer {
     }
 
     @Override
-    public int onBlockPlaced(World world, int x, int y, int z, int sideHit,
-            float hitX, float hitY, float hitZ, int metaData) {
+    public int onBlockPlaced(World world, int x, int y, int z, int sideHit, float hitX, float hitY, float hitZ, int metaData) {
 
         return sideHit;
     }
 
     @Override
-    public void onBlockDestroyedByPlayer(World world, int x, int y, int z,
-            int metaData) {
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metaData) {
 
         // TileEntity tile = world.getBlockTileEntity(x, y, z);
 
