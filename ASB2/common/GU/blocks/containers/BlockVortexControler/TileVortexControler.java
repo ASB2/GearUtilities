@@ -43,8 +43,7 @@ public class TileVortexControler extends TileBase implements IPowerMisc {
 
     public boolean sustainVortex() {
 
-        if (this.getPowerProvider().canUsePower(
-                Variables.BASIC_VORTEX_COST_PER_TICK, ForgeDirection.UNKNOWN)) {
+        if (this.getPowerProvider().usePower(Variables.BASIC_VORTEX_COST_PER_TICK, ForgeDirection.UNKNOWN, false)) {
 
         }
         return false;

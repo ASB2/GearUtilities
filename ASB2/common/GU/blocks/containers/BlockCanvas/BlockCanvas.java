@@ -1,15 +1,18 @@
 package GU.blocks.containers.BlockCanvas;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.blocks.containers.ContainerBase;
 import GU.color.EnumVinillaColor;
 import GU.info.Reference;
+import GU.utils.UtilDirection;
 import GU.color.*;
 
 public class BlockCanvas extends ContainerBase {
@@ -24,6 +27,17 @@ public class BlockCanvas extends ContainerBase {
         this.registerTile(TileCanvas.class);
     }
 
+    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
+    
+        int id = UtilDirection.translateDirectionToBlockId(world, ForgeDirection.getOrientation(side), x, y, z);
+        
+        if(id == 0 || (!Block.blocksList[id].isOpaqueCube() && id != this.blockID)) {
+        
+            return true;
+        }
+        return false;
+    }
+    
     @Override
     public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
 
@@ -36,6 +50,11 @@ public class BlockCanvas extends ContainerBase {
         return true;
     }
 
+    public boolean isOpaqueCube() {
+        
+        return false;
+    }
+    
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 

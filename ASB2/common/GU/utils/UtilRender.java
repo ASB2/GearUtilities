@@ -23,7 +23,7 @@ public final class UtilRender {
 
             if (FMLClientHandler.instance().getClient() != null)
                 FMLClientHandler.instance().getClient().renderEngine
-                        .func_110577_a(texture);
+                .func_110577_a(texture);
         }
     }
 
@@ -148,64 +148,58 @@ public final class UtilRender {
     }
 
     public static void renderFakeSide(RenderBlocks renderer, Block block, ForgeDirection direction, int x, int y, int z, Icon icon, int red, int green, int blue, int alfa, int brightness) {
-    
+
         Tessellator tess = Tessellator.instance;
 
         tess.setBrightness(brightness);
         tess.setColorRGBA(red, green, blue, alfa);
-        
+
         switch(direction) {
-            
+
             case DOWN: renderer.renderFaceYNeg(block, x, y, z, icon);
-                break;
+            break;
             case UP: renderer.renderFaceYPos(block, x, y, z, icon);
-                break;
+            break;
             case NORTH: renderer.renderFaceZNeg(block, x, y, z, icon);
-                break;
+            break;
             case SOUTH: renderer.renderFaceZPos(block, x, y, z, icon);
-                break;
+            break;
             case WEST: renderer.renderFaceXNeg(block, x, y, z, icon);
-                break;
+            break;
             case EAST: renderer.renderFaceXPos(block, x, y, z, icon);
-                break;
+            break;
             default:
                 break;            
         }        
     }
-    
+
     public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, int meta) {
 
         Tessellator tessellator = Tessellator.instance;
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, -1F, 0.0F);
-        renderblocks.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D,
-                block.getIcon(0, meta));
+        renderblocks.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(0, meta));
         tessellator.draw();
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 1.0F, 0.0F);
-        renderblocks.renderFaceYPos(block, 0.0D, 0.0D, 0.0D,
-                block.getIcon(1, meta));
+        renderblocks.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(1, meta));
         tessellator.draw();
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 0.0F, -1F);
-        renderblocks.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D,
-                block.getIcon(2, meta));
+        renderblocks.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(2, meta));
         tessellator.draw();
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 0.0F, 1.0F);
-        renderblocks.renderFaceZPos(block, 0.0D, 0.0D, 0.0D,
-                block.getIcon(3, meta));
+        renderblocks.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(3, meta));
         tessellator.draw();
         tessellator.startDrawingQuads();
         tessellator.setNormal(-1F, 0.0F, 0.0F);
-        renderblocks.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D,
-                block.getIcon(4, meta));
+        renderblocks.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(4, meta));
         tessellator.draw();
         tessellator.startDrawingQuads();
         tessellator.setNormal(1.0F, 0.0F, 0.0F);
-        renderblocks.renderFaceXPos(block, 0.0D, 0.0D, 0.0D,
-                block.getIcon(5, meta));
+        renderblocks.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(5, meta));
         tessellator.draw();
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }
@@ -279,7 +273,7 @@ public final class UtilRender {
     }
 
     public static boolean renderMetadataBlock(Block block, int metadata, int x, int y, int z, RenderBlocks renderer, IBlockAccess world) {
-        
+
         int var5 = block.colorMultiplier(world, x, y, z);
         float var6 = (var5 >> 16 & 255) / 255.0F;
         float var7 = (var5 >> 8 & 255) / 255.0F;
@@ -296,7 +290,7 @@ public final class UtilRender {
 
         return Minecraft.isAmbientOcclusionEnabled()
                 && Block.lightValue[block.blockID] == 0 ? renderMetadataBlockWithAmbientOcclusion( block, metadata, x, y, z, var6, var7, var8, renderer, world)
-                : renderMetadataBlockWithColorMultiplier(block, metadata, x, y, z, var6, var7, var8, renderer, world);
+                        : renderMetadataBlockWithColorMultiplier(block, metadata, x, y, z, var6, var7, var8, renderer, world);
     }
 
     static boolean renderMetadataBlockWithAmbientOcclusion(Block block, int metadata, int xPos, int yPos, int zPos, float colorRed, float colorGreen, float colorBlue, RenderBlocks render, IBlockAccess world) {

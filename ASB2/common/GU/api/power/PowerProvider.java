@@ -5,12 +5,10 @@ import net.minecraftforge.common.ForgeDirection;
 
 public abstract class PowerProvider {
 
-    NBTTagCompound ntbTag = new NBTTagCompound();
-
     protected State currentState;
     protected PowerClass powerClass;
 
-    protected float powerStored = 0;
+    protected float powerStored;
     protected float powerMax;
 
     public PowerProvider(int maximumPower, PowerClass powerClass) {
@@ -75,21 +73,23 @@ public abstract class PowerProvider {
         return currentState;
     }
 
-    public boolean gainPower(float PowerGained, ForgeDirection direction) {
+    public boolean gainPower(float PowerGained, ForgeDirection direction, boolean doUse) {
 
         if (this.getPowerMax() - this.getPowerStored() >= PowerGained) {
 
-            this.setPower(this.getPowerStored() + PowerGained);
+            if(doUse)
+                this.setPower(this.getPowerStored() + PowerGained);
 
             return true;
         }
         return false;
     }
 
-    public boolean usePower(float PowerUsed, ForgeDirection direction) {
+    public boolean usePower(float PowerUsed, ForgeDirection direction, boolean doUse) {
 
         if (this.getPowerStored() >= PowerUsed) {
 
+            if(doUse)
             this.setPower(this.getPowerStored() - PowerUsed);
 
             return true;
@@ -120,24 +120,6 @@ public abstract class PowerProvider {
         if (getPowerStored() > 0)
             return true;
 
-        return false;
-    }
-
-    public boolean canGainPower(float power, ForgeDirection direction) {
-
-        if (this.getPowerMax() - this.getPowerStored() >= power) {
-
-            return true;
-        }
-        return false;
-    }
-
-    public boolean canUsePower(float power, ForgeDirection direction) {
-
-        if (this.getPowerStored() >= power) {
-
-            return true;
-        }
         return false;
     }
 

@@ -1,6 +1,7 @@
 package GU.utils;
 
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.api.power.IPowerMisc;
@@ -176,52 +177,42 @@ public class UtilDirection {
 
         int numberNextTo = 0;
         // Bottom of Tile
-        if (worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord - 1,
-                tile.zCoord) instanceof TileEntity) {
+        if (worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord - 1, tile.zCoord) instanceof TileEntity) {
             numberNextTo++;
         }
         // top of Tile
-        if (worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord + 1,
-                tile.zCoord) instanceof TileEntity) {
+        if (worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord + 1, tile.zCoord) instanceof TileEntity) {
             numberNextTo++;
         }
         // left
-        if (worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord,
-                tile.zCoord - 1) instanceof TileEntity) {
+        if (worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord - 1) instanceof TileEntity) {
             numberNextTo++;
         }
         // right
-        if (worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord,
-                tile.zCoord + 1) instanceof TileEntity) {
+        if (worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord, tile.zCoord + 1) instanceof TileEntity) {
             numberNextTo++;
         }
         // front
-        if (worldObj.getBlockTileEntity(tile.xCoord + 1, tile.yCoord,
-                tile.zCoord) instanceof TileEntity) {
+        if (worldObj.getBlockTileEntity(tile.xCoord + 1, tile.yCoord, tile.zCoord) instanceof TileEntity) {
             numberNextTo++;
         }
         // back
-        if (worldObj.getBlockTileEntity(tile.xCoord - 1, tile.yCoord,
-                tile.zCoord) instanceof TileEntity) {
+        if (worldObj.getBlockTileEntity(tile.xCoord - 1, tile.yCoord, tile.zCoord) instanceof TileEntity) {
             numberNextTo++;
         }
         return numberNextTo;
     }
 
-    public static int translateDirectionToBlockId(World world,
-            ForgeDirection direction, int xCoord, int yCoord, int zCoord) {
+    public static int translateDirectionToBlockId(IBlockAccess world, ForgeDirection direction, int xCoord, int yCoord, int zCoord) {
 
-        int[] coords = UtilDirection.translateDirectionToCoords(direction,
-                xCoord, yCoord, zCoord);
+        int[] coords = UtilDirection.translateDirectionToCoords(direction, xCoord, yCoord, zCoord);
 
         return world.getBlockId(coords[0], coords[1], coords[2]);
     }
 
-    public static int translateDirectionToBlockId(World world,
-            ForgeDirection direction, TileEntity tile) {
+    public static int translateDirectionToBlockId(World world, ForgeDirection direction, TileEntity tile) {
 
-        int[] coords = UtilDirection.translateDirectionToCoords(direction,
-                tile.xCoord, tile.yCoord, tile.zCoord);
+        int[] coords = UtilDirection.translateDirectionToCoords(direction, tile.xCoord, tile.yCoord, tile.zCoord);
 
         return world.getBlockId(coords[0], coords[1], coords[2]);
     }

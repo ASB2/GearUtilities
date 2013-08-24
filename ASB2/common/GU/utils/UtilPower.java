@@ -20,17 +20,13 @@ public class UtilPower {
         if (powerSink.getPowerProvider() != null
                 && powerSource.getPowerProvider() != null) {
 
-            if (powerSink.getPowerProvider().canGainPower(amountOfPower,
-                    direction)) {
+            if (powerSink.getPowerProvider().gainPower(amountOfPower, direction, false)) {
 
-                if (powerSource.getPowerProvider().canUsePower(amountOfPower,
-                        opposite)) {
+                if (powerSource.getPowerProvider().usePower(amountOfPower, opposite, true)) {
 
-                    if (powerSink.getPowerProvider().gainPower(amountOfPower,
-                            direction)) {
+                    if (powerSink.getPowerProvider().gainPower(amountOfPower, direction, false)) {
 
-                        powerSource.getPowerProvider().usePower(amountOfPower,
-                                opposite);
+                        powerSource.getPowerProvider().usePower(amountOfPower, opposite, true);
 
                         return true;
                     }
@@ -45,20 +41,15 @@ public class UtilPower {
 
         ForgeDirection opposite = direction.getOpposite();
 
-        if (powerSink.getPowerProvider() != null
-                && powerSource.getPowerProvider() != null) {
+        if (powerSink.getPowerProvider() != null && powerSource.getPowerProvider() != null) {
 
-            if (powerSink.getPowerProvider().canGainPower(amountOfPower,
-                    direction)) {
+            if (powerSink.getPowerProvider().gainPower(amountOfPower, direction, false)) {
 
-                if (powerSource.getPowerProvider().canUsePower(amountOfPower,
-                        opposite)) {
+                if (powerSource.getPowerProvider().usePower(amountOfPower, opposite, false)) {
 
-                    if (powerSink.getPowerProvider().gainPower(amountOfPower,
-                            direction)) {
+                    if (powerSink.getPowerProvider().gainPower(amountOfPower, direction, true)) {
 
-                        powerSource.getPowerProvider().usePower(amountOfPower,
-                                opposite);
+                        powerSource.getPowerProvider().usePower(amountOfPower, opposite, true);
 
                         return true;
                     }

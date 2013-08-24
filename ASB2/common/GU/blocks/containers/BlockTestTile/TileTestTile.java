@@ -41,15 +41,9 @@ public class TileTestTile extends TileBase implements IBlockCycle {
 
                     if (pTile.getPowerProvider() != null) {
 
-                        if (pTile.getPowerProvider().canGainPower(
-                                pTile.getPowerProvider().getPowerClass()
-                                        .getPowerValue(),
-                                direction.getOpposite())) {
+                        if (pTile.getPowerProvider().gainPower(pTile.getPowerProvider().getPowerClass().getPowerValue(), direction.getOpposite(), false)) {
 
-                            pTile.getPowerProvider().gainPower(
-                                    pTile.getPowerProvider().getPowerClass()
-                                            .getPowerValue(),
-                                    direction.getOpposite());
+                            pTile.getPowerProvider().gainPower(pTile.getPowerProvider().getPowerClass().getPowerValue(), direction.getOpposite(), true);
                         }
                     }
                 }
