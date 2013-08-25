@@ -27,30 +27,22 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements
 
             this.decrementLength(player);
 
-            UtilPlayers.sendChatToPlayer(player, "Debth of tunnel == "
-                    + UtilItemStack.getNBTTagInt(itemStack, "length"));
+            UtilPlayers.sendChatToPlayer(player, "Debth of tunnel == " + UtilItemStack.getNBTTagInt(itemStack, "length"));
 
             return itemStack;
-            // player.openGui(TechCraft.instance, -1, world, (int)player.posX,
-            // (int)player.posY, (int)player.posZ);
+            // player.openGui(TechCraft.instance, -1, world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
 
         this.incrementLength(player);
-        UtilPlayers.sendChatToPlayer(player, "Debth of tunnel == "
-                + UtilItemStack.getNBTTagInt(itemStack, "length"));
+        UtilPlayers.sendChatToPlayer(player, "Debth of tunnel == " + UtilItemStack.getNBTTagInt(itemStack, "length"));
 
         return itemStack;
     }
 
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player,
-            World world, int x, int y, int z, int side, float hitx, float hity,
-            float hitz) {
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz) {
 
         ForgeDirection sideF = ForgeDirection.getOrientation(side);
-
-        if (sideF == ForgeDirection.EAST)
-            sideF = sideF.getOpposite();
 
         UtilItemStack.setNBTTagInt(itemStack, "id", world.getBlockId(x, y, z));
 
@@ -67,8 +59,7 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements
 
         if (UtilItemStack.getNBTTagInt(cItem, "length") > 0) {
 
-            UtilItemStack.setNBTTagInt(cItem, "length",
-                    UtilItemStack.getNBTTagInt(cItem, "length") - 1);
+            UtilItemStack.setNBTTagInt(cItem, "length", UtilItemStack.getNBTTagInt(cItem, "length") - 1);
         }
     }
 
@@ -76,14 +67,12 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements
 
         ItemStack cItem = player.inventory.getCurrentItem();
 
-        UtilItemStack.setNBTTagInt(cItem, "length",
-                UtilItemStack.getNBTTagInt(cItem, "length") + 1);
+        UtilItemStack.setNBTTagInt(cItem, "length", UtilItemStack.getNBTTagInt(cItem, "length") + 1);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player,
-            java.util.List info, boolean var1) {
+    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
         super.addInformation(itemStack, player, info, var1);
         info.add("Idea Source: EE2");
     }
@@ -92,13 +81,11 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements
     public boolean execute(EntityPlayer player, World world, int x, int y,
             int z, ForgeDirection side, int mid) {
 
-        int blockToBreak = UtilItemStack.getNBTTagInt(
-                player.inventory.getCurrentItem(), "id");
+        int blockToBreak = UtilItemStack.getNBTTagInt( player.inventory.getCurrentItem(), "id");
 
         if (world.blockExists(x, y, z)) {
 
-            if (!(Block.blocksList[blockToBreak].getBlockHardness(world, x, y,
-                    z) == -1)) {
+            if (Block.blocksList[blockToBreak].getBlockHardness(world, x, y, z) != -1) {
 
                 if (world.getBlockTileEntity(x, y, z) == null) {
 

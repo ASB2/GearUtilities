@@ -12,8 +12,7 @@ import net.minecraftforge.common.ForgeDirection;
 
 public class UtilBlock {
 
-    public static boolean placeBlockInAir(World world, int x, int y, int z,
-            int blockId, int metaData) {
+    public static boolean placeBlockInAir(World world, int x, int y, int z, int blockId, int metaData) {
 
         if (world.getBlockId(x, y, z) == 0) {
 
@@ -22,8 +21,7 @@ public class UtilBlock {
         return false;
     }
 
-    public static boolean setBlock(World world, int x, int y, int z,
-            int blockId, int metaData) {
+    public static boolean setBlock(World world, int x, int y, int z, int blockId, int metaData) {
 
         if (world.blockExists(x, y, z)) {
 
@@ -35,8 +33,7 @@ public class UtilBlock {
 
             else {
 
-                return world.setBlockMetadataWithNotify(x, y, z, blockId,
-                        metaData);
+                return world.setBlockMetadataWithNotify(x, y, z, blockId, metaData);
             }
         }
         return false;
@@ -46,20 +43,16 @@ public class UtilBlock {
 
         if (world.getBlockId(x, y, z) != 0) {
 
-            world.playAuxSFX(
-                    2001,
-                    x,
-                    y,
-                    z,
-                    world.getBlockId(x, y, z)
-                            + (world.getBlockMetadata(x, y, z) << 12));
-            Block.blocksList[world.getBlockId(x, y, z)].dropBlockAsItem(world,
-                    x, y, z, world.getBlockMetadata(x, y, z), 0);
+            world.playAuxSFX(2001, x, y, z, world.getBlockId(x, y, z) + (world.getBlockMetadata(x, y, z) << 12));
+            Block.blocksList[world.getBlockId(x, y, z)].dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
             world.setBlockToAir(x, y, z);
         }
     }
 
     public static void breakAndAddToInventory(IInventory inventory, World world, int x, int y, int z, int fortune, boolean dropExtra) {
+
+        if(fortune <= 0)
+            fortune = 1;
 
         if (world.getBlockId(x, y, z) != 0) {
 
@@ -92,6 +85,21 @@ public class UtilBlock {
         }
     }
 
+    public static ArrayList<ItemStack> getItemStackDropped(World world, int x, int y, int z, int fortune) {
+
+        if(fortune <= 0)
+            fortune = 1;
+
+        if (world.getBlockId(x, y, z) != 0) {
+
+            Block block = Block.blocksList[world.getBlockId(x, y, z)];
+
+            return block.getBlockDropped(world, x, y, z, world.getBlockMetadata(x, y, z), fortune);
+        }
+
+        return new ArrayList<ItemStack>();
+    }
+
     public static void spawnItemStackEntity(World world, int x, int y, int z, ItemStack item, int delayforPickup) {
 
         if (world.getGameRules().getGameRuleBooleanValue("doTileDrops") && !world.isRemote) {
@@ -107,9 +115,7 @@ public class UtilBlock {
         }
     }
 
-    public static boolean cycle2DBlock(EntityPlayer player, World world, int x,
-            int y, int z, ForgeDirection side, int radius, IBlockCycle cycle,
-            int id) {
+    public static boolean cycle2DBlock(EntityPlayer player, World world, int x, int y, int z, ForgeDirection side, int radius, IBlockCycle cycle, int id) {
 
         boolean isSuccessful = false;
 
@@ -156,9 +162,7 @@ public class UtilBlock {
      * Sends the coordinates of every block within a certain radius
      */
 
-    public static boolean cycle3DBlock(EntityPlayer player, World world, int x,
-            int y, int z, ForgeDirection side, int radius, IBlockCycle cycle,
-            int id) {
+    public static boolean cycle3DBlock(EntityPlayer player, World world, int x, int y, int z, ForgeDirection side, int radius, IBlockCycle cycle, int id) {
         boolean isSuccessful = false;
 
         if (side.offsetX != 0) {
@@ -193,9 +197,7 @@ public class UtilBlock {
         return isSuccessful;
     }
 
-    public static boolean cycle3DBlock(EntityPlayer player, World world, int x,
-            int y, int z, ForgeDirection side, int radius, int distance,
-            IBlockCycle cycle, int id) {
+    public static boolean cycle3DBlock(EntityPlayer player, World world, int x, int y, int z, ForgeDirection side, int radius, int distance, IBlockCycle cycle, int id) {
         boolean isSuccessful = false;
 
         for (int i = 0; i < distance; i++) {

@@ -34,6 +34,7 @@ public class TileCanvas extends TileBase implements IColorable, IPeripheral {
     @Override
     public Color getColor(ForgeDirection direction) {
 
+        worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
         return coloredSides[direction.ordinal()];
     }
 
@@ -86,13 +87,13 @@ public class TileCanvas extends TileBase implements IColorable, IPeripheral {
     @Override
     public String[] getMethodNames() {
 
-        return new String[] {"getColor()", "setColor"};
+        return new String[] {"getColor", "setColor"};
     }
 
     @Override
     public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception {
 
-        if(method == 0) {
+        if(method == 0) {   
 
             if(arguments.length == 1) {
 

@@ -4,6 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import GU.GUTickHandler;
+import GU.blocks.containers.BlockBlockBreaker.ContainerBlockBreaker;
+import GU.blocks.containers.BlockBlockBreaker.TileBlockBreaker;
 import GU.blocks.containers.BlockCreationTable.ContainerCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
 import GU.info.Gui;
@@ -24,23 +26,23 @@ public class CommonProxy implements IGuiHandler {
     }
 
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world,
-            int x, int y, int z) {
+    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         switch (ID) {
 
             case Gui.CREATION_TABLE:
-                return new ContainerCreationTable(player.inventory,
-                        (TileCreationTable) tile);
+                return new ContainerCreationTable(player.inventory, (TileCreationTable) tile);       
+                
+            case Gui.BLOCK_BREAKER:
+                return new ContainerBlockBreaker(player.inventory, (TileBlockBreaker) tile);
         }
         return null;
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world,
-            int x, int y, int z) {
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         // TODO Auto-generated method stub
         return null;
     }

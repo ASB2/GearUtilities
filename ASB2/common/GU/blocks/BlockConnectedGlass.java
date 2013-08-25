@@ -19,16 +19,7 @@ public class BlockConnectedGlass extends BlockBase {
     }
 
     @Override
-    public boolean isBlockSolidOnSide(World world, int x, int y, int z,
-            ForgeDirection side) {
-
-        return true;
-    }
-
-
-    @Override
-    public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y,
-            int z, int side) {
+    public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
 
         return true;
     }
@@ -74,7 +65,6 @@ public class BlockConnectedGlass extends BlockBase {
 
     @Override
     public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
-
 
         return UtilRender.renderConnectedTexture(blockAccess, icons, this.blockID, x, y, z, side);
     }

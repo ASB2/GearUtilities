@@ -12,8 +12,7 @@ import GU.blocks.containers.TileBase;
 import GU.power.GUPowerProvider;
 import GU.utils.UtilInventory;
 
-public class TileCreationTable extends TileBase implements IPowerMisc,
-        IInventory {
+public class TileCreationTable extends TileBase implements IPowerMisc, IInventory {
 
     public TileCreationTable() {
 
@@ -25,17 +24,13 @@ public class TileCreationTable extends TileBase implements IPowerMisc,
     @Override
     public void updateEntity() {
 
-        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-
-            waitTimer.update();
-        }
+        waitTimer.update();
     }
 
     @Override
     public void trigger(int id) {
 
-        ((GUPowerProvider) this.getPowerProvider()).movePower(worldObj, xCoord,
-                yCoord, zCoord);
+        ((GUPowerProvider)this.getPowerProvider()).movePower(worldObj, xCoord, yCoord, zCoord);
     }
 
     @Override

@@ -26,13 +26,11 @@ public class BlockCreationTable extends ContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z,
-            EntityPlayer player, int hitX, float hitY, float hitZ, float par9) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitX, float hitY, float hitZ, float par9) {
 
         if (!player.isSneaking()) {
 
-            player.openGui(GearUtilities.instance, Gui.CREATION_TABLE, world,
-                    x, y, z);
+            player.openGui(GearUtilities.instance, Gui.CREATION_TABLE, world, x, y, z);
             return true;
         }
         return false;
@@ -41,12 +39,9 @@ public class BlockCreationTable extends ContainerBase {
     @Override
     public void registerIcons(IconRegister iconRegistry) {
 
-        top = iconRegistry.registerIcon(Reference.MODDID
-                + ":BlockCreationTableTop");
-        sides = iconRegistry.registerIcon(Reference.MODDID
-                + ":BlockCreationTableSide");
-        bottom = iconRegistry
-                .registerIcon(Reference.MODDID + ":DefaultTexture");
+        top = iconRegistry.registerIcon(Reference.MODDID + ":BlockCreationTableTop");
+        sides = iconRegistry.registerIcon(Reference.MODDID + ":BlockCreationTableSide");
+        bottom = iconRegistry.registerIcon(Reference.MODDID + ":DefaultTexture");
     }
 
     @Override

@@ -4,8 +4,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
+import GU.api.WhiteLists;
 import GU.info.Reference;
 import GU.info.Variables;
 import GU.packets.GUPacketHandler;
@@ -110,8 +112,10 @@ public final class GearUtilities {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-
+        
         FluidRegistry.registerFluidContainers();
         CraftRegistry.init();
+
+        WhiteLists.getInstance().addWrench(new ItemStack(ItemRegistry.ItemAdvancedStick, 1, 0));
     }
 }

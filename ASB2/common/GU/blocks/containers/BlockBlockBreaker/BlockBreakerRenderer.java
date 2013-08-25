@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockLamp;
+package GU.blocks.containers.BlockBlockBreaker;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
@@ -11,52 +11,46 @@ import GU.info.Models;
 import GU.info.Textures;
 import GU.utils.UtilRender;
 
-public class LampRenderer extends TileEntitySpecialRenderer implements
-IItemRenderer {
+public class BlockBreakerRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
     @Override
-    public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
+    public void renderTileEntityAt(TileEntity tileentity, double x, double y,  double z, float f) {
 
-        TileLamp tile = (TileLamp) tileentity;
-
+        TileBlockBreaker tile = (TileBlockBreaker)tileentity;
+        
         GL11.glPushMatrix();
 
-        UtilRender.renderTexture(Textures.LAMP);
-
+        GL11.glTranslated(x + .5f, y + .5f, z + .5f);        
+        GL11.glScalef(.5F, .5F, .5F);
+        
         switch (tile.getOrientation()) {
 
             case UP: {
-
-                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F - .38F, (float) z + 0.5F);
+                
                 break;
             }
             case DOWN: {
-
-                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F + .38F, (float) z + 0.5F);
+                
                 GL11.glRotatef(180F, 1F, 0F, 0F);
                 break;
             }
             case NORTH: {
 
-                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + .8F + .08F);
                 GL11.glRotatef(-90F, 1F, 0F, 0F);
                 break;
             }
             case SOUTH: {
 
-                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + .2F - .08F);
                 GL11.glRotatef(90F, 1F, 0F, 0F);
                 break;
             }
             case WEST: {
 
-                GL11.glTranslatef((float) x + 0.7F + .18F - .001F, (float) y + .5F, (float) z + 0.5F);
                 GL11.glRotatef(90F, 0F, 0F, 1F);
                 break;
             }
             case EAST: {
 
-                GL11.glTranslatef((float) x + .12F, (float) y + .5F, (float) z + 0.5F);
                 GL11.glRotatef(-90F, 0F, 0F, 1F);
                 break;
             }
@@ -64,10 +58,9 @@ IItemRenderer {
                 break;
             }
         }
-
-        GL11.glScalef(.5F, .5F, .5F);
-
-        Models.ModelLamp.renderAll();
+        
+        UtilRender.renderTexture(Textures.BLOCK_BREAKER);
+        Models.ModelBlockBreaker.renderAll();
 
         GL11.glPopMatrix();
     }
@@ -79,8 +72,7 @@ IItemRenderer {
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
-            ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
 
         return true;
     }
@@ -92,7 +84,7 @@ IItemRenderer {
 
             case ENTITY: {
 
-                renderItemSwitched(type, 0f, 1f, 0f, 1F);
+                renderItemSwitched(type, 0f, 0f - 1, 0f, .7F);
                 return;
             }
 
@@ -119,8 +111,7 @@ IItemRenderer {
         }
     }
 
-    private void renderItemSwitched(ItemRenderType type, float x, float y,
-            float z, float scale) {
+    private void renderItemSwitched(ItemRenderType type, float x, float y, float z, float scale) {
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -128,11 +119,8 @@ IItemRenderer {
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
-        GL11.glRotatef(180F, 0F, 180F, 0F);
-
-        UtilRender.renderTexture(Textures.LAMP);
-
-        Models.ModelLamp.renderAll();
+        UtilRender.renderTexture(Textures.BLOCK_BREAKER);
+        Models.ModelBlockBreaker.renderAll();
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();

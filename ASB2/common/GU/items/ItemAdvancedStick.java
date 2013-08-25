@@ -10,8 +10,7 @@ import GU.api.IWrenchable;
 public class ItemAdvancedStick extends ItemBase {
 
     public ItemAdvancedStick(int id) {
-        super(id);
-        this.setMaxStackSize(1);
+        super(id);  
         this.setFull3D();
     }
 

@@ -11,8 +11,7 @@ import GU.info.Models;
 import GU.info.Textures;
 import GU.utils.UtilRender;
 
-public class CreationTableRenderer extends TileEntitySpecialRenderer implements
-        IItemRenderer {
+public class CreationTableRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y,
