@@ -26,6 +26,7 @@ import GU.info.Models;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import GU.blocks.containers.BlockCamoBlock.*;
 
 public class ClientProxy extends CommonProxy {
 
@@ -69,6 +70,9 @@ public class ClientProxy extends CommonProxy {
                     
                 case Gui.BLOCK_BREAKER:
                     return new GuiBlockBreaker(player.inventory, tile);
+            
+                case Gui.CAMO_BLOCK:
+                    return new GuiCamoBlock(player.inventory, tile);
             }
         }
         return null;

@@ -6,6 +6,8 @@ import net.minecraft.world.World;
 import GU.GUTickHandler;
 import GU.blocks.containers.BlockBlockBreaker.ContainerBlockBreaker;
 import GU.blocks.containers.BlockBlockBreaker.TileBlockBreaker;
+import GU.blocks.containers.BlockCamoBlock.ContainerCamoBlock;
+import GU.blocks.containers.BlockCamoBlock.TileCamoBlock;
 import GU.blocks.containers.BlockCreationTable.ContainerCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
 import GU.info.Gui;
@@ -37,6 +39,9 @@ public class CommonProxy implements IGuiHandler {
                 
             case Gui.BLOCK_BREAKER:
                 return new ContainerBlockBreaker(player.inventory, (TileBlockBreaker) tile);
+        
+            case Gui.CAMO_BLOCK:
+                return new ContainerCamoBlock(player.inventory, (TileCamoBlock) tile);
         }
         return null;
     }

@@ -19,6 +19,7 @@ import GU.blocks.BlockTestRender.BlockTestRender;
 import GU.blocks.containers.ContainerBase;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.BlockAdvancedPotionBrewery;
 import GU.blocks.containers.BlockBlockBreaker.BlockBlockBreaker;
+import GU.blocks.containers.BlockCamoBlock.BlockCamoBlock;
 import GU.blocks.containers.BlockCanvas.BlockCanvas;
 import GU.blocks.containers.BlockConnectableTank.BlockConnectableTank;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
@@ -53,6 +54,7 @@ public class BlockRegistry {
     public static BlockBase BlockEtherealConnectedGlass;
     public static ContainerBase BlockAdvancedPotionBrewery;
     public static ContainerBase BlockBlockBreaker;
+    public static ContainerBase BlockCamoBlock;
     
     private static int id = 500;
 
@@ -149,6 +151,10 @@ public class BlockRegistry {
         BlockBlockBreaker = new BlockBlockBreaker(config.getBlock("BlockBlockBreaker", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockBlockBreaker.setBlockName("BlockBlockBreaker");
         LanguageRegistry.addName(BlockBlockBreaker, "Block Breaker");
+        
+        BlockCamoBlock = new BlockCamoBlock(config.getBlock("BlockCamoBlock", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockCamoBlock.setBlockName("BlockCamoBlock");
+        LanguageRegistry.addName(BlockCamoBlock, "Camo Block");
     }
 
     public static void initTestBlocks(Configuration config) {

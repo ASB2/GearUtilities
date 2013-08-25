@@ -45,7 +45,6 @@ public class BlockSpeedyRoad extends BlockBase {
             default:
                 return this.side;
         }
-
     }
 
     @Override
@@ -56,7 +55,7 @@ public class BlockSpeedyRoad extends BlockBase {
     public void onEntityWalking(World world, int x, int y, int z, Entity entity) {
 
         if (!world.isBlockIndirectlyGettingPowered(x, y, z)) {
-            
+
             if (entity instanceof EntityLivingBase) {
 
                 ((EntityLivingBase)entity).addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 10, 3));
