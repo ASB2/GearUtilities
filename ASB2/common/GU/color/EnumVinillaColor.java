@@ -1,5 +1,7 @@
 package GU.color;
 
+import java.awt.Color;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;

@@ -7,9 +7,11 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import GU.BlockRegistry;
 import GU.ItemRegistry;
 import GU.blocks.BlockTestRender.TestRenderRenderer;
+import GU.blocks.containers.BlockAdvancedPotionBrewery.GuiAdvancedPotionBrewery;
 import GU.blocks.containers.BlockBlockBreaker.BlockBreakerRenderer;
 import GU.blocks.containers.BlockBlockBreaker.GuiBlockBreaker;
 import GU.blocks.containers.BlockBlockBreaker.TileBlockBreaker;
+import GU.blocks.containers.BlockCamoBlock.GuiCamoBlock;
 import GU.blocks.containers.BlockCanvas.CanvasRenderer;
 import GU.blocks.containers.BlockConnectableTank.ConnectableTankRenderer;
 import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
@@ -26,7 +28,6 @@ import GU.info.Models;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import GU.blocks.containers.BlockCamoBlock.*;
 
 public class ClientProxy extends CommonProxy {
 
@@ -73,6 +74,9 @@ public class ClientProxy extends CommonProxy {
             
                 case Gui.CAMO_BLOCK:
                     return new GuiCamoBlock(player.inventory, tile);
+                    
+                case Gui.ADVANCED_POTION_BREWERY:
+                    return new GuiAdvancedPotionBrewery(player.inventory, tile);
             }
         }
         return null;

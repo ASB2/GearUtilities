@@ -32,7 +32,7 @@ public class ItemStorageCrystal extends ItemBase {
 
         list.add(new ItemStack(id, 1, 0));
 
-        for(ItemStack stack : GU.FluidRegistry.StorageCrystals) {
+        for(ItemStack stack : GU.FluidRegistry.STORAGE_CRYSTAL_LIST) {
 
             list.add(stack);
         }
@@ -46,8 +46,8 @@ public class ItemStorageCrystal extends ItemBase {
 
             if (fluid.getFluid().getStillIcon() != null) {
 
-                if(pass == 0)
-                    return fluid.getFluid().getIcon();
+                if(pass == 0 && fluid.getFluid().getStillIcon() != null)
+                    return fluid.getFluid().getStillIcon();
             }
         }
 

@@ -1,8 +1,12 @@
 package GU.blocks.containers.BlockConnectableTank;
 
+import java.awt.Color;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
 import GU.utils.UtilMisc;
 import GU.utils.UtilRender;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -21,26 +25,30 @@ public class ConnectableTankRenderer implements ISimpleBlockRenderingHandler {
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 
-        UtilRender.renderMetadataBlock(block, 0, x, y, z, renderer, world);
-
         TileConnectableTank tile = (TileConnectableTank) world.getBlockTileEntity(x, y, z);
 
+        renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
+        UtilRender.renderMetadataBlock(block, 0, x, y, z, renderer, world);
+        
         if (tile.fluidTank.getFluid() != null) {
 
-            if (!(tile.fluidTank.getCapacity() == tile.fluidTank .getFluidAmount())) {
+            double min = .001, max = .9999;
 
-                renderer.setRenderBounds(0.001F, 0.0001F, 0.0001F, 0.999F, UtilMisc.getAmountScaled(0.9999, tile.fluidTank.getFluidAmount(), tile.fluidTank.getCapacity()), 0.999F);
-            } else {
+            renderer.setRenderBounds(min, min, min, max, UtilMisc.getAmountScaled(max, tile.fluidTank.getFluidAmount(), tile.fluidTank.getCapacity()),max);
 
-                renderer.setRenderBounds(0.001F, 0.001F, 0.001F, 0.999F, 0.999, 0.999F);
-            }
+            Fluid fluid = tile.fluidTank.getFluid().getFluid();
+            Color color = new Color(fluid.getColor());
+            
+            for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS) {
 
-            if (tile.fluidTank.getFluid().getFluid().getIcon() != null) {
+                if(direction == ForgeDirection.UP) {
 
-                UtilRender.renderFakeBlock(tile.fluidTank.getFluid().getFluid().getIcon(), x, y, z, renderer, world);
-            } else {
+                    UtilRender.renderFakeSide(renderer, block, direction, x, y, z, fluid.getStillIcon(), color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha(), block.getMixedBrightnessForBlock(world, x, y, z));
+                }   
+                else {
 
-                UtilRender.renderFakeBlock(block.getIcon(0, 0), x, y, z, renderer, world);
+                    UtilRender.renderFakeSide(renderer, block, direction, x, y, z, fluid.getFlowingIcon(), color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha(), block.getMixedBrightnessForBlock(world, x, y, z));
+                }
             }
         }
         return true;

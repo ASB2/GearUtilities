@@ -1,5 +1,7 @@
 package GU.color;
 
+import java.awt.Color;
+
 import net.minecraftforge.common.ForgeDirection;
 
 public interface IColorable {

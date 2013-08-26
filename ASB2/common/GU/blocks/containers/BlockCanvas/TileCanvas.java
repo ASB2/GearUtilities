@@ -1,10 +1,11 @@
 package GU.blocks.containers.BlockCanvas;
 
+import java.awt.Color;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
-import GU.color.Color;
 import GU.color.IColorable;
 import GU.packets.ColorPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
@@ -22,7 +23,7 @@ public class TileCanvas extends TileBase implements IColorable, IPeripheral {
 
         for(int i = 0; i < coloredSides.length; i++) {
 
-            coloredSides[i] = new Color();
+            coloredSides[i] = new Color(255, 255, 255, 255);
         }
     }
 

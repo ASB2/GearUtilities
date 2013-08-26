@@ -14,6 +14,7 @@ import GU.info.Gui;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
+import GU.blocks.containers.BlockAdvancedPotionBrewery.*;
 
 public class CommonProxy implements IGuiHandler {
 
@@ -42,6 +43,9 @@ public class CommonProxy implements IGuiHandler {
         
             case Gui.CAMO_BLOCK:
                 return new ContainerCamoBlock(player.inventory, (TileCamoBlock) tile);
+                
+            case Gui.ADVANCED_POTION_BREWERY:
+                return new ContainerAdvancedPotionBrewery(player.inventory, (TileAdvancedPotionBrewery) tile);
         }
         return null;
     }

@@ -1,8 +1,9 @@
 package GU.packets;
 
+import java.awt.Color;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.ForgeDirection;
-import GU.color.Color;
 import GU.color.IColorable;
 
 import com.google.common.io.ByteArrayDataInput;
