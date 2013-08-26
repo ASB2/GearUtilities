@@ -13,7 +13,7 @@ public class BlockEnhancedBricks extends ContainerBase {
         this.registerTile(TileEnchancedBricks.class);
     }
 
-    public int getRenderBlockPass() {
+    public int getRenderType() {
 
         return EnchancedBricksRenderer.enchancedBricksID;
     }
