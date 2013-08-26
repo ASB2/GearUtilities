@@ -19,6 +19,7 @@ import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
 import GU.blocks.containers.BlockLamp.LampRenderer;
 import GU.blocks.containers.BlockLamp.TileLamp;
+import GU.blocks.containers.BlockEnhancedBricks.EnchancedBricksRenderer;
 import GU.blocks.containers.BlockTestLaser.TestLaserRenderer;
 import GU.blocks.containers.BlockTestLaser.TileTestLaser;
 import GU.entity.EntityTest.EntityTestEntity;
@@ -55,6 +56,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());
         RenderingRegistry.registerBlockHandler(new CanvasRenderer());
+        RenderingRegistry.registerBlockHandler(new EnchancedBricksRenderer());
     }
 
     @Override

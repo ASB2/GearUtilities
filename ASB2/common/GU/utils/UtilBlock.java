@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
 public class UtilBlock {
-
+    
     public static boolean placeBlockInAir(World world, int x, int y, int z, int blockId, int metaData) {
 
         if (world.getBlockId(x, y, z) == 0) {

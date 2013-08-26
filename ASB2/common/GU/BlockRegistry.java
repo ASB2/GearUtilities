@@ -24,6 +24,7 @@ import GU.blocks.containers.BlockConnectableTank.BlockConnectableTank;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockLamp.BlockLamp;
+import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockTestLaser.BlockTestLaser;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
@@ -54,7 +55,7 @@ public class BlockRegistry {
     public static ContainerBase BlockAdvancedPotionBrewery;
     public static ContainerBase BlockBlockBreaker;
     public static ContainerBase BlockCamoBlock;
-    
+    public static ContainerBase BlockEnhancedBricks;
     private static int id = 500;
 
     public static void init(Configuration config) {
@@ -151,6 +152,10 @@ public class BlockRegistry {
         BlockCamoBlock = new BlockCamoBlock(config.getBlock("BlockCamoBlock", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockCamoBlock.setBlockName("BlockCamoBlock");
         LanguageRegistry.addName(BlockCamoBlock, "Camo Block");
+    
+        BlockEnhancedBricks = new BlockEnhancedBricks(config.getBlock("BlockEnhancedBricks", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockEnhancedBricks.setBlockName("BlockEnhancedBricks");
+        LanguageRegistry.addName(BlockEnhancedBricks, "Enhanced Bricks");
     }
 
     public static void initTestBlocks(Configuration config) {
