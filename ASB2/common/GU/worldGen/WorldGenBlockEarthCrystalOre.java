@@ -25,8 +25,6 @@ public class WorldGenBlockEarthCrystalOre implements IWorldGenerator {
         int Ycoord = random.nextInt(100);
         int Zcoord = blockZ + random.nextInt(16);
 
-        (new WorldGenMinable(BlockRegistry.BlockMetadataOre.blockID, 1, 20,
-                Block.stone.blockID)).generate(world, random, Xcoord, Ycoord,
-                Zcoord);
+        (new WorldGenMinable(BlockRegistry.BlockMetadataOre.blockID, 1, 20, Block.stone.blockID)).generate(world, random, Xcoord, Ycoord, Zcoord);
     }
 }

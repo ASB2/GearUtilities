@@ -20,8 +20,7 @@ public class StorageCrystalRenderer implements IItemRenderer {
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
-            ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
         // TODO Auto-generated method stub
         return false;
     }

@@ -19,15 +19,12 @@ public class WorldGenBlockAirCrystalOre implements IWorldGenerator {
             generateSurface(world, random, chunkX * 16, chunkZ * 16);
     }
 
-    private void generateSurface(World world, Random random, int blockX,
-            int blockZ) {
+    private void generateSurface(World world, Random random, int blockX, int blockZ) {
 
         int Xcoord = blockX + random.nextInt(16);
         int Ycoord = random.nextInt(100) + 1;
         int Zcoord = blockZ + random.nextInt(16);
 
-        (new WorldGenMinable(BlockRegistry.BlockMetadataOre.blockID, 0, 20,
-                Block.stone.blockID)).generate(world, random, Xcoord, Ycoord,
-                Zcoord);
+        (new WorldGenMinable(BlockRegistry.BlockMetadataOre.blockID, 0, 20, Block.stone.blockID)).generate(world, random, Xcoord, Ycoord, Zcoord);
     }
 }

@@ -52,6 +52,7 @@ public class BlockCamoBlock extends ContainerBase {
             player.openGui(GearUtilities.instance, Gui.CAMO_BLOCK, world, x, y, z);
             return true;
         }
+        world.markBlockForRenderUpdate(x, y, z);
         return false;
     }
 

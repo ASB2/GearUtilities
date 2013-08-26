@@ -10,8 +10,7 @@ import GU.utils.UtilBlock;
 import GU.utils.UtilItemStack;
 import GU.utils.UtilPlayers;
 
-public class ItemEnhancedDestructionCatalyst extends ItemBase implements
-        IBlockCycle {
+public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockCycle {
 
     public ItemEnhancedDestructionCatalyst(int id) {
         super(id);
@@ -20,8 +19,7 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world,
-            EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 
         if (player.isSneaking()) {
 
@@ -30,7 +28,6 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements
             UtilPlayers.sendChatToPlayer(player, "Debth of tunnel == " + UtilItemStack.getNBTTagInt(itemStack, "length"));
 
             return itemStack;
-            // player.openGui(TechCraft.instance, -1, world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
 
         this.incrementLength(player);
@@ -42,12 +39,9 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz) {
 
-        ForgeDirection sideF = ForgeDirection.getOrientation(side);
-
         UtilItemStack.setNBTTagInt(itemStack, "id", world.getBlockId(x, y, z));
 
-        UtilBlock.cycle3DBlock(player, world, x, y, z, sideF, 1,
-                UtilItemStack.getNBTTagInt(itemStack, "length"), this, 0);
+        UtilBlock.cycle3DBlock(player, world, x, y, z, ForgeDirection.getOrientation(side), 1, UtilItemStack.getNBTTagInt(itemStack, "length"), this, 0);
 
         UtilItemStack.setNBTTagInt(itemStack, "id", 0);
         return true;
@@ -78,8 +72,7 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements
     }
 
     @Override
-    public boolean execute(EntityPlayer player, World world, int x, int y,
-            int z, ForgeDirection side, int mid) {
+    public boolean execute(EntityPlayer player, World world, int x, int y, int z, ForgeDirection side, int mid) {
 
         int blockToBreak = UtilItemStack.getNBTTagInt( player.inventory.getCurrentItem(), "id");
 
@@ -89,14 +82,11 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements
 
                 if (world.getBlockTileEntity(x, y, z) == null) {
 
-                    if (world.getBlockId(x, y, z) == blockToBreak
-                            || (world.getBlockId(x, y, z) == Block.oreRedstone.blockID && blockToBreak == Block.oreRedstoneGlowing.blockID)) {
+                    if (world.getBlockId(x, y, z) == blockToBreak || (world.getBlockId(x, y, z) == Block.oreRedstone.blockID && blockToBreak == Block.oreRedstoneGlowing.blockID)) {
 
-                        if (UtilItemStack.damageItem(player,
-                                player.inventory.getCurrentItem(), 1)) {
+                        if (UtilItemStack.damageItem(player, player.inventory.getCurrentItem(), 1)) {
 
-                            UtilBlock.breakAndAddToInventory(player.inventory,
-                                    world, x, y, z, 5, true);
+                            UtilBlock.breakAndAddToInventory(player.inventory, world, x, y, z, 5, true);
                             return true;
                         }
                     }

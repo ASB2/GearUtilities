@@ -28,13 +28,13 @@ public class ItemBase extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public boolean requiresMultipleRenderPasses() {
+        
         return true;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player,
-            java.util.List info, boolean var1) {
+    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
         info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "From: "
                 + Reference.NAME);
     }
@@ -42,15 +42,13 @@ public class ItemBase extends Item {
     @Override
     public void registerIcons(IconRegister iconRegister) {
 
-        itemIcon = iconRegister
-                .registerIcon(Reference.MODDID + ":ItemTestItem");
+        itemIcon = iconRegister.registerIcon(Reference.MODDID + ":ItemTestItem");
         texture = iconRegister.registerIcon(Reference.MODDID + ":" + itemName);
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack itemStack, EntityPlayer player,
-            World world, int x, int y, int z, int side, float hitX, float hitY,
-            float hitZ) {
+    public boolean onItemUseFirst(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+       
         return false;
     }
 
@@ -58,7 +56,6 @@ public class ItemBase extends Item {
     public String getUnlocalizedName(ItemStack itemstack) {
 
         return super.getUnlocalizedName(itemstack);
-        // return "Unknown Metadata Notify ASB2";
     }
 
     public void setItemName(String texture) {

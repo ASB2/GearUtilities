@@ -1,6 +1,8 @@
 package GU.blocks.BlockMetadataOre;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import GU.GUItemBlock;
 import GU.info.Reference;
 
@@ -19,6 +21,14 @@ public class ItemBlockMetadataOre extends GUItemBlock {
         return damageValue;
     }
 
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
+    {
+        boolean itWorked = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+
+        world.setBlockMetadataWithNotify(x, y, z, this.getDamage(stack), 3);
+        return itWorked;
+    }
+
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
 
@@ -34,6 +44,8 @@ public class ItemBlockMetadataOre extends GUItemBlock {
                 return Reference.UNIQUE_ID + "BlockWaterCrystalOre";
             case 4:
                 return Reference.UNIQUE_ID + "BlockEnergyCrystalOre";
+            case 5:
+                return Reference.UNIQUE_ID + "BlockGarnetOre";
             default:
                 return "Unknown Metadata Notify ASB2";
         }
@@ -54,6 +66,8 @@ public class ItemBlockMetadataOre extends GUItemBlock {
                 return "Water Crystal Ore";
             case 4:
                 return "Energy Crystal Ore";
+            case 5:
+                return "Garnet Ore";
             default:
                 return "Unknown Metadata Notify ASB2";
         }

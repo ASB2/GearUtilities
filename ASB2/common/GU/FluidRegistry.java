@@ -1,5 +1,8 @@
 package GU;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -15,6 +18,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class FluidRegistry {
 
+    public static List<ItemStack> StorageCrystals = new ArrayList<ItemStack>();
+    
     public static IconRegister iconProvider;
 
     public static FluidBase LiquidWood;
@@ -22,8 +27,6 @@ public class FluidRegistry {
     public static FluidBase LiquidGold;
     public static FluidBase LiquidDiamond;
     public static FluidBase LiquidEmerald;
-
-    public static FluidBase LiquidCheese;
 
     public static void initFluids() {
 
@@ -33,8 +36,6 @@ public class FluidRegistry {
         LiquidDiamond = new FluidBase("liquidDiamond", 0x000000);
         LiquidEmerald = new FluidBase("liquidEmerald", 0x000000);
 
-        LiquidCheese = new FluidBase("liquidCheese", 0x000000);
-
     }
 
     @ForgeSubscribe
@@ -43,24 +44,18 @@ public class FluidRegistry {
 
         if (event.map.textureType == 0) {
 
-            LiquidDiamond.setIcon(event.map.registerIcon(Reference.MODDID
-                    + ":FluidDiamond"));
+            LiquidDiamond.setIcon(event.map.registerIcon(Reference.MODDID + ":FluidDiamond"));
         }
     }
 
     public static void registerFluidContainers() {
 
-        for (Fluid fluid : net.minecraftforge.fluids.FluidRegistry
-                .getRegisteredFluids().values()) {
+        for (Fluid fluid : net.minecraftforge.fluids.FluidRegistry.getRegisteredFluids().values()) {
 
-            ItemStack filled = new ItemStack(ItemRegistry.ItemStorageCrystal,
-                    1, fluid.getID());
-            FluidContainerRegistry.registerFluidContainer(fluid, filled,
-                    new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0));
-            ((ItemStorageCrystal) filled.getItem()).setFluidStack(
-                    filled,
-                    new FluidStack(fluid, ((ItemStorageCrystal) filled
-                            .getItem()).getCapasity(filled)));
+            ItemStack filled = new ItemStack(ItemRegistry.ItemStorageCrystal, 1, fluid.getID());
+            FluidContainerRegistry.registerFluidContainer(fluid, filled, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0));
+            ((ItemStorageCrystal)filled.getItem()).setFluidStack(filled, new FluidStack(fluid, ((ItemStorageCrystal) filled.getItem()).getCapasity(filled)));
+            StorageCrystals.add(filled);
         }
     }
 }

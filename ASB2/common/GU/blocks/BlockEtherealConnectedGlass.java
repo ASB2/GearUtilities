@@ -10,6 +10,7 @@ public class BlockEtherealConnectedGlass extends BlockConnectedGlass {
         super(id, material);
     }
 
+    
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 

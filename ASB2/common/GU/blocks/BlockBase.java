@@ -70,8 +70,7 @@ public class BlockBase extends Block {
     }
 
     @Override
-    public int onBlockPlaced(World world, int x, int y, int z, int sideHit,
-            float hitX, float hitY, float hitZ, int metaData) {
+    public int onBlockPlaced(World world, int x, int y, int z, int sideHit, float hitX, float hitY, float hitZ, int metaData) {
 
         return sideHit;
     }
@@ -87,8 +86,7 @@ public class BlockBase extends Block {
 
         this.blockName = texture;
         this.setUnlocalizedName(Reference.UNIQUE_ID + blockName);
-        GameRegistry.registerBlock(this, GUItemBlock.class,
-                this.getUnlocalizedName());
+        GameRegistry.registerBlock(this, GUItemBlock.class, this.getUnlocalizedName());
     }
 
     @Override

@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraft.world.World;
 import GU.ItemRegistry;
 import GU.blocks.BlockBase;
 import GU.info.Reference;
@@ -20,7 +21,8 @@ public class BlockMetadataOre extends BlockBase {
     Icon fire;
     Icon water;
     Icon energy;
-
+    Icon garnet;
+    
     public BlockMetadataOre(int id, Material material) {
         super(id, material);
     }
@@ -30,24 +32,25 @@ public class BlockMetadataOre extends BlockBase {
 
         this.blockName = texture;
         this.setUnlocalizedName(Reference.UNIQUE_ID + blockName);
-        GameRegistry.registerBlock(this, ItemBlockMetadataOre.class,
-                this.getUnlocalizedName());
+        GameRegistry.registerBlock(this, ItemBlockMetadataOre.class, this.getUnlocalizedName());
     }
 
+    @Override
+    public int onBlockPlaced(World world, int x, int y, int z, int sideHit, float hitX, float hitY, float hitZ, int metaData) {
+
+        return 0;
+    }
+    
     @Override
     public void registerIcons(IconRegister iconRegister) {
         super.registerIcons(iconRegister);
 
-        air = iconRegister.registerIcon(Reference.MODDID
-                + ":BlockAirCrystalOre");
-        earth = iconRegister.registerIcon(Reference.MODDID
-                + ":BlockEarthCrystalOre");
-        fire = iconRegister.registerIcon(Reference.MODDID
-                + ":BlockFireCrystalOre");
-        water = iconRegister.registerIcon(Reference.MODDID
-                + ":BlockWaterCrystalOre");
-        energy = iconRegister.registerIcon(Reference.MODDID
-                + ":BlockEnergyCrystalOre");
+        air = iconRegister.registerIcon(Reference.MODDID + ":BlockAirCrystalOre");
+        earth = iconRegister.registerIcon(Reference.MODDID + ":BlockEarthCrystalOre");
+        fire = iconRegister.registerIcon(Reference.MODDID + ":BlockFireCrystalOre");
+        water = iconRegister.registerIcon(Reference.MODDID + ":BlockWaterCrystalOre");
+        energy = iconRegister.registerIcon(Reference.MODDID + ":BlockEnergyCrystalOre");
+        garnet = iconRegister.registerIcon(Reference.MODDID + ":BlockGarnetOre");
     }
 
     @Override
@@ -64,6 +67,9 @@ public class BlockMetadataOre extends BlockBase {
                 return water;
             case 4:
                 return energy;
+            case 5:
+                return garnet; 
+                
             default:
                 return super.getIcon(side, metadata);
         }
@@ -78,7 +84,7 @@ public class BlockMetadataOre extends BlockBase {
         subItems.add(new ItemStack(this, 1, 2));
         subItems.add(new ItemStack(this, 1, 3));
         subItems.add(new ItemStack(this, 1, 4));
-
+        subItems.add(new ItemStack(this, 1, 5));
     }
 
     @Override
@@ -96,6 +102,8 @@ public class BlockMetadataOre extends BlockBase {
                 return ItemRegistry.ItemWaterCrystalShard.itemID;
             case 4:
                 return ItemRegistry.ItemEnergyCrystalShard.itemID;
+            case 5:
+                return ItemRegistry.ItemGarnet.itemID;
             default:
                 return 0;
         }

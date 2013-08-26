@@ -25,9 +25,7 @@ public class WorldGenBlockBurningFlower implements IWorldGenerator {
             int XCoordinate = blockX + random.nextInt(16);
             int ZCoordinate = blockZ + random.nextInt(16);
             int YCoordinate = random.nextInt(256);
-            (new WorldGenFlowers(BlockRegistry.BlockBurningFlower.blockID))
-                    .generate(world, random, XCoordinate, YCoordinate,
-                            ZCoordinate);
+            (new WorldGenFlowers(BlockRegistry.BlockBurningFlower.blockID)).generate(world, random, XCoordinate, YCoordinate, ZCoordinate);
         }
     }
 }

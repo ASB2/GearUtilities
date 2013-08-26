@@ -58,11 +58,11 @@ public final class GearUtilities {
 
         logger.setParent(FMLLog.getLogger());
 
-        logger.log(Level.INFO,"[" + Reference.NAME + "] Beginning destruction of known world");
+        logger.log(Level.INFO," Beginning destruction of known world");
 
         if (Loader.isModLoaded("Natura") || Loader.isModLoaded("TConstruct")) {
 
-            logger.log(Level.INFO, "[" + Reference.NAME + "] Joining mods in world domination");
+            logger.log(Level.INFO, " Joining mods in world domination");
         }
 
 

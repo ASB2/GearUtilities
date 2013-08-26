@@ -1,9 +1,13 @@
 package GU.items.ItemStorageCrystal;
 
+import java.util.List;
+
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import GU.items.ItemBase;
@@ -17,14 +21,27 @@ public class ItemStorageCrystal extends ItemBase {
     }
 
     @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void getSubItems(int id, CreativeTabs tab, List list) {
+
+        list.add(new ItemStack(id, 1, 0));
+
+        for(ItemStack stack : GU.FluidRegistry.StorageCrystals) {
+
+            list.add(stack);
+        }
+    }
+
+    @Override
     public Icon getIcon(ItemStack stack, int pass) {
 
-        if (this.getFluidStack(stack) != null) {
+        FluidStack fluid = this.getFluidStack(stack);
+        if (fluid != null) {
 
-            if (this.getFluidStack(stack).getFluid().getIcon() != null) {
+            if (fluid.getFluid().getStillIcon() != null) {
 
-                if (pass == 0)
-                    return this.getFluidStack(stack).getFluid().getStillIcon();
+                if(pass == 0)
+                return fluid.getFluid().getIcon();
             }
         }
 
@@ -49,10 +66,13 @@ public class ItemStorageCrystal extends ItemBase {
 
     public FluidStack getFluidStack(ItemStack itemStack) {
 
-        if (FluidRegistry.getFluid(UtilItemStack.getTAGfromItemstack(itemStack).getString("fluidName")) != null && UtilItemStack.getTAGfromItemstack(itemStack).getInteger("fluidAmount") != 0) {
+        String name = UtilItemStack.getTAGfromItemstack(itemStack).getString("fluidName");
+        Fluid fluid = FluidRegistry.getFluid(name);
+        int fluidAmount = UtilItemStack.getTAGfromItemstack(itemStack).getInteger("fluidAmount");
+        
+        if (fluid != null && fluidAmount != 0) {
 
-            return new FluidStack(FluidRegistry.getFluid(UtilItemStack.getTAGfromItemstack(itemStack).getString("fluidName")),
-                    UtilItemStack.getTAGfromItemstack(itemStack).getInteger("fluidAmount"));
+            return new FluidStack(fluid, fluidAmount);
         }
         return null;
     }
@@ -60,7 +80,7 @@ public class ItemStorageCrystal extends ItemBase {
     public boolean setFluidStack(ItemStack itemStack, FluidStack fluid) {
 
         if (fluid != null) {
-            
+
             if (this.getFluidStack(itemStack) != null) {
 
                 if (this.getFluidStack(itemStack).isFluidEqual(fluid)) {
@@ -88,6 +108,6 @@ public class ItemStorageCrystal extends ItemBase {
 
     public int getCapasity(ItemStack itemStack) {
 
-        return 1600;
+        return 1000;
     }
 }

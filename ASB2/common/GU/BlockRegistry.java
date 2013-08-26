@@ -10,7 +10,6 @@ import GU.blocks.BlockEtherealConnectedGlass;
 import GU.blocks.BlockFalseBlock;
 import GU.blocks.BlockFreezingFlower;
 import GU.blocks.BlockGarnetBlock;
-import GU.blocks.BlockGarnetOre;
 import GU.blocks.BlockPhantomBlock;
 import GU.blocks.BlockSpeedyRoad;
 import GU.blocks.BlockTestBlock;
@@ -67,11 +66,8 @@ public class BlockRegistry {
         LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 2), "Fire Crystal Ore");
         LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 3), "Water Crystal Ore");
         LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 4), "Energy Crystal Ore");
-
-        BlockGarnetOre = new BlockGarnetOre(config.getBlock("BlockGarnetOre", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockGarnetOre.setBlockName("BlockGarnetOre");
-        LanguageRegistry.addName(BlockGarnetOre, "Garnet Ore");
-
+        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 5), "Garnet Ore");
+        
         BlockGarnetBlock = new BlockGarnetBlock(config.getBlock( "BlockGarnetBlock", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockGarnetBlock.setBlockName("BlockGarnetBlock");
         LanguageRegistry.addName(BlockGarnetBlock, "Garnet Block");
