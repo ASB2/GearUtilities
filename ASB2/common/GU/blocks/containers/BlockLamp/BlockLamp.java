@@ -22,8 +22,7 @@ public class BlockLamp extends ContainerBase {
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x,
-            int y, int z) {
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 
         this.setBlockBoundsBasedOnState(world, x, y, z);
         return super.getCollisionBoundingBoxFromPool(world, x, y, z);
@@ -31,16 +30,14 @@ public class BlockLamp extends ContainerBase {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x,
-            int y, int z) {
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z) {
 
         this.setBlockBoundsBasedOnState(world, x, y, z);
         return super.getSelectedBoundingBoxFromPool(world, x, y, z);
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y,
-            int z) {
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
 
         float minWidth = 0, minHeight = 0;
 
@@ -99,8 +96,7 @@ public class BlockLamp extends ContainerBase {
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World world, int x, int y, int z,
-            Entity entity) {
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
         super.onEntityCollidedWithBlock(world, x, y, z, entity);
     }
 

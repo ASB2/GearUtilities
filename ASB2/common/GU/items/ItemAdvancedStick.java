@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import GU.api.IWrenchable;
 
 public class ItemAdvancedStick extends ItemBase {
@@ -31,6 +32,10 @@ public class ItemAdvancedStick extends ItemBase {
 
                 ((IWrenchable) block).triggerBlock(world, player.isSneaking(), itemStack, x, y, z, side);
                 return true;
+            }
+            else {
+                
+                block.rotateBlock(world, x, y, z, ForgeDirection.NORTH);
             }
         }
 
