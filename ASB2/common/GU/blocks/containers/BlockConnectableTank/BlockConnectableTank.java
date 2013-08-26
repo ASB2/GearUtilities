@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
 import GU.utils.UtilInventory;
-import GU.utils.UtilRender;
+import GU.utils.*;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockConnectableTank extends ContainerBase {
@@ -41,7 +41,7 @@ public class BlockConnectableTank extends ContainerBase {
         this.setUnlocalizedName(Reference.UNIQUE_ID + blockName);
         GameRegistry.registerBlock(this, ItemBlockConnectableTank.class, this.getUnlocalizedName());
     }
-    
+
     @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 
@@ -50,10 +50,10 @@ public class BlockConnectableTank extends ContainerBase {
         if (tile != null && tile instanceof TileConnectableTank) {
 
             TileConnectableTank tileIn = (TileConnectableTank)tile;
-            
+
             ItemStack stack = new ItemStack(this, 1, 0);
             ((ItemBlockConnectableTank)stack.getItem()).setFluidStack(stack, tileIn.fluidTank.getFluid());
-            
+
             ArrayList<ItemStack> list = new ArrayList<ItemStack>();
             list.add(stack);
             return list;
@@ -160,9 +160,8 @@ public class BlockConnectableTank extends ContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z,
-            EntityPlayer entityplayer, int par6, float par7, float par8,
-            float par9) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityplayer, int side, float par7, float par8, float par9) {
+
         ItemStack current = entityplayer.inventory.getCurrentItem();
 
         if (current != null) {
@@ -172,56 +171,45 @@ public class BlockConnectableTank extends ContainerBase {
 
             if (fluid != null) {
 
-                int amount = tank.fluidTank.fill(fluid, true);
+                if (!entityplayer.capabilities.isCreativeMode) {
 
-                if (amount != 0 && !entityplayer.capabilities.isCreativeMode) {
 
-                    return UtilInventory.consumeItemStack(
-                            entityplayer.inventory, current, 1);
+                    if(UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid)) {
+
+                        if(UtilInventory.consumeItemStack(entityplayer.inventory, current, 1)) {
+
+                            return true;
+                        }
+                    }
                 }
-                return true;
+
+                else {
+
+                    return UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid);
+                }
             } else {
 
-                if (FluidContainerRegistry.isEmptyContainer(current)) {
+                if(FluidContainerRegistry.isEmptyContainer(current)) {
 
-                    if (tank.fluidTank.getFluid() != null) {
+                    if(tank.fluidTank.getFluid() != null) {
 
-                        ItemStack filled = FluidContainerRegistry
-                                .fillFluidContainer(tank.fluidTank.getFluid(),
-                                        current);
+                        ItemStack filled = FluidContainerRegistry.fillFluidContainer(tank.fluidTank.getFluid(), current);
 
-                        if (FluidContainerRegistry
-                                .getFluidForFilledItem(filled).amount <= tank.fluidTank
-                                .getFluidAmount()) {
+                        if(!entityplayer.capabilities.isCreativeMode) {
 
-                            if (!entityplayer.capabilities.isCreativeMode) {
+                            if(UtilFluid.removeFluidFromTank(tank, ForgeDirection.getOrientation(side), FluidContainerRegistry.getFluidForFilledItem(filled))) {
 
-                                if (UtilInventory
-                                        .addItemStackToInventoryAndSpawnExcess(
-                                                world, entityplayer.inventory,
-                                                filled, x, y, z)
-                                        && UtilInventory.consumeItemStack(
-                                                entityplayer.inventory,
-                                                current, 1)) {
+                                if(UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, x, y, z)) {
 
-                                    tank.fluidTank
-                                            .drain(FluidContainerRegistry
-                                                    .getFluidForFilledItem(filled).amount,
-                                                    true);
-                                }
-                            } else {
+                                    if(UtilInventory.consumeItemStack(entityplayer.inventory, current, 1)) {
 
-                                if (UtilInventory
-                                        .addItemStackToInventoryAndSpawnExcess(
-                                                world, entityplayer.inventory,
-                                                filled, x, y, z)) {
-
-                                    tank.fluidTank
-                                            .drain(FluidContainerRegistry
-                                                    .getFluidForFilledItem(filled).amount,
-                                                    true);
+                                        return true;
+                                    }
                                 }
                             }
+                        } else {
+
+                            return UtilFluid.removeFluidFromTank(tank, ForgeDirection.getOrientation(side), fluid);
                         }
                     }
                 }

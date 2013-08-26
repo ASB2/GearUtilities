@@ -12,13 +12,13 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import GU.ItemRegistry;
 import GU.items.ItemBase;
 import GU.utils.UtilBlock;
 import GU.utils.UtilDirection;
 import GU.utils.UtilInventory;
 import GU.utils.UtilItemStack;
 import GU.utils.UtilMisc;
-import GU.*;
 
 public class ItemStorageCrystal extends ItemBase {
 
@@ -74,18 +74,49 @@ public class ItemStorageCrystal extends ItemBase {
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz) {
 
         FluidStack stack = this.getFluidStack(itemStack);
+        int[] coords = UtilDirection.translateDirectionToCoords( ForgeDirection.getOrientation(side), x, y, z);
+
         if(stack != null) {
 
             if(stack.getFluid().getBlockID() != -1 && stack.getFluid().getBlockID() != 0) {
 
-                int[] coords = UtilDirection.translateDirectionToCoords( ForgeDirection.getOrientation(side), x, y, z);
+                if(!player.capabilities.isCreativeMode) {
 
-                if(UtilInventory.consumeItemStack(player.inventory, itemStack, 1) && UtilInventory.addItemStackToInventory(player.inventory, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0))) {
-                    
+                    if(UtilInventory.consumeItemStack(player.inventory, itemStack, 1) && UtilInventory.addItemStackToInventory(player.inventory, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0))) {
+
+                        return UtilBlock.placeBlockInAir(world, coords[0], coords[1], coords[2], stack.getFluid().getBlockID(), 0);
+                    }
+                }
+                else {
+
                     return UtilBlock.placeBlockInAir(world, coords[0], coords[1], coords[2], stack.getFluid().getBlockID(), 0);
                 }
             }
-        }        
+        }
+//        else {
+//            
+//            Fluid fluid = FluidRegistry.getFluid(world.getBlockId(coords[0], coords[1], coords[2]));
+//
+//            if(fluid != null) {
+//                
+//                ItemStack filled = FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0));
+//
+//                if(filled != null) {
+//
+//                    if(!player.capabilities.isCreativeMode) {
+//
+//                        if(UtilInventory.addItemStackToInventory(player.inventory, filled) && UtilInventory.consumeItemStack(player.inventory, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0), 1)) {
+//
+//                            return world.setBlockToAir(coords[0], coords[1], coords[2]);
+//                        }
+//                    }
+//                    else {
+//                        
+//                        return world.setBlockToAir(coords[0], coords[1], coords[2]);
+//                    }
+//                }
+//            }
+//        }
         return false;
     }
 

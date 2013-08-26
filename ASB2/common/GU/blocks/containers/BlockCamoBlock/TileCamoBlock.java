@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import GU.blocks.containers.TileBase;
+import GU.utils.*;
 
 public class TileCamoBlock extends TileBase implements IInventory {
 
@@ -27,26 +28,8 @@ public class TileCamoBlock extends TileBase implements IInventory {
     @Override
     public ItemStack decrStackSize(int slot, int amount) {
 
-        ItemStack itemStack = getStackInSlot(slot);
-        if (itemStack != null) {
 
-            if (itemStack.stackSize <= amount) {
-
-                setInventorySlotContents(slot, null);
-            }
-
-            else {
-
-                itemStack = itemStack.splitStack(amount);
-
-                if (itemStack.stackSize == 0) {
-
-                    setInventorySlotContents(slot, null);
-                }
-            }
-        }
-
-        return itemStack;
+        return UtilInventory.decreaseSlotContents(this, slot, amount);
     }
 
     @Override

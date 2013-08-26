@@ -56,15 +56,13 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
         for (ForgeDirection direction : ForgeDirection.values()) {
 
-            TileEntity tile = UtilDirection.translateDirectionToTile(this,
-                    worldObj, direction);
+            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
             if (tile != null && tile instanceof TileConnectableTank) {
 
                 TileConnectableTank tileC = (TileConnectableTank) tile;
 
-                if (!(tileC.fluidTank.getCapacity() == tileC.fluidTank
-                        .getFluidAmount())) {
+                if (!(tileC.fluidTank.getCapacity() == tileC.fluidTank.getFluidAmount()) && direction != ForgeDirection.UP) {
 
                     amount++;
                 }
@@ -96,7 +94,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
                 if (fluidTank.getFluidAmount() >= 1000)
                     return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 1000, true);
                 
-                return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 1000, true);
+                return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, fluidTank.getFluidAmount(), true);
             }
         }
         return false;
@@ -107,26 +105,11 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
         boolean itWorked = false;
 
         int amountDivided = 1000;
-
-        if (fluidTank.getFluidAmount() >= 5000)
-            amountDivided = 5000;
-
-        if (fluidTank.getFluidAmount() >= 4000)
-            amountDivided = 4000;
-
-        if (fluidTank.getFluidAmount() >= 3000)
-            amountDivided = 3000;
-
-        if (fluidTank.getFluidAmount() >= 2000)
-            amountDivided = 2000;
-
+        
         if (this.getFluidHandlersAround() != 0) {
 
-            amountDivided = 1000 / this.getFluidHandlersAround();
-        }
-
-        if (fluidTank.getFluidAmount() < 1000)
-            amountDivided = fluidTank.getFluidAmount();
+            amountDivided = amountDivided / this.getFluidHandlersAround();
+        }        
 
         for (ForgeDirection direction : ForgeDirection.values()) {
 

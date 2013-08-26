@@ -1,6 +1,7 @@
 package GU.utils;
 
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
@@ -83,8 +84,7 @@ public final class UtilFluid {
         return isSuccessful;
     }
 
-    public static boolean addFluidToTank(IFluidHandler destination,
-            ForgeDirection from, FluidStack fluid) {
+    public static boolean addFluidToTank(IFluidHandler destination, ForgeDirection from, FluidStack fluid) {
 
         boolean itWorked = false;
 
@@ -129,8 +129,12 @@ public final class UtilFluid {
         return itWorked;
     }
 
-    public static boolean removeFluidFromTank(IFluidHandler destination,
-            ForgeDirection from, FluidStack fluid) {
+    public static boolean removeFluidFromTank(IFluidHandler destination, ForgeDirection from, Fluid fluid, int amount) {
+        
+        return UtilFluid.removeFluidFromTank(destination, from, new FluidStack(fluid, amount));
+    }
+    
+    public static boolean removeFluidFromTank(IFluidHandler destination, ForgeDirection from, FluidStack fluid) {
 
         ForgeDirection oppositeDirection = from.getOpposite();
 
@@ -138,18 +142,21 @@ public final class UtilFluid {
 
             if (destination.getTankInfo(from) != null) {
 
-                for (FluidTankInfo info : destination.getTankInfo(from)) {
+                for (FluidTankInfo info : destination.getTankInfo(oppositeDirection)) {
 
                     if (info.fluid != null) {
 
                         if (info.fluid.isFluidEqual(fluid)) {
 
-                            if (destination.canDrain(oppositeDirection,
-                                    fluid.getFluid())) {
+                            if (destination.canDrain(oppositeDirection, fluid.getFluid())) {
 
-                                destination.drain(oppositeDirection, fluid,
-                                        true);
-                                return true;
+                                if(destination.drain(oppositeDirection, fluid, false) != null) {
+                                    
+                                    if(destination.drain(oppositeDirection, fluid, true) != null) {
+
+                                        return true;                                        
+                                    }
+                                }
                             }
                         }
                     }

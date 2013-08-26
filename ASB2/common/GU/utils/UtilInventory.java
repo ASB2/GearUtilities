@@ -28,21 +28,12 @@ public class UtilInventory {
 
                     destination.setInventorySlotContents(i, itemStack);
                     return true;
-                } else {
+                } 
+                else {
 
-                    if (stack.isItemEqual(itemStack)) {
+                    if(stack.isItemEqual(itemStack)) {
 
-                        int stackSizeAdded = stack.stackSize + itemStack.stackSize;
-
-                        if (stackSizeAdded <= destination.getInventoryStackLimit()) {
-
-                            if (stackSizeAdded <= stack.getMaxStackSize()) {
-
-                                stack.stackSize = stackSizeAdded;
-                                destination.setInventorySlotContents(i, stack);
-                                return true;
-                            }
-                        }
+                        return UtilInventory.increaseSlotContents(destination, i, itemStack.stackSize);
                     }
                 }
             }
@@ -59,7 +50,7 @@ public class UtilInventory {
                 ItemStack stack = destination.getStackInSlot(i);
 
                 if (stack == null) {
-                    
+
                     return true;
                 } else {
 
@@ -70,7 +61,7 @@ public class UtilInventory {
                         if (stackSizeAdded <= destination.getInventoryStackLimit()) {
 
                             if (stackSizeAdded <= stack.getMaxStackSize()) {
-                                
+
                                 return true;
                             }
                         }
@@ -80,7 +71,7 @@ public class UtilInventory {
         }
         return false;
     }
-    
+
     public static boolean addItemStackToSlot(IInventory inventory, ItemStack stack, int slot) {
 
         if (stack != null && inventory != null) {
@@ -101,7 +92,7 @@ public class UtilInventory {
         return false;
     }
 
-    public static boolean doesInventoryHasStack(IInventory inventory, ItemStack stack) {
+    public static boolean hasItemStack(IInventory inventory, ItemStack stack) {
 
         if (stack != null) {
 
@@ -131,7 +122,7 @@ public class UtilInventory {
 
                     if (slotStack.isItemEqual(itemStack)) {
 
-                        return UtilInventory.decreaseSlotContents(inventory, i, amount);
+                        return UtilInventory.decreaseSlotContents(inventory, i, amount) != null;
                     }
                 }
             }
@@ -230,66 +221,48 @@ public class UtilInventory {
         }
     }
 
-    public static boolean decreaseSlotContents(IInventory inventory, int slotToChange, int amount) {
-
-        if (inventory.getStackInSlot(slotToChange) != null) {
-
-            ItemStack itemStack = inventory.getStackInSlot(slotToChange).copy();
-
-            if (itemStack != null) {
-
-                if (itemStack.stackSize == 1 && amount == 1) {
-
-                    inventory.setInventorySlotContents(slotToChange, null);
-                    return true;
-                }
-                if (itemStack.stackSize >= amount) {
-
-                    itemStack.stackSize = itemStack.stackSize - amount;
-
-                    if (itemStack.stackSize > 0) {
-
-                        inventory.setInventorySlotContents(slotToChange, itemStack);
-                        return true;
-                    } else if (itemStack.stackSize == 0) {
-
-                        inventory.setInventorySlotContents(slotToChange, null);
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public static ItemStack decreaseSlotContentsItemStack(IInventory inventory, int slot, int amt) {
+    public static ItemStack decreaseSlotContents(IInventory inventory, int slot, int amount) {
 
         ItemStack stack = inventory.getStackInSlot(slot);
 
         if (stack != null) {
 
-            if (stack.stackSize <= amt) {
+            int newAmount = stack.stackSize - amount;
 
+            ItemStack temp = stack.copy();
+            temp.stackSize = newAmount;
+            
+            if(newAmount > 0) {
+                
+                inventory.setInventorySlotContents(slot, temp);
+                return temp;
+            }
+            else if(newAmount == 0) {
+
+                ItemStack newStack = stack.copy();
+                newStack.stackSize = amount;
                 inventory.setInventorySlotContents(slot, null);
-            } else {
-
-                stack = stack.splitStack(amt);
-                if (stack.stackSize == 0) {
-
-                    inventory.setInventorySlotContents(slot, null);
-                }
+                return newStack;
             }
         }
-        return stack;
+        return null;
     }
 
-    public static boolean increaseSlotContents(IInventory inventory, ItemStack itemStack, int slotToChange, int amount) {
+    public static boolean increaseSlotContents(IInventory inventory, int slot, int amount) {
 
-        if (amount <= inventory.getInventoryStackLimit() && itemStack.stackSize <= inventory.getInventoryStackLimit()) {
+        ItemStack stack = inventory.getStackInSlot(slot);
 
-            if (inventory.getStackInSlot(slotToChange) == null) {
+        if (stack != null) {
 
-                inventory.setInventorySlotContents(slotToChange, itemStack);
+            int newAmount = stack.stackSize + amount;
+
+            if(newAmount <= inventory.getInventoryStackLimit() && newAmount <= stack.getMaxStackSize()) {
+
+                ItemStack temp = stack.copy();
+                temp.stackSize = newAmount;
+
+                inventory.setInventorySlotContents(slot, temp);
+                return true;
             }
         }
         return false;

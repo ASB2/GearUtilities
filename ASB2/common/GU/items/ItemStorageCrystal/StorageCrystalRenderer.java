@@ -1,8 +1,5 @@
 package GU.items.ItemStorageCrystal;
 
-import java.util.Random;
-
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
@@ -32,7 +29,7 @@ public class StorageCrystalRenderer implements IItemRenderer {
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
         ItemStorageCrystal crystal = (ItemStorageCrystal) item.getItem();
-        Tessellator tess = Tessellator.instance;
+//        Tessellator tess = Tessellator.instance;
         Icon icon = crystal.getIcon(item, 0);
         
         renderItem.renderIcon(0, 0, icon, 16, 16);
