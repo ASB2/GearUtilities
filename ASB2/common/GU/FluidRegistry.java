@@ -30,11 +30,11 @@ public class FluidRegistry {
 
     public static void initFluids() {
 
-        LiquidWood = new FluidBase("liquidWood", 0x000000);
-        LiquidIron = new FluidBase("liquidiron", 0x000000);
-        LiquidGold = new FluidBase("liquidGold", 0x000000);
-        LiquidDiamond = new FluidBase("liquidDiamond", 0x000000);
-        LiquidEmerald = new FluidBase("liquidEmerald", 0x000000);
+        LiquidWood = new FluidBase("Liquid Wood", 0x000000);
+        LiquidIron = new FluidBase("Liquid Iron", 0x000000);
+        LiquidGold = new FluidBase("Liquid Gold", 0x000000);
+        LiquidDiamond = new FluidBase("Liquid Diamond", 0x000000);
+        LiquidEmerald = new FluidBase("Liquid Emerald", 0x000000);
 
     }
 
@@ -44,7 +44,7 @@ public class FluidRegistry {
 
         if (event.map.textureType == 0) {
 
-            LiquidDiamond.setIcon(event.map.registerIcon(Reference.MODDID + ":FluidDiamond"));
+            LiquidDiamond.setIcon(event.map.registerIcon(Reference.MODDID + ":fluids/FluidDiamond"));
         }
     }
 

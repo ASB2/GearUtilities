@@ -27,6 +27,7 @@ IWaitTrigger, IWrenchable {
     protected Wait waitTimer;
 
     public TileBase() {
+        
         if (color == null)
             color = EnumVinillaColor.NONE;
 

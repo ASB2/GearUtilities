@@ -173,12 +173,14 @@ public class BlockConnectableTank extends ContainerBase {
 
                 if (!entityplayer.capabilities.isCreativeMode) {
 
+                    if(UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid, false)) {
+                        
+                        if(UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid, true)) {
 
-                    if(UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid, true)) {
+                            if(UtilInventory.consumeItemStack(entityplayer.inventory, current, 1)) {
 
-                        if(UtilInventory.consumeItemStack(entityplayer.inventory, current, 1)) {
-
-                            return true;
+                                return true;
+                            }
                         }
                     }
                 }

@@ -17,9 +17,9 @@ public class UtilInventory {
 
     public static boolean addItemStackToInventory(IInventory destination, ItemStack itemStack, boolean doWork) {
 
-        if (itemStack != null) {
+        boolean itWorked = false;
 
-            boolean itWorked = false;
+        if (itemStack != null) {
             
             for (int i = 0; i < destination.getSizeInventory(); i++) {
 
@@ -29,7 +29,7 @@ public class UtilInventory {
                 }
             }
         }
-        return false;
+        return itWorked;
     }
 
     public static boolean addItemStackToSlot(IInventory destination, ItemStack itemStack, int slot, boolean doWork) {

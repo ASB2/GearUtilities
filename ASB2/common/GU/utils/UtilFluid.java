@@ -33,7 +33,7 @@ public final class UtilFluid {
                                 if(UtilFluid.removeFluidFromTank(source, oppositeDirection, fluidToMove, false)) {
 
                                     isSuccessful = true;
-                                    
+
                                     if(doMove) {
 
                                         UtilFluid.addFluidToTank(destination, from, fluidToMove, true);
@@ -68,22 +68,22 @@ public final class UtilFluid {
                             itWorked = false;
                             break;
                         }                        
-
-                        if(destination.canFill(oppositeDirection, fluid.getFluid())) {
-
-                            if(destination.fill(oppositeDirection, fluid, false) != 0) {
-
-                                if(doMove)
-                                    destination.fill(oppositeDirection, fluid, true);
-
-                                itWorked = true;
-                            } 
-                            else {
-
-                                itWorked = false;
-                            }
-                        } 
                     }
+                    
+                    if(destination.canFill(oppositeDirection, fluid.getFluid())) {
+
+                        if(destination.fill(oppositeDirection, fluid, false) != 0) {
+
+                            if(doMove)
+                                destination.fill(oppositeDirection, fluid, true);
+
+                            itWorked = true;
+                        } 
+                        else {
+
+                            itWorked = false;
+                        }
+                    } 
                 }
             }
         }
@@ -99,6 +99,7 @@ public final class UtilFluid {
 
         ForgeDirection oppositeDirection = from.getOpposite();
         boolean itWorked = false;
+
         if(fluid != null && destination != null) {
 
             if(destination.getTankInfo(from) != null) {
