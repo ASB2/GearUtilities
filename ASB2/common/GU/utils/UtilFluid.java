@@ -7,8 +7,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public final class UtilFluid {
 
-    public static boolean moveFluid(IFluidHandler source, ForgeDirection from,
-            IFluidHandler destination, int amount, boolean fillExtra) {
+    public static boolean moveFluid(IFluidHandler source, ForgeDirection from, IFluidHandler destination, int amount, boolean fillExtra) {
 
         ForgeDirection oppositeDirection = from.getOpposite();
 
@@ -26,19 +25,23 @@ public final class UtilFluid {
 
                         fluidStack.amount = amount;
 
-                        if (destination.canFill(oppositeDirection,
-                                fluidStack.getFluid())) {
+                        if (destination.canFill(oppositeDirection, fluidStack.getFluid())) {
 
                             if (source.canDrain(from, fluidStack.getFluid())) {
 
-                                if (destination.fill(oppositeDirection,
-                                        fluidStack, true) != 0) {
+                                if (destination.fill(oppositeDirection, fluidStack, false) != 0) {
 
-                                    source.drain(from, fluidStack, true);
-                                    isSuccessful = true;
-                                } else {
+                                    if(destination.fill(oppositeDirection, fluidStack, true) != 0) {
 
-                                    isSuccessful = false;
+                                        if(source.drain(from, fluidStack, false) != null) {
+
+                                            source.drain(from, fluidStack, true);
+                                            isSuccessful = true;
+                                        } else {
+
+                                            isSuccessful = false;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -47,26 +50,27 @@ public final class UtilFluid {
 
                             FluidStack stackTwo = fluidStack.copy();
 
-                            if (stackTwo.amount >= info.capacity
-                                    - info.fluid.amount) {
+                            if (stackTwo.amount >= info.capacity - info.fluid.amount) {
 
-                                stackTwo.amount = info.capacity
-                                        - info.fluid.amount;
+                                stackTwo.amount = info.capacity - info.fluid.amount;
 
-                                if (destination.canFill(oppositeDirection,
-                                        stackTwo.getFluid())) {
+                                if (destination.canFill(oppositeDirection, stackTwo.getFluid())) {
 
-                                    if (source.canDrain(from,
-                                            stackTwo.getFluid())) {
+                                    if (source.canDrain(from, stackTwo.getFluid())) {
 
-                                        if (destination.fill(oppositeDirection,
-                                                stackTwo, true) != 0) {
+                                        if (destination.fill(oppositeDirection, stackTwo, false) != 0) {
 
-                                            source.drain(from, stackTwo, true);
-                                            isSuccessful = true;
-                                        } else {
+                                            if(destination.fill(oppositeDirection, stackTwo, true) != 0) {
 
-                                            isSuccessful = false;
+                                                if(source.drain(from, stackTwo, false) != null) {
+
+                                                    source.drain(from, stackTwo, true);
+                                                    isSuccessful = true;
+                                                } else {
+
+                                                    isSuccessful = false;
+                                                }
+                                            }
                                         }
                                     }
                                 }
