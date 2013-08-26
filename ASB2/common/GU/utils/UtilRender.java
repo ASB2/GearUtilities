@@ -1737,10 +1737,7 @@ public final class UtilRender {
             var8 = var11;
         }
 
-        return Minecraft.isAmbientOcclusionEnabled() ? renderFakeBlockWithAmbientOcclusion(
-                texture, x, y, z, var6, var7, var8, renderer, world)
-                : renderFakeBlockWithColorMultiplier(texture, x, y, z, var6,
-                        var7, var8, renderer, world);
+        return Minecraft.isAmbientOcclusionEnabled() ? renderFakeBlockWithAmbientOcclusion(texture, x, y, z, var6, var7, var8, renderer, world) : renderFakeBlockWithColorMultiplier(texture, x, y, z, var6, var7, var8, renderer, world);
     }
 
     public static boolean renderFakeBlock(Icon texture, int x, int y, int z,

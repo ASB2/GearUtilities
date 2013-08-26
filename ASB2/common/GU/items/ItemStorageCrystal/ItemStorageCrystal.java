@@ -41,7 +41,7 @@ public class ItemStorageCrystal extends ItemBase {
             if (fluid.getFluid().getStillIcon() != null) {
 
                 if(pass == 0)
-                return fluid.getFluid().getIcon();
+                    return fluid.getFluid().getIcon();
             }
         }
 
@@ -69,7 +69,7 @@ public class ItemStorageCrystal extends ItemBase {
         String name = UtilItemStack.getTAGfromItemstack(itemStack).getString("fluidName");
         Fluid fluid = FluidRegistry.getFluid(name);
         int fluidAmount = UtilItemStack.getTAGfromItemstack(itemStack).getInteger("fluidAmount");
-        
+
         if (fluid != null && fluidAmount != 0) {
 
             return new FluidStack(fluid, fluidAmount);
