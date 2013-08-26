@@ -1720,15 +1720,14 @@ public final class UtilRender {
         return id == idToMatch;
     }
 
-    public static boolean renderFakeBlock(Icon texture, int x, int y, int z,
-            RenderBlocks renderer, IBlockAccess world) {
+    public static boolean renderFakeBlock(Icon texture, int x, int y, int z, RenderBlocks renderer, IBlockAccess world) {
         Block block = Block.stone;
         int var5 = block.colorMultiplier(world, x, y, z);
         float var6 = (var5 >> 16 & 255) / 255.0F;
         float var7 = (var5 >> 8 & 255) / 255.0F;
         float var8 = (var5 & 255) / 255.0F;
 
-        if (EntityRenderer.anaglyphEnable) {
+        if (EntityRenderer.anaglyphEnable) { 
             float var9 = (var6 * 30.0F + var7 * 59.0F + var8 * 11.0F) / 100.0F;
             float var10 = (var6 * 30.0F + var7 * 70.0F) / 100.0F;
             float var11 = (var6 * 30.0F + var8 * 70.0F) / 100.0F;
@@ -2649,9 +2648,7 @@ public final class UtilRender {
         return flag;
     }
 
-    public static boolean renderFakeBlockWithColorMultiplier(Icon texture,
-            int xPos, int yPos, int zPos, float colorRed, float colorGreen,
-            float colorBlue, RenderBlocks render, IBlockAccess world) {
+    public static boolean renderFakeBlockWithColorMultiplier(Icon texture, int xPos, int yPos, int zPos, float colorRed, float colorGreen, float colorBlue, RenderBlocks render, IBlockAccess world) {
         Block block = Block.stone;
         render.enableAO = false;
         Tessellator tessellator = Tessellator.instance;
@@ -2685,37 +2682,27 @@ public final class UtilRender {
             f18 = f6 * colorBlue;
         }
 
-        int l = block.getMixedBrightnessForBlock(render.blockAccess, xPos,
-                yPos, zPos);
+        int l = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos, zPos);
 
         if (render.renderAllFaces
-                || block.shouldSideBeRendered(render.blockAccess, xPos,
-                        yPos - 1, zPos, 0)) {
-            tessellator.setBrightness(render.renderMinY > 0.0D ? l : block
-                    .getMixedBrightnessForBlock(render.blockAccess, xPos,
-                            yPos - 1, zPos));
+                || block.shouldSideBeRendered(render.blockAccess, xPos, yPos - 1, zPos, 0)) {
+            tessellator.setBrightness(render.renderMinY > 0.0D ? l : block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos - 1, zPos));
             tessellator.setColorOpaque_F(f10, f13, f16);
             render.renderFaceYNeg(block, xPos, yPos, zPos, texture);
             flag = true;
         }
 
         if (render.renderAllFaces
-                || block.shouldSideBeRendered(render.blockAccess, xPos,
-                        yPos + 1, zPos, 1)) {
-            tessellator.setBrightness(render.renderMaxY < 1.0D ? l : block
-                    .getMixedBrightnessForBlock(render.blockAccess, xPos,
-                            yPos + 1, zPos));
+                || block.shouldSideBeRendered(render.blockAccess, xPos, yPos + 1, zPos, 1)) {
+            tessellator.setBrightness(render.renderMaxY < 1.0D ? l : block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos + 1, zPos));
             tessellator.setColorOpaque_F(f7, f8, f9);
             render.renderFaceYPos(block, xPos, yPos, zPos, texture);
             flag = true;
         }
 
         if (render.renderAllFaces
-                || block.shouldSideBeRendered(render.blockAccess, xPos, yPos,
-                        zPos - 1, 2)) {
-            tessellator.setBrightness(render.renderMinZ > 0.0D ? l : block
-                    .getMixedBrightnessForBlock(render.blockAccess, xPos, yPos,
-                            zPos - 1));
+                || block.shouldSideBeRendered(render.blockAccess, xPos, yPos, zPos - 1, 2)) {
+            tessellator.setBrightness(render.renderMinZ > 0.0D ? l : block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos, zPos - 1));
             tessellator.setColorOpaque_F(f11, f14, f17);
             render.renderFaceZNeg(block, xPos, yPos, zPos, texture);
 
@@ -2723,11 +2710,8 @@ public final class UtilRender {
         }
 
         if (render.renderAllFaces
-                || block.shouldSideBeRendered(render.blockAccess, xPos, yPos,
-                        zPos + 1, 3)) {
-            tessellator.setBrightness(render.renderMaxZ < 1.0D ? l : block
-                    .getMixedBrightnessForBlock(render.blockAccess, xPos, yPos,
-                            zPos + 1));
+                || block.shouldSideBeRendered(render.blockAccess, xPos, yPos, zPos + 1, 3)) {
+            tessellator.setBrightness(render.renderMaxZ < 1.0D ? l : block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos, zPos + 1));
             tessellator.setColorOpaque_F(f11, f14, f17);
             render.renderFaceZPos(block, xPos, yPos, zPos, texture);
 
@@ -2735,11 +2719,8 @@ public final class UtilRender {
         }
 
         if (render.renderAllFaces
-                || block.shouldSideBeRendered(render.blockAccess, xPos - 1,
-                        yPos, zPos, 4)) {
-            tessellator.setBrightness(render.renderMinX > 0.0D ? l : block
-                    .getMixedBrightnessForBlock(render.blockAccess, xPos - 1,
-                            yPos, zPos));
+                || block.shouldSideBeRendered(render.blockAccess, xPos - 1, yPos, zPos, 4)) {
+            tessellator.setBrightness(render.renderMinX > 0.0D ? l : block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos, zPos));
             tessellator.setColorOpaque_F(f12, f15, f18);
             render.renderFaceXNeg(block, xPos, yPos, zPos, texture);
 
@@ -2747,11 +2728,8 @@ public final class UtilRender {
         }
 
         if (render.renderAllFaces
-                || block.shouldSideBeRendered(render.blockAccess, xPos + 1,
-                        yPos, zPos, 5)) {
-            tessellator.setBrightness(render.renderMaxX < 1.0D ? l : block
-                    .getMixedBrightnessForBlock(render.blockAccess, xPos + 1,
-                            yPos, zPos));
+                || block.shouldSideBeRendered(render.blockAccess, xPos + 1, yPos, zPos, 5)) {
+            tessellator.setBrightness(render.renderMaxX < 1.0D ? l : block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos, zPos));
             tessellator.setColorOpaque_F(f12, f15, f18);
             render.renderFaceXPos(block, xPos, yPos, zPos, texture);
 
