@@ -21,8 +21,7 @@ public class ItemPhantomPlacer extends ItemBase {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player,
-            java.util.List info, boolean var1) {
+    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
         super.addInformation(itemStack, player, info, var1);
 
         info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD)
@@ -34,21 +33,16 @@ public class ItemPhantomPlacer extends ItemBase {
     }
 
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player,
-            World world, int x, int y, int z, int side, float hitx, float hity,
-            float hitz) {
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz) {
 
-        int[] coords = UtilDirection.translateDirectionToCoords(
-                ForgeDirection.getOrientation(side), x, y, z);
+        int[] coords = UtilDirection.translateDirectionToCoords( ForgeDirection.getOrientation(side), x, y, z);
 
-        UtilBlock.placeBlockInAir(world, coords[0], coords[1], coords[2],
-                BlockRegistry.BlockPhantomBlock.blockID, 0);
+        UtilBlock.placeBlockInAir(world, coords[0], coords[1], coords[2], BlockRegistry.BlockPhantomBlock.blockID, 0);
         return true;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world,
-            EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 
         if (!world.isRemote) {
 

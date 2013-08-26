@@ -7,12 +7,18 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import GU.items.ItemBase;
+import GU.utils.UtilBlock;
+import GU.utils.UtilDirection;
+import GU.utils.UtilInventory;
 import GU.utils.UtilItemStack;
 import GU.utils.UtilMisc;
+import GU.*;
 
 public class ItemStorageCrystal extends ItemBase {
 
@@ -62,6 +68,25 @@ public class ItemStorageCrystal extends ItemBase {
             info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Stored: None");
             info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Amount: 0");
         }
+    }
+
+    @Override
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz) {
+
+        FluidStack stack = this.getFluidStack(itemStack);
+        if(stack != null) {
+
+            if(stack.getFluid().getBlockID() != -1 && stack.getFluid().getBlockID() != 0) {
+
+                int[] coords = UtilDirection.translateDirectionToCoords( ForgeDirection.getOrientation(side), x, y, z);
+
+                if(UtilInventory.consumeItemStack(player.inventory, itemStack, 1) && UtilInventory.addItemStackToInventory(player.inventory, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0))) {
+                    
+                    return UtilBlock.placeBlockInAir(world, coords[0], coords[1], coords[2], stack.getFluid().getBlockID(), 0);
+                }
+            }
+        }        
+        return false;
     }
 
     public FluidStack getFluidStack(ItemStack itemStack) {
