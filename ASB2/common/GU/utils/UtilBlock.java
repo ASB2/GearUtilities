@@ -66,7 +66,7 @@ public class UtilBlock {
 
                     if (inventory != null) {
 
-                        if (!UtilInventory.addItemStackToInventory(inventory, item)) {
+                        if (!UtilInventory.addItemStackToInventory(inventory, item, true)) {
 
                             if (dropExtra) {
 

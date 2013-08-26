@@ -82,7 +82,7 @@ public class ItemStorageCrystal extends ItemBase {
 
                 if(!player.capabilities.isCreativeMode) {
 
-                    if(UtilInventory.consumeItemStack(player.inventory, itemStack, 1) && UtilInventory.addItemStackToInventory(player.inventory, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0))) {
+                    if(UtilInventory.consumeItemStack(player.inventory, itemStack, 1) && UtilInventory.addItemStackToInventory(player.inventory, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0), true)) {
 
                         return UtilBlock.placeBlockInAir(world, coords[0], coords[1], coords[2], stack.getFluid().getBlockID(), 0);
                     }

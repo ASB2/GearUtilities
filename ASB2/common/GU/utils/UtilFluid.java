@@ -8,71 +8,36 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public final class UtilFluid {
 
-    public static boolean moveFluid(IFluidHandler source, ForgeDirection from, IFluidHandler destination, int amount, boolean fillExtra) {
+    public static boolean moveFluid(IFluidHandler source, ForgeDirection from, IFluidHandler destination, int amount, boolean doMove) {
 
         ForgeDirection oppositeDirection = from.getOpposite();
 
         boolean isSuccessful = false;
 
-        if (source != null && destination != null) {
+        if(source != null && destination != null) {
 
             for (FluidTankInfo info : source.getTankInfo(from)) {
 
-                if (info.fluid != null) {
+                if(info != null) {
 
-                    FluidStack fluidStack = info.fluid.copy();
+                    if(info.fluid != null) {
 
-                    if (fluidStack.amount >= amount) {
+                        FluidStack fluidToMove = info.fluid.copy();
 
-                        fluidStack.amount = amount;
+                        if(fluidToMove.amount >= amount) {
 
-                        if (destination.canFill(oppositeDirection, fluidStack.getFluid())) {
+                            fluidToMove.amount = amount;
 
-                            if (source.canDrain(from, fluidStack.getFluid())) {
+                            if(UtilFluid.addFluidToTank(destination, from, fluidToMove, false)) {
 
-                                if (destination.fill(oppositeDirection, fluidStack, false) != 0) {
+                                if(UtilFluid.removeFluidFromTank(source, oppositeDirection, fluidToMove, false)) {
 
-                                    if(destination.fill(oppositeDirection, fluidStack, true) != 0) {
+                                    isSuccessful = true;
+                                    
+                                    if(doMove) {
 
-                                        if(source.drain(from, fluidStack, false) != null) {
-
-                                            source.drain(from, fluidStack, true);
-                                            isSuccessful = true;
-                                        } else {
-
-                                            isSuccessful = false;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        else if (fillExtra) {
-
-                            FluidStack stackTwo = fluidStack.copy();
-
-                            if (stackTwo.amount >= info.capacity - info.fluid.amount) {
-
-                                stackTwo.amount = info.capacity - info.fluid.amount;
-
-                                if (destination.canFill(oppositeDirection, stackTwo.getFluid())) {
-
-                                    if (source.canDrain(from, stackTwo.getFluid())) {
-
-                                        if (destination.fill(oppositeDirection, stackTwo, false) != 0) {
-
-                                            if(destination.fill(oppositeDirection, stackTwo, true) != 0) {
-
-                                                if(source.drain(from, stackTwo, false) != null) {
-
-                                                    source.drain(from, stackTwo, true);
-                                                    isSuccessful = true;
-                                                } else {
-
-                                                    isSuccessful = false;
-                                                }
-                                            }
-                                        }
+                                        UtilFluid.addFluidToTank(destination, from, fluidToMove, true);
+                                        UtilFluid.removeFluidFromTank(source, oppositeDirection, fluidToMove, true);
                                     }
                                 }
                             }
@@ -84,43 +49,81 @@ public final class UtilFluid {
         return isSuccessful;
     }
 
-    public static boolean addFluidToTank(IFluidHandler destination, ForgeDirection from, FluidStack fluid) {
+    public static boolean addFluidToTank(IFluidHandler destination, ForgeDirection from, FluidStack fluid, boolean doMove) {
 
         boolean itWorked = false;
 
         ForgeDirection oppositeDirection = from.getOpposite();
 
-        if (fluid != null && destination != null && fluid != null) {
+        if(fluid != null && destination != null && fluid != null) {
 
             for (FluidTankInfo info : destination.getTankInfo(from)) {
 
-                if (info.fluid != null) {
+                if(info != null) {
 
-                    if (info.fluid.isFluidEqual(fluid)) {
+                    if(info.fluid != null) {
 
-                        if (destination.canFill(oppositeDirection,
-                                fluid.getFluid())) {
-
-                            if (destination
-                                    .fill(oppositeDirection, fluid, true) != 0) {
-
-                                itWorked = true;
-                            } else {
-                                itWorked = false;
-                            }
-                        }
-                    }
-                } else {
-
-                    if (destination
-                            .canFill(oppositeDirection, fluid.getFluid())) {
-
-                        if (destination.fill(oppositeDirection, fluid, true) != 0) {
-
-                            itWorked = true;
-                        } else {
+                        if(!(info.fluid.isFluidEqual(fluid))) {
 
                             itWorked = false;
+                            break;
+                        }                        
+
+                        if(destination.canFill(oppositeDirection, fluid.getFluid())) {
+
+                            if(destination.fill(oppositeDirection, fluid, false) != 0) {
+
+                                if(doMove)
+                                    destination.fill(oppositeDirection, fluid, true);
+
+                                itWorked = true;
+                            } 
+                            else {
+
+                                itWorked = false;
+                            }
+                        } 
+                    }
+                }
+            }
+        }
+        return itWorked;
+    }
+
+    public static boolean removeFluidFromTank(IFluidHandler destination, ForgeDirection from, Fluid fluid, int amount, boolean doMove) {
+
+        return UtilFluid.removeFluidFromTank(destination, from, new FluidStack(fluid, amount), doMove);
+    }
+
+    public static boolean removeFluidFromTank(IFluidHandler destination, ForgeDirection from, FluidStack fluid, boolean doMove) {
+
+        ForgeDirection oppositeDirection = from.getOpposite();
+        boolean itWorked = false;
+        if(fluid != null && destination != null) {
+
+            if(destination.getTankInfo(from) != null) {
+
+                for (FluidTankInfo info : destination.getTankInfo(oppositeDirection)) {
+
+                    if(info != null) {
+
+                        if(info.fluid != null) {
+
+                            if(!(info.fluid.isFluidEqual(fluid))) {
+
+                                itWorked = false;
+                                break;
+                            }
+                        }
+
+                        if(destination.canDrain(oppositeDirection, fluid.getFluid())) {
+
+                            if(destination.drain(oppositeDirection, fluid, false) != null) {
+
+                                if(doMove)
+                                    destination.drain(oppositeDirection, fluid, true);
+                                itWorked = true;
+                            }
                         }
                     }
                 }
@@ -129,52 +132,15 @@ public final class UtilFluid {
         return itWorked;
     }
 
-    public static boolean removeFluidFromTank(IFluidHandler destination, ForgeDirection from, Fluid fluid, int amount) {
-        
-        return UtilFluid.removeFluidFromTank(destination, from, new FluidStack(fluid, amount));
-    }
-    
-    public static boolean removeFluidFromTank(IFluidHandler destination, ForgeDirection from, FluidStack fluid) {
-
-        ForgeDirection oppositeDirection = from.getOpposite();
-
-        if (fluid != null && destination != null) {
-
-            if (destination.getTankInfo(from) != null) {
-
-                for (FluidTankInfo info : destination.getTankInfo(oppositeDirection)) {
-
-                    if (info.fluid != null) {
-
-                        if (info.fluid.isFluidEqual(fluid)) {
-
-                            if (destination.canDrain(oppositeDirection, fluid.getFluid())) {
-
-                                if(destination.drain(oppositeDirection, fluid, false) != null) {
-                                    
-                                    if(destination.drain(oppositeDirection, fluid, true) != null) {
-
-                                        return true;                                        
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     public static boolean isFull(FluidTankInfo[] info) {
 
         boolean isSucesful = false;
 
         for (FluidTankInfo tInfo : info) {
 
-            if (tInfo != null) {
+            if(tInfo != null) {
 
-                if (!(tInfo.fluid.amount < tInfo.capacity)) {
+                if(!(tInfo.fluid.amount < tInfo.capacity)) {
 
                     isSucesful = true;
                 } else {

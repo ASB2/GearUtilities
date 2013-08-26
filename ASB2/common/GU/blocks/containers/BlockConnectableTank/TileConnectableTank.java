@@ -37,11 +37,10 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
                 if (fluidTank.getCapacity() - fluidTank.getFluidAmount() >= 1000) {
 
-                    UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN,
-                            new FluidStack(FluidRegistry.WATER, 1000));
+                    UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000), true);
                 } else {
 
-                    UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, fluidTank.getCapacity() - fluidTank.getFluidAmount()));
+                    UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, fluidTank.getCapacity() - fluidTank.getFluidAmount()), true);
                 }
             }
 

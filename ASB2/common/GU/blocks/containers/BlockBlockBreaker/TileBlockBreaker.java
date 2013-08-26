@@ -44,7 +44,7 @@ public class TileBlockBreaker extends TileBase implements IInventory {
 
             for(ItemStack stack: items) {
 
-                itWorked = UtilInventory.canAddItemStackToInventory(this, stack);
+                itWorked = UtilInventory.addItemStackToInventory(this, stack, false);
             }
         }
         else {

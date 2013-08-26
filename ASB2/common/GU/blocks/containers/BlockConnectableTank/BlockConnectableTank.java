@@ -174,7 +174,7 @@ public class BlockConnectableTank extends ContainerBase {
                 if (!entityplayer.capabilities.isCreativeMode) {
 
 
-                    if(UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid)) {
+                    if(UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid, true)) {
 
                         if(UtilInventory.consumeItemStack(entityplayer.inventory, current, 1)) {
 
@@ -185,7 +185,7 @@ public class BlockConnectableTank extends ContainerBase {
 
                 else {
 
-                    return UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid);
+                    return UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid, true);
                 }
             } else {
 
@@ -197,7 +197,7 @@ public class BlockConnectableTank extends ContainerBase {
 
                         if(!entityplayer.capabilities.isCreativeMode) {
 
-                            if(UtilFluid.removeFluidFromTank(tank, ForgeDirection.getOrientation(side), FluidContainerRegistry.getFluidForFilledItem(filled))) {
+                            if(UtilFluid.removeFluidFromTank(tank, ForgeDirection.getOrientation(side), FluidContainerRegistry.getFluidForFilledItem(filled), true)) {
 
                                 if(UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, x, y, z)) {
 
@@ -209,7 +209,7 @@ public class BlockConnectableTank extends ContainerBase {
                             }
                         } else {
 
-                            return UtilFluid.removeFluidFromTank(tank, ForgeDirection.getOrientation(side), fluid);
+                            return UtilFluid.removeFluidFromTank(tank, ForgeDirection.getOrientation(side), fluid, true);
                         }
                     }
                 }

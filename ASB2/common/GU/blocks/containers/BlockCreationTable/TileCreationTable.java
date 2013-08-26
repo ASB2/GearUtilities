@@ -53,12 +53,8 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
 
     @Override
     public ItemStack decrStackSize(int i, int j) {
-
-        if (UtilInventory.decreaseSlotContents(this, i, j)) {
-
-            return this.getStackInSlot(i);
-        }
-        return null;
+        
+        return UtilInventory.decreaseSlotContents(this, i, j);
     }
 
     @Override
