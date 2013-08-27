@@ -1,7 +1,6 @@
 package GU.blocks.containers.BlockLamp;
 
-import GU.blocks.containers.TileBase;
+import GU.color.TileColorable;
 
-public class TileLamp extends TileBase {
-
+public class TileLamp extends TileColorable {
 }

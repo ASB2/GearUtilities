@@ -1,17 +1,25 @@
 package GU.blocks.containers.BlockLamp;
 
+import java.awt.Color;
+
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import GU.blocks.containers.ContainerBase;
+import GU.api.color.IColorable;
+import GU.color.BlockColorable;
+import GU.color.ColorableRenderer;
+import GU.color.IBlockColorable;
+import GU.utils.UtilRender;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockLamp extends ContainerBase {
+public class BlockLamp extends BlockColorable implements IBlockColorable {
 
     public BlockLamp(int id, Material material) {
         super(id, material);
@@ -47,43 +55,37 @@ public class BlockLamp extends ContainerBase {
 
             case DOWN: {
 
-                this.setBlockBounds(minWidth, 1 - maxHeight, minWidth,
-                        maxWidth, 1, maxWidth);
+                this.setBlockBounds(minWidth, 1 - maxHeight, minWidth, maxWidth, 1, maxWidth);
                 return;
             }
 
             case UP: {
 
-                this.setBlockBounds(minWidth, minHeight, minWidth, maxWidth,
-                        maxHeight, maxWidth);
+                this.setBlockBounds(minWidth, minHeight, minWidth, maxWidth, maxHeight, maxWidth);
                 break;
             }
 
             case NORTH: {
 
-                this.setBlockBounds(minWidth, minWidth, 1 - maxHeight,
-                        maxWidth, maxWidth, maxWidth);
+                this.setBlockBounds(minWidth, minWidth, 1 - maxHeight, maxWidth, maxWidth, maxWidth);
                 break;
             }
 
             case SOUTH: {
 
-                this.setBlockBounds(minWidth, minWidth, minWidth, maxWidth,
-                        maxWidth, maxHeight);
+                this.setBlockBounds(minWidth, minWidth, minWidth, maxWidth, maxWidth, maxHeight);
                 break;
             }
 
             case WEST: {
 
-                this.setBlockBounds(1 - maxHeight, minWidth, minWidth,
-                        maxWidth, maxWidth, maxWidth);
+                this.setBlockBounds(1 - maxHeight, minWidth, minWidth, maxWidth, maxWidth, maxWidth);
                 break;
             }
 
             case EAST: {
 
-                this.setBlockBounds(minWidth, minWidth, minWidth, maxHeight,
-                        maxWidth, maxWidth);
+                this.setBlockBounds(minWidth, minWidth, minWidth, maxHeight, maxWidth, maxWidth);
                 break;
             }
 
@@ -101,8 +103,90 @@ public class BlockLamp extends ContainerBase {
     }
 
     @Override
+    public int getRenderType() {
+
+        return ColorableRenderer.colorableTile;
+    }
+    
+    @Override
     public TileEntity createNewTileEntity(World world) {
 
         return new TileLamp();
+    }
+
+    @Override
+    public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
+       
+        renderer.setRenderBounds(0, 0, 0, 1, .5, 1);
+        UtilRender.renderStandardInvBlock(renderer, block, meta); 
+    }
+
+    @Override
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+        
+        float minWidth = 0, minHeight = 0;
+
+        float maxWidth = 1, maxHeight = .25F;
+        
+        switch (ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z))) {
+
+            case DOWN: {
+
+                this.setBlockBounds(minWidth, 1 - maxHeight, minWidth, maxWidth, 1, maxWidth);
+                break;
+            }
+
+            case UP: {
+
+                this.setBlockBounds(minWidth, minHeight, minWidth, maxWidth, maxHeight, maxWidth);
+                break;
+            }
+
+            case NORTH: {
+
+                this.setBlockBounds(minWidth, minWidth, 1 - maxHeight, maxWidth, maxWidth, maxWidth);
+                break;
+            }
+
+            case SOUTH: {
+
+                this.setBlockBounds(minWidth, minWidth, minWidth, maxWidth, maxWidth, maxHeight);
+                break;
+            }
+
+            case WEST: {
+
+                this.setBlockBounds(1 - maxHeight, minWidth, minWidth, maxWidth, maxWidth, maxWidth);
+                break;
+            }
+
+            case EAST: {
+
+                this.setBlockBounds(minWidth, minWidth, minWidth, maxHeight, maxWidth, maxWidth);
+                break;
+            }
+
+            default: {
+
+                this.setBlockBounds(0, 0, 0, 1, 1, 1);
+                break;
+            }
+        }
+        
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
+
+        if (tile != null && tile instanceof IColorable) {
+            
+            for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS) {
+
+                if(block.shouldSideBeRendered(world, x, y, z, direction.ordinal())) {
+
+                    Color color = ((IColorable) tile).getColor(direction);
+
+                    UtilRender.renderFakeSide(renderer, block, direction, x, y, z, block.getIcon(direction.ordinal(), 0), color.getRed(), color.getGreen(), color.getBlue(), 255, 15728864);
+                }
+            }
+        }
+        return true;
     }
 }

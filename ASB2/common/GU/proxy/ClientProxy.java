@@ -16,8 +16,6 @@ import GU.blocks.containers.BlockConnectableTank.ConnectableTankRenderer;
 import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
-import GU.blocks.containers.BlockLamp.LampRenderer;
-import GU.blocks.containers.BlockLamp.TileLamp;
 import GU.blocks.containers.BlockTestLaser.TestLaserRenderer;
 import GU.blocks.containers.BlockTestLaser.TileTestLaser;
 import GU.color.ColorableRenderer;
@@ -37,9 +35,6 @@ public class ClientProxy extends CommonProxy {
         Models.initModels();
 
         RenderingRegistry.registerEntityRenderingHandler(EntityTestEntity.class, new TestEntityRenderer());
-
-        ClientRegistry.bindTileEntitySpecialRenderer(TileLamp.class, new LampRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockLamp.blockID, new LampRenderer());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class, new CreationTableRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());

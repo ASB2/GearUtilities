@@ -63,7 +63,7 @@ public class CraftRegistry {
             'E', BlockRegistry.BlockEnhancedBricks,
             'T', Block.torchWood,
             'R', Item.redstone,
-            'I', Item.ingotIron });
+            'I', Item.ingotIron});
 
         // CraftingManager.getInstance().getRecipeList().add(new
         // ShapedOreRecipe(new ItemStack(file.bioMass), new Object[]{"XXX",
