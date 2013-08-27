@@ -12,16 +12,15 @@ import GU.blocks.containers.BlockBlockBreaker.BlockBreakerRenderer;
 import GU.blocks.containers.BlockBlockBreaker.GuiBlockBreaker;
 import GU.blocks.containers.BlockBlockBreaker.TileBlockBreaker;
 import GU.blocks.containers.BlockCamoBlock.GuiCamoBlock;
-import GU.blocks.containers.BlockCanvas.CanvasRenderer;
 import GU.blocks.containers.BlockConnectableTank.ConnectableTankRenderer;
 import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
 import GU.blocks.containers.BlockLamp.LampRenderer;
 import GU.blocks.containers.BlockLamp.TileLamp;
-import GU.blocks.containers.BlockEnhancedBricks.EnchancedBricksRenderer;
 import GU.blocks.containers.BlockTestLaser.TestLaserRenderer;
 import GU.blocks.containers.BlockTestLaser.TileTestLaser;
+import GU.color.ColorableRenderer;
 import GU.entity.EntityTest.EntityTestEntity;
 import GU.entity.EntityTest.TestEntityRenderer;
 import GU.info.Gui;
@@ -55,8 +54,7 @@ public class ClientProxy extends CommonProxy {
 
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());
-        RenderingRegistry.registerBlockHandler(new CanvasRenderer());
-        RenderingRegistry.registerBlockHandler(new EnchancedBricksRenderer());
+        RenderingRegistry.registerBlockHandler(new ColorableRenderer());
     }
 
     @Override

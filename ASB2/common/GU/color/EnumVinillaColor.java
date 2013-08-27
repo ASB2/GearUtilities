@@ -162,7 +162,7 @@ public enum EnumVinillaColor {
             case BLUE:
                 return new Color(0, 0, 255);
             case BROWN:
-                return new Color(165, 42, 42);
+                return new Color(75, 42, 42);
             case GREEN:
                 return new Color(0, 255, 0);
             case RED:

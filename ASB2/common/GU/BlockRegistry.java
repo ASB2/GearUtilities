@@ -155,7 +155,7 @@ public class BlockRegistry {
     
         BlockEnhancedBricks = new BlockEnhancedBricks(config.getBlock("BlockEnhancedBricks", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockEnhancedBricks.setBlockName("BlockEnhancedBricks");
-        LanguageRegistry.addName(BlockEnhancedBricks, "Enhanced Bricks");
+        LanguageRegistry.addName(BlockEnhancedBricks, "Enhanced Brick");
     }
 
     public static void initTestBlocks(Configuration config) {

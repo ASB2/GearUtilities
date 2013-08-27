@@ -1,5 +1,6 @@
 package GU.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -113,8 +114,9 @@ public class ItemGearReader extends ItemBase {
                 }
             }
         }
-        UtilPlayers.sendChatToPlayer(player, "Block" + " ID: " + world.getBlockId(x, y, z));
-        UtilPlayers.sendChatToPlayer(player, "Block" + " has metadata: " + world.getBlockMetadata(x, y, z));
+        UtilPlayers.sendChatToPlayer(player, "Block ID: " + world.getBlockId(x, y, z));
+        UtilPlayers.sendChatToPlayer(player, "Block has metadata: " + world.getBlockMetadata(x, y, z));
+        UtilPlayers.sendChatToPlayer(player, "Block brightness: " + Block.blocksList[world.getBlockId(x, y, z)].getMixedBrightnessForBlock(world, x, y, z));
         UtilPlayers.sendChatToPlayer(player, "--------");
         return true;
     }
