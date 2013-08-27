@@ -23,7 +23,7 @@ public class TileEnchancedBricks extends TileBase implements IColorable, IPeriph
 
         for(int i = 0; i < coloredSides.length; i++) {
 
-            coloredSides[i] = new Color(255, 255, 255, 255);
+            coloredSides[i] = Color.WHITE;
         }
     }
 

@@ -206,15 +206,13 @@ public class UtilBlock {
 
                 if (side.offsetX > 0) {
 
-                    if (UtilBlock.cycle2DBlock(player, world, x + i, y, z,
-                            side, radius, cycle, id))
+                    if (UtilBlock.cycle2DBlock(player, world, x - i, y, z, side, radius, cycle, id))
                         isSuccessful = true;
                 }
 
                 if (side.offsetX < 0) {
 
-                    if (UtilBlock.cycle2DBlock(player, world, x - i, y, z,
-                            side, radius, cycle, id))
+                    if (UtilBlock.cycle2DBlock(player, world, x + i, y, z, side, radius, cycle, id))
                         isSuccessful = true;
                 }
             }
@@ -223,15 +221,13 @@ public class UtilBlock {
 
                 if (side.offsetY > 0) {
 
-                    if (UtilBlock.cycle2DBlock(player, world, x, y - i, z,
-                            side, radius, cycle, id))
+                    if (UtilBlock.cycle2DBlock(player, world, x, y - i, z, side, radius, cycle, id))
                         isSuccessful = true;
                 }
 
                 if (side.offsetY < 0) {
 
-                    if (UtilBlock.cycle2DBlock(player, world, x, y + i, z,
-                            side, radius, cycle, id))
+                    if (UtilBlock.cycle2DBlock(player, world, x, y + i, z, side, radius, cycle, id))
                         isSuccessful = true;
                 }
             }
@@ -240,15 +236,13 @@ public class UtilBlock {
 
                 if (side.offsetZ > 0) {
 
-                    if (UtilBlock.cycle2DBlock(player, world, x, y, z - i,
-                            side, radius, cycle, id))
+                    if (UtilBlock.cycle2DBlock(player, world, x, y, z - i, side, radius, cycle, id))
                         isSuccessful = true;
                 }
 
                 if (side.offsetZ < 0) {
 
-                    if (UtilBlock.cycle2DBlock(player, world, x, y, z + i,
-                            side, radius, cycle, id))
+                    if (UtilBlock.cycle2DBlock(player, world, x, y, z + i, side, radius, cycle, id))
                         isSuccessful = true;
                 }
             }

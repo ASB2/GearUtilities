@@ -41,7 +41,7 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
 
         UtilItemStack.setNBTTagInt(itemStack, "id", world.getBlockId(x, y, z));
 
-        UtilBlock.cycle3DBlock(player, world, x, y, z, ForgeDirection.getOrientation(side), 1, UtilItemStack.getNBTTagInt(itemStack, "length"), this, 0);
+        UtilBlock.cycle3DBlock(player, world, x, y, z, ForgeDirection.getOrientation(side), 100, UtilItemStack.getNBTTagInt(itemStack, "length"), this, 0);
 
         UtilItemStack.setNBTTagInt(itemStack, "id", 0);
         return true;
@@ -78,16 +78,26 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
 
         if (world.blockExists(x, y, z)) {
 
-            if (Block.blocksList[blockToBreak].getBlockHardness(world, x, y, z) != -1) {
+            if(Block.blocksList[blockToBreak] != null) {
+                
+                if (Block.blocksList[blockToBreak].getBlockHardness(world, x, y, z) != -1) {
 
-                if (world.getBlockTileEntity(x, y, z) == null) {
+                    if (world.getBlockTileEntity(x, y, z) == null) {
 
-                    if (world.getBlockId(x, y, z) == blockToBreak || (world.getBlockId(x, y, z) == Block.oreRedstone.blockID && blockToBreak == Block.oreRedstoneGlowing.blockID)) {
+                        if (world.getBlockId(x, y, z) == blockToBreak || (world.getBlockId(x, y, z) == Block.oreRedstone.blockID && blockToBreak == Block.oreRedstoneGlowing.blockID)) {
 
-                        if (UtilItemStack.damageItem(player, player.inventory.getCurrentItem(), 1)) {
+                            if(!player.capabilities.isCreativeMode) {
 
-                            UtilBlock.breakAndAddToInventory(player.inventory, world, x, y, z, 5, true);
-                            return true;
+                                if (UtilItemStack.damageItem(player, player.inventory.getCurrentItem(), 1)) {
+
+                                    UtilBlock.breakAndAddToInventory(player.inventory, world, x, y, z, 5, true);
+                                    return true;
+                                }
+                            }
+                            else {
+
+                                UtilBlock.breakAndAddToInventory(player.inventory, world, x, y, z, 5, false);
+                            }
                         }
                     }
                 }

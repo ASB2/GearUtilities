@@ -4,7 +4,7 @@ import net.minecraftforge.common.Configuration;
 
 public class Variables {
 
-    public static String CRYSTALS_ALL = "CRYSTALS_ALL";
+    public final static String CRYSTALS_ALL = "CRYSTALS_ALL";
     
     public static int GEOTHERMAL_GENERATOR_POWER_PER_BUCKET = 100;
     public static int BASIC_VORTEX_COST_PER_TICK = 10;

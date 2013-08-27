@@ -44,76 +44,54 @@ public class BlockEnhancedBricks extends ContainerBase implements IBlockColorabl
 
         if(tile != null && tile instanceof IColorable) {
 
-            if(player.getHeldItem() != null) {
+            if(player.inventory.getCurrentItem() != null) {
 
-                if( EnumVinillaColor.isItemDye(player.getHeldItem())) {
+                if(EnumVinillaColor.isItemDye(player.inventory.getCurrentItem())) {
 
-                    ((IColorable)tile).setColor(EnumVinillaColor.getRGBValue(EnumVinillaColor.getItemColorValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
+                    if(!player.isSneaking()) {
+
+                        ((IColorable)tile).setColor(EnumVinillaColor.getRGBValue(EnumVinillaColor.getItemColorValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
+                        return true;
+                    }
+                    else {
+
+                        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+
+                            ((IColorable)tile).setColor(EnumVinillaColor.getRGBValue(EnumVinillaColor.getItemColorValue(player.getHeldItem())), direction);
+                        }
+                        return true;
+                    }
                 }
                 else {
 
-                    int amount = 50;
-                    int negAmount = -500;
-                    
-                    if(!player.isSneaking()) {
-                        
-                        if(player.getHeldItem().getItem() == ItemRegistry.ItemEarthCrystalShard) {
+                    int amount = -50;
 
-                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));  
-                            
-                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
-                            return true;
-                        }
-                        if(player.getHeldItem().getItem() == ItemRegistry.ItemFireCrystalShard) {
+                    if(player.getHeldItem().getItem() == ItemRegistry.ItemEarthCrystalShard) {
 
-                            Color color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));  
-                            
-                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
-                            return true;                   
-                        }
-                        if(player.getHeldItem().getItem() == ItemRegistry.ItemWaterCrystalShard) {
+                        Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
+                        ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));   
 
-                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));   
-                            
-                            color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
-                            return true;                   
-                        }
+                        color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
+                        ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                        return true;
                     }
-                    else {
-                        
-                        if(player.getHeldItem().getItem() == ItemRegistry.ItemEarthCrystalShard) {
+                    if(player.getHeldItem().getItem() == ItemRegistry.ItemFireCrystalShard) {
 
-                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);                        
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));   
-                            
-                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);     
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
-                            return true;
-                        }
-                        if(player.getHeldItem().getItem() == ItemRegistry.ItemFireCrystalShard) {
+                        Color color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
+                        ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));    
 
-                            Color color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);                        
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));    
-                            
-                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);     
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
-                            return true;                   
-                        }
-                        if(player.getHeldItem().getItem() == ItemRegistry.ItemWaterCrystalShard) {
+                        color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
+                        ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                        return true;                   
+                    }
+                    if(player.getHeldItem().getItem() == ItemRegistry.ItemWaterCrystalShard) {
 
-                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);                        
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side)); 
-                            
-                            color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);     
-                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
-                            return true;                   
-                        }
+                        Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
+                        ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side)); 
+
+                        color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
+                        ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                        return true;                   
                     }
                 }
             }

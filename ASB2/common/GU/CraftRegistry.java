@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import GU.info.Variables;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -11,11 +12,11 @@ public class CraftRegistry {
 
     public static void init() {
 
-        OreDictionary.registerOre(Variables.CRYSTALS_ALL, ItemRegistry.ItemAirCrystalShard);
-        OreDictionary.registerOre(Variables.CRYSTALS_ALL, ItemRegistry.ItemEarthCrystalShard);
-        OreDictionary.registerOre(Variables.CRYSTALS_ALL, ItemRegistry.ItemFireCrystalShard);
-        OreDictionary.registerOre(Variables.CRYSTALS_ALL, ItemRegistry.ItemWaterCrystalShard);
-        OreDictionary.registerOre(Variables.CRYSTALS_ALL, ItemRegistry.ItemEnergyCrystalShard);
+        OreDictionary.registerOre(Variables.CRYSTALS_ALL, new ItemStack(ItemRegistry.ItemAirCrystalShard));
+        OreDictionary.registerOre(Variables.CRYSTALS_ALL, new ItemStack(ItemRegistry.ItemEarthCrystalShard));
+        OreDictionary.registerOre(Variables.CRYSTALS_ALL, new ItemStack(ItemRegistry.ItemFireCrystalShard));
+        OreDictionary.registerOre(Variables.CRYSTALS_ALL, new ItemStack(ItemRegistry.ItemWaterCrystalShard));
+        OreDictionary.registerOre(Variables.CRYSTALS_ALL, new ItemStack(ItemRegistry.ItemEnergyCrystalShard));
                 
         GameRegistry.addRecipe(new ItemStack(Item.bucketLava), new Object[] {
             "FFF", 
@@ -46,6 +47,14 @@ public class CraftRegistry {
             'S', Item.stick,
             'Q', Block.blockNetherQuartz,
             'I', Item.ingotIron });
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack (BlockRegistry.BlockEnhancedBricks, 4), new Object[] {
+            "CBC", 
+            "BRB", 
+            "CBC",
+            'C', Variables.CRYSTALS_ALL,
+            'B', Block.stoneBrick,
+            'R', Item.redstone}));
         
         GameRegistry.addRecipe(new ItemStack(BlockRegistry.BlockLamp, 8), new Object[] {
             "ITI", 
