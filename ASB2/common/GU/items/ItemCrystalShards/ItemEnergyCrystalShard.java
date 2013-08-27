@@ -11,10 +11,8 @@ public class ItemEnergyCrystalShard extends ItemCrystal {
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack itemStack, EntityPlayer player,
-            World world, int x, int y, int z, int side, float hitX, float hitY,
-            float hitZ) {
-        return super.onItemUseFirst(itemStack, player, world, x, y, z, side,
-                hitX, hitY, hitZ);
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+        
+        return false;
     }
 }

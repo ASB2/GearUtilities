@@ -1,5 +1,7 @@
 package GU.utils;
 
+import java.awt.Color;
+
 import net.minecraft.util.EnumChatFormatting;
 
 public class UtilMisc {
@@ -14,13 +16,13 @@ public class UtilMisc {
 
         char[] characters = string.toCharArray();
         char first = characters[0];
-        
+
         characters[0] = Character.toUpperCase(first);
-        
+
         String temp = "";
-        
+
         for(char character: characters) {
-            
+
             temp = temp + Character.toString(character);
         }
         return temp;
@@ -80,5 +82,32 @@ public class UtilMisc {
     public static String getColorCode(EnumChatFormatting color) {
 
         return "\u00A7 " + color;
+    }
+
+    public static Color changeRed(Color color, int amount) {
+
+        if(color.getRed() + amount <= 255 && color.getRed() + amount >= 0) {
+
+            return new Color(color.getRed() + amount, color.getGreen(), color.getBlue());
+        }
+        return color;
+    }
+
+    public static Color changeGreen(Color color, int amount) {
+
+        if(color.getGreen() + amount <= 255 && color.getGreen() + amount >= 0) {
+
+            return new Color(color.getRed(), color.getGreen()+ amount , color.getBlue());
+        }
+        return color;
+    }
+    
+    public static Color changeBlue(Color color, int amount) {
+
+        if(color.getBlue() + amount <= 255 && color.getBlue() + amount >= 0) {
+
+            return new Color(color.getRed(), color.getGreen(), color.getBlue() + amount);
+        }
+        return color;
     }
 }

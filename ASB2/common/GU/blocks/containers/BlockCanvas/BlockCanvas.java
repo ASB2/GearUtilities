@@ -14,13 +14,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.BlockRegistry;
+import GU.ItemRegistry;
+import GU.api.color.EnumVinillaColor;
+import GU.api.color.IColorable;
 import GU.blocks.containers.ContainerBase;
 import GU.color.ColorableRenderer;
-import GU.color.EnumVinillaColor;
 import GU.color.IBlockColorable;
-import GU.color.IColorable;
 import GU.info.Reference;
 import GU.utils.UtilDirection;
+import GU.utils.UtilMisc;
 import GU.utils.UtilRender;
 
 public class BlockCanvas extends ContainerBase implements IBlockColorable {
@@ -36,16 +38,16 @@ public class BlockCanvas extends ContainerBase implements IBlockColorable {
     }
 
     public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
-    
+
         int id = UtilDirection.translateDirectionToBlockId(world, ForgeDirection.getOrientation(side), x, y, z);
-        
+
         if(id == 0 || (!Block.blocksList[id].isOpaqueCube() && id != this.blockID)) {
-        
+
             return true;
         }
         return false;
     }
-    
+
     @Override
     public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
 
@@ -59,10 +61,10 @@ public class BlockCanvas extends ContainerBase implements IBlockColorable {
     }
 
     public boolean isOpaqueCube() {
-        
+
         return false;
     }
-    
+
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 
@@ -70,9 +72,73 @@ public class BlockCanvas extends ContainerBase implements IBlockColorable {
 
         if(tile != null && tile instanceof IColorable) {
 
-            if(player.getHeldItem() != null && EnumVinillaColor.isItemDye(player.getHeldItem())) {
+            if(player.getHeldItem() != null) {
 
-                ((IColorable)tile).setColor(EnumVinillaColor.getRGBValue(EnumVinillaColor.getItemColorValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
+                if( EnumVinillaColor.isItemDye(player.getHeldItem())) {
+
+                    ((IColorable)tile).setColor(EnumVinillaColor.getRGBValue(EnumVinillaColor.getItemColorValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
+                    return true;
+                }
+                else {
+
+                    int amount = 50;
+                    int negAmount = -50;
+                    
+                    if(!player.isSneaking()) {
+                        
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemEarthCrystalShard) {
+
+                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));                        
+                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;
+                        }
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemFireCrystalShard) {
+
+                            Color color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));                        
+                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;                   
+                        }
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemWaterCrystalShard) {
+
+                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));                        
+                            color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;                   
+                        }
+                    }
+                    else {
+                        
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemEarthCrystalShard) {
+
+                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));                        
+                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;
+                        }
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemFireCrystalShard) {
+
+                            Color color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));                        
+                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;                   
+                        }
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemWaterCrystalShard) {
+
+                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));                        
+                            color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;                   
+                        }
+                    }
+                }
             }
         }
         return false;
@@ -116,7 +182,7 @@ public class BlockCanvas extends ContainerBase implements IBlockColorable {
 
     @Override
     public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
-       
+
         renderer.setRenderBounds(0.01, 0.01, 0.01, .99, .99, .99);
         UtilRender.renderStandardInvBlock(renderer, block, meta);
 
@@ -143,12 +209,12 @@ public class BlockCanvas extends ContainerBase implements IBlockColorable {
                 }
             }
 
-            renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
+            renderer.setRenderBounds(0 - .001, 0 - .001, 0 - .001, 1 + .001, 1 + .001, 1 + .001);
             this.renderFakeBlock(world, renderer, block, x, y, z, ((BlockCanvas)BlockRegistry.BlockCanvas).inner, 255, 255, 255, 255, block.getMixedBrightnessForBlock(world, x, y, z));
         }
         return true;
     }
-    
+
     public void renderFakeBlock(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, Icon icon, float red, float green, float blue, float alfa, int brightness) {
 
         Tessellator tess = Tessellator.instance;

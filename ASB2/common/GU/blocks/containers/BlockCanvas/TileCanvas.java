@@ -4,9 +4,9 @@ import java.awt.Color;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
+import GU.api.color.IColorable;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
-import GU.color.IColorable;
 import GU.packets.ColorPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import dan200.computer.api.IComputerAccess;
@@ -96,16 +96,21 @@ public class TileCanvas extends TileBase implements IColorable, IPeripheral {
 
         if(method == 0) {   
 
-            if(arguments.length == 1) {
+            if(arguments.length == 2) {
 
                 if(arguments[0] instanceof Double) {
 
                     ForgeDirection direction = ForgeDirection.getOrientation(((Double)arguments[0]).intValue());
 
-                    return new Object[]{"Red ", this.getColor(direction).getRed(), "Green ", this.getColor(direction).getGreen(), "Blue ",this.getColor(direction).getBlue()};
+                    switch(((Double)arguments[1]).intValue()) {
+
+                        case 0: return new Object[]{this.getColor(direction).getRed()};
+                        case 1: return new Object[]{this.getColor(direction).getGreen()};
+                        case 2: return new Object[]{this.getColor(direction).getBlue()};
+                    }
                 }
             }
-            return new String[]{"Incorrect input. Expected int side"};
+            return new String[]{"Incorrect input. Expected int side, int r/g/b"};
         }
 
         if(method == 1) {

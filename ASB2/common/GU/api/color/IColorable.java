@@ -1,4 +1,4 @@
-package GU.color;
+package GU.api.color;
 
 import java.awt.Color;
 

@@ -12,19 +12,18 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import GU.api.color.EnumVinillaColor;
+import GU.api.color.IColorable;
 import GU.blocks.containers.ContainerBase;
 import GU.color.ColorableRenderer;
-import GU.color.EnumVinillaColor;
 import GU.color.IBlockColorable;
-import GU.color.IColorable;
 import GU.info.Reference;
-import GU.utils.UtilDirection;
-import GU.utils.UtilRender;
-
+import GU.utils.*;
+import GU.*;
 public class BlockEnhancedBricks extends ContainerBase implements IBlockColorable {
 
     Icon overlay;
-    
+
     public BlockEnhancedBricks(int id, Material material) {
         super(id, material);
         this.useStandardRendering = false;
@@ -34,7 +33,7 @@ public class BlockEnhancedBricks extends ContainerBase implements IBlockColorabl
     @Override
     public void registerIcons(IconRegister iconRegister) {
         super.registerIcons(iconRegister);
-        
+
         overlay = iconRegister.registerIcon(Reference.MODDID + ":BlockEnhancedBricksOverlay");
     }
 
@@ -45,31 +44,100 @@ public class BlockEnhancedBricks extends ContainerBase implements IBlockColorabl
 
         if(tile != null && tile instanceof IColorable) {
 
-            if(player.getHeldItem() != null && EnumVinillaColor.isItemDye(player.getHeldItem())) {
+            if(player.getHeldItem() != null) {
 
-                ((IColorable)tile).setColor(EnumVinillaColor.getRGBValue(EnumVinillaColor.getItemColorValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
+                if( EnumVinillaColor.isItemDye(player.getHeldItem())) {
+
+                    ((IColorable)tile).setColor(EnumVinillaColor.getRGBValue(EnumVinillaColor.getItemColorValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
+                }
+                else {
+
+                    int amount = 50;
+                    int negAmount = -500;
+                    
+                    if(!player.isSneaking()) {
+                        
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemEarthCrystalShard) {
+
+                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));  
+                            
+                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;
+                        }
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemFireCrystalShard) {
+
+                            Color color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));  
+                            
+                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;                   
+                        }
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemWaterCrystalShard) {
+
+                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));   
+                            
+                            color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;                   
+                        }
+                    }
+                    else {
+                        
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemEarthCrystalShard) {
+
+                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));   
+                            
+                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;
+                        }
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemFireCrystalShard) {
+
+                            Color color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));    
+                            
+                            color = UtilMisc.changeBlue(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;                   
+                        }
+                        if(player.getHeldItem().getItem() == ItemRegistry.ItemWaterCrystalShard) {
+
+                            Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);                        
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side)); 
+                            
+                            color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), negAmount);     
+                            ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
+                            return true;                   
+                        }
+                    }
+                }
             }
         }
         return false;
     }
-    
+
     public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
-        
+
         int id = UtilDirection.translateDirectionToBlockId(world, ForgeDirection.getOrientation(side), x, y, z);
-        
+
         if(id == 0 || (!Block.blocksList[id].isOpaqueCube() && id != this.blockID)) {
-        
+
             return true;
         }
         return false;
     }
-    
+
     @Override
     public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
 
         return true;
     }
-    
+
     public int getRenderType() {
 
         return ColorableRenderer.colorableTile;
@@ -77,7 +145,7 @@ public class BlockEnhancedBricks extends ContainerBase implements IBlockColorabl
 
     @Override
     public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
-        
+
         renderer.setRenderBounds(0.0001, 0.0001, 0.0001, .9999, .9999, .9999);
         UtilRender.renderStandardInvBlock(renderer, block, block.getIcon(0, 0), 255, 255, 255, 255);
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
@@ -86,7 +154,7 @@ public class BlockEnhancedBricks extends ContainerBase implements IBlockColorabl
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-        
+
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         if (tile != null && tile instanceof IColorable) {
@@ -103,12 +171,12 @@ public class BlockEnhancedBricks extends ContainerBase implements IBlockColorabl
                 }
             }
 
-            renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
+            renderer.setRenderBounds(0 - .0001, 0 - .0001, 0 - .0001, 1 + .0001, 1 + .0001, 1 + .0001);
             UtilRender.renderFakeBlock(renderer, block, x, y, z, overlay, 255, 255, 255, 255, block.getMixedBrightnessForBlock(world, x, y, z));
         }
         return true;
     }
-    
+
     @Override
     public TileEntity createNewTileEntity(World world) {
 

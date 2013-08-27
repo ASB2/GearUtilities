@@ -20,7 +20,7 @@ public class BlockBlockBreaker extends ContainerBase {
     public BlockBlockBreaker(int id, Material material) {
         super(id, material);
         this.registerTile(TileBlockBreaker.class);
-        this.useStandardRendering = false;
+        this.useStandardRendering = true;
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.ForgeDirection;
-import GU.color.IColorable;
+import GU.api.color.IColorable;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;

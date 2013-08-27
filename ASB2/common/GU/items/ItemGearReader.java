@@ -10,12 +10,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import GU.api.color.IColorable;
+import GU.api.color.IVinillaColorable;
 import GU.api.power.IPowerMisc;
-import GU.color.IVinillaColorable;
 import GU.info.Reference;
 import GU.utils.UtilMisc;
 import GU.utils.UtilPlayers;
-import GU.color.*;
 
 public class ItemGearReader extends ItemBase {
 

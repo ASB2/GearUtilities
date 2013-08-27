@@ -4,9 +4,9 @@ import java.awt.Color;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
+import GU.api.color.IColorable;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
-import GU.color.IColorable;
 import GU.packets.ColorPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import dan200.computer.api.IComputerAccess;
@@ -26,12 +26,12 @@ public class TileEnchancedBricks extends TileBase implements IColorable, IPeriph
             coloredSides[i] = new Color(255, 255, 255, 255);
         }
     }
-    
+
     public void updateEntity() {    
 
         waitTimer.update();
     }
-    
+
     @Override
     public Color getColor(ForgeDirection direction) {
 
@@ -96,20 +96,26 @@ public class TileEnchancedBricks extends TileBase implements IColorable, IPeriph
 
         if(method == 0) {   
 
-            if(arguments.length == 1) {
+            if(arguments.length == 2) {
 
                 if(arguments[0] instanceof Double) {
 
                     ForgeDirection direction = ForgeDirection.getOrientation(((Double)arguments[0]).intValue());
 
-                    return new Object[]{"Red ", this.getColor(direction).getRed(), "Green ", this.getColor(direction).getGreen(), "Blue ",this.getColor(direction).getBlue()};
+                    switch(((Double)arguments[1]).intValue()) {
+
+                        case 0: return new Object[]{this.getColor(direction).getRed()};
+                        case 1: return new Object[]{this.getColor(direction).getGreen()};
+                        case 2: return new Object[]{this.getColor(direction).getBlue()};
+
+                    }
                 }
             }
-            return new String[]{"Incorrect input. Expected int side"};
+            return new String[]{"Incorrect input. Expected int side, int r/g/b"};
         }
 
         if(method == 1) {
-            
+
             if(arguments.length == 4) {
 
                 if(arguments[0] instanceof Double && arguments[1] instanceof Double && arguments[2] instanceof Double && arguments[3] instanceof Double) {
@@ -121,7 +127,7 @@ public class TileEnchancedBricks extends TileBase implements IColorable, IPeriph
                 return new String[]{"Incorrect input. Expected int side, int red value, int green value, int blue value"};
             }
         }
-        
+
         return new String[]{"Paramaters Requires 4 Integers"};
     }
 
