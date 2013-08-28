@@ -96,7 +96,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
         if(this.fluidTank.getFluidAmount() >= this.getFluidHandlersAround() * 1000) {
 
             int amountDivided = 1000;
-            
+
             for (ForgeDirection direction : ForgeDirection.values()) {
 
                 if(direction != ForgeDirection.UP) {
@@ -188,13 +188,16 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
 
-        if(this.fluidTank.getFluid() != null) {
+        if(fluid != null) {
+            
+            if(this.fluidTank.getFluid() != null) {
 
-            if(fluidTank.getFluidAmount() > 0) {
+                if(fluidTank.getFluidAmount() > 0) {
 
-                if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
+                    if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
 
-                    return true;
+                        return true;
+                    }
                 }
             }
         }
@@ -238,10 +241,10 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
             if(fluidTank.getFluid() != null) {
 
                 PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new ConnectableTankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
-            } else {
+            } 
+            else {
 
-                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord,
-                        20, worldObj.provider.dimensionId, new ConnectableTankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
+                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new ConnectableTankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
             }
         }
     }

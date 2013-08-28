@@ -7,11 +7,12 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
 public class UtilBlock {
-    
+
     public static boolean placeBlockInAir(World world, int x, int y, int z, int blockId, int metaData) {
 
         if (world.getBlockId(x, y, z) == 0) {
@@ -19,6 +20,36 @@ public class UtilBlock {
             return world.setBlock(x, y, z, blockId, metaData, 3);
         }
         return false;
+    }
+
+    public static boolean isBlockIndirectlyGettingPowered(IBlockAccess world, int x, int y, int z) {
+
+        boolean itWorked = false;
+
+        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+
+            if(world.isBlockProvidingPowerTo(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, direction.ordinal()) > 0) {
+
+                itWorked = true;
+            }
+        }
+        return itWorked;
+    }
+
+    public static int getHighestRedstoneStrength(IBlockAccess world, int x, int y, int z) {
+
+        int highest = 0;
+
+        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+
+            int temp = world.isBlockProvidingPowerTo(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, direction.getOpposite().ordinal());
+         
+            if(temp > highest) {
+                
+                highest = temp;
+            }
+        }
+        return highest * 15;
     }
 
     public static boolean setBlock(World world, int x, int y, int z, int blockId, int metaData) {

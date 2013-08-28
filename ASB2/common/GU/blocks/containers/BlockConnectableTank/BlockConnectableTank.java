@@ -23,11 +23,13 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class BlockConnectableTank extends ContainerBase {
 
     private Icon[] icons = new Icon[16];
+    private Icon[] iconsTop = new Icon[16];
     private Icon top;
     private Icon bottom;
 
     private String folder = ":tankConnected";
-
+    private String folderTop = ":tankConnected/topConnected";
+    
     public BlockConnectableTank(int id, Material material) {
         super(id, material);
 
@@ -114,7 +116,7 @@ public class BlockConnectableTank extends ContainerBase {
 
             if (!(blockAccess.getBlockId(x, y + 1, z) == this.blockID)) {
 
-                return top;
+                return UtilRender.renderConnectedTexture(blockAccess, iconsTop, this.blockID, x, y, z, side);
             }
         }
 
@@ -157,6 +159,23 @@ public class BlockConnectableTank extends ContainerBase {
         icons[13] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_3_l");
         icons[14] = iconRegistry.registerIcon(Reference.MODDID + folder + "/connected_3_r");
         icons[15] = iconRegistry.registerIcon(Reference.MODDID + folder + "/blank");
+        
+        iconsTop[0] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connectedRegular");
+        iconsTop[1] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_1_d");
+        iconsTop[2] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_1_u");
+        iconsTop[3] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_1_l");
+        iconsTop[4] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_1_r");
+        iconsTop[5] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_2_h");
+        iconsTop[6] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_2_v");
+        iconsTop[7] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_2_dl");
+        iconsTop[8] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_2_dr");
+        iconsTop[9] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_2_ul");
+        iconsTop[10] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_2_ur");
+        iconsTop[11] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_3_d");
+        iconsTop[12] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_3_u");
+        iconsTop[13] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_3_l");
+        iconsTop[14] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/connected_3_r");
+        iconsTop[15] = iconRegistry.registerIcon(Reference.MODDID + folderTop + "/blank");
     }
 
     @Override
@@ -177,19 +196,18 @@ public class BlockConnectableTank extends ContainerBase {
                         
                         if(UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid, true)) {
 
-                            if(UtilInventory.consumeItemStack(entityplayer.inventory, current, 1)) {
-
-                                return true;
-                            }
+                            UtilInventory.consumeItemStack(entityplayer.inventory, current, 1);
                         }
                     }
                 }
 
                 else {
 
-                    return UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid, true);
+                    UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid, true);
                 }
-            } else {
+            return true;
+            } 
+            else {
 
                 if(FluidContainerRegistry.isEmptyContainer(current)) {
 
@@ -203,17 +221,15 @@ public class BlockConnectableTank extends ContainerBase {
 
                                 if(UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, x, y, z)) {
 
-                                    if(UtilInventory.consumeItemStack(entityplayer.inventory, current, 1)) {
-
-                                        return true;
-                                    }
+                                    UtilInventory.consumeItemStack(entityplayer.inventory, current, 1);
                                 }
                             }
                         } else {
 
-                            return UtilFluid.removeFluidFromTank(tank, ForgeDirection.getOrientation(side), fluid, true);
+                            UtilFluid.removeFluidFromTank(tank, ForgeDirection.getOrientation(side), fluid, true);
                         }
                     }
+                    return true;
                 }
             }
         }
