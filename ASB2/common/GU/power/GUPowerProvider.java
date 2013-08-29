@@ -8,7 +8,7 @@ import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
 import GU.utils.UtilDirection;
-import GU.utils.UtilPower;
+import GU.api.power.UtilPower;
 
 public class GUPowerProvider extends PowerProvider {
 
@@ -29,8 +29,7 @@ public class GUPowerProvider extends PowerProvider {
 
             if (world.blockExists(coords[0], coords[1], coords[2])) {
 
-                TileEntity tileToAffect = UtilDirection
-                        .translateDirectionToTile(tile, tile.worldObj,
+                TileEntity tileToAffect = UtilDirection.translateDirectionToTile(tile, tile.worldObj,
                                 direction);
 
                 if (tileToAffect != null) {
@@ -48,9 +47,7 @@ public class GUPowerProvider extends PowerProvider {
                                     if (tileToAffectCasted.getPowerProvider()
                                             .getCurrentState() == State.SOURCE) {
 
-                                        UtilPower.transferPower(
-                                                tileToAffectCasted, direction,
-                                                (IPowerMisc) tile);
+                                        UtilPower.transferPower(tileToAffectCasted, direction, (IPowerMisc) tile);
                                     }
                                 }
                                     break;

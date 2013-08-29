@@ -9,5 +9,4 @@ public interface IRuneBlock {
     
     ForgeDirection getOrientation();
     ArrayList<ItemStack> getRunes();
-    ItemStack removeRune();
 }

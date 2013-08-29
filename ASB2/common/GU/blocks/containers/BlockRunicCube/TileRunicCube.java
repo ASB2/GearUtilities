@@ -12,12 +12,9 @@ import GU.utils.UtilInventory;
 
 public class TileRunicCube extends TileBase implements IInventory, IRuneBlock {
 
-    int inventorySize = 1;
-
-    public TileRunicCube(int inventorySize) {
-
-        this.inventorySize = inventorySize;
-        tileItemStacks = new ItemStack[inventorySize];
+    public TileRunicCube() {
+        
+        tileItemStacks = new ItemStack[3];
     }
 
     public void updateEntity() {
@@ -25,13 +22,14 @@ public class TileRunicCube extends TileBase implements IInventory, IRuneBlock {
         for(ItemStack stack : tileItemStacks) {
 
             if(stack != null) {
+                
                 if(stack.getItem() instanceof IRuneItem) {
 
                     IRuneItem rune = (IRuneItem)stack.getItem();
 
-                    if(rune.shouldUpdate(this, stack, xCoord, yCoord, zCoord)) {
+                    if(rune.shouldUpdate(worldObj, this, stack, xCoord, yCoord, zCoord)) {
 
-                        rune.onUpdate(this, stack, xCoord, yCoord, zCoord);
+                        rune.onUpdate(worldObj, this, stack, xCoord, yCoord, zCoord);
                     }
                 }
             }
@@ -51,24 +49,6 @@ public class TileRunicCube extends TileBase implements IInventory, IRuneBlock {
             }
         }
         return array;
-    }
-
-    @Override
-    public ItemStack removeRune() {
-
-        if(!getRunes().isEmpty()) {
-
-            for(ItemStack stack : getRunes()) {
-
-                if(stack != null) {
-
-                    ((IRuneItem)stack.getItem()).onRemoval(this, stack, xCoord, yCoord, zCoord);
-                    UtilInventory.consumeItemStack(this, stack, stack.stackSize);
-                    return stack;
-                }
-            }
-        }
-        return null;
     }
 
     @Override

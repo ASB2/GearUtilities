@@ -1,4 +1,4 @@
-package GU.blocks;
+package GU.models;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;

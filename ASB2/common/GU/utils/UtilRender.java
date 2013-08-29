@@ -21,9 +21,10 @@ public final class UtilRender {
 
         if (texture != null) {
 
-            if (FMLClientHandler.instance().getClient() != null)
-                FMLClientHandler.instance().getClient().renderEngine
-                .func_110577_a(texture);
+            if (FMLClientHandler.instance().getClient() != null && texture != null) {
+
+                FMLClientHandler.instance().getClient().renderEngine.func_110577_a(texture);
+            }
         }
     }
 
@@ -31,12 +32,17 @@ public final class UtilRender {
 
         if (FMLClientHandler.instance().getClient() != null) {
 
-            Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+            Minecraft mc = Minecraft.getMinecraft();
+            int settings = mc.gameSettings.particleSetting;
+
+            if(!(settings == 2 || settings == 1 && fx.worldObj.rand.nextInt(3) == 0)) {
+
+                Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+            }
         }
     }
 
-    public static void renderByOrientation(double x, double y, double z,
-            ForgeDirection direction) {
+    public static void renderByOrientation(double x, double y, double z, ForgeDirection direction) {
 
         switch (direction.getOpposite()) {
 
@@ -133,7 +139,8 @@ public final class UtilRender {
     public static void renderFakeBlock(RenderBlocks renderer, Block block, int x, int y, int z, Icon icon, int red, int green, int blue, int alfa, int brightness) {
 
         Tessellator tess = Tessellator.instance;
-
+        
+        tess.startDrawingQuads();
         tess.setBrightness(brightness);
         tess.setColorRGBA(red, green, blue, alfa);
 
@@ -145,6 +152,7 @@ public final class UtilRender {
 
         renderer.renderFaceZNeg(block, x, y, z, icon);
         renderer.renderFaceZPos(block, x, y, z, icon);
+        tess.draw();
     }
 
     public static void renderFakeSide(RenderBlocks renderer, Block block, ForgeDirection direction, int x, int y, int z, Icon icon, int red, int green, int blue, int alfa, int brightness) {
@@ -293,7 +301,7 @@ public final class UtilRender {
                         : renderMetadataBlockWithColorMultiplier(block, metadata, x, y, z, var6, var7, var8, renderer, world);
     }
 
-    static boolean renderMetadataBlockWithAmbientOcclusion(Block block, int metadata, int xPos, int yPos, int zPos, float colorRed, float colorGreen, float colorBlue, RenderBlocks render, IBlockAccess world) {
+    public static boolean renderMetadataBlockWithAmbientOcclusion(Block block, int metadata, int xPos, int yPos, int zPos, float colorRed, float colorGreen, float colorBlue, RenderBlocks render, IBlockAccess world) {
         render.enableAO = true;
         boolean flag = false;
         float f3 = 0.0F;
@@ -326,77 +334,50 @@ public final class UtilRender {
                 --yPos;
             }
 
-            render.aoBrightnessXYNN = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos - 1, yPos, zPos);
-            render.aoBrightnessYZNN = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos, zPos - 1);
-            render.aoBrightnessYZNP = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos, zPos + 1);
-            render.aoBrightnessXYPN = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos + 1, yPos, zPos);
-            render.aoLightValueScratchXYNN = block
-                    .getAmbientOcclusionLightValue(render.blockAccess,
-                            xPos - 1, yPos, zPos);
-            render.aoLightValueScratchYZNN = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos, zPos - 1);
-            render.aoLightValueScratchYZNP = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos, zPos + 1);
-            render.aoLightValueScratchXYPN = block
-                    .getAmbientOcclusionLightValue(render.blockAccess,
-                            xPos + 1, yPos, zPos);
-            flag3 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos + 1,
-                    yPos - 1, zPos)];
-            flag2 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1,
-                    yPos - 1, zPos)];
-            flag5 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos,
-                    yPos - 1, zPos + 1)];
-            flag4 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos,
-                    yPos - 1, zPos - 1)];
+            render.aoBrightnessXYNN = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos, zPos);
+            render.aoBrightnessYZNN = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos, zPos - 1);
+            render.aoBrightnessYZNP = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos, zPos + 1);
+            render.aoBrightnessXYPN = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos, zPos);
+            render.aoLightValueScratchXYNN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos, zPos);
+            render.aoLightValueScratchYZNN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos, zPos - 1);
+            render.aoLightValueScratchYZNP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos, zPos + 1);
+            render.aoLightValueScratchXYPN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos + 1, yPos, zPos);
+            flag3 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos + 1, yPos - 1, zPos)];
+            flag2 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1, yPos - 1, zPos)];
+            flag5 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos, yPos - 1, zPos + 1)];
+            flag4 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos, yPos - 1, zPos - 1)];
 
             if (!flag4 && !flag2) {
                 render.aoLightValueScratchXYZNNN = render.aoLightValueScratchXYNN;
                 render.aoBrightnessXYZNNN = render.aoBrightnessXYNN;
             } else {
-                render.aoLightValueScratchXYZNNN = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos - 1, yPos, zPos - 1);
-                render.aoBrightnessXYZNNN = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos - 1, yPos, zPos - 1);
+                render.aoLightValueScratchXYZNNN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos, zPos - 1);
+                render.aoBrightnessXYZNNN = block.getMixedBrightnessForBlock( render.blockAccess, xPos - 1, yPos, zPos - 1);
             }
 
             if (!flag5 && !flag2) {
                 render.aoLightValueScratchXYZNNP = render.aoLightValueScratchXYNN;
                 render.aoBrightnessXYZNNP = render.aoBrightnessXYNN;
             } else {
-                render.aoLightValueScratchXYZNNP = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos - 1, yPos, zPos + 1);
-                render.aoBrightnessXYZNNP = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos - 1, yPos, zPos + 1);
+                render.aoLightValueScratchXYZNNP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos, zPos + 1);
+                render.aoBrightnessXYZNNP = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos, zPos + 1);
             }
 
             if (!flag4 && !flag3) {
                 render.aoLightValueScratchXYZPNN = render.aoLightValueScratchXYPN;
                 render.aoBrightnessXYZPNN = render.aoBrightnessXYPN;
             } else {
-                render.aoLightValueScratchXYZPNN = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
+                render.aoLightValueScratchXYZPNN = block.getAmbientOcclusionLightValue(render.blockAccess,
                                 xPos + 1, yPos, zPos - 1);
-                render.aoBrightnessXYZPNN = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos + 1, yPos, zPos - 1);
+                render.aoBrightnessXYZPNN = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos, zPos - 1);
             }
 
             if (!flag5 && !flag3) {
                 render.aoLightValueScratchXYZPNP = render.aoLightValueScratchXYPN;
                 render.aoBrightnessXYZPNP = render.aoBrightnessXYPN;
             } else {
-                render.aoLightValueScratchXYZPNP = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos + 1, yPos, zPos + 1);
-                render.aoBrightnessXYZPNP = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos + 1, yPos, zPos + 1);
+                render.aoLightValueScratchXYZPNP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos + 1, yPos, zPos + 1);
+                render.aoBrightnessXYZPNP = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos, zPos + 1);
             }
 
             if (render.renderMinY <= 0.0D) {
@@ -405,36 +386,19 @@ public final class UtilRender {
 
             i1 = l;
 
-            if (render.renderMinY <= 0.0D
-                    || !render.blockAccess.isBlockOpaqueCube(xPos, yPos - 1,
-                            zPos)) {
-                i1 = block.getMixedBrightnessForBlock(render.blockAccess, xPos,
-                        yPos - 1, zPos);
+            if (render.renderMinY <= 0.0D || !render.blockAccess.isBlockOpaqueCube(xPos, yPos - 1, zPos)) {
+                i1 = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos - 1, zPos);
             }
 
-            f7 = block.getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                    yPos - 1, zPos);
-            f3 = (render.aoLightValueScratchXYZNNP
-                    + render.aoLightValueScratchXYNN
-                    + render.aoLightValueScratchYZNP + f7) / 4.0F;
-            f6 = (render.aoLightValueScratchYZNP + f7
-                    + render.aoLightValueScratchXYZPNP + render.aoLightValueScratchXYPN) / 4.0F;
-            f5 = (f7 + render.aoLightValueScratchYZNN
-                    + render.aoLightValueScratchXYPN + render.aoLightValueScratchXYZPNN) / 4.0F;
-            f4 = (render.aoLightValueScratchXYNN
-                    + render.aoLightValueScratchXYZNNN + f7 + render.aoLightValueScratchYZNN) / 4.0F;
-            render.brightnessTopLeft = render.getAoBrightness(
-                    render.aoBrightnessXYZNNP, render.aoBrightnessXYNN,
-                    render.aoBrightnessYZNP, i1);
-            render.brightnessTopRight = render.getAoBrightness(
-                    render.aoBrightnessYZNP, render.aoBrightnessXYZPNP,
-                    render.aoBrightnessXYPN, i1);
-            render.brightnessBottomRight = render.getAoBrightness(
-                    render.aoBrightnessYZNN, render.aoBrightnessXYPN,
-                    render.aoBrightnessXYZPNN, i1);
-            render.brightnessBottomLeft = render.getAoBrightness(
-                    render.aoBrightnessXYNN, render.aoBrightnessXYZNNN,
-                    render.aoBrightnessYZNN, i1);
+            f7 = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos - 1, zPos);
+            f3 = (render.aoLightValueScratchXYZNNP + render.aoLightValueScratchXYNN + render.aoLightValueScratchYZNP + f7) / 4.0F;
+            f6 = (render.aoLightValueScratchYZNP + f7 + render.aoLightValueScratchXYZPNP + render.aoLightValueScratchXYPN) / 4.0F;
+            f5 = (f7 + render.aoLightValueScratchYZNN + render.aoLightValueScratchXYPN + render.aoLightValueScratchXYZPNN) / 4.0F;
+            f4 = (render.aoLightValueScratchXYNN + render.aoLightValueScratchXYZNNN + f7 + render.aoLightValueScratchYZNN) / 4.0F;
+            render.brightnessTopLeft = render.getAoBrightness(render.aoBrightnessXYZNNP, render.aoBrightnessXYNN, render.aoBrightnessYZNP, i1);
+            render.brightnessTopRight = render.getAoBrightness(render.aoBrightnessYZNP, render.aoBrightnessXYZPNP, render.aoBrightnessXYPN, i1);
+            render.brightnessBottomRight = render.getAoBrightness(render.aoBrightnessYZNN, render.aoBrightnessXYPN, render.aoBrightnessXYZPNN, i1);
+            render.brightnessBottomLeft = render.getAoBrightness(render.aoBrightnessXYNN, render.aoBrightnessXYZNNN, render.aoBrightnessYZNN, i1);
 
             if (flag1) {
                 render.colorRedTopLeft = render.colorRedBottomLeft = render.colorRedBottomRight = render.colorRedTopRight = colorRed * 0.5F;
@@ -458,127 +422,80 @@ public final class UtilRender {
             render.colorRedTopRight *= f6;
             render.colorGreenTopRight *= f6;
             render.colorBlueTopRight *= f6;
-            render.renderFaceYNeg(block, xPos, yPos, zPos, block
-                    .getBlockTexture(render.blockAccess, xPos, yPos, zPos, 0));
+            render.renderFaceYNeg(block, xPos, yPos, zPos, block.getBlockTexture(render.blockAccess, xPos, yPos, zPos, 0));
             flag = true;
         }
 
-        if (render.renderAllFaces
-                || block.shouldSideBeRendered(render.blockAccess, xPos,
-                        yPos + 1, zPos, 1)) {
+        if (render.renderAllFaces || block.shouldSideBeRendered(render.blockAccess, xPos, yPos + 1, zPos, 1)) {
             if (render.renderMaxY >= 1.0D) {
                 ++yPos;
             }
 
-            render.aoBrightnessXYNP = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos - 1, yPos, zPos);
-            render.aoBrightnessXYPP = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos + 1, yPos, zPos);
-            render.aoBrightnessYZPN = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos, zPos - 1);
-            render.aoBrightnessYZPP = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos, zPos + 1);
-            render.aoLightValueScratchXYNP = block
-                    .getAmbientOcclusionLightValue(render.blockAccess,
-                            xPos - 1, yPos, zPos);
-            render.aoLightValueScratchXYPP = block
-                    .getAmbientOcclusionLightValue(render.blockAccess,
-                            xPos + 1, yPos, zPos);
-            render.aoLightValueScratchYZPN = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos, zPos - 1);
-            render.aoLightValueScratchYZPP = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos, zPos + 1);
-            flag3 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos + 1,
-                    yPos + 1, zPos)];
-            flag2 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1,
-                    yPos + 1, zPos)];
-            flag5 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos,
-                    yPos + 1, zPos + 1)];
-            flag4 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos,
-                    yPos + 1, zPos - 1)];
+            render.aoBrightnessXYNP = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos, zPos);
+            render.aoBrightnessXYPP = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos, zPos);
+            render.aoBrightnessYZPN = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos, zPos - 1);
+            render.aoBrightnessYZPP = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos, zPos + 1);
+            render.aoLightValueScratchXYNP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos, zPos);
+            render.aoLightValueScratchXYPP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos + 1, yPos, zPos);
+            render.aoLightValueScratchYZPN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos, zPos - 1);
+            render.aoLightValueScratchYZPP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos, zPos + 1);
+            flag3 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos + 1, yPos + 1, zPos)];
+            flag2 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1, yPos + 1, zPos)];
+            flag5 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos, yPos + 1, zPos + 1)];
+            flag4 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos, yPos + 1, zPos - 1)];
 
             if (!flag4 && !flag2) {
                 render.aoLightValueScratchXYZNPN = render.aoLightValueScratchXYNP;
                 render.aoBrightnessXYZNPN = render.aoBrightnessXYNP;
             } else {
-                render.aoLightValueScratchXYZNPN = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos - 1, yPos, zPos - 1);
-                render.aoBrightnessXYZNPN = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos - 1, yPos, zPos - 1);
+                render.aoLightValueScratchXYZNPN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos, zPos - 1);
+                render.aoBrightnessXYZNPN = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos, zPos - 1);
             }
 
             if (!flag4 && !flag3) {
                 render.aoLightValueScratchXYZPPN = render.aoLightValueScratchXYPP;
                 render.aoBrightnessXYZPPN = render.aoBrightnessXYPP;
             } else {
-                render.aoLightValueScratchXYZPPN = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos + 1, yPos, zPos - 1);
-                render.aoBrightnessXYZPPN = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos + 1, yPos, zPos - 1);
+                render.aoLightValueScratchXYZPPN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos + 1, yPos, zPos - 1);
+                render.aoBrightnessXYZPPN = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos, zPos - 1);
             }
 
             if (!flag5 && !flag2) {
                 render.aoLightValueScratchXYZNPP = render.aoLightValueScratchXYNP;
                 render.aoBrightnessXYZNPP = render.aoBrightnessXYNP;
             } else {
-                render.aoLightValueScratchXYZNPP = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos - 1, yPos, zPos + 1);
-                render.aoBrightnessXYZNPP = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos - 1, yPos, zPos + 1);
+                render.aoLightValueScratchXYZNPP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos, zPos + 1);
+                render.aoBrightnessXYZNPP = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos, zPos + 1);
             }
 
             if (!flag5 && !flag3) {
                 render.aoLightValueScratchXYZPPP = render.aoLightValueScratchXYPP;
                 render.aoBrightnessXYZPPP = render.aoBrightnessXYPP;
             } else {
-                render.aoLightValueScratchXYZPPP = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos + 1, yPos, zPos + 1);
-                render.aoBrightnessXYZPPP = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos + 1, yPos, zPos + 1);
+                render.aoLightValueScratchXYZPPP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos + 1, yPos, zPos + 1);
+                render.aoBrightnessXYZPPP = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos, zPos + 1);
             }
 
             if (render.renderMaxY >= 1.0D) {
+                
                 --yPos;
             }
 
             i1 = l;
 
-            if (render.renderMaxY >= 1.0D
-                    || !render.blockAccess.isBlockOpaqueCube(xPos, yPos + 1,
-                            zPos)) {
-                i1 = block.getMixedBrightnessForBlock(render.blockAccess, xPos,
-                        yPos + 1, zPos);
+            if (render.renderMaxY >= 1.0D || !render.blockAccess.isBlockOpaqueCube(xPos, yPos + 1, zPos)) {
+                i1 = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos + 1, zPos);
             }
 
-            f7 = block.getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                    yPos + 1, zPos);
-            f6 = (render.aoLightValueScratchXYZNPP
-                    + render.aoLightValueScratchXYNP
-                    + render.aoLightValueScratchYZPP + f7) / 4.0F;
-            f3 = (render.aoLightValueScratchYZPP + f7
-                    + render.aoLightValueScratchXYZPPP + render.aoLightValueScratchXYPP) / 4.0F;
-            f4 = (f7 + render.aoLightValueScratchYZPN
-                    + render.aoLightValueScratchXYPP + render.aoLightValueScratchXYZPPN) / 4.0F;
-            f5 = (render.aoLightValueScratchXYNP
-                    + render.aoLightValueScratchXYZNPN + f7 + render.aoLightValueScratchYZPN) / 4.0F;
-            render.brightnessTopRight = render.getAoBrightness(
-                    render.aoBrightnessXYZNPP, render.aoBrightnessXYNP,
-                    render.aoBrightnessYZPP, i1);
-            render.brightnessTopLeft = render.getAoBrightness(
-                    render.aoBrightnessYZPP, render.aoBrightnessXYZPPP,
-                    render.aoBrightnessXYPP, i1);
-            render.brightnessBottomLeft = render.getAoBrightness(
-                    render.aoBrightnessYZPN, render.aoBrightnessXYPP,
-                    render.aoBrightnessXYZPPN, i1);
-            render.brightnessBottomRight = render.getAoBrightness(
-                    render.aoBrightnessXYNP, render.aoBrightnessXYZNPN,
-                    render.aoBrightnessYZPN, i1);
+            f7 = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos + 1, zPos);
+            f6 = (render.aoLightValueScratchXYZNPP + render.aoLightValueScratchXYNP + render.aoLightValueScratchYZPP + f7) / 4.0F;
+            f3 = (render.aoLightValueScratchYZPP + f7 + render.aoLightValueScratchXYZPPP + render.aoLightValueScratchXYPP) / 4.0F;
+            f4 = (f7 + render.aoLightValueScratchYZPN + render.aoLightValueScratchXYPP + render.aoLightValueScratchXYZPPN) / 4.0F;
+            f5 = (render.aoLightValueScratchXYNP + render.aoLightValueScratchXYZNPN + f7 + render.aoLightValueScratchYZPN) / 4.0F;
+            render.brightnessTopRight = render.getAoBrightness(render.aoBrightnessXYZNPP, render.aoBrightnessXYNP, render.aoBrightnessYZPP, i1);
+            render.brightnessTopLeft = render.getAoBrightness(render.aoBrightnessYZPP, render.aoBrightnessXYZPPP, render.aoBrightnessXYPP, i1);
+            render.brightnessBottomLeft = render.getAoBrightness(render.aoBrightnessYZPN, render.aoBrightnessXYPP, render.aoBrightnessXYZPPN, i1);
+            render.brightnessBottomRight = render.getAoBrightness(render.aoBrightnessXYNP, render.aoBrightnessXYZNPN,  render.aoBrightnessYZPN, i1);
             render.colorRedTopLeft = render.colorRedBottomLeft = render.colorRedBottomRight = render.colorRedTopRight = colorRed;
             render.colorGreenTopLeft = render.colorGreenBottomLeft = render.colorGreenBottomRight = render.colorGreenTopRight = colorGreen;
             render.colorBlueTopLeft = render.colorBlueBottomLeft = render.colorBlueBottomRight = render.colorBlueTopRight = colorBlue;
@@ -594,91 +511,60 @@ public final class UtilRender {
             render.colorRedTopRight *= f6;
             render.colorGreenTopRight *= f6;
             render.colorBlueTopRight *= f6;
-            render.renderFaceYPos(block, xPos, yPos, zPos, block
-                    .getBlockTexture(render.blockAccess, xPos, yPos, zPos, 1));
+            render.renderFaceYPos(block, xPos, yPos, zPos, block.getBlockTexture(render.blockAccess, xPos, yPos, zPos, 1));
             flag = true;
         }
 
         Icon icon;
 
-        if (render.renderAllFaces
-                || block.shouldSideBeRendered(render.blockAccess, xPos, yPos,
-                        zPos - 1, 2)) {
+        if (render.renderAllFaces || block.shouldSideBeRendered(render.blockAccess, xPos, yPos, zPos - 1, 2)) {
             if (render.renderMinZ <= 0.0D) {
                 --zPos;
             }
 
-            render.aoLightValueScratchXZNN = block
-                    .getAmbientOcclusionLightValue(render.blockAccess,
-                            xPos - 1, yPos, zPos);
-            render.aoLightValueScratchYZNN = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos - 1, zPos);
-            render.aoLightValueScratchYZPN = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos + 1, zPos);
-            render.aoLightValueScratchXZPN = block
-                    .getAmbientOcclusionLightValue(render.blockAccess,
-                            xPos + 1, yPos, zPos);
-            render.aoBrightnessXZNN = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos - 1, yPos, zPos);
-            render.aoBrightnessYZNN = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos - 1, zPos);
-            render.aoBrightnessYZPN = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos + 1, zPos);
-            render.aoBrightnessXZPN = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos + 1, yPos, zPos);
-            flag3 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos + 1,
-                    yPos, zPos - 1)];
-            flag2 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1,
-                    yPos, zPos - 1)];
-            flag5 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos,
-                    yPos + 1, zPos - 1)];
-            flag4 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos,
-                    yPos - 1, zPos - 1)];
+            render.aoLightValueScratchXZNN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos, zPos);
+            render.aoLightValueScratchYZNN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos - 1, zPos);
+            render.aoLightValueScratchYZPN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos + 1, zPos);
+            render.aoLightValueScratchXZPN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos + 1, yPos, zPos);
+            render.aoBrightnessXZNN = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos, zPos);
+            render.aoBrightnessYZNN = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos - 1, zPos);
+            render.aoBrightnessYZPN = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos + 1, zPos);
+            render.aoBrightnessXZPN = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos, zPos);
+            flag3 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos + 1, yPos, zPos - 1)];
+            flag2 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1, yPos, zPos - 1)];
+            flag5 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos, yPos + 1, zPos - 1)];
+            flag4 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos, yPos - 1, zPos - 1)];
 
             if (!flag2 && !flag4) {
                 render.aoLightValueScratchXYZNNN = render.aoLightValueScratchXZNN;
                 render.aoBrightnessXYZNNN = render.aoBrightnessXZNN;
             } else {
-                render.aoLightValueScratchXYZNNN = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos - 1, yPos - 1, zPos);
-                render.aoBrightnessXYZNNN = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos - 1, yPos - 1, zPos);
+                render.aoLightValueScratchXYZNNN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos - 1, zPos);
+                render.aoBrightnessXYZNNN = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos - 1, zPos);
             }
 
             if (!flag2 && !flag5) {
                 render.aoLightValueScratchXYZNPN = render.aoLightValueScratchXZNN;
                 render.aoBrightnessXYZNPN = render.aoBrightnessXZNN;
             } else {
-                render.aoLightValueScratchXYZNPN = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos - 1, yPos + 1, zPos);
-                render.aoBrightnessXYZNPN = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos - 1, yPos + 1, zPos);
+                render.aoLightValueScratchXYZNPN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos + 1, zPos);
+                render.aoBrightnessXYZNPN = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos + 1, zPos);
             }
 
             if (!flag3 && !flag4) {
                 render.aoLightValueScratchXYZPNN = render.aoLightValueScratchXZPN;
                 render.aoBrightnessXYZPNN = render.aoBrightnessXZPN;
             } else {
-                render.aoLightValueScratchXYZPNN = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos + 1, yPos - 1, zPos);
-                render.aoBrightnessXYZPNN = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos + 1, yPos - 1, zPos);
+                render.aoLightValueScratchXYZPNN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos + 1, yPos - 1, zPos);
+                render.aoBrightnessXYZPNN = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos - 1, zPos);
             }
 
             if (!flag3 && !flag5) {
                 render.aoLightValueScratchXYZPPN = render.aoLightValueScratchXZPN;
                 render.aoBrightnessXYZPPN = render.aoBrightnessXZPN;
             } else {
-                render.aoLightValueScratchXYZPPN = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos + 1, yPos + 1, zPos);
-                render.aoBrightnessXYZPPN = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos + 1, yPos + 1, zPos);
+                render.aoLightValueScratchXYZPPN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos + 1, yPos + 1, zPos);
+                render.aoBrightnessXYZPPN = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos + 1, zPos);
             }
 
             if (render.renderMinZ <= 0.0D) {
@@ -687,36 +573,19 @@ public final class UtilRender {
 
             i1 = l;
 
-            if (render.renderMinZ <= 0.0D
-                    || !render.blockAccess.isBlockOpaqueCube(xPos, yPos,
-                            zPos - 1)) {
-                i1 = block.getMixedBrightnessForBlock(render.blockAccess, xPos,
-                        yPos, zPos - 1);
+            if (render.renderMinZ <= 0.0D || !render.blockAccess.isBlockOpaqueCube(xPos, yPos, zPos - 1)) {
+                i1 = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos, zPos - 1);
             }
 
-            f7 = block.getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                    yPos, zPos - 1);
-            f3 = (render.aoLightValueScratchXZNN
-                    + render.aoLightValueScratchXYZNPN + f7 + render.aoLightValueScratchYZPN) / 4.0F;
-            f4 = (f7 + render.aoLightValueScratchYZPN
-                    + render.aoLightValueScratchXZPN + render.aoLightValueScratchXYZPPN) / 4.0F;
-            f5 = (render.aoLightValueScratchYZNN + f7
-                    + render.aoLightValueScratchXYZPNN + render.aoLightValueScratchXZPN) / 4.0F;
-            f6 = (render.aoLightValueScratchXYZNNN
-                    + render.aoLightValueScratchXZNN
-                    + render.aoLightValueScratchYZNN + f7) / 4.0F;
-            render.brightnessTopLeft = render.getAoBrightness(
-                    render.aoBrightnessXZNN, render.aoBrightnessXYZNPN,
-                    render.aoBrightnessYZPN, i1);
-            render.brightnessBottomLeft = render.getAoBrightness(
-                    render.aoBrightnessYZPN, render.aoBrightnessXZPN,
-                    render.aoBrightnessXYZPPN, i1);
-            render.brightnessBottomRight = render.getAoBrightness(
-                    render.aoBrightnessYZNN, render.aoBrightnessXYZPNN,
-                    render.aoBrightnessXZPN, i1);
-            render.brightnessTopRight = render.getAoBrightness(
-                    render.aoBrightnessXYZNNN, render.aoBrightnessXZNN,
-                    render.aoBrightnessYZNN, i1);
+            f7 = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos, zPos - 1);
+            f3 = (render.aoLightValueScratchXZNN + render.aoLightValueScratchXYZNPN + f7 + render.aoLightValueScratchYZPN) / 4.0F;
+            f4 = (f7 + render.aoLightValueScratchYZPN + render.aoLightValueScratchXZPN + render.aoLightValueScratchXYZPPN) / 4.0F;
+            f5 = (render.aoLightValueScratchYZNN + f7 + render.aoLightValueScratchXYZPNN + render.aoLightValueScratchXZPN) / 4.0F;
+            f6 = (render.aoLightValueScratchXYZNNN + render.aoLightValueScratchXZNN + render.aoLightValueScratchYZNN + f7) / 4.0F;
+            render.brightnessTopLeft = render.getAoBrightness(render.aoBrightnessXZNN, render.aoBrightnessXYZNPN, render.aoBrightnessYZPN, i1);
+            render.brightnessBottomLeft = render.getAoBrightness(render.aoBrightnessYZPN, render.aoBrightnessXZPN, render.aoBrightnessXYZPPN, i1);
+            render.brightnessBottomRight = render.getAoBrightness(render.aoBrightnessYZNN, render.aoBrightnessXYZPNN, render.aoBrightnessXZPN, i1);
+            render.brightnessTopRight = render.getAoBrightness(render.aoBrightnessXYZNNN, render.aoBrightnessXZNN, render.aoBrightnessYZNN, i1);
 
             if (flag1) {
                 render.colorRedTopLeft = render.colorRedBottomLeft = render.colorRedBottomRight = render.colorRedTopRight = colorRed * 0.8F;
@@ -740,91 +609,60 @@ public final class UtilRender {
             render.colorRedTopRight *= f6;
             render.colorGreenTopRight *= f6;
             render.colorBlueTopRight *= f6;
-            icon = block.getBlockTexture(render.blockAccess, xPos, yPos, zPos,
-                    2);
+            icon = block.getBlockTexture(render.blockAccess, xPos, yPos, zPos, 2);
             render.renderFaceZNeg(block, xPos, yPos, zPos, icon);
 
             flag = true;
         }
 
-        if (render.renderAllFaces
-                || block.shouldSideBeRendered(render.blockAccess, xPos, yPos,
-                        zPos + 1, 3)) {
+        if (render.renderAllFaces || block.shouldSideBeRendered(render.blockAccess, xPos, yPos, zPos + 1, 3)) {
             if (render.renderMaxZ >= 1.0D) {
                 ++zPos;
             }
 
-            render.aoLightValueScratchXZNP = block
-                    .getAmbientOcclusionLightValue(render.blockAccess,
-                            xPos - 1, yPos, zPos);
-            render.aoLightValueScratchXZPP = block
-                    .getAmbientOcclusionLightValue(render.blockAccess,
-                            xPos + 1, yPos, zPos);
-            render.aoLightValueScratchYZNP = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos - 1, zPos);
-            render.aoLightValueScratchYZPP = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos + 1, zPos);
-            render.aoBrightnessXZNP = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos - 1, yPos, zPos);
-            render.aoBrightnessXZPP = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos + 1, yPos, zPos);
-            render.aoBrightnessYZNP = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos - 1, zPos);
-            render.aoBrightnessYZPP = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos + 1, zPos);
-            flag3 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos + 1,
-                    yPos, zPos + 1)];
-            flag2 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1,
-                    yPos, zPos + 1)];
-            flag5 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos,
-                    yPos + 1, zPos + 1)];
-            flag4 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos,
-                    yPos - 1, zPos + 1)];
+            render.aoLightValueScratchXZNP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos, zPos);
+            render.aoLightValueScratchXZPP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos + 1, yPos, zPos);
+            render.aoLightValueScratchYZNP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos - 1, zPos);
+            render.aoLightValueScratchYZPP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos + 1, zPos);
+            render.aoBrightnessXZNP = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos, zPos);
+            render.aoBrightnessXZPP = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos, zPos);
+            render.aoBrightnessYZNP = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos - 1, zPos);
+            render.aoBrightnessYZPP = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos + 1, zPos);
+            flag3 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos + 1, yPos, zPos + 1)];
+            flag2 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1, yPos, zPos + 1)];
+            flag5 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos, yPos + 1, zPos + 1)];
+            flag4 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos, yPos - 1, zPos + 1)];
 
             if (!flag2 && !flag4) {
                 render.aoLightValueScratchXYZNNP = render.aoLightValueScratchXZNP;
                 render.aoBrightnessXYZNNP = render.aoBrightnessXZNP;
             } else {
-                render.aoLightValueScratchXYZNNP = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos - 1, yPos - 1, zPos);
-                render.aoBrightnessXYZNNP = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos - 1, yPos - 1, zPos);
+                render.aoLightValueScratchXYZNNP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos - 1, zPos);
+                render.aoBrightnessXYZNNP = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos - 1, zPos);
             }
 
             if (!flag2 && !flag5) {
                 render.aoLightValueScratchXYZNPP = render.aoLightValueScratchXZNP;
                 render.aoBrightnessXYZNPP = render.aoBrightnessXZNP;
             } else {
-                render.aoLightValueScratchXYZNPP = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos - 1, yPos + 1, zPos);
-                render.aoBrightnessXYZNPP = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos - 1, yPos + 1, zPos);
+                render.aoLightValueScratchXYZNPP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos + 1, zPos);
+                render.aoBrightnessXYZNPP = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos + 1, zPos);
             }
 
             if (!flag3 && !flag4) {
                 render.aoLightValueScratchXYZPNP = render.aoLightValueScratchXZPP;
                 render.aoBrightnessXYZPNP = render.aoBrightnessXZPP;
             } else {
-                render.aoLightValueScratchXYZPNP = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos + 1, yPos - 1, zPos);
-                render.aoBrightnessXYZPNP = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos + 1, yPos - 1, zPos);
+                render.aoLightValueScratchXYZPNP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos + 1, yPos - 1, zPos);
+                render.aoBrightnessXYZPNP = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos - 1, zPos);
             }
 
             if (!flag3 && !flag5) {
                 render.aoLightValueScratchXYZPPP = render.aoLightValueScratchXZPP;
                 render.aoBrightnessXYZPPP = render.aoBrightnessXZPP;
             } else {
-                render.aoLightValueScratchXYZPPP = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos + 1, yPos + 1, zPos);
-                render.aoBrightnessXYZPPP = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos + 1, yPos + 1, zPos);
+                render.aoLightValueScratchXYZPPP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos + 1, yPos + 1, zPos);
+                render.aoBrightnessXYZPPP = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos + 1, zPos);
             }
 
             if (render.renderMaxZ >= 1.0D) {
@@ -833,36 +671,19 @@ public final class UtilRender {
 
             i1 = l;
 
-            if (render.renderMaxZ >= 1.0D
-                    || !render.blockAccess.isBlockOpaqueCube(xPos, yPos,
-                            zPos + 1)) {
-                i1 = block.getMixedBrightnessForBlock(render.blockAccess, xPos,
-                        yPos, zPos + 1);
+            if (render.renderMaxZ >= 1.0D || !render.blockAccess.isBlockOpaqueCube(xPos, yPos, zPos + 1)) {
+                i1 = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos, zPos + 1);
             }
 
-            f7 = block.getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                    yPos, zPos + 1);
-            f3 = (render.aoLightValueScratchXZNP
-                    + render.aoLightValueScratchXYZNPP + f7 + render.aoLightValueScratchYZPP) / 4.0F;
-            f6 = (f7 + render.aoLightValueScratchYZPP
-                    + render.aoLightValueScratchXZPP + render.aoLightValueScratchXYZPPP) / 4.0F;
-            f5 = (render.aoLightValueScratchYZNP + f7
-                    + render.aoLightValueScratchXYZPNP + render.aoLightValueScratchXZPP) / 4.0F;
-            f4 = (render.aoLightValueScratchXYZNNP
-                    + render.aoLightValueScratchXZNP
-                    + render.aoLightValueScratchYZNP + f7) / 4.0F;
-            render.brightnessTopLeft = render.getAoBrightness(
-                    render.aoBrightnessXZNP, render.aoBrightnessXYZNPP,
-                    render.aoBrightnessYZPP, i1);
-            render.brightnessTopRight = render.getAoBrightness(
-                    render.aoBrightnessYZPP, render.aoBrightnessXZPP,
-                    render.aoBrightnessXYZPPP, i1);
-            render.brightnessBottomRight = render.getAoBrightness(
-                    render.aoBrightnessYZNP, render.aoBrightnessXYZPNP,
-                    render.aoBrightnessXZPP, i1);
-            render.brightnessBottomLeft = render.getAoBrightness(
-                    render.aoBrightnessXYZNNP, render.aoBrightnessXZNP,
-                    render.aoBrightnessYZNP, i1);
+            f7 = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos, zPos + 1);
+            f3 = (render.aoLightValueScratchXZNP + render.aoLightValueScratchXYZNPP + f7 + render.aoLightValueScratchYZPP) / 4.0F;
+            f6 = (f7 + render.aoLightValueScratchYZPP + render.aoLightValueScratchXZPP + render.aoLightValueScratchXYZPPP) / 4.0F;
+            f5 = (render.aoLightValueScratchYZNP + f7 + render.aoLightValueScratchXYZPNP + render.aoLightValueScratchXZPP) / 4.0F;
+            f4 = (render.aoLightValueScratchXYZNNP + render.aoLightValueScratchXZNP + render.aoLightValueScratchYZNP + f7) / 4.0F;
+            render.brightnessTopLeft = render.getAoBrightness(render.aoBrightnessXZNP, render.aoBrightnessXYZNPP, render.aoBrightnessYZPP, i1);
+            render.brightnessTopRight = render.getAoBrightness(render.aoBrightnessYZPP, render.aoBrightnessXZPP, render.aoBrightnessXYZPPP, i1);
+            render.brightnessBottomRight = render.getAoBrightness(render.aoBrightnessYZNP, render.aoBrightnessXYZPNP, render.aoBrightnessXZPP, i1);
+            render.brightnessBottomLeft = render.getAoBrightness(render.aoBrightnessXYZNNP, render.aoBrightnessXZNP, render.aoBrightnessYZNP, i1);
 
             if (flag1) {
                 render.colorRedTopLeft = render.colorRedBottomLeft = render.colorRedBottomRight = render.colorRedTopRight = colorRed * 0.8F;
@@ -886,91 +707,61 @@ public final class UtilRender {
             render.colorRedTopRight *= f6;
             render.colorGreenTopRight *= f6;
             render.colorBlueTopRight *= f6;
-            icon = block.getBlockTexture(render.blockAccess, xPos, yPos, zPos,
-                    3);
+            icon = block.getBlockTexture(render.blockAccess, xPos, yPos, zPos, 3);
             render.renderFaceZPos(block, xPos, yPos, zPos, icon);
 
             flag = true;
         }
 
         if (render.renderAllFaces
-                || block.shouldSideBeRendered(render.blockAccess, xPos - 1,
-                        yPos, zPos, 4)) {
+                || block.shouldSideBeRendered(render.blockAccess, xPos - 1, yPos, zPos, 4)) {
             if (render.renderMinX <= 0.0D) {
                 --xPos;
             }
 
-            render.aoLightValueScratchXYNN = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos - 1, zPos);
-            render.aoLightValueScratchXZNN = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos, zPos - 1);
-            render.aoLightValueScratchXZNP = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos, zPos + 1);
-            render.aoLightValueScratchXYNP = block
-                    .getAmbientOcclusionLightValue(render.blockAccess, xPos,
-                            yPos + 1, zPos);
-            render.aoBrightnessXYNN = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos - 1, zPos);
-            render.aoBrightnessXZNN = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos, zPos - 1);
-            render.aoBrightnessXZNP = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos, zPos + 1);
-            render.aoBrightnessXYNP = block.getMixedBrightnessForBlock(
-                    render.blockAccess, xPos, yPos + 1, zPos);
-            flag3 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1,
-                    yPos + 1, zPos)];
-            flag2 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1,
-                    yPos - 1, zPos)];
-            flag5 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1,
-                    yPos, zPos - 1)];
-            flag4 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1,
-                    yPos, zPos + 1)];
+            render.aoLightValueScratchXYNN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos - 1, zPos);
+            render.aoLightValueScratchXZNN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos, zPos - 1);
+            render.aoLightValueScratchXZNP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos, zPos + 1);
+            render.aoLightValueScratchXYNP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos + 1, zPos);
+            render.aoBrightnessXYNN = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos - 1, zPos);
+            render.aoBrightnessXZNN = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos, zPos - 1);
+            render.aoBrightnessXZNP = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos, zPos + 1);
+            render.aoBrightnessXYNP = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos + 1, zPos);
+            flag3 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1, yPos + 1, zPos)];
+            flag2 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1, yPos - 1, zPos)];
+            flag5 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1, yPos, zPos - 1)];
+            flag4 = Block.canBlockGrass[render.blockAccess.getBlockId(xPos - 1, yPos, zPos + 1)];
 
             if (!flag5 && !flag2) {
                 render.aoLightValueScratchXYZNNN = render.aoLightValueScratchXZNN;
                 render.aoBrightnessXYZNNN = render.aoBrightnessXZNN;
             } else {
-                render.aoLightValueScratchXYZNNN = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos, yPos - 1, zPos - 1);
-                render.aoBrightnessXYZNNN = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos, yPos - 1, zPos - 1);
+                render.aoLightValueScratchXYZNNN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos - 1, zPos - 1);
+                render.aoBrightnessXYZNNN = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos - 1, zPos - 1);
             }
 
             if (!flag4 && !flag2) {
                 render.aoLightValueScratchXYZNNP = render.aoLightValueScratchXZNP;
                 render.aoBrightnessXYZNNP = render.aoBrightnessXZNP;
             } else {
-                render.aoLightValueScratchXYZNNP = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos, yPos - 1, zPos + 1);
-                render.aoBrightnessXYZNNP = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos, yPos - 1, zPos + 1);
+                render.aoLightValueScratchXYZNNP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos - 1, zPos + 1);
+                render.aoBrightnessXYZNNP = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos - 1, zPos + 1);
             }
 
             if (!flag5 && !flag3) {
                 render.aoLightValueScratchXYZNPN = render.aoLightValueScratchXZNN;
                 render.aoBrightnessXYZNPN = render.aoBrightnessXZNN;
             } else {
-                render.aoLightValueScratchXYZNPN = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos, yPos + 1, zPos - 1);
-                render.aoBrightnessXYZNPN = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos, yPos + 1, zPos - 1);
+                render.aoLightValueScratchXYZNPN = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos + 1, zPos - 1);
+                render.aoBrightnessXYZNPN = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos + 1, zPos - 1);
             }
 
             if (!flag4 && !flag3) {
                 render.aoLightValueScratchXYZNPP = render.aoLightValueScratchXZNP;
                 render.aoBrightnessXYZNPP = render.aoBrightnessXZNP;
             } else {
-                render.aoLightValueScratchXYZNPP = block
-                        .getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos, yPos + 1, zPos + 1);
-                render.aoBrightnessXYZNPP = block.getMixedBrightnessForBlock(
-                        render.blockAccess, xPos, yPos + 1, zPos + 1);
+                render.aoLightValueScratchXYZNPP = block.getAmbientOcclusionLightValue(render.blockAccess, xPos, yPos + 1, zPos + 1);
+                render.aoBrightnessXYZNPP = block.getMixedBrightnessForBlock(render.blockAccess, xPos, yPos + 1, zPos + 1);
             }
 
             if (render.renderMinX <= 0.0D) {
@@ -980,34 +771,19 @@ public final class UtilRender {
             i1 = l;
 
             if (render.renderMinX <= 0.0D
-                    || !render.blockAccess.isBlockOpaqueCube(xPos - 1, yPos,
-                            zPos)) {
-                i1 = block.getMixedBrightnessForBlock(render.blockAccess,
-                        xPos - 1, yPos, zPos);
+                    || !render.blockAccess.isBlockOpaqueCube(xPos - 1, yPos, zPos)) {
+                i1 = block.getMixedBrightnessForBlock(render.blockAccess, xPos - 1, yPos, zPos);
             }
 
-            f7 = block.getAmbientOcclusionLightValue(render.blockAccess,
-                    xPos - 1, yPos, zPos);
-            f6 = (render.aoLightValueScratchXYNN
-                    + render.aoLightValueScratchXYZNNP + f7 + render.aoLightValueScratchXZNP) / 4.0F;
-            f3 = (f7 + render.aoLightValueScratchXZNP
-                    + render.aoLightValueScratchXYNP + render.aoLightValueScratchXYZNPP) / 4.0F;
-            f4 = (render.aoLightValueScratchXZNN + f7
-                    + render.aoLightValueScratchXYZNPN + render.aoLightValueScratchXYNP) / 4.0F;
-            f5 = (render.aoLightValueScratchXYZNNN
-                    + render.aoLightValueScratchXYNN
-                    + render.aoLightValueScratchXZNN + f7) / 4.0F;
-            render.brightnessTopRight = render.getAoBrightness(
-                    render.aoBrightnessXYNN, render.aoBrightnessXYZNNP,
-                    render.aoBrightnessXZNP, i1);
-            render.brightnessTopLeft = render.getAoBrightness(
-                    render.aoBrightnessXZNP, render.aoBrightnessXYNP,
-                    render.aoBrightnessXYZNPP, i1);
-            render.brightnessBottomLeft = render.getAoBrightness(
-                    render.aoBrightnessXZNN, render.aoBrightnessXYZNPN,
-                    render.aoBrightnessXYNP, i1);
-            render.brightnessBottomRight = render.getAoBrightness(
-                    render.aoBrightnessXYZNNN, render.aoBrightnessXYNN,
+            f7 = block.getAmbientOcclusionLightValue(render.blockAccess, xPos - 1, yPos, zPos);
+            f6 = (render.aoLightValueScratchXYNN + render.aoLightValueScratchXYZNNP + f7 + render.aoLightValueScratchXZNP) / 4.0F;
+            f3 = (f7 + render.aoLightValueScratchXZNP + render.aoLightValueScratchXYNP + render.aoLightValueScratchXYZNPP) / 4.0F;
+            f4 = (render.aoLightValueScratchXZNN + f7 + render.aoLightValueScratchXYZNPN + render.aoLightValueScratchXYNP) / 4.0F;
+            f5 = (render.aoLightValueScratchXYZNNN + render.aoLightValueScratchXYNN + render.aoLightValueScratchXZNN + f7) / 4.0F;
+            render.brightnessTopRight = render.getAoBrightness(render.aoBrightnessXYNN, render.aoBrightnessXYZNNP, render.aoBrightnessXZNP, i1);
+            render.brightnessTopLeft = render.getAoBrightness(render.aoBrightnessXZNP, render.aoBrightnessXYNP, render.aoBrightnessXYZNPP, i1);
+            render.brightnessBottomLeft = render.getAoBrightness(render.aoBrightnessXZNN, render.aoBrightnessXYZNPN, render.aoBrightnessXYNP, i1);
+            render.brightnessBottomRight = render.getAoBrightness(render.aoBrightnessXYZNNN, render.aoBrightnessXYNN,
                     render.aoBrightnessXZNN, i1);
 
             if (flag1) {
@@ -1189,10 +965,7 @@ public final class UtilRender {
         return flag;
     }
 
-    static boolean renderMetadataBlockWithColorMultiplier(Block block,
-            int metadata, int xPos, int yPos, int zPos, float colorRed,
-            float colorGreen, float colorBlue, RenderBlocks render,
-            IBlockAccess world) {
+    static boolean renderMetadataBlockWithColorMultiplier(Block block, int metadata, int xPos, int yPos, int zPos, float colorRed, float colorGreen, float colorBlue, RenderBlocks render, IBlockAccess world) {
         render.enableAO = false;
         Tessellator tessellator = Tessellator.instance;
         boolean flag = false;

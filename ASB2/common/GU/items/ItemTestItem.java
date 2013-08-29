@@ -4,9 +4,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import GU.api.runes.*;
+import net.minecraftforge.common.ForgeDirection;
+import GU.api.runes.IRuneBlock;
+import GU.api.runes.IRuneItem;
+import GU.utils.*;
 
-public class ItemTestItem extends ItemBase implements IRuneItem {
+public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle {
 
     public ItemTestItem(int id) {
         super(id);
@@ -19,27 +22,34 @@ public class ItemTestItem extends ItemBase implements IRuneItem {
     }
 
     @Override
-    public void onUpdate(IRuneBlock block, ItemStack stack, int x, int y, int z) {
-        // TODO Auto-generated method stub
-        
+    public void onUpdate(World world, IRuneBlock block, ItemStack stack, int x, int y, int z) {
+
+        UtilBlock.cycle3DBlock(null, world, x + block.getOrientation().offsetX, y + block.getOrientation().offsetY, z + block.getOrientation().offsetZ, block.getOrientation().getOpposite(), 25, 25 + 1 + 25, this, 0);
     }
 
     @Override
-    public boolean shouldUpdate(IRuneBlock block, ItemStack stack, int x, int y, int z) {
+    public boolean shouldUpdate(World world, IRuneBlock block, ItemStack stack, int x, int y, int z) {
+
+        return true;
+    }
+
+    @Override
+    public void randomUpdate(World world, IRuneBlock block, ItemStack stack, int x, int y, int z) {
         // TODO Auto-generated method stub
-        return false;
+        
     }
 
     @Override
     public Item getItem() {
-        // TODO Auto-generated method stub
+
         return this;
     }
 
     @Override
-    public void onRemoval(IRuneBlock block, ItemStack stack, int x, int y, int z) {
-        // TODO Auto-generated method stub
-        
+    public boolean execute(EntityPlayer player, World world, int x, int y, int z, ForgeDirection side, int id) {
+
+        UtilBlock.breakBlock(world, x, y, z);
+        return false;
     }
 
 }

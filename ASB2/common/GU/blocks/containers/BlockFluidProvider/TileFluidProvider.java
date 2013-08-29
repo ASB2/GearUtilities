@@ -39,11 +39,11 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
 
                         IFluidHandler fTile = (IFluidHandler) tile;
 
-                        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord,
-                                yCoord, zCoord)) {
+                        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
                             UtilFluid.addFluidToTank(fTile, direction, fluidStack, true);
-                        } else {
+                        } 
+                        else {
 
                             UtilFluid.removeFluidFromTank(fTile, direction, fluidStack, true);
                         }

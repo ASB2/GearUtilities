@@ -12,10 +12,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.api.color.IColorable;
-import GU.blocks.BlockSimpleRenderer;
-import GU.blocks.IBlockRender;
 import GU.color.BlockColorable;
 import GU.info.Reference;
+import GU.models.BlockSimpleRenderer;
+import GU.models.IBlockRender;
 import GU.utils.UtilDirection;
 import GU.utils.UtilRender;
 

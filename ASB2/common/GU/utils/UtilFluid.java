@@ -57,33 +57,36 @@ public final class UtilFluid {
 
         if(fluid != null && destination != null && fluid != null) {
 
-            for (FluidTankInfo info : destination.getTankInfo(from)) {
+            if(destination.getTankInfo(from) != null) {
+                
+                for (FluidTankInfo info : destination.getTankInfo(from)) {
 
-                if(info != null) {
+                    if(info != null) {
 
-                    if(info.fluid != null) {
+                        if(info.fluid != null) {
 
-                        if(!(info.fluid.isFluidEqual(fluid))) {
+                            if(!(info.fluid.isFluidEqual(fluid))) {
 
-                            itWorked = false;
-                            break;
-                        }                        
-                    }
-                    
-                    if(destination.canFill(oppositeDirection, fluid.getFluid())) {
-
-                        if(destination.fill(oppositeDirection, fluid, false) != 0) {
-
-                            if(doMove)
-                                destination.fill(oppositeDirection, fluid, true);
-
-                            itWorked = true;
-                        } 
-                        else {
-
-                            itWorked = false;
+                                itWorked = false;
+                                break;
+                            }                        
                         }
-                    } 
+
+                        if(destination.canFill(oppositeDirection, fluid.getFluid())) {
+
+                            if(destination.fill(oppositeDirection, fluid, false) != 0) {
+
+                                if(doMove)
+                                    destination.fill(oppositeDirection, fluid, true);
+
+                                return true;
+                            } 
+                            else {
+
+                                itWorked = false;
+                            }
+                        } 
+                    }
                 }
             }
         }
