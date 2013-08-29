@@ -1,4 +1,4 @@
-package GU.color;
+package GU.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -6,26 +6,26 @@ import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
-public class ColorableRenderer implements ISimpleBlockRenderingHandler {
+public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
 
-    public static int colorableTile = RenderingRegistry.getNextAvailableRenderId();
+    public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 
     @Override
     public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
 
 
-        if(block instanceof IBlockColorable) {
+        if(block instanceof IBlockRender) {
 
-            ((IBlockColorable)block).renderInventoryBlock(block, meta, modelID, renderer);
+            ((IBlockRender)block).renderInventoryBlock(block, meta, modelID, renderer);
         }
     }
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 
-        if(block instanceof IBlockColorable) {
+        if(block instanceof IBlockRender) {
 
-            return ((IBlockColorable)block).renderWorldBlock(world, x, y, z, block, modelId, renderer);
+            return ((IBlockRender)block).renderWorldBlock(world, x, y, z, block, modelId, renderer);
         }
         return false;
     }
@@ -39,6 +39,6 @@ public class ColorableRenderer implements ISimpleBlockRenderingHandler {
     @Override
     public int getRenderId() {
 
-        return colorableTile;
+        return renderID;
     }
 }

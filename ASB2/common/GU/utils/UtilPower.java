@@ -59,8 +59,7 @@ public class UtilPower {
         return false;
     }
 
-    public static IPowerMisc findConductor(ForgeDirection side, World worldObj,
-            int distance, int x, int y, int z) {
+    public static IPowerMisc findConductor(ForgeDirection side, World worldObj, int distance, int x, int y, int z) {
 
         for (int i = 0; i <= distance; i++) {
 

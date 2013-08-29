@@ -10,26 +10,24 @@ public class UtilInventory {
 
         if (!UtilInventory.addItemStackToInventory(destination, itemStack, true)) {
 
-            UtilBlock.spawnItemStackEntity(world, x, y, z, itemStack, 0);
+            UtilBlock.spawnItemStackEntity(world, x, y, z, itemStack, 1);
         }
         return true;
     }
 
     public static boolean addItemStackToInventory(IInventory destination, ItemStack itemStack, boolean doWork) {
 
-        boolean itWorked = false;
-
         if (itemStack != null) {
-            
+
             for (int i = 0; i < destination.getSizeInventory(); i++) {
 
-                if(itWorked == false) {
-                    
-                    itWorked =  UtilInventory.addItemStackToSlot(destination, itemStack, i, doWork);
+                if(UtilInventory.addItemStackToSlot(destination, itemStack, i, doWork)) {
+
+                    return true;
                 }
             }
         }
-        return itWorked;
+        return false;
     }
 
     public static boolean addItemStackToSlot(IInventory destination, ItemStack itemStack, int slot, boolean doWork) {
@@ -49,10 +47,17 @@ public class UtilInventory {
 
                 if(stack.isItemEqual(itemStack)) {
 
-                    if(doWork)
+                    if(doWork) {
+                        
                         return UtilInventory.increaseSlotContents(destination, slot, itemStack.stackSize);
-
-                    return true;
+                    }
+                    else {
+                        
+                        if(stack.stackSize + itemStack.stackSize <= destination.getInventoryStackLimit()) {
+                            
+                            return true;
+                        }
+                    }
                 }
             }
         }
@@ -89,7 +94,7 @@ public class UtilInventory {
 
                     if (slotStack.isItemEqual(itemStack)) {
 
-                        return UtilInventory.decreaseSlotContents(inventory, i, amount) != null;
+                        return UtilInventory.decreaseSlotContentsBoolean(inventory, i, amount);
                     }
                 }
             }
@@ -100,7 +105,7 @@ public class UtilInventory {
     public static boolean moveEntireInventory(IInventory source, IInventory destination) {
 
         boolean itWorked = false;
-        
+
         for (int sourceSlot = 0; sourceSlot < source.getSizeInventory(); sourceSlot++) {
 
             if (source.getStackInSlot(sourceSlot) != null) {
@@ -108,9 +113,9 @@ public class UtilInventory {
                 for (int destinationSlot = 0; destinationSlot < destination.getSizeInventory(); destinationSlot++) {
 
                     ItemStack sourceStack = source.getStackInSlot(sourceSlot);
-                    
+
                     if(UtilInventory.addItemStackToSlot(destination, sourceStack, destinationSlot, false)) {
-                        
+
                         itWorked = UtilInventory.addItemStackToSlot(destination, sourceStack, destinationSlot, true);
                     }
                 }

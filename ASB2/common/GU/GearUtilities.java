@@ -116,6 +116,6 @@ public final class GearUtilities {
         FluidRegistry.registerFluidContainers();
         CraftRegistry.init();
 
-        WhiteLists.getInstance().addWrench(new ItemStack(ItemRegistry.ItemAdvancedStick, 1, 0));
+        WhiteLists.getInstance().addWrench(new ItemStack(ItemRegistry.ItemAdvancedStick, 1));
     }
 }

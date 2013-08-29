@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import GU.BlockRegistry;
 import GU.ItemRegistry;
+import GU.blocks.BlockSimpleRenderer;
 import GU.blocks.BlockTestRender.TestRenderRenderer;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.GuiAdvancedPotionBrewery;
 import GU.blocks.containers.BlockBlockBreaker.BlockBreakerRenderer;
@@ -18,7 +19,6 @@ import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
 import GU.blocks.containers.BlockTestLaser.TestLaserRenderer;
 import GU.blocks.containers.BlockTestLaser.TileTestLaser;
-import GU.color.ColorableRenderer;
 import GU.entity.EntityTest.EntityTestEntity;
 import GU.entity.EntityTest.TestEntityRenderer;
 import GU.info.Gui;
@@ -49,7 +49,7 @@ public class ClientProxy extends CommonProxy {
 
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());
-        RenderingRegistry.registerBlockHandler(new ColorableRenderer());
+        RenderingRegistry.registerBlockHandler(new BlockSimpleRenderer());
     }
 
     @Override

@@ -139,8 +139,7 @@ public class UtilBlock {
             double d0 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
             double d1 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
             double d2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-            EntityItem entityitem = new EntityItem(world, x + d0, y + d1, z
-                    + d2, item);
+            EntityItem entityitem = new EntityItem(world, x + d0, y + d1, z + d2, item);
             entityitem.delayBeforeCanPickup = delayforPickup;
             world.spawnEntityInWorld(entityitem);
         }

@@ -14,14 +14,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.BlockRegistry;
 import GU.api.color.IColorable;
+import GU.blocks.BlockSimpleRenderer;
+import GU.blocks.IBlockRender;
 import GU.color.BlockColorable;
-import GU.color.ColorableRenderer;
-import GU.color.IBlockColorable;
 import GU.info.Reference;
 import GU.utils.UtilDirection;
 import GU.utils.UtilRender;
 
-public class BlockCanvas extends BlockColorable implements IBlockColorable {
+public class BlockCanvas extends BlockColorable implements IBlockRender {
 
     public Icon inner;
     public Icon[] icons = new Icon[16];
@@ -88,7 +88,7 @@ public class BlockCanvas extends BlockColorable implements IBlockColorable {
     @Override
     public int getRenderType() {
 
-        return ColorableRenderer.colorableTile;
+        return BlockSimpleRenderer.renderID;
     }
 
     @Override
