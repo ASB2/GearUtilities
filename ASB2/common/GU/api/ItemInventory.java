@@ -32,7 +32,7 @@ public class ItemInventory implements IInventory {
         this.useableByPlayer = useableByPlayer;
     }
 
-    public ItemStack getItem() {
+    public ItemStack getInventoryContainerItem() {
     
         return stack;
     }
@@ -109,7 +109,7 @@ public class ItemInventory implements IInventory {
     @Override
     public void onInventoryChanged() {
 
-        ((IItemInventory)stack.getItem()).onInventoryChanged(this);
+        ((IItemInventory)stack.getItem()).onInventoryChanged(this, getInventoryContainerItem());
     }
 
     @Override
@@ -133,7 +133,7 @@ public class ItemInventory implements IInventory {
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack) {
         
-        return ((IItemInventory)stack.getItem()).isItemValidForSlot(this, i, itemstack);
+        return ((IItemInventory)stack.getItem()).isItemValidForSlot(this, this.getInventoryContainerItem(), i, itemstack);
     }
 
     private NBTTagCompound getTAGfromItemstack(ItemStack itemStack) {

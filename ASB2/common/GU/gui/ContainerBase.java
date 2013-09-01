@@ -31,7 +31,7 @@ public abstract class ContainerBase extends Container {
 
             if(((ItemStack)tile).getItem() instanceof IItemInventory) {
 
-                slotCount = ((IItemInventory)tile).getInventory(((ItemStack)tile));
+                slotCount = ((IItemInventory)tile).getInventory(((ItemStack)tile)).getSizeInventory();
             }
         }
 
