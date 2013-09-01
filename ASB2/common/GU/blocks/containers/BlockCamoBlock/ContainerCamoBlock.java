@@ -7,7 +7,7 @@ import GU.gui.ContainerBase;
 public class ContainerCamoBlock extends ContainerBase {
 
     public ContainerCamoBlock(InventoryPlayer inventory, TileCamoBlock tileEntity) {
-        super(inventory);
+        super(inventory, tileEntity);
 
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 0, 47 + 15, 14)));
     }

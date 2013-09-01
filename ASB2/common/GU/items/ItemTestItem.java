@@ -1,5 +1,6 @@
 package GU.items;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -8,8 +9,9 @@ import net.minecraftforge.common.ForgeDirection;
 import GU.api.runes.IRuneBlock;
 import GU.api.runes.IRuneItem;
 import GU.utils.*;
+import GU.api.potion.*;
 
-public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle {
+public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IPotionIngredient {
 
     public ItemTestItem(int id) {
         super(id);
@@ -50,6 +52,53 @@ public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle {
 
         UtilBlock.breakBlock(world, x, y, z);
         return false;
+    }
+
+    @Override
+    public IngredientType getIngredientType(ItemStack stack) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public int getPowerChange(ItemStack stack) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int getDurationChange(ItemStack stack) {
+        // TODO Auto-generated method stub
+        return 200;
+    }
+
+    @Override
+    public int getStrengthChange(ItemStack stack) {
+        // TODO Auto-generated method stub
+        return 200;
+    }
+
+    @Override
+    public void onEntityDrinkPotion(World world, ItemStack potion, EntityLivingBase entity) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onPotionThrown(World world, ItemStack potion, EntityLivingBase entity) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void onThrownPotionHitEntity(World world, ItemStack potion, EntityLivingBase entity) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void onThrownPotionHitBlock(World world, ItemStack potion, int x, int y, int z) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

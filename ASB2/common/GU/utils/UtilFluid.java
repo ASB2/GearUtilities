@@ -16,28 +16,31 @@ public final class UtilFluid {
 
         if(source != null && destination != null) {
 
-            for (FluidTankInfo info : source.getTankInfo(from)) {
+            if(destination.getTankInfo(from) != null) {
 
-                if(info != null) {
+                for (FluidTankInfo info : source.getTankInfo(from)) {
 
-                    if(info.fluid != null) {
+                    if(info != null) {
 
-                        FluidStack fluidToMove = info.fluid.copy();
+                        if(info.fluid != null) {
 
-                        if(fluidToMove.amount >= amount) {
+                            FluidStack fluidToMove = info.fluid.copy();
 
-                            fluidToMove.amount = amount;
+                            if(fluidToMove.amount >= amount) {
 
-                            if(UtilFluid.addFluidToTank(destination, from, fluidToMove, false)) {
+                                fluidToMove.amount = amount;
 
-                                if(UtilFluid.removeFluidFromTank(source, oppositeDirection, fluidToMove, false)) {
+                                if(UtilFluid.addFluidToTank(destination, from, fluidToMove, false)) {
 
-                                    isSuccessful = true;
+                                    if(UtilFluid.removeFluidFromTank(source, oppositeDirection, fluidToMove, false)) {
 
-                                    if(doMove) {
+                                        isSuccessful = true;
 
-                                        UtilFluid.addFluidToTank(destination, from, fluidToMove, true);
-                                        UtilFluid.removeFluidFromTank(source, oppositeDirection, fluidToMove, true);
+                                        if(doMove) {
+
+                                            UtilFluid.addFluidToTank(destination, from, fluidToMove, true);
+                                            UtilFluid.removeFluidFromTank(source, oppositeDirection, fluidToMove, true);
+                                        }
                                     }
                                 }
                             }
@@ -55,10 +58,10 @@ public final class UtilFluid {
 
         ForgeDirection oppositeDirection = from.getOpposite();
 
-        if(fluid != null && destination != null && fluid != null) {
+        if(fluid != null && destination != null) {
 
             if(destination.getTankInfo(from) != null) {
-                
+
                 for (FluidTankInfo info : destination.getTankInfo(from)) {
 
                     if(info != null) {
@@ -107,26 +110,29 @@ public final class UtilFluid {
 
             if(destination.getTankInfo(from) != null) {
 
-                for (FluidTankInfo info : destination.getTankInfo(oppositeDirection)) {
+                if(destination.getTankInfo(from) != null) {
+                    
+                    for (FluidTankInfo info : destination.getTankInfo(oppositeDirection)) {
 
-                    if(info != null) {
+                        if(info != null) {
 
-                        if(info.fluid != null) {
+                            if(info.fluid != null) {
 
-                            if(!(info.fluid.isFluidEqual(fluid))) {
+                                if(!(info.fluid.isFluidEqual(fluid))) {
 
-                                itWorked = false;
-                                break;
+                                    itWorked = false;
+                                    break;
+                                }
                             }
-                        }
 
-                        if(destination.canDrain(oppositeDirection, fluid.getFluid())) {
+                            if(destination.canDrain(oppositeDirection, fluid.getFluid())) {
 
-                            if(destination.drain(oppositeDirection, fluid, false) != null) {
+                                if(destination.drain(oppositeDirection, fluid, false) != null) {
 
-                                if(doMove)
-                                    destination.drain(oppositeDirection, fluid, true);
-                                itWorked = true;
+                                    if(doMove)
+                                        destination.drain(oppositeDirection, fluid, true);
+                                    itWorked = true;
+                                }
                             }
                         }
                     }

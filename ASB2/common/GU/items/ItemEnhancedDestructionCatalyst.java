@@ -96,7 +96,7 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
                             }
                             else {
 
-                                UtilBlock.breakAndAddToInventory(player.inventory, world, x, y, z, 5, false);
+                                world.setBlockToAir(x, y, z);
                             }
                         }
                     }

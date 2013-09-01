@@ -6,6 +6,7 @@ import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
@@ -16,6 +17,29 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.client.FMLClientHandler;
 
 public final class UtilRender {
+
+    public static void renderIcon(int x, int y, Icon icon, int width, int height) {
+
+        int zLevel = 1;
+
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV((double)(x + 0), (double)(y + height), (double)zLevel, (double)icon.getMinU(), (double)icon.getMaxV());
+        tessellator.addVertexWithUV((double)(x + width), (double)(y + height), (double)zLevel, (double)icon.getMaxU(), (double)icon.getMaxV());
+        tessellator.addVertexWithUV((double)(x + width), (double)(y + 0), (double)zLevel, (double)icon.getMaxU(), (double)icon.getMinV());
+        tessellator.addVertexWithUV((double)(x + 0), (double)(y + 0), (double)zLevel, (double)icon.getMinU(), (double)icon.getMinV());
+        tessellator.draw();
+    }
+
+    public static void bindBlockTextures() {
+
+        UtilRender.renderTexture(TextureMap.field_110575_b);
+    }
+
+    public static void bindItemTextures() {
+
+        UtilRender.renderTexture(TextureMap.field_110576_c);
+    }
 
     public static void renderTexture(ResourceLocation texture) {
 
@@ -139,8 +163,7 @@ public final class UtilRender {
     public static void renderFakeBlock(RenderBlocks renderer, Block block, int x, int y, int z, Icon icon, int red, int green, int blue, int alfa, int brightness) {
 
         Tessellator tess = Tessellator.instance;
-        
-        tess.startDrawingQuads();
+
         tess.setBrightness(brightness);
         tess.setColorRGBA(red, green, blue, alfa);
 
@@ -152,33 +175,35 @@ public final class UtilRender {
 
         renderer.renderFaceZNeg(block, x, y, z, icon);
         renderer.renderFaceZPos(block, x, y, z, icon);
-        tess.draw();
     }
 
     public static void renderFakeSide(RenderBlocks renderer, Block block, ForgeDirection direction, int x, int y, int z, Icon icon, int red, int green, int blue, int alfa, int brightness) {
 
-        Tessellator tess = Tessellator.instance;
+        if(icon != null) {
+            
+            Tessellator tess = Tessellator.instance;
 
-        tess.setBrightness(brightness);
-        tess.setColorRGBA(red, green, blue, alfa);
+            tess.setBrightness(brightness);
+            tess.setColorRGBA(red, green, blue, alfa);
 
-        switch(direction) {
+            switch(direction) {
 
-            case DOWN: renderer.renderFaceYNeg(block, x, y, z, icon);
-            break;
-            case UP: renderer.renderFaceYPos(block, x, y, z, icon);
-            break;
-            case NORTH: renderer.renderFaceZNeg(block, x, y, z, icon);
-            break;
-            case SOUTH: renderer.renderFaceZPos(block, x, y, z, icon);
-            break;
-            case WEST: renderer.renderFaceXNeg(block, x, y, z, icon);
-            break;
-            case EAST: renderer.renderFaceXPos(block, x, y, z, icon);
-            break;
-            default:
-                break;            
-        }        
+                case DOWN: renderer.renderFaceYNeg(block, x, y, z, icon);
+                break;
+                case UP: renderer.renderFaceYPos(block, x, y, z, icon);
+                break;
+                case NORTH: renderer.renderFaceZNeg(block, x, y, z, icon);
+                break;
+                case SOUTH: renderer.renderFaceZPos(block, x, y, z, icon);
+                break;
+                case WEST: renderer.renderFaceXNeg(block, x, y, z, icon);
+                break;
+                case EAST: renderer.renderFaceXPos(block, x, y, z, icon);
+                break;
+                default:
+                    break;            
+            }        
+        }
     }
 
     public static void renderStandardInvBlock(RenderBlocks renderblocks, Block block, int meta) {
@@ -368,7 +393,7 @@ public final class UtilRender {
                 render.aoBrightnessXYZPNN = render.aoBrightnessXYPN;
             } else {
                 render.aoLightValueScratchXYZPNN = block.getAmbientOcclusionLightValue(render.blockAccess,
-                                xPos + 1, yPos, zPos - 1);
+                        xPos + 1, yPos, zPos - 1);
                 render.aoBrightnessXYZPNN = block.getMixedBrightnessForBlock(render.blockAccess, xPos + 1, yPos, zPos - 1);
             }
 
@@ -477,7 +502,7 @@ public final class UtilRender {
             }
 
             if (render.renderMaxY >= 1.0D) {
-                
+
                 --yPos;
             }
 

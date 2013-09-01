@@ -51,12 +51,11 @@ public abstract class GuiBase extends GuiContainer {
 
         for (int i = 0; i < container.slotList.size(); i++) {
 
-            addSlot(posX + container.slotList.get(i).xDisplayPosition - 1, posY
-                    + container.slotList.get(i).yDisplayPosition - 1);
+            renderSlot(posX + container.slotList.get(i).xDisplayPosition - 1, posY + container.slotList.get(i).yDisplayPosition - 1);
         }
     }
 
-    public void addSlot(int x, int y) {
+    public void renderSlot(int x, int y) {
 
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
         drawTexturedModalRect(x, y, 176, 32, 18, 18);
@@ -64,37 +63,56 @@ public abstract class GuiBase extends GuiContainer {
 
     public void renderBigSlot(int x, int y) {
 
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(x, y, 226, 4, 26, 26);
+        drawTexturedModalRect(posX + x -5, posY + y - 5, 226, 4, 26, 26);
     }
 
     public void renderFlame(int x, int y) {
 
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(x, y, 191, 0, 14, 14);
+        drawTexturedModalRect(posX + x, posY + y, 191, 0, 14, 14);
     }
 
     public void renderBurningFlame(int x, int y) {
 
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(x, y, 176, 0, 14, 14);
+        drawTexturedModalRect( posX + x, posY + y, 176, 0, 14, 14);
     }
 
     public void scaleFlame(int x, int y, int scale) {
 
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(x, y + 14 - scale, 191, 0, 14, scale);
+        drawTexturedModalRect(posX + x, posY + y + 14 - scale, 191, 0, 14, scale);
     }
 
     public void scaleBurningFlame(int x, int y, int scale) {
+
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(x, y + 14 - scale, 176, 0, 14, scale);
+        drawTexturedModalRect(posX + x, posY + y + 14 - scale, 176, 0, 14, scale);
     }
 
-    public void addTank(int x, int y) {
+    public void renderTank(int x, int y) {
+
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
 
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(x, y, 176, 123, 18, 71);
+        drawTexturedModalRect(posX + x, posY + y, 176, 123, 18, 71);
     }
 
     public void scaleLiquid(int x, int y, int scale, Icon icon) {
@@ -118,26 +136,69 @@ public abstract class GuiBase extends GuiContainer {
 
     public void renderRightArrow(int x, int y) {
 
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(x, y, 200, 14, 24, 17);
+        drawTexturedModalRect(posX + x, posY + y, 200, 14, 24, 17);
     }
 
     public void renderLeftArrow(int x, int y) {
 
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(x, y, 195, 32, 24, 17);
+        drawTexturedModalRect(posX + x, posY + y, 195, 32, 24, 17);
     }
 
-    public void addPowerTank(int x, int y) {
+    public void renderGuage(int x, int y) {
+
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
 
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(x, y, 176, 51, 18, 71);
+        drawTexturedModalRect(posX + x, posY +  y, 176, 51, 18, 71);
     }
 
     public void scalePower(int x, int y, int scale) {
 
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
+
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(x, y + 71 - scale + 4, 194, 51, 18, scale);
+        drawTexturedModalRect(posX + x, posY + y + 71 - scale + 4, 194, 51, 18, scale);
+    }
+
+    public void scaleFluid(int x, int y, int scale, Icon icon) {
+
+        if(icon != null) {
+
+            posX = (width - xSizeOfTexture) / 2;
+            posY = (height - ySizeOfTexture) / 2;
+
+            drawTexturedModelRectFromIcon(posX + x, posY + y + 71 - scale + 4, icon, 18, scale);
+        }
+    }
+
+    public void renderGuageOverLay(int x, int y) {
+
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
+
+        UtilRender.renderTexture(Gui.GUI_DEFAULT);
+        drawTexturedModalRect(posX + x, posY +  y, 176, 123, 18, 71);
+    }
+
+    public void renderIcon(int x, int y, Icon icon, int width, int height) {
+
+        if(icon != null) {
+
+            posX = (width - xSizeOfTexture) / 2;
+            posY = (height - ySizeOfTexture) / 2;
+
+            drawTexturedModelRectFromIcon(posX + x, posY + y, icon, width, height);
+        }
     }
 
     protected void drawTooltips(IPowerMisc tileEntity, int mouseX, int mouseY,
@@ -147,26 +208,20 @@ public abstract class GuiBase extends GuiContainer {
 
             if (isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
 
-                drawBarTooltip("Energy", "TCU", (int) tileEntity
-                        .getPowerProvider().getPowerStored(), (int) tileEntity
-                        .getPowerProvider().getPowerMax(), mouseX, mouseY);
+                drawBarTooltip("Energy", "TCU", (int) tileEntity.getPowerProvider().getPowerStored(), (int) tileEntity.getPowerProvider().getPowerMax(), mouseX, mouseY);
             }
         }
     }
 
-    protected void drawTooltips(int fluidMax, int fluidAmount,
-            String fluidName, int mouseX, int mouseY, int coordX, int coordY,
-            int maxX, int maxY) {
+    protected void drawTooltips(int fluidMax, int fluidAmount, String fluidName, int mouseX, int mouseY, int coordX, int coordY, int maxX, int maxY) {
 
         if (isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
 
-            drawBarTooltip("Fluid: " + fluidName, "mB", fluidAmount, fluidMax,
-                    mouseX, mouseY);
+            drawBarTooltip("Fluid: " + fluidName, "mB", fluidAmount, fluidMax, mouseX, mouseY);
         }
     }
 
-    protected void drawBarTooltip(String name, String unit, int value, int max,
-            int x, int y) {
+    protected void drawBarTooltip(String name, String unit, int value, int max, int x, int y) {
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -205,24 +260,15 @@ public abstract class GuiBase extends GuiContainer {
         this.zLevel = 300.0F;
         itemRenderer.zLevel = 300.0F;
         int color1 = -267386864;
-        this.drawGradientRect(xStart - 3, yStart - 4,
-                xStart + tooltipWidth + 3, yStart - 3, color1, color1);
-        this.drawGradientRect(xStart - 3, yStart + tooltipHeight + 3, xStart
-                + tooltipWidth + 3, yStart + tooltipHeight + 4, color1, color1);
-        this.drawGradientRect(xStart - 3, yStart - 3,
-                xStart + tooltipWidth + 3, yStart + tooltipHeight + 3, color1,
-                color1);
-        this.drawGradientRect(xStart - 4, yStart - 3, xStart - 3, yStart
-                + tooltipHeight + 3, color1, color1);
-        this.drawGradientRect(xStart + tooltipWidth + 3, yStart - 3, xStart
-                + tooltipWidth + 4, yStart + tooltipHeight + 3, color1, color1);
+        this.drawGradientRect(xStart - 3, yStart - 4, xStart + tooltipWidth + 3, yStart - 3, color1, color1);
+        this.drawGradientRect(xStart - 3, yStart + tooltipHeight + 3, xStart + tooltipWidth + 3, yStart + tooltipHeight + 4, color1, color1);
+        this.drawGradientRect(xStart - 3, yStart - 3, xStart + tooltipWidth + 3, yStart + tooltipHeight + 3, color1, color1);
+        this.drawGradientRect(xStart - 4, yStart - 3, xStart - 3, yStart + tooltipHeight + 3, color1, color1);
+        this.drawGradientRect(xStart + tooltipWidth + 3, yStart - 3, xStart + tooltipWidth + 4, yStart + tooltipHeight + 3, color1, color1);
         int color2 = 1347420415;
         int color3 = (color2 & 16711422) >> 1 | color2 & -16777216;
-        this.drawGradientRect(xStart - 3, yStart - 3 + 1, xStart - 3 + 1,
-                yStart + tooltipHeight + 3 - 1, color2, color3);
-        this.drawGradientRect(xStart + tooltipWidth + 2, yStart - 3 + 1, xStart
-                + tooltipWidth + 3, yStart + tooltipHeight + 3 - 1, color2,
-                color3);
+        this.drawGradientRect(xStart - 3, yStart - 3 + 1, xStart - 3 + 1, yStart + tooltipHeight + 3 - 1, color2, color3);
+        this.drawGradientRect(xStart + tooltipWidth + 2, yStart - 3 + 1, xStart + tooltipWidth + 3, yStart + tooltipHeight + 3 - 1, color2, color3);
         this.drawGradientRect(xStart - 3, yStart - 3,
                 xStart + tooltipWidth + 3, yStart - 3 + 1, color2, color2);
         this.drawGradientRect(xStart - 3, yStart + tooltipHeight + 2, xStart

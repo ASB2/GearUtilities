@@ -2,13 +2,11 @@ package GU.items;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.BlockRegistry;
 import GU.utils.UtilBlock;
 import GU.utils.UtilDirection;
-import GU.utils.UtilMisc;
 import GU.utils.UtilPlayers;
 
 public class ItemPhantomPlacer extends ItemBase {
@@ -21,15 +19,11 @@ public class ItemPhantomPlacer extends ItemBase {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
-        super.addInformation(itemStack, player, info, var1);
+    public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
 
-        info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD)
-                + "Hold shift to place above or below you.");
-        info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD)
-                + "Other wise it will place at cardinal directions");
-        info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD)
-                + "Made just for your " + player.username);
+        info.add("Hold shift to place above or below you.");
+        info.add("or don't to place at cardinal directions");
+        info.add("Made just for you " + player.username);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package GU.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -11,7 +11,9 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import GU.GearUtilities;
 import GU.info.Reference;
-import GU.utils.*;
+import GU.utils.UtilMisc;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBase extends Item {
 
@@ -35,10 +37,25 @@ public class ItemBase extends Item {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
-        info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "From: "
-                + Reference.NAME);
+//        super.addInformation(itemStack, player, info, var1);
+        
+        info.add("From: " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + Reference.NAME);
+        
+        if(Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+            
+            this.addInformationSneaking(itemStack, player, info, var1);
+        }
+        else {
+
+            info.add("Press " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Shift "+ UtilMisc.getColorCode(EnumChatFormatting.GRAY) + "to show more info");
+        }
     }
 
+    @SuppressWarnings("rawtypes")
+    public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
+        
+    }
+    
     @Override
     public void registerIcons(IconRegister iconRegister) {
 

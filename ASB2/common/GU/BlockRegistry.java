@@ -27,7 +27,6 @@ import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockLamp.BlockLamp;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockRunicCube.BlockRunicCube;
-import GU.blocks.containers.BlockTestLaser.BlockTestLaser;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -115,10 +114,6 @@ public class BlockRegistry {
         BlockConnectableTank = new BlockConnectableTank(config.getBlock("BlockConnectableTank", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockConnectableTank.setBlockName("BlockConnectableTank");
         LanguageRegistry.addName(BlockConnectableTank, "Connectable Tank");
-
-        BlockTestLaser = new BlockTestLaser(config.getBlock("BlockTestLaser", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockTestLaser.setBlockName("BlockTestLaser");
-        LanguageRegistry.addName(BlockTestLaser, "Test Laser");
 
         BlockTestRender = new BlockTestRender(config.getBlock( "BlockTestRender", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockTestRender.setBlockName("BlockTestRender");

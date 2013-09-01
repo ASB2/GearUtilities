@@ -33,20 +33,23 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
-            if(fluidTank.getFluid() != null && fluidTank.getFluid().getFluid() == FluidRegistry.WATER && fluidTank.getFluidAmount() >= 2000) {
+            if((fluidTank.getFluid() != null)) {
+                
+                if(fluidTank.getFluid().getFluid() == FluidRegistry.WATER && fluidTank.getFluidAmount() >= 2000) {
 
-                if(fluidTank.getCapacity() - fluidTank.getFluidAmount() >= 1000) {
+                    if(fluidTank.getCapacity() - fluidTank.getFluidAmount() >= 1000) {
 
-                    UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000), true);
-                } 
-                else {
+                        UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000), true);
+                    } 
+                    else {
 
-                    UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, fluidTank.getCapacity() - fluidTank.getFluidAmount()), true);
+                        UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, fluidTank.getCapacity() - fluidTank.getFluidAmount()), true);
+                    }
                 }
-            }
 
-            if(!this.moveFluidBelow())
+                this.moveFluidBelow();
                 this.moveAround();
+            }
         }
     }
 
@@ -119,10 +122,13 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
                                             if(info.fluid.amount <= this.fluidTank.getFluidAmount()) {
 
+                                                if(!(this.fluidTank.getFluidAmount() - info.fluid.amount >= 1000 && tile instanceof TileConnectableTank))break;
+
                                                 itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided, true);
                                             }
                                         }
-                                    } else {
+                                    } 
+                                    else {
 
                                         itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler) tile, amountDivided, true);
                                     }
@@ -189,7 +195,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
 
         if(fluid != null) {
-            
+
             if(this.fluidTank.getFluid() != null) {
 
                 if(fluidTank.getFluidAmount() > 0) {

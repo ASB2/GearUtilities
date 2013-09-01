@@ -30,8 +30,7 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
 
             for (ForgeDirection direction : ForgeDirection.values()) {
 
-                TileEntity tile = UtilDirection.translateDirectionToTile(this,
-                        worldObj, direction);
+                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
                 if (tile != null) {
 

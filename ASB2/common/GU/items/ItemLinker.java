@@ -17,9 +17,8 @@ public class ItemLinker extends ItemBase {
     }
 
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player,
-            World world, int x, int y, int z, int hitX, float hitY, float hitZ,
-            float par10) {
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int hitX, float hitY, float hitZ, float par10) {
+        
         if (!this.isCoodsSet(itemStack)) {
 
             this.setXCoord(itemStack, x);
@@ -28,8 +27,7 @@ public class ItemLinker extends ItemBase {
             this.setDimentionIDCoord(itemStack, player.dimension);
             this.setCoodsSet(itemStack, true);
 
-            UtilPlayers.sendChatToPlayer(player, "Coordinates set to X: " + x
-                    + " Y: " + y + " Z: " + z);
+            UtilPlayers.sendChatToPlayer(player, "Coordinates set to X: " + x + " Y: " + y + " Z: " + z);
         }
 
         return !this.isCoodsSet(itemStack);
@@ -37,15 +35,12 @@ public class ItemLinker extends ItemBase {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player,
-            java.util.List info, boolean var1) {
+    public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
         super.addInformation(itemStack, player, info, var1);
 
         if (this.isCoodsSet(itemStack)) {
 
-            info.add("X: " + this.getXCoord(itemStack) + " Y: "
-                    + this.getYCoord(itemStack) + " Z: "
-                    + this.getXCoord(itemStack));
+            info.add("X: " + this.getXCoord(itemStack) + " Y: " + this.getYCoord(itemStack) + " Z: " + this.getXCoord(itemStack));
             info.add("Dimention " + this.getDimentionIDCoord(itemStack));
 
         } else {
@@ -53,12 +48,9 @@ public class ItemLinker extends ItemBase {
         }
     }
 
-    public int getDimentionIDCoord(ItemStack item) {
-        NBTTagCompound nbtTagCompound = UtilItemStack.getTAGfromItemstack(item);
-        if (nbtTagCompound != null) {
-            return nbtTagCompound.getInteger("dimentionID");
-        }
-        return 0;
+    public int getDimentionIDCoord(ItemStack itemStack) {
+        
+        return UtilItemStack.getNBTTagInt(itemStack, "dimentionID");
     }
 
     public void setDimentionIDCoord(ItemStack item, int x) {

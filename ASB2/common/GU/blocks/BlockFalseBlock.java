@@ -45,8 +45,7 @@ public class BlockFalseBlock extends BlockBase {
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World world, int x, int y, int z,
-            Entity entity) {
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
 
         float movementFactor = .3F;
         entity.fallDistance = 0;

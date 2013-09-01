@@ -8,17 +8,15 @@ public class UtilPower {
 
         ForgeDirection opposite = direction.getOpposite();
 
-        int amountOfPower = powerSource.getPowerProvider().getPowerClass()
-                .getPowerValue();
+        int amountOfPower = powerSource.getPowerProvider().getPowerClass().getPowerValue();
 
-        if (powerSink.getPowerProvider() != null
-                && powerSource.getPowerProvider() != null) {
+        if (powerSink.getPowerProvider() != null && powerSource.getPowerProvider() != null) {
 
             if (powerSink.getPowerProvider().gainPower(amountOfPower, direction, false)) {
 
-                if (powerSource.getPowerProvider().usePower(amountOfPower, opposite, true)) {
+                if (powerSource.getPowerProvider().usePower(amountOfPower, opposite, false)) {
 
-                    if (powerSink.getPowerProvider().gainPower(amountOfPower, direction, false)) {
+                    if (powerSink.getPowerProvider().gainPower(amountOfPower, direction, true)) {
 
                         powerSource.getPowerProvider().usePower(amountOfPower, opposite, true);
 

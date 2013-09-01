@@ -7,7 +7,7 @@ import GU.gui.ContainerBase;
 public class ContainerCreationTable extends ContainerBase {
 
     public ContainerCreationTable(InventoryPlayer inventory, TileCreationTable tileEntity) {
-        super(inventory);
+        super(inventory, tileEntity);
 
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 0, 28, 64)));
 

@@ -12,8 +12,8 @@ import GU.api.power.UtilPower;
 
 public class GUPowerProvider extends PowerProvider {
 
-    public GUPowerProvider(int maximumPower, PowerClass powerClass, State state) {
-        super(maximumPower, powerClass);
+    public GUPowerProvider(PowerClass powerClass, State state) {
+        super(powerClass.getSuggestedMax(), powerClass);
 
         this.currentState = state;
     }
@@ -54,12 +54,9 @@ public class GUPowerProvider extends PowerProvider {
 
                                 case SOURCE: {
 
-                                    if (tileToAffectCasted.getPowerProvider()
-                                            .getCurrentState() == State.SINK) {
+                                    if (tileToAffectCasted.getPowerProvider().getCurrentState() == State.SINK) {
 
-                                        UtilPower.transferPower(
-                                                (IPowerMisc) tile, direction,
-                                                tileToAffectCasted);
+                                        UtilPower.transferPower((IPowerMisc) tile, direction, tileToAffectCasted);
                                     }
                                 }
                                     break;
@@ -74,20 +71,17 @@ public class GUPowerProvider extends PowerProvider {
         }
     }
 
-    public void movePower(World world, int x, int y, int z, boolean source) {
+    public void movePower(World world, int x, int y, int z, boolean isExporting) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
-            int[] coords = UtilDirection.translateDirectionToCoords(direction,
-                    tile);
+            int[] coords = UtilDirection.translateDirectionToCoords(direction, tile);
 
             if (world.blockExists(coords[0], coords[1], coords[2])) {
 
-                TileEntity tileToAffect = UtilDirection
-                        .translateDirectionToTile(tile, tile.worldObj,
-                                direction);
+                TileEntity tileToAffect = UtilDirection.translateDirectionToTile(tile, world, direction);
 
                 if (tileToAffect != null) {
 
@@ -97,14 +91,12 @@ public class GUPowerProvider extends PowerProvider {
 
                         if (tileToAffectCasted.getPowerProvider() != null) {
 
-                            if (source) {
+                            if (isExporting) {
 
-                                UtilPower.transferPower((IPowerMisc) tile,
-                                        direction, tileToAffectCasted);
+                                UtilPower.transferPower((IPowerMisc) tile, direction, tileToAffectCasted);
                             } else {
 
-                                UtilPower.transferPower(tileToAffectCasted,
-                                        direction, (IPowerMisc) tile);
+                                UtilPower.transferPower(tileToAffectCasted, direction, (IPowerMisc) tile);
                             }
                         }
                     }

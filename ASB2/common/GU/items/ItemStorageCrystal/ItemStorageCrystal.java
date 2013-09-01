@@ -19,6 +19,7 @@ import GU.utils.UtilDirection;
 import GU.utils.UtilInventory;
 import GU.utils.UtilItemStack;
 import GU.utils.UtilMisc;
+import GU.utils.*;
 
 public class ItemStorageCrystal extends ItemBase {
 
@@ -46,27 +47,29 @@ public class ItemStorageCrystal extends ItemBase {
 
             if (fluid.getFluid().getStillIcon() != null) {
 
-                if(pass == 0 && fluid.getFluid().getStillIcon() != null)
+                if(pass == 0 && fluid.getFluid().getStillIcon() != null) {
+                    
+                    UtilRender.bindBlockTextures();
                     return fluid.getFluid().getStillIcon();
+                }
             }
         }
-
+        UtilRender.bindItemTextures();
         return super.getIcon(stack, pass);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
-        super.addInformation(itemStack, player, info, var1);
+    public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
 
         if (this.getFluidStack(itemStack) != null) {
 
-            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Stored: " + UtilMisc.capitilizeFirst(this.getFluidStack(itemStack).getFluid().getName()));
-            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Amount: " + UtilMisc.capitilizeFirst(Integer.toString(this .getFluidStack(itemStack).amount)));
+            info.add("Fluid Stored: " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + UtilMisc.capitilizeFirst(this.getFluidStack(itemStack).getFluid().getName()));
+            info.add("Fluid Amount: " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + UtilMisc.capitilizeFirst(Integer.toString(this .getFluidStack(itemStack).amount)));
         } else {
 
-            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Stored: None");
-            info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Amount: 0");
+            info.add("Fluid Stored: None");
+            info.add("Fluid Amount: 0");
         }
     }
 
@@ -93,30 +96,30 @@ public class ItemStorageCrystal extends ItemBase {
                 }
             }
         }
-//        else {
-//            
-//            Fluid fluid = FluidRegistry.getFluid(world.getBlockId(coords[0], coords[1], coords[2]));
-//
-//            if(fluid != null) {
-//                
-//                ItemStack filled = FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0));
-//
-//                if(filled != null) {
-//
-//                    if(!player.capabilities.isCreativeMode) {
-//
-//                        if(UtilInventory.addItemStackToInventory(player.inventory, filled) && UtilInventory.consumeItemStack(player.inventory, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0), 1)) {
-//
-//                            return world.setBlockToAir(coords[0], coords[1], coords[2]);
-//                        }
-//                    }
-//                    else {
-//                        
-//                        return world.setBlockToAir(coords[0], coords[1], coords[2]);
-//                    }
-//                }
-//            }
-//        }
+        //        else {
+        //            
+        //            Fluid fluid = FluidRegistry.getFluid(world.getBlockId(coords[0], coords[1], coords[2]));
+        //
+        //            if(fluid != null) {
+        //                
+        //                ItemStack filled = FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0));
+        //
+        //                if(filled != null) {
+        //
+        //                    if(!player.capabilities.isCreativeMode) {
+        //
+        //                        if(UtilInventory.addItemStackToInventory(player.inventory, filled) && UtilInventory.consumeItemStack(player.inventory, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0), 1)) {
+        //
+        //                            return world.setBlockToAir(coords[0], coords[1], coords[2]);
+        //                        }
+        //                    }
+        //                    else {
+        //                        
+        //                        return world.setBlockToAir(coords[0], coords[1], coords[2]);
+        //                    }
+        //                }
+        //            }
+        //        }
         return false;
     }
 

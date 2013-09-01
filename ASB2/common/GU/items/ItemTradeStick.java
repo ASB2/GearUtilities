@@ -4,11 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
-import GU.utils.UtilBlock;
-import GU.utils.UtilInventory;
-import GU.utils.UtilItemStack;
-import GU.utils.UtilPlayers;
+import GU.utils.*;
 
 public class ItemTradeStick extends ItemBase {
 
@@ -21,9 +19,9 @@ public class ItemTradeStick extends ItemBase {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
-        super.addInformation(itemStack, player, info, var1);
-        info.add("Idea Source: Thaumcraft 3");
+    public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
+
+        info.add("Idea Source: " + UtilMisc.getColorCode(EnumChatFormatting.DARK_AQUA) + "Thaumcraft 3");
     }
 
     public void setBlockIDAndMeta(ItemStack item, int id, int meta) {
@@ -42,9 +40,7 @@ public class ItemTradeStick extends ItemBase {
     }
 
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player,
-            World world, int x, int y, int z, int side, float hitx, float hity,
-            float hitz) {
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz) {
 
         if (player.isSneaking()) {
 

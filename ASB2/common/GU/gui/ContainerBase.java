@@ -6,8 +6,10 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import GU.api.*;
 
 public abstract class ContainerBase extends Container {
 
@@ -15,10 +17,23 @@ public abstract class ContainerBase extends Container {
 
     InventoryPlayer inventory;
     List<Slot> slotList = new ArrayList<Slot>();
+    int slotCount = 0;
 
-    public ContainerBase(InventoryPlayer inventory) {
+    public ContainerBase(InventoryPlayer inventory, Object tile) {
 
         this.inventory = inventory;
+
+        if(tile instanceof IInventory) {
+
+            slotCount = ((IInventory)tile).getSizeInventory();
+        }
+        else if(tile instanceof ItemStack) {
+
+            if(((ItemStack)tile).getItem() instanceof IItemInventory) {
+
+                slotCount = ((IItemInventory)tile).getSizeInventory(((ItemStack)tile));
+            }
+        }
 
         this.addInventorySlots();
     }
@@ -34,8 +49,7 @@ public abstract class ContainerBase extends Container {
 
             for (int k = 0; k < 9; k++) {
 
-                addSlotToContainer(new Slot(inventory, k + i * 9 + 9,
-                        8 + k * 18, 84 + i * 18));
+                addSlotToContainer(new Slot(inventory, k + i * 9 + 9, 8 + k * 18, 84 + i * 18));
             }
         }
 
@@ -51,6 +65,10 @@ public abstract class ContainerBase extends Container {
         return slot;
     }
 
+    public void onButtonEvent(int buttonID) {
+
+    }
+
     @Override
     public boolean canInteractWith(EntityPlayer entityplayer) {
         // TODO Auto-generated method stub
@@ -58,7 +76,40 @@ public abstract class ContainerBase extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slotnumber) {
+    public ItemStack transferStackInSlot(EntityPlayer player, int slotNumber) {
+
+        Slot slot = getSlot(slotNumber);
+
+        if(slot != null && slot.getHasStack()) {
+
+            ItemStack stack = slot.getStack();
+            ItemStack result = stack.copy();
+
+            if(slotNumber >= 36) {
+
+                if(!mergeItemStack(stack, 0, 36, false)) {
+
+                    return null;
+                }
+            }
+
+            else if(!mergeItemStack(stack, 36, 36 + slotCount, false)) {
+
+                return null;   
+            }
+
+            if(stack.stackSize == 0) {
+
+                slot.putStack(null);
+            }
+            else {
+
+                slot.onSlotChanged();
+            }
+
+            slot.onPickupFromSlot(player, stack);
+            return result;
+        }
 
         return null;
     }

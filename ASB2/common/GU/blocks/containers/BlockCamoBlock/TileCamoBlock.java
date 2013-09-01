@@ -51,9 +51,15 @@ public class TileCamoBlock extends TileBase implements IInventory {
     }
 
     @Override
+    public void onInventoryChanged() {
+        super.onInventoryChanged();
+
+        worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);    }
+    
+    @Override
     public int getInventoryStackLimit() {
 
-        return 64;
+        return 1;
     }
 
     @Override

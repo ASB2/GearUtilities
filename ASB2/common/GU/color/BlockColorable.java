@@ -12,11 +12,13 @@ import GU.api.color.EnumVinillaColor;
 import GU.api.color.IColorable;
 import GU.blocks.containers.ContainerBase;
 import GU.utils.UtilMisc;
+import GU.utils.UtilPlayers;
 
 public abstract class BlockColorable extends ContainerBase {
 
     public BlockColorable(int id, Material material) {
         super(id, material);
+
         // TODO Auto-generated constructor stub
     }
 
@@ -69,6 +71,8 @@ public abstract class BlockColorable extends ContainerBase {
                     }
                     if(player.getHeldItem().getItem() == ItemRegistry.ItemWaterCrystalShard) {
 
+                        if(player.isSneaking())
+                        UtilPlayers.sendChatToPlayer(player, "Hi");
                         Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
                         ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side)); 
 

@@ -19,7 +19,7 @@ public class GuiCreationTable extends GuiBase {
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
 
         this.renderDefaultGui();
-        this.addPowerTank(posX + 8, posY + 6);
+        this.renderGuage(8, 6);
         this.scalePower(posX + 7, posY + 5, UtilMisc.getAmountScaled(75, (int) tileEntity.getPowerProvider().getPowerStored(), (int) tileEntity.getPowerProvider().getPowerMax()));
     }
 }

@@ -16,8 +16,7 @@ import GU.api.wait.Wait;
 import GU.utils.UtilBlock;
 import GU.utils.UtilDirection;
 
-public abstract class TileBase extends TileEntity implements IVinillaColorable,
-IWaitTrigger, IWrenchable {
+public abstract class TileBase extends TileEntity implements IVinillaColorable, IWaitTrigger, IWrenchable {
 
     protected PowerProvider powerProvider;
     protected ForgeDirection orientation;
@@ -35,6 +34,10 @@ IWaitTrigger, IWrenchable {
             orientation = ForgeDirection.DOWN;
 
         fluidTank = new FluidTank(0);
+    }
+    
+    public void onButtonEvent(int buttonID) {
+        
     }
 
     public ForgeDirection getOrientation() {

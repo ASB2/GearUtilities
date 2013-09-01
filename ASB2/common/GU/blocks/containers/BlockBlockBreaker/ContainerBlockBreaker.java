@@ -7,7 +7,7 @@ import GU.gui.ContainerBase;
 public class ContainerBlockBreaker extends ContainerBase {
 
     public ContainerBlockBreaker(InventoryPlayer inventory, TileBlockBreaker tileEntity) {
-        super(inventory);
+        super(inventory, tileEntity);
 
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 0, 47 + 15, 14)));
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 1, 65 + 15, 14)));

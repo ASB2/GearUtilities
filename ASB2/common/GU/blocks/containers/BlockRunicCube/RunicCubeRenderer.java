@@ -22,9 +22,6 @@ public class RunicCubeRenderer extends TileEntitySpecialRenderer implements IIte
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
         Block block = BlockRegistry.BlockRunicCube;
-        //        UtilRender.renderFakeSide(blockRenderer, block, ForgeDirection.DOWN, (int)x, (int)y, (int)z, block.getIcon(0,0), 255, 255, 255, 255, 255);
-//        UtilRender.renderFakeBlock(block.getIcon(0,0), (int)x, (int)y, (int)z, blockRenderer, tileentity.worldObj);
-//        UtilRender.renderMetadataBlock(block, 0, (int)x, (int)y, (int)z, blockRenderer, tileentity.worldObj);
         UtilRender.renderFakeBlock(blockRenderer, block, (int)x, (int)y, (int)z, block.getIcon(0,0), 255, 255, 255, 255, 1532056);
     }
 

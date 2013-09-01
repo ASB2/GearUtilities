@@ -5,7 +5,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import GU.BlockRegistry;
-import GU.ItemRegistry;
 import GU.blocks.BlockTestRender.TestRenderRenderer;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.GuiAdvancedPotionBrewery;
 import GU.blocks.containers.BlockBlockBreaker.BlockBreakerRenderer;
@@ -18,13 +17,10 @@ import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
 import GU.blocks.containers.BlockRunicCube.RunicCubeRenderer;
 import GU.blocks.containers.BlockRunicCube.TileRunicCube;
-import GU.blocks.containers.BlockTestLaser.TestLaserRenderer;
-import GU.blocks.containers.BlockTestLaser.TileTestLaser;
 import GU.entity.EntityTest.EntityTestEntity;
 import GU.entity.EntityTest.TestEntityRenderer;
 import GU.info.Gui;
 import GU.info.Models;
-import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import GU.models.BlockSimpleRenderer;
 import GU.sounds.SoundHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -42,11 +38,6 @@ public class ClientProxy extends CommonProxy {
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class, new CreationTableRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());
-
-        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
-
-        ClientRegistry.bindTileEntitySpecialRenderer(TileTestLaser.class, new TestLaserRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockTestLaser.blockID, new TestLaserRenderer());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileBlockBreaker.class, new BlockBreakerRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockBlockBreaker.blockID, new BlockBreakerRenderer());

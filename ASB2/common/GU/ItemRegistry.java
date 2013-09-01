@@ -4,6 +4,7 @@ import net.minecraftforge.common.Configuration;
 import GU.items.ItemAdvancedStick;
 import GU.items.ItemBase;
 import GU.items.ItemBasicDestructionCatalyst;
+import GU.items.ItemBrewedPotion;
 import GU.items.ItemCrystalCasing;
 import GU.items.ItemEnhancedDestructionCatalyst;
 import GU.items.ItemGarnet;
@@ -44,6 +45,8 @@ public class ItemRegistry {
     public static ItemBase ItemTestItem;
     public static ItemBase ItemStorageCrystal;
     public static ItemBase ItemPhantomPlacer;
+    public static ItemBase ItemBrewedPotion;    
+    
     private static int id = 5000;
 
     public static void init(Configuration config) {
@@ -123,6 +126,10 @@ public class ItemRegistry {
         ItemPhantomPlacer = new ItemPhantomPlacer(config.getItem("ItemPhantomPlacer", ItemRegistry.getNextBaseID()).getInt());
         ItemPhantomPlacer.setItemName("ItemPhantomPlacer");
         LanguageRegistry.addName(ItemPhantomPlacer, "Phantom Placer");
+        
+        ItemBrewedPotion = new ItemBrewedPotion(config.getItem("ItemBrewedPotion", ItemRegistry.getNextBaseID()).getInt());
+        ItemBrewedPotion.setItemName("ItemBrewedPotion");
+        LanguageRegistry.addName(ItemBrewedPotion, "Brewed Potion");
     }
 
     public static int getNextBaseID() {

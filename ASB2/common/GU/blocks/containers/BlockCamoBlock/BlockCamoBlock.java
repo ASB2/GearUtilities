@@ -7,6 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -56,6 +57,15 @@ public class BlockCamoBlock extends ContainerBase {
         return false;
     }
 
+    @Override
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
+
+        if (world.isBlockIndirectlyGettingPowered(x, y, z))
+            return null;
+
+        return super.getCollisionBoundingBoxFromPool(world, x, y, z);
+    }
+    
     @Override
     public TileEntity createNewTileEntity(World world) {
 

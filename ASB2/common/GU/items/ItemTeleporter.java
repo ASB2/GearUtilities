@@ -25,8 +25,7 @@ public class ItemTeleporter extends ItemBase {
     }
 
     @Override
-    public void onCreated(ItemStack par1ItemStack, World par2World,
-            EntityPlayer player) {
+    public void onCreated(ItemStack par1ItemStack, World par2World, EntityPlayer player) {
 
         this.setXCoord(par1ItemStack, player.posX);
         this.setYCoord(par1ItemStack, player.posY);
@@ -36,29 +35,24 @@ public class ItemTeleporter extends ItemBase {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
-            EntityPlayer player) {
-        if (isCoodsSet(par1ItemStack)) {
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+        
+        if (isCoodsSet(itemStack)) {
 
             if (player instanceof EntityPlayerMP) {
 
                 for (int i = 0; i < 2; i++) {
 
-                    if (player.dimension != this
-                            .getDimentionIDCoord(par1ItemStack)) {
+                    if (player.dimension != this.getDimentionIDCoord(itemStack)) {
 
-                        par1ItemStack.damageItem(1, player);
-                        player.travelToDimension(this
-                                .getDimentionIDCoord(par1ItemStack));
+                        itemStack.damageItem(1, player);
+                        player.travelToDimension(this.getDimentionIDCoord(itemStack));
                     }
 
                     else {
 
-                        par1ItemStack.damageItem(1, player);
-                        player.setPositionAndUpdate(
-                                this.getXCoord(par1ItemStack),
-                                this.getYCoord(par1ItemStack),
-                                this.getZCoord(par1ItemStack));
+                        itemStack.damageItem(1, player);
+                        player.setPositionAndUpdate(this.getXCoord(itemStack), this.getYCoord(itemStack), this.getZCoord(itemStack));
                     }
                 }
             }
@@ -66,34 +60,31 @@ public class ItemTeleporter extends ItemBase {
 
         else {
 
-            this.setXCoord(par1ItemStack, player.posX);
-            this.setYCoord(par1ItemStack, player.posY);
-            this.setZCoord(par1ItemStack, player.posZ);
-            this.setDimentionIDCoord(par1ItemStack, player.dimension);
-            setCoodsSet(par1ItemStack, true);
+            this.setXCoord(itemStack, player.posX);
+            this.setYCoord(itemStack, player.posY);
+            this.setZCoord(itemStack, player.posZ);
+            this.setDimentionIDCoord(itemStack, player.dimension);
+            setCoodsSet(itemStack, true);
 
             UtilPlayers.sendChatToPlayer(player, "Link Set");
         }
 
-        return par1ItemStack;
+        return itemStack;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer player,
-            @SuppressWarnings("rawtypes") List info, boolean b) {
+    public void addInformationSneaking(ItemStack par1ItemStack, EntityPlayer player, List info, boolean b) {
 
         if (isCoodsSet(par1ItemStack)) {
 
-            info.add("Destination X: " + (int) this.getXCoord(par1ItemStack)
-                    + " Y: " + (int) this.getYCoord(par1ItemStack) + " Z: "
-                    + (int) this.getZCoord(par1ItemStack));
+            info.add("Destination X: " + (int) this.getXCoord(par1ItemStack) + " Y: " + (int) this.getYCoord(par1ItemStack) + " Z: " + (int) this.getZCoord(par1ItemStack));
             info.add("Dimention ID: " + this.getDimentionIDCoord(par1ItemStack));
         }
 
         if (!isCoodsSet(par1ItemStack)) {
 
-            info.add("Link not set.");
+            info.add("Coords Not Set.");
         }
     }
 

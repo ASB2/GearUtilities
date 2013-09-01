@@ -4,17 +4,18 @@ import net.minecraft.item.ItemStack;
 
 public interface IItemInventory {
 
-    public int getSizeInventory(ItemStack itemStack);
-
-    public ItemStack getStackInSlot(ItemStack itemStack, int slot);
-
-    public boolean decreaseStackSize(ItemStack itemStack, int slot, int amount);
-
-    public boolean setStackInSlot(ItemStack itemStack, int slot);
-
-    public String getName(ItemStack itemStack);
-
-    public int getMaxStackSize(ItemStack itemStack);
-
-    public boolean isStackValidForSlot(ItemStack itemStack, int slot);
+    /**
+     * Gets the inventory the item contains
+     */
+    public int getInventory(ItemStack itemStack);
+    
+    /**
+     * Called when an the contents of an Inventory change, usually
+     */
+    void onInventoryChanged(ItemInventory inventory);
+    
+    /**
+     * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
+     */
+    boolean isItemValidForSlot(ItemInventory inventory, int slot, ItemStack itemstack);
 }

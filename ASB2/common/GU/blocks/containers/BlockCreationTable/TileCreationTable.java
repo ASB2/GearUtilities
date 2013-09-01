@@ -17,8 +17,8 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     public TileCreationTable() {
 
         this.waitTimer = new Wait(10, this, 0);
-        powerProvider = new GUPowerProvider(0, PowerClass.LOW, State.SINK);
-        tileItemStacks = new ItemStack[11];
+        powerProvider = new GUPowerProvider(PowerClass.LOW, State.SINK);
+        tileItemStacks = new ItemStack[11]; 
     }
 
     @Override
