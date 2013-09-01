@@ -20,7 +20,10 @@ public class ItemInventory implements IInventory {
     boolean isInvNameLocalized = false;
     int inventoryStackLimit = 0;
     boolean useableByPlayer = false;
-
+    
+    /*
+     *Example Inventory 
+     */
     public ItemInventory (ItemStack stack, int stackLimit, String inventoryName, boolean isInvNameLocalized, int inventoryStackLimit, boolean useableByPlayer) {
 
         this.stack = stack;
