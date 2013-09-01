@@ -7,7 +7,7 @@ public interface IItemInventory {
     /**
      * Gets the inventory the item contains
      */
-    public int getInventory(ItemStack itemStack);
+    public ItemInventory getInventory(ItemStack itemStack);
     
     /**
      * Called when an the contents of an Inventory change, usually
