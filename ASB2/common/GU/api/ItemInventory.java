@@ -2,13 +2,12 @@ package GU.api;
 
 import java.util.ArrayList;
 
-import GU.utils.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import GU.api.IItemInventory;
+import GU.utils.UtilItemStack;
 
 public class ItemInventory implements IInventory {
 
@@ -33,10 +32,10 @@ public class ItemInventory implements IInventory {
     }
 
     public ItemStack getInventoryContainerItem() {
-    
+
         return stack;
     }
-    
+
     @Override
     public int getSizeInventory() {
 
@@ -109,7 +108,6 @@ public class ItemInventory implements IInventory {
     @Override
     public void onInventoryChanged() {
 
-        ((IItemInventory)stack.getItem()).onInventoryChanged(this, getInventoryContainerItem());
     }
 
     @Override
@@ -132,8 +130,8 @@ public class ItemInventory implements IInventory {
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-        
-        return ((IItemInventory)stack.getItem()).isItemValidForSlot(this, this.getInventoryContainerItem(), i, itemstack);
+
+        return true;
     }
 
     private NBTTagCompound getTAGfromItemstack(ItemStack itemStack) {
