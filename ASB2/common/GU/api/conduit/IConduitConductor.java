@@ -1,6 +1,5 @@
 package GU.api.conduit;
 
-import net.minecraft.world.World;
 
 public interface IConduitConductor {
 
@@ -19,10 +18,4 @@ public interface IConduitConductor {
      * The coordinates of the conduit
      */
     int[] getCoords();
-    
-    /**
-     * Used in conjunction with the getNearestConduit in IConduitNetwork to see if the conduit meets the requirements.
-     * @prams worldObj, conduit you are checking, id passed when getNearestConduit was called for personal use
-     */
-    boolean isConditValid(World world, IConduitConductor conduit, int id);
 }

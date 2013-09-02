@@ -2,19 +2,23 @@ package GU.api.conduit;
 
 import java.util.ArrayList;
 
+import GU.api.conduit.packet.IConduitPacket;
+
 import net.minecraft.world.World;
 
 public class ConduitNetwork implements IConduitNetwork {
 
     ArrayList<IConduitConductor> conduitList = new ArrayList<IConduitConductor>();
-
+    ArrayList<IConduitPacket> conduitPackets = new ArrayList<IConduitPacket>();
+    
     public ConduitNetwork() {
 
     }
 
     @Override
-    public void updateNetwork(World worldObj, int x, int y, int z) {
+    public void updateNetwork(World worldObj) {
 
+        
     }
 
 
@@ -40,6 +44,21 @@ public class ConduitNetwork implements IConduitNetwork {
                 }
             }        
         }
+    }
+    
+    @Override
+    public void addConduitPacketToQuene(IConduitPacket packet) {
+        
+        if(packet != null) {
+            
+            conduitPackets.add(packet);
+        }
+    }
+
+    @Override
+    public ArrayList<IConduitPacket> getQuenedPackets() {
+
+        return conduitPackets;
     }
     
     @Override

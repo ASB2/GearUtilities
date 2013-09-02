@@ -1,7 +1,8 @@
-package GU.api.conduit;
+package GU.api.conduit.packet;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -14,7 +15,7 @@ import ASB2.utils.UtilInventory;
 import GU.api.power.IPowerMisc;
 import GU.api.power.PowerHelper;
 
-public class ConduitPacket {
+public class ConduitPacket implements IConduitPacket {
 
     PacketType type;
     ForgeDirection direction;
@@ -107,11 +108,11 @@ public class ConduitPacket {
         }
     }
 
-    public void savePacket() {
+    public void savePacket(NBTTagCompound tag) {
 
     }
 
-    public void loadPacket() {
+    public void loadPacket(NBTTagCompound tag) {
 
     }
 

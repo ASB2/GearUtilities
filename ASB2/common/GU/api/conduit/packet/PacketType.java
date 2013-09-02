@@ -1,4 +1,4 @@
-package GU.api.conduit;
+package GU.api.conduit.packet;
 
 public enum PacketType {
 
