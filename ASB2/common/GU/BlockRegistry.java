@@ -28,6 +28,7 @@ import GU.blocks.containers.BlockLamp.BlockLamp;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockRunicCube.BlockRunicCube;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
+import GU.blocks.containers.BlockUniversalConduit.BlockUniversalConduit;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class BlockRegistry {
@@ -57,6 +58,7 @@ public class BlockRegistry {
     public static ContainerBase BlockCamoBlock;
     public static ContainerBase BlockEnhancedBricks;
     public static ContainerBase BlockRunicCube;
+    public static ContainerBase BlockUniversalConduit;
     
     private static int id = 500;
 
@@ -158,6 +160,10 @@ public class BlockRegistry {
         BlockRunicCube = new BlockRunicCube(config.getBlock("BlockRunicCube", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockRunicCube.setBlockName("BlockRunicCube");
         LanguageRegistry.addName(BlockRunicCube, "Runic Cube");
+        
+        BlockUniversalConduit = new BlockUniversalConduit(config.getBlock("BlockUniversalConduit", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockUniversalConduit.setBlockName("BlockUniversalConduit");
+        LanguageRegistry.addName(BlockUniversalConduit, "Universal Conduit");
     }
 
     public static void initTestBlocks(Configuration config) {

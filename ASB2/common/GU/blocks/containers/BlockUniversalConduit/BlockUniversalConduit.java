@@ -9,6 +9,8 @@ public class BlockUniversalConduit extends ContainerBase {
 
     public BlockUniversalConduit(int id, Material material) {
         super(id, material);
+        
+        this.registerTile(TileUniversalConduit.class);
     }
 
     @Override

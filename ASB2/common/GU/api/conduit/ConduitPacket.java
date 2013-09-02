@@ -1,5 +1,6 @@
 package GU.api.conduit;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -9,6 +10,9 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilFluid;
+import ASB2.utils.UtilInventory;
+import GU.api.power.IPowerMisc;
+import GU.api.power.PowerHelper;
 
 public class ConduitPacket {
 
@@ -30,7 +34,6 @@ public class ConduitPacket {
 
         tank = new FluidTank(stack.amount);
         tank.setFluid(stack);
-//        = stack;
     }
 
     public ConduitPacket(ForgeDirection direction, ItemStack stack) {
@@ -56,18 +59,49 @@ public class ConduitPacket {
 
                     case FLUID: {
 
-                        if(heldFluid != null) {
+                        if(tank.getFluid() != null) {
                             
                             if(tile instanceof IFluidHandler) {
 
-                                if(UtilFluid.addFluidToTank((IFluidHandler)tile, direction, heldFluid, true)) {
+                                UtilFluid.moveFluid(tank, direction, (IFluidHandler)tile, 1000, true);
+                            }
+                        }
+                        break;
+                    }  
+                    
+                    case ITEM: {
 
-                                    this.heldFluid = null;
+                        if(heldItem != null) {
+                            
+                            if(tile instanceof IInventory) {
+
+                                if(UtilInventory.addItemStackToInventory((IInventory)tile, heldItem, true)) {
+                                  
+                                    heldItem = null;
                                 }
                             }
                         }
                         break;
-                    }   
+                    }  
+                    
+                    case GUU: {
+
+                        if(heldEnergy > 0) {
+                            
+                            if(tile instanceof IPowerMisc) {
+
+                                if(PowerHelper.addEnergyToProvider((IPowerMisc)tile, direction, heldEnergy)) {
+                                   
+                                    heldEnergy = 0;
+                                }
+                            }
+                        }
+                        break;
+                    } 
+                    default : {
+                        
+                        break;
+                    }
                 }
             }
         }
@@ -93,7 +127,7 @@ public class ConduitPacket {
 
     public FluidStack getHeldFluid() {
 
-        return heldFluid;
+        return tank.getFluid();
     }
 
     public PacketType getPacketType() {

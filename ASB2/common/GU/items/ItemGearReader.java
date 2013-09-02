@@ -16,6 +16,7 @@ import GU.api.color.IColorable;
 import GU.api.color.IVanillaColorable;
 import GU.api.power.IPowerMisc;
 import GU.info.Reference;
+import GU.api.conduit.*;
 
 public class ItemGearReader extends ItemBase {
 
@@ -111,6 +112,21 @@ public class ItemGearReader extends ItemBase {
                     UtilPlayers.sendChatToPlayer(player, "Green: " + mTile.getColor(ForgeDirection.getOrientation(side)).getGreen());
                     UtilPlayers.sendChatToPlayer(player, "Blue: " + mTile.getColor(ForgeDirection.getOrientation(side)).getBlue());
                     UtilPlayers.sendChatToPlayer(player, "Alpha: " + mTile.getColor(ForgeDirection.getOrientation(side)).getAlpha());
+                }
+            }
+            
+            if (tile instanceof IConduitConductor) {
+
+                IConduitConductor mTile = (IConduitConductor) tile;
+
+                if (mTile.getNetwork() != null) {
+
+                    UtilPlayers.sendChatToPlayer(player, "Conduit Network: It Works");
+                    UtilPlayers.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getAvaliableConductors().size());
+                }
+                else {
+                    
+                    UtilPlayers.sendChatToPlayer(player, "Conduit Network: null");
                 }
             }
         }
