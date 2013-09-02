@@ -38,9 +38,8 @@ public class GuiAdvancedPotionBrewery extends GuiBase {
                     if(tileEntity.fluidTank.getFluid() != null) {
 
                         UtilRender.bindBlockTextures();
-                                                this.scaleFluid(151, 6, UtilMisc.getAmountScaled(75, tileEntity.fluidTank.getFluidAmount(), tileEntity.fluidTank.getCapacity()), tileEntity.fluidTank.getFluid().getFluid().getStillIcon());
-                                                this.renderGuageOverLay(151, 6);
-                        this.renderIcon(151, 6,tileEntity.fluidTank.getFluid().getFluid().getStillIcon(), 16, 16);
+                        this.scaleFluid(151, 6, UtilMisc.getAmountScaled(75, tileEntity.fluidTank.getFluidAmount(), tileEntity.fluidTank.getCapacity()), tileEntity.fluidTank.getFluid().getFluid().getStillIcon());
+                        this.renderGuageOverLay(151, 6);
                     }
                 }
             }
@@ -52,13 +51,13 @@ public class GuiAdvancedPotionBrewery extends GuiBase {
         super.drawScreen(mouseX, mouseY, gameTicks);
 
         drawTooltips(tileEntity, mouseX, mouseY, 8, 6, 18, 71);
-        
+
         if(tileEntity.fluidTank.getFluid() != null) {
 
             drawTooltips(tileEntity.fluidTank.getCapacity(), tileEntity.fluidTank.getFluidAmount(), tileEntity.fluidTank.getFluid().getFluid().getLocalizedName(), mouseX, mouseY, 151, 6, 18, 71);
         }
         else {
-            
+
             drawTooltips(tileEntity.fluidTank.getCapacity(), 0, "None", mouseX, mouseY, 151, 6, 18, 71);
         }
     }

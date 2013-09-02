@@ -37,7 +37,7 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
 
         this.waitTimer = new Wait(20 * 5, this, 1);
         tileItemStacks = new ItemStack[8];
-        fluidTank = new FluidTank(4000);
+        fluidTank = new FluidTank(1000 * 10);
         powerProvider = new GUPowerProvider(PowerClass.LOW, State.SINK);
     }
 

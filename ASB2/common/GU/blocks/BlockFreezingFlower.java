@@ -4,7 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import GU.utils.UtilPlayers;
+import ASB2.utils.UtilPlayers;
 
 public class BlockFreezingFlower extends FlowerBase {
 

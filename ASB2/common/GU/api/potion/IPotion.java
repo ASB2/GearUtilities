@@ -12,9 +12,6 @@ public interface IPotion {
     void setStrength(ItemStack stack, int amount);
     int getStrength(ItemStack stack);
     
-    void setisThrowable(ItemStack stack, boolean newValue);
-    boolean isThrowable(ItemStack stack);   
-    
     ArrayList<ItemStack> getIngredients(ItemStack stack);
     
     void setIngredients(ItemStack stack, ArrayList<ItemStack> ingredients);

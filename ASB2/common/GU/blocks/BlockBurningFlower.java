@@ -4,7 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import GU.utils.UtilPlayers;
+import ASB2.utils.UtilPlayers;
 
 public class BlockBurningFlower extends FlowerBase {
 
@@ -16,7 +16,6 @@ public class BlockBurningFlower extends FlowerBase {
     public void onEntityCollidedWithBlock(World world, int x, int y, int z,
             Entity entity) {
 
-        UtilPlayers
-                .damagePlayer(world, x, y, z, entity, DamageSource.onFire, 1);
+        UtilPlayers.damagePlayer(world, x, y, z, entity, DamageSource.onFire, 1);
     }
 }

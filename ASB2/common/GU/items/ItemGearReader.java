@@ -11,7 +11,7 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import GU.api.color.IColorable;
-import GU.api.color.IVinillaColorable;
+import GU.api.color.IVanillaColorable;
 import GU.api.power.IPowerMisc;
 import GU.info.Reference;
 import GU.utils.UtilMisc;
@@ -32,9 +32,9 @@ public class ItemGearReader extends ItemBase {
 
         if (tile != null) {
 
-            if (tile instanceof IVinillaColorable) {
+            if (tile instanceof IVanillaColorable) {
 
-                IVinillaColorable mTile = (IVinillaColorable) tile;
+                IVanillaColorable mTile = (IVanillaColorable) tile;
 
                 UtilPlayers.sendChatToPlayer(player, "Block has color: "
                         + mTile.getColorEnum().toString());

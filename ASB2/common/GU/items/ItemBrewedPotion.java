@@ -26,7 +26,6 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
 
         info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Duration: " + this.getDuration(stack));
         info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Strength: " + this.getStrength(stack));
-        info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Is Throwable: " + this.isThrowable(stack));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -116,21 +115,6 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
     public int getStrength(ItemStack stack) {
 
         return UtilItemStack.getNBTTagInt(stack, "strength");
-    }
-
-    @Override
-    public void setisThrowable(ItemStack stack, boolean newValue) {
-
-        if(stack != null) {
-
-            UtilItemStack.setNBTTagBoolean(stack, "canThrow", newValue);
-        }
-    }
-
-    @Override
-    public boolean isThrowable(ItemStack stack) {
-
-        return UtilItemStack.getNBTTagBoolean(stack, "canThrow");
     }
 
     @Override

@@ -75,8 +75,7 @@ public final class GearUtilities {
 
         MinecraftForge.EVENT_BUS.register(new FluidRegistry());
         FluidRegistry.initFluids();
-
-        MinecraftForge.EVENT_BUS.register(new MiscRegistry());
+        
         MiscRegistry.init(config);
 
         config.save();
@@ -116,6 +115,6 @@ public final class GearUtilities {
         FluidRegistry.registerFluidContainers();
         CraftRegistry.init();
 
-        WhiteLists.getInstance().addWrench(new ItemStack(ItemRegistry.ItemAdvancedStick, 1));
+        WhiteLists.getInstance().addWrench(new ItemStack(ItemRegistry.ItemAdvancedStick));
     }
 }

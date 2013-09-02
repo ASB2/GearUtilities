@@ -7,7 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import GU.utils.UtilItemStack;
+import ASB2.utils.UtilItemStack;
 
 public class ItemInventory implements IInventory {
 

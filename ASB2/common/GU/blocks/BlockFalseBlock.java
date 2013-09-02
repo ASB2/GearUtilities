@@ -8,7 +8,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import GU.utils.UtilPlayers;
+import ASB2.utils.UtilPlayers;
 
 public class BlockFalseBlock extends BlockBase {
 

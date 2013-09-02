@@ -1,10 +1,9 @@
 package GU.api.module;
 
-import net.minecraftforge.fluids.FluidStack;
 
 public abstract interface IModuleProvider {
     
     ModuleType getModuleType();
-    FluidStack getFluid();
+    float getMaxPowerChange();
     String getName();
 }

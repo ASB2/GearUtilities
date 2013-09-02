@@ -22,7 +22,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
     public TileConnectableTank() {
 
-        this.waitTimer = new Wait(20, this, 1);
+        this.waitTimer = new Wait(20 * 5, this, 1);
         fluidTank = new FluidTank(maxLiquid);
     }
 

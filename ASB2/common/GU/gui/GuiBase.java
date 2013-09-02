@@ -45,7 +45,7 @@ public abstract class GuiBase extends GuiContainer {
 
         PacketDispatcher.sendPacketToServer(new ButtonPressPacket(button.id).makePacket());
     }
-    
+
     public void renderDefaultGui() {
 
         posX = (width - xSizeOfTexture) / 2;
@@ -177,7 +177,15 @@ public abstract class GuiBase extends GuiContainer {
         posY = (height - ySizeOfTexture) / 2;
 
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(posX + x, posY + y + 71 - scale + 4, 194, 51, 18, scale);
+        
+        if(75 == scale) {
+
+            drawTexturedModalRect(posX + x, posY + y + 75 - scale, 194, 51, 18, scale - 5);
+        }
+        else {
+
+            drawTexturedModalRect(posX + x, posY + y + 71 - scale, 194, 51, 18, scale);
+        }
     }
 
     public void scaleFluid(int x, int y, int scale, Icon icon) {
@@ -187,7 +195,14 @@ public abstract class GuiBase extends GuiContainer {
             posX = (width - xSizeOfTexture) / 2;
             posY = (height - ySizeOfTexture) / 2;
 
-            drawTexturedModelRectFromIcon(posX + x, posY + y + 71 - scale, icon, 18, scale);
+            if(75 == scale) {
+                
+                drawTexturedModelRectFromIcon(posX + x, posY + y + 75 - scale, icon, 18, scale - 5);
+            }
+            else {
+
+                drawTexturedModelRectFromIcon(posX + x, posY + y + 71 - scale, icon, 18, scale);
+            }
         }
     }
 

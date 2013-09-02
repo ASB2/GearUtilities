@@ -1,13 +1,13 @@
 package GU.blocks;
 
-import GU.info.Reference;
-import GU.utils.UtilRender;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilRender;
+import GU.info.Reference;
 
 public class BlockConnectedGlass extends BlockBase {
 

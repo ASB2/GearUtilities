@@ -1,26 +1,24 @@
 [
 {
-  "modid": "ASB2_TechCraft",
+  "modid": "ASB2_GearUtilities",
   
-  "name": "TechCraft",
+  "name": "Gear Utilities",
   
-  "description": "A resulting cross of technology and magic",
+  "description": "A Creation of My Imagination",
   
   "version": "0.0.1",
   
-  "credits": "Created by ASB2, textures by proswhere, ideas by iOverpowered",
+  "credits": "Created by ASB2 for ASB2",
   
-  "logoFile": "/assets/techcraft/blank/gear.png",
+  "logoFile": "/assets/gearutilities/blank/gear.png",
   
-  "mcversion": "1.5.1",
+  "mcversion": "1.5.2",
   
   "url": "",
   "updateUrl": "",
-  "authors": [ "ASB2"],
+  "authors": ["ASB2"],
   "parent":"",
   "screenshots": [],
-  "dependencies": [
-     "mod_MinecraftForge"
-  ]
+  "dependencies": [ "MinecraftForge, ASB2Core"]
 }
 ]

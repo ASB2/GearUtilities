@@ -6,11 +6,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 
-public enum EnumVinillaColor {
+public enum VanillaColor {
 
     BLACK, RED, GREEN, BROWN, BLUE, PURPLE, CYAN, LIGHT_GREY, GREY, PINK, LIME, YELLOW, LIGHT_BLUE, MAGENTA, ORANGE, WHITE, NONE;
 
-    public static ItemStack getVinillaDye(EnumVinillaColor color) {
+    public static ItemStack getVinillaDye(VanillaColor color) {
 
         switch (color) {
             
@@ -52,7 +52,7 @@ public enum EnumVinillaColor {
         }
     }
 
-    public static EnumVinillaColor getItemColorValue(ItemStack item) {
+    public static VanillaColor getItemColorValue(ItemStack item) {
 
         if (item != null) {
 
@@ -65,42 +65,42 @@ public enum EnumVinillaColor {
                     switch (item.getItemDamage()) {
 
                         case 0:
-                            return EnumVinillaColor.BLACK;
+                            return VanillaColor.BLACK;
                         case 1:
-                            return EnumVinillaColor.RED;
+                            return VanillaColor.RED;
                         case 2:
-                            return EnumVinillaColor.GREEN;
+                            return VanillaColor.GREEN;
                         case 3:
-                            return EnumVinillaColor.BROWN;
+                            return VanillaColor.BROWN;
                         case 4:
-                            return EnumVinillaColor.BLUE;
+                            return VanillaColor.BLUE;
                         case 5:
-                            return EnumVinillaColor.PURPLE;
+                            return VanillaColor.PURPLE;
                         case 6:
-                            return EnumVinillaColor.CYAN;
+                            return VanillaColor.CYAN;
                         case 7:
-                            return EnumVinillaColor.LIGHT_GREY;
+                            return VanillaColor.LIGHT_GREY;
                         case 8:
-                            return EnumVinillaColor.GREY;
+                            return VanillaColor.GREY;
                         case 9:
-                            return EnumVinillaColor.PINK;
+                            return VanillaColor.PINK;
                         case 10:
-                            return EnumVinillaColor.LIME;
+                            return VanillaColor.LIME;
                         case 11:
-                            return EnumVinillaColor.YELLOW;
+                            return VanillaColor.YELLOW;
                         case 12:
-                            return EnumVinillaColor.LIGHT_BLUE;
+                            return VanillaColor.LIGHT_BLUE;
                         case 13:
-                            return EnumVinillaColor.MAGENTA;
+                            return VanillaColor.MAGENTA;
                         case 14:
-                            return EnumVinillaColor.ORANGE;
+                            return VanillaColor.ORANGE;
                         case 15:
-                            return EnumVinillaColor.WHITE;
+                            return VanillaColor.WHITE;
                     }
                 }
             }
         }
-        return EnumVinillaColor.NONE;
+        return VanillaColor.NONE;
     }
 
     public static boolean isItemDye(ItemStack item) {
@@ -123,17 +123,17 @@ public enum EnumVinillaColor {
         return false;
     }
     
-    public static EnumVinillaColor translateNumberToColor(int numb) {
+    public static VanillaColor translateNumberToColor(int numb) {
 
-        return EnumVinillaColor.values()[numb];
+        return VanillaColor.values()[numb];
     }
 
-    public static int translateColorToNumber(EnumVinillaColor color) {
+    public static int translateColorToNumber(VanillaColor color) {
 
         return color.ordinal();
     }
     
-    public static Color getRGBValue(EnumVinillaColor color) {
+    public static Color getRGBValue(VanillaColor color) {
      
         switch (color) {
 

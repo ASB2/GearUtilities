@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.ItemRegistry;
-import GU.api.color.EnumVinillaColor;
+import GU.api.color.VanillaColor;
 import GU.api.color.IColorable;
 import GU.blocks.containers.ContainerBase;
 import GU.utils.UtilMisc;
@@ -31,18 +31,18 @@ public abstract class BlockColorable extends ContainerBase {
 
             if(player.inventory.getCurrentItem() != null) {
 
-                if(EnumVinillaColor.isItemDye(player.inventory.getCurrentItem())) {
+                if(VanillaColor.isItemDye(player.inventory.getCurrentItem())) {
 
                     if(!player.isSneaking()) {
 
-                        ((IColorable)tile).setColor(EnumVinillaColor.getRGBValue(EnumVinillaColor.getItemColorValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
+                        ((IColorable)tile).setColor(VanillaColor.getRGBValue(VanillaColor.getItemColorValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
                         return true;
                     }
                     else {
 
                         for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
-                            ((IColorable)tile).setColor(EnumVinillaColor.getRGBValue(EnumVinillaColor.getItemColorValue(player.getHeldItem())), direction);
+                            ((IColorable)tile).setColor(VanillaColor.getRGBValue(VanillaColor.getItemColorValue(player.getHeldItem())), direction);
                         }
                         return true;
                     }

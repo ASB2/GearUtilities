@@ -8,19 +8,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
 import GU.api.IWrenchable;
-import GU.api.color.EnumVinillaColor;
-import GU.api.color.IVinillaColorable;
+import GU.api.color.IVanillaColorable;
+import GU.api.color.VanillaColor;
 import GU.api.power.PowerProvider;
 import GU.api.wait.IWaitTrigger;
 import GU.api.wait.Wait;
 import GU.utils.UtilBlock;
 import GU.utils.UtilDirection;
 
-public abstract class TileBase extends TileEntity implements IVinillaColorable, IWaitTrigger, IWrenchable {
+public abstract class TileBase extends TileEntity implements IVanillaColorable, IWaitTrigger, IWrenchable {
 
     protected PowerProvider powerProvider;
     protected ForgeDirection orientation;
-    protected EnumVinillaColor color;
+    protected VanillaColor color;
     protected ItemStack[] tileItemStacks = new ItemStack[0];
     public FluidTank fluidTank;
     protected Wait waitTimer;
@@ -28,7 +28,7 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
     public TileBase() {
         
         if (color == null)
-            color = EnumVinillaColor.NONE;
+            color = VanillaColor.NONE;
 
         if (orientation == null)
             orientation = ForgeDirection.DOWN;
@@ -46,13 +46,13 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
     }
 
     @Override
-    public EnumVinillaColor getColorEnum() {
+    public VanillaColor getColorEnum() {
 
         return color;
     }
 
     @Override
-    public void setColor(EnumVinillaColor color) {
+    public void setColor(VanillaColor color) {
 
         this.color = color;
     }
@@ -110,8 +110,8 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
 
         fluidTank.readFromNBT(tag);
 
-        if (color == EnumVinillaColor.NONE || color == null)
-            color = EnumVinillaColor.translateNumberToColor(tag
+        if (color == VanillaColor.NONE || color == null)
+            color = VanillaColor.translateNumberToColor(tag
                     .getInteger("color"));
 
         if (this.powerProvider != null)
@@ -138,8 +138,8 @@ public abstract class TileBase extends TileEntity implements IVinillaColorable, 
 
         fluidTank.writeToNBT(tag);
 
-        if (this.getColorEnum() != EnumVinillaColor.NONE)
-            tag.setInteger("color", EnumVinillaColor.translateColorToNumber(this.getColorEnum()));
+        if (this.getColorEnum() != VanillaColor.NONE)
+            tag.setInteger("color", VanillaColor.translateColorToNumber(this.getColorEnum()));
 
         if (this.powerProvider != null)
             this.powerProvider.writeToNBT(tag);

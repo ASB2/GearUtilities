@@ -4,8 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import ASB2.utils.UtilMisc;
 import GU.info.Reference;
-import GU.utils.UtilMisc;
 
 public class GUItemBlock extends ItemBlock {
 
