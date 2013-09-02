@@ -15,25 +15,6 @@ public class ConduitNetwork implements IConduitNetwork {
     @Override
     public void updateNetwork(World worldObj, int x, int y, int z) {
 
-        if(!conduitList.isEmpty()) {
-
-            for(IConduitConductor conduit : this.getAvaliableConductors()) {
-
-                if(worldObj.getBlockId(conduit.getCoords()[0], conduit.getCoords()[1], conduit.getCoords()[2]) != 0) {
-
-                    if(worldObj.getBlockTileEntity(conduit.getCoords()[0], conduit.getCoords()[1], conduit.getCoords()[2]) == null) {
-
-                        conduitList.remove(conduit);
-                        break;
-                    }
-                }
-                else {
-
-                    conduitList.remove(conduit);
-                    break;
-                }
-            }
-        }
     }
 
 
@@ -60,7 +41,7 @@ public class ConduitNetwork implements IConduitNetwork {
             }        
         }
     }
-
+    
     @Override
     public boolean addConductor(World worldObj, IConduitConductor conduit) {
 
@@ -85,5 +66,28 @@ public class ConduitNetwork implements IConduitNetwork {
     public ArrayList<IConduitConductor> getAvaliableConductors() {
 
         return conduitList;
+    }
+    
+    public void recalculateList(World worldObj) {
+        
+        if(!conduitList.isEmpty()) {
+
+            for(IConduitConductor conduit : this.getAvaliableConductors()) {
+
+                if(worldObj.getBlockId(conduit.getCoords()[0], conduit.getCoords()[1], conduit.getCoords()[2]) != 0) {
+
+                    if(worldObj.getBlockTileEntity(conduit.getCoords()[0], conduit.getCoords()[1], conduit.getCoords()[2]) == null) {
+
+                        conduitList.remove(conduit);
+                        break;
+                    }
+                }
+                else {
+
+                    conduitList.remove(conduit);
+                    break;
+                }
+            }
+        }
     }
 }

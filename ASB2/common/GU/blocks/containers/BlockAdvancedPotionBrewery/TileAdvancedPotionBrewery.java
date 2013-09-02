@@ -210,12 +210,6 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     }
 
     @Override
-    public void onInventoryChanged() {
-        super.onInventoryChanged();
-
-    }
-
-    @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 
         if(resource.getFluid() == FluidRegistry.WATER) {

@@ -11,7 +11,7 @@ public abstract class PowerProvider {
     protected float powerStored;
     protected float powerMax;
 
-    public PowerProvider(int maximumPower, PowerClass powerClass) {
+    public PowerProvider(float maximumPower, PowerClass powerClass) {
 
         this.powerClass = powerClass;
         this.powerMax = maximumPower;

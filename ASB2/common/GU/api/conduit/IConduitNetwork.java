@@ -22,12 +22,6 @@ public interface IConduitNetwork {
     void mergeNetworks(World world, ArrayList<IConduitConductor> newNetwok);
     
     /*
-     * Traces a path from the provided source conduit to the destination conduit
-     * @return if the path can be traced.
-     */
-    boolean tracePath(World world, IConduitConductor source, IConduitConductor destination);
-    
-    /*
      * A list of all the conduits that are in this network
      * @return Conduits in the network
      */

@@ -8,7 +8,7 @@ public class UtilPower {
 
         ForgeDirection opposite = direction.getOpposite();
 
-        int amountOfPower = powerSource.getPowerProvider().getPowerClass().getPowerValue();
+        float amountOfPower = powerSource.getPowerProvider().getPowerClass().getPowerValue();
 
         if (powerSink.getPowerProvider() != null && powerSource.getPowerProvider() != null) {
 

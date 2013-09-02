@@ -4,21 +4,21 @@ public enum PowerClass {
 
     LOW(10, 1000), MID(100, 10000), HIGH(1000, 100000);
 
-    PowerClass(int power, int max) {
+    PowerClass(float power, float max) {
 
         powerValue = power;
         suggestedMax = max;
     }
 
-    int powerValue = 0;
-    int suggestedMax = 0;
+    private float powerValue = 0;
+    private float suggestedMax = 0;
     
-    public int getPowerValue() {
+    public float getPowerValue() {
 
         return powerValue;
     }
     
-    public int getSuggestedMax() {
+    public float getSuggestedMax() {
 
         return suggestedMax;
     }
