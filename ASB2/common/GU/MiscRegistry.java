@@ -5,6 +5,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.event.ForgeSubscribe;
 import GU.entity.EntityTest.EntityTestEntity;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import GU.entity.EntityPotion.*;
 
 public class MiscRegistry {
 
@@ -15,8 +16,8 @@ public class MiscRegistry {
 
     public static void initEntitys() {
 
-        EntityRegistry.registerModEntity(EntityTestEntity.class, "Test Entity",
-                0, GearUtilities.instance, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityTestEntity.class, "Test Entity", 0, GearUtilities.instance, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityModularPotion.class, "Modular Potion", 1, GearUtilities.instance, 80, 3, true);
     }
 
     @ForgeSubscribe

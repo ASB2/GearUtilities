@@ -1,9 +1,11 @@
 package GU.items;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.api.runes.IRuneBlock;
@@ -38,7 +40,7 @@ public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IP
     @Override
     public void randomUpdate(World world, IRuneBlock block, ItemStack stack, int x, int y, int z) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -86,19 +88,20 @@ public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IP
     @Override
     public void onPotionThrown(World world, ItemStack potion, EntityLivingBase entity) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void onThrownPotionHitEntity(World world, ItemStack potion, EntityLivingBase entity) {
-        // TODO Auto-generated method stub
-        
+
+        UtilPlayers.sendChatToPlayer(Minecraft.getMinecraft().thePlayer, "I Hit Something");
+        entity.addPotionEffect(new PotionEffect(1, 1000, 3));
     }
 
     @Override
     public void onThrownPotionHitBlock(World world, ItemStack potion, int x, int y, int z) {
-        // TODO Auto-generated method stub
-        
+
+        world.setBlockToAir(x, y - 0, z);
     }
 
 }

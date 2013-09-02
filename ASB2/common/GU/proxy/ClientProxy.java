@@ -30,9 +30,8 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void register() {
-
+        
         Models.initModels();
-        new SoundHandler();
 
         RenderingRegistry.registerEntityRenderingHandler(EntityTestEntity.class, new TestEntityRenderer());
 

@@ -8,9 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import GU.api.potion.IPotion;
+import GU.api.potion.IPotionIngredient;
+import GU.entity.EntityPotion.EntityModularPotion;
 import GU.utils.UtilItemStack;
 import GU.utils.UtilMisc;
-import GU.api.potion.*;
 
 public class ItemBrewedPotion extends ItemBase implements IPotion {
 
@@ -44,7 +45,17 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
 
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 
-        player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+        if(!player.isSneaking()) {
+
+            player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+        }
+        else {
+            
+            if (!world.isRemote) {
+                
+                world.spawnEntityInWorld(new EntityModularPotion(world, player, itemStack));
+            }
+        }
         return itemStack;
     }
 
@@ -75,7 +86,7 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
         for(ItemStack stack : this.getIngredients(itemStack)) {
 
             if(stack.getItem() instanceof IPotionIngredient) {
-                
+
                 ((IPotionIngredient)stack.getItem()).onEntityDrinkPotion(world, stack, player);
             }
         }

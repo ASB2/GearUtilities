@@ -5,8 +5,9 @@ import GU.info.Reference;
 
 public enum Sounds {
 
-    TEST("test", ".ogg");
-
+    TEST("test", ".ogg"),
+    POTION_HIT("potion_hit", ".ogg");
+    
     private String name;
     private String format;
 
