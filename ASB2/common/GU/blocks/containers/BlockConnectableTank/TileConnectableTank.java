@@ -1,6 +1,5 @@
 package GU.blocks.containers.BlockConnectableTank;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -10,11 +9,12 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import ASB2.utils.UtilDirection;
+import ASB2.utils.UtilFluid;
+import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
-import GU.utils.UtilDirection;
-import GU.utils.UtilFluid;
-import GU.api.wait.*;
-import GU.packets.*;
+import GU.packets.TankPacket;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class TileConnectableTank extends TileBase implements IFluidHandler {
 

@@ -13,12 +13,12 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilRender;
 import GU.api.color.IColorable;
 import GU.color.BlockColorable;
 import GU.info.Reference;
 import GU.models.BlockSimpleRenderer;
 import GU.models.IBlockRender;
-import GU.utils.UtilRender;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

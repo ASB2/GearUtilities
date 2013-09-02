@@ -8,10 +8,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.IBlockCycle;
+import ASB2.utils.UtilBlock;
+import ASB2.utils.UtilPlayers;
+import GU.api.potion.IPotionIngredient;
 import GU.api.runes.IRuneBlock;
 import GU.api.runes.IRuneItem;
-import GU.utils.*;
-import GU.api.potion.*;
 
 public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IPotionIngredient {
 

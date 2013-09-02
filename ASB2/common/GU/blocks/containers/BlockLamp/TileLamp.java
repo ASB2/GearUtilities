@@ -2,11 +2,10 @@ package GU.blocks.containers.BlockLamp;
 
 import java.awt.Color;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
-
 import net.minecraftforge.common.ForgeDirection;
 import GU.color.TileColorable;
 import GU.packets.ColorPacket;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class TileLamp extends TileColorable {
 

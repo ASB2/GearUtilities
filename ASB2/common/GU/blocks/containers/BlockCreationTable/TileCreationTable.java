@@ -3,6 +3,7 @@ package GU.blocks.containers.BlockCreationTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import ASB2.utils.UtilInventory;
 import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
@@ -10,7 +11,6 @@ import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.power.GUPowerProvider;
-import GU.utils.UtilInventory;
 
 public class TileCreationTable extends TileBase implements IPowerMisc, IInventory {
 

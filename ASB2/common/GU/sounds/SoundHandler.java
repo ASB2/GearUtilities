@@ -3,7 +3,7 @@ package GU.sounds;
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
-import GU.info.*;
+import GU.info.Reference;
 
 public class SoundHandler {
 

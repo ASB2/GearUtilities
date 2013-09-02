@@ -2,7 +2,7 @@ package GU.entity.EntityTest;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import GU.entity.*;
+import GU.entity.EntityBase;
 
 public class EntityTestEntity extends EntityBase {
 

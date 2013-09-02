@@ -12,13 +12,14 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilDirection;
+import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
 import GU.api.color.IColorable;
 import GU.color.BlockColorable;
 import GU.info.Reference;
-import GU.utils.UtilDirection;
-import GU.utils.UtilRender;
-import GU.models.*;
+import GU.models.BlockSimpleRenderer;
+import GU.models.IBlockRender;
 
 public class BlockCanvas extends BlockColorable implements IBlockRender {
 

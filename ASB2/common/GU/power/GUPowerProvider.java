@@ -3,11 +3,11 @@ package GU.power;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilDirection;
 import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
-import GU.utils.UtilDirection;
 import GU.api.power.UtilPower;
 
 public class GUPowerProvider extends PowerProvider {

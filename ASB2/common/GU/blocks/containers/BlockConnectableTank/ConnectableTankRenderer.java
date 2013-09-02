@@ -7,8 +7,8 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
-import GU.utils.UtilMisc;
-import GU.utils.UtilRender;
+import ASB2.utils.UtilMisc;
+import ASB2.utils.UtilRender;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 

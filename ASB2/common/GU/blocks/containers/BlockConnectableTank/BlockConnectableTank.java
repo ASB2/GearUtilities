@@ -14,10 +14,11 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
+import ASB2.utils.UtilFluid;
+import ASB2.utils.UtilInventory;
+import ASB2.utils.UtilRender;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
-import GU.utils.UtilInventory;
-import GU.utils.*;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockConnectableTank extends ContainerBase {

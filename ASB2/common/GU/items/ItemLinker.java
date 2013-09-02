@@ -4,8 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import GU.utils.UtilItemStack;
-import GU.utils.*;
+import ASB2.utils.UtilItemStack;
+import ASB2.utils.UtilPlayers;
 
 public class ItemLinker extends ItemBase {
 

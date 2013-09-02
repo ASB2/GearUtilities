@@ -3,9 +3,9 @@ package GU.blocks.containers.BlockAdvancedPotionBrewery;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
+import ASB2.utils.UtilMisc;
+import ASB2.utils.UtilRender;
 import GU.gui.GuiBase;
-import GU.utils.UtilMisc;
-import GU.utils.UtilRender;
 
 public class GuiAdvancedPotionBrewery extends GuiBase {
 

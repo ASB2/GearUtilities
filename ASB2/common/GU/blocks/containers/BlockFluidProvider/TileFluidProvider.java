@@ -8,9 +8,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import ASB2.utils.UtilDirection;
+import ASB2.utils.UtilFluid;
 import GU.blocks.containers.TileBase;
-import GU.utils.UtilDirection;
-import GU.utils.UtilFluid;
 
 public class TileFluidProvider extends TileBase implements IFluidHandler {
 

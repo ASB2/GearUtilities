@@ -4,10 +4,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilBlock;
+import ASB2.utils.UtilDirection;
+import ASB2.utils.UtilPlayers;
 import GU.BlockRegistry;
-import GU.utils.UtilBlock;
-import GU.utils.UtilDirection;
-import GU.utils.UtilPlayers;
 
 public class ItemPhantomPlacer extends ItemBase {
 

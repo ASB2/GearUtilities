@@ -1,8 +1,11 @@
 package GU.blocks.containers.BlockPowerTest;
 
-import GU.blocks.containers.*;
-import GU.power.*;
-import GU.api.power.*;
+import GU.api.power.IPowerMisc;
+import GU.api.power.PowerClass;
+import GU.api.power.PowerProvider;
+import GU.api.power.State;
+import GU.blocks.containers.TileBase;
+import GU.power.GUPowerProvider;
 
 public class TilePowerTest extends TileBase implements IPowerMisc {
 

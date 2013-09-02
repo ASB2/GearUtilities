@@ -11,13 +11,13 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilDirection;
+import ASB2.utils.UtilRender;
 import GU.api.color.IColorable;
 import GU.color.BlockColorable;
 import GU.info.Reference;
 import GU.models.BlockSimpleRenderer;
 import GU.models.IBlockRender;
-import GU.utils.UtilDirection;
-import GU.utils.UtilRender;
 
 public class BlockEnhancedBricks extends BlockColorable implements IBlockRender {
 

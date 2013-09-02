@@ -1,9 +1,9 @@
 package GU;
 
+import net.minecraft.creativetab.CreativeTabs;
 import GU.info.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.creativetab.CreativeTabs;
 
 public class GUCreativeTab extends CreativeTabs {
 

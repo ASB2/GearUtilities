@@ -3,7 +3,7 @@ package GU.blocks.containers.BlockPowerTest;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import GU.blocks.containers.*;
+import GU.blocks.containers.ContainerBase;
 
 public class BlockPowerTest extends ContainerBase {
 

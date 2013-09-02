@@ -5,10 +5,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import GU.utils.IBlockCycle;
-import GU.utils.UtilBlock;
-import GU.utils.UtilItemStack;
-import GU.utils.UtilPlayers;
+import ASB2.utils.IBlockCycle;
+import ASB2.utils.UtilBlock;
+import ASB2.utils.UtilItemStack;
+import ASB2.utils.UtilPlayers;
 
 public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockCycle {
 

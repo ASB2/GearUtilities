@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
+import ASB2.utils.UtilRender;
 import GU.info.Particles;
-import GU.utils.UtilRender;
 import GU.vector.Vector3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

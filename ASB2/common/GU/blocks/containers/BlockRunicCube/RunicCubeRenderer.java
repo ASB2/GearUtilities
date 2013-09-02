@@ -9,10 +9,10 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
+import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
 import GU.info.Models;
 import GU.info.Textures;
-import GU.utils.UtilRender;
 
 public class RunicCubeRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 

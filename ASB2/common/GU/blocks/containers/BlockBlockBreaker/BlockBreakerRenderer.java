@@ -7,9 +7,9 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
+import ASB2.utils.UtilRender;
 import GU.info.Models;
 import GU.info.Textures;
-import GU.utils.UtilRender;
 
 public class BlockBreakerRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 

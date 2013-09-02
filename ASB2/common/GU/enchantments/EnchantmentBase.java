@@ -2,7 +2,7 @@ package GU.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
-import GU.info.*;
+import GU.info.Reference;
 
 public abstract class EnchantmentBase extends Enchantment {
 

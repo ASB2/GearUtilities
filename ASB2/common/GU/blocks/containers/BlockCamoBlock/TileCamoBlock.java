@@ -3,8 +3,8 @@ package GU.blocks.containers.BlockCamoBlock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import ASB2.utils.UtilInventory;
 import GU.blocks.containers.TileBase;
-import GU.utils.*;
 
 public class TileCamoBlock extends TileBase implements IInventory {
 

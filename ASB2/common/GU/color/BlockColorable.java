@@ -7,12 +7,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilMisc;
+import ASB2.utils.UtilPlayers;
 import GU.ItemRegistry;
-import GU.api.color.VanillaColor;
 import GU.api.color.IColorable;
+import GU.api.color.VanillaColor;
 import GU.blocks.containers.ContainerBase;
-import GU.utils.UtilMisc;
-import GU.utils.UtilPlayers;
 
 public abstract class BlockColorable extends ContainerBase {
 

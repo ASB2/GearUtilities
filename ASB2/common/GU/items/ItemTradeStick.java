@@ -6,7 +6,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
-import GU.utils.*;
+import ASB2.utils.UtilBlock;
+import ASB2.utils.UtilInventory;
+import ASB2.utils.UtilItemStack;
+import ASB2.utils.UtilMisc;
+import ASB2.utils.UtilPlayers;
 
 public class ItemTradeStick extends ItemBase {
 

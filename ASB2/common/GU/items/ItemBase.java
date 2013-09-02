@@ -1,7 +1,5 @@
 package GU.items;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -9,9 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+
+import org.lwjgl.input.Keyboard;
+
+import ASB2.utils.UtilMisc;
 import GU.GearUtilities;
 import GU.info.Reference;
-import GU.utils.UtilMisc;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

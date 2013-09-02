@@ -3,7 +3,7 @@ package GU.fx;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.World;
-import GU.vector.*;
+import GU.vector.Vector3;
 
 public class TestEffect extends EntityFX {
 

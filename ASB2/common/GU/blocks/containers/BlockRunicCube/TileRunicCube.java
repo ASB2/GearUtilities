@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import ASB2.utils.UtilInventory;
 import GU.api.runes.IRuneBlock;
 import GU.api.runes.IRuneItem;
 import GU.blocks.containers.TileBase;
-import GU.utils.UtilInventory;
 
 public class TileRunicCube extends TileBase implements IInventory, IRuneBlock {
 

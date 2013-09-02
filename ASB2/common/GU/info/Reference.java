@@ -10,7 +10,6 @@ public final class Reference {
     public static final String CLIENT_PROXY = "GU.proxy.ClientProxy";
     public static final String COMMON_PROXY = "GU.proxy.CommonProxy";
 
-    public static final String RESOURCE_LOCATION = "/assets/"
-            + MODDID.toLowerCase() + "/";
+    public static final String RESOURCE_LOCATION = "/assets/" + MODDID.toLowerCase() + "/";
     public static final String POWER_NAME = "GUU";
 }

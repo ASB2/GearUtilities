@@ -7,14 +7,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
+import ASB2.utils.UtilBlock;
+import ASB2.utils.UtilDirection;
 import GU.api.IWrenchable;
 import GU.api.color.IVanillaColorable;
 import GU.api.color.VanillaColor;
 import GU.api.power.PowerProvider;
 import GU.api.wait.IWaitTrigger;
 import GU.api.wait.Wait;
-import GU.utils.UtilBlock;
-import GU.utils.UtilDirection;
 
 public abstract class TileBase extends TileEntity implements IVanillaColorable, IWaitTrigger, IWrenchable {
 

@@ -7,8 +7,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import GU.utils.UtilItemStack;
-import GU.utils.UtilPlayers;
+import ASB2.utils.UtilItemStack;
+import ASB2.utils.UtilPlayers;
 
 public class ItemTeleporter extends ItemBase {
 

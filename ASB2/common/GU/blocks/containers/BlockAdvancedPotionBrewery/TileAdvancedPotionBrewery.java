@@ -2,8 +2,6 @@ package GU.blocks.containers.BlockAdvancedPotionBrewery;
 
 import java.util.ArrayList;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -14,18 +12,24 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import ASB2.utils.UtilBlock;
+import ASB2.utils.UtilFluid;
+import ASB2.utils.UtilInventory;
+import GU.ItemRegistry;
 import GU.api.module.IModuleProvider;
 import GU.api.module.IModuleUser;
-import GU.blocks.containers.TileBase;
-import GU.utils.UtilInventory;
-import GU.*;
-import GU.api.potion.*;
-import GU.api.power.*;
+import GU.api.potion.IPotion;
+import GU.api.potion.IPotionIngredient;
+import GU.api.power.IPowerMisc;
+import GU.api.power.PowerClass;
+import GU.api.power.PowerProvider;
+import GU.api.power.State;
 import GU.api.wait.Wait;
+import GU.blocks.containers.TileBase;
+import GU.info.Variables;
 import GU.packets.TankPacket;
-import GU.power.*;
-import GU.info.*;
-import GU.utils.*;
+import GU.power.GUPowerProvider;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class TileAdvancedPotionBrewery extends TileBase implements IInventory, IFluidHandler, IModuleUser, IPowerMisc {
 

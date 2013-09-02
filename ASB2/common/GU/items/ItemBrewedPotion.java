@@ -7,11 +7,11 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
+import ASB2.utils.UtilItemStack;
+import ASB2.utils.UtilMisc;
 import GU.api.potion.IPotion;
 import GU.api.potion.IPotionIngredient;
 import GU.entity.EntityPotion.EntityModularPotion;
-import GU.utils.UtilItemStack;
-import GU.utils.UtilMisc;
 
 public class ItemBrewedPotion extends ItemBase implements IPotion {
 

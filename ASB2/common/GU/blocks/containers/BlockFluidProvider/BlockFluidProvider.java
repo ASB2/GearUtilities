@@ -7,8 +7,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import ASB2.utils.UtilPlayers;
 import GU.blocks.containers.ContainerBase;
-import GU.utils.*;
 
 public class BlockFluidProvider extends ContainerBase {
 

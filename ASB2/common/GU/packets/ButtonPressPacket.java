@@ -1,12 +1,12 @@
 package GU.packets;
 
 import net.minecraft.entity.player.EntityPlayer;
+import GU.gui.ContainerBase;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
 import cpw.mods.fml.relauncher.Side;
-import GU.gui.*;
 
 public class ButtonPressPacket extends GUPacketBase {
 

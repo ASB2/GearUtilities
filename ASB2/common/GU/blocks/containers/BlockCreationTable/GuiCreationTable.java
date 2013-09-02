@@ -2,8 +2,8 @@ package GU.blocks.containers.BlockCreationTable;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
+import ASB2.utils.UtilMisc;
 import GU.gui.GuiBase;
-import GU.utils.UtilMisc;
 
 public class GuiCreationTable extends GuiBase {
 

@@ -9,11 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import ASB2.utils.UtilInventory;
+import ASB2.utils.UtilRender;
 import GU.api.runes.IRuneItem;
 import GU.blocks.containers.ContainerBase;
 import GU.entity.FXBase;
-import GU.utils.UtilInventory;
-import GU.utils.UtilRender;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

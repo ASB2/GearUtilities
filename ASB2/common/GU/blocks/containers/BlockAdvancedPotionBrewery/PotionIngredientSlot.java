@@ -3,8 +3,9 @@ package GU.blocks.containers.BlockAdvancedPotionBrewery;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import GU.api.potion.*;
-import GU.api.*;
+import GU.api.WhiteLists;
+import GU.api.potion.IPotion;
+import GU.api.potion.IPotionIngredient;
 
 public class PotionIngredientSlot extends Slot {
 

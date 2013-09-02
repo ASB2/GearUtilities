@@ -7,9 +7,9 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import ASB2.utils.UtilItemStack;
+import ASB2.utils.UtilMisc;
 import GU.GUItemBlock;
-import GU.utils.UtilItemStack;
-import GU.utils.UtilMisc;
 
 public class ItemBlockConnectableTank extends GUItemBlock {
 
