@@ -3,14 +3,18 @@ package GU.gui;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.Icon;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
+
 import GU.api.power.IPowerMisc;
 import GU.info.Gui;
+import GU.packets.ButtonPressPacket;
 import GU.utils.UtilRender;
 
 public abstract class GuiBase extends GuiContainer {
@@ -36,6 +40,12 @@ public abstract class GuiBase extends GuiContainer {
 
     }
 
+    @Override
+    protected void actionPerformed(GuiButton button) {
+
+        PacketDispatcher.sendPacketToServer(new ButtonPressPacket(button.id).makePacket());
+    }
+    
     public void renderDefaultGui() {
 
         posX = (width - xSizeOfTexture) / 2;
@@ -177,7 +187,7 @@ public abstract class GuiBase extends GuiContainer {
             posX = (width - xSizeOfTexture) / 2;
             posY = (height - ySizeOfTexture) / 2;
 
-            drawTexturedModelRectFromIcon(posX + x, posY + y + 71 - scale + 4, icon, 18, scale);
+            drawTexturedModelRectFromIcon(posX + x, posY + y + 71 - scale, icon, 18, scale);
         }
     }
 
@@ -201,14 +211,13 @@ public abstract class GuiBase extends GuiContainer {
         }
     }
 
-    protected void drawTooltips(IPowerMisc tileEntity, int mouseX, int mouseY,
-            int coordX, int coordY, int maxX, int maxY) {
+    protected void drawTooltips(IPowerMisc tileEntity, int mouseX, int mouseY, int coordX, int coordY, int maxX, int maxY) {
 
         if (tileEntity != null && tileEntity.getPowerProvider() != null) {
 
             if (isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
 
-                drawBarTooltip("Energy", "TCU", (int) tileEntity.getPowerProvider().getPowerStored(), (int) tileEntity.getPowerProvider().getPowerMax(), mouseX, mouseY);
+                drawBarTooltip("Energy", "GUU", (int) tileEntity.getPowerProvider().getPowerStored(), (int) tileEntity.getPowerProvider().getPowerMax(), mouseX, mouseY);
             }
         }
     }

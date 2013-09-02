@@ -2,6 +2,8 @@ package GU.blocks.containers.BlockAdvancedPotionBrewery;
 
 import java.util.ArrayList;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -19,6 +21,8 @@ import GU.utils.UtilInventory;
 import GU.*;
 import GU.api.potion.*;
 import GU.api.power.*;
+import GU.api.wait.Wait;
+import GU.packets.TankPacket;
 import GU.power.*;
 import GU.info.*;
 import GU.utils.*;
@@ -31,6 +35,7 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
 
     public TileAdvancedPotionBrewery() {
 
+        this.waitTimer = new Wait(20 * 5, this, 1);
         tileItemStacks = new ItemStack[8];
         fluidTank = new FluidTank(4000);
         powerProvider = new GUPowerProvider(PowerClass.LOW, State.SINK);
@@ -39,12 +44,18 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     @Override
     public void updateEntity() {
 
+        waitTimer.update();
+        
         if((shouldCraft || worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))) {
 
             if(hasRequired()) {
 
                 this.craftPotion();
             }
+        }
+        else {
+            
+            shouldCraft = false;
         }
     }
 
@@ -354,5 +365,18 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     public PowerProvider getPowerProvider() {
 
         return powerProvider;
+    }
+    
+    @Override
+    public void trigger(int id) {
+
+        if(fluidTank.getFluid() != null) {
+
+            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
+        } 
+        else {
+
+            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
+        }
     }
 }

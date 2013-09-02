@@ -22,7 +22,6 @@ import GU.entity.EntityTest.TestEntityRenderer;
 import GU.info.Gui;
 import GU.info.Models;
 import GU.models.BlockSimpleRenderer;
-import GU.sounds.SoundHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 

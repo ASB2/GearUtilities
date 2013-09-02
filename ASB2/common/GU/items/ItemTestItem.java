@@ -57,27 +57,21 @@ public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IP
     }
 
     @Override
-    public IngredientType getIngredientType(ItemStack stack) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public int getPowerChange(ItemStack stack) {
         // TODO Auto-generated method stub
-        return 0;
+        return 200;
     }
 
     @Override
     public int getDurationChange(ItemStack stack) {
         // TODO Auto-generated method stub
-        return 200;
+        return 20;
     }
 
     @Override
     public int getStrengthChange(ItemStack stack) {
         // TODO Auto-generated method stub
-        return 200;
+        return 20;
     }
 
     @Override

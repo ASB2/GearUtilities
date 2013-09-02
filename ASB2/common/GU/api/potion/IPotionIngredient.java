@@ -5,12 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public interface IPotionIngredient {
-    
-    /*
-     * How the ingredient affects the potion's cook time.
-     * Negative number decrease duration positive increase it. 
-     */
-    IngredientType getIngredientType(ItemStack stack);
 
     /*
      * How the ingredient affects the potion's power requirement.

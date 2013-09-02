@@ -34,7 +34,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
             if((fluidTank.getFluid() != null)) {
-                
+
                 if(fluidTank.getFluid().getFluid() == FluidRegistry.WATER && fluidTank.getFluidAmount() >= 2000) {
 
                     if(fluidTank.getCapacity() - fluidTank.getFluidAmount() >= 1000) {
@@ -243,15 +243,13 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
     @Override
     public void trigger(int id) {
 
-        if(id == 1) {
-            if(fluidTank.getFluid() != null) {
+        if(fluidTank.getFluid() != null) {
 
-                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new ConnectableTankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
-            } 
-            else {
+            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
+        } 
+        else {
 
-                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new ConnectableTankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
-            }
+            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
         }
     }
 }

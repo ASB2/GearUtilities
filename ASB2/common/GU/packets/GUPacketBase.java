@@ -20,7 +20,7 @@ public abstract class GUPacketBase {
     static {
         ImmutableBiMap.Builder<Integer, Class<? extends GUPacketBase>> builder = ImmutableBiMap.builder();
 
-        builder.put(Integer.valueOf(0), ConnectableTankPacket.class);
+        builder.put(Integer.valueOf(0), TankPacket.class);
         builder.put(Integer.valueOf(1), ColorPacket.class);
         builder.put(Integer.valueOf(2), ButtonPressPacket.class);
         
