@@ -1,5 +1,7 @@
 package GU.blocks.containers.BlockUniversalConduit;
 
+import java.awt.Color;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
@@ -8,6 +10,8 @@ import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
 import ASB2.vector.Vector3;
+import GU.api.cluster.IClusterTrigger;
+import GU.api.cluster.IClustor;
 import GU.api.conduit.IConduitConductor;
 import GU.api.conduit.IConduitNetwork;
 import GU.api.power.IPowerMisc;
@@ -15,8 +19,7 @@ import GU.api.power.PowerHelper;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.conduit.ConduitNetwork;
-import GU.api.cluster.*;
-import GU.entity.EntityCluster.*;
+import GU.entity.EntityCluster.EntityInfoCluster;
 
 public class TileUniversalConduit extends TileBase implements IConduitConductor, IClusterTrigger {
 
@@ -30,7 +33,7 @@ public class TileUniversalConduit extends TileBase implements IConduitConductor,
 
     public void updateEntity() {
 
-        waitTimer.update();
+        //        waitTimer.update();
 
         if(this.getNetwork() != null) {
 
@@ -41,30 +44,35 @@ public class TileUniversalConduit extends TileBase implements IConduitConductor,
                 this.getNetwork().addConductor(worldObj, this);
             }
         }
-        
-        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-            
-            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
-            
-            if(tile != null) {
-                
-                if(tile instanceof IInventory || tile instanceof IPowerMisc || tile instanceof IFluidHandler) {
+
+        TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
+
+        if(tile != null) {
+
+            if(tile instanceof IInventory || tile instanceof IPowerMisc || tile instanceof IFluidHandler) {
+
+                if(!worldObj.isRemote) {
                     
-                    EntityInfoCluster clustor = new EntityInfoCluster(worldObj, new Vector3(this), direction.getOpposite(), this);
-                    worldObj.spawnEntityInWorld(clustor);
+                    worldObj.spawnEntityInWorld(new EntityInfoCluster(worldObj, new Vector3(this), this.getOrientation(), this, 1, Color.WHITE));
                 }
             }
+        }
+        else {
+            
+            worldObj.spawnEntityInWorld(new EntityInfoCluster(worldObj, new Vector3(this.xCoord + .5, this.yCoord + 1, this.zCoord + .5), ForgeDirection.UNKNOWN, this, 1, Color.WHITE));
+        
+        System.out.println("asdf;kljasd;fklj");
         }
     }
 
     @Override
     public void onClustorCollosion(ForgeDirection side, Vector3 position, IClustor clustor) {
-        
+
         TileEntity sink = position.getTileEntity(worldObj);
 
         if(sink != null) {
 
-            TileEntity source = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation());
+            TileEntity source = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
 
             if(source != null) {
 
@@ -82,7 +90,7 @@ public class TileUniversalConduit extends TileBase implements IConduitConductor,
 
                         if(sink instanceof IFluidHandler) {
 
-                            UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, true);
+                            UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, 1000, true);
                         }
                     }
 
@@ -91,7 +99,7 @@ public class TileUniversalConduit extends TileBase implements IConduitConductor,
                         if(sink instanceof IPowerMisc) {
 
                             if(PowerHelper.moveEnergy((IPowerMisc)source, (IPowerMisc)sink, side, true)) {
-                                
+
                                 System.out.println("Packet Recieved");
                             }
                         }

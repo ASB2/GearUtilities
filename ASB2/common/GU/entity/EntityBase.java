@@ -16,8 +16,7 @@ import com.google.common.io.ByteArrayDataOutput;
 
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 
-public abstract class EntityBase extends Entity implements
-IEntityAdditionalSpawnData {
+public abstract class EntityBase extends Entity implements IEntityAdditionalSpawnData {
 
     public EntityBase(World world) {
         super(world);
@@ -99,14 +98,13 @@ IEntityAdditionalSpawnData {
 
     @Override
     protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
-        // TODO Auto-generated method stub
+        super.readFromNBT(nbttagcompound);
 
     }
 
     @Override
     protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
-        // TODO Auto-generated method stub
-
+        super.writeToNBT(nbttagcompound);
     }
 
     @Override

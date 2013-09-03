@@ -14,6 +14,7 @@ import ASB2.utils.UtilPlayers;
 import GU.api.potion.IPotionIngredient;
 import GU.api.runes.IRuneBlock;
 import GU.api.runes.IRuneItem;
+import GU.entity.EntityCluster.*;
 
 public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IPotionIngredient {
 
@@ -24,6 +25,9 @@ public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IP
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
 
+        if(!world.isRemote) {
+            
+        }
         return true;
     }
 

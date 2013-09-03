@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -39,6 +40,8 @@ public class FluidRegistry {
     public static FluidBase WaterEssence;
     
     public static void initFluids() {
+
+        MinecraftForge.EVENT_BUS.register(new FluidRegistry());
         
         LiquidStone = new FluidBase("Liquid Stone", Color.LIGHT_GRAY.hashCode());
         

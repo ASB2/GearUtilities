@@ -3,7 +3,7 @@ package GU.proxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import GU.GUTickHandler;
+import GU.GearUtilities;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.ContainerAdvancedPotionBrewery;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.TileAdvancedPotionBrewery;
 import GU.blocks.containers.BlockBlockBreaker.ContainerBlockBreaker;
@@ -12,9 +12,14 @@ import GU.blocks.containers.BlockCamoBlock.ContainerCamoBlock;
 import GU.blocks.containers.BlockCamoBlock.TileCamoBlock;
 import GU.blocks.containers.BlockCreationTable.ContainerCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
+import GU.entity.EntityCluster.EntityInfoCluster;
+import GU.entity.EntityPotion.EntityModularPotion;
+import GU.entity.EntityTest.EntityTestEntity;
 import GU.info.Gui;
 import GU.sounds.SoundHandler;
+import GU.worldGen.RetroGenManager;
 import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
@@ -22,8 +27,12 @@ public class CommonProxy implements IGuiHandler {
 
     public void register() {
 
-        TickRegistry.registerTickHandler(new GUTickHandler(), Side.SERVER);
+        TickRegistry.registerTickHandler(new RetroGenManager(), Side.SERVER);
         new SoundHandler();
+        
+        EntityRegistry.registerModEntity(EntityTestEntity.class, "Test Entity", 0, GearUtilities.instance, 256, 3, true);
+        EntityRegistry.registerModEntity(EntityModularPotion.class, "Modular Potion", 1, GearUtilities.instance, 256, 3, true);
+        EntityRegistry.registerModEntity(EntityInfoCluster.class, "Info Clustor", 2, GearUtilities.instance, 256, 3, true);    
     }
 
     public int addArmor(String string) {

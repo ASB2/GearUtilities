@@ -1,5 +1,7 @@
 package GU.entity.EntityCluster;
 
+import java.awt.Color;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -27,23 +29,29 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
     Vector3 position;
     ForgeDirection direction;
     IClusterTrigger source;
+    int range = 0;
+    Color color;
 
-    public EntityInfoCluster(World world, Vector3 start, ForgeDirection direction, IClusterTrigger source) {
+    public EntityInfoCluster(World world, Vector3 start, ForgeDirection direction, IClusterTrigger source, int range, Color color) {
         this(world);
 
         this.start = start;
-        position = new Vector3(start);
+        position = start.clone();
         this.direction = direction;
         this.source = source;
+        this.range = range;
+        this.color = color;
+        
+        this.posX = start.x;
+        this.posY = start.y;
+        this.posZ = start.z;
     }
 
     public EntityInfoCluster(World world) {
         super(world);
 
-        this.setSize(.7f, .7f);
+        this.setSize(.02f, .02f);
         isImmuneToFire = true;
-        isAirBorne = true;
-        this.noClip = true;
     }
 
 
@@ -51,54 +59,49 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
     public void onEntityUpdate() {
         super.onEntityUpdate();
 
-        if(direction != null && source != null) {            
+        if(direction != null && source != null) {    
 
-            int divided = 1;
-            this.moveEntity(direction.offsetX / divided, direction.offsetY / divided, direction.offsetZ / divided);
-        
-            if(position.getTileEntity(worldObj) != null) {
-                
-                if(position.getTileEntity(worldObj) instanceof IInventory || position.getTileEntity(worldObj) instanceof IPowerMisc || position.getTileEntity(worldObj) instanceof IFluidHandler) {
-                    
-                    source.onClustorCollosion(direction, position, this);
-                    this.setDead();
-                }                
+            if(start.distanceTo(position) <= range) {
+
+                int divided = 5;
+                this.moveEntity(direction.offsetX / divided, direction.offsetY / divided, direction.offsetZ / divided);
+                position.add(new Vector3(direction));
+                if(position.getTileEntity(worldObj) != null) {
+
+                    if(position.getTileEntity(worldObj) instanceof IInventory || position.getTileEntity(worldObj) instanceof IPowerMisc || position.getTileEntity(worldObj) instanceof IFluidHandler) {
+
+                        source.onClustorCollosion(direction, position, this);
+                        this.setDead();
+                    }                
+                }
             }
-            else {
-                this.setDead();
-            }
+        }
+        else {
+            
+            this.setDead();
         }
     }
 
     @Override
     protected void onImpactEntity(Entity entity) {
- 
+
         UtilPlayers.damagePlayer(worldObj, entity, GUDamageSource.clusterCollision, 100);       
-    }
-
-    protected void kill() {
-
-        super.kill();
-    }
-
-    protected boolean canTriggerWalking() {
-
-        return false;
     }
 
     @SideOnly(Side.CLIENT)
     public float getShadowSize() {
 
-        return 0;
+        return super.getShadowSize();
     }
 
     public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt) {
 
-        onStruckByLightning(par1EntityLightningBolt);
+        super.onStruckByLightning(par1EntityLightningBolt);
     }
 
     public void onKillEntity(EntityLivingBase par1EntityLivingBase) {
 
+        super.onKillEntity(par1EntityLivingBase);
     }
 
     public boolean doesEntityNotTriggerPressurePlate() {
@@ -113,7 +116,7 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
 
     public boolean shouldRenderInPass(int pass)
     {
-        return pass == 0;
+        return true;
     }
 
     @Override
@@ -132,13 +135,13 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
     protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
         super.readEntityFromNBT(nbttagcompound);
 
-        start = Vector3.readFromNBT(nbttagcompound);
+        //        start = Vector3.readFromNBT(nbttagcompound);
     }
 
     @Override
     protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
         super.writeToNBT(nbttagcompound);
 
-        start.writeToNBT(nbttagcompound);
+        //        start.writeToNBT(nbttagcompound);
     }
 }

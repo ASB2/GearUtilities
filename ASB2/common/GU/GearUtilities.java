@@ -12,6 +12,7 @@ import GU.info.Reference;
 import GU.info.Variables;
 import GU.packets.GUPacketHandler;
 import GU.proxy.CommonProxy;
+import GU.worldGen.RetroGenManager;
 import GU.worldGen.WorldGenBlockAirCrystalOre;
 import GU.worldGen.WorldGenBlockBurningFlower;
 import GU.worldGen.WorldGenBlockEarthCrystalOre;
@@ -47,7 +48,7 @@ public final class GearUtilities {
     public static CommonProxy proxy;
 
     public GearUtilities() {
-        
+
     }
 
     public static CreativeTabs tabGUBlocks = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Blocks");
@@ -71,13 +72,10 @@ public final class GearUtilities {
 
         Variables.updateVariables(config);
         ItemRegistry.init(config);
-        BlockRegistry.init(config);
-
-        MinecraftForge.EVENT_BUS.register(new FluidRegistry());
+        BlockRegistry.init(config);        
         FluidRegistry.initFluids();
+        RetroGenManager.init();
         
-        MiscRegistry.init(config);
-
         config.save();
         instance = this;
     }
@@ -111,7 +109,7 @@ public final class GearUtilities {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        
+
         FluidRegistry.registerFluidContainers();
         CraftRegistry.init();
 

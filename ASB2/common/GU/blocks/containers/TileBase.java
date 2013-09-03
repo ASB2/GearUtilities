@@ -41,7 +41,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
     public ForgeDirection getOrientation() {
 
-        return ForgeDirection.getOrientation(getBlockMetadata());
+        return ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
     }
 
     @Override
