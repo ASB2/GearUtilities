@@ -32,9 +32,10 @@ public class RetroGenManager implements ITickHandler {
 
         if(Variables.DO_RETROGEN) {
 
-            if(!event.getData().hasKey(Reference.MODDID)) {
+            if(!(event.getData().getString(Reference.MODDID) == Reference.MODDID)) {
 
                 CACHEED_CHUNKS.add(event.getChunk());
+                event.getData().setString(Reference.MODDID, Reference.MODDID);                
             }
         }
     }
@@ -49,6 +50,8 @@ public class RetroGenManager implements ITickHandler {
             Chunk chunk = chunksIt.next();
             
             GameRegistry.generateWorld(chunk.xPosition, chunk.zPosition, chunk.worldObj, chunk.worldObj.getChunkProvider(), chunk.worldObj.getChunkProvider());
+            
+            chunksIt.remove();
         }
     }
 

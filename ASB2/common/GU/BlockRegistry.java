@@ -20,6 +20,7 @@ import GU.blocks.containers.BlockAdvancedPotionBrewery.BlockAdvancedPotionBrewer
 import GU.blocks.containers.BlockBlockBreaker.BlockBlockBreaker;
 import GU.blocks.containers.BlockCamoBlock.BlockCamoBlock;
 import GU.blocks.containers.BlockCanvas.BlockCanvas;
+import GU.blocks.containers.BlockClusterSender.BlockClusterSender;
 import GU.blocks.containers.BlockConnectableTank.BlockConnectableTank;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
@@ -32,7 +33,7 @@ import GU.blocks.containers.BlockUniversalConduit.BlockUniversalConduit;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class BlockRegistry {
-
+    
     public static BlockMetadataOre BlockMetadataOre;
     public static BlockBase BlockTestBlock;
     public static ContainerBase BlockTestTile;
@@ -59,6 +60,7 @@ public class BlockRegistry {
     public static ContainerBase BlockEnhancedBricks;
     public static ContainerBase BlockRunicCube;
     public static ContainerBase BlockUniversalConduit;
+    public static ContainerBase BlockClusterSender;
     
     private static int id = 500;
 
@@ -164,6 +166,10 @@ public class BlockRegistry {
         BlockUniversalConduit = new BlockUniversalConduit(config.getBlock("BlockUniversalConduit", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockUniversalConduit.setBlockName("BlockUniversalConduit");
         LanguageRegistry.addName(BlockUniversalConduit, "Universal Conduit");
+        
+        BlockClusterSender = new BlockClusterSender(config.getBlock("BlockClusterSender", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockClusterSender.setBlockName("BlockClusterSender");
+        LanguageRegistry.addName(BlockClusterSender, "Cluster Sender");
     }
 
     public static void initTestBlocks(Configuration config) {

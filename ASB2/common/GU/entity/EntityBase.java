@@ -10,6 +10,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import ASB2.vector.Vector3;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
@@ -22,6 +23,22 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
         super(world);
     }
 
+    public EntityBase(World world, double x, double y, double z) {
+        super(world);
+        
+        this.posX = x;
+        this.posY = y;
+        this.posZ = z;
+    }
+    
+    public EntityBase(World world, Vector3 position) {
+        super(world);
+        
+        this.posX = position.x;
+        this.posY = position.y;
+        this.posZ = position.z;
+    }
+    
     public void onUpdate() {
         super.onUpdate();
 
@@ -87,10 +104,14 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
 
     @Override
     protected void entityInit() {
-        // TODO Auto-generated method stub
-
     }
 
+    @Override
+    public void onCollideWithPlayer(EntityPlayer player) {
+
+        this.onImpactEntity(player);
+    }
+    
     public void updateMovement() {
 
         this.setPosition(posX + motionX, posY + motionY, posZ + motionZ);
