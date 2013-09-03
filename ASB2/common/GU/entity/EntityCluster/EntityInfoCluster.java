@@ -22,21 +22,21 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
     Vector3 position;
     ForgeDirection direction;
     IClusterTrigger source;
+    int maxRange = 1;
 
-    public EntityInfoCluster(World world, Vector3 start, ForgeDirection direction, IClusterTrigger source) {
+    public EntityInfoCluster(World world, Vector3 start, ForgeDirection direction, IClusterTrigger source, int maxRange) {
         super(world, start);
 
         this.start = start;
         position = start.clone();
         this.direction = direction;
         this.source = source;
-        this.setSize(.5f, .5f);
+        this.setSize(0f, 0f);
+        this.maxRange = maxRange;
     }
 
     public EntityInfoCluster(World world) {
         super(world);
-
-        this.setSize(.5f, .5f);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
         if(start != null && position != null) {
 
             this.setPosition(position.x, position.y, position.z);
-            
+
             int divided = 1;
 
             this.moveEntity(direction.offsetX / divided, direction.offsetY / divided, direction.offsetZ / divided);
@@ -63,6 +63,7 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
             if(position.getTileEntity(worldObj) instanceof IInventory || position.getTileEntity(worldObj) instanceof IPowerMisc || position.getTileEntity(worldObj) instanceof IFluidHandler) {
 
                 source.onClustorCollosion(direction, position, this);
+                worldObj.markBlockForUpdate(position.intX(), position.intY(), position.intZ());
                 this.setDead();
             }   
         }

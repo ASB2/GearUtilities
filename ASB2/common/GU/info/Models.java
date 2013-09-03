@@ -10,6 +10,7 @@ public final class Models {
     public static IModelCustom ModelBlockBreaker;
     public static IModelCustom ModelEssenceHandler;
     public static IModelCustom ModelRunicCube;
+    public static IModelCustom ModelCulsterSender;
     
     public static final String LAMP = Reference.RESOURCE_LOCATION + "models/ModelLamp.obj";
     public static final String CREATION_TABLE = Reference.RESOURCE_LOCATION + "models/ModelCreationTable.obj";
@@ -17,6 +18,7 @@ public final class Models {
     public static final String BLOCK_BREAKER = Reference.RESOURCE_LOCATION + "models/ModelBlockBreaker.obj";
     public static final String ESSENCE_HANDLER = Reference.RESOURCE_LOCATION + "models/ModelEssenceHandler.obj";
     public static final String RUNIC_CUBE = Reference.RESOURCE_LOCATION + "models/ModelRunicCube.obj";
+    public static final String CLUSTER_SENDER = Reference.RESOURCE_LOCATION + "models/ModelClusterRenderer.obj";
     
     public static void initModels() {
 
@@ -25,5 +27,6 @@ public final class Models {
         ModelBlockBreaker = AdvancedModelLoader.loadModel(Models.BLOCK_BREAKER);
         ModelEssenceHandler = AdvancedModelLoader.loadModel(Models.BLOCK_BREAKER);
         ModelRunicCube = AdvancedModelLoader.loadModel(Models.RUNIC_CUBE);
+        ModelCulsterSender = AdvancedModelLoader.loadModel(Models.CLUSTER_SENDER);
     }
 }

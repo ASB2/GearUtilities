@@ -11,6 +11,8 @@ import GU.blocks.containers.BlockBlockBreaker.BlockBreakerRenderer;
 import GU.blocks.containers.BlockBlockBreaker.GuiBlockBreaker;
 import GU.blocks.containers.BlockBlockBreaker.TileBlockBreaker;
 import GU.blocks.containers.BlockCamoBlock.GuiCamoBlock;
+import GU.blocks.containers.BlockClusterSender.ClusterSenderRenderer;
+import GU.blocks.containers.BlockClusterSender.TileClusterSender;
 import GU.blocks.containers.BlockConnectableTank.ConnectableTankRenderer;
 import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
@@ -45,6 +47,9 @@ public class ClientProxy extends CommonProxy {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileRunicCube.class, new RunicCubeRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockRunicCube.blockID, new RunicCubeRenderer());
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileClusterSender.class, new ClusterSenderRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockClusterSender.blockID, new ClusterSenderRenderer());
         
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());

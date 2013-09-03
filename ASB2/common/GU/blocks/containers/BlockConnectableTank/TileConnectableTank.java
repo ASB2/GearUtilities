@@ -22,7 +22,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
     public TileConnectableTank() {
 
-        this.waitTimer = new Wait(20 * 5, this, 1);
+        this.waitTimer = new Wait(20 * 3, this, 1);
         fluidTank = new FluidTank(maxLiquid);
     }
 
@@ -146,7 +146,11 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 
-        worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+        if(doFill) {
+
+            this.trigger(0);
+            worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
+        }
         return fluidTank.fill(resource, doFill);
     }
 
@@ -173,15 +177,19 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource,
-            boolean doDrain) {
+    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
 
         if(resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
 
             return null;
         }
-
-        worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+        
+        if(doDrain) {
+        
+            this.trigger(0);
+            worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+        }
+        
         return fluidTank.drain(resource.amount, doDrain);
     }
 

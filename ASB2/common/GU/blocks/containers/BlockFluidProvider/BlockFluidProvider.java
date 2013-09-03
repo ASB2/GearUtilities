@@ -20,7 +20,7 @@ public class BlockFluidProvider extends ContainerBase {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityplayer, int par6, float par7, float par8, float par9) {
-        
+
         ItemStack current = entityplayer.inventory.getCurrentItem();
 
         if (current != null && FluidContainerRegistry.getFluidForFilledItem(current) != null) {
@@ -28,7 +28,7 @@ public class BlockFluidProvider extends ContainerBase {
             FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(current);
             TileFluidProvider tank = (TileFluidProvider) world.getBlockTileEntity(x, y, z);
 
-            if (fluid != null) {
+            if (fluid != null && tank != null) {
 
                 tank.fluidStack = fluid;
                 return true;
@@ -37,13 +37,21 @@ public class BlockFluidProvider extends ContainerBase {
 
             TileFluidProvider tank = (TileFluidProvider) world.getBlockTileEntity(x, y, z);
 
-            if (tank.fluidTank.getFluid() != null && tank.fluidStack.getFluid().getLocalizedName() != null) {
+            if(tank != null && tank.fluidTank != null) {
 
-                UtilPlayers.sendChatToPlayer(entityplayer, "Current Fluids is: " + tank.fluidStack.getFluid().getLocalizedName());
-            } 
-            else {
+                if (tank.fluidTank.getFluid() != null) {
 
-                UtilPlayers.sendChatToPlayer(entityplayer, "No Fluid");
+                    if(tank.fluidStack.getFluid().getLocalizedName() != null) {
+                        
+                        if(!world.isRemote)
+                            UtilPlayers.sendChatToPlayer(entityplayer, "Current Fluids is: " + tank.fluidStack.getFluid().getLocalizedName());
+                    } 
+                    else {
+
+                        if(!world.isRemote)
+                            UtilPlayers.sendChatToPlayer(entityplayer, "No Fluid");
+                    }
+                }
                 return true;
             }
         }

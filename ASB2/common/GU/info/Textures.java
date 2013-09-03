@@ -18,6 +18,7 @@ public final class Textures {
     public static final ResourceLocation CREATION_TABLE = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelCreationTable2.png");
     public static final ResourceLocation BLOCK_BREAKER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelBlockBreaker.png");
     public static final ResourceLocation RUNIC_CUBE = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelRunicCube.png");
+    public static final ResourceLocation CLUSTER_SENDER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelClusterSender.png");
     
     public static final ResourceLocation CRYSTAL_BLANK = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalBlank.png");
     public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalAir.png");

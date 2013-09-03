@@ -20,13 +20,13 @@ public class TileClusterSender extends TileBase implements IClusterTrigger {
 
     public TileClusterSender() {
 
-        waitTimer = new Wait(20 *10, this, 0);
+        waitTimer = new Wait(20 * 10, this, 0);
     }
 
     public void updateEntity() {
 
         waitTimer.update();
-        this.trigger(0);
+//        this.trigger(0);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class TileClusterSender extends TileBase implements IClusterTrigger {
 
                         if(sink instanceof IFluidHandler) {
 
-                            UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, 1000, true);
+                            UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, true);
                         }
                     }
 
@@ -84,7 +84,7 @@ public class TileClusterSender extends TileBase implements IClusterTrigger {
 
                 if(!worldObj.isRemote) {
 
-                    worldObj.spawnEntityInWorld(new EntityInfoCluster(worldObj, new Vector3(this), this.getOrientation(), this));
+                    worldObj.spawnEntityInWorld(new EntityInfoCluster(worldObj, new Vector3(this), this.getOrientation(), this, 20));
                 }
             }
         }
