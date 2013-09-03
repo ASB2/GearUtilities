@@ -40,22 +40,11 @@ public class TileUniversalConduit extends TileBase implements IConduitConductor,
                 this.getNetwork().addConductor(worldObj, this);
             }
 
-            for(ForgeDirection packetDirection : ForgeDirection.VALID_DIRECTIONS) {
+            TileEntity source = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
 
-                TileEntity packetDestination = UtilDirection.translateDirectionToTile(this, worldObj, packetDirection);
+            if(source != null && (source instanceof IInventory || source instanceof IPowerMisc || source instanceof IFluidHandler)) {
 
-                if(packetDestination != null && packetDestination instanceof IConduitConductor) {
-
-                    for(ForgeDirection tileDirection : ForgeDirection.VALID_DIRECTIONS) {
-
-                        TileEntity tileTakingOutOf = UtilDirection.translateDirectionToTile(this, worldObj, tileDirection);
-
-                        if(tileTakingOutOf != null && (tileTakingOutOf instanceof IInventory || tileTakingOutOf instanceof IPowerMisc || tileTakingOutOf instanceof IFluidHandler)) {
-
-                            this.getNetwork().addConduitPacketToQuene(new ConduitPacket(this, packetDirection, null, new Vector3(this), this.getNetwork()));
-                        }
-                    }
-                }
+                this.getNetwork().addConduitPacketToQuene(new ConduitPacket(this, this.getOrientation(), null, new Vector3(this), this.getNetwork()));
             }
         }
     }
@@ -63,37 +52,40 @@ public class TileUniversalConduit extends TileBase implements IConduitConductor,
     @Override
     public void onPacketRecieved(int x, int y, int z, IConduitPacket packet) {
 
-        TileEntity tile = worldObj.getBlockTileEntity(x, y, z);
+        TileEntity sink = worldObj.getBlockTileEntity(x, y, z);
 
-        if(tile != null) {
+        if(sink != null) {
 
-            for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            TileEntity source = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation());
 
-                TileEntity adjacent = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+            if(source != null) {
 
-                if(adjacent != null) {
+                if(source != sink) {
 
-                    if(adjacent instanceof IInventory) {
+                    if(source instanceof IInventory) {
 
-                        if(tile instanceof IInventory) {
+                        if(sink instanceof IInventory) {
 
-                            UtilInventory.moveEntireInventory((IInventory)tile, (IInventory)adjacent);
+                            UtilInventory.moveEntireInventory((IInventory)source, (IInventory)sink);
                         }
                     }
 
-                    if(adjacent instanceof IFluidHandler) {
+                    if(source instanceof IFluidHandler) {
 
-                        if(tile instanceof IFluidHandler) {
+                        if(sink instanceof IFluidHandler) {
 
-                            UtilFluid.moveFluid((IFluidHandler)tile, ((ConduitPacket)packet).getDirection().getOpposite(), (IFluidHandler)adjacent, true);
+                            UtilFluid.moveFluid((IFluidHandler)source, ((ConduitPacket)packet).getDirection(), (IFluidHandler)sink, true);
                         }
                     }
-                    
-                    if(adjacent instanceof IPowerMisc) {
 
-                        if(tile instanceof IPowerMisc) {
+                    if(source instanceof IPowerMisc) {
 
-                            PowerHelper.moveEnergy((IPowerMisc)tile, (IPowerMisc)adjacent, direction.getOpposite(), true);
+                        if(sink instanceof IPowerMisc) {
+
+                            if(PowerHelper.moveEnergy((IPowerMisc)source, (IPowerMisc)sink, ((ConduitPacket)packet).getDirection(), true)) {
+                                
+                                System.out.println("Packet Recieved");
+                            }
                         }
                     }
                 }

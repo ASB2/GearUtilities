@@ -1,10 +1,10 @@
 package GU.api.conduit;
 
 import java.util.ArrayList;
-
-import GU.api.conduit.packet.IConduitPacket;
+import java.util.Iterator;
 
 import net.minecraft.world.World;
+import GU.api.conduit.packet.IConduitPacket;
 
 public class ConduitNetwork implements IConduitNetwork {
 
@@ -19,16 +19,23 @@ public class ConduitNetwork implements IConduitNetwork {
     public void updateNetwork(World worldObj) {
 
         if(!conduitPackets.isEmpty()) {
-            
-            for(IConduitPacket packet : conduitPackets) {
+
+            Iterator<IConduitPacket> packetIt = conduitPackets.iterator();
+
+            while(packetIt.hasNext()) {
+
+                IConduitPacket packet = packetIt.next();
 
                 if(packet != null) {
 
-                    packet.updatePacket(worldObj);
-                }
-                else {
-
-                    conduitPackets.remove(packet);  
+                    if(!packet.destory(worldObj)) {
+                        
+                        packet.updatePacket(worldObj);
+                    }
+                    else {
+                        
+                        packetIt.remove();
+                    }
                 }
             }
         }
@@ -60,12 +67,24 @@ public class ConduitNetwork implements IConduitNetwork {
     }
 
     @Override
-    public void addConduitPacketToQuene(IConduitPacket packet) {
+    public boolean addConduitPacketToQuene(IConduitPacket packet) {
 
         if(packet != null && !conduitPackets.contains(packet)) {
 
-            conduitPackets.add(packet);
+            return conduitPackets.add(packet);
         }
+        return false;
+    }
+
+
+    @Override
+    public boolean removeConduitPacketFromQuene(IConduitPacket packet) {
+
+        if(conduitPackets.contains(packet)) {
+
+            return conduitPackets.remove(packet);
+        }
+        return false;
     }
 
     @Override
@@ -90,6 +109,16 @@ public class ConduitNetwork implements IConduitNetwork {
 
                 return conduitList.add(conduit);
             }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removeConductor(World world, IConduitConductor conduit) {
+
+        if(conduitList.contains(conduit)) {
+
+            return conduitList.remove(conduit);
         }
         return false;
     }

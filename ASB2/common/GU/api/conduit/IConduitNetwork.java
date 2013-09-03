@@ -15,8 +15,9 @@ public interface IConduitNetwork {
     /**
      * Should add a packet to a list to get updated.
      */
-    void addConduitPacketToQuene(IConduitPacket packet);
+    boolean addConduitPacketToQuene(IConduitPacket packet);
     
+    boolean removeConduitPacketFromQuene(IConduitPacket packet);
     /**
      * A list of all the conduits that are in this network
      * @return Packets that havent't found a place to place their cargo.
@@ -27,6 +28,11 @@ public interface IConduitNetwork {
      * Adds a conductor to the network
      */
     boolean addConductor(World world, IConduitConductor conduit);
+    
+    /**
+     * Adds a conductor to the network
+     */
+    boolean removeConductor(World world, IConduitConductor conduit);
     
     /**
      * Should merge everything in the current network into the new network.

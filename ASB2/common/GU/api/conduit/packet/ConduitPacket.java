@@ -46,7 +46,7 @@ public class ConduitPacket implements IConduitPacket {
 
                     if(tile instanceof IInventory || tile instanceof IFluidHandler || tile instanceof IPowerMisc) {
 
-                        packetReciever.onPacketRecieved(position.intX(), position.intY(), position.intZ(), this);
+                        packetReciever.onPacketRecieved(tile.xCoord, tile.yCoord, tile.zCoord, this);
                         shouldDie = true;
                     }
                 }
@@ -58,12 +58,31 @@ public class ConduitPacket implements IConduitPacket {
 
                 if(((IConduitConductor)tile).getNetwork() != null) {
 
-                    ((IConduitConductor)tile).getNetwork().addConduitPacketToQuene(this);
+                    if(((IConduitConductor)tile).getNetwork() != this.network) {
+                        
+                        ((IConduitConductor)tile).getNetwork().addConduitPacketToQuene(this);
+                        this.network.removeConduitPacketFromQuene(this);
+                    }             
                 }
             }
             else {
 
-                direction = UtilDirection.translateDirectionToRandomRightAngle(direction);
+                ForgeDirection temp = UtilDirection.translateDirectionToRandomRightAngle(direction);
+                
+                for(ForgeDirection tempD : ForgeDirection.VALID_DIRECTIONS) {
+                    
+                    TileEntity tile1 = position.clone().add(new Vector3(tempD)).getTileEntity(world);
+                    
+                    if(tile1 != null && tile instanceof IConduitConductor) {
+                        
+                        direction = temp;
+                        return;
+                    }
+                    else {
+                        
+                        temp = UtilDirection.translateDirectionToRandomRightAngle(direction);
+                    }
+                }
             }
         }
     }
