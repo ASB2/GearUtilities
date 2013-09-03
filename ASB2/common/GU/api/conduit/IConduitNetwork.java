@@ -3,7 +3,6 @@ package GU.api.conduit;
 import java.util.ArrayList;
 
 import net.minecraft.world.World;
-import GU.api.conduit.packet.*;
 
 public interface IConduitNetwork {
 
@@ -11,18 +10,6 @@ public interface IConduitNetwork {
      * Easy way for things to update a network. The coords should be the coordinates of the tile calling the method.
      */
     void updateNetwork(World world);
-    
-    /**
-     * Should add a packet to a list to get updated.
-     */
-    boolean addConduitPacketToQuene(IConduitPacket packet);
-    
-    boolean removeConduitPacketFromQuene(IConduitPacket packet);
-    /**
-     * A list of all the conduits that are in this network
-     * @return Packets that havent't found a place to place their cargo.
-     */
-    ArrayList<IConduitPacket> getQuenedPackets();
     
     /**
      * Adds a conductor to the network

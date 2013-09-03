@@ -1,5 +1,6 @@
 package GU.entity.EntityTest;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import GU.entity.EntityBase;
@@ -31,6 +32,12 @@ public class EntityTestEntity extends EntityBase {
     @Override
     protected void writeEntityToNBT(NBTTagCompound tag) {
 
+    }
+
+    @Override
+    protected void onImpactEntity(Entity entity) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

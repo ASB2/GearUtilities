@@ -17,6 +17,8 @@ import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
 import GU.blocks.containers.BlockRunicCube.RunicCubeRenderer;
 import GU.blocks.containers.BlockRunicCube.TileRunicCube;
+import GU.entity.EntityCluster.EntityInfoCluster;
+import GU.entity.EntityCluster.InfoClusterRenderer;
 import GU.entity.EntityTest.EntityTestEntity;
 import GU.entity.EntityTest.TestEntityRenderer;
 import GU.info.Gui;
@@ -33,7 +35,8 @@ public class ClientProxy extends CommonProxy {
         Models.initModels();
 
         RenderingRegistry.registerEntityRenderingHandler(EntityTestEntity.class, new TestEntityRenderer());
-
+        RenderingRegistry.registerEntityRenderingHandler(EntityInfoCluster.class, new InfoClusterRenderer());
+        
         ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class, new CreationTableRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());
 

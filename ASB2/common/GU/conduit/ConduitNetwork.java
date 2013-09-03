@@ -1,15 +1,14 @@
-package GU.api.conduit;
+package GU.conduit;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import net.minecraft.world.World;
-import GU.api.conduit.packet.IConduitPacket;
+import GU.api.conduit.IConduitConductor;
+import GU.api.conduit.IConduitNetwork;
 
 public class ConduitNetwork implements IConduitNetwork {
 
     ArrayList<IConduitConductor> conduitList = new ArrayList<IConduitConductor>();
-    ArrayList<IConduitPacket> conduitPackets = new ArrayList<IConduitPacket>();
 
     public ConduitNetwork() {
 
@@ -17,28 +16,7 @@ public class ConduitNetwork implements IConduitNetwork {
 
     @Override
     public void updateNetwork(World worldObj) {
-
-        if(!conduitPackets.isEmpty()) {
-
-            Iterator<IConduitPacket> packetIt = conduitPackets.iterator();
-
-            while(packetIt.hasNext()) {
-
-                IConduitPacket packet = packetIt.next();
-
-                if(packet != null) {
-
-                    if(!packet.destory(worldObj)) {
-                        
-                        packet.updatePacket(worldObj);
-                    }
-                    else {
-                        
-                        packetIt.remove();
-                    }
-                }
-            }
-        }
+        
     }
 
 
@@ -64,33 +42,6 @@ public class ConduitNetwork implements IConduitNetwork {
                 }
             }        
         }
-    }
-
-    @Override
-    public boolean addConduitPacketToQuene(IConduitPacket packet) {
-
-        if(packet != null && !conduitPackets.contains(packet)) {
-
-            return conduitPackets.add(packet);
-        }
-        return false;
-    }
-
-
-    @Override
-    public boolean removeConduitPacketFromQuene(IConduitPacket packet) {
-
-        if(conduitPackets.contains(packet)) {
-
-            return conduitPackets.remove(packet);
-        }
-        return false;
-    }
-
-    @Override
-    public ArrayList<IConduitPacket> getQuenedPackets() {
-
-        return conduitPackets;
     }
 
     @Override

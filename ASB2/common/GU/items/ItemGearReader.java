@@ -123,7 +123,6 @@ public class ItemGearReader extends ItemBase {
 
                     UtilPlayers.sendChatToPlayer(player, "Conduit Network: It Works");
                     UtilPlayers.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getAvaliableConductors().size());
-                    UtilPlayers.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getQuenedPackets().size());
                 }
                 else {
                     

@@ -4,20 +4,21 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.IFluidHandler;
-import ASB2.utils.*;
+import ASB2.utils.UtilDirection;
+import ASB2.utils.UtilFluid;
+import ASB2.utils.UtilInventory;
 import ASB2.vector.Vector3;
-import GU.api.conduit.ConduitNetwork;
 import GU.api.conduit.IConduitConductor;
 import GU.api.conduit.IConduitNetwork;
-import GU.api.conduit.packet.ConduitPacket;
-import GU.api.conduit.packet.IConduitPacket;
-import GU.api.conduit.packet.IPacketReciever;
 import GU.api.power.IPowerMisc;
+import GU.api.power.PowerHelper;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
-import GU.api.power.*;
+import GU.conduit.ConduitNetwork;
+import GU.api.cluster.*;
+import GU.entity.EntityCluster.*;
 
-public class TileUniversalConduit extends TileBase implements IConduitConductor, IPacketReciever {
+public class TileUniversalConduit extends TileBase implements IConduitConductor, IClusterTrigger {
 
     IConduitNetwork network;
 
@@ -39,20 +40,27 @@ public class TileUniversalConduit extends TileBase implements IConduitConductor,
 
                 this.getNetwork().addConductor(worldObj, this);
             }
-
-            TileEntity source = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
-
-            if(source != null && (source instanceof IInventory || source instanceof IPowerMisc || source instanceof IFluidHandler)) {
-
-                this.getNetwork().addConduitPacketToQuene(new ConduitPacket(this, this.getOrientation(), null, new Vector3(this), this.getNetwork()));
+        }
+        
+        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            
+            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+            
+            if(tile != null) {
+                
+                if(tile instanceof IInventory || tile instanceof IPowerMisc || tile instanceof IFluidHandler) {
+                    
+                    EntityInfoCluster clustor = new EntityInfoCluster(worldObj, new Vector3(this), direction.getOpposite(), this);
+                    worldObj.spawnEntityInWorld(clustor);
+                }
             }
         }
     }
 
     @Override
-    public void onPacketRecieved(int x, int y, int z, IConduitPacket packet) {
-
-        TileEntity sink = worldObj.getBlockTileEntity(x, y, z);
+    public void onClustorCollosion(ForgeDirection side, Vector3 position, IClustor clustor) {
+        
+        TileEntity sink = position.getTileEntity(worldObj);
 
         if(sink != null) {
 
@@ -74,7 +82,7 @@ public class TileUniversalConduit extends TileBase implements IConduitConductor,
 
                         if(sink instanceof IFluidHandler) {
 
-                            UtilFluid.moveFluid((IFluidHandler)source, ((ConduitPacket)packet).getDirection(), (IFluidHandler)sink, true);
+                            UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, true);
                         }
                     }
 
@@ -82,7 +90,7 @@ public class TileUniversalConduit extends TileBase implements IConduitConductor,
 
                         if(sink instanceof IPowerMisc) {
 
-                            if(PowerHelper.moveEnergy((IPowerMisc)source, (IPowerMisc)sink, ((ConduitPacket)packet).getDirection(), true)) {
+                            if(PowerHelper.moveEnergy((IPowerMisc)source, (IPowerMisc)sink, side, true)) {
                                 
                                 System.out.println("Packet Recieved");
                             }
@@ -90,7 +98,7 @@ public class TileUniversalConduit extends TileBase implements IConduitConductor,
                     }
                 }
             }                 
-        }
+        }   
     }
 
 
