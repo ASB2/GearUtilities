@@ -10,6 +10,7 @@ public class BlockClusterSender extends ContainerBase {
     public BlockClusterSender(int id, Material material) {
         super(id, material);
         
+        this.useStandardRendering = false;
         this.registerTile(TileClusterSender.class);
     }
 

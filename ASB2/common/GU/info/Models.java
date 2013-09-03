@@ -18,7 +18,7 @@ public final class Models {
     public static final String BLOCK_BREAKER = Reference.RESOURCE_LOCATION + "models/ModelBlockBreaker.obj";
     public static final String ESSENCE_HANDLER = Reference.RESOURCE_LOCATION + "models/ModelEssenceHandler.obj";
     public static final String RUNIC_CUBE = Reference.RESOURCE_LOCATION + "models/ModelRunicCube.obj";
-    public static final String CLUSTER_SENDER = Reference.RESOURCE_LOCATION + "models/ModelClusterRenderer.obj";
+    public static final String CLUSTER_SENDER = Reference.RESOURCE_LOCATION + "models/ModelClusterSender.obj";
     
     public static void initModels() {
 

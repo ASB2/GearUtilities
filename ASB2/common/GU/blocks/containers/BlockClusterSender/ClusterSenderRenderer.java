@@ -1,26 +1,74 @@
 package GU.blocks.containers.BlockClusterSender;
 
-import org.lwjgl.opengl.GL11;
-
-import ASB2.utils.UtilRender;
-import GU.BlockRegistry;
-import GU.info.Models;
-import GU.info.Textures;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.client.IItemRenderer.ItemRenderType;
-import net.minecraftforge.client.IItemRenderer.ItemRendererHelper;
+import net.minecraftforge.common.ForgeDirection;
+
+import org.lwjgl.opengl.GL11;
+
+import ASB2.utils.UtilRender;
+import ASB2.vector.*;
+import GU.info.Models;
+import GU.info.Textures;
 
 public class ClusterSenderRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
+        GL11.glPushMatrix();
+
+        switch (ForgeDirection.getOrientation(new Vector3(tileentity).getBlockMetadata(tileentity.worldObj))) {
+
+            case UP: {
+                
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .07f, (float) z + .5F);
+                break;
+            }
+            case DOWN: {
+                
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .94F, (float) z + .5F);
+                GL11.glRotatef(180F, 1F, 0F, 0F);
+                break;
+            }
+
+            case SOUTH: {
+                
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + 0.07F);
+                GL11.glRotatef(90F, 1F, 0F, 0F);
+                break;
+            }
+            case NORTH: {
+                
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + .93F);
+                GL11.glRotatef(-90F, 1F, 0F, 0F);
+                break;
+            }
+            case WEST: {
+                
+                GL11.glTranslatef((float) x + .94F, (float) y + .5F, (float) z + .5F);
+                GL11.glRotatef(90F, 0F, 0F, 1F);
+                break;
+            }
+            case EAST: {
+                
+                GL11.glTranslatef((float) x + .07F, (float) y + .5F, (float) z + .5F);
+                GL11.glRotatef(-90F, 0F, 0F, 1F);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
         
+        GL11.glScalef(.5f, .5f, .5f);
+
+        UtilRender.renderTexture(Textures.CLUSTER_SENDER);
+        Models.ModelCulsterSender.renderAll();
+
+        GL11.glPopMatrix();
     }
 
     @Override
@@ -43,19 +91,19 @@ public class ClusterSenderRenderer extends TileEntitySpecialRenderer implements 
 
             case ENTITY: {
 
-                renderItemSwitched(type, 0f, 0f - 1, 0f, .7F);
+                renderItemSwitched(type, 0f, 1, 0f, .7F);
                 return;
             }
 
             case EQUIPPED: {
 
-                renderItemSwitched(type, 0f, 0f + 1, 0f, .7F);
+                renderItemSwitched(type, 0f, 1, .5f, .7F);
                 return;
             }
 
             case INVENTORY: {
 
-                renderItemSwitched(type, 0f, 0f, 0f, .6F);
+                renderItemSwitched(type, 0f, 0f, 0f, .5F);
                 return;
             }
 
