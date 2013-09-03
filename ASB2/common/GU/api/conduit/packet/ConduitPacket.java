@@ -1,111 +1,83 @@
 package GU.api.conduit.packet;
 
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilDirection;
-import ASB2.utils.UtilFluid;
-import ASB2.utils.UtilInventory;
+import ASB2.vector.Vector3;
 import GU.api.power.IPowerMisc;
-import GU.api.power.PowerHelper;
+import GU.api.conduit.*;
 
 public class ConduitPacket implements IConduitPacket {
 
-    PacketType type;
+    IConduitNetwork network;
+    Vector3 position;
+    IPacketReciever packetReciever;
     ForgeDirection direction;
+    PacketType type;
 
-    FluidTank tank;
-    ItemStack heldItem;
-    float heldEnergy;
+    boolean shouldDie;
 
-    private ConduitPacket(ForgeDirection direction, PacketType type) {
+    public ConduitPacket(IPacketReciever packetReciever, ForgeDirection direction, PacketType type, int x, int y, int z, IConduitNetwork network) {
+        this(packetReciever, direction, type, new Vector3(x, y, z), network);
+    }
 
+    public ConduitPacket(IPacketReciever packetReciever, ForgeDirection direction, PacketType type, Vector3 position, IConduitNetwork network) {
+
+        this.network = network;
+        this.position = position;
+        this.packetReciever = packetReciever;
         this.direction = direction;
         this.type = type;
     }
 
-    public ConduitPacket(ForgeDirection direction, FluidStack stack) {
-        this(direction, PacketType.FLUID);
+    public void updatePacket(World world) {
 
-        tank = new FluidTank(stack.amount);
-        tank.setFluid(stack);
-    }
+        if(!shouldDie) {
 
-    public ConduitPacket(ForgeDirection direction, ItemStack stack) {
-        this(direction, PacketType.ITEM);
+            for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
-        heldItem = stack;
-    }
+                TileEntity tile = UtilDirection.translateDirectionToTile(world, direction, position.intX(), position.intY(), position.intZ());
 
-    public ConduitPacket(ForgeDirection direction, PacketType type, float energy) {
-        this(direction, type);
-        heldEnergy = energy;
-    }
+                if(tile != null) {
 
-    public void updatePacket(World world, int x, int y, int z) {
+                    if(tile instanceof IInventory || tile instanceof IFluidHandler || tile instanceof IPowerMisc) {
 
-        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-
-            TileEntity tile = UtilDirection.translateDirectionToTile(world, direction, x, y, z);
-
-            if(tile != null) {
-
-                switch(this.getPacketType()) {
-
-                    case FLUID: {
-
-                        if(tank.getFluid() != null) {
-                            
-                            if(tile instanceof IFluidHandler) {
-
-                                UtilFluid.moveFluid(tank, direction, (IFluidHandler)tile, 1000, true);
-                            }
-                        }
-                        break;
-                    }  
-                    
-                    case ITEM: {
-
-                        if(heldItem != null) {
-                            
-                            if(tile instanceof IInventory) {
-
-                                if(UtilInventory.addItemStackToInventory((IInventory)tile, heldItem, true)) {
-                                  
-                                    heldItem = null;
-                                }
-                            }
-                        }
-                        break;
-                    }  
-                    
-                    case GUU: {
-
-                        if(heldEnergy > 0) {
-                            
-                            if(tile instanceof IPowerMisc) {
-
-                                if(PowerHelper.addEnergyToProvider((IPowerMisc)tile, direction, heldEnergy)) {
-                                   
-                                    heldEnergy = 0;
-                                }
-                            }
-                        }
-                        break;
-                    } 
-                    default : {
-                        
-                        break;
+                        packetReciever.onPacketRecieved(position.intX(), position.intY(), position.intZ(), this);
+                        shouldDie = true;
                     }
                 }
             }
+
+            TileEntity tile = position.clone().add(new Vector3(direction)).getTileEntity(world);
+
+            if(tile != null && tile instanceof IConduitConductor) {
+
+                if(((IConduitConductor)tile).getNetwork() != null) {
+
+                    ((IConduitConductor)tile).getNetwork().addConduitPacketToQuene(this);
+                }
+            }
+            else {
+
+                direction = UtilDirection.translateDirectionToRandomRightAngle(direction);
+            }
         }
+    }
+
+    @Override
+    public boolean destory(World world) {
+
+        return shouldDie;
+    }
+    
+    @Override
+    public Vector3 getPosition() {
+
+        return position;
     }
 
     public void savePacket(NBTTagCompound tag) {
@@ -114,21 +86,6 @@ public class ConduitPacket implements IConduitPacket {
 
     public void loadPacket(NBTTagCompound tag) {
 
-    }
-
-    public float getHeldEnergy() {
-
-        return heldEnergy;
-    }
-
-    public ItemStack getHeldItem() {
-
-        return heldItem;
-    }
-
-    public FluidStack getHeldFluid() {
-
-        return tank.getFluid();
     }
 
     public PacketType getPacketType() {

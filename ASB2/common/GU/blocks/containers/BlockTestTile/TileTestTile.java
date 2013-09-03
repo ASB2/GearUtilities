@@ -7,11 +7,11 @@ import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.IBlockCycle;
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilRender;
+import ASB2.vector.Vector3;
 import GU.api.power.IPowerMisc;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.fx.TestEffect;
-import GU.vector.Vector3;
 
 public class TileTestTile extends TileBase implements IBlockCycle {
 

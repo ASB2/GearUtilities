@@ -10,7 +10,7 @@ public class ConduitNetwork implements IConduitNetwork {
 
     ArrayList<IConduitConductor> conduitList = new ArrayList<IConduitConductor>();
     ArrayList<IConduitPacket> conduitPackets = new ArrayList<IConduitPacket>();
-    
+
     public ConduitNetwork() {
 
     }
@@ -18,7 +18,20 @@ public class ConduitNetwork implements IConduitNetwork {
     @Override
     public void updateNetwork(World worldObj) {
 
-        
+        if(!conduitPackets.isEmpty()) {
+            
+            for(IConduitPacket packet : conduitPackets) {
+
+                if(packet != null) {
+
+                    packet.updatePacket(worldObj);
+                }
+                else {
+
+                    conduitPackets.remove(packet);  
+                }
+            }
+        }
     }
 
 
@@ -45,12 +58,12 @@ public class ConduitNetwork implements IConduitNetwork {
             }        
         }
     }
-    
+
     @Override
     public void addConduitPacketToQuene(IConduitPacket packet) {
-        
-        if(packet != null) {
-            
+
+        if(packet != null && !conduitPackets.contains(packet)) {
+
             conduitPackets.add(packet);
         }
     }
@@ -60,11 +73,11 @@ public class ConduitNetwork implements IConduitNetwork {
 
         return conduitPackets;
     }
-    
+
     @Override
     public boolean addConductor(World worldObj, IConduitConductor conduit) {
 
-        if(conduit != null) {
+        if(conduit != null && !conduitList.contains(conduit)) {
 
             if(worldObj != null) {
 
@@ -86,9 +99,9 @@ public class ConduitNetwork implements IConduitNetwork {
 
         return conduitList;
     }
-    
+
     public void recalculateList(World worldObj) {
-        
+
         if(!conduitList.isEmpty()) {
 
             for(IConduitConductor conduit : this.getAvaliableConductors()) {

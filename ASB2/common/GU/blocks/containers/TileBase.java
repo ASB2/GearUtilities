@@ -8,7 +8,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
 import ASB2.utils.UtilBlock;
-import ASB2.utils.UtilDirection;
 import GU.api.IWrenchable;
 import GU.api.color.IVanillaColorable;
 import GU.api.color.VanillaColor;
@@ -79,23 +78,22 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
         switch (getOrientation()) {
 
             case DOWN:
-                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord,
-                        UtilDirection.translateDirectionToNumber(ForgeDirection.UP), 3);
+                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, ForgeDirection.UP.ordinal(), 3);
                 return;
             case UP:
-                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.SOUTH), 3);
+                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, ForgeDirection.SOUTH.ordinal(), 3);
                 return;
             case SOUTH:
-                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.WEST), 3);
+                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, ForgeDirection.WEST.ordinal(), 3);
                 return;
             case WEST:
-                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection .translateDirectionToNumber(ForgeDirection.NORTH), 3);
+                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, ForgeDirection.NORTH.ordinal(), 3);
                 return;
             case NORTH:
-                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.EAST), 3);
+                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, ForgeDirection.EAST.ordinal(), 3);
                 return;
             case EAST:
-                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, UtilDirection.translateDirectionToNumber(ForgeDirection.DOWN), 3);
+                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, ForgeDirection.DOWN.ordinal(), 3);
                 return;
 
             default:

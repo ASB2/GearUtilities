@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilRender;
 import GU.info.Particles;
-import GU.vector.Vector3;
+import ASB2.vector.Vector3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
