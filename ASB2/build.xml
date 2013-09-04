@@ -7,7 +7,8 @@
 	<target name="clean">
 		<delete file="${build.dir.development}\Minecraft\mcp\forge\mcp\src\minecraft\mcmod.info" />
 		<delete dir="${build.dir.development}\Minecraft\mcp\forge\mcp\src\minecraft\GU" />
-		<delete dir="${build.dir.development}\Minecraft\mcp\forge\mcp\src\minecraft\External Api" />
+		<delete dir="${build.dir.development}\Minecraft\mcp\forge\mcp\src\minecraft\dan200" />
+		<delete dir="${build.dir.development}\Minecraft\mcp\forge\mcp\src\minecraft\ASB2" />
 		<delete dir="${build.dir.development}\Minecraft\mcp\forge\mcp\reobf\minecraft" />
 	</target>
 
@@ -20,7 +21,8 @@
 	<target name="prep">
 		<copy todir="${build.dir.development}\Minecraft\mcp\forge\mcp\src\minecraft">
 			<fileset dir="${build.dir.development}\Gear Utilities\ASB2\common\" />
-			<fileset dir="${build.dir.development}\Gear Utilities\ASB2\External Api\" />
+			<fileset dir="${build.dir.development}\Gear Utilities\ASB2\external apis\src" />
+			<fileset dir="${build.dir.development}\ASB2-Core\ASB2\common" />
 		</copy>
 	</target>
 
