@@ -16,21 +16,13 @@ import GU.items.ItemRainBGone;
 import GU.items.ItemTeleporter;
 import GU.items.ItemTestItem;
 import GU.items.ItemTradeStick;
-import GU.items.ItemCrystalShards.ItemAirCrystalShard;
-import GU.items.ItemCrystalShards.ItemEarthCrystalShard;
-import GU.items.ItemCrystalShards.ItemEnergyCrystalShard;
-import GU.items.ItemCrystalShards.ItemFireCrystalShard;
-import GU.items.ItemCrystalShards.ItemWaterCrystalShard;
+import GU.items.ItemCrystalShards.ItemCrystal;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class ItemRegistry {
 
-    public static ItemBase ItemAirCrystalShard;
-    public static ItemBase ItemEarthCrystalShard;
-    public static ItemBase ItemFireCrystalShard;
-    public static ItemBase ItemWaterCrystalShard;
-    public static ItemBase ItemEnergyCrystalShard;
+    public static ItemCrystal ItemCrystal;
     public static ItemBase ItemGarnet;
     public static ItemBase ItemCrystalCasing;
     public static ItemBase ItemBasicDestructionCatalyst;
@@ -51,25 +43,7 @@ public class ItemRegistry {
 
     public static void init(Configuration config) {
 
-        ItemAirCrystalShard = new ItemAirCrystalShard(config.getItem("ItemAirCrystalShard", ItemRegistry.getNextBaseID()).getInt());
-        ItemAirCrystalShard.setItemName("ItemAirCrystalShard");
-        LanguageRegistry.addName(ItemAirCrystalShard, "Air Crystal Shard");
-
-        ItemEarthCrystalShard = new ItemEarthCrystalShard(config.getItem("ItemEarthCrystalShard", ItemRegistry.getNextBaseID()).getInt());
-        ItemEarthCrystalShard.setItemName("ItemEarthCrystalShard");
-        LanguageRegistry.addName(ItemEarthCrystalShard, "Earth Crystal Shard");
-
-        ItemFireCrystalShard = new ItemFireCrystalShard(config.getItem("ItemFireCrystalShard", ItemRegistry.getNextBaseID()).getInt());
-        ItemFireCrystalShard.setItemName("ItemFireCrystalShard");
-        LanguageRegistry.addName(ItemFireCrystalShard, "Fire Crystal Shard");
-
-        ItemWaterCrystalShard = new ItemWaterCrystalShard(config.getItem("ItemWaterCrystalShard", ItemRegistry.getNextBaseID()).getInt());
-        ItemWaterCrystalShard.setItemName("ItemWaterCrystalShard");
-        LanguageRegistry.addName(ItemWaterCrystalShard, "Water Crystal Shard");
-
-        ItemEnergyCrystalShard = new ItemEnergyCrystalShard(config.getItem("ItemEnergyCrystalShard", ItemRegistry.getNextBaseID()).getInt());
-        ItemEnergyCrystalShard.setItemName("ItemEnergyCrystalShard");
-        LanguageRegistry.addName(ItemEnergyCrystalShard, "Energy Crystal Shard");
+        ItemCrystal = new ItemCrystal(config.getItem("ItemCrystal", ItemRegistry.getNextBaseID()).getInt());
 
         ItemGarnet = new ItemGarnet(config.getItem("ItemGarnet",ItemRegistry.getNextBaseID()).getInt());
         ItemGarnet.setItemName("ItemGarnet");

@@ -66,15 +66,15 @@ public class CrystalRenderer implements IItemRenderer {
 
     public ResourceLocation getTexture(ItemStack stack) {
 
-        if (stack.itemID == ItemRegistry.ItemAirCrystalShard.itemID)
+        if (stack.itemID == ItemRegistry.ItemCrystal.ItemAirCrystalShard.itemID)
             return Textures.CRYSTAL_AIR;
-        if (stack.itemID == ItemRegistry.ItemEarthCrystalShard.itemID)
+        if (stack.itemID == ItemRegistry.ItemCrystal.ItemEarthCrystalShard.itemID)
             return Textures.CRYSTAL_EARTH;
-        if (stack.itemID == ItemRegistry.ItemFireCrystalShard.itemID)
+        if (stack.itemID == ItemRegistry.ItemCrystal.ItemFireCrystalShard.itemID)
             return Textures.CRYSTAL_FIRE;
-        if (stack.itemID == ItemRegistry.ItemWaterCrystalShard.itemID)
+        if (stack.itemID == ItemRegistry.ItemCrystal.ItemWaterCrystalShard.itemID)
             return Textures.CRYSTAL_WATER;
-        if (stack.itemID == ItemRegistry.ItemEnergyCrystalShard.itemID)
+        if (stack.itemID == ItemRegistry.ItemCrystal.ItemEnergyCrystalShard.itemID)
             return Textures.CRYSTAL_ENERGY;
 
         return Textures.CRYSTAL_BLANK;

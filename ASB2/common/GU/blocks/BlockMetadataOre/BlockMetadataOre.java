@@ -22,7 +22,7 @@ public class BlockMetadataOre extends BlockBase {
     Icon water;
     Icon energy;
     Icon garnet;
-    
+
     public BlockMetadataOre(int id, Material material) {
         super(id, material);
     }
@@ -40,7 +40,7 @@ public class BlockMetadataOre extends BlockBase {
 
         return 0;
     }
-    
+
     @Override
     public void registerIcons(IconRegister iconRegister) {
         super.registerIcons(iconRegister);
@@ -69,7 +69,7 @@ public class BlockMetadataOre extends BlockBase {
                 return energy;
             case 5:
                 return garnet; 
-                
+
             default:
                 return super.getIcon(side, metadata);
         }
@@ -88,20 +88,20 @@ public class BlockMetadataOre extends BlockBase {
     }
 
     @Override
-    public int idDropped(int par1, Random par2Random, int par3) {
+    public int idDropped(int metadata, Random par2Random, int par3) {
 
-        switch (par1) {
+        switch (metadata) {
 
             case 0:
-                return ItemRegistry.ItemAirCrystalShard.itemID;
+                return ItemRegistry.ItemCrystal.ItemAirCrystalShard.itemID;
             case 1:
-                return ItemRegistry.ItemEarthCrystalShard.itemID;
+                return ItemRegistry.ItemCrystal.ItemEarthCrystalShard.itemID;
             case 2:
-                return ItemRegistry.ItemFireCrystalShard.itemID;
+                return ItemRegistry.ItemCrystal.ItemFireCrystalShard.itemID;
             case 3:
-                return ItemRegistry.ItemWaterCrystalShard.itemID;
+                return ItemRegistry.ItemCrystal.ItemWaterCrystalShard.itemID;
             case 4:
-                return ItemRegistry.ItemEnergyCrystalShard.itemID;
+                return ItemRegistry.ItemCrystal.ItemEnergyCrystalShard.itemID;
             case 5:
                 return ItemRegistry.ItemGarnet.itemID;
             default:

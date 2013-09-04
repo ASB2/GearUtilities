@@ -3,7 +3,6 @@ package GU;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import GU.info.Variables;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -11,18 +10,13 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class CraftRegistry {
 
     public static void init() {
-
-        OreDictionary.registerOre(Variables.CRYSTALS_ALL, new ItemStack(ItemRegistry.ItemAirCrystalShard));
-        OreDictionary.registerOre(Variables.CRYSTALS_ALL, new ItemStack(ItemRegistry.ItemEarthCrystalShard));
-        OreDictionary.registerOre(Variables.CRYSTALS_ALL, new ItemStack(ItemRegistry.ItemFireCrystalShard));
-        OreDictionary.registerOre(Variables.CRYSTALS_ALL, new ItemStack(ItemRegistry.ItemWaterCrystalShard));
-        OreDictionary.registerOre(Variables.CRYSTALS_ALL, new ItemStack(ItemRegistry.ItemEnergyCrystalShard));
+        
                 
         GameRegistry.addRecipe(new ItemStack(Item.bucketLava), new Object[] {
             "FFF", 
             "FSF", 
             "FBF", 
-            'F', ItemRegistry.ItemFireCrystalShard,
+            'F', ItemRegistry.ItemCrystal.ItemFireCrystalShard,
             'S', Block.stone, 
             'B', Item.bucketEmpty });
 

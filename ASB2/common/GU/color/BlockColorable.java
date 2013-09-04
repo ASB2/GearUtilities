@@ -51,7 +51,7 @@ public abstract class BlockColorable extends ContainerBase {
 
                     int amount = -50;
 
-                    if(player.getHeldItem().getItem() == ItemRegistry.ItemEarthCrystalShard) {
+                    if(player.getHeldItem().isItemEqual(ItemRegistry.ItemCrystal.ItemEarthCrystalShard)) {
 
                         Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
                         ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));   
@@ -60,7 +60,7 @@ public abstract class BlockColorable extends ContainerBase {
                         ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
                         return true;
                     }
-                    if(player.getHeldItem().getItem() == ItemRegistry.ItemFireCrystalShard) {
+                    if(player.getHeldItem().isItemEqual(ItemRegistry.ItemCrystal.ItemFireCrystalShard)) {
 
                         Color color = UtilMisc.changeGreen(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
                         ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));    
@@ -69,7 +69,7 @@ public abstract class BlockColorable extends ContainerBase {
                         ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side));
                         return true;                   
                     }
-                    if(player.getHeldItem().getItem() == ItemRegistry.ItemWaterCrystalShard) {
+                    if(player.getHeldItem().isItemEqual(ItemRegistry.ItemCrystal.ItemWaterCrystalShard)) {
 
                         if(player.isSneaking())
                         UtilPlayers.sendChatToPlayer(player, "Hi");

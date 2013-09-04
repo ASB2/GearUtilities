@@ -18,7 +18,7 @@ public class InfoClusterRenderer extends Render {
         GL11.glPushMatrix();
         
         GL11.glTranslated(x, y, z);
-//        GL11.glScalef(.5f, .5f, .5f);
+        GL11.glScalef(.5f, .5f, .5f);
         
         UtilRender.renderTexture(func_110775_a(entity));
         Models.ModelCreationTable.renderAll();

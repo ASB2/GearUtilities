@@ -8,10 +8,8 @@ public class GUFuelHandler implements IFuelHandler {
     @Override
     public int getBurnTime(ItemStack fuel) {
 
-        int id = fuel.itemID;
-
-        if (id == (ItemRegistry.ItemFireCrystalShard.itemID)) {
-
+        if(ItemRegistry.ItemCrystal.ItemFireCrystalShard.isItemEqual(fuel)) {
+            
             return 1600;
         }
 
