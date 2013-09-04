@@ -36,7 +36,6 @@ public class ItemLinker extends ItemBase {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
-        super.addInformation(itemStack, player, info, var1);
 
         if (this.isCoodsSet(itemStack)) {
 

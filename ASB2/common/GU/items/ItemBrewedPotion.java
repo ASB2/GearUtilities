@@ -17,6 +17,7 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
 
     public ItemBrewedPotion(int id) {
         super(id);
+        this.setCreativeTab(null);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

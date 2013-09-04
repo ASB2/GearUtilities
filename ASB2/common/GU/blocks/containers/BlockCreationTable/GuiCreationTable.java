@@ -20,6 +20,8 @@ public class GuiCreationTable extends GuiBase {
 
         this.renderDefaultGui();
         this.renderGuage(8, 6);
+        this.renderBigSlot(148, 32);
+        this.renderRightArrow(118, 32);
         this.scalePower(8, 6, UtilMisc.getAmountScaled(75, (int) tileEntity.getPowerProvider().getPowerStored(), (int) tileEntity.getPowerProvider().getPowerMax()));
     }
     

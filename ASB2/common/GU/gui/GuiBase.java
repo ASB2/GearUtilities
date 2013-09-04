@@ -76,7 +76,7 @@ public abstract class GuiBase extends GuiContainer {
         posY = (height - ySizeOfTexture) / 2;
 
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(posX + x -5, posY + y - 5, 226, 4, 26, 26);
+        drawTexturedModalRect(posX + x - 5, posY + y - 5, 226, 4, 26, 26);
     }
 
     public void renderFlame(int x, int y) {
