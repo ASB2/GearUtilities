@@ -6,11 +6,11 @@ import java.util.Iterator;
 
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import GU.info.Reference;
 import GU.info.Variables;
 import cpw.mods.fml.common.ITickHandler;
-import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -27,7 +27,7 @@ public class RetroGenManager implements ITickHandler {
         MinecraftForge.EVENT_BUS.register(new RetroGenManager());
     }
 
-    @EventHandler
+    @ForgeSubscribe
     public void chunkDataLoad (ChunkDataEvent.Load event){
 
         if(Variables.DO_RETROGEN) {

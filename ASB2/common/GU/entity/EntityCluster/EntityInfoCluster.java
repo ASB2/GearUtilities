@@ -1,11 +1,9 @@
 package GU.entity.EntityCluster;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilPlayers;
 import ASB2.vector.Vector3;
 import GU.api.cluster.IClusterTrigger;
@@ -14,7 +12,6 @@ import GU.entity.EntityBase;
 import GU.info.GUDamageSource;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import GU.api.power.*;
 
 public class EntityInfoCluster extends EntityBase implements IClustor {
 
@@ -31,7 +28,7 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
         position = start.clone();
         this.direction = direction;
         this.source = source;
-        this.setSize(0f, 0f);
+        this.setSize(.1f, .1f);
         this.maxRange = maxRange;
     }
 
@@ -60,15 +57,19 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
             this.moveEntity(direction.offsetX / divided, direction.offsetY / divided, direction.offsetZ / divided);
             position = new Vector3(this);
 
-            if(position.getTileEntity(worldObj) instanceof IInventory || position.getTileEntity(worldObj) instanceof IPowerMisc || position.getTileEntity(worldObj) instanceof IFluidHandler) {
-
-                source.onClustorCollosion(direction, position, this);
-                worldObj.markBlockForUpdate(position.intX(), position.intY(), position.intZ());
-                this.setDead();
-            }   
+            source.onClustorCollosion(direction, position, this);  
         }
     }
 
+
+
+    @Override
+    public boolean stopClustor() {
+        
+        this.setDead();
+        return false;
+    }
+    
     @Override
     protected void onImpactEntity(Entity entity) {
 

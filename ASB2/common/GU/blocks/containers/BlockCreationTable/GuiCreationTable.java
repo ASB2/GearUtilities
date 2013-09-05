@@ -1,5 +1,6 @@
 package GU.blocks.containers.BlockCreationTable;
 
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
 import ASB2.utils.UtilMisc;
@@ -30,5 +31,17 @@ public class GuiCreationTable extends GuiBase {
         super.drawScreen(mouseX, mouseY, gameTicks);
 
         drawTooltips(tileEntity, mouseX, mouseY, 8, 6, 18, 71);
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public void initGui() {
+        super.initGui();
+        buttonList.clear();
+
+        posX = (width - xSizeOfTexture) / 2;
+        posY = (height - ySizeOfTexture) / 2;
+
+        buttonList.add(new GuiButton(0, posX + 115, posY + 61, 32, 20, "Craft"));
     }
 }

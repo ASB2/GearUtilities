@@ -35,6 +35,11 @@ public class BlockLamp extends BlockColorable implements IBlockRender {
         useStandardRendering = false;
     }
 
+    public ForgeDirection[] getValidRotations(World worldObj, int x, int y, int z) {
+
+        return ForgeDirection.VALID_DIRECTIONS;
+    }
+    
     @Override
     public void registerIcons(IconRegister iconRegister) {
         super.registerIcons(iconRegister);

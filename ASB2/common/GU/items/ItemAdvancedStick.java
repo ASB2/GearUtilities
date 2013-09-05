@@ -35,7 +35,7 @@ public class ItemAdvancedStick extends ItemBase {
             }
             else {
                 
-                block.rotateBlock(world, x, y, z, ForgeDirection.NORTH);
+                block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(side));
             }
         }
 

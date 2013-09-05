@@ -1,5 +1,7 @@
 package GU.items;
 
+import java.util.Random;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
@@ -13,15 +15,21 @@ public class ItemLifeStealingBludgeoningStick extends ItemBase {
         this.setFull3D();
     }
 
-    public boolean hitEntity(ItemStack itemStack,
-            EntityLiving entityGettingHit, EntityLiving entityWhoHit) {
+    public boolean hitEntity(ItemStack itemStack, EntityLiving entityGettingHit, EntityLiving entityWhoHit) {
 
-        entityWhoHit.heal(1);
-        itemStack.damageItem(1, entityWhoHit);
+        Random rand = new Random();
+        int damage = rand.nextInt(10);
+        itemStack.damageItem(damage, entityWhoHit);
+        
+        if(rand.nextInt(5) == rand.nextInt(5)) {
+
+            entityWhoHit.heal(damage);
+        }
         return true;
     }
 
     public int getDamageVsEntity(Entity par1Entity) {
-        return 1;
+        
+        return 5;
     }
 }

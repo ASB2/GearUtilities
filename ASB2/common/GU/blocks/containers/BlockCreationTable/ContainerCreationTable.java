@@ -9,7 +9,7 @@ public class ContainerCreationTable extends ContainerBase {
     public ContainerCreationTable(InventoryPlayer inventory, TileCreationTable tileEntity) {
         super(inventory, tileEntity);
 
-        this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 0, 28, 64)));
+        this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 0, 28, 60)));
 
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 1, 62, 14)));
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 2, 80, 14)));
@@ -19,9 +19,9 @@ public class ContainerCreationTable extends ContainerBase {
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 5, 80, 32)));
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 6, 98, 32)));
 
-        this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 7, 62, 65)));
-        this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 8, 80, 65)));
-        this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 9, 98, 65)));
+        this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 7, 62, 50)));
+        this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 8, 80, 50)));
+        this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 9, 98, 50)));
 
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 10, 148, 32)));
     }

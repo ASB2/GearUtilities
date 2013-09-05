@@ -7,8 +7,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import GU.GearUtilities;
-import GU.api.WhiteLists;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Gui;
 import GU.info.Reference;
@@ -20,7 +20,7 @@ public class BlockBlockBreaker extends ContainerBase {
     public BlockBlockBreaker(int id, Material material) {
         super(id, material);
         this.registerTile(TileBlockBreaker.class);
-        this.useStandardRendering = true;
+        this.useStandardRendering = false;
     }
 
     @Override
@@ -28,6 +28,11 @@ public class BlockBlockBreaker extends ContainerBase {
         super.registerIcons(iconRegister);
 
         front = iconRegister.registerIcon(Reference.MODDID + ":BlockBlockBreakerFront");
+    }
+
+    public ForgeDirection[] getValidRotations(World worldObj, int x, int y, int z) {
+
+        return ForgeDirection.VALID_DIRECTIONS;
     }
 
     @Override
@@ -47,13 +52,10 @@ public class BlockBlockBreaker extends ContainerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitX, float hitY, float hitZ, float par9) {
 
-        if(!WhiteLists.getInstance().isWrench(player.inventory.getCurrentItem())) {
-            
-            if (!player.isSneaking()) {
+        if (!player.isSneaking()) {
 
-                player.openGui(GearUtilities.instance, Gui.BLOCK_BREAKER, world, x, y, z);
-                return true;
-            }
+            player.openGui(GearUtilities.instance, Gui.BLOCK_BREAKER, world, x, y, z);
+            return true;
         }
         return false;
     }

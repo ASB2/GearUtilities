@@ -12,9 +12,10 @@ import ASB2.utils.UtilPlayers;
 
 public class BlockFalseBlock extends BlockBase {
 
-    public BlockFalseBlock(int par1, Material par3Material) {
-        super(par1, par3Material);
+    public BlockFalseBlock(int par1, Material material) {
+        super(par1, material);
         useStandardRendering = false;
+        this.setHardness(Block.stone.blockHardness);
     }
 
     @Override

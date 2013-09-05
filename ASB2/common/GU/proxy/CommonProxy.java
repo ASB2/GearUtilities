@@ -12,6 +12,8 @@ import GU.blocks.containers.BlockCamoBlock.ContainerCamoBlock;
 import GU.blocks.containers.BlockCamoBlock.TileCamoBlock;
 import GU.blocks.containers.BlockCreationTable.ContainerCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
+import GU.blocks.containers.BlockItemSender.ContainerItemSender;
+import GU.blocks.containers.BlockItemSender.TileItemSender;
 import GU.entity.EntityCluster.EntityInfoCluster;
 import GU.entity.EntityPotion.EntityModularPotion;
 import GU.entity.EntityTest.EntityTestEntity;
@@ -58,6 +60,9 @@ public class CommonProxy implements IGuiHandler {
                 
             case Gui.ADVANCED_POTION_BREWERY:
                 return new ContainerAdvancedPotionBrewery(player.inventory, (TileAdvancedPotionBrewery) tile);
+                
+            case Gui.ITEM_SENDER:
+                return new ContainerItemSender(player.inventory, (TileItemSender) tile);
         }
         return null;
     }

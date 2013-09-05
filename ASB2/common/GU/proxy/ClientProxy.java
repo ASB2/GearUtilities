@@ -17,6 +17,9 @@ import GU.blocks.containers.BlockConnectableTank.ConnectableTankRenderer;
 import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
+import GU.blocks.containers.BlockItemSender.GuiItemSender;
+import GU.blocks.containers.BlockItemSender.ItemSenderRenderer;
+import GU.blocks.containers.BlockItemSender.TileItemSender;
 import GU.blocks.containers.BlockRunicCube.RunicCubeRenderer;
 import GU.blocks.containers.BlockRunicCube.TileRunicCube;
 import GU.entity.EntityCluster.EntityInfoCluster;
@@ -51,6 +54,9 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileClusterSender.class, new ClusterSenderRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockClusterSender.blockID, new ClusterSenderRenderer());
         
+        ClientRegistry.bindTileEntitySpecialRenderer(TileItemSender.class, new ItemSenderRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockItemSender.blockID, new ItemSenderRenderer());
+        
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());
         RenderingRegistry.registerBlockHandler(new BlockSimpleRenderer());
@@ -76,6 +82,9 @@ public class ClientProxy extends CommonProxy {
 
                 case Gui.ADVANCED_POTION_BREWERY:
                     return new GuiAdvancedPotionBrewery(player.inventory, tile);
+                    
+                case Gui.ITEM_SENDER:
+                    return new GuiItemSender(player.inventory, tile);
             }
         }
         return null;

@@ -20,6 +20,10 @@ public final class Textures {
     public static final ResourceLocation RUNIC_CUBE = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelRunicCube.png");
     public static final ResourceLocation CLUSTER_SENDER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelClusterSender.png");
     
+    public static final ResourceLocation ITEM_SENDER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelItemSender.png");
+    public static final ResourceLocation ITEM_SENDER_ADDITION_1 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelItemSenderRenderAddition1.png");
+    public static final ResourceLocation ITEM_SENDER_ADDITION_2 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelItemSenderRenderAddition2.png");
+    
     public static final ResourceLocation CRYSTAL_BLANK = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalBlank.png");
     public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalAir.png");
     public static final ResourceLocation CRYSTAL_EARTH = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalEarth.png");

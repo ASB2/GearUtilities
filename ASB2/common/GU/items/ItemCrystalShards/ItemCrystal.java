@@ -16,23 +16,25 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemCrystal extends ItemBase {
 
-    public ItemStack ItemAirCrystalShard = new ItemStack(this, 1, 0);
-    public ItemStack ItemEarthCrystalShard = new ItemStack(this, 1, 1);
-    public ItemStack ItemFireCrystalShard = new ItemStack(this, 1, 2);
-    public ItemStack ItemWaterCrystalShard = new ItemStack(this, 1, 3);
-    public ItemStack ItemEnergyCrystalShard = new ItemStack(this, 1, 4);
-    public ItemStack ItemVoidCrystalShard = new ItemStack(this, 1, 5);
-    public ItemStack ItemMetallicCrystalShard = new ItemStack(this, 1, 6);
-
+    public final ItemStack ItemAirCrystalShard = new ItemStack(this, 1, 0);
+    public final ItemStack ItemEarthCrystalShard = new ItemStack(this, 1, 1);
+    public final ItemStack ItemFireCrystalShard = new ItemStack(this, 1, 2);
+    public final ItemStack ItemWaterCrystalShard = new ItemStack(this, 1, 3);
+    public final ItemStack ItemEnergyCrystalShard = new ItemStack(this, 1, 4);
+    public final ItemStack ItemVoidCrystalShard = new ItemStack(this, 1, 5);
+    public final ItemStack ItemMetallicCrystalShard = new ItemStack(this, 1, 6);
+    public final ItemStack ItemBloodCrystalShard = new ItemStack(this, 1, 7);
+    public final ItemStack ItemCrystalCasing = new ItemStack(this, 1, 8);
+    
     Icon[] CRYSTAL_ICONS = new Icon[CRYSTAL_SHARDS];
-    String[] CRYSTAL_NAMES_UNLOCALIZED = new String[] {"ItemAirCrystalShard", "ItemEarthCrystalShard", "ItemFireCrystalShard", "ItemWaterCrystalShard", "ItemEnergyCrystalShard", "ItemVoidCrystalShard", "ItemMetallicCrystalShard"};
-    String[] CRYSTAL_NAMES_IG = new String[] {"Air Crystal Shard", "Earth Crystal Shard", "Fire Crystal Shard", "Water Crystal Shard", "Energy Crystal Shard", "Void Crystal Shard", "Metallic Crystal Shard"};
+    String[] CRYSTAL_NAMES_UNLOCALIZED = new String[] {"ItemAirCrystalShard", "ItemEarthCrystalShard", "ItemFireCrystalShard", "ItemWaterCrystalShard", "ItemEnergyCrystalShard", "ItemVoidCrystalShard", "ItemMetallicCrystalShard", "ItemBloodCrystalShard", "ItemCrystalCasing"};
+    String[] CRYSTAL_NAMES_IG = new String[] {"Air Crystal Shard", "Earth Crystal Shard", "Fire Crystal Shard", "Water Crystal Shard", "Energy Crystal Shard", "Void Crystal Shard", "Metallic Crystal Shard", "Blood Crystal Shard", "Crystal Casing"};
 
-    static int CRYSTAL_SHARDS = 7;
+    static int CRYSTAL_SHARDS = 9;
 
     public ItemCrystal(int id) {
-
         super(id);
+        
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
 

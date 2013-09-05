@@ -22,6 +22,17 @@ public abstract class BlockColorable extends ContainerBase {
         // TODO Auto-generated constructor stub
     }
 
+    public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection side) {
+        
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
+        
+        if(tile != null && tile instanceof IColorable ) {
+            
+            ((IColorable)tile).setColor(Color.WHITE, side);
+        }
+        return false;
+    }
+    
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 

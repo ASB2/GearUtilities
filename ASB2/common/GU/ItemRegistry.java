@@ -1,11 +1,17 @@
 package GU;
 
+import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
+import ASB2.items.AxeBase;
+import ASB2.items.PickaxeBase;
+import ASB2.items.ShovelBase;
+import ASB2.items.SwordBase;
+import GU.info.Reference;
 import GU.items.ItemAdvancedStick;
 import GU.items.ItemBase;
 import GU.items.ItemBasicDestructionCatalyst;
 import GU.items.ItemBrewedPotion;
-import GU.items.ItemCrystalCasing;
 import GU.items.ItemEnhancedDestructionCatalyst;
 import GU.items.ItemGarnet;
 import GU.items.ItemGearReader;
@@ -24,7 +30,6 @@ public class ItemRegistry {
 
     public static ItemCrystal ItemCrystal;
     public static ItemBase ItemGarnet;
-    public static ItemBase ItemCrystalCasing;
     public static ItemBase ItemBasicDestructionCatalyst;
     public static ItemBase ItemEnhancedDestructionCatalyst;
     public static ItemBase ItemLifeStealingBludgeoningStick;
@@ -38,9 +43,10 @@ public class ItemRegistry {
     public static ItemBase ItemStorageCrystal;
     public static ItemBase ItemPhantomPlacer;
     public static ItemBase ItemBrewedPotion;    
-    
-    private static int id = 5000;
+    public static Item ItemCharcoalSword, ItemCharcoalPickaxe, ItemCharcoalShovel, ItemCharcoalAxe; 
 
+    private static int id = 5000;
+    
     public static void init(Configuration config) {
 
         ItemCrystal = new ItemCrystal(config.getItem("ItemCrystal", ItemRegistry.getNextBaseID()).getInt());
@@ -52,10 +58,6 @@ public class ItemRegistry {
         ItemTestItem = new ItemTestItem(config.getItem("ItemTestItem",ItemRegistry.getNextBaseID()).getInt());
         ItemTestItem.setItemName("ItemTestItem");
         LanguageRegistry.addName(ItemTestItem, "Test Item");
-
-        ItemCrystalCasing = new ItemCrystalCasing(config.getItem("ItemCrystalCasing", ItemRegistry.getNextBaseID()).getInt());
-        ItemCrystalCasing.setItemName("ItemCrystalCasing");
-        LanguageRegistry.addName(ItemCrystalCasing, "Crystal Casing");
 
         ItemBasicDestructionCatalyst = new ItemBasicDestructionCatalyst(config.getItem("ItemContritioSimplexCatalyst", ItemRegistry.getNextBaseID()).getInt());
         ItemBasicDestructionCatalyst .setItemName("ItemContritioSimplexCatalyst");
@@ -100,10 +102,22 @@ public class ItemRegistry {
         ItemPhantomPlacer = new ItemPhantomPlacer(config.getItem("ItemPhantomPlacer", ItemRegistry.getNextBaseID()).getInt());
         ItemPhantomPlacer.setItemName("ItemPhantomPlacer");
         LanguageRegistry.addName(ItemPhantomPlacer, "Phantom Placer");
-        
+
         ItemBrewedPotion = new ItemBrewedPotion(config.getItem("ItemBrewedPotion", ItemRegistry.getNextBaseID()).getInt());
         ItemBrewedPotion.setItemName("ItemBrewedPotion");
         LanguageRegistry.addName(ItemBrewedPotion, "Brewed Potion");
+
+        ItemCharcoalSword = new SwordBase(config.getItem("ItemCharcoalSword", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.STONE, Reference.MODDID + ":ItemCharcoalSword");
+        LanguageRegistry.addName(ItemCharcoalSword, "Charcoal Sword");
+
+        ItemCharcoalPickaxe = new PickaxeBase(config.getItem("ItemCharcoalPickaxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.STONE, Reference.MODDID + ":ItemCharcoalPickaxe");
+        LanguageRegistry.addName(ItemCharcoalPickaxe, "Charcoal Pickaxe");
+
+        ItemCharcoalShovel = new ShovelBase(config.getItem("ItemCharcoalShovel", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.STONE, Reference.MODDID + ":ItemCharcoalShovel");
+        LanguageRegistry.addName(ItemCharcoalShovel, "Charcoal Shovel");
+
+        ItemCharcoalAxe = new AxeBase(config.getItem("ItemCharcoalAxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.STONE, Reference.MODDID +  ":ItemCharcoalAxe");
+        LanguageRegistry.addName(ItemCharcoalAxe, "Charcoal Axe");
     }
 
     public static int getNextBaseID() {

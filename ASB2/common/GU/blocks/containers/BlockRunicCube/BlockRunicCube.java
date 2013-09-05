@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilInventory;
 import ASB2.utils.UtilRender;
 import GU.api.runes.IRuneItem;
@@ -26,6 +27,11 @@ public class BlockRunicCube extends ContainerBase {
         this.registerTile(TileRunicCube.class);
     }
 
+    public ForgeDirection[] getValidRotations(World worldObj, int x, int y, int z) {
+
+        return ForgeDirection.VALID_DIRECTIONS;
+    }
+    
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 

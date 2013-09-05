@@ -35,7 +35,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = Reference.MODDID, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:Forge@[7.7.1.829,)")
+@Mod(modid = Reference.MODDID, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:Forge@[7.7.1.845,)")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { Reference.MOD_CHANNEL }, packetHandler = GUPacketHandler.class)
 
 public final class GearUtilities {
@@ -74,7 +74,8 @@ public final class GearUtilities {
         ItemRegistry.init(config);
         BlockRegistry.init(config);        
         FluidRegistry.initFluids();
-        RetroGenManager.init();
+        RetroGenManager.init();        
+        MinecraftForge.EVENT_BUS.register(new ForgeEvents());
         
         config.save();
         instance = this;
