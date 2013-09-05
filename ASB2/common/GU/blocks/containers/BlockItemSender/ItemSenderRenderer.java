@@ -15,11 +15,15 @@ import GU.info.Textures;
 
 public class ItemSenderRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
+    public static float rotation = 0;
+
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
+        TileItemSender tile = (TileItemSender)tileentity;
+
         GL11.glPushMatrix();
-        
+
         switch (ForgeDirection.getOrientation(new Vector3(tileentity).getBlockMetadata(tileentity.worldObj))) {
 
             case UP: {
@@ -65,24 +69,94 @@ public class ItemSenderRenderer extends TileEntitySpecialRenderer implements IIt
 
         GL11.glScalef(.5f, .5f, .5f);
 
+        rotation++;
+
         UtilRender.renderTexture(Textures.ITEM_SENDER);
         Models.ModelItemSender.renderPart("Panel");
 
-        GL11.glColor3d(1, 0, 1);
+        //        GL11.glColor3d(1, 0, 1);
+        GL11.glRotatef(0F - tile.animationPosition, 0F, 1F, 0F);
 
         for(int i = 0; i < 4; i++) {
-            
+
             switch(i) {
-                
+
+                case 0: {
+
+                    GL11.glRotatef(0F, 0F, 1F, 0F);
+                    break;
+                }
+
                 case 1: {
 
+                    GL11.glRotatef(90F, 0F, 1F, 0F);
+                    break;
+                }
 
-                    GL11.glRotatef(-90F, 0F, 0F, 1F);
+                case 2: {
+
+                    GL11.glRotatef(180F, 0F, 1F, 0F);
+                    break;
+                }
+
+                case 3: {
+
+                    GL11.glRotatef(90F, 0F, -1F , 0F);
                     break;
                 }
             }
-        UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_1);
-        Models.ModelItemSender.renderPart("Render_Addition_1");
+
+            switch(tile.renderMode) {
+
+                case 1: {
+
+                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_1);
+                    Models.ModelItemSender.renderPart("Render_Addition_1");
+                    break;
+                }
+
+                case 2: {
+
+                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_2);
+                    Models.ModelItemSender.renderPart("Render_Addition_2");
+                    break;
+                }
+                
+                case 3: {
+
+                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_3);
+                    Models.ModelItemSender.renderPart("Render_Addition_3");
+                    break;
+                }
+                
+                case 4: {
+
+                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_4);
+                    Models.ModelItemSender.renderPart("Render_Addition_4");
+                    break;
+                }
+                
+                case 5: {
+
+                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_5);
+                    Models.ModelItemSender.renderPart("Render_Addition_5");
+                    break;
+                }
+                
+                case 6: {
+
+                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_6);
+                    Models.ModelItemSender.renderPart("Render_Addition_6");
+                    break;
+                }
+                
+                case 7: {
+
+                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_7);
+                    Models.ModelItemSender.renderPart("Render_Addition_7");
+                    break;
+                }
+            }
         }
         GL11.glPopMatrix();
     }

@@ -23,6 +23,11 @@ public final class Textures {
     public static final ResourceLocation ITEM_SENDER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelItemSender.png");
     public static final ResourceLocation ITEM_SENDER_ADDITION_1 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelItemSenderRenderAddition1.png");
     public static final ResourceLocation ITEM_SENDER_ADDITION_2 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelItemSenderRenderAddition2.png");
+    public static final ResourceLocation ITEM_SENDER_ADDITION_3 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelItemSenderRenderAddition3.png");
+    public static final ResourceLocation ITEM_SENDER_ADDITION_4 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelItemSenderRenderAddition4.png");
+    public static final ResourceLocation ITEM_SENDER_ADDITION_5 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelItemSenderRenderAddition5.png");
+    public static final ResourceLocation ITEM_SENDER_ADDITION_6 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelItemSenderRenderAddition6.png");
+    public static final ResourceLocation ITEM_SENDER_ADDITION_7 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelItemSenderRenderAddition7.png");
     
     public static final ResourceLocation CRYSTAL_BLANK = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalBlank.png");
     public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalAir.png");

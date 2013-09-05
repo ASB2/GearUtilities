@@ -6,9 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -19,8 +17,6 @@ import GU.color.BlockColorable;
 import GU.info.Reference;
 import GU.models.BlockSimpleRenderer;
 import GU.models.IBlockRender;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockLamp extends BlockColorable implements IBlockRender {
 
@@ -58,20 +54,6 @@ public class BlockLamp extends BlockColorable implements IBlockRender {
     public Icon getIcon(int side, int metadata) {
         
         return super.getIcon(side, metadata);
-    }
-    @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
-
-        this.setBlockBoundsBasedOnState(world, x, y, z);
-        return super.getCollisionBoundingBoxFromPool(world, x, y, z);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z) {
-
-        this.setBlockBoundsBasedOnState(world, x, y, z);
-        return super.getSelectedBoundingBoxFromPool(world, x, y, z);
     }
 
     @Override
@@ -125,11 +107,6 @@ public class BlockLamp extends BlockColorable implements IBlockRender {
                 break;
             }
         }
-    }
-
-    @Override
-    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-        super.onEntityCollidedWithBlock(world, x, y, z, entity);
     }
 
     @Override

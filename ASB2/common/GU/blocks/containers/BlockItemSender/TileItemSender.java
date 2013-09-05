@@ -20,13 +20,17 @@ import GU.entity.EntityCluster.EntityInfoCluster;
 
 public class TileItemSender extends TileBase implements IClusterTrigger, IInventory {
 
+    float animationPosition;
+    int renderMode;
+    
     public TileItemSender() {
 
         waitTimer = new Wait(20 * 10, this, 0);
     }
 
     public void updateEntity() {
-
+        animationPosition++;
+        renderMode = 3;
         waitTimer.update();
         this.tileItemStacks = new ItemStack[10];
     }
