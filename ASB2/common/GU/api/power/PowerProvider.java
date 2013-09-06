@@ -3,7 +3,7 @@ package GU.api.power;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 
-public abstract class PowerProvider {
+public abstract class PowerProvider implements IPowerProvider {
 
     protected State currentState;
     protected PowerClass powerClass;
@@ -15,10 +15,6 @@ public abstract class PowerProvider {
 
         this.powerClass = powerClass;
         this.powerMax = maximumPower;
-    }
-
-    public void updateProvider() {
-
     }
 
     public float getPowerStored() {
@@ -36,16 +32,16 @@ public abstract class PowerProvider {
         return this.powerClass;
     }
 
-    public State getCurrentState() {
+    public State getCurrentState(ForgeDirection direction) {
 
         if (currentState == null) {
 
-            if (this.outputtingPower()) {
+            if (this.outputtingPower(direction)) {
 
                 currentState = State.SOURCE;
             }
 
-            else if (this.requestingPower()) {
+            else if (this.requestingPower(direction)) {
 
                 currentState = State.SINK;
             }
@@ -56,12 +52,12 @@ public abstract class PowerProvider {
             }
         }
 
-        if (this.outputtingPower()) {
+        if (this.outputtingPower(direction)) {
 
             currentState = State.SOURCE;
         }
 
-        else if (this.requestingPower()) {
+        else if (this.requestingPower(direction)) {
 
             currentState = State.SINK;
         }
@@ -107,7 +103,7 @@ public abstract class PowerProvider {
         this.powerMax = newMaxPower;
     }
 
-    public boolean requestingPower() {
+    public boolean requestingPower(ForgeDirection direction) {
 
         if (getPowerStored() < getPowerMax())
             return true;
@@ -115,7 +111,7 @@ public abstract class PowerProvider {
         return false;
     }
 
-    public boolean outputtingPower() {
+    public boolean outputtingPower(ForgeDirection direction) {
 
         if (getPowerStored() > 0)
             return true;

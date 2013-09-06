@@ -1,6 +1,7 @@
 package GU.items;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -27,44 +28,39 @@ public class ItemBasicDestructionCatalyst extends ItemBase implements
     }
 
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player,
-            World world, int x, int y, int z, int side, float hitx, float hity,
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity,
             float hitz) {
 
         ForgeDirection sideF = ForgeDirection.getOrientation(side);
 
         UtilItemStack.setNBTTagInt(itemStack, "id", world.getBlockId(x, y, z));
+        UtilItemStack.setNBTTagInt(itemStack, "meta", world.getBlockMetadata(x, y, z));
         UtilBlock.cycle2DBlock(player, world, x, y, z, sideF, 1, this, 0);
 
         return true;
     }
 
     @Override
-    public boolean execute(EntityPlayer player, World world, int x, int y,
-            int z, ForgeDirection side, int mid) {
+    public boolean execute(EntityLivingBase player, World world, int x, int y, int z, ForgeDirection side, int mid) {
 
-        int blockToBreak = UtilItemStack.getNBTTagInt(
-                player.inventory.getCurrentItem(), "id");
-
+        int blockToBreak = UtilItemStack.getNBTTagInt(((EntityPlayer)player).inventory.getCurrentItem(), "id");
+        int blockToBreakMeta = UtilItemStack.getNBTTagInt(((EntityPlayer)player).inventory.getCurrentItem(), "meta");
+        
         if (world.blockExists(x, y, z)) {
 
             if (blockToBreak != Block.bedrock.blockID) {
 
                 if (world.getBlockTileEntity(x, y, z) == null) {
 
-                    if (world.getBlockId(x, y, z) == blockToBreak
-                            || (world.getBlockId(x, y, z) == Block.oreRedstone.blockID && blockToBreak == Block.oreRedstoneGlowing.blockID)) {
+                    if ((world.getBlockId(x, y, z) == blockToBreak && world.getBlockMetadata(x, y, z) == blockToBreakMeta)|| (world.getBlockId(x, y, z) == Block.oreRedstone.blockID && blockToBreak == Block.oreRedstoneGlowing.blockID)) {
 
                         int id = world.getBlockId(x, y, z);
 
                         if (id > 0) {
 
-                            if (UtilItemStack.damageItem(player,
-                                    player.inventory.getCurrentItem(), 1)) {
+                            if (UtilItemStack.damageItem(player, ((EntityPlayer)player).inventory.getCurrentItem(), 1)) {
 
-                                UtilBlock.breakAndAddToInventory(
-                                        player.inventory, world, x, y, z, 1,
-                                        true);
+                                UtilBlock.breakAndAddToInventory( ((EntityPlayer)player).inventory, world, x, y, z, 1, true);
                             }
                         }
                     }

@@ -4,7 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import ASB2.utils.UtilPlayers;
+import ASB2.utils.UtilEntity;
 import ASB2.vector.Vector3;
 import GU.api.cluster.IClusterTrigger;
 import GU.api.cluster.IClustor;
@@ -19,9 +19,9 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
     Vector3 position;
     ForgeDirection direction;
     IClusterTrigger source;
-    int maxRange = 1;
-
-    public EntityInfoCluster(World world, Vector3 start, ForgeDirection direction, IClusterTrigger source, int maxRange) {
+    int id;
+    
+    public EntityInfoCluster(World world, Vector3 start, ForgeDirection direction, IClusterTrigger source, int id) {
         super(world, start);
 
         this.start = start;
@@ -29,7 +29,7 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
         this.direction = direction;
         this.source = source;
         this.setSize(.1f, .1f);
-        this.maxRange = maxRange;
+        this.id = id;
     }
 
     public EntityInfoCluster(World world) {
@@ -47,33 +47,37 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
 
     @Override
     public void onUpdate() {
+        super.onUpdate();
 
-        if(start != null && position != null) {
+        if(!worldObj.isRemote) {
 
-            this.setPosition(position.x, position.y, position.z);
+            double divided = 1;            
+            position.add(direction.offsetX / divided, direction.offsetY / divided,direction.offsetZ / divided);
+            this.setPosition(position);
 
-            int divided = 1;
+            source.onSentClustorCollosion(source, direction, position, this, id);
 
-            this.moveEntity(direction.offsetX / divided, direction.offsetY / divided, direction.offsetZ / divided);
-            position = new Vector3(this);
+            if(position.getTileEntity(worldObj) != null) {
 
-            source.onClustorCollosion(direction, position, this);  
+                if(position.getTileEntity(worldObj) instanceof IClusterTrigger) {
+
+                    ((IClusterTrigger)position.getTileEntity(worldObj)).onClustorCollosion(source, direction, position, this);
+                }
+            }      
         }
     }
 
-
-
     @Override
     public boolean stopClustor() {
-        
+
         this.setDead();
         return false;
     }
-    
+
     @Override
     protected void onImpactEntity(Entity entity) {
 
-        UtilPlayers.damagePlayer(worldObj, entity, GUDamageSource.clusterCollision, 100);       
+        UtilEntity.damageEntity(worldObj, entity, GUDamageSource.clusterCollision, 100);       
     }
 
     @SideOnly(Side.CLIENT)

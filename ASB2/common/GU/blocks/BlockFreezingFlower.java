@@ -2,9 +2,7 @@ package GU.blocks;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import ASB2.utils.UtilPlayers;
 
 public class BlockFreezingFlower extends FlowerBase {
 
@@ -13,17 +11,8 @@ public class BlockFreezingFlower extends FlowerBase {
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World par1World, int x, int y, int z,
-            Entity entity) {
+    public void onEntityCollidedWithBlock(World par1World, int x, int y, int z, Entity entity) {
 
-        if (entity instanceof EntityPlayer) {
-
-            if (!(UtilPlayers.isSpecialPlayer(((EntityPlayer) entity).username))) {
-
-                entity.setInWeb();
-            }
-        } else {
-            entity.setInWeb();
-        }
+        entity.setInWeb();
     }
 }

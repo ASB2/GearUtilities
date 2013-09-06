@@ -25,7 +25,7 @@ import GU.blocks.containers.BlockConnectableTank.BlockConnectableTank;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
-import GU.blocks.containers.BlockItemSender.BlockItemSender;
+import GU.blocks.containers.BlockSender.BlockSender;
 import GU.blocks.containers.BlockLamp.BlockLamp;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockRunicCube.BlockRunicCube;
@@ -62,7 +62,7 @@ public class BlockRegistry {
     public static ContainerBase BlockRunicCube;
     public static ContainerBase BlockUniversalConduit;
     public static ContainerBase BlockClusterSender;
-    public static ContainerBase BlockItemSender;
+    public static ContainerBase BlockSender;
     
     private static int id = 500;
 
@@ -171,11 +171,11 @@ public class BlockRegistry {
         
         BlockClusterSender = new BlockClusterSender(config.getBlock("BlockClusterSender", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockClusterSender.setBlockName("BlockClusterSender");
-        LanguageRegistry.addName(BlockClusterSender, "Cluster Sender");
+        LanguageRegistry.addName(BlockClusterSender, "Cluster Redirector");
         
-        BlockItemSender = new BlockItemSender(config.getBlock("BlockItemSender", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockItemSender.setBlockName("BlockItemSender");
-        LanguageRegistry.addName(BlockItemSender, "Item Sender");
+        BlockSender = new BlockSender(config.getBlock("BlockSender", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockSender.setBlockName("BlockSender");
+        LanguageRegistry.addName(BlockSender, "Universal Sender");
     }
 
     public static void initTestBlocks(Configuration config) {

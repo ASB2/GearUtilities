@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import ASB2.utils.UtilItemStack;
-import ASB2.utils.UtilPlayers;
+import ASB2.utils.UtilEntity;
 
 public class ItemTeleporter extends ItemBase {
 
@@ -66,7 +66,7 @@ public class ItemTeleporter extends ItemBase {
             this.setDimentionIDCoord(itemStack, player.dimension);
             setCoodsSet(itemStack, true);
 
-            UtilPlayers.sendChatToPlayer(player, "Link Set");
+            UtilEntity.sendChatToPlayer(player, "Link Set");
         }
 
         return itemStack;

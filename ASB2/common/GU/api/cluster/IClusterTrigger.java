@@ -5,5 +5,7 @@ import ASB2.vector.Vector3;
 
 public interface IClusterTrigger {
 
-    void onClustorCollosion(ForgeDirection side, Vector3 position, IClustor clustor);
+    void onSentClustorCollosion(IClusterTrigger source, ForgeDirection side, Vector3 position, IClustor clustor, int id);
+    
+    void onClustorCollosion(IClusterTrigger source, ForgeDirection side, Vector3 position, IClustor clustor);
 }

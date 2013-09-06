@@ -27,33 +27,35 @@ public class FluidRegistry {
     
     public static IconRegister iconProvider;
 
-    public static FluidBase LiquidStone;
+    public static FluidBase MoltenStone;
     
-    public static FluidBase LiquidIron;
-    public static FluidBase LiquidGold;
-    public static FluidBase LiquidDiamond;
-    public static FluidBase LiquidEmerald;
+    public static FluidBase MoltenIron;
+    public static FluidBase MoltenGold;
+    public static FluidBase MoltenDiamond;
+    public static FluidBase MoltenEmerald;
 
-    public static FluidBase AirEssence;
-    public static FluidBase EarthEssence;
-    public static FluidBase FireEssence;
-    public static FluidBase WaterEssence;
+    public static FluidBase Vitam;
+    public static FluidBase AerVitam;
+    public static FluidBase TerraeVitam;
+    public static FluidBase IgnisVitam;
+    public static FluidBase AquaVitam;
     
     public static void initFluids() {
 
         MinecraftForge.EVENT_BUS.register(new FluidRegistry());
         
-        LiquidStone = new FluidBase("Liquid Stone", Color.LIGHT_GRAY.hashCode());
+        MoltenStone = new FluidBase("Molten Stone", Color.LIGHT_GRAY.hashCode());
         
-        LiquidIron = new FluidBase("Liquid Iron", Color.LIGHT_GRAY.hashCode());
-        LiquidGold = new FluidBase("Liquid Gold", new Color(255, 220, 0).hashCode());
-        LiquidDiamond = new FluidBase("Liquid Diamond", new Color(0, 225, 255).hashCode());
-        LiquidEmerald = new FluidBase("Liquid Emerald", Color.GREEN.hashCode());
-        
-        AirEssence = new FluidBase("Air Essence", Color.YELLOW.hashCode());
-        EarthEssence = new FluidBase("Earth Essence", Color.GREEN.hashCode());
-        FireEssence = new FluidBase("Fire Essence", Color.RED.hashCode());
-        WaterEssence = new FluidBase("Water Essence", Color.BLUE.hashCode());
+        MoltenIron = new FluidBase("Molten Iron", Color.LIGHT_GRAY.hashCode());
+        MoltenGold = new FluidBase("Molten Gold", new Color(255, 220, 0).hashCode());
+        MoltenDiamond = new FluidBase("Molten Diamond", new Color(0, 225, 255).hashCode());
+        MoltenEmerald = new FluidBase("Molten Emerald", Color.GREEN.hashCode());
+
+        Vitam = new FluidBase("Vitam", Color.BLUE.hashCode());
+        AerVitam = new FluidBase("Aer Essence", Color.YELLOW.hashCode());
+        TerraeVitam = new FluidBase("Terrae Essence", Color.GREEN.hashCode());
+        IgnisVitam = new FluidBase("Ignis Essence", Color.RED.hashCode());
+        AquaVitam = new FluidBase("Aqua Essence", Color.BLUE.hashCode());
     }
 
     @ForgeSubscribe
@@ -73,8 +75,8 @@ public class FluidRegistry {
                 base.setStillIcon(stillIcon);
                 base.setFlowingIcon(flowingIcon);
             }
-            LiquidStone.setStillIcon(Block.stone.getIcon(0, 0));
-            LiquidStone.setFlowingIcon(Block.stone.getIcon(0, 0));
+            MoltenStone.setStillIcon(Block.stone.getIcon(0, 0));
+            MoltenStone.setFlowingIcon(Block.stone.getIcon(0, 0));
         }
     }
 

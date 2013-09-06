@@ -1,6 +1,6 @@
 package GU.blocks.containers.BlockTestTile;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -56,9 +56,8 @@ public class TileTestTile extends TileBase implements IBlockCycle {
     }
 
     @Override
-    public boolean execute(EntityPlayer player, World world, int x, int y,
-            int z, ForgeDirection side, int id) {
-
+    public boolean execute(EntityLivingBase player, World world, int x, int y, int z, ForgeDirection side, int id) {
+        
         Vector3 vector = new Vector3(x + .5, y + .5, z + .5);
 
         if (world.isRemote) {
@@ -66,6 +65,6 @@ public class TileTestTile extends TileBase implements IBlockCycle {
 
             UtilRender.renderFX(test);
         }
-        return true;
+        return false;
     }
 }

@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import ASB2.utils.UtilPlayers;
+import ASB2.utils.UtilEntity;
 import GU.blocks.containers.ContainerBase;
 
 public class BlockFluidProvider extends ContainerBase {
@@ -44,12 +44,12 @@ public class BlockFluidProvider extends ContainerBase {
                     if(tank.fluidStack.getFluid().getLocalizedName() != null) {
                         
                         if(!world.isRemote)
-                            UtilPlayers.sendChatToPlayer(entityplayer, "Current Fluids is: " + tank.fluidStack.getFluid().getLocalizedName());
+                            UtilEntity.sendChatToPlayer(entityplayer, "Current Fluids is: " + tank.fluidStack.getFluid().getLocalizedName());
                     } 
                     else {
 
                         if(!world.isRemote)
-                            UtilPlayers.sendChatToPlayer(entityplayer, "No Fluid");
+                            UtilEntity.sendChatToPlayer(entityplayer, "No Fluid");
                     }
                 }
                 return true;

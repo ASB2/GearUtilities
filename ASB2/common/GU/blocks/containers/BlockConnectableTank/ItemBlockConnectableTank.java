@@ -33,11 +33,9 @@ public class ItemBlockConnectableTank extends GUItemBlock {
         return itWorked;
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
-        super.addInformation(itemStack, player, info, var1);
-
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
+     
         if (this.getFluidStack(itemStack) != null) {
 
             info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Fluid Stored: " + UtilMisc.capitilizeFirst(this.getFluidStack(itemStack).getFluid().getName()));

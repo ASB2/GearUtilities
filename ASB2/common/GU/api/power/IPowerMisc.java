@@ -5,5 +5,5 @@ public interface IPowerMisc {
     /**
      * Returns power provider class of the tile
      */
-    PowerProvider getPowerProvider();
+    IPowerProvider getPowerProvider();
 }

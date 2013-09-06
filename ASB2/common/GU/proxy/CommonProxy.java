@@ -12,8 +12,8 @@ import GU.blocks.containers.BlockCamoBlock.ContainerCamoBlock;
 import GU.blocks.containers.BlockCamoBlock.TileCamoBlock;
 import GU.blocks.containers.BlockCreationTable.ContainerCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
-import GU.blocks.containers.BlockItemSender.ContainerItemSender;
-import GU.blocks.containers.BlockItemSender.TileItemSender;
+import GU.blocks.containers.BlockSender.ContainerSender;
+import GU.blocks.containers.BlockSender.TileSender;
 import GU.entity.EntityCluster.EntityInfoCluster;
 import GU.entity.EntityPotion.EntityModularPotion;
 import GU.entity.EntityTest.EntityTestEntity;
@@ -30,11 +30,11 @@ public class CommonProxy implements IGuiHandler {
     public void register() {
 
         TickRegistry.registerTickHandler(new RetroGenManager(), Side.SERVER);
-        new SoundHandler();
+        SoundHandler.init();
         
-        EntityRegistry.registerModEntity(EntityTestEntity.class, "Test Entity", 0, GearUtilities.instance, 256, 3, true);
-        EntityRegistry.registerModEntity(EntityModularPotion.class, "Modular Potion", 1, GearUtilities.instance, 256, 3, true);
-        EntityRegistry.registerModEntity(EntityInfoCluster.class, "Info Clustor", 2, GearUtilities.instance, 256, 3, true);    
+        EntityRegistry.registerModEntity(EntityTestEntity.class, "Test Entity", 0, GearUtilities.instance, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityModularPotion.class, "Modular Potion", 1, GearUtilities.instance, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityInfoCluster.class, "Info Clustor", 2, GearUtilities.instance, 80, 3, true);    
     }
 
     public int addArmor(String string) {
@@ -61,8 +61,8 @@ public class CommonProxy implements IGuiHandler {
             case Gui.ADVANCED_POTION_BREWERY:
                 return new ContainerAdvancedPotionBrewery(player.inventory, (TileAdvancedPotionBrewery) tile);
                 
-            case Gui.ITEM_SENDER:
-                return new ContainerItemSender(player.inventory, (TileItemSender) tile);
+            case Gui.SENDER:
+                return new ContainerSender(player.inventory, (TileSender) tile);
         }
         return null;
     }

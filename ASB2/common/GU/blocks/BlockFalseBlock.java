@@ -8,7 +8,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import ASB2.utils.UtilPlayers;
 
 public class BlockFalseBlock extends BlockBase {
 
@@ -61,10 +60,7 @@ public class BlockFalseBlock extends BlockBase {
 
         if (entity instanceof EntityPlayer) {
 
-            if ((UtilPlayers.isSpecialPlayer(((EntityPlayer) entity).username))) {
-
-                entity.extinguish();
-            }
+            entity.extinguish();
 
             if (world.getBlockId(x, y + 1, z) == 0
                     && world.getBlockId(x, y + 2, z) == 0

@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilMisc;
-import ASB2.utils.UtilPlayers;
+import ASB2.utils.UtilEntity;
 import GU.ItemRegistry;
 import GU.api.color.IColorable;
 import GU.api.color.VanillaColor;
@@ -23,16 +23,16 @@ public abstract class BlockColorable extends ContainerBase {
     }
 
     public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection side) {
-        
+
         TileEntity tile = world.getBlockTileEntity(x, y, z);
-        
+
         if(tile != null && tile instanceof IColorable ) {
-            
+
             ((IColorable)tile).setColor(Color.WHITE, side);
         }
         return false;
     }
-    
+
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 
@@ -83,7 +83,7 @@ public abstract class BlockColorable extends ContainerBase {
                     if(player.getHeldItem().isItemEqual(ItemRegistry.ItemCrystal.ItemWaterCrystalShard)) {
 
                         if(player.isSneaking())
-                        UtilPlayers.sendChatToPlayer(player, "Hi");
+                            UtilEntity.sendChatToPlayer(player, "Hi");
                         Color color = UtilMisc.changeRed(((IColorable)tile).getColor(ForgeDirection.getOrientation(side)), amount);                        
                         ((IColorable)tile).setColor(color, ForgeDirection.getOrientation(side)); 
 

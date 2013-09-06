@@ -1,17 +1,17 @@
-package GU.blocks.containers.BlockItemSender;
+package GU.blocks.containers.BlockSender;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import GU.gui.ContainerBase;
 
-public class ContainerItemSender extends ContainerBase {
+public class ContainerSender extends ContainerBase {
 
-    TileItemSender tileEntity;
+    TileSender tileEntity;
 
-    public ContainerItemSender(InventoryPlayer inventory, TileItemSender tileEntity) {
+    public ContainerSender(InventoryPlayer inventory, TileSender tileEntity) {
         super(inventory, tileEntity);
         this.tileEntity = tileEntity;
-
+        
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 0, 62, 14)));
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 1, 80, 14)));
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 2, 98, 14)));
@@ -23,8 +23,6 @@ public class ContainerItemSender extends ContainerBase {
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 6, 62, 50)));
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 7, 80, 50)));
         this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 8, 98, 50)));
-
-        this.addSlotToContainer(addSlotToList(new Slot(tileEntity, 9, 148, 32)));
     }
 
     @Override

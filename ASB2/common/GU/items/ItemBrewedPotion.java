@@ -34,9 +34,9 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
 
         info.add(UtilMisc.getColorCode(EnumChatFormatting.RED) + "Ingredients :");
 
-        if(!this.getIngredients(stack).isEmpty()) {
+        if(!this.getModules(stack).isEmpty()) {
 
-            for(ItemStack itemStack : this.getIngredients(stack)) {
+            for(ItemStack itemStack : this.getModules(stack)) {
 
                 info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + itemStack.getDisplayName());
             }
@@ -83,7 +83,7 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
 
     public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player) {
 
-        for(ItemStack stack : this.getIngredients(itemStack)) {
+        for(ItemStack stack : this.getModules(itemStack)) {
 
             if(stack.getItem() instanceof IPotionIngredient) {
 
@@ -119,14 +119,16 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
     }
 
     @Override
-    public ArrayList<ItemStack> getIngredients(ItemStack stack) {
-
-        return UtilItemStack.getNBTTagInventory(stack, "Items");
+    public void addItemModule(ItemStack accepter, ItemStack moduleToAdd) {
+        
+        ArrayList<ItemStack> inventory = UtilItemStack.getNBTTagInventory(accepter, "Items");        
+        inventory.add(moduleToAdd);        
+        UtilItemStack.setNBTTagInventory(accepter, "Items", inventory);        
     }
 
     @Override
-    public void setIngredients(ItemStack stack, ArrayList<ItemStack> ingredients) {
+    public ArrayList<ItemStack> getModules(ItemStack stack) {
 
-        UtilItemStack.setNBTTagInventory(stack, "Items", ingredients);
+        return UtilItemStack.getNBTTagInventory(stack, "Items");
     }
 }

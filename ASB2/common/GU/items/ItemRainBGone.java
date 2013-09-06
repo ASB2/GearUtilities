@@ -3,7 +3,7 @@ package GU.items;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import ASB2.utils.UtilPlayers;
+import ASB2.utils.UtilEntity;
 
 public class ItemRainBGone extends ItemBase {
 
@@ -22,7 +22,7 @@ public class ItemRainBGone extends ItemBase {
             world.toggleRain();
             itemStack.damageItem(1, player);
 
-            UtilPlayers.sendChatToPlayer(player, "The rain will soon be dispursed");
+            UtilEntity.sendChatToPlayer(player, "The rain will soon be dispursed");
         }
         return itemStack;
     }

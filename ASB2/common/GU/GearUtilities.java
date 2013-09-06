@@ -76,7 +76,7 @@ public final class GearUtilities {
         FluidRegistry.initFluids();
         RetroGenManager.init();        
         MinecraftForge.EVENT_BUS.register(new ForgeEvents());
-        
+        GameRegistry.registerFuelHandler(new GUFuelHandler());
         config.save();
         instance = this;
     }

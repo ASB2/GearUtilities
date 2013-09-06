@@ -26,7 +26,7 @@ public class BlockClusterSender extends ContainerBase {
 
         float minWidth = 0, minHeight = 0;
 
-        float maxWidth = 1, maxHeight = .75F;
+        float maxWidth = 1, maxHeight = .3F;
 
         switch (ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z))) {
 

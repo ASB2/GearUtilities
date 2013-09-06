@@ -2,6 +2,7 @@ package GU.blocks.containers.BlockAdvancedPotionBrewery;
 
 import java.util.ArrayList;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -16,13 +17,11 @@ import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
 import GU.ItemRegistry;
-import GU.api.module.IModuleProvider;
-import GU.api.module.IModuleUser;
 import GU.api.potion.IPotion;
 import GU.api.potion.IPotionIngredient;
 import GU.api.power.IPowerMisc;
+import GU.api.power.IPowerProvider;
 import GU.api.power.PowerClass;
-import GU.api.power.PowerProvider;
 import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
@@ -31,9 +30,7 @@ import GU.packets.TankPacket;
 import GU.power.GUPowerProvider;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class TileAdvancedPotionBrewery extends TileBase implements IInventory, IFluidHandler, IModuleUser, IPowerMisc {
-
-    ArrayList<IModuleProvider> moduleList = new ArrayList<IModuleProvider>();
+public class TileAdvancedPotionBrewery extends TileBase implements IInventory, IFluidHandler, IPowerMisc {
 
     boolean shouldCraft = false;;
 
@@ -49,6 +46,9 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     public void updateEntity() {
 
         waitTimer.update();
+        
+        if(Minecraft.getMinecraft().thePlayer != null&& Minecraft.getMinecraft().thePlayer.openContainer != null && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerAdvancedPotionBrewery)
+            this.sendReqularPowerPackets(10);
         
         if((shouldCraft || worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))) {
 
@@ -78,9 +78,12 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
         IPotion potionInterface = (IPotion)potion.getItem();
 
         potionInterface.setDuration(potion, getCombinedDuration());
-        potionInterface.setIngredients(potion, getIngredients());
         potionInterface.setStrength(potion, getCombinedStrength());
 
+        for(ItemStack stack : getIngredients()) {
+
+            potionInterface.addItemModule(potion, stack);
+        }
         if(hasRequired()) {
 
             UtilFluid.removeFluidFromTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000), true);
@@ -181,32 +184,6 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     public boolean hasRequired() {
 
         return (this.fluidTank.getFluidAmount() >= 1000) && (this.getPowerProvider().usePower(Variables.POTION_BASE_COST * this.getIngredients().size() + getCombinedPower(), ForgeDirection.UNKNOWN, false));
-    }
-
-    @Override
-    public boolean addModule(IModuleProvider module) {
-
-        if(!moduleList.contains(module)) {
-
-            return moduleList.add(module);         
-        }
-        return false;
-    }
-
-    @Override
-    public boolean removeModule(IModuleProvider module) {
-
-        if(moduleList.contains(module)) {
-
-            return moduleList.remove(module);         
-        }
-        return false;
-    }
-
-    @Override
-    public ArrayList<IModuleProvider> getModules() {
-
-        return moduleList;
     }
 
     @Override
@@ -360,7 +337,7 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     }
 
     @Override
-    public PowerProvider getPowerProvider() {
+    public IPowerProvider getPowerProvider() {
 
         return powerProvider;
     }

@@ -1,5 +1,7 @@
 package GU.blocks.containers.BlockClusterSender;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
@@ -20,18 +22,21 @@ public class TileClusterSender extends TileBase implements IClusterTrigger {
 
     public TileClusterSender() {
 
-        waitTimer = new Wait(20 * 10, this, 0);
+        waitTimer = new Wait(20, this, 0);
     }
 
     public void updateEntity() {
 
-        waitTimer.update();
-//        this.trigger(0);
+        if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+
+            waitTimer.update();
+        }
     }
 
     @Override
-    public void onClustorCollosion(ForgeDirection side, Vector3 position, IClustor clustor) {
+    public void onSentClustorCollosion(IClusterTrigger sender, ForgeDirection side, Vector3 position, IClustor clustor, int id) {
 
+        System.out.println("Packet Hit");
         TileEntity sink = position.getTileEntity(worldObj);
 
         if(sink != null) {
@@ -47,6 +52,7 @@ public class TileClusterSender extends TileBase implements IClusterTrigger {
                         if(sink instanceof IInventory) {
 
                             UtilInventory.moveEntireInventory((IInventory)source, (IInventory)sink);
+                            clustor.stopClustor();
                         }
                     }
 
@@ -55,6 +61,7 @@ public class TileClusterSender extends TileBase implements IClusterTrigger {
                         if(sink instanceof IFluidHandler) {
 
                             UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, true);
+                            clustor.stopClustor();
                         }
                     }
 
@@ -62,15 +69,35 @@ public class TileClusterSender extends TileBase implements IClusterTrigger {
 
                         if(sink instanceof IPowerMisc) {
 
-                            if(PowerHelper.moveEnergy((IPowerMisc)source, (IPowerMisc)sink, side, true)) {
-
-                                System.out.println("Packet Recieved");
-                            }
+                            PowerHelper.moveEnergy((IPowerMisc)source, (IPowerMisc)sink, side, true, false);
+                            clustor.stopClustor();
                         }
                     }
                 }
             }                 
         }   
+        else {
+
+            if(position.getBlockID(worldObj) != 0) {
+                
+                if(Block.blocksList[position.getBlockID(worldObj)] != null) {
+
+                    if(!(Block.blocksList[position.getBlockID(worldObj)].blockMaterial == Material.air)) {
+
+                        clustor.stopClustor();
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onClustorCollosion(IClusterTrigger source, ForgeDirection side, Vector3 position, IClustor clustor) {
+
+        if(!worldObj.isRemote) {
+
+            worldObj.spawnEntityInWorld(new EntityInfoCluster(worldObj, position, this.getOrientation(), source, 0));
+        }
     }
 
     @Override
@@ -84,7 +111,7 @@ public class TileClusterSender extends TileBase implements IClusterTrigger {
 
                 if(!worldObj.isRemote) {
 
-                    worldObj.spawnEntityInWorld(new EntityInfoCluster(worldObj, new Vector3(this), this.getOrientation(), this, 20));
+                    worldObj.spawnEntityInWorld(new EntityInfoCluster(worldObj, new Vector3(this), this.getOrientation(), this, 0));
                 }
             }
         }

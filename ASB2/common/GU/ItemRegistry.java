@@ -4,7 +4,9 @@ import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
 import ASB2.items.AxeBase;
+import ASB2.items.HoeBase;
 import ASB2.items.PickaxeBase;
+import ASB2.items.ScytheBase;
 import ASB2.items.ShovelBase;
 import ASB2.items.SwordBase;
 import GU.info.Reference;
@@ -44,7 +46,8 @@ public class ItemRegistry {
     public static ItemBase ItemPhantomPlacer;
     public static ItemBase ItemBrewedPotion;    
     public static Item ItemCharcoalSword, ItemCharcoalPickaxe, ItemCharcoalShovel, ItemCharcoalAxe; 
-
+    public static Item ItemGarnetSword, ItemGarnetPickaxe, ItemGarnetShovel, ItemGarnetAxe, ItemGarnetHoe, ItemGarnetScythe; 
+    
     private static int id = 5000;
     
     public static void init(Configuration config) {
@@ -118,6 +121,24 @@ public class ItemRegistry {
 
         ItemCharcoalAxe = new AxeBase(config.getItem("ItemCharcoalAxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.STONE, Reference.MODDID +  ":ItemCharcoalAxe");
         LanguageRegistry.addName(ItemCharcoalAxe, "Charcoal Axe");
+        
+        ItemGarnetSword = new SwordBase(config.getItem("ItemGarnetSword", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.STONE, Reference.MODDID + ":ItemGarnetSword");
+        LanguageRegistry.addName(ItemGarnetSword, "Garnet Sword");
+
+        ItemGarnetPickaxe = new PickaxeBase(config.getItem("ItemGarnetPickaxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemGarnetPickaxe");
+        LanguageRegistry.addName(ItemCharcoalPickaxe, "Garnet Pickaxe");
+
+        ItemGarnetShovel = new ShovelBase(config.getItem("ItemGarnetShovel", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemGarnetShovel");
+        LanguageRegistry.addName(ItemGarnetShovel, "Garnet Shovel");
+
+        ItemGarnetAxe = new AxeBase(config.getItem("ItemGarnetAxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID +  ":ItemGarnetAxe");
+        LanguageRegistry.addName(ItemGarnetAxe, "Garnet Axe");
+        
+        ItemGarnetHoe = new HoeBase(config.getItem("ItemGarnetHoe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID +  ":ItemGarnetHoe");
+        LanguageRegistry.addName(ItemGarnetHoe, "Garnet Hoe");
+        
+        ItemGarnetScythe = new ScytheBase(config.getItem("ItemGarnetScythe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID +  ":ItemGarnetScythe");
+        LanguageRegistry.addName(ItemGarnetScythe, "Garnet Scythe");
     }
 
     public static int getNextBaseID() {

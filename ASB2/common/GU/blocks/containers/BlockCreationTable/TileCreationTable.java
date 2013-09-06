@@ -1,5 +1,6 @@
 package GU.blocks.containers.BlockCreationTable;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -25,6 +26,8 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     public void updateEntity() {
 
         waitTimer.update();
+        if(Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().thePlayer.openContainer != null && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerCreationTable)
+            this.sendReqularPowerPackets(10);
     }
 
     @Override
@@ -53,7 +56,7 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
 
     @Override
     public ItemStack decrStackSize(int i, int j) {
-        
+
         return UtilInventory.decreaseSlotContents(this, i, j);
     }
 

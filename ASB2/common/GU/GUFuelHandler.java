@@ -12,7 +12,6 @@ public class GUFuelHandler implements IFuelHandler {
             
             return 1600;
         }
-
         return 0;
     }
 

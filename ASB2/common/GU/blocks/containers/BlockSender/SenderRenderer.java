@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockItemSender;
+package GU.blocks.containers.BlockSender;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
@@ -13,17 +13,17 @@ import ASB2.vector.*;
 import GU.info.Models;
 import GU.info.Textures;
 
-public class ItemSenderRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
-
-    public static float rotation = 0;
+public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
-        TileItemSender tile = (TileItemSender)tileentity;
+        TileSender tile = (TileSender)tileentity;
 
         GL11.glPushMatrix();
 
+        GL11.glColor3d(1, 1, 1);
+        
         switch (ForgeDirection.getOrientation(new Vector3(tileentity).getBlockMetadata(tileentity.worldObj))) {
 
             case UP: {
@@ -69,12 +69,9 @@ public class ItemSenderRenderer extends TileEntitySpecialRenderer implements IIt
 
         GL11.glScalef(.5f, .5f, .5f);
 
-        rotation++;
-
         UtilRender.renderTexture(Textures.ITEM_SENDER);
-        Models.ModelItemSender.renderPart("Panel");
-
-        //        GL11.glColor3d(1, 0, 1);
+        Models.ModelSender.renderPart("Panel");
+        
         GL11.glRotatef(0F - tile.animationPosition, 0F, 1F, 0F);
 
         for(int i = 0; i < 4; i++) {
@@ -106,54 +103,54 @@ public class ItemSenderRenderer extends TileEntitySpecialRenderer implements IIt
                 }
             }
 
-            switch(tile.renderMode) {
+            switch(tile.getMode()) {
 
                 case 1: {
 
-                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_1);
-                    Models.ModelItemSender.renderPart("Render_Addition_1");
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_1);
+                    Models.ModelSender.renderPart("Render_Addition_1");
                     break;
                 }
 
                 case 2: {
 
-                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_2);
-                    Models.ModelItemSender.renderPart("Render_Addition_2");
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_2);
+                    Models.ModelSender.renderPart("Render_Addition_2");
                     break;
                 }
-                
+
                 case 3: {
 
-                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_3);
-                    Models.ModelItemSender.renderPart("Render_Addition_3");
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_3);
+                    Models.ModelSender.renderPart("Render_Addition_3");
                     break;
                 }
-                
+
                 case 4: {
 
-                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_4);
-                    Models.ModelItemSender.renderPart("Render_Addition_4");
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_4);
+                    Models.ModelSender.renderPart("Render_Addition_4");
                     break;
                 }
-                
+
                 case 5: {
 
-                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_5);
-                    Models.ModelItemSender.renderPart("Render_Addition_5");
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_5);
+                    Models.ModelSender.renderPart("Render_Addition_5");
                     break;
                 }
-                
+
                 case 6: {
 
-                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_6);
-                    Models.ModelItemSender.renderPart("Render_Addition_6");
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_6);
+                    Models.ModelSender.renderPart("Render_Addition_6");
                     break;
                 }
-                
+
                 case 7: {
 
-                    UtilRender.renderTexture(Textures.ITEM_SENDER_ADDITION_7);
-                    Models.ModelItemSender.renderPart("Render_Addition_7");
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_7);
+                    Models.ModelSender.renderPart("Render_Addition_7");
                     break;
                 }
             }
@@ -168,8 +165,7 @@ public class ItemSenderRenderer extends TileEntitySpecialRenderer implements IIt
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
-            ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
 
         return true;
     }
@@ -181,25 +177,25 @@ public class ItemSenderRenderer extends TileEntitySpecialRenderer implements IIt
 
             case ENTITY: {
 
-                renderItemSwitched(type, 0f, 1, 0f, .7F);
+                renderItemSwitched(type, item, 0f, 1, 0f, .7F);
                 return;
             }
 
             case EQUIPPED: {
 
-                renderItemSwitched(type, 0f, 1, .5f, .7F);
+                renderItemSwitched(type, item, 0f, 1, .5f, .7F);
                 return;
             }
 
             case INVENTORY: {
 
-                renderItemSwitched(type, 0f, 0f, 0f, .5F);
+                renderItemSwitched(type, item, 0f, 0f, 0f, .5F);
                 return;
             }
 
             case EQUIPPED_FIRST_PERSON: {
 
-                renderItemSwitched(type, 0f - .5F, 0f, 0f + .5F, .5F);
+                renderItemSwitched(type, item, 0f - .5F, 0f, 0f + .5F, .5F);
                 return;
             }
 
@@ -208,7 +204,7 @@ public class ItemSenderRenderer extends TileEntitySpecialRenderer implements IIt
         }
     }
 
-    private void renderItemSwitched(ItemRenderType type, float x, float y, float z, float scale) {
+    private void renderItemSwitched(ItemRenderType type, ItemStack item, float x, float y, float z, float scale) {
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -217,9 +213,91 @@ public class ItemSenderRenderer extends TileEntitySpecialRenderer implements IIt
         GL11.glScalef(scale, scale, scale);
 
         UtilRender.renderTexture(Textures.ITEM_SENDER);
-        Models.ModelCulsterSender.renderAll();
+        Models.ModelSender.renderPart("Panel");
 
+        for(int i = 0; i < 4; i++) {
+
+            switch(i) {
+
+                case 0: {
+
+                    GL11.glRotatef(0F, 0F, 1F, 0F);
+                    break;
+                }
+
+                case 1: {
+
+                    GL11.glRotatef(90F, 0F, 1F, 0F);
+                    break;
+                }
+
+                case 2: {
+
+                    GL11.glRotatef(180F, 0F, 1F, 0F);
+                    break;
+                }
+
+                case 3: {
+
+                    GL11.glRotatef(90F, 0F, -1F , 0F);
+                    break;
+                }
+            }
+
+            switch(item.getItemDamage()) {
+
+                case 1: {
+
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_1);
+                    Models.ModelSender.renderPart("Render_Addition_1");
+                    break;
+                }
+
+                case 2: {
+
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_2);
+                    Models.ModelSender.renderPart("Render_Addition_2");
+                    break;
+                }
+
+                case 3: {
+
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_3);
+                    Models.ModelSender.renderPart("Render_Addition_3");
+                    break;
+                }
+
+                case 4: {
+
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_4);
+                    Models.ModelSender.renderPart("Render_Addition_4");
+                    break;
+                }
+
+                case 5: {
+
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_5);
+                    Models.ModelSender.renderPart("Render_Addition_5");
+                    break;
+                }
+
+                case 6: {
+
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_6);
+                    Models.ModelSender.renderPart("Render_Addition_6");
+                    break;
+                }
+
+                case 7: {
+
+                    UtilRender.renderTexture(Textures.SENDER_ADDITION_7);
+                    Models.ModelSender.renderPart("Render_Addition_7");
+                    break;
+                }
+            }
+        }
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }
+
 }

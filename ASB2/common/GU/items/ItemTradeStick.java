@@ -10,7 +10,7 @@ import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilInventory;
 import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilMisc;
-import ASB2.utils.UtilPlayers;
+import ASB2.utils.UtilEntity;
 
 public class ItemTradeStick extends ItemBase {
 
@@ -50,7 +50,7 @@ public class ItemTradeStick extends ItemBase {
 
             this.setBlockIDAndMeta(itemStack, world.getBlockId(x, y, z),
                     world.getBlockMetadata(x, y, z));
-            UtilPlayers.sendChatToPlayer(player,
+            UtilEntity.sendChatToPlayer(player,
                     "Block ID set to: " + world.getBlockId(x, y, z));
             return true;
         }

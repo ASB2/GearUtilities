@@ -1,6 +1,7 @@
 package GU.items;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -8,7 +9,7 @@ import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.IBlockCycle;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilItemStack;
-import ASB2.utils.UtilPlayers;
+import ASB2.utils.UtilEntity;
 
 public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockCycle {
 
@@ -25,13 +26,13 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
 
             this.decrementLength(player);
 
-            UtilPlayers.sendChatToPlayer(player, "Debth of tunnel == " + UtilItemStack.getNBTTagInt(itemStack, "length"));
+            UtilEntity.sendChatToPlayer(player, "Debth of tunnel == " + UtilItemStack.getNBTTagInt(itemStack, "length"));
 
             return itemStack;
         }
 
         this.incrementLength(player);
-        UtilPlayers.sendChatToPlayer(player, "Debth of tunnel == " + UtilItemStack.getNBTTagInt(itemStack, "length"));
+        UtilEntity.sendChatToPlayer(player, "Debth of tunnel == " + UtilItemStack.getNBTTagInt(itemStack, "length"));
 
         return itemStack;
     }
@@ -72,9 +73,9 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
     }
 
     @Override
-    public boolean execute(EntityPlayer player, World world, int x, int y, int z, ForgeDirection side, int mid) {
+    public boolean execute(EntityLivingBase player, World world, int x, int y, int z, ForgeDirection side, int mid) {
 
-        int blockToBreak = UtilItemStack.getNBTTagInt( player.inventory.getCurrentItem(), "id");
+        int blockToBreak = UtilItemStack.getNBTTagInt(((EntityPlayer)player).inventory.getCurrentItem(), "id");
 
         if (world.blockExists(x, y, z)) {
 
@@ -86,11 +87,11 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
 
                         if (world.getBlockId(x, y, z) == blockToBreak || (world.getBlockId(x, y, z) == Block.oreRedstone.blockID && blockToBreak == Block.oreRedstoneGlowing.blockID)) {
 
-                            if(!player.capabilities.isCreativeMode) {
+                            if(!((EntityPlayer)player).capabilities.isCreativeMode) {
 
-                                if (UtilItemStack.damageItem(player, player.inventory.getCurrentItem(), 1)) {
+                                if (UtilItemStack.damageItem(player, ((EntityPlayer)player).inventory.getCurrentItem(), 1)) {
 
-                                    UtilBlock.breakAndAddToInventory(player.inventory, world, x, y, z, 5, true);
+                                    UtilBlock.breakAndAddToInventory(((EntityPlayer)player).inventory, world, x, y, z, 5, true);
                                     return true;
                                 }
                             }

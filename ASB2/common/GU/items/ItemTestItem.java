@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.IBlockCycle;
 import ASB2.utils.UtilBlock;
-import ASB2.utils.UtilPlayers;
+import ASB2.utils.UtilEntity;
 import GU.api.potion.IPotionIngredient;
 import GU.api.runes.IRuneBlock;
 import GU.api.runes.IRuneItem;
@@ -55,7 +55,7 @@ public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IP
     }
 
     @Override
-    public boolean execute(EntityPlayer player, World world, int x, int y, int z, ForgeDirection side, int id) {
+    public boolean execute(EntityLivingBase player, World world, int x, int y, int z, ForgeDirection side, int id) {
 
         UtilBlock.breakBlock(world, x, y, z);
         return false;
@@ -93,7 +93,7 @@ public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IP
     @Override
     public void onThrownPotionHitEntity(World world, ItemStack potion, EntityLivingBase entity) {
 
-        UtilPlayers.sendChatToPlayer(Minecraft.getMinecraft().thePlayer, "I Hit Something");
+        UtilEntity.sendChatToPlayer(Minecraft.getMinecraft().thePlayer, "I Hit Something");
         entity.addPotionEffect(new PotionEffect(1, 1000, 3));
     }
 

@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilDirection;
-import ASB2.utils.UtilPlayers;
+import ASB2.utils.UtilEntity;
 import GU.BlockRegistry;
 
 public class ItemPhantomPlacer extends ItemBase {
@@ -40,17 +40,17 @@ public class ItemPhantomPlacer extends ItemBase {
 
         if (!world.isRemote) {
 
-            int[] coords = UtilDirection.translateDirectionToCoords(UtilPlayers
+            int[] coords = UtilDirection.translateDirectionToCoords(UtilEntity
                     .getEntityDirection(player, !player.isSneaking()),
                     (int) player.posX, (int) player.posY, (int) player.posZ);
 
-            if (UtilPlayers.getEntityDirection(player, !player.isSneaking()) == ForgeDirection.DOWN) {
+            if (UtilEntity.getEntityDirection(player, !player.isSneaking()) == ForgeDirection.DOWN) {
 
                 UtilBlock.placeBlockInAir(world, coords[0], coords[1],
                         coords[2] - 1, BlockRegistry.BlockPhantomBlock.blockID,
                         0);
                 return itemStack;
-            } else if (UtilPlayers.getEntityDirection(player,
+            } else if (UtilEntity.getEntityDirection(player,
                     !player.isSneaking()) == ForgeDirection.DOWN) {
 
                 UtilBlock.placeBlockInAir(world, coords[0] - 2, coords[1] + 1,

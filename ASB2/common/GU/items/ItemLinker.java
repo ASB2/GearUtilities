@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import ASB2.utils.UtilItemStack;
-import ASB2.utils.UtilPlayers;
+import ASB2.utils.UtilEntity;
 
 public class ItemLinker extends ItemBase {
 
@@ -27,7 +27,7 @@ public class ItemLinker extends ItemBase {
             this.setDimentionIDCoord(itemStack, player.dimension);
             this.setCoodsSet(itemStack, true);
 
-            UtilPlayers.sendChatToPlayer(player, "Coordinates set to X: " + x + " Y: " + y + " Z: " + z);
+            UtilEntity.sendChatToPlayer(player, "Coordinates set to X: " + x + " Y: " + y + " Z: " + z);
         }
 
         return !this.isCoodsSet(itemStack);

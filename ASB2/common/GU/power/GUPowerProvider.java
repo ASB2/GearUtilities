@@ -40,12 +40,11 @@ public class GUPowerProvider extends PowerProvider {
 
                         if (tileToAffectCasted.getPowerProvider() != null) {
 
-                            switch (this.getCurrentState()) {
+                            switch (this.getCurrentState(direction)) {
 
                                 case SINK: {
 
-                                    if (tileToAffectCasted.getPowerProvider()
-                                            .getCurrentState() == State.SOURCE) {
+                                    if (tileToAffectCasted.getPowerProvider().getCurrentState(direction) == State.SOURCE) {
 
                                         UtilPower.transferPower(tileToAffectCasted, direction, (IPowerMisc) tile);
                                     }
@@ -54,7 +53,7 @@ public class GUPowerProvider extends PowerProvider {
 
                                 case SOURCE: {
 
-                                    if (tileToAffectCasted.getPowerProvider().getCurrentState() == State.SINK) {
+                                    if (tileToAffectCasted.getPowerProvider().getCurrentState(direction) == State.SINK) {
 
                                         UtilPower.transferPower((IPowerMisc) tile, direction, tileToAffectCasted);
                                     }
@@ -106,7 +105,7 @@ public class GUPowerProvider extends PowerProvider {
     }
 
     @Override
-    public State getCurrentState() {
+    public State getCurrentState(ForgeDirection direction) {
 
         if (currentState == null) {
 

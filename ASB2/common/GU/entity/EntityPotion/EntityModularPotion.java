@@ -51,7 +51,7 @@ public class EntityModularPotion extends EntityThrowable {
         if(stack != null) {
             
             IPotion potion = ((IPotion)stack.getItem());
-            ArrayList<ItemStack> itemLists = ((IPotion)stack.getItem()).getIngredients(stack);
+            ArrayList<ItemStack> itemLists = ((IPotion)stack.getItem()).getModules(stack);
 
             if(!this.worldObj.isRemote) {
 

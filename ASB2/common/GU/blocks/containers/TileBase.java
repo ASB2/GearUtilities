@@ -1,5 +1,6 @@
 package GU.blocks.containers;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -14,9 +15,11 @@ import GU.api.color.VanillaColor;
 import GU.api.power.PowerProvider;
 import GU.api.wait.IWaitTrigger;
 import GU.api.wait.Wait;
+import GU.packets.*;
 
 public abstract class TileBase extends TileEntity implements IVanillaColorable, IWaitTrigger, IWrenchable {
 
+    int wait;
     protected PowerProvider powerProvider;
     protected ForgeDirection orientation;
     protected VanillaColor color;
@@ -25,7 +28,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     protected Wait waitTimer;
 
     public TileBase() {
-        
+
         if (color == null)
             color = VanillaColor.NONE;
 
@@ -34,11 +37,21 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
         fluidTank = new FluidTank(0);
     }
-    
+
     public void onButtonEvent(int buttonID) {
-        
+
     }
 
+    public void sendReqularPowerPackets(int delay) {
+
+        wait++;
+
+        if(wait >= delay) {
+
+            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId,(new PowerPacket(xCoord, yCoord, zCoord, this.powerProvider.getPowerStored(), this.powerProvider.getPowerMax()).makePacket()));
+            wait = 0;
+        }
+    }
     public ForgeDirection getOrientation() {
 
         return ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
@@ -109,8 +122,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
         fluidTank.readFromNBT(tag);
 
         if (color == VanillaColor.NONE || color == null)
-            color = VanillaColor.translateNumberToColor(tag
-                    .getInteger("color"));
+            color = VanillaColor.translateNumberToColor(tag.getInteger("color"));
 
         if (this.powerProvider != null)
             this.powerProvider.readFromNBT(tag);
@@ -120,11 +132,12 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
         tileItemStacks = new ItemStack[tileItemStacks.length];
 
         for (int i = 0; i < nbttaglist.tagCount(); i++) {
-            NBTTagCompound nbttagcompound = (NBTTagCompound) nbttaglist
-                    .tagAt(i);
+
+            NBTTagCompound nbttagcompound = (NBTTagCompound) nbttaglist.tagAt(i);
             byte byte0 = nbttagcompound.getByte("Slot");
 
             if (byte0 >= 0 && byte0 < tileItemStacks.length) {
+
                 tileItemStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound);
             }
         }

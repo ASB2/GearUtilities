@@ -23,6 +23,7 @@ public abstract class GUPacketBase {
         builder.put(Integer.valueOf(0), TankPacket.class);
         builder.put(Integer.valueOf(1), ColorPacket.class);
         builder.put(Integer.valueOf(2), ButtonPressPacket.class);
+        builder.put(Integer.valueOf(3), PowerPacket.class);
         
         idMap = builder.build();
     }

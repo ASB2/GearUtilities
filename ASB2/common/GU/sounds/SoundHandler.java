@@ -7,11 +7,14 @@ import GU.info.Reference;
 
 public class SoundHandler {
 
-    public SoundHandler() {
-
-        MinecraftForge.EVENT_BUS.register(this);
+    public SoundHandler() {        
     }
 
+    public static void init() {
+        
+        MinecraftForge.EVENT_BUS.register(new SoundHandler());
+    }
+    
     @ForgeSubscribe
     public void doSoundsLoad(SoundLoadEvent event) {
         
