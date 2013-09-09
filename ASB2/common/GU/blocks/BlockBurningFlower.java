@@ -8,13 +8,12 @@ import ASB2.utils.UtilEntity;
 
 public class BlockBurningFlower extends FlowerBase {
 
-    public BlockBurningFlower(int par1, Material par3Material) {
-        super(par1, par3Material);
+    public BlockBurningFlower(int id, Material material) {
+        super(id, material);
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World world, int x, int y, int z,
-            Entity entity) {
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
 
         UtilEntity.damageEntity(world, entity, DamageSource.onFire, 1);
     }

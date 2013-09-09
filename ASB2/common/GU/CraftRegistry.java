@@ -143,6 +143,7 @@ public class CraftRegistry {
         // CraftingManager.getInstance().getRecipeList().add(new
         // ShapedOreRecipe(new ItemStack(file.bioMass), new Object[]{"XXX",
         // "XXX", "XXX", Character.valueOf('X'), "bioMass"}));
+        
         UtilRecipe.addStorageBlock9(new ItemStack(BlockRegistry.BlockGarnetBlock), new ItemStack(ItemRegistry.ItemGarnet));
         UtilRecipe.addSword(new ItemStack(ItemRegistry.ItemGarnet), new ItemStack(ItemRegistry.ItemGarnetSword));
         UtilRecipe.addPickaxe(new ItemStack(ItemRegistry.ItemGarnet), new ItemStack(ItemRegistry.ItemGarnetPickaxe));
@@ -166,6 +167,7 @@ public class CraftRegistry {
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 5), new ItemStack(BlockRegistry.BlockSender, 1, 4));
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 6), new ItemStack(BlockRegistry.BlockSender, 1, 5));
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 7), new ItemStack(BlockRegistry.BlockSender, 1, 6));
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 0), new ItemStack(BlockRegistry.BlockSender, 1, 7));
         
          GameRegistry.addSmelting(Item.axeWood.itemID, new ItemStack(
          ItemRegistry.ItemCharcoalAxe), 1.F);

@@ -45,18 +45,12 @@ public class TankPacket extends GUPacketBase {
     @Override
     protected void read(ByteArrayDataInput in) throws ProtocolException {
 
-        try {
-            x = in.readInt();
-            y = in.readInt();
-            z = in.readInt();
-            liquidId = in.readInt();
-            liquidAmount = in.readInt();
-            itWorked = true;
-        } catch (IllegalStateException e) {
-
-            // e.printStackTrace();
-            return;
-        }
+        x = in.readInt();
+        y = in.readInt();
+        z = in.readInt();
+        liquidId = in.readInt();
+        liquidAmount = in.readInt();
+        itWorked = true;
     }
 
     @Override

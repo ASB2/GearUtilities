@@ -7,7 +7,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.fluids.IFluidHandler;
+import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilDirection;
+import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
 import ASB2.vector.Vector3;
 import GU.api.cluster.IClusterTrigger;
@@ -21,7 +24,7 @@ import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.entity.EntityCluster.EntityInfoCluster;
 import GU.info.Variables;
-import GU.power.*;
+import GU.power.GUPowerProvider;
 
 public class TileSender extends TileBase implements IClusterTrigger, IInventory, IPowerMisc {
 
@@ -30,7 +33,8 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
     public static final int POWER_MODE = 3;
     public static final int LIQUID_MODE = 4;
     public static final int VORTEX_STABILIZE_MODE = 5;
-    
+    public static final int BLOCK_BREAK_MODE = 6;
+
     float animationPosition;
     int currentMode;
 
@@ -44,7 +48,7 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
     public void updateEntity() {
 
         animationPosition++;
-        
+
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
             this.waitTimer.update();
@@ -136,38 +140,56 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
                         }
                     }
                 }
+                else {
+                    
+                    if(sink instanceof IFluidHandler && source instanceof IFluidHandler) {
+                        
+                        if(LIQUID_MODE == this.getMode()) {
+                            
+                            if(PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, false, true) && UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, false)) {
+                                
+                                PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, true, true);
+                                UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, true);  
+                            }                          
+                        }
+                    }
+                }
             }
         }            
-    } 
-
-
+    }
 
     @Override
     public void onClustorCollosion(IClusterTrigger source, ForgeDirection side, Vector3 position, IClustor clustor) {
         // TODO Auto-generated method stub
 
     }
-
-    public boolean hasAdjacent(TileEntity tile) {
-
-        if(tile != null) {
-
-        }
-        return false;
-    }
-
+    
     @Override
     public void trigger(int id) {
-        
-        TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
 
-        if(tile != null) {
+        if(BLOCK_BREAK_MODE == this.getMode()) {
 
-            if(tile instanceof IInventory || tile instanceof IPowerMisc) {
+            if(PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, false, true)) {
 
-                if(!worldObj.isRemote) {
+                if(UtilBlock.breakAndAddToInventory(this, worldObj, xCoord + this.getOrientation().getOpposite().offsetX, yCoord + this.getOrientation().getOpposite().offsetY, zCoord + this.getOrientation().getOpposite().offsetZ, false)) {
 
-                    worldObj.spawnEntityInWorld(new EntityInfoCluster(worldObj, new Vector3(this), this.getOrientation(), this, 0));
+                    PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, true, true);
+                    UtilBlock.breakAndAddToInventory(this, worldObj, xCoord + this.getOrientation().getOpposite().offsetX, yCoord + this.getOrientation().getOpposite().offsetY, zCoord + this.getOrientation().getOpposite().offsetZ, true);
+                }
+            }
+        }
+        else {
+            
+            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
+
+            if(tile != null) {
+
+                if(tile instanceof IInventory || tile instanceof IPowerMisc || tile instanceof IFluidHandler) {
+
+                    if(!worldObj.isRemote) {
+
+                        worldObj.spawnEntityInWorld(new EntityInfoCluster(worldObj, new Vector3(this), this.getOrientation(), this, 0));
+                    }
                 }
             }
         }
@@ -255,7 +277,7 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        
+
         currentMode = tag.getInteger("mode");        
     }
 

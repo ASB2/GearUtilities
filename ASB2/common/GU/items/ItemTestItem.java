@@ -24,9 +24,6 @@ public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IP
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
 
-        if(!world.isRemote) {
-            
-        }
         return true;
     }
 
@@ -92,8 +89,7 @@ public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IP
 
     @Override
     public void onThrownPotionHitEntity(World world, ItemStack potion, EntityLivingBase entity) {
-
-        UtilEntity.sendChatToPlayer(Minecraft.getMinecraft().thePlayer, "I Hit Something");
+        
         entity.addPotionEffect(new PotionEffect(1, 1000, 3));
     }
 

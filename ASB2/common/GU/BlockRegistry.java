@@ -81,11 +81,11 @@ public class BlockRegistry {
         BlockGarnetBlock.setBlockName("BlockGarnetBlock");
         LanguageRegistry.addName(BlockGarnetBlock, "Garnet Block");
 
-        BlockBurningFlower = new BlockBurningFlower(config.getBlock( "BlockBurningFlower", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockBurningFlower = new BlockBurningFlower(config.getBlock( "BlockBurningFlower", BlockRegistry.getNextBaseID()).getInt(), Material.leaves);
         BlockBurningFlower.setBlockName("BlockBurningFlower");
         LanguageRegistry.addName(BlockBurningFlower, "Burning Flower");
 
-        BlockFreezingFlower = new BlockFreezingFlower(config.getBlock( "BlockFreezingFlower", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockFreezingFlower = new BlockFreezingFlower(config.getBlock( "BlockFreezingFlower", BlockRegistry.getNextBaseID()).getInt(), Material.leaves);
         BlockFreezingFlower.setBlockName("BlockFreezingFlower");
         LanguageRegistry.addName(BlockFreezingFlower, "Freezing Flower");
 

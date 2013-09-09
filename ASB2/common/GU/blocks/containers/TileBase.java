@@ -1,6 +1,5 @@
 package GU.blocks.containers;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -8,14 +7,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
-import ASB2.utils.UtilBlock;
 import GU.api.IWrenchable;
 import GU.api.color.IVanillaColorable;
 import GU.api.color.VanillaColor;
 import GU.api.power.PowerProvider;
 import GU.api.wait.IWaitTrigger;
 import GU.api.wait.Wait;
-import GU.packets.*;
+import GU.packets.PowerPacket;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public abstract class TileBase extends TileEntity implements IVanillaColorable, IWaitTrigger, IWrenchable {
 
@@ -82,11 +81,6 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
     @Override
     public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
-
-        if (isSneaking) {
-
-            UtilBlock.breakAndAddToInventory(null, worldObj, x, y, z, 1, true);
-        }
 
         switch (getOrientation()) {
 

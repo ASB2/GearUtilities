@@ -60,7 +60,7 @@ public class ItemBasicDestructionCatalyst extends ItemBase implements
 
                             if (UtilItemStack.damageItem(player, ((EntityPlayer)player).inventory.getCurrentItem(), 1)) {
 
-                                UtilBlock.breakAndAddToInventory( ((EntityPlayer)player).inventory, world, x, y, z, 1, true);
+                                UtilBlock.breakAndAddToInventory(((EntityPlayer)player).inventory, world, x, y, z, true);
                             }
                         }
                     }

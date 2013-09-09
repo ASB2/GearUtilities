@@ -82,17 +82,12 @@ public class ItemTradeStick extends ItemBase {
 
                             if (!player.capabilities.isCreativeMode) {
 
-                                if (UtilItemStack.damageItem(player,
-                                        player.inventory.getCurrentItem(), 1)) {
+                                if (UtilItemStack.damageItem(player, player.inventory.getCurrentItem(), 1)) {
 
-                                    if (UtilInventory.consumeItemStack(
-                                            player.inventory, blockToSet, 1)) {
+                                    if (UtilInventory.consumeItemStack(player.inventory, blockToSet, 1)) {
 
-                                        UtilBlock.breakAndAddToInventory(
-                                                player.inventory, world, x, y,
-                                                z, 1, true);
-                                        world.setBlock(x, y, z, blockToPlace,
-                                                blockMeta, 3);
+                                        UtilBlock.breakAndAddToInventorySpawnExcess(player.inventory, world, x, y, z, 1, true);
+                                        world.setBlock(x, y, z, blockToPlace, blockMeta, 3);
                                     }
                                 }
                             } else {

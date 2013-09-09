@@ -22,14 +22,12 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
     public TileConnectableTank() {
 
-        this.waitTimer = new Wait(20 * 3, this, 1);
+        this.waitTimer = new Wait(20 * 2, this, 0);
         fluidTank = new FluidTank(maxLiquid);
     }
 
     @Override
     public void updateEntity() {
-
-        waitTimer.update();
 
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
@@ -148,9 +146,10 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
         if(doFill) {
 
-            this.trigger(0);
             worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
         }
+
+        this.trigger(0);
         return fluidTank.fill(resource, doFill);
     }
 
@@ -183,13 +182,13 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
             return null;
         }
-        
+
         if(doDrain) {
-        
-            this.trigger(0);
+
             worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
         }
-        
+
+        this.trigger(0);        
         return fluidTank.drain(resource.amount, doDrain);
     }
 
@@ -237,8 +236,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
     public TileConnectableTank getTankAbove(TileEntity tile) {
 
-        TileEntity below = worldObj.getBlockTileEntity(tile.xCoord,
-                tile.yCoord + 1, tile.zCoord);
+        TileEntity below = worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord + 1, tile.zCoord);
 
         if(below instanceof TileConnectableTank) {
 
@@ -251,13 +249,16 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
     @Override
     public void trigger(int id) {
 
-        if(fluidTank.getFluid() != null) {
+        if(!worldObj.isRemote) {
 
-            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
-        } 
-        else {
+            if(fluidTank.getFluid() != null) {
 
-            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
+                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
+            } 
+            else {
+
+                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
+            }
         }
     }
 }

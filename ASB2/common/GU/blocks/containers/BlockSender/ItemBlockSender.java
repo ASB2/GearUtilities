@@ -25,7 +25,16 @@ public class ItemBlockSender extends GUItemBlock {
             case 2: info.add("Smelting Mode");
             break;
 
-            case 3: info.add("Power Extraction");
+            case 3: info.add("Power Extraction Mode");
+            break;
+            
+            case 4: info.add("Fluid Extraction Mode");
+            break;
+            
+            case 5: info.add("Vortex Stabilization Mode");
+            break;
+            
+            case 6: info.add("Block Breaking Mode");
             break;
         }
     }

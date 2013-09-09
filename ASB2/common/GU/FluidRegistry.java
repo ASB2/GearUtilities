@@ -52,10 +52,10 @@ public class FluidRegistry {
         MoltenEmerald = new FluidBase("Molten Emerald", Color.GREEN.hashCode());
 
         Vitam = new FluidBase("Vitam", Color.BLUE.hashCode());
-        AerVitam = new FluidBase("Aer Essence", Color.YELLOW.hashCode());
-        TerraeVitam = new FluidBase("Terrae Essence", Color.GREEN.hashCode());
-        IgnisVitam = new FluidBase("Ignis Essence", Color.RED.hashCode());
-        AquaVitam = new FluidBase("Aqua Essence", Color.BLUE.hashCode());
+        AerVitam = new FluidBase("Aer Vitam", Color.YELLOW.hashCode());
+        TerraeVitam = new FluidBase("Terrae Vitam", Color.GREEN.hashCode());
+        IgnisVitam = new FluidBase("Ignis Vitam", Color.RED.hashCode());
+        AquaVitam = new FluidBase("Aqua Vitam", Color.BLUE.hashCode());
     }
 
     @ForgeSubscribe

@@ -3,7 +3,7 @@ package GU.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
@@ -50,28 +50,22 @@ public class BlockFalseBlock extends BlockBase {
         float movementFactor = .3F;
         entity.fallDistance = 0;
 
-        if (world.getBlockId(x, y + 1, z) == 0
-                && world.getBlockId(x, y + 2, z) == 0
-                || world.getBlockId(x, y + 1, z) == this.blockID
-                || world.getBlockId(x, y + 2, z) == this.blockID) {
-
-            entity.motionY += movementFactor;
-        }
-
-        if (entity instanceof EntityPlayer) {
+        if (entity instanceof EntityLivingBase) {
 
             entity.extinguish();
 
-            if (world.getBlockId(x, y + 1, z) == 0
-                    && world.getBlockId(x, y + 2, z) == 0
-                    || world.getBlockId(x, y + 1, z) == this.blockID
-                    || world.getBlockId(x, y + 2, z) == this.blockID) {
+            if (((EntityLivingBase) entity).isSneaking()) {
 
-                if (((EntityPlayer) entity).isSneaking()) {
-
-                    entity.motionY -= movementFactor;
-                }
+                entity.motionY -= movementFactor;
             }
+            else {
+
+                entity.motionY += movementFactor;
+            }
+        }
+        else {
+            
+            entity.motionY += movementFactor;
         }
     }
 }

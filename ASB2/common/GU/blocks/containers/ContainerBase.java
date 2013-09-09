@@ -32,8 +32,8 @@ public abstract class ContainerBase extends BlockContainer {
 
         MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);
         this.setCreativeTab(GearUtilities.tabGUBlocks);
-        setHardness(100f);
-        setResistance(100F);
+        setHardness(1.5f);
+        setResistance(10F);
     }
 
     @Override

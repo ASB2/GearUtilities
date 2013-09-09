@@ -14,6 +14,7 @@ public class Variables {
     public static int SENDER_SMELT_COST = 200 + SENDER_ITEM_COST;
     public static int SENDER_POWERSEND_COST = 500 + SENDER_ITEM_COST;
     public static int SENDER_POWERSEND_AMOUNT = 500 + SENDER_ITEM_COST;
+    public static int SENDER_BREAKBLOCK_AMOUNT = 50;
     
     public static void updateVariables(Configuration config) {
         

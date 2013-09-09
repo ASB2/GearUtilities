@@ -27,7 +27,7 @@ public class TileBlockBreaker extends TileBase implements IInventory {
 
             if(canContainBlock() && !BlackLists.getInstance().isOnBlockBreakerBlackList(Block.blocksList[UtilDirection.translateDirectionToBlockId(worldObj, getOrientation(), this)], worldObj.getBlockMetadata(coords[0], coords[1], coords[2]))) {
 
-                UtilBlock.breakAndAddToInventory(this, worldObj, coords[0], coords[1], coords[2], 1, true);
+                UtilBlock.breakAndAddToInventory(this, worldObj, coords[0], coords[1], coords[2], true);
             }
         }
     }
