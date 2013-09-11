@@ -1,6 +1,5 @@
 package GU.items;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -10,7 +9,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.IBlockCycle;
 import ASB2.utils.UtilBlock;
-import ASB2.utils.UtilEntity;
 import GU.api.potion.IPotionIngredient;
 import GU.api.runes.IRuneBlock;
 import GU.api.runes.IRuneItem;
