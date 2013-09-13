@@ -72,9 +72,11 @@ public class BloodStoneRenderer implements IItemRenderer {
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
+GL11.glRotatef(-rotate, 1F, 1,01F);
+
         UtilRender.renderTexture(Textures.BLOOD_STONE_HEXAGON);
         Models.ModelBloodStone.renderPart("Hexagon");
-
+        
         GL11.glRotatef(rotate, 1F, 1,01F);
 
         UtilRender.renderTexture(Textures.BLOOD_STONE_CUBE);
