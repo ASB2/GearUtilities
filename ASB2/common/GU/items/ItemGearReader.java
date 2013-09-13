@@ -47,7 +47,7 @@ public class ItemGearReader extends ItemBase {
                 if (mTile.getPowerProvider() != null) {
 
                     UtilEntity.sendChatToPlayer(player, "Tile has " + mTile.getPowerProvider().getPowerStored() + " out of " + mTile.getPowerProvider().getPowerMax() + " " + Reference.POWER_NAME + " Stored");
-                    UtilEntity.sendChatToPlayer(player, "Tile state: " + mTile.getPowerProvider().getCurrentState(ForgeDirection.getOrientation(side)));
+                    UtilEntity.sendChatToPlayer(player, "Tile state: " + mTile.getPowerProvider().getCurrentState());
                 }
             }
 

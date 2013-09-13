@@ -36,35 +36,7 @@ public abstract class PowerProvider implements IPowerProvider {
 
         if (currentState == null) {
 
-            if (this.outputtingPower(direction)) {
-
-                currentState = State.SOURCE;
-            }
-
-            else if (this.requestingPower(direction)) {
-
-                currentState = State.SINK;
-            }
-
-            else {
-
-                currentState = State.OTHER;
-            }
-        }
-
-        if (this.outputtingPower(direction)) {
-
-            currentState = State.SOURCE;
-        }
-
-        else if (this.requestingPower(direction)) {
-
-            currentState = State.SINK;
-        }
-
-        else {
-
-            currentState = State.OTHER;
+            return State.OTHER;
         }
         return currentState;
     }
@@ -101,22 +73,6 @@ public abstract class PowerProvider implements IPowerProvider {
     public void setMaxPower(float newMaxPower) {
 
         this.powerMax = newMaxPower;
-    }
-
-    public boolean requestingPower(ForgeDirection direction) {
-
-        if (getPowerStored() < getPowerMax())
-            return true;
-
-        return false;
-    }
-
-    public boolean outputtingPower(ForgeDirection direction) {
-
-        if (getPowerStored() > 0)
-            return true;
-
-        return false;
     }
 
     public void readFromNBT(NBTTagCompound tagCompound) {

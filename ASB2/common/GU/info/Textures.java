@@ -19,7 +19,7 @@ public final class Textures {
     public static final ResourceLocation BLOCK_BREAKER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelBlockBreaker.png");
     public static final ResourceLocation RUNIC_CUBE = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelRunicCube.png");
     public static final ResourceLocation CLUSTER_SENDER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelClusterSender.png");
-    
+
     public static final ResourceLocation ITEM_SENDER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelSender.png");
     public static final ResourceLocation SENDER_ADDITION_1 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelSenderRenderAddition1.png");
     public static final ResourceLocation SENDER_ADDITION_2 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelSenderRenderAddition2.png");
@@ -28,7 +28,10 @@ public final class Textures {
     public static final ResourceLocation SENDER_ADDITION_5 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelSenderRenderAddition5.png");
     public static final ResourceLocation SENDER_ADDITION_6 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelSenderRenderAddition6.png");
     public static final ResourceLocation SENDER_ADDITION_7 = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelSenderRenderAddition7.png");
-    
+
+    public static final ResourceLocation BLOOD_STONE_CUBE = new ResourceLocation(Reference.MODDID + ":textures/items/ModelBloodStoneCube.png");
+    public static final ResourceLocation BLOOD_STONE_HEXAGON = new ResourceLocation(Reference.MODDID + ":textures/items/ModelBloodStoneHexagon.png");
+
     public static final ResourceLocation CRYSTAL_BLANK = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalBlank.png");
     public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalAir.png");
     public static final ResourceLocation CRYSTAL_EARTH = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalEarth.png");

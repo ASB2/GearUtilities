@@ -4,5 +4,5 @@ import net.minecraft.item.ItemStack;
 
 public interface IPowerItems {
 
-    IPowerProvider getPowerProvider(ItemStack stack);
+    IItemPowerProvider getPowerProvider(ItemStack stack);
 }

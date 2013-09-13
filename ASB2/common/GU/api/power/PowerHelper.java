@@ -10,7 +10,7 @@ public class PowerHelper {
 
             if(powerProvider.getPowerProvider() != null) {
 
-                if(powerProvider.getPowerProvider().getCurrentState(direction) == State.SINK || powerProvider.getPowerProvider().getCurrentState(direction) == State.OTHER || ignoreState) {
+                if(powerProvider.getPowerProvider().getCurrentState() == State.SINK || powerProvider.getPowerProvider().getCurrentState() == State.OTHER || ignoreState) {
 
                     if(powerProvider.getPowerProvider().gainPower(power, direction, doWork)) {
 
@@ -28,7 +28,7 @@ public class PowerHelper {
 
             if(powerProvider.getPowerProvider() != null) {
 
-                if(powerProvider.getPowerProvider().getCurrentState(direction) == State.SOURCE || powerProvider.getPowerProvider().getCurrentState(direction) == State.OTHER || ignoreState) {
+                if(powerProvider.getPowerProvider().getCurrentState() == State.SOURCE || powerProvider.getPowerProvider().getCurrentState() == State.OTHER || ignoreState) {
 
                     if(powerProvider.getPowerProvider().usePower(power, direction, doWork)) {
 

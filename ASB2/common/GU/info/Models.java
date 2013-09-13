@@ -12,6 +12,7 @@ public final class Models {
     public static IModelCustom ModelRunicCube;
     public static IModelCustom ModelCulsterSender;
     public static IModelCustom ModelSender;
+    public static IModelCustom ModelBloodStone;
     
     public static final String LAMP = Reference.RESOURCE_LOCATION + "models/ModelLamp.obj";
     public static final String CREATION_TABLE = Reference.RESOURCE_LOCATION + "models/ModelCreationTable.obj";
@@ -21,6 +22,7 @@ public final class Models {
     public static final String RUNIC_CUBE = Reference.RESOURCE_LOCATION + "models/ModelRunicCube.obj";
     public static final String CLUSTER_SENDER = Reference.RESOURCE_LOCATION + "models/ModelClusterSender.obj";
     public static final String SENDER = Reference.RESOURCE_LOCATION + "models/ModelSender.obj";
+    public static final String BLOOD_STONE = Reference.RESOURCE_LOCATION + "models/ModelBloodStone.obj";
     
     public static void initModels() {
 
@@ -31,5 +33,6 @@ public final class Models {
         ModelRunicCube = AdvancedModelLoader.loadModel(Models.RUNIC_CUBE);
         ModelCulsterSender = AdvancedModelLoader.loadModel(Models.CLUSTER_SENDER);
         ModelSender = AdvancedModelLoader.loadModel(Models.SENDER);
+        ModelBloodStone = AdvancedModelLoader.loadModel(Models.BLOOD_STONE);
     }
 }

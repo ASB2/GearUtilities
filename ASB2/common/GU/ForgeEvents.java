@@ -1,7 +1,7 @@
 package GU;
 
-import java.util.Random;
-
+import ASB2.utils.UtilBlock;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityHorse;
@@ -13,35 +13,32 @@ import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import ASB2.utils.UtilBlock;
-import ASB2.vector.Vector3;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
 public class ForgeEvents {
 
     @ForgeSubscribe
-    public void LivingDeathEven(LivingDeathEvent event) {
+    public void onEntityDrop(LivingDropsEvent event) {
 
-        if(event.entityLiving instanceof EntityPig 
-                || event.entityLiving instanceof EntitySheep 
-                || event.entityLiving instanceof EntityCow 
-                || event.entityLiving instanceof EntityChicken 
-                || event.entityLiving instanceof EntitySquid 
-                || event.entityLiving instanceof EntityWolf 
-                || event.entityLiving instanceof EntityMooshroom 
-                || event.entityLiving instanceof EntityOcelot 
-                || event.entityLiving instanceof EntityVillager
-                || event.entityLiving instanceof EntityHorse) {
+        if(!event.entityLiving.worldObj.isRemote) {
 
-            Random rand = new Random();
+            if(!event.isCanceled()) {
 
-            if(rand.nextInt(10) == 1) {
+                    UtilBlock.spawnItemStackEntity(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemRegistry.ItemCrystal.ItemBloodCrystalShard, 1);
 
-                if(!event.entityLiving.worldObj.isRemote) {
+                    if(event.entityLiving instanceof EntityPig 
+                            || event.entityLiving instanceof EntitySheep 
+                            || event.entityLiving instanceof EntityCow 
+                            || event.entityLiving instanceof EntityChicken 
+                            || event.entityLiving instanceof EntitySquid 
+                            || event.entityLiving instanceof EntityWolf 
+                            || event.entityLiving instanceof EntityMooshroom 
+                            || event.entityLiving instanceof EntityOcelot 
+                            || event.entityLiving instanceof EntityVillager
+                            || event.entityLiving instanceof EntityHorse) {
 
-                    Vector3 entiyPos = new Vector3(event.entityLiving);
-                    UtilBlock.spawnItemStackEntity(event.entityLiving.worldObj, entiyPos.intX(), entiyPos.intY(), entiyPos.intZ(), ItemRegistry.ItemCrystal.ItemBloodCrystalShard, 1);
-                }   
+                        event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemRegistry.ItemCrystal.ItemBloodCrystalShard));
+                    }
             }
         }
     }

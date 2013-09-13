@@ -24,6 +24,7 @@ import GU.items.ItemRainBGone;
 import GU.items.ItemTeleporter;
 import GU.items.ItemTestItem;
 import GU.items.ItemTradeStick;
+import GU.items.ItemBloodStone.ItemBloodStone;
 import GU.items.ItemCrystalShards.ItemCrystal;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -46,7 +47,8 @@ public class ItemRegistry {
     public static ItemBase ItemPhantomPlacer;
     public static ItemBase ItemBrewedPotion;    
     public static Item ItemCharcoalSword, ItemCharcoalPickaxe, ItemCharcoalShovel, ItemCharcoalAxe; 
-    public static Item ItemGarnetSword, ItemGarnetPickaxe, ItemGarnetShovel, ItemGarnetAxe, ItemGarnetHoe, ItemGarnetScythe; 
+    public static Item ItemGarnetSword, ItemGarnetPickaxe, ItemGarnetShovel, ItemGarnetAxe, ItemGarnetHoe, ItemGarnetScythe;
+    public static ItemBase ItemBloodStone;   
     
     private static int id = 5000;
     
@@ -149,6 +151,10 @@ public class ItemRegistry {
         ItemGarnetScythe = new ScytheBase(config.getItem("ItemGarnetScythe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID +  ":ItemGarnetScythe");
         LanguageRegistry.addName(ItemGarnetScythe, "Garnet Scythe");
         ItemGarnetScythe.setCreativeTab(GearUtilities.tabGUItems);
+        
+        ItemBloodStone = new ItemBloodStone(config.getItem("ItemBloodStone", ItemRegistry.getNextBaseID()).getInt());
+        ItemBloodStone.setItemName("ItemBloodStone");
+        LanguageRegistry.addName(ItemBloodStone, "Blood Stone");
     }
 
     public static int getNextBaseID() {

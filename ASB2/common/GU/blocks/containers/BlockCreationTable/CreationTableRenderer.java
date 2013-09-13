@@ -14,8 +14,7 @@ import GU.info.Textures;
 public class CreationTableRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
     @Override
-    public void renderTileEntityAt(TileEntity tileentity, double x, double y,
-            double z, float f) {
+    public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
         if (tileentity instanceof TileCreationTable) {
 
@@ -38,8 +37,7 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
-            ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
 
         return true;
     }
@@ -78,8 +76,7 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
         }
     }
 
-    private void renderItemSwitched(ItemRenderType type, float x, float y,
-            float z, float scale) {
+    private void renderItemSwitched(ItemRenderType type, float x, float y, float z, float scale) {
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);

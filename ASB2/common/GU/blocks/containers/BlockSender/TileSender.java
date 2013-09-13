@@ -40,7 +40,7 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
 
     public TileSender() {
 
-        waitTimer = new Wait(20, this, 0);
+        waitTimer = new Wait(5, this, 0);
         this.tileItemStacks = new ItemStack[9];    
         this.powerProvider = new GUPowerProvider(PowerClass.LOW, State.SINK);
     }

@@ -5,6 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import GU.BlockRegistry;
+import GU.ItemRegistry;
 import GU.blocks.BlockTestRender.TestRenderRenderer;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.GuiAdvancedPotionBrewery;
 import GU.blocks.containers.BlockBlockBreaker.BlockBreakerRenderer;
@@ -17,17 +18,18 @@ import GU.blocks.containers.BlockConnectableTank.ConnectableTankRenderer;
 import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
+import GU.blocks.containers.BlockRunicCube.RunicCubeRenderer;
+import GU.blocks.containers.BlockRunicCube.TileRunicCube;
 import GU.blocks.containers.BlockSender.GuiSender;
 import GU.blocks.containers.BlockSender.SenderRenderer;
 import GU.blocks.containers.BlockSender.TileSender;
-import GU.blocks.containers.BlockRunicCube.RunicCubeRenderer;
-import GU.blocks.containers.BlockRunicCube.TileRunicCube;
 import GU.entity.EntityCluster.EntityInfoCluster;
 import GU.entity.EntityCluster.InfoClusterRenderer;
 import GU.entity.EntityTest.EntityTestEntity;
 import GU.entity.EntityTest.TestEntityRenderer;
 import GU.info.Gui;
 import GU.info.Models;
+import GU.items.ItemBloodStone.BloodStoneRenderer;
 import GU.models.BlockSimpleRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -56,6 +58,8 @@ public class ClientProxy extends CommonProxy {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileSender.class, new SenderRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSender.blockID, new SenderRenderer());
+        
+        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemBloodStone.itemID, new BloodStoneRenderer());
         
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());
