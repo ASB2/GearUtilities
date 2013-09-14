@@ -6,6 +6,16 @@ import net.minecraftforge.common.ForgeDirection;
 
 public class PowerHelper {
 
+    public static boolean addEnergyToProviderFromInventory(IPowerProvider provider, IInventory inventory, float power, boolean doUse) {
+        
+        if(provider.gainPower(power, ForgeDirection.UNKNOWN, false) && PowerHelper.useEnergyFromInventory(inventory, power, false)) {
+            
+            PowerHelper.useEnergyFromInventory(inventory, power, true);
+            provider.gainPower(power, ForgeDirection.UNKNOWN, true);
+            return true;
+        }
+        return false;
+    }
     public static boolean useEnergyFromInventory(IInventory inventory, float power, boolean doUse) {
 
         for(int i = 0; i < inventory.getSizeInventory(); i++) {

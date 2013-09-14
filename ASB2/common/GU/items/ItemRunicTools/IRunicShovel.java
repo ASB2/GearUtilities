@@ -65,6 +65,13 @@ public class IRunicShovel extends ShovelBase implements IPowerItem {
                 return itemStack;
             }
             
+            if(this.getPowerProvider(itemStack).gainPower(5, ForgeDirection.UNKNOWN, false) && PowerHelper.useEnergyFromInventory(player.inventory, 5, false)) {
+
+                this.getPowerProvider(itemStack).gainPower(5, ForgeDirection.UNKNOWN, true);
+                PowerHelper.useEnergyFromInventory(player.inventory, 5, true);
+                return itemStack;
+            }
+            
             if(this.getPowerProvider(itemStack).gainPower(1, ForgeDirection.UNKNOWN, false) && PowerHelper.useEnergyFromInventory(player.inventory, 1, false)) {
 
                 this.getPowerProvider(itemStack).gainPower(1, ForgeDirection.UNKNOWN, true);
