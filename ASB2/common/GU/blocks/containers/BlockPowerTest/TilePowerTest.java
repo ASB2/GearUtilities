@@ -3,7 +3,6 @@ package GU.blocks.containers.BlockPowerTest;
 import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
-import GU.api.power.State;
 import GU.blocks.containers.TileBase;
 import GU.power.GUPowerProvider;
 
@@ -11,7 +10,7 @@ public class TilePowerTest extends TileBase implements IPowerMisc {
 
     public TilePowerTest() {
 
-        this.powerProvider = new GUPowerProvider(PowerClass.LOW, State.OTHER);
+        this.powerProvider = new GUPowerProvider(PowerClass.LOW);
     }
 
     @Override
@@ -19,11 +18,11 @@ public class TilePowerTest extends TileBase implements IPowerMisc {
 
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
-            this.getPowerProvider().setPower(this.getPowerProvider().getPowerMax());         
+            this.getPowerProvider().setPowerStored(this.getPowerProvider().getPowerMax());         
         }
         else {
             
-            this.getPowerProvider().setPower(0);   
+            this.getPowerProvider().setPowerStored(0);   
         }
         
         ((GUPowerProvider) this.getPowerProvider()).movePower(worldObj, xCoord, yCoord, zCoord, !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord));

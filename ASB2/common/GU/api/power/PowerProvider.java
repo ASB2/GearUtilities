@@ -4,8 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 
 public abstract class PowerProvider implements IPowerProvider {
-
-    protected State currentState;
+    
     protected PowerClass powerClass;
 
     protected float powerStored;
@@ -32,21 +31,12 @@ public abstract class PowerProvider implements IPowerProvider {
         return this.powerClass;
     }
 
-    public State getCurrentState(ForgeDirection direction) {
-
-        if (currentState == null) {
-
-            return State.OTHER;
-        }
-        return currentState;
-    }
-
     public boolean gainPower(float PowerGained, ForgeDirection direction, boolean doUse) {
 
         if (this.getPowerMax() - this.getPowerStored() >= PowerGained) {
 
             if(doUse)
-                this.setPower(this.getPowerStored() + PowerGained);
+                this.setPowerStored(this.getPowerStored() + PowerGained);
 
             return true;
         }
@@ -58,19 +48,19 @@ public abstract class PowerProvider implements IPowerProvider {
         if (this.getPowerStored() >= PowerUsed) {
 
             if(doUse)
-            this.setPower(this.getPowerStored() - PowerUsed);
+            this.setPowerStored(this.getPowerStored() - PowerUsed);
 
             return true;
         }
         return false;
     }
 
-    public void setPower(float newPower) {
+    public void setPowerStored(float newPower) {
 
         this.powerStored = newPower;
     }
 
-    public void setMaxPower(float newMaxPower) {
+    public void setPowerMax(float newMaxPower) {
 
         this.powerMax = newMaxPower;
     }

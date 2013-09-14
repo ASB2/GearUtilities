@@ -22,7 +22,6 @@ import GU.api.potion.IPotionIngredient;
 import GU.api.power.IPowerMisc;
 import GU.api.power.IPowerProvider;
 import GU.api.power.PowerClass;
-import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.info.Variables;
@@ -39,13 +38,11 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
         this.waitTimer = new Wait(20 * 5, this, 1);
         tileItemStacks = new ItemStack[8];
         fluidTank = new FluidTank(1000 * 10);
-        powerProvider = new GUPowerProvider(PowerClass.LOW, State.SINK);
+        powerProvider = new GUPowerProvider(PowerClass.LOW);
     }
 
     @Override
     public void updateEntity() {
-
-        waitTimer.update();
         
         if(Minecraft.getMinecraft().thePlayer != null&& Minecraft.getMinecraft().thePlayer.openContainer != null && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerAdvancedPotionBrewery)
             this.sendReqularPowerPackets(10);
@@ -223,8 +220,7 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource,
-            boolean doDrain) {
+    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
 
         if(resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
 

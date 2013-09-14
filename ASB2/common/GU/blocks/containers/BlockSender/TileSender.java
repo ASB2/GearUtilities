@@ -19,7 +19,6 @@ import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerHelper;
 import GU.api.power.PowerProvider;
-import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.entity.EntityCluster.EntityInfoCluster;
@@ -42,7 +41,7 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
 
         waitTimer = new Wait(5, this, 0);
         this.tileItemStacks = new ItemStack[9];    
-        this.powerProvider = new GUPowerProvider(PowerClass.LOW, State.SINK);
+        this.powerProvider = new GUPowerProvider(PowerClass.LOW);
     }
 
     public void updateEntity() {
@@ -86,7 +85,7 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
 
                         case EXTRACTING_MODE: {
 
-                            if(PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_ITEM_COST, true, true)) {
+                            if(PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_ITEM_COST, true)) {
 
                                 UtilInventory.moveEntireInventory(sourceI, sinkI);
                                 clustor.stopClustor();
@@ -96,7 +95,7 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
 
                         case SMELTING_MODE: {
 
-                            if(PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_SMELT_COST, true, true)) {
+                            if(PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_SMELT_COST, true)) {
 
                                 for(int i = 0; i < sourceI.getSizeInventory(); i++) {
 
@@ -130,10 +129,10 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
 
                         case POWER_MODE: {
 
-                            if(PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_POWERSEND_COST, false, true) && PowerHelper.moveEnergy(this, sinkI, side, Variables.SENDER_POWERSEND_AMOUNT, false, true)) {
+                            if(PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_POWERSEND_COST, false) && PowerHelper.moveEnergy(this, sinkI, side, Variables.SENDER_POWERSEND_AMOUNT, false)) {
 
-                                PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_POWERSEND_COST, false, true);
-                                PowerHelper.moveEnergy(this, sinkI, side, Variables.SENDER_POWERSEND_AMOUNT, true, true);
+                                PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_POWERSEND_COST, false);
+                                PowerHelper.moveEnergy(this, sinkI, side, Variables.SENDER_POWERSEND_AMOUNT, true);
                                 clustor.stopClustor();
                             }
                             break;
@@ -146,9 +145,9 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
                         
                         if(LIQUID_MODE == this.getMode()) {
                             
-                            if(PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, false, true) && UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, false)) {
+                            if(PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, false) && UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, false)) {
                                 
-                                PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, true, true);
+                                PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, true);
                                 UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, true);  
                             }                          
                         }
@@ -169,11 +168,11 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
 
         if(BLOCK_BREAK_MODE == this.getMode()) {
 
-            if(PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, false, true)) {
+            if(PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, false)) {
 
                 if(UtilBlock.breakAndAddToInventory(this, worldObj, xCoord + this.getOrientation().getOpposite().offsetX, yCoord + this.getOrientation().getOpposite().offsetY, zCoord + this.getOrientation().getOpposite().offsetZ, false)) {
 
-                    PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, true, true);
+                    PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, true);
                     UtilBlock.breakAndAddToInventory(this, worldObj, xCoord + this.getOrientation().getOpposite().offsetX, yCoord + this.getOrientation().getOpposite().offsetY, zCoord + this.getOrientation().getOpposite().offsetZ, true);
                 }
             }

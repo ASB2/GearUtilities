@@ -28,7 +28,7 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
 
             fluidTank.setFluid(fluidStack);
 
-            for (ForgeDirection direction : ForgeDirection.values()) {
+            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
                 TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 

@@ -59,7 +59,7 @@ public class ItemTestItem extends ItemBase implements IRuneItem, IBlockCycle, IP
     @Override
     public int getPowerChange(ItemStack stack) {
         // TODO Auto-generated method stub
-        return 200;
+        return 20;
     }
 
     @Override

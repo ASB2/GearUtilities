@@ -16,6 +16,8 @@ public class Variables {
     public static int SENDER_POWERSEND_AMOUNT = 500 + SENDER_ITEM_COST;
     public static int SENDER_BREAKBLOCK_AMOUNT = 50;
     
+    public static int ANIMATION_SPEED = 5;    
+    
     public static void updateVariables(Configuration config) {
         
         DO_RETROGEN = config.get("Misc", "Do Retrogen", false, "Set to true to enable retrogen").getBoolean(true);

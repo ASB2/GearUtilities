@@ -6,9 +6,9 @@ import net.minecraft.world.World;
 import GU.GUItemBlock;
 import GU.info.Reference;
 
-public class ItemBlockMetadataOre extends GUItemBlock {
+public class ItemBlockMetadataBlock extends GUItemBlock {
 
-    public ItemBlockMetadataOre(int id) {
+    public ItemBlockMetadataBlock(int id) {
         super(id);
 
         this.setHasSubtypes(true);
@@ -45,7 +45,9 @@ public class ItemBlockMetadataOre extends GUItemBlock {
             case 4:
                 return Reference.UNIQUE_ID + "BlockEnergyCrystalOre";
             case 5:
-                return Reference.UNIQUE_ID + "BlockGarnetOre";
+                return Reference.UNIQUE_ID + "BlockGarnetOre";                
+            case 6:
+                return Reference.UNIQUE_ID + "BlockGarnetBlock";
             default:
                 return "Unknown Metadata Notify ASB2";
         }
@@ -68,6 +70,8 @@ public class ItemBlockMetadataOre extends GUItemBlock {
                 return "Energy Crystal Ore";
             case 5:
                 return "Garnet Ore";
+            case 6:
+                return "Garnet Block";
             default:
                 return "Unknown Metadata Notify ASB2";
         }

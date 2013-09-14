@@ -40,26 +40,19 @@ public class ItemPhantomPlacer extends ItemBase {
 
         if (!world.isRemote) {
 
-            int[] coords = UtilDirection.translateDirectionToCoords(UtilEntity
-                    .getEntityDirection(player, !player.isSneaking()),
-                    (int) player.posX, (int) player.posY, (int) player.posZ);
+            int[] coords = UtilDirection.translateDirectionToCoords(UtilEntity .getEntityDirection(player, !player.isSneaking()), (int) player.posX, (int) player.posY, (int) player.posZ);
 
             if (UtilEntity.getEntityDirection(player, !player.isSneaking()) == ForgeDirection.DOWN) {
 
-                UtilBlock.placeBlockInAir(world, coords[0], coords[1],
-                        coords[2] - 1, BlockRegistry.BlockPhantomBlock.blockID,
-                        0);
+                UtilBlock.placeBlockInAir(world, coords[0], coords[1], coords[2] - 1, BlockRegistry.BlockPhantomBlock.blockID, 0);
                 return itemStack;
-            } else if (UtilEntity.getEntityDirection(player,
-                    !player.isSneaking()) == ForgeDirection.DOWN) {
+            } 
+            else if (UtilEntity.getEntityDirection(player, !player.isSneaking()) == ForgeDirection.DOWN) {
 
-                UtilBlock.placeBlockInAir(world, coords[0] - 2, coords[1] + 1,
-                        coords[2] - 1, BlockRegistry.BlockPhantomBlock.blockID,
-                        0);
-            } else {
-                UtilBlock.placeBlockInAir(world, coords[0] - 1, coords[1] + 1,
-                        coords[2] - 1, BlockRegistry.BlockPhantomBlock.blockID,
-                        0);
+                UtilBlock.placeBlockInAir(world, coords[0] - 2, coords[1] + 1, coords[2] - 1, BlockRegistry.BlockPhantomBlock.blockID, 0);
+            } 
+            else {
+                UtilBlock.placeBlockInAir(world, coords[0] - 1, coords[1] + 1, coords[2] - 1, BlockRegistry.BlockPhantomBlock.blockID, 0);
             }
         }
         return itemStack;

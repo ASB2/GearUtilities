@@ -30,6 +30,7 @@ import GU.entity.EntityTest.TestEntityRenderer;
 import GU.info.Gui;
 import GU.info.Models;
 import GU.items.ItemBloodStone.BloodStoneRenderer;
+import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import GU.models.BlockSimpleRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -60,6 +61,8 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSender.blockID, new SenderRenderer());
         
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemBloodStone.itemID, new BloodStoneRenderer());
+        
+        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
         
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());

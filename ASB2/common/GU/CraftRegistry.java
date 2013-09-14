@@ -5,9 +5,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import ASB2.utils.UtilRecipe;
 import GU.info.Variables;
 import cpw.mods.fml.common.registry.GameRegistry;
-import ASB2.utils.*;
 
 public class CraftRegistry {
 
@@ -62,7 +62,7 @@ public class CraftRegistry {
             'R', Item.redstone,
             'I', Item.ingotIron});
 
-        GameRegistry.addRecipe(new ItemStack(BlockRegistry.BlockConnectableTank, 1), new Object[] {
+        GameRegistry.addRecipe(new ItemStack(BlockRegistry.BlockConnectableTank), new Object[] {
             "QGQ", 
             "GEG", 
             "QGQ",
@@ -102,7 +102,7 @@ public class CraftRegistry {
             'C', Variables.CRYSTALS_ALL}));
 
 
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemPhantomPlacer, 1), new Object[] {
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemPhantomPlacer), new Object[] {
             "QIQ", 
             "CAC", 
             "CAC",
@@ -122,35 +122,17 @@ public class CraftRegistry {
             'A', ItemRegistry.ItemAdvancedStick,
             'S', Item.stick}));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemTeleporter, 2), new Object[] {
-            "ECE", 
-            "CDC", 
-            "ECE",
-            
-            'D', Item.diamond,
-            'C', Variables.CRYSTALS_ALL,
-            'E', Item.enderPearl}));
-        
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 1), new Object[] {
-            "CIC", 
-            "IBI", 
-            "CIC",
-            
-            'C', Variables.CRYSTALS_ALL,
-            'I', Item.ingotIron,
-            'B', BlockRegistry.BlockEnhancedBricks}));
-        
         // CraftingManager.getInstance().getRecipeList().add(new
         // ShapedOreRecipe(new ItemStack(file.bioMass), new Object[]{"XXX",
         // "XXX", "XXX", Character.valueOf('X'), "bioMass"}));
         
-        UtilRecipe.addStorageBlock9(new ItemStack(BlockRegistry.BlockGarnetBlock), new ItemStack(ItemRegistry.ItemGarnet));
-        UtilRecipe.addSword(new ItemStack(ItemRegistry.ItemGarnet), new ItemStack(ItemRegistry.ItemGarnetSword));
-        UtilRecipe.addPickaxe(new ItemStack(ItemRegistry.ItemGarnet), new ItemStack(ItemRegistry.ItemGarnetPickaxe));
-        UtilRecipe.addShovel(new ItemStack(ItemRegistry.ItemGarnet), new ItemStack(ItemRegistry.ItemGarnetShovel));
-        UtilRecipe.addAxe(new ItemStack(ItemRegistry.ItemGarnet), new ItemStack(ItemRegistry.ItemGarnetAxe));
-        UtilRecipe.addHoe(new ItemStack(ItemRegistry.ItemGarnet), new ItemStack(ItemRegistry.ItemGarnetHoe));
-        UtilRecipe.addScythe(new ItemStack(ItemRegistry.ItemGarnet), new ItemStack(ItemRegistry.ItemGarnetScythe));
+        UtilRecipe.addStorageBlock9(BlockRegistry.BlockMetadataOre.BlockGarnetBlock, ItemRegistry.ItemCrystal.ItemGarnet);
+        UtilRecipe.addSword(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetSword));
+        UtilRecipe.addPickaxe(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetPickaxe));
+        UtilRecipe.addShovel(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetShovel));
+        UtilRecipe.addAxe(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetAxe));
+        UtilRecipe.addHoe(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetHoe));
+        UtilRecipe.addScythe(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetScythe));
         
         GameRegistry.addShapelessRecipe(new ItemStack(Item.seeds), Item.wheat);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ItemTeleporter), ItemRegistry.ItemTeleporter);
@@ -159,15 +141,6 @@ public class CraftRegistry {
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockConnectedGlass), BlockRegistry.BlockEtherealConnectedGlass);
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Block.torchWood, 6), ItemRegistry.ItemCrystal.ItemFireCrystalShard, Item.stick));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Item.coal, 1, 1), ItemRegistry.ItemCrystal.ItemFireCrystalShard, "logWood"));
-        
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 1), new ItemStack(BlockRegistry.BlockSender, 1, 0));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 2), new ItemStack(BlockRegistry.BlockSender, 1, 1));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 3), new ItemStack(BlockRegistry.BlockSender, 1, 2));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 4), new ItemStack(BlockRegistry.BlockSender, 1, 3));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 5), new ItemStack(BlockRegistry.BlockSender, 1, 4));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 6), new ItemStack(BlockRegistry.BlockSender, 1, 5));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 7), new ItemStack(BlockRegistry.BlockSender, 1, 6));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 0), new ItemStack(BlockRegistry.BlockSender, 1, 7));
         
          GameRegistry.addSmelting(Item.axeWood.itemID, new ItemStack(
          ItemRegistry.ItemCharcoalAxe), 1.F);
@@ -180,5 +153,117 @@ public class CraftRegistry {
         
          GameRegistry.addSmelting(Item.swordWood.itemID, new ItemStack(
          ItemRegistry.ItemCharcoalSword), 1.F);
+         
+         initTempRecipes();
+    }
+    
+    public static void initTempRecipes() {     
+
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemTeleporter, 2), new Object[] {
+            "ECE", 
+            "CDC", 
+            "ECE",
+            
+            'D', Item.diamond,
+            'C', Variables.CRYSTALS_ALL,
+            'E', Item.enderPearl}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockSender, 1), new Object[] {
+            "CIC", 
+            "IBI", 
+            "CIC",
+            
+            'C', Variables.CRYSTALS_ALL,
+            'I', Item.ingotIron,
+            'B', BlockRegistry.BlockEnhancedBricks}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemBloodStone), new Object[] {
+            "BSB", 
+            "SES", 
+            "BSB",
+            
+            'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard,
+            'S', BlockRegistry.BlockFalseBlock,
+            'E', ItemRegistry.ItemCrystal.ItemEnergyCrystalShard}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemRunicSword), new Object[] {
+            "ESE", 
+            "EBE", 
+            "EAE",
+            
+            'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard,
+            'S',ItemRegistry.ItemBloodStone,
+            'E', BlockRegistry.BlockFalseBlock,
+            'A',ItemRegistry.ItemAdvancedStick}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemRunicPickaxe), new Object[] {
+            "BBB", 
+            "ESE", 
+            "EAE",
+            
+            'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard,
+            'S',ItemRegistry.ItemBloodStone,
+            'E', BlockRegistry.BlockFalseBlock,
+            'A',ItemRegistry.ItemAdvancedStick}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemRunicShovel), new Object[] {
+            "EBE", 
+            "ESE", 
+            "EAE",
+            
+            'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard,
+            'S',ItemRegistry.ItemBloodStone,
+            'E', BlockRegistry.BlockFalseBlock,
+            'A',ItemRegistry.ItemAdvancedStick}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemRunicAxe), new Object[] {
+            "BBE", 
+            "BSE", 
+            "EAE",
+            
+            'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard,
+            'S',ItemRegistry.ItemBloodStone,
+            'E', BlockRegistry.BlockFalseBlock,
+            'A',ItemRegistry.ItemAdvancedStick}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemRunicAxe), new Object[] {
+            "EBB", 
+            "ESB", 
+            "EAE",
+            
+            'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard,
+            'S',ItemRegistry.ItemBloodStone,
+            'E', BlockRegistry.BlockFalseBlock,
+            'A',ItemRegistry.ItemAdvancedStick}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemRunicHoe), new Object[] {
+            "BBE", 
+            "ESE", 
+            "EAE",
+            
+            'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard,
+            'S',ItemRegistry.ItemBloodStone,
+            'E', BlockRegistry.BlockFalseBlock,
+            'A',ItemRegistry.ItemAdvancedStick}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemRunicHoe), new Object[] {
+            "EBB", 
+            "ESE", 
+            "EAE",
+            
+            'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard,
+            'S',ItemRegistry.ItemBloodStone,
+            'E', BlockRegistry.BlockFalseBlock,
+            'A',ItemRegistry.ItemAdvancedStick}));
+        
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 1), new ItemStack(BlockRegistry.BlockSender, 1, 0));
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 2), new ItemStack(BlockRegistry.BlockSender, 1, 1));
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 3), new ItemStack(BlockRegistry.BlockSender, 1, 2));
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 4), new ItemStack(BlockRegistry.BlockSender, 1, 3));
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 5), new ItemStack(BlockRegistry.BlockSender, 1, 4));
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 6), new ItemStack(BlockRegistry.BlockSender, 1, 5));
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 7), new ItemStack(BlockRegistry.BlockSender, 1, 6));
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 0), new ItemStack(BlockRegistry.BlockSender, 1, 7));
     }
 }

@@ -27,11 +27,6 @@ public class TileColorable extends TileBase implements IColorable, IPeripheral {
         }
     }
 
-    public void updateEntity() {    
-
-        waitTimer.update();
-    }
-
     @Override
     public Color getColor(ForgeDirection direction) {
 
@@ -43,6 +38,7 @@ public class TileColorable extends TileBase implements IColorable, IPeripheral {
     public boolean setColor(Color color, ForgeDirection direction) {
 
         coloredSides[direction.ordinal()] = color;
+        this.trigger(0);
         worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
         return true;
     }
@@ -73,9 +69,12 @@ public class TileColorable extends TileBase implements IColorable, IPeripheral {
 
     public void trigger(int id) {
 
-        for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS){
+        if(!worldObj.isRemote) {
 
-            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new ColorPacket(xCoord, yCoord, zCoord, coloredSides[direction.ordinal()], direction.ordinal()).makePacket());
+            for(ForgeDirection direction: ForgeDirection.VALID_DIRECTIONS){
+
+                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new ColorPacket(xCoord, yCoord, zCoord, coloredSides[direction.ordinal()], direction.ordinal()).makePacket());
+            }
         }
     }
 

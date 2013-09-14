@@ -15,7 +15,6 @@ import GU.items.ItemBase;
 import GU.items.ItemBasicDestructionCatalyst;
 import GU.items.ItemBrewedPotion;
 import GU.items.ItemEnhancedDestructionCatalyst;
-import GU.items.ItemGarnet;
 import GU.items.ItemGearReader;
 import GU.items.ItemLifeStealingBludgeoningStick;
 import GU.items.ItemLinker;
@@ -28,11 +27,11 @@ import GU.items.ItemBloodStone.ItemBloodStone;
 import GU.items.ItemCrystalShards.ItemCrystal;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import GU.items.ItemRunicTools.*;
 
 public class ItemRegistry {
 
     public static ItemCrystal ItemCrystal;
-    public static ItemBase ItemGarnet;
     public static ItemBase ItemBasicDestructionCatalyst;
     public static ItemBase ItemEnhancedDestructionCatalyst;
     public static ItemBase ItemLifeStealingBludgeoningStick;
@@ -49,16 +48,13 @@ public class ItemRegistry {
     public static Item ItemCharcoalSword, ItemCharcoalPickaxe, ItemCharcoalShovel, ItemCharcoalAxe; 
     public static Item ItemGarnetSword, ItemGarnetPickaxe, ItemGarnetShovel, ItemGarnetAxe, ItemGarnetHoe, ItemGarnetScythe;
     public static ItemBase ItemBloodStone;   
+    public static Item ItemRunicSword, ItemRunicPickaxe, ItemRunicShovel, ItemRunicAxe, ItemRunicHoe;   
     
     private static int id = 5000;
     
     public static void init(Configuration config) {
 
         ItemCrystal = new ItemCrystal(config.getItem("ItemCrystal", ItemRegistry.getNextBaseID()).getInt());
-
-        ItemGarnet = new ItemGarnet(config.getItem("ItemGarnet",ItemRegistry.getNextBaseID()).getInt());
-        ItemGarnet.setItemName("ItemGarnet");
-        LanguageRegistry.addName(ItemGarnet, "Garnet");
 
         ItemTestItem = new ItemTestItem(config.getItem("ItemTestItem",ItemRegistry.getNextBaseID()).getInt());
         ItemTestItem.setItemName("ItemTestItem");
@@ -155,6 +151,26 @@ public class ItemRegistry {
         ItemBloodStone = new ItemBloodStone(config.getItem("ItemBloodStone", ItemRegistry.getNextBaseID()).getInt());
         ItemBloodStone.setItemName("ItemBloodStone");
         LanguageRegistry.addName(ItemBloodStone, "Blood Stone");
+        
+        ItemRunicSword = new ItemRunicSword(config.getItem("ItemRunicSword", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.EMERALD, Reference.MODDID + ":ItemRunicSword");
+        LanguageRegistry.addName(ItemRunicSword, "Runic Sword");
+        ItemRunicSword.setCreativeTab(GearUtilities.tabGUItems);
+        
+        ItemRunicPickaxe = new ItemRunicPickaxe(config.getItem("ItemRunicPickaxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.EMERALD, Reference.MODDID + ":ItemRunicPickaxe");
+        LanguageRegistry.addName(ItemRunicPickaxe, "Runic Pickaxe");
+        ItemRunicPickaxe.setCreativeTab(GearUtilities.tabGUItems);
+        
+        ItemRunicShovel = new IRunicShovel(config.getItem("IRunicShovel", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.EMERALD, Reference.MODDID + ":IRunicShovel");
+        LanguageRegistry.addName(ItemRunicShovel, "Runic Shovel");
+        ItemRunicShovel.setCreativeTab(GearUtilities.tabGUItems);
+        
+        ItemRunicAxe = new ItemRunicAxe(config.getItem("ItemRunicAxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.EMERALD, Reference.MODDID + ":ItemRunicAxe");
+        LanguageRegistry.addName(ItemRunicAxe, "Runic Axe");
+        ItemRunicAxe.setCreativeTab(GearUtilities.tabGUItems);
+        
+        ItemRunicHoe = new ItemRunicHoe(config.getItem("ItemRunicHoe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.EMERALD, Reference.MODDID + ":ItemRunicHoe");
+        LanguageRegistry.addName(ItemRunicHoe, "Runic Hoe");
+        ItemRunicHoe.setCreativeTab(GearUtilities.tabGUItems);
     }
 
     public static int getNextBaseID() {

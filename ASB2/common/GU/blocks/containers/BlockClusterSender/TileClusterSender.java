@@ -69,7 +69,7 @@ public class TileClusterSender extends TileBase implements IClusterTrigger {
 
                         if(sink instanceof IPowerMisc) {
 
-                            PowerHelper.moveEnergy((IPowerMisc)source, (IPowerMisc)sink, side, true, false);
+                            PowerHelper.moveEnergy((IPowerMisc)source, (IPowerMisc)sink, side, true);
                             clustor.stopClustor();
                         }
                     }

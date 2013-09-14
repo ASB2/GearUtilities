@@ -67,7 +67,7 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
 
             case EQUIPPED_FIRST_PERSON: {
 
-                renderItemSwitched(type, 0f - .5F, 0f, 0f + .5F, .5F);
+                renderItemSwitched(type, 0f - .5F, 1f, 0 + .9f, .5F);
                 return;
             }
 

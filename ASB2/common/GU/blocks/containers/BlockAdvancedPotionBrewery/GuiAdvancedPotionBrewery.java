@@ -54,7 +54,7 @@ public class GuiAdvancedPotionBrewery extends GuiBase {
 
         if(tileEntity.fluidTank.getFluid() != null) {
 
-            drawTooltips(tileEntity.fluidTank.getCapacity(), tileEntity.fluidTank.getFluidAmount(), tileEntity.fluidTank.getFluid().getFluid().getLocalizedName(), mouseX, mouseY, 151, 6, 18, 71);
+            drawTooltips(tileEntity.fluidTank.getCapacity(), tileEntity.fluidTank.getFluidAmount(), tileEntity.fluidTank.getFluid().getFluid().getName(), mouseX, mouseY, 151, 6, 18, 71);
         }
         else {
 

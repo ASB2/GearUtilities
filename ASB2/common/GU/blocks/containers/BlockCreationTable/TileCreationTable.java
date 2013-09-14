@@ -8,7 +8,6 @@ import ASB2.utils.UtilInventory;
 import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
-import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.power.GUPowerProvider;
@@ -18,7 +17,7 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     public TileCreationTable() {
 
         this.waitTimer = new Wait(10, this, 0);
-        powerProvider = new GUPowerProvider(PowerClass.LOW, State.SINK);
+        powerProvider = new GUPowerProvider(PowerClass.LOW);
         tileItemStacks = new ItemStack[11]; 
     }
 
@@ -28,12 +27,6 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
         waitTimer.update();
         if(Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().thePlayer.openContainer != null && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerCreationTable)
             this.sendReqularPowerPackets(10);
-    }
-
-    @Override
-    public void trigger(int id) {
-
-        ((GUPowerProvider)this.getPowerProvider()).movePower(worldObj, xCoord, yCoord, zCoord);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package GU;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import GU.blocks.BlockBase;
 import GU.blocks.BlockBurningFlower;
@@ -9,7 +8,6 @@ import GU.blocks.BlockConnectedGlass;
 import GU.blocks.BlockEtherealConnectedGlass;
 import GU.blocks.BlockFalseBlock;
 import GU.blocks.BlockFreezingFlower;
-import GU.blocks.BlockGarnetBlock;
 import GU.blocks.BlockPhantomBlock;
 import GU.blocks.BlockSpeedyRoad;
 import GU.blocks.BlockTestBlock;
@@ -25,10 +23,10 @@ import GU.blocks.containers.BlockConnectableTank.BlockConnectableTank;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
-import GU.blocks.containers.BlockSender.BlockSender;
 import GU.blocks.containers.BlockLamp.BlockLamp;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockRunicCube.BlockRunicCube;
+import GU.blocks.containers.BlockSender.BlockSender;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
 import GU.blocks.containers.BlockUniversalConduit.BlockUniversalConduit;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -38,8 +36,6 @@ public class BlockRegistry {
     public static BlockMetadataOre BlockMetadataOre;
     public static BlockBase BlockTestBlock;
     public static ContainerBase BlockTestTile;
-    public static BlockBase BlockGarnetOre;
-    public static BlockBase BlockGarnetBlock;
     public static BlockBase BlockBurningFlower;
     public static BlockBase BlockFreezingFlower;
     public static BlockBase BlockFalseBlock;
@@ -68,18 +64,7 @@ public class BlockRegistry {
 
     public static void init(Configuration config) {
 
-        BlockMetadataOre = new BlockMetadataOre(config.getBlock( "Metadata Ores", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockMetadataOre.setBlockName("BlockMetadataOre");
-        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 0), "Air Crystal Ore");
-        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 1), "Earth Crystal Ore");
-        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 2), "Fire Crystal Ore");
-        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 3), "Water Crystal Ore");
-        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 4), "Energy Crystal Ore");
-        LanguageRegistry.addName(new ItemStack(BlockMetadataOre, 1, 5), "Garnet Ore");
-        
-        BlockGarnetBlock = new BlockGarnetBlock(config.getBlock( "BlockGarnetBlock", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockGarnetBlock.setBlockName("BlockGarnetBlock");
-        LanguageRegistry.addName(BlockGarnetBlock, "Garnet Block");
+        BlockMetadataOre = new BlockMetadataOre(config.getBlock( "Metadata Blocks", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
 
         BlockBurningFlower = new BlockBurningFlower(config.getBlock( "BlockBurningFlower", BlockRegistry.getNextBaseID()).getInt(), Material.leaves);
         BlockBurningFlower.setBlockName("BlockBurningFlower");

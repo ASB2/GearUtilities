@@ -61,8 +61,8 @@ public class PowerPacket extends GUPacketBase {
 
             if(((IPowerMisc)tile).getPowerProvider() != null) {
 
-                ((IPowerMisc)tile).getPowerProvider().setPower(power);
-                ((IPowerMisc)tile).getPowerProvider().setMaxPower(max);
+                ((IPowerMisc)tile).getPowerProvider().setPowerStored(power);
+                ((IPowerMisc)tile).getPowerProvider().setPowerMax(max);
             }
         }
     }

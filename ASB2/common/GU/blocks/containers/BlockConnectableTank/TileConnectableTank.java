@@ -98,7 +98,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
             int amountDivided = 1000;
 
-            for (ForgeDirection direction : ForgeDirection.values()) {
+            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
                 if(direction != ForgeDirection.UP) {
 
@@ -108,30 +108,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
                         if(tile instanceof IFluidHandler) {
 
-                            IFluidHandler fTile = (IFluidHandler) tile;
-
-                            if(fTile.getTankInfo(direction.getOpposite()) != null) {
-
-                                for (FluidTankInfo info : fTile.getTankInfo(direction.getOpposite())) {
-
-                                    if(info.fluid != null) {
-
-                                        if(info.fluid.isFluidEqual(this.fluidTank.getFluid())) {
-
-                                            if(info.fluid.amount <= this.fluidTank.getFluidAmount()) {
-
-                                                if(!(this.fluidTank.getFluidAmount() - info.fluid.amount >= 1000 && tile instanceof TileConnectableTank))break;
-
-                                                itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided, true);
-                                            }
-                                        }
-                                    } 
-                                    else {
-
-                                        itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler) tile, amountDivided, true);
-                                    }
-                                }
-                            }
+                            itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided, true);
                         }
                     }
                 }
@@ -144,32 +121,38 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 
+        int fill = fluidTank.fill(resource, doFill);
+
+        if(fill == 0) {
+
+            if(UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP) != null && UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP) instanceof IFluidHandler) {
+
+                return ((IFluidHandler)UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP)).fill(from, resource, doFill);
+            }
+        }
+
         if(doFill) {
 
             worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
+            this.trigger(0);
         }
-
-        this.trigger(0);
-        return fluidTank.fill(resource, doFill);
+        return fill;
     }
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
 
-        if(fluidTank != null) {
+        if(fluid != null) {
 
-            if(fluid != null) {
+            if(fluidTank.getFluid() != null) {
 
-                if(fluidTank.getFluid() != null) {
-
-                    if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
-
-                        return true;
-                    }
-                } else {
+                if(this.fluidTank.getFluid().getFluid() == fluid) {
 
                     return true;
                 }
+            } else {
+
+                return true;
             }
         }
         return false;

@@ -1,16 +1,15 @@
 package GU.items.ItemBloodStone;
 
-import java.util.Random;
-
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
-import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilRender;
 import GU.info.Models;
 import GU.info.Textures;
+import GU.info.*;
 
 public class BloodStoneRenderer implements IItemRenderer {
 
@@ -51,7 +50,7 @@ public class BloodStoneRenderer implements IItemRenderer {
 
             case EQUIPPED_FIRST_PERSON: {
 
-                renderItemSwitched(item, type, 0f - .5F, 0f, 0f + .5F, .5F);
+                renderItemSwitched(item, type, 0f - .5F, 1f, 0 + .5f, .5F);
                 return;
             }
 
@@ -61,10 +60,6 @@ public class BloodStoneRenderer implements IItemRenderer {
     }
 
     private void renderItemSwitched(ItemStack item, ItemRenderType type, float x, float y, float z, float scale) {
-
-        int rotate = UtilItemStack.getNBTTagInt(item, "rotate");
-        rotate++;
-        UtilItemStack.setNBTTagInt(item, "rotate", rotate);
         
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -72,16 +67,18 @@ public class BloodStoneRenderer implements IItemRenderer {
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
-GL11.glRotatef(-rotate, 1F, 1,01F);
-
+        GL11.glPushMatrix();
+        GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
         UtilRender.renderTexture(Textures.BLOOD_STONE_HEXAGON);
         Models.ModelBloodStone.renderPart("Hexagon");
+        GL11.glPopMatrix();
         
-        GL11.glRotatef(rotate, 1F, 1,01F);
-
+        GL11.glPushMatrix();
+        GL11.glRotatef(Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1, 1F);
         UtilRender.renderTexture(Textures.BLOOD_STONE_CUBE);
         Models.ModelBloodStone.renderPart("Cube");
-
+        GL11.glPopMatrix();
+        
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }

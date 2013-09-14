@@ -2,7 +2,7 @@ package GU.api.power;
 
 public enum PowerClass {
 
-    LOW(0, 10, 1000), MID(1, 100, 10000), HIGH(2, 1000, 100000), UNKNOWN(3, 0, 0);
+    LOW(0, 10, 1000), MID(1, 100, 10000), HIGH(2, 1000, 100000), OTHER(3, 0, 0);
 
     private int id;
     private float powerValue = 0;
@@ -37,7 +37,7 @@ public enum PowerClass {
             case 0: return LOW;
             case 1: return MID;
             case 2: return HIGH;
-            default: return UNKNOWN;
+            default: return OTHER;
         }
     }
 }
