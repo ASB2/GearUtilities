@@ -10,14 +10,13 @@ import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
-import GU.power.GUPowerProvider;
 
 public class TileCreationTable extends TileBase implements IPowerMisc, IInventory {
 
     public TileCreationTable() {
 
         this.waitTimer = new Wait(10, this, 0);
-        powerProvider = new GUPowerProvider(PowerClass.LOW);
+        powerProvider = new PowerProvider(PowerClass.LOW);
         tileItemStacks = new ItemStack[11]; 
     }
 

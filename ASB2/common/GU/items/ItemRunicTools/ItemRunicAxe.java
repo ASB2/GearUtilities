@@ -14,9 +14,9 @@ import ASB2.items.AxeBase;
 import ASB2.utils.UtilMisc;
 import GU.api.power.IPowerItem;
 import GU.api.power.IPowerProvider;
+import GU.api.power.ItemPowerProvider;
 import GU.api.power.PowerHelper;
 import GU.info.Reference;
-import GU.power.ItemPowerProvider;
 
 public class ItemRunicAxe extends AxeBase implements IPowerItem {
 

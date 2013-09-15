@@ -6,8 +6,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.api.power.IPowerItem;
 import GU.api.power.IPowerProvider;
+import GU.api.power.ItemPowerProvider;
 import GU.items.ItemBase;
-import GU.power.ItemPowerProvider;
 
 public class ItemBloodStone extends ItemBase implements IPowerItem {
 

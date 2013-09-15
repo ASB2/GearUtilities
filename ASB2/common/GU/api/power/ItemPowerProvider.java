@@ -1,11 +1,9 @@
-package GU.power;
+package GU.api.power;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilItemStack;
-import GU.api.power.IPowerProvider;
-import GU.api.power.PowerClass;
 
 public class ItemPowerProvider implements IPowerProvider {
 

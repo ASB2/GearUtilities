@@ -3,12 +3,16 @@ package GU.api.power;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 
-public abstract class PowerProvider implements IPowerProvider {
-    
+public class PowerProvider implements IPowerProvider {
+
     protected PowerClass powerClass;
 
     protected float powerStored;
     protected float powerMax;
+
+    public PowerProvider(PowerClass powerClass) {
+        this(powerClass.getSuggestedMax(), powerClass);
+    }
 
     public PowerProvider(float maximumPower, PowerClass powerClass) {
 
@@ -48,7 +52,7 @@ public abstract class PowerProvider implements IPowerProvider {
         if (this.getPowerStored() >= PowerUsed) {
 
             if(doUse)
-            this.setPowerStored(this.getPowerStored() - PowerUsed);
+                this.setPowerStored(this.getPowerStored() - PowerUsed);
 
             return true;
         }
