@@ -30,6 +30,7 @@ import GU.blocks.containers.BlockSender.BlockSender;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
 import GU.blocks.containers.BlockUniversalConduit.BlockUniversalConduit;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import GU.blocks.containers.BlockSolarFocus.*;
 
 public class BlockRegistry {
     
@@ -59,6 +60,7 @@ public class BlockRegistry {
     public static ContainerBase BlockUniversalConduit;
     public static ContainerBase BlockClusterSender;
     public static ContainerBase BlockSender;
+    public static ContainerBase BlockSolarFocus;
     
     private static int id = 500;
 
@@ -161,6 +163,10 @@ public class BlockRegistry {
         BlockSender = new BlockSender(config.getBlock("BlockSender", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockSender.setBlockName("BlockSender");
         LanguageRegistry.addName(BlockSender, "Universal Sender");
+        
+        BlockSolarFocus = new BlockSolarFocus(config.getBlock("BlockSolarFocus", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockSolarFocus.setBlockName("BlockSolarFocus");
+        LanguageRegistry.addName(BlockSolarFocus, "Solar Focus");
     }
 
     public static void initTestBlocks(Configuration config) {

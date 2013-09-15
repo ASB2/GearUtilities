@@ -19,4 +19,6 @@ public interface IPowerProvider {
     
     void readFromNBT(NBTTagCompound tagCompound);
     void writeToNBT(NBTTagCompound tagCompound);
+    
+    IPowerProvider copy();
 }

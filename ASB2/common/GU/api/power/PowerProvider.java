@@ -80,4 +80,11 @@ public class PowerProvider implements IPowerProvider {
         tagCompound.setFloat("powerStored", powerStored);
         tagCompound.setFloat("powerMax", powerMax);
     }
+
+    @Override
+    public IPowerProvider copy() {
+        PowerProvider provider = new PowerProvider(this.getPowerMax(), this.getPowerClass());
+        provider.setPowerStored(getPowerStored());
+        return provider;
+    }
 }

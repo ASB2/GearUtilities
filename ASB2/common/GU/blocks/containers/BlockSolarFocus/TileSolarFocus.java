@@ -17,23 +17,29 @@ public class TileSolarFocus extends TileBase implements IPowerMisc, IInventory{
 
     public TileSolarFocus() {
 
-        waitTimer = new Wait(10, this, 0);
+        waitTimer = new Wait(20, this, 0);
         tileItemStacks = new ItemStack[1];
         powerProvider = new PowerProvider(PowerClass.LOW);
     }
 
     public void updateEntity() {
 
-        waitTimer.update();
+        if((worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()) || worldObj.getBlockLightOpacity(xCoord, yCoord, zCoord) >= 10) {
+            
+            waitTimer.update();
+        }
     }
 
     public void trigger(int id) {
 
         if(tileItemStacks[0] != null && tileItemStacks[0].getItem() instanceof ISolarFocus) {
 
-            if(this.getPowerProvider().gainPower(((ISolarFocus)tileItemStacks[0].getItem()).getPowerForTick(tileItemStacks[0], worldObj, xCoord, yCoord, zCoord, this.getPowerProvider()), ForgeDirection.UP, true)) {
+            if(((ISolarFocus)tileItemStacks[0].getItem()).canFocus(tileItemStacks[0], worldObj, xCoord, yCoord, zCoord, this.getPowerProvider().copy())) {
 
-                ((ISolarFocus)tileItemStacks[0].getItem()).damageFocus(tileItemStacks[0], worldObj, xCoord, yCoord, zCoord, this.getPowerProvider());
+                if(this.getPowerProvider().gainPower(((ISolarFocus)tileItemStacks[0].getItem()).getPowerForTick(tileItemStacks[0], worldObj, xCoord, yCoord, zCoord, this.getPowerProvider().copy()), ForgeDirection.UP, true)) {
+
+                    ((ISolarFocus)tileItemStacks[0].getItem()).damageFocus(tileItemStacks[0], worldObj, xCoord, yCoord, zCoord, this.getPowerProvider().copy());
+                }
             }
         }                
     }
@@ -76,8 +82,8 @@ public class TileSolarFocus extends TileBase implements IPowerMisc, IInventory{
 
     @Override
     public int getInventoryStackLimit() {
-        // TODO Auto-generated method stub
-        return 64;
+
+        return 1;
     }
 
     @Override
@@ -100,8 +106,8 @@ public class TileSolarFocus extends TileBase implements IPowerMisc, IInventory{
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-        // TODO Auto-generated method stub
-        return true;
+
+        return itemstack.stackSize == 1;
     }
 
     @Override

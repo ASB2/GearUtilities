@@ -14,6 +14,7 @@ import GU.blocks.containers.BlockCreationTable.ContainerCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
 import GU.blocks.containers.BlockSender.ContainerSender;
 import GU.blocks.containers.BlockSender.TileSender;
+import GU.blocks.containers.BlockSolarFocus.*;
 import GU.entity.EntityCluster.EntityInfoCluster;
 import GU.entity.EntityPotion.EntityModularPotion;
 import GU.entity.EntityTest.EntityTestEntity;
@@ -50,19 +51,22 @@ public class CommonProxy implements IGuiHandler {
         switch (ID) {
 
             case Gui.CREATION_TABLE:
-                return new ContainerCreationTable(player.inventory, (TileCreationTable) tile);       
+                return new ContainerCreationTable(player.inventory, (TileCreationTable)tile);       
                 
             case Gui.BLOCK_BREAKER:
-                return new ContainerBlockBreaker(player.inventory, (TileBlockBreaker) tile);
+                return new ContainerBlockBreaker(player.inventory, (TileBlockBreaker)tile);
         
             case Gui.CAMO_BLOCK:
-                return new ContainerCamoBlock(player.inventory, (TileCamoBlock) tile);
+                return new ContainerCamoBlock(player.inventory, (TileCamoBlock)tile);
                 
             case Gui.ADVANCED_POTION_BREWERY:
-                return new ContainerAdvancedPotionBrewery(player.inventory, (TileAdvancedPotionBrewery) tile);
+                return new ContainerAdvancedPotionBrewery(player.inventory, (TileAdvancedPotionBrewery)tile);
                 
             case Gui.SENDER:
-                return new ContainerSender(player.inventory, (TileSender) tile);
+                return new ContainerSender(player.inventory, (TileSender)tile);
+                
+            case Gui.SOLAR_FOCUS:
+                return new ContainerSolarFocus(player.inventory, (TileSolarFocus)tile);  
         }
         return null;
     }

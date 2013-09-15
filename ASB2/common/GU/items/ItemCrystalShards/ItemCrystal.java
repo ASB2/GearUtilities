@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import GU.info.Reference;
 import GU.info.Variables;
@@ -13,8 +14,10 @@ import GU.items.ItemBase;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import GU.api.*;
+import GU.api.power.IPowerProvider;
 
-public class ItemCrystal extends ItemBase {
+public class ItemCrystal extends ItemBase implements ISolarFocus {
 
     public final ItemStack ItemAirCrystalShard = new ItemStack(this, 1, 0);
     public final ItemStack ItemEarthCrystalShard = new ItemStack(this, 1, 1);
@@ -90,5 +93,22 @@ public class ItemCrystal extends ItemBase {
     public String getItemStackDisplayName(ItemStack itemStack) {
 
         return Reference.UNIQUE_ID + CRYSTAL_NAMES_IG[itemStack.getItemDamage()];
+    }
+
+    @Override
+    public void damageFocus(ItemStack stack, World world, int x, int y, int z, IPowerProvider solar) {
+        
+    }
+
+    @Override
+    public int getPowerForTick(ItemStack stack, World world, int x, int y, int z, IPowerProvider solar) {
+
+        return 1;
+    }
+
+    @Override
+    public boolean canFocus(ItemStack stack, World world, int x, int y, int z, IPowerProvider solar) {
+
+        return true;
     }
 }

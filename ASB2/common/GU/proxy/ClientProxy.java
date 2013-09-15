@@ -23,6 +23,8 @@ import GU.blocks.containers.BlockRunicCube.TileRunicCube;
 import GU.blocks.containers.BlockSender.GuiSender;
 import GU.blocks.containers.BlockSender.SenderRenderer;
 import GU.blocks.containers.BlockSender.TileSender;
+import GU.blocks.containers.BlockSolarFocus.SolarFocusRenderer;
+import GU.blocks.containers.BlockSolarFocus.*;
 import GU.entity.EntityCluster.EntityInfoCluster;
 import GU.entity.EntityCluster.InfoClusterRenderer;
 import GU.entity.EntityTest.EntityTestEntity;
@@ -64,6 +66,9 @@ public class ClientProxy extends CommonProxy {
         
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
         
+        ClientRegistry.bindTileEntitySpecialRenderer(TileSolarFocus.class, new SolarFocusRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSolarFocus.blockID, new SolarFocusRenderer());
+        
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());
         RenderingRegistry.registerBlockHandler(new BlockSimpleRenderer());
@@ -92,6 +97,9 @@ public class ClientProxy extends CommonProxy {
                     
                 case Gui.SENDER:
                     return new GuiSender(player.inventory, tile);
+                    
+                case Gui.SOLAR_FOCUS:
+                    return new GuiSolarFocus(player.inventory, tile);                    
             }
         }
         return null;

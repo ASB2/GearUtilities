@@ -80,4 +80,12 @@ public class ItemPowerProvider implements IPowerProvider {
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public IPowerProvider copy() {
+        
+        ItemPowerProvider provider = new ItemPowerProvider(item, this.getPowerMax());
+        provider.setPowerStored(getPowerStored());
+        return provider;
+    }
 }

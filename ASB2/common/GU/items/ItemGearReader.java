@@ -112,7 +112,7 @@ public class ItemGearReader extends ItemBase {
                     UtilEntity.sendChatToPlayer(player, "Alpha: " + mTile.getColor(ForgeDirection.getOrientation(side)).getAlpha());
                 }
             }
-            
+
             if (tile instanceof IConductor) {
 
                 IConductor mTile = (IConductor) tile;
@@ -123,14 +123,14 @@ public class ItemGearReader extends ItemBase {
                     UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getAvaliableConductors().size());
                 }
                 else {
-                    
+
                     UtilEntity.sendChatToPlayer(player, "Conduit Network: null");
                 }
             }
         }
-        UtilEntity.sendChatToPlayer(player, "Block ID: " + world.getBlockId(x, y, z));
-        UtilEntity.sendChatToPlayer(player, "Block has metadata: " + world.getBlockMetadata(x, y, z));
-        UtilEntity.sendChatToPlayer(player, "Block has direction: " + ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)));
+        UtilEntity.sendChatToPlayer(player, "Block id: " + world.getBlockId(x, y, z));
+        UtilEntity.sendChatToPlayer(player, "Block metadata: " + world.getBlockMetadata(x, y, z));
+        UtilEntity.sendChatToPlayer(player, "Block direction: " + ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)));
         UtilEntity.sendChatToPlayer(player, "Block brightness: " + Block.blocksList[world.getBlockId(x, y, z)].getMixedBrightnessForBlock(world, x, y, z));
         UtilEntity.sendChatToPlayer(player, "--------");
         return true;
