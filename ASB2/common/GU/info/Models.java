@@ -14,6 +14,7 @@ public final class Models {
     public static IModelCustom ModelSender;
     public static IModelCustom ModelBloodStone;
     public static IModelCustom ModelSolarFocus;
+    public static IModelCustom ModelOctogon;
     
     public static final String LAMP = Reference.RESOURCE_LOCATION + "models/ModelLamp.obj";
     public static final String CREATION_TABLE = Reference.RESOURCE_LOCATION + "models/ModelCreationTable.obj";
@@ -25,6 +26,7 @@ public final class Models {
     public static final String SENDER = Reference.RESOURCE_LOCATION + "models/ModelSender.obj";
     public static final String BLOOD_STONE = Reference.RESOURCE_LOCATION + "models/ModelBloodStone.obj";
     public static final String SOLAR_FOCUS = Reference.RESOURCE_LOCATION + "models/ModelSolarFocus.obj";
+    public static final String OCTOGON = Reference.RESOURCE_LOCATION + "models/ModelOctogon.obj";
     
     public static void initModels() {
 
@@ -37,5 +39,6 @@ public final class Models {
         ModelSender = AdvancedModelLoader.loadModel(Models.SENDER);
         ModelBloodStone = AdvancedModelLoader.loadModel(Models.BLOOD_STONE);
         ModelSolarFocus = AdvancedModelLoader.loadModel(Models.SOLAR_FOCUS);
+        ModelOctogon = AdvancedModelLoader.loadModel(Models.OCTOGON);
     }
 }

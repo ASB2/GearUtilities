@@ -23,8 +23,11 @@ import GU.blocks.containers.BlockRunicCube.TileRunicCube;
 import GU.blocks.containers.BlockSender.GuiSender;
 import GU.blocks.containers.BlockSender.SenderRenderer;
 import GU.blocks.containers.BlockSender.TileSender;
+import GU.blocks.containers.BlockSolarFocus.GuiSolarFocus;
 import GU.blocks.containers.BlockSolarFocus.SolarFocusRenderer;
-import GU.blocks.containers.BlockSolarFocus.*;
+import GU.blocks.containers.BlockSolarFocus.TileSolarFocus;
+import GU.blocks.containers.BlockUniversalConduit.TileUniversalConduit;
+import GU.blocks.containers.BlockUniversalConduit.UniversalConduitRenderer;
 import GU.entity.EntityCluster.EntityInfoCluster;
 import GU.entity.EntityCluster.InfoClusterRenderer;
 import GU.entity.EntityTest.EntityTestEntity;
@@ -68,6 +71,11 @@ public class ClientProxy extends CommonProxy {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileSolarFocus.class, new SolarFocusRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSolarFocus.blockID, new SolarFocusRenderer());
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileUniversalConduit.class, new UniversalConduitRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockUniversalConduit.blockID, new UniversalConduitRenderer());
+        
+        
         
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());

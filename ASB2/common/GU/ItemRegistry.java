@@ -1,7 +1,9 @@
 package GU;
 
+import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraftforge.common.Configuration;
 import ASB2.items.AxeBase;
 import ASB2.items.HoeBase;
@@ -25,9 +27,14 @@ import GU.items.ItemTestItem;
 import GU.items.ItemTradeStick;
 import GU.items.ItemBloodStone.ItemBloodStone;
 import GU.items.ItemCrystalShards.ItemCrystal;
+import GU.items.ItemRunicTools.IRunicShovel;
+import GU.items.ItemRunicTools.ItemRunicAxe;
+import GU.items.ItemRunicTools.ItemRunicHoe;
+import GU.items.ItemRunicTools.ItemRunicPickaxe;
+import GU.items.ItemRunicTools.ItemRunicSword;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import GU.items.ItemRunicTools.*;
+import GU.items.*;
 
 public class ItemRegistry {
 
@@ -49,6 +56,7 @@ public class ItemRegistry {
     public static Item ItemGarnetSword, ItemGarnetPickaxe, ItemGarnetShovel, ItemGarnetAxe, ItemGarnetHoe, ItemGarnetScythe;
     public static ItemBase ItemBloodStone;   
     public static Item ItemRunicSword, ItemRunicPickaxe, ItemRunicShovel, ItemRunicAxe, ItemRunicHoe;   
+    public static ItemArmor ItemPurificationHelmet;
     
     private static int id = 5000;
     
@@ -171,6 +179,10 @@ public class ItemRegistry {
         ItemRunicHoe = new ItemRunicHoe(config.getItem("ItemRunicHoe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.EMERALD, Reference.MODDID + ":ItemRunicHoe");
         LanguageRegistry.addName(ItemRunicHoe, "Runic Hoe");
         ItemRunicHoe.setCreativeTab(GearUtilities.tabGUItems);
+        
+        ItemPurificationHelmet = new ItemPurificationHelmet(config.getItem("ItemPurificationHelmet", ItemRegistry.getNextBaseID()).getInt(), EnumArmorMaterial.CLOTH, 0, 0);
+        LanguageRegistry.addName(ItemPurificationHelmet, "Purification Helmet");
+//        ItemPurificationHelmet.setCreativeTab(GearUtilities.tabGUItems);
     }
 
     public static int getNextBaseID() {

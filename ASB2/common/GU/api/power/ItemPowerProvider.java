@@ -29,6 +29,22 @@ public class ItemPowerProvider implements IPowerProvider {
 
     public boolean usePower(float power, ForgeDirection direction, boolean doUse) {
 
+        if(this.getMaxOutput() != -1 ) {
+
+            if(power > this.getMaxOutput()) {
+
+                return false;
+            }
+        }
+
+        if(this.getMinOutput() != -1 ) {
+
+            if(power < this.getMinOutput()) {
+
+                return false;
+            }
+        }
+        
         if(this.getPowerStored() >= power) {
 
             if(doUse)
@@ -40,6 +56,22 @@ public class ItemPowerProvider implements IPowerProvider {
     }
 
     public boolean gainPower(float power, ForgeDirection direction, boolean doUse) {
+
+        if(this.getMaxInput() != -1 ) {
+
+            if(power > this.getMaxInput()) {
+
+                return false;
+            }
+        }
+
+        if(this.getMinInput() != -1 ) {
+
+            if(power < this.getMinInput()) {
+
+                return false;
+            }
+        }
 
         if(this.getPowerMax() - this.getPowerStored() >= power) {
 
@@ -72,20 +104,44 @@ public class ItemPowerProvider implements IPowerProvider {
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tagCompound) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public IPowerProvider copy() {
-        
+
         ItemPowerProvider provider = new ItemPowerProvider(item, this.getPowerMax());
         provider.setPowerStored(getPowerStored());
         return provider;
+    }
+
+    @Override
+    public float getMinInput() {
+
+        return -1;
+    }
+
+    @Override
+    public float getMinOutput() {
+
+        return -1;
+    }
+
+    @Override
+    public float getMaxInput() {
+
+        return -1;
+    }
+
+    @Override
+    public float getMaxOutput() {
+
+        return -1;
     }
 }

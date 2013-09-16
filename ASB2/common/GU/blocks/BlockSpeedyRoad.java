@@ -28,10 +28,8 @@ public class BlockSpeedyRoad extends BlockBase {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister) {
 
-        top = par1IconRegister.registerIcon(Reference.MODDID
-                + ":BlockSpeedyRoadTop");
-        side = par1IconRegister.registerIcon(Reference.MODDID
-                + ":BlockSpeedyRoadSide2");
+        top = par1IconRegister.registerIcon(Reference.MODDID + ":BlockSpeedyRoadTop");
+        side = par1IconRegister.registerIcon(Reference.MODDID + ":BlockSpeedyRoadSide2");
     }
 
     @Override

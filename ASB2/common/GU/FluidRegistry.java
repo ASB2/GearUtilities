@@ -28,6 +28,8 @@ public class FluidRegistry {
     public static IconRegister iconProvider;
 
     public static FluidBase MoltenStone;
+    public static FluidBase Blood;
+    public static FluidBase CapturedSoul;
     
     public static FluidBase MoltenIron;
     public static FluidBase MoltenGold;
@@ -45,6 +47,8 @@ public class FluidRegistry {
         MinecraftForge.EVENT_BUS.register(new FluidRegistry());
         
         MoltenStone = new FluidBase("Molten Stone", Color.LIGHT_GRAY.hashCode());
+        Blood = new FluidBase("Blood", Color.RED.hashCode());
+        CapturedSoul  = new FluidBase("Captured Soul", Color.LIGHT_GRAY.hashCode()); 
         
         MoltenIron = new FluidBase("Molten Iron", Color.LIGHT_GRAY.hashCode());
         MoltenGold = new FluidBase("Molten Gold", new Color(255, 220, 0).hashCode());
@@ -77,6 +81,9 @@ public class FluidRegistry {
             }
             MoltenStone.setStillIcon(Block.stone.getIcon(0, 0));
             MoltenStone.setFlowingIcon(Block.stone.getIcon(0, 0));
+            
+            CapturedSoul.setStillIcon(Block.slowSand.getIcon(0, 0));
+            CapturedSoul.setFlowingIcon(Block.slowSand.getIcon(0, 0));
         }
     }
 

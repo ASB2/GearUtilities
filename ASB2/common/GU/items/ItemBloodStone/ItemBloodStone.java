@@ -3,7 +3,6 @@ package GU.items.ItemBloodStone;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import GU.api.power.IPowerItem;
 import GU.api.power.IPowerProvider;
 import GU.api.power.ItemPowerProvider;
@@ -25,14 +24,6 @@ public class ItemBloodStone extends ItemBase implements IPowerItem {
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz) {
 
-        if(player.isSneaking()) {
-            
-            this.getPowerProvider(itemStack).setPowerStored(1000);
-        }
-        else {
-
-            this.getPowerProvider(itemStack).usePower(20, ForgeDirection.UNKNOWN, true);
-        }
         return true;
     }
 

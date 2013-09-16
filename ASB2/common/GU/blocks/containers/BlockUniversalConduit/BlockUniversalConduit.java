@@ -11,6 +11,7 @@ public class BlockUniversalConduit extends ContainerBase {
         super(id, material);
         
         this.registerTile(TileUniversalConduit.class);
+        this.useStandardRendering = false;
     }
 
     @Override

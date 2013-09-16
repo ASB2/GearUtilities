@@ -23,6 +23,10 @@ public class GUCreativeTab extends CreativeTabs {
 
             return BlockRegistry.BlockSpeedyRoad.blockID;
         }
+        else if(name.equalsIgnoreCase(Reference.NAME + ": Fluids")) {
+        
+            return ItemRegistry.ItemStorageCrystal.itemID;
+        }        
         return ItemRegistry.ItemGearReader.itemID;
     }
 

@@ -53,7 +53,8 @@ public final class GearUtilities {
 
     public static CreativeTabs tabGUBlocks = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Blocks");
     public static CreativeTabs tabGUItems = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Items");
-
+    public static CreativeTabs tabGUFluids = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Fluids");
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
 

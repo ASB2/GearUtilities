@@ -35,6 +35,7 @@ public final class Textures {
     public static final ResourceLocation SOLAR_FOCUS_TOP = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelSolarFocusTop.png");
     public static final ResourceLocation SOLAR_FOCUS_BOTTOM = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelSolarFocusBottom.png");
 
+    public static final ResourceLocation UNIVERSAL_CONDUIT = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelUniversalConduit.png");
     
     public static final ResourceLocation CRYSTAL_BLANK = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalBlank.png");
     public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalAir.png");

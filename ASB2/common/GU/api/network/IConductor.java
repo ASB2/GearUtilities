@@ -1,6 +1,5 @@
 package GU.api.network;
 
-
 public interface IConductor {
 
     /**

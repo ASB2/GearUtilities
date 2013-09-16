@@ -20,11 +20,13 @@ import ASB2.utils.UtilMisc;
 import ASB2.utils.UtilRender;
 import GU.ItemRegistry;
 import GU.items.ItemBase;
+import GU.*;
 
 public class ItemStorageCrystal extends ItemBase {
 
     public ItemStorageCrystal(int id) {
         super(id);
+        this.setCreativeTab(GearUtilities.tabGUFluids);
     }
 
     @Override

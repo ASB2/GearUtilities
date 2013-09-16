@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilRender;
 import GU.api.ISolarFocus;
-import GU.info.Models;
+import GU.info.*;
 import GU.info.Textures;
 
 public class SolarFocusRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
@@ -28,9 +28,10 @@ public class SolarFocusRenderer extends TileEntitySpecialRenderer implements IIt
         GL11.glScalef(.5f, .5f, .5f);
 
         UtilRender.renderTexture(Textures.SOLAR_FOCUS_TOP);
-        Models.ModelSolarFocus.renderAll();
-
-        GL11.glPopMatrix();
+        Models.ModelSolarFocus.renderPart("Bottom");        
+        Models.ModelSolarFocus.renderPart("Top");
+        
+        GL11.glPopMatrix();        
 
         if(tile.worldObj.isDaytime()) {
             

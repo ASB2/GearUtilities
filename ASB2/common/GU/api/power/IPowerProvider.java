@@ -9,6 +9,12 @@ public interface IPowerProvider {
     float getPowerStored();
     float getPowerMax();
     
+    float getMinInput();
+    float getMinOutput();
+    
+    float getMaxInput();
+    float getMaxOutput();
+    
     boolean gainPower(float PowerGained, ForgeDirection direction, boolean doUse);
     boolean usePower(float PowerUsed, ForgeDirection direction, boolean doUse);
     

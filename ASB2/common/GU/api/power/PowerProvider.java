@@ -35,24 +35,56 @@ public class PowerProvider implements IPowerProvider {
         return this.powerClass;
     }
 
-    public boolean gainPower(float PowerGained, ForgeDirection direction, boolean doUse) {
+    public boolean usePower(float power, ForgeDirection direction, boolean doUse) {
 
-        if (this.getPowerMax() - this.getPowerStored() >= PowerGained) {
+        if(this.getMaxOutput() != -1 ) {
+
+            if(power > this.getMaxOutput()) {
+
+                return false;
+            }
+        }
+
+        if(this.getMinOutput() != -1 ) {
+
+            if(power < this.getMinOutput()) {
+
+                return false;
+            }
+        }
+        
+        if(this.getPowerStored() >= power) {
 
             if(doUse)
-                this.setPowerStored(this.getPowerStored() + PowerGained);
+                this.setPowerStored(this.getPowerStored() - power);
 
             return true;
         }
         return false;
     }
 
-    public boolean usePower(float PowerUsed, ForgeDirection direction, boolean doUse) {
+    public boolean gainPower(float power, ForgeDirection direction, boolean doUse) {
 
-        if (this.getPowerStored() >= PowerUsed) {
+        if(this.getMaxInput() != -1 ) {
+
+            if(power > this.getMaxInput()) {
+
+                return false;
+            }
+        }
+
+        if(this.getMinInput() != -1 ) {
+
+            if(power < this.getMinInput()) {
+
+                return false;
+            }
+        }
+
+        if(this.getPowerMax() - this.getPowerStored() >= power) {
 
             if(doUse)
-                this.setPowerStored(this.getPowerStored() - PowerUsed);
+                this.setPowerStored(this.getPowerStored() + power);
 
             return true;
         }
@@ -86,5 +118,29 @@ public class PowerProvider implements IPowerProvider {
         PowerProvider provider = new PowerProvider(this.getPowerMax(), this.getPowerClass());
         provider.setPowerStored(getPowerStored());
         return provider;
+    }
+
+    @Override
+    public float getMinInput() {
+
+        return -1;
+    }
+
+    @Override
+    public float getMinOutput() {
+
+        return -1;
+    }
+
+    @Override
+    public float getMaxInput() {
+
+        return -1;
+    }
+
+    @Override
+    public float getMaxOutput() {
+
+        return -1;
     }
 }
