@@ -19,6 +19,7 @@ import GU.blocks.containers.BlockBlockBreaker.BlockBlockBreaker;
 import GU.blocks.containers.BlockCamoBlock.BlockCamoBlock;
 import GU.blocks.containers.BlockCanvas.BlockCanvas;
 import GU.blocks.containers.BlockClusterSender.BlockClusterSender;
+import GU.blocks.containers.BlockConduitInterface.BlockConduitInterface;
 import GU.blocks.containers.BlockConnectableTank.BlockConnectableTank;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
@@ -27,10 +28,10 @@ import GU.blocks.containers.BlockLamp.BlockLamp;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockRunicCube.BlockRunicCube;
 import GU.blocks.containers.BlockSender.BlockSender;
+import GU.blocks.containers.BlockSolarFocus.BlockSolarFocus;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
 import GU.blocks.containers.BlockUniversalConduit.BlockUniversalConduit;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import GU.blocks.containers.BlockSolarFocus.*;
 
 public class BlockRegistry {
     
@@ -61,6 +62,7 @@ public class BlockRegistry {
     public static ContainerBase BlockClusterSender;
     public static ContainerBase BlockSender;
     public static ContainerBase BlockSolarFocus;
+    public static ContainerBase BlockConduitInterface;
     
     private static int id = 500;
 
@@ -167,6 +169,10 @@ public class BlockRegistry {
         BlockSolarFocus = new BlockSolarFocus(config.getBlock("BlockSolarFocus", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockSolarFocus.setBlockName("BlockSolarFocus");
         LanguageRegistry.addName(BlockSolarFocus, "Solar Focus");
+        
+        BlockConduitInterface = new BlockConduitInterface(config.getBlock("BlockConduitInterface", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockConduitInterface.setBlockName("BlockConduitInterface");
+        LanguageRegistry.addName(BlockConduitInterface, "Conduit Interface");
     }
 
     public static void initTestBlocks(Configuration config) {

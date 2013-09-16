@@ -13,7 +13,7 @@ public class BlockSolarFocus extends ContainerBase {
     public BlockSolarFocus(int id, Material material) {
         super(id, material);
         this.useStandardRendering = false;
-
+        this.registerTile(TileSolarFocus.class);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class BlockSolarFocus extends ContainerBase {
         }
         return false;
     }
-    
+
     @Override
     public TileEntity createNewTileEntity(World world) {
 

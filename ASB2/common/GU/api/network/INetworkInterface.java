@@ -1,5 +1,5 @@
 package GU.api.network;
 
-public interface INetworkInterface {
+public interface INetworkInterface extends IConductor {
 
 }

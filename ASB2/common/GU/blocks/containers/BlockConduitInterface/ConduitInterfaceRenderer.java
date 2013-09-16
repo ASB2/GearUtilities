@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockUniversalConduit;
+package GU.blocks.containers.BlockConduitInterface;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -22,11 +22,13 @@ import GU.info.Models;
 import GU.info.Textures;
 import GU.info.Variables;
 
-public class UniversalConduitRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
+public class ConduitInterfaceRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f) {
 
+        boolean[] importing = ((TileConduitInterface)tileEntity).importing;
+        
         GL11.glPushMatrix();
         GL11.glTranslated(x + .5f, y + .5, z + .5f);
         GL11.glScalef(.5f, .5f, .5f);
@@ -38,7 +40,6 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
         if(adjacent == 0) {
 
             GL11.glPushMatrix();
-            GL11.glScalef(.5f, .5f, .5f);
             GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
             Models.ModelOctogon.renderAll();
             GL11.glPopMatrix();
@@ -59,7 +60,7 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
 
                 if(tile != null) {
 
-                    if(tile instanceof IInventory || tile instanceof IFluidHandler || tile instanceof IPowerMisc || tile instanceof IConductor || tile instanceof INetworkInterface) {
+                    if(tile instanceof IInventory || tile instanceof IFluidHandler || tile instanceof IPowerMisc) {
 
                         switch (direction) {
 
@@ -110,7 +111,71 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
                         }
                         
                         GL11.glPushMatrix();
+
+                        if(importing[direction.ordinal()]) {
+                            
+                            UtilRender.renderTexture(Textures.CONDUIT_INTERFACE_IMPORTING);
+                        }
+                        else {
+                            
+                            UtilRender.renderTexture(Textures.CONDUIT_INTERFACE_EXPORTING);
+                        }
+                            
+                        Models.ModelOctogon.renderAll();
+
+                        GL11.glPopMatrix();
+                    }
+                    else if(tile instanceof IConductor) {
                         
+                        switch (direction) {
+
+                            case UP: {
+                                
+                                GL11.glTranslated(0, .9, 0);
+                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1F, 0);
+                                break;
+                            }
+                            case DOWN: {
+                                
+                                GL11.glTranslated(0, -.9, 0);
+                                GL11.glRotatef(180F, 1F, 0F, 0F);
+                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1F, 0);
+                                break;
+                            }
+                            case NORTH: {
+                                
+                                GL11.glTranslated(0, 0, -.9);
+                                GL11.glRotatef(-90F, 1F, 0F, 0F);
+                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
+                                break;
+                            }
+                            case SOUTH: {
+
+                                GL11.glTranslated(0, 0, .9);
+                                GL11.glRotatef(90F, 1F, 0F, 0F);
+                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
+                                break;
+                            }
+                            case WEST: {
+
+                                GL11.glTranslated(-0.9, 0, 0);
+                                GL11.glRotatef(90F, 0F, 0F, 1F);
+                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
+                                break;
+                            }
+                            case EAST: {
+
+                                GL11.glTranslated(0.9, 0, 0);
+                                GL11.glRotatef(-90F, 0F, 0F, 1F);
+                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
+                                break;
+                            }
+                            default: {
+                                break;
+                            }
+                        }
+                        
+                        GL11.glPushMatrix();
                         GL11.glScalef(.5f, .5f, .5f);
                         Models.ModelOctogon.renderAll();
 
@@ -135,7 +200,7 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
 
             if(tile != null) {
 
-                if(tile instanceof IConductor || tile instanceof INetworkInterface) {
+                if(tile instanceof IInventory || tile instanceof IFluidHandler || tile instanceof IPowerMisc || tile instanceof IConductor || tile instanceof INetworkInterface) {
 
                     amount++;
                 }

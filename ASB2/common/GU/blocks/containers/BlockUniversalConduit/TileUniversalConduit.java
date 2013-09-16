@@ -1,18 +1,11 @@
 package GU.blocks.containers.BlockUniversalConduit;
 
-import java.util.Iterator;
-
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.IFluidHandler;
-import ASB2.utils.*;
+import ASB2.utils.UtilDirection;
 import ASB2.vector.Vector3;
 import GU.api.network.IConductor;
 import GU.api.network.INetwork;
-import GU.api.power.IPowerMisc;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.network.UniversalConduitNetwork;
@@ -20,7 +13,6 @@ import GU.network.UniversalConduitNetwork;
 public class TileUniversalConduit extends TileBase implements IConductor {
 
     UniversalConduitNetwork network;
-    boolean importing = false;
 
     public TileUniversalConduit() {
 
@@ -38,48 +30,6 @@ public class TileUniversalConduit extends TileBase implements IConductor {
 
                 this.getNetwork().addConductor(worldObj, new Vector3(this));
             }
-
-            if(importing) {
-
-                if(UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite()) != null) {
-
-                    if(!((UniversalConduitNetwork)this.getNetwork()).getAvaliableInventorys().isEmpty()) {
-
-                        Iterator<Vector3> it = ((UniversalConduitNetwork)this.getNetwork()).getAvaliableInventorys().iterator();
-
-                        while(it.hasNext()) {
-
-                            Vector3 vector = it.next();
-
-                            if(vector != null) {
-
-                                if(vector.getTileEntity(worldObj) != null) {
-
-                                    if(vector.getTileEntity(worldObj) instanceof IInventory && UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite()) instanceof IInventory) {
-
-                                        UtilInventory.moveEntireInventory((IInventory)UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite()), (IInventory)vector.getTileEntity(worldObj));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
-    public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
-
-        if(importing) {
-
-            importing = false;
-            return;
-        }
-        else {
-
-            importing = true;
-            return;
         }
     }
 
@@ -114,21 +64,6 @@ public class TileUniversalConduit extends TileBase implements IConductor {
                             conduit.setNetwork(this.getNetwork());
                         }
                     }
-                }
-
-                if(tile instanceof IInventory) {
-
-                    ((UniversalConduitNetwork)this.getNetwork()).addAvaliableInventory(new Vector3(tile));
-                }
-
-                if(tile instanceof IFluidHandler) {
-
-                    ((UniversalConduitNetwork)this.getNetwork()).addAvaliableTank(new Vector3(tile));
-                } 
-
-                if(tile instanceof IPowerMisc) {
-
-                    ((UniversalConduitNetwork)this.getNetwork()).postPowerRequest(new Vector3(tile));
                 }
             }
         }
