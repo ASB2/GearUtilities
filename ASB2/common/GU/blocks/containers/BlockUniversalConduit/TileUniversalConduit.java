@@ -53,6 +53,14 @@ public class TileUniversalConduit extends TileBase implements IConductor {
                             if(conduit.getNetwork() != this.getNetwork()) {
 
                                 conduit.getNetwork().mergeNetworks(worldObj, this.getNetwork().getAvaliableConductors());
+                            
+                                for(Vector3 vector : conduit.getNetwork().getAvaliableConductors()) {
+
+                                    if(vector != null && vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof IConductor) {
+
+                                        ((IConductor)vector.getTileEntity(worldObj)).setNetwork(this.getNetwork());
+                                    }
+                                } 
                             }
                             else {
 

@@ -2,22 +2,16 @@ package GU.blocks.containers.BlockUniversalConduit;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.IFluidHandler;
 
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilRender;
-import ASB2.vector.Vector3;
 import GU.api.network.IConductor;
-import GU.api.network.INetworkInterface;
-import GU.api.power.IPowerMisc;
 import GU.info.Models;
 import GU.info.Textures;
 import GU.info.Variables;
@@ -30,118 +24,85 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
         GL11.glPushMatrix();
         GL11.glTranslated(x + .5f, y + .5, z + .5f);
         GL11.glScalef(.5f, .5f, .5f);
+
+        UtilRender.renderTexture(Textures.UNIVERSAL_CONDUIT_CENTER);
         
-        int adjacent = getAdjacent(tileEntity.worldObj, new Vector3(tileEntity));
-
-        UtilRender.renderTexture(Textures.UNIVERSAL_CONDUIT);
-
-        if(adjacent == 0) {
-
-            GL11.glPushMatrix();
-            GL11.glScalef(.5f, .5f, .5f);
-            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
-            Models.ModelOctogon.renderAll();
-            GL11.glPopMatrix();
-        }
-        else {
-            
-            GL11.glPushMatrix();
-            GL11.glScalef(.5f, .5f, .5f);
-            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
-            Models.ModelOctogon.renderAll();
-            GL11.glPopMatrix();
-            
-            for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-                
-                GL11.glPushMatrix();
-                
-                TileEntity tile = UtilDirection.translateDirectionToTile(tileEntity, tileEntity.worldObj, direction);
-
-                if(tile != null) {
-
-                    if(tile instanceof IInventory || tile instanceof IFluidHandler || tile instanceof IPowerMisc || tile instanceof IConductor || tile instanceof INetworkInterface) {
-
-                        switch (direction) {
-
-                            case UP: {
-                                
-                                GL11.glTranslated(0, .9, 0);
-                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1F, 0);
-                                break;
-                            }
-                            case DOWN: {
-                                
-                                GL11.glTranslated(0, -.9, 0);
-                                GL11.glRotatef(180F, 1F, 0F, 0F);
-                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1F, 0);
-                                break;
-                            }
-                            case NORTH: {
-                                
-                                GL11.glTranslated(0, 0, -.9);
-                                GL11.glRotatef(-90F, 1F, 0F, 0F);
-                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
-                                break;
-                            }
-                            case SOUTH: {
-
-                                GL11.glTranslated(0, 0, .9);
-                                GL11.glRotatef(90F, 1F, 0F, 0F);
-                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
-                                break;
-                            }
-                            case WEST: {
-
-                                GL11.glTranslated(-0.9, 0, 0);
-                                GL11.glRotatef(90F, 0F, 0F, 1F);
-                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
-                                break;
-                            }
-                            case EAST: {
-
-                                GL11.glTranslated(0.9, 0, 0);
-                                GL11.glRotatef(-90F, 0F, 0F, 1F);
-                                GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
-                                break;
-                            }
-                            default: {
-                                break;
-                            }
-                        }
-                        
-                        GL11.glPushMatrix();
-                        
-                        GL11.glScalef(.5f, .5f, .5f);
-                        Models.ModelOctogon.renderAll();
-
-                        GL11.glPopMatrix();
-                    }
-                }
-                GL11.glPopMatrix();
-            }
-        }
-
+        GL11.glPushMatrix();
+        GL11.glScalef(.5f, .5f, .5f);
+        GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
+        Models.ModelOctogon.renderAll();
         GL11.glPopMatrix();
-    }
-
-
-    public int getAdjacent(World world, Vector3 position) {
-
-        int amount = 0;
 
         for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
-            TileEntity tile = UtilDirection.translateDirectionToTile(position.getTileEntity(world), world, direction);
+            GL11.glPushMatrix();
+
+            TileEntity tile = UtilDirection.translateDirectionToTile(tileEntity, tileEntity.worldObj, direction);
 
             if(tile != null) {
 
-                if(tile instanceof IConductor || tile instanceof INetworkInterface) {
+                if(tile instanceof IConductor) {
 
-                    amount++;
+                    switch (direction) {
+
+                        case UP: {
+
+                            GL11.glTranslated(0, .9, 0);
+                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1F, 0);
+                            break;
+                        }
+                        case DOWN: {
+
+                            GL11.glTranslated(0, -.9, 0);
+                            GL11.glRotatef(180F, 1F, 0F, 0F);
+                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1F, 0);
+                            break;
+                        }
+                        case NORTH: {
+
+                            GL11.glTranslated(0, 0, -.9);
+                            GL11.glRotatef(-90F, 1F, 0F, 0F);
+                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
+                            break;
+                        }
+                        case SOUTH: {
+
+                            GL11.glTranslated(0, 0, .9);
+                            GL11.glRotatef(90F, 1F, 0F, 0F);
+                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
+                            break;
+                        }
+                        case WEST: {
+
+                            GL11.glTranslated(-0.9, 0, 0);
+                            GL11.glRotatef(90F, 0F, 0F, 1F);
+                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
+                            break;
+                        }
+                        case EAST: {
+
+                            GL11.glTranslated(0.9, 0, 0);
+                            GL11.glRotatef(-90F, 0F, 0F, 1F);
+                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
+                    }
+
+                    GL11.glPushMatrix();
+
+                    GL11.glScalef(.5f, .5f, .5f);
+                    UtilRender.renderTexture(Textures.UNIVERSAL_CONDUIT);
+                    Models.ModelOctogon.renderAll();
+
+                    GL11.glPopMatrix();
                 }
             }
+            GL11.glPopMatrix();
         }
-        return amount;
+        GL11.glPopMatrix();
     }
 
     @Override
@@ -198,8 +159,12 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
-        UtilRender.renderTexture(Textures.SOLAR_FOCUS_TOP);
-        Models.ModelSolarFocus.renderAll();
+        GL11.glPushMatrix();
+        UtilRender.renderTexture(Textures.UNIVERSAL_CONDUIT);
+        GL11.glScalef(.5f, .5f, .5f);
+        GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
+        Models.ModelOctogon.renderAll();
+        GL11.glPopMatrix();
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();

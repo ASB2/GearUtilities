@@ -24,7 +24,7 @@ public class UniversalConduitNetwork implements IPowerNetwork, IItemNetwork, IFl
     @Override
     public void mergeNetworks(World world, ArrayList<Vector3> newNetwork) {
 
-        if(this.getAvaliableConductors() != null) {
+        if(this.getAvaliableConductors() != null && newNetwork != null) {
 
             for(Vector3 vector : this.getAvaliableConductors()) {
 

@@ -10,4 +10,7 @@ public interface IPotion extends IItemModuleAccepter {
     
     void setStrength(ItemStack stack, int amount);
     int getStrength(ItemStack stack);
+    
+    void setThrowable(ItemStack stack, boolean isthrowable);
+    boolean getThrowable(ItemStack stack);
 }

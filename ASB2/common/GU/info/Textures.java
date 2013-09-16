@@ -36,7 +36,9 @@ public final class Textures {
     public static final ResourceLocation SOLAR_FOCUS_BOTTOM = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelSolarFocusBottom.png");
 
     public static final ResourceLocation UNIVERSAL_CONDUIT = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelUniversalConduit.png");
+    public static final ResourceLocation UNIVERSAL_CONDUIT_CENTER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelUniversalConduitCenter.png");
     
+    public static final ResourceLocation CONDUIT_INTERFACE_CENTER = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelConduitInterfaceCenter.png");
     public static final ResourceLocation CONDUIT_INTERFACE_IMPORTING = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelConduitInterfaceImporting.png");
     public static final ResourceLocation CONDUIT_INTERFACE_EXPORTING = new ResourceLocation(Reference.MODDID + ":textures/blocks/ModelConduitInterfaceExporting.png");
     

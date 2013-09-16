@@ -18,7 +18,7 @@ public interface INetwork {
     boolean removeConductor(World world, Vector3 conduit);
     
     /**
-     * Should merge everything in the current network into the new network.
+     * Should merge everything in the network the method is called in into the provided network.
      */
     void mergeNetworks(World world, ArrayList<Vector3> newNetwok);
     

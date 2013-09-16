@@ -17,7 +17,7 @@ public class ContainerAdvancedPotionBrewery extends ContainerBase {
         this.addSlotToContainer(addSlotToList(new PotionIngredientSlot(tileEntity, 3, 90, 19)));
         this.addSlotToContainer(addSlotToList(new PotionIngredientSlot(tileEntity, 4, 109, 19)));
         this.addSlotToContainer(addSlotToList(new PotionIngredientSlot(tileEntity, 5, 128, 19)));
-        this.addSlotToContainer(addSlotToList(new PotionIngredientSlot(tileEntity, 6, 35, 54)));
+        this.addSlotToContainer(addSlotToList(new PotionBottleSlot(tileEntity, 6, 35, 54)));
         this.addSlotToContainer(addSlotToList(new PotionIngredientSlot(tileEntity, 7, 83, 54)));
 
         tileEntity.trigger(0);

@@ -45,7 +45,7 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
 
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 
-        if(!player.isSneaking()) {
+        if(!this.getThrowable(itemStack)) {
 
             player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
         }
@@ -130,5 +130,17 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
     public ArrayList<ItemStack> getModules(ItemStack stack) {
 
         return UtilItemStack.getNBTTagInventory(stack, "Items");
+    }
+
+    @Override
+    public void setThrowable(ItemStack stack, boolean isthrowable) {
+        
+        UtilItemStack.setNBTTagBoolean(stack, "throwable", isthrowable);
+    }
+
+    @Override
+    public boolean getThrowable(ItemStack stack) {
+
+        return UtilItemStack.getNBTTagBoolean(stack, "throwable");
     }
 }

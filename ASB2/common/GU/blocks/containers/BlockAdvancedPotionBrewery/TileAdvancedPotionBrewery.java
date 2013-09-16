@@ -2,7 +2,6 @@ package GU.blocks.containers.BlockAdvancedPotionBrewery;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -13,11 +12,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
 import GU.ItemRegistry;
 import GU.api.potion.IPotion;
+import GU.api.potion.IPotionBottle;
 import GU.api.potion.IPotionIngredient;
 import GU.api.power.IPowerMisc;
 import GU.api.power.IPowerProvider;
@@ -43,10 +42,7 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
 
     @Override
     public void updateEntity() {
-        
-        if(Minecraft.getMinecraft().thePlayer != null&& Minecraft.getMinecraft().thePlayer.openContainer != null && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerAdvancedPotionBrewery)
-            this.sendReqularPowerPackets(10);
-        
+
         if((shouldCraft || worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))) {
 
             if(hasRequired()) {
@@ -55,7 +51,7 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
             }
         }
         else {
-            
+
             shouldCraft = false;
         }
     }
@@ -76,29 +72,50 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
 
         potionInterface.setDuration(potion, getCombinedDuration());
         potionInterface.setStrength(potion, getCombinedStrength());
+        potionInterface.setThrowable(potion, this.isThrowable());
+        
 
         for(ItemStack stack : getIngredients()) {
 
             potionInterface.addItemModule(potion, stack);
         }
+
         if(hasRequired()) {
 
-            UtilFluid.removeFluidFromTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000), true);
-            this.getPowerProvider().usePower(Variables.POTION_BASE_COST * this.getIngredients().size() + getCombinedPower(), ForgeDirection.UNKNOWN, true);
+            if(UtilInventory.addItemStackToSlot(this, potion, 7, false)) {
 
-            UtilInventory.decreaseSlotContents(this, 0, 1);
-            UtilInventory.decreaseSlotContents(this, 1, 1);
-            UtilInventory.decreaseSlotContents(this, 2, 1);
-            UtilInventory.decreaseSlotContents(this, 3, 1);
-            UtilInventory.decreaseSlotContents(this, 4, 1);
-            UtilInventory.decreaseSlotContents(this, 5, 1);
-            UtilInventory.decreaseSlotContents(this, 6, 1);
+                if(UtilFluid.removeFluidFromTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000), false) && this.getPowerProvider().usePower(Variables.POTION_BASE_COST * this.getIngredients().size() + getCombinedPower(), ForgeDirection.UNKNOWN, false)) {
 
-            if(!UtilInventory.addItemStackToSlot(this, potion, 7, true)) {
+                    UtilInventory.addItemStackToSlot(this, potion, 7, true);
+                    UtilFluid.removeFluidFromTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000), true);
+                    this.getPowerProvider().usePower(Variables.POTION_BASE_COST * this.getIngredients().size() + getCombinedPower(), ForgeDirection.UNKNOWN, true);
 
-                UtilBlock.spawnItemStackEntity(worldObj, xCoord, yCoord, zCoord, potion, 1);
+                    UtilInventory.decreaseSlotContents(this, 0, 1);
+                    UtilInventory.decreaseSlotContents(this, 1, 1);
+                    UtilInventory.decreaseSlotContents(this, 2, 1);
+                    UtilInventory.decreaseSlotContents(this, 3, 1);
+                    UtilInventory.decreaseSlotContents(this, 4, 1);
+                    UtilInventory.decreaseSlotContents(this, 5, 1);
+                    UtilInventory.decreaseSlotContents(this, 6, 1);
+                }
             }
         }
+    }
+
+    public boolean isThrowable() {
+
+        ItemStack stack = this.getStackInSlot(6);
+
+        if(stack != null) {
+
+            if(stack.getItem() instanceof IPotionBottle) {
+
+                IPotionBottle potionInterface = (IPotionBottle)stack.getItem();
+                
+                return potionInterface.isThrowable(stack);
+            }        
+        }
+        return false;
     }
 
     public int getCombinedDuration() {
@@ -322,8 +339,8 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-        // TODO Auto-generated method stub
-        return true;
+
+        return itemstack.getItem() instanceof IPotionIngredient;
     }
 
     @Override
@@ -337,17 +354,20 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
 
         return powerProvider;
     }
-    
+
     @Override
     public void trigger(int id) {
 
-        if(fluidTank.getFluid() != null) {
+        if(!worldObj.isRemote) {
 
-            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
-        } 
-        else {
+            if(fluidTank.getFluid() != null) {
 
-            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
+                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
+            } 
+            else {
+
+                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
+            }
         }
     }
 }
