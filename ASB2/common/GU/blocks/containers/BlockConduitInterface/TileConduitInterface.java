@@ -83,29 +83,6 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
             else {
 
                 importing[side] = true;
-
-                if(this.getNetwork() != null) {
-
-                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.getOrientation(side));
-
-                    if(tile != null) {
-
-                        if(tile instanceof IInventory) {
-
-                            ((UniversalConduitNetwork)this.getNetwork()).removeAvaliableInventory(new Vector3(tile));
-                        }
-
-                        if(tile instanceof IFluidHandler) {
-
-                            ((UniversalConduitNetwork)this.getNetwork()).removeAvaliableTank(new Vector3(tile));
-                        }
-
-                        if(tile instanceof IPowerMisc) {
-
-                            ((UniversalConduitNetwork)this.getNetwork()).removePowerRequest(new Vector3(tile));
-                        }
-                    }
-                }
                 return;
             }
         }
@@ -144,29 +121,6 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
             else {
 
                 importing[side] = true;
-
-                if(this.getNetwork() != null) {
-
-                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.getOrientation(side));
-
-                    if(tile != null) {
-
-                        if(tile instanceof IInventory) {
-
-                            ((UniversalConduitNetwork)this.getNetwork()).removeAvaliableInventory(new Vector3(tile));
-                        }
-
-                        if(tile instanceof IFluidHandler) {
-
-                            ((UniversalConduitNetwork)this.getNetwork()).removeAvaliableTank(new Vector3(tile));
-                        }
-
-                        if(tile instanceof IPowerMisc) {
-
-                            ((UniversalConduitNetwork)this.getNetwork()).removePowerRequest(new Vector3(tile));
-                        }
-                    }
-                }
                 return;
             }
         }

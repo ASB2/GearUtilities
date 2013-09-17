@@ -82,7 +82,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
                 if(fluidTank.getFluidAmount() >= 1000) {
 
-                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, 1000, true);
+                    return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, true);
                 }
                 return UtilFluid.moveFluid(this, ForgeDirection.DOWN, below, fluidTank.getFluidAmount(), true);
             }
@@ -96,11 +96,9 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
         if(this.fluidTank.getFluidAmount() >= this.getFluidHandlersAround() * 1000) {
 
-            int amountDivided = 1000;
-
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
-                if(direction != ForgeDirection.UP) {
+                if(direction != ForgeDirection.UP && direction != ForgeDirection.DOWN) {
 
                     TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
@@ -108,7 +106,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
                         if(tile instanceof IFluidHandler) {
 
-                            itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, amountDivided, true);
+                            itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 1000, true);
                         }
                     }
                 }
@@ -169,9 +167,8 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
         if(doDrain) {
 
             worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
-        }
-
-        this.trigger(0);        
+            this.trigger(0);   
+        }     
         return fluidTank.drain(resource.amount, doDrain);
     }
 
@@ -206,13 +203,13 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
         return new FluidTankInfo[] { fluidTank.getInfo() };
     }
 
-    public TileConnectableTank getTankBelow(TileEntity tile) {
+    public IFluidHandler getTankBelow(TileEntity tile) {
 
         TileEntity below = worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord - 1, tile.zCoord);
 
-        if(below instanceof TileConnectableTank) {
+        if(below instanceof IFluidHandler) {
 
-            return (TileConnectableTank) below;
+            return (IFluidHandler) below;
         }
         return null;
     }

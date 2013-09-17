@@ -30,8 +30,8 @@ public class ConduitInterfaceRenderer extends TileEntitySpecialRenderer implemen
         GL11.glTranslated(x + .5f, y + .5, z + .5f);
         GL11.glScalef(.5f, .5f, .5f);
 
-        UtilRender.renderTexture(Textures.CONDUIT_INTERFACE_CENTER);
         GL11.glPushMatrix();
+        UtilRender.renderTexture(Textures.CONDUIT_INTERFACE_CENTER);
         GL11.glScalef(.7f, .7f, .7f);
         GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
         Models.ModelOctogon.renderAll();
@@ -161,6 +161,7 @@ public class ConduitInterfaceRenderer extends TileEntitySpecialRenderer implemen
                     }
 
                     GL11.glPushMatrix();
+                    UtilRender.renderTexture(Textures.CONDUIT_INTERFACE_CENTER);
                     GL11.glScalef(.5f, .5f, .5f);
                     Models.ModelOctogon.renderAll();
 

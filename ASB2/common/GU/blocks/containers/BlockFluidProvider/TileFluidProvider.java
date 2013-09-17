@@ -25,7 +25,7 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     public void updateEntity() {
 
         if (fluidStack != null) {
-
+            fluidStack.amount = fluidTank.getCapacity();
             fluidTank.setFluid(fluidStack);
 
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
