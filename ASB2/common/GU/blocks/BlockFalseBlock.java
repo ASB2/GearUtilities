@@ -11,10 +11,9 @@ import net.minecraftforge.common.ForgeDirection;
 
 public class BlockFalseBlock extends BlockBase {
 
-    public BlockFalseBlock(int par1, Material material) {
-        super(par1, material);
+    public BlockFalseBlock(int id, Material material) {
+        super(id, material);
         useStandardRendering = false;
-        this.setHardness(Block.stone.blockHardness);
     }
 
     @Override

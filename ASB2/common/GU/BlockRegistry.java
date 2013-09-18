@@ -22,6 +22,7 @@ import GU.blocks.containers.BlockClusterSender.BlockClusterSender;
 import GU.blocks.containers.BlockConduitInterface.BlockConduitInterface;
 import GU.blocks.containers.BlockConnectableTank.BlockConnectableTank;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
+import GU.blocks.containers.BlockEnergyCube.BlockEnergyCube;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockLamp.BlockLamp;
@@ -63,6 +64,7 @@ public class BlockRegistry {
     public static ContainerBase BlockSender;
     public static ContainerBase BlockSolarFocus;
     public static ContainerBase BlockConduitInterface;
+    public static ContainerBase BlockEnergyCube;
     
     private static int id = 500;
 
@@ -173,6 +175,10 @@ public class BlockRegistry {
         BlockConduitInterface = new BlockConduitInterface(config.getBlock("BlockConduitInterface", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockConduitInterface.setBlockName("BlockConduitInterface");
         LanguageRegistry.addName(BlockConduitInterface, "Conduit Interface");
+        
+        BlockEnergyCube = new BlockEnergyCube(config.getBlock("BlockEnergyCube", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockEnergyCube.setBlockName("BlockEnergyCube");
+        LanguageRegistry.addName(BlockEnergyCube, "Energy Cube");
     }
 
     public static void initTestBlocks(Configuration config) {

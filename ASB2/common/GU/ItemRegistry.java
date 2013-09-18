@@ -21,12 +21,14 @@ import GU.items.ItemGearReader;
 import GU.items.ItemLifeStealingBludgeoningStick;
 import GU.items.ItemLinker;
 import GU.items.ItemPhantomPlacer;
+import GU.items.ItemPurificationHelmet;
 import GU.items.ItemRainBGone;
 import GU.items.ItemTeleporter;
 import GU.items.ItemTestItem;
 import GU.items.ItemTradeStick;
 import GU.items.ItemBloodStone.ItemBloodStone;
 import GU.items.ItemCrystalShards.ItemCrystal;
+import GU.items.ItemHandheldTank.ItemHandheldTank;
 import GU.items.ItemRunicTools.IRunicShovel;
 import GU.items.ItemRunicTools.ItemRunicAxe;
 import GU.items.ItemRunicTools.ItemRunicHoe;
@@ -34,7 +36,6 @@ import GU.items.ItemRunicTools.ItemRunicPickaxe;
 import GU.items.ItemRunicTools.ItemRunicSword;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import GU.items.*;
 
 public class ItemRegistry {
 
@@ -57,6 +58,8 @@ public class ItemRegistry {
     public static ItemBase ItemBloodStone;   
     public static Item ItemRunicSword, ItemRunicPickaxe, ItemRunicShovel, ItemRunicAxe, ItemRunicHoe;   
     public static ItemArmor ItemPurificationHelmet;
+    public static Item ItemSmoothStoneSword, ItemSmoothStonePickaxe, ItemSmoothStoneShovel, ItemSmoothStoneAxe, ItemSmoothStoneHoe;
+    public static ItemBase ItemHandheldTank;
     
     private static int id = 5000;
     
@@ -183,6 +186,10 @@ public class ItemRegistry {
         ItemPurificationHelmet = new ItemPurificationHelmet(config.getItem("ItemPurificationHelmet", ItemRegistry.getNextBaseID()).getInt(), EnumArmorMaterial.CLOTH, 0, 0);
         LanguageRegistry.addName(ItemPurificationHelmet, "Purification Helmet");
 //        ItemPurificationHelmet.setCreativeTab(GearUtilities.tabGUItems);
+        
+        ItemHandheldTank = new ItemHandheldTank(config.getItem( "ItemHandheldTank", ItemRegistry.getNextBaseID()).getInt());
+        ItemHandheldTank.setItemName("ItemHandheldTank");
+        LanguageRegistry.addName(ItemHandheldTank, "Handheld Tank");
     }
 
     public static int getNextBaseID() {

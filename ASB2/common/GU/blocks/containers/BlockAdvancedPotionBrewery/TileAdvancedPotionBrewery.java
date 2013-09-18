@@ -340,7 +340,17 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 
-        return itemstack.getItem() instanceof IPotionIngredient;
+        if(i == 7) {
+            
+            return false;
+        }
+        
+        if(i == 6) {
+            
+            return itemstack.getItem() instanceof IPotionBottle;
+        }
+        
+        return itemstack.getItem() instanceof IPotionIngredient && !(itemstack.getItem() instanceof IPotionBottle);
     }
 
     @Override

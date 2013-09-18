@@ -16,6 +16,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import GU.fluid.FluidBase;
 import GU.info.Reference;
+import GU.items.ItemHandheldTank.ItemHandheldTank;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -23,6 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class FluidRegistry {
 
     public static List<ItemStack> STORAGE_CRYSTAL_LIST = new ArrayList<ItemStack>();
+    public static List<ItemStack> HANDHELDTANK = new ArrayList<ItemStack>();
     public static List<FluidBase> GU_FLUIDS = new ArrayList<FluidBase>();
     
     public static IconRegister iconProvider;
@@ -89,12 +91,17 @@ public class FluidRegistry {
 
     public static void registerFluidContainers() {
 
-        for (Fluid fluid : net.minecraftforge.fluids.FluidRegistry.getRegisteredFluids().values()) {
+        for(Fluid fluid : net.minecraftforge.fluids.FluidRegistry.getRegisteredFluids().values()) {
 
             ItemStack filled = new ItemStack(ItemRegistry.ItemStorageCrystal, 1, fluid.getID());
             FluidContainerRegistry.registerFluidContainer(fluid, filled, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0));
             ((ItemStorageCrystal)filled.getItem()).setFluidStack(filled, new FluidStack(fluid, ((ItemStorageCrystal) filled.getItem()).getCapasity(filled)));
             STORAGE_CRYSTAL_LIST.add(filled);
+            
+            filled = new ItemStack(ItemRegistry.ItemHandheldTank, 1, fluid.getID());
+            FluidContainerRegistry.registerFluidContainer(fluid, filled, new ItemStack(ItemRegistry.ItemHandheldTank, 1, 0));
+            ((ItemHandheldTank)filled.getItem()).setFluidStack(filled, new FluidStack(fluid, ((ItemHandheldTank) filled.getItem()).getCapasity(filled)));       
+            HANDHELDTANK.add(filled);
         }
     }
 }

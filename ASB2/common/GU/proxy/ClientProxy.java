@@ -20,6 +20,8 @@ import GU.blocks.containers.BlockConnectableTank.ConnectableTankRenderer;
 import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
+import GU.blocks.containers.BlockEnergyCube.EnergyCubeRenderer;
+import GU.blocks.containers.BlockEnergyCube.TileEnergyCube;
 import GU.blocks.containers.BlockRunicCube.RunicCubeRenderer;
 import GU.blocks.containers.BlockRunicCube.TileRunicCube;
 import GU.blocks.containers.BlockSender.GuiSender;
@@ -37,6 +39,7 @@ import GU.entity.EntityTest.TestEntityRenderer;
 import GU.info.Gui;
 import GU.info.Models;
 import GU.items.ItemBloodStone.BloodStoneRenderer;
+import GU.items.ItemHandheldTank.HandheldTankRenderer;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import GU.models.BlockSimpleRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -79,6 +82,11 @@ public class ClientProxy extends CommonProxy {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileConduitInterface.class, new ConduitInterfaceRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockConduitInterface.blockID, new ConduitInterfaceRenderer());
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEnergyCube.class, new EnergyCubeRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockEnergyCube.blockID, new EnergyCubeRenderer());
+        
+        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemHandheldTank.itemID, new HandheldTankRenderer());
         
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());

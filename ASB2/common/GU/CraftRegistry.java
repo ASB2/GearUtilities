@@ -61,6 +61,14 @@ public class CraftRegistry {
             'T', Block.torchWood,
             'R', Item.redstone,
             'I', Item.ingotIron});
+        
+        GameRegistry.addRecipe(new ItemStack(BlockRegistry.BlockCanvas, 8), new Object[] {
+            "IWI", 
+            "WEW", 
+            "IWI",
+            'E', BlockRegistry.BlockEnhancedBricks,
+            'W', Block.cloth,
+            'I', Item.ingotIron});
 
         GameRegistry.addRecipe(new ItemStack(BlockRegistry.BlockConnectableTank), new Object[] {
             "QGQ", 
@@ -256,6 +264,48 @@ public class CraftRegistry {
             'S',ItemRegistry.ItemBloodStone,
             'E', BlockRegistry.BlockFalseBlock,
             'A',ItemRegistry.ItemAdvancedStick}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockSolarFocus), new Object[] {
+            "AAA", 
+            "EBE", 
+            "ICI",
+            
+            'A', ItemRegistry.ItemCrystal.ItemAirCrystalShard,
+            'S', ItemRegistry.ItemBloodStone,
+            'E', BlockRegistry.BlockEnhancedBricks,
+            'I', Item.ingotIron,
+            'B', ItemRegistry.ItemBloodStone,
+            'C', Block.chest}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockUniversalConduit), new Object[] {
+            "IEI", 
+            "IBI", 
+            "ICI",
+            
+            'E', ItemRegistry.ItemCrystal.ItemEnergyCrystalShard,
+            'I', Item.ingotIron,
+            'B', Item.bucketEmpty,
+            'C', Block.chest}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockConduitInterface), new Object[] {
+            "IBI", 
+            "CIE", 
+            "IRI",
+            
+            'E', ItemRegistry.ItemCrystal.ItemEnergyCrystalShard,
+            'I', Item.ingotIron,
+            'R', Item.redstone,
+            'B', Item.bucketEmpty,
+            'C', Block.chest}));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemTradeStick), new Object[] {
+            "EDE", 
+            "DAD", 
+            "EDE",
+            
+            'E', Item.emerald,
+            'D', Item.diamond,
+            'A', ItemRegistry.ItemAdvancedStick}));
         
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 1), new ItemStack(BlockRegistry.BlockSender, 1, 0));
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 2), new ItemStack(BlockRegistry.BlockSender, 1, 1));

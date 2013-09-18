@@ -24,8 +24,8 @@ public abstract class GuiBase extends GuiContainer {
     public final int ySizeOfTexture = 166;
     public final int powerBarScale = 75;
 
-    protected int posX = (width - xSizeOfTexture) / 2;
-    protected int posY = (height - ySizeOfTexture) / 2;
+    protected int posX;
+    protected int posY;
 
     public GuiBase(ContainerBase container) {
         super(container);
@@ -261,9 +261,11 @@ public abstract class GuiBase extends GuiContainer {
         int yStart;
 
         for (int i = 0; i < stringList.size(); i++) {
+            
             tempWidth = this.fontRenderer.getStringWidth(stringList.get(i));
 
             if (tempWidth > tooltipWidth) {
+                
                 tooltipWidth = tempWidth;
             }
         }
@@ -273,10 +275,12 @@ public abstract class GuiBase extends GuiContainer {
         int tooltipHeight = 8;
 
         if (stringList.size() > 1) {
+            
             tooltipHeight += 2 + (stringList.size() - 1) * 10;
         }
 
         if (this.guiTop + yStart + tooltipHeight + 6 > this.height) {
+            
             yStart = this.height - tooltipHeight - this.guiTop - 6;
         }
 
@@ -292,10 +296,8 @@ public abstract class GuiBase extends GuiContainer {
         int color3 = (color2 & 16711422) >> 1 | color2 & -16777216;
         this.drawGradientRect(xStart - 3, yStart - 3 + 1, xStart - 3 + 1, yStart + tooltipHeight + 3 - 1, color2, color3);
         this.drawGradientRect(xStart + tooltipWidth + 2, yStart - 3 + 1, xStart + tooltipWidth + 3, yStart + tooltipHeight + 3 - 1, color2, color3);
-        this.drawGradientRect(xStart - 3, yStart - 3,
-                xStart + tooltipWidth + 3, yStart - 3 + 1, color2, color2);
-        this.drawGradientRect(xStart - 3, yStart + tooltipHeight + 2, xStart
-                + tooltipWidth + 3, yStart + tooltipHeight + 3, color3, color3);
+        this.drawGradientRect(xStart - 3, yStart - 3, xStart + tooltipWidth + 3, yStart - 3 + 1, color2, color2);
+        this.drawGradientRect(xStart - 3, yStart + tooltipHeight + 2, xStart + tooltipWidth + 3, yStart + tooltipHeight + 3, color3, color3);
 
         for (int stringIndex = 0; stringIndex < stringList.size(); ++stringIndex) {
             String line = stringList.get(stringIndex);

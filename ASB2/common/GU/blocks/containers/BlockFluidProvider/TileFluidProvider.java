@@ -55,36 +55,17 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 
-        worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
-        return fluidTank.fill(resource, doFill);
+        return 0;
     }
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
-
-        if (fluidTank != null) {
-
-            if (fluid != null) {
-
-                if (fluidTank.getFluid() != null) {
-
-                    if (this.fluidTank.getFluid().isFluidEqual(
-                            new FluidStack(fluid, 0))) {
-
-                        return true;
-                    }
-                } else {
-
-                    return true;
-                }
-            }
-        }
+        
         return false;
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource,
-            boolean doDrain) {
+    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
 
         if (resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
 
@@ -127,7 +108,6 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        this.fluidStack = fluidTank.getFluid();
     }
 
     @Override

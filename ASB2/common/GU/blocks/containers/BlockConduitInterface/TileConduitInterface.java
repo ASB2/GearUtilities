@@ -218,7 +218,7 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
                     }
                     else {
 
-                        for(Vector3 vector : ((UniversalConduitNetwork)this.getNetwork()).getAvaliableTanks()) {
+                        for(Vector3 vector : ((UniversalConduitNetwork)this.getNetwork()).getPowerRequests()) {
 
                             if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof IPowerMisc) {
 

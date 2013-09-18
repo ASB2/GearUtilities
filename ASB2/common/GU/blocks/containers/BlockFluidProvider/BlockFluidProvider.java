@@ -41,10 +41,10 @@ public class BlockFluidProvider extends ContainerBase {
 
                 if (tank.fluidTank.getFluid() != null) {
 
-                    if(tank.fluidStack.getFluid().getLocalizedName() != null) {
+                    if(tank.fluidTank.getFluid().getFluid().getName() != null) {
                         
                         if(!world.isRemote)
-                            UtilEntity.sendChatToPlayer(entityplayer, "Current Fluids is: " + tank.fluidStack.getFluid().getLocalizedName());
+                            UtilEntity.sendChatToPlayer(entityplayer, "Current Fluids is: " + tank.fluidTank.getFluid().getFluid().getName());
                     } 
                     else {
 

@@ -25,7 +25,7 @@ public class BlockBase extends Block {
         MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);
         this.setCreativeTab(GearUtilities.tabGUBlocks);
         setHardness(1.5f);
-        setResistance(8.0F);
+        setResistance(10.0F);
     }
 
     @Override

@@ -1,5 +1,8 @@
 package GU.blocks.containers.BlockConnectableTank;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -57,13 +60,11 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
         for (ForgeDirection direction : ForgeDirection.values()) {
 
-            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+            if(direction != ForgeDirection.UP && direction != ForgeDirection.DOWN) {
 
-            if(tile != null && tile instanceof TileConnectableTank) {
+                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
-                TileConnectableTank tileC = (TileConnectableTank) tile;
-
-                if(!(tileC.fluidTank.getCapacity() == tileC.fluidTank.getFluidAmount()) && direction != ForgeDirection.UP) {
+                if(tile != null && tile instanceof IFluidHandler) {
 
                     amount++;
                 }
@@ -106,7 +107,17 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
                         if(tile instanceof IFluidHandler) {
 
-                            itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 1000, true);
+                            if(tile instanceof TileConnectableTank) {
+
+                                if(((TileConnectableTank)tile).fluidTank.getFluidAmount() < this.fluidTank.getFluidAmount()) {
+
+                                    itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 1000, true);
+                                }
+                            }
+                            else {
+
+                                itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 1000, true);
+                            }
                         }
                     }
                 }
@@ -125,7 +136,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
             if(UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP) != null && UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP) instanceof IFluidHandler) {
 
-                return ((IFluidHandler)UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP)).fill(from, resource, doFill);
+                return ((IFluidHandler)UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP)).fill(ForgeDirection.DOWN, resource, doFill);
             }
         }
 
@@ -148,12 +159,13 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
                     return true;
                 }
-            } else {
+            } 
+            else {
 
                 return true;
             }
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -175,6 +187,16 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
 
+        if(fluidTank.getFluidAmount() < maxDrain) {
+
+            return null;
+        }
+
+        if(doDrain) {
+
+            worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+            this.trigger(0);   
+        }  
         return fluidTank.drain(maxDrain, doDrain);
     }
 
@@ -214,30 +236,65 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
         return null;
     }
 
-    public TileConnectableTank getTankAbove(TileEntity tile) {
+    public IFluidHandler getTankAbove(TileEntity tile) {
 
         TileEntity below = worldObj.getBlockTileEntity(tile.xCoord, tile.yCoord + 1, tile.zCoord);
 
-        if(below instanceof TileConnectableTank) {
+        if(below instanceof IFluidHandler) {
 
-            return (TileConnectableTank) below;
+            return (IFluidHandler) below;
         }
 
         return null;
     }
 
     @Override
+    public final Packet132TileEntityData getDescriptionPacket() {
+
+        NBTTagCompound nbt = new NBTTagCompound();        
+        this.writeToNBT(nbt);
+
+        return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
+    }
+
+    @Override
+    public final void onDataPacket(INetworkManager net, Packet132TileEntityData packet) {
+
+        NBTTagCompound nbt = packet.customParam1;
+
+        if (nbt != null) {
+
+            this.readFromNBT(nbt);
+        }
+    }
+
+    public final void updateClients() {
+
+        if (!worldObj.isRemote) {
+
+            Packet132TileEntityData packet = this.getDescriptionPacket();
+            PacketDispatcher.sendPacketToAllInDimension(packet, this.worldObj.provider.dimensionId);
+        }
+    }
+
+
+    @SuppressWarnings("unused")
+    @Override
     public void trigger(int id) {
 
-        if(!worldObj.isRemote) {
+        updateClients();
 
-            if(fluidTank.getFluid() != null) {
+        if(false) {
+            if(!worldObj.isRemote) {
 
-                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
-            } 
-            else {
+                if(fluidTank.getFluid() != null) {
 
-                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
+                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
+                } 
+                else {
+
+                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
+                }
             }
         }
     }
