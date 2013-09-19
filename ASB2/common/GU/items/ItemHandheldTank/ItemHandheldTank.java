@@ -63,7 +63,9 @@ public class ItemHandheldTank extends ItemBase {
 
             info.add("Fluid Stored: " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + UtilMisc.capitilizeFirst(this.getFluidStack(itemStack).getFluid().getName()));
             info.add("Fluid Amount: " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + UtilMisc.capitilizeFirst(Integer.toString(this .getFluidStack(itemStack).amount)));
-        } else {
+        } 
+        
+        else {
 
             info.add("Fluid Stored: None");
             info.add("Fluid Amount: 0");

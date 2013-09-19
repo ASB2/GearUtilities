@@ -1,8 +1,5 @@
 package GU.blocks.containers.BlockConnectableTank;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -248,53 +245,19 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
         return null;
     }
 
-    @Override
-    public final Packet132TileEntityData getDescriptionPacket() {
 
-        NBTTagCompound nbt = new NBTTagCompound();        
-        this.writeToNBT(nbt);
-
-        return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
-    }
-
-    @Override
-    public final void onDataPacket(INetworkManager net, Packet132TileEntityData packet) {
-
-        NBTTagCompound nbt = packet.customParam1;
-
-        if (nbt != null) {
-
-            this.readFromNBT(nbt);
-        }
-    }
-
-    public final void updateClients() {
-
-        if (!worldObj.isRemote) {
-
-            Packet132TileEntityData packet = this.getDescriptionPacket();
-            PacketDispatcher.sendPacketToAllInDimension(packet, this.worldObj.provider.dimensionId);
-        }
-    }
-
-
-    @SuppressWarnings("unused")
     @Override
     public void trigger(int id) {
+        
+        if(!worldObj.isRemote) {
 
-        updateClients();
+            if(fluidTank.getFluid() != null) {
 
-        if(false) {
-            if(!worldObj.isRemote) {
+                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
+            } 
+            else {
 
-                if(fluidTank.getFluid() != null) {
-
-                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
-                } 
-                else {
-
-                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
-                }
+                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
             }
         }
     }

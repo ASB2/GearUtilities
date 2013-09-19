@@ -3,6 +3,8 @@ package GU.blocks.containers;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -109,6 +111,35 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
         }
     }
 
+    @Override
+    public final Packet132TileEntityData getDescriptionPacket() {
+
+        NBTTagCompound nbt = new NBTTagCompound();        
+        this.writeToNBT(nbt);
+
+        return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
+    }
+
+    @Override
+    public final void onDataPacket(INetworkManager net, Packet132TileEntityData packet) {
+
+        NBTTagCompound nbt = packet.customParam1;
+
+        if (nbt != null) {
+
+            this.readFromNBT(nbt);
+        }
+    }
+
+    public final void updateClients() {
+
+        if (!worldObj.isRemote) {
+
+            Packet132TileEntityData packet = this.getDescriptionPacket();
+            PacketDispatcher.sendPacketToAllInDimension(packet, this.worldObj.provider.dimensionId);
+        }
+    }
+    
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);

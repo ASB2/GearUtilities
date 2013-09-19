@@ -28,15 +28,13 @@ public class FluidRegistry {
     public static List<FluidBase> GU_FLUIDS = new ArrayList<FluidBase>();
     
     public static IconRegister iconProvider;
-
-    public static FluidBase MoltenStone;
+    
     public static FluidBase Blood;
     public static FluidBase CapturedSoul;
     
-    public static FluidBase MoltenIron;
-    public static FluidBase MoltenGold;
-    public static FluidBase MoltenDiamond;
-    public static FluidBase MoltenEmerald;
+    public static FluidBase Nutrients;    
+    public static FluidBase VegetableMash;
+    public static FluidBase MeatMash;
 
     public static FluidBase Vitam;
     public static FluidBase AerVitam;
@@ -48,14 +46,12 @@ public class FluidRegistry {
 
         MinecraftForge.EVENT_BUS.register(new FluidRegistry());
         
-        MoltenStone = new FluidBase("Molten Stone", Color.LIGHT_GRAY.hashCode());
         Blood = new FluidBase("Blood", Color.RED.hashCode());
         CapturedSoul  = new FluidBase("Captured Soul", Color.LIGHT_GRAY.hashCode()); 
-        
-        MoltenIron = new FluidBase("Molten Iron", Color.LIGHT_GRAY.hashCode());
-        MoltenGold = new FluidBase("Molten Gold", new Color(255, 220, 0).hashCode());
-        MoltenDiamond = new FluidBase("Molten Diamond", new Color(0, 225, 255).hashCode());
-        MoltenEmerald = new FluidBase("Molten Emerald", Color.GREEN.hashCode());
+        Nutrients = new FluidBase("Nutrients", Color.GREEN.hashCode()); 
+
+        VegetableMash = new FluidBase("Vegetable Mash", Color.GREEN.hashCode()); 
+        MeatMash = new FluidBase("Meat Mash", Color.GREEN.hashCode()); 
 
         Vitam = new FluidBase("Vitam", Color.BLUE.hashCode());
         AerVitam = new FluidBase("Aer Vitam", Color.YELLOW.hashCode());
@@ -81,8 +77,6 @@ public class FluidRegistry {
                 base.setStillIcon(stillIcon);
                 base.setFlowingIcon(flowingIcon);
             }
-            MoltenStone.setStillIcon(Block.stone.getIcon(0, 0));
-            MoltenStone.setFlowingIcon(Block.stone.getIcon(0, 0));
             
             CapturedSoul.setStillIcon(Block.slowSand.getIcon(0, 0));
             CapturedSoul.setFlowingIcon(Block.slowSand.getIcon(0, 0));
@@ -94,13 +88,13 @@ public class FluidRegistry {
         for(Fluid fluid : net.minecraftforge.fluids.FluidRegistry.getRegisteredFluids().values()) {
 
             ItemStack filled = new ItemStack(ItemRegistry.ItemStorageCrystal, 1, fluid.getID());
-            FluidContainerRegistry.registerFluidContainer(fluid, filled, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0));
-            ((ItemStorageCrystal)filled.getItem()).setFluidStack(filled, new FluidStack(fluid, ((ItemStorageCrystal) filled.getItem()).getCapasity(filled)));
+            ((ItemStorageCrystal)filled.getItem()).setFluidStack(filled, new FluidStack(fluid, ((ItemStorageCrystal) filled.getItem()).getCapasity(filled)));            
+            FluidContainerRegistry.registerFluidContainer(new FluidStack(fluid, ((ItemStorageCrystal) filled.getItem()).getCapasity(filled)), filled, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0));
             STORAGE_CRYSTAL_LIST.add(filled);
             
             filled = new ItemStack(ItemRegistry.ItemHandheldTank, 1, fluid.getID());
-            FluidContainerRegistry.registerFluidContainer(fluid, filled, new ItemStack(ItemRegistry.ItemHandheldTank, 1, 0));
-            ((ItemHandheldTank)filled.getItem()).setFluidStack(filled, new FluidStack(fluid, ((ItemHandheldTank) filled.getItem()).getCapasity(filled)));       
+            ((ItemHandheldTank)filled.getItem()).setFluidStack(filled, new FluidStack(fluid, ((ItemHandheldTank) filled.getItem()).getCapasity(filled)));
+            FluidContainerRegistry.registerFluidContainer(new FluidStack(fluid, ((ItemHandheldTank) filled.getItem()).getCapasity(filled)), filled, new ItemStack(ItemRegistry.ItemHandheldTank, 1, 0));
             HANDHELDTANK.add(filled);
         }
     }

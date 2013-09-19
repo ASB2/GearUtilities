@@ -14,8 +14,6 @@ import GU.blocks.containers.TileBase;
 
 public class TileFluidProvider extends TileBase implements IFluidHandler {
 
-    public FluidStack fluidStack;
-
     public TileFluidProvider() {
 
         fluidTank = new FluidTank(1000);
@@ -24,9 +22,7 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public void updateEntity() {
 
-        if (fluidStack != null) {
-            fluidStack.amount = fluidTank.getCapacity();
-            fluidTank.setFluid(fluidStack);
+        if(fluidTank.getFluid() != null) {
 
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
@@ -40,16 +36,22 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
 
                         if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
-                            UtilFluid.addFluidToTank(fTile, direction, fluidStack, true);
+                            UtilFluid.addFluidToTank(fTile, direction, fluidTank.getFluid(), true);
                         } 
                         else {
 
-                            UtilFluid.removeFluidFromTank(fTile, direction, fluidStack, true);
+                            UtilFluid.removeFluidFromTank(fTile, direction, fluidTank.getFluid(), true);
                         }
                     }
                 }
             }
         }
+    }
+
+    public void setFluid(FluidStack fluid) {
+
+        fluidTank.setFluid(fluid);
+        fluidTank.setCapacity(fluid.amount);
     }
 
     @Override
@@ -60,7 +62,7 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
-        
+
         return false;
     }
 

@@ -290,7 +290,6 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
         for(int i = 0; i < importing.length; i++) {       
 
             importing[i] = tag.getBoolean("importing " + i);
-            System.out.println("I have read from nbt " + i);
         }
     }
 
@@ -301,7 +300,6 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
         for(int i = 0; i < importing.length; i++) {       
 
             tag.setBoolean("importing " + i, importing[i]);
-            System.out.println("I have written to nbt " + i);
         }
     }
 }

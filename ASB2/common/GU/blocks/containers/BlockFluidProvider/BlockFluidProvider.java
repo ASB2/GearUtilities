@@ -30,7 +30,7 @@ public class BlockFluidProvider extends ContainerBase {
 
             if (fluid != null && tank != null) {
 
-                tank.fluidStack = fluid;
+                tank.setFluid(fluid);
                 return true;
             }
         } else {

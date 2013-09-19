@@ -1,7 +1,5 @@
 package GU.items.ItemHandheldTank;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 
@@ -44,7 +42,7 @@ public class HandheldTankRenderer implements IItemRenderer {
 
             case INVENTORY: {
 
-                renderItemSwitched(item, type, 0f, 0f - .1f, 0f, .6F, data);
+                renderItemSwitched(item, type, 0f, 0f, 0f, .6F, data);
                 return;
             }
 
@@ -66,18 +64,17 @@ public class HandheldTankRenderer implements IItemRenderer {
 
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
-        
+
         UtilRender.renderTexture(Textures.HANDHELD_TANK_OUTSIDE);
         Models.ModelHandheldTank.renderPart("Points");
-        
-        UtilRender.renderTexture(Textures.HANDHELD_TANK_CENTER);
+
+                UtilRender.renderTexture(Textures.HANDHELD_TANK_CENTER);
         Models.ModelHandheldTank.renderPart("Center");
-        
+
         if(((ItemHandheldTank)item.getItem()).getFluidStack(item) != null && ((ItemHandheldTank)item.getItem()).getFluidStack(item).getFluid().getStillIcon() != null) {
 
-            UtilRender.renderIcon(0, 0, ((ItemHandheldTank)item.getItem()).getFluidStack(item).getFluid().getStillIcon(), 16, 16);
+//            UtilRender.renderIcon(0, 0, ((ItemHandheldTank)item.getItem()).getFluidStack(item).getFluid().getStillIcon(), 16, 16);
         }
-
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }
