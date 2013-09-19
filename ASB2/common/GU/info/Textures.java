@@ -55,8 +55,9 @@ public final class Textures {
     public static final ResourceLocation ENERGY_CUBE_EAST_EXPORTING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/exporting/ModelEnergyCubeEast.png");
     public static final ResourceLocation ENERGY_CUBE_WEST_EXPORTING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/exporting/ModelEnergyCubeWest.png");
     
-    public static final ResourceLocation HANDHELD_TANK = new ResourceLocation(Reference.MODDID + ":textures/models/ModelHandheldTank.png");
-    
+    public static final ResourceLocation HANDHELD_TANK_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelHandheldTank/ModelHandheldTankCenter.png");
+    public static final ResourceLocation HANDHELD_TANK_OUTSIDE = new ResourceLocation(Reference.MODDID + ":textures/models/ModelHandheldTank/ModelHandheldTankOutside.png");
+
     public static final ResourceLocation CRYSTAL_BLANK = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalBlank.png");
     public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalAir.png");
     public static final ResourceLocation CRYSTAL_EARTH = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalEarth.png");

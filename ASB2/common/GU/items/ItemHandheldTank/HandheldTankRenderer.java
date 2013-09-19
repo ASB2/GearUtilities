@@ -1,5 +1,7 @@
 package GU.items.ItemHandheldTank;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 
@@ -30,25 +32,25 @@ public class HandheldTankRenderer implements IItemRenderer {
 
             case ENTITY: {
 
-                renderItemSwitched(item, type, 0f, .5f, 0f, 1f);
+                renderItemSwitched(item, type, 0f, .5f, 0f, .5f, data);
                 return;
             }
 
             case EQUIPPED: {
 
-                renderItemSwitched(item, type, 0f, 0f + 1, 0f, .7F);
+                renderItemSwitched(item, type, 0f, 0f + 1, 0f, .7F, data);
                 return;
             }
 
             case INVENTORY: {
 
-                renderItemSwitched(item, type, 0f, 0f - .1f, 0f, .6F);
+                renderItemSwitched(item, type, 0f, 0f - .1f, 0f, .6F, data);
                 return;
             }
 
             case EQUIPPED_FIRST_PERSON: {
 
-                renderItemSwitched(item, type, 0f - .5F, 1f, 0 + .9f, .5F);
+                renderItemSwitched(item, type, 0f - .5F, 1f, 0 + .9f, .5F, data);
                 return;
             }
 
@@ -57,16 +59,24 @@ public class HandheldTankRenderer implements IItemRenderer {
         }
     }
 
-    private void renderItemSwitched(ItemStack item, ItemRenderType type, float x, float y, float z, float scale) {
+    private void renderItemSwitched(ItemStack item, ItemRenderType type, float x, float y, float z, float scale, Object... data) {
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
 
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
+        
+        UtilRender.renderTexture(Textures.HANDHELD_TANK_OUTSIDE);
+        Models.ModelHandheldTank.renderPart("Points");
+        
+        UtilRender.renderTexture(Textures.HANDHELD_TANK_CENTER);
+        Models.ModelHandheldTank.renderPart("Center");
+        
+        if(((ItemHandheldTank)item.getItem()).getFluidStack(item) != null && ((ItemHandheldTank)item.getItem()).getFluidStack(item).getFluid().getStillIcon() != null) {
 
-        UtilRender.renderTexture(Textures.HANDHELD_TANK);
-        Models.ModelHandheldTank.renderAll();
+            UtilRender.renderIcon(0, 0, ((ItemHandheldTank)item.getItem()).getFluidStack(item).getFluid().getStillIcon(), 16, 16);
+        }
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
