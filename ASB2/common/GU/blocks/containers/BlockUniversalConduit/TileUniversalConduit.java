@@ -99,4 +99,10 @@ public class TileUniversalConduit extends TileBase implements IConductor {
 
         return new int[]{xCoord, yCoord, zCoord};
     }
+    
+    @Override
+    public TileEntity[] getAvaliableTileEntities() {
+
+        return new TileEntity[0];
+    }
 }

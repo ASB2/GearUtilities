@@ -1,5 +1,7 @@
 package GU.api.network;
 
+import net.minecraft.tileentity.TileEntity;
+
 public interface IConductor {
 
     /**
@@ -17,4 +19,6 @@ public interface IConductor {
      * The coordinates of the conduit
      */
     int[] getCoords();
+    
+    TileEntity[] getAvaliableTileEntities();
 }

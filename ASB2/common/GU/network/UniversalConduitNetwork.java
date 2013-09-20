@@ -134,7 +134,7 @@ public class UniversalConduitNetwork implements IPowerNetwork, IItemNetwork, IFl
     }
 
     @Override
-    public boolean postPowerRequest(Vector3 vector) {
+    public boolean addPowerRequest(Vector3 vector) {
 
         if(vector != null && !tankList.contains(vector)) {
 
