@@ -8,6 +8,7 @@ import ASB2.utils.UtilInventory;
 import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
+import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 
@@ -16,7 +17,7 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     public TileCreationTable() {
 
         this.waitTimer = new Wait(10, this, 0);
-        powerProvider = new PowerProvider(PowerClass.LOW);
+        powerProvider = new PowerProvider(PowerClass.LOW, State.SINK);
         tileItemStacks = new ItemStack[11]; 
     }
 

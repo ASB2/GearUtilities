@@ -19,6 +19,8 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f) {
 
+        double amount = .0;
+        
         ForgeDirection direction = ForgeDirection.getOrientation(tileEntity.worldObj.getBlockMetadata((int)x, (int)y, (int)z));
 
         GL11.glPushMatrix();
@@ -47,7 +49,14 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_NORTH);
                     }
+
+                    GL11.glPushMatrix();   
+
+                    GL11.glTranslated(0, 0, amount);
+
+
                     Models.ModelEnergyCube.renderPart("Front");  
+                    GL11.glPopMatrix();
                     break;
                 }
 
@@ -61,7 +70,12 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_SOUTH);
                     }
+                    
+                    GL11.glPushMatrix();   
+
+                    GL11.glTranslated(0, 0, -amount);
                     Models.ModelEnergyCube.renderPart("Back");  
+                    GL11.glPopMatrix();
                     break;
                 }
 
@@ -75,7 +89,13 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_EAST);
                     }
+                    
+                    GL11.glPushMatrix();   
+
+                    GL11.glTranslated(-amount, 0, 0);
+                    
                     Models.ModelEnergyCube.renderPart("Right"); 
+                    GL11.glPopMatrix();
                     break;
                 }
 
@@ -89,7 +109,13 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_WEST);
                     }
+                    
+                    GL11.glPushMatrix();   
+
+                    GL11.glTranslated(amount, 0, 0);
+                    
                     Models.ModelEnergyCube.renderPart("Left");
+                    GL11.glPopMatrix();
                     break;
                 }
 
@@ -103,7 +129,13 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_UP);
                     }
+                    
+                    GL11.glPushMatrix();   
+
+                    GL11.glTranslated(0, -amount, 0);
+                    
                     Models.ModelEnergyCube.renderPart("Top");
+                    GL11.glPopMatrix();
                     break;
                 }
 
@@ -117,10 +149,15 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_DOWN);
                     }
+                    
+                    GL11.glPushMatrix();   
+
+                    GL11.glTranslated(0, amount, 0);
                     Models.ModelEnergyCube.renderPart("Bottom");  
+                    GL11.glPopMatrix();
                     break;
                 }
-                
+
                 default: {
                     break;
                 }
@@ -160,7 +197,7 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
             case INVENTORY: {
 
-                renderItemSwitched(item, type, 0f, 0f - .1f, 0f, .6F);
+                renderItemSwitched(item, type, 0f, 0f - .1f, 0f, .5F);
                 return;
             }
 

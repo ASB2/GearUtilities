@@ -47,10 +47,6 @@ public final class GearUtilities {
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.COMMON_PROXY)
     public static CommonProxy proxy;
 
-    public GearUtilities() {
-
-    }
-
     public static CreativeTabs tabGUBlocks = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Blocks");
     public static CreativeTabs tabGUItems = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Items");
     public static CreativeTabs tabGUFluids = new GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Fluids");

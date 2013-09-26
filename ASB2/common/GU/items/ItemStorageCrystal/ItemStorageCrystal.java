@@ -27,6 +27,7 @@ public class ItemStorageCrystal extends ItemBase {
     public ItemStorageCrystal(int id) {
         super(id);
         this.setCreativeTab(GearUtilities.tabGUFluids);
+        this.setHasSubtypes(true);
     }
 
     @Override

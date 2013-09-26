@@ -51,9 +51,10 @@ public class ItemBase extends Item {
         }
     }
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
-        
+
+        info.add("Made just for you " + player.username);
     }
     
     @Override
@@ -68,13 +69,7 @@ public class ItemBase extends Item {
        
         return false;
     }
-
-    @Override
-    public String getUnlocalizedName(ItemStack itemstack) {
-
-        return super.getUnlocalizedName(itemstack);
-    }
-
+    
     public void setItemName(String texture) {
 
         this.itemName = texture;

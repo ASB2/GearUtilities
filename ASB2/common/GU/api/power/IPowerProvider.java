@@ -22,6 +22,7 @@ public interface IPowerProvider {
     void setPowerMax(float newMaxPower);
     
     PowerClass getPowerClass();
+    State getState();
     
     void readFromNBT(NBTTagCompound tagCompound);
     void writeToNBT(NBTTagCompound tagCompound);

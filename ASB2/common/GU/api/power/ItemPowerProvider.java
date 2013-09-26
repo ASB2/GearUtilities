@@ -144,4 +144,10 @@ public class ItemPowerProvider implements IPowerProvider {
 
         return -1;
     }
+
+    @Override
+    public State getState() {
+
+        return State.OTHER;
+    }
 }

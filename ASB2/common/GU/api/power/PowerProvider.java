@@ -6,18 +6,20 @@ import net.minecraftforge.common.ForgeDirection;
 public class PowerProvider implements IPowerProvider {
 
     protected PowerClass powerClass;
-
+    protected State currentState;
+    
     protected float powerStored;
     protected float powerMax;
 
-    public PowerProvider(PowerClass powerClass) {
-        this(powerClass.getSuggestedMax(), powerClass);
+    public PowerProvider(PowerClass powerClass, State state) {
+        this(powerClass.getSuggestedMax(), powerClass, state);
     }
 
-    public PowerProvider(float maximumPower, PowerClass powerClass) {
+    public PowerProvider(float maximumPower, PowerClass powerClass, State state) {
 
         this.powerClass = powerClass;
         this.powerMax = maximumPower;
+        this.currentState = state;
     }
 
     public float getPowerStored() {
@@ -52,7 +54,7 @@ public class PowerProvider implements IPowerProvider {
                 return false;
             }
         }
-        
+
         if(this.getPowerStored() >= power) {
 
             if(doUse)
@@ -115,7 +117,7 @@ public class PowerProvider implements IPowerProvider {
 
     @Override
     public IPowerProvider copy() {
-        PowerProvider provider = new PowerProvider(this.getPowerMax(), this.getPowerClass());
+        PowerProvider provider = new PowerProvider(this.getPowerMax(), this.getPowerClass(), getState());
         provider.setPowerStored(getPowerStored());
         return provider;
     }
@@ -142,5 +144,11 @@ public class PowerProvider implements IPowerProvider {
     public float getMaxOutput() {
 
         return -1;
+    }
+
+    @Override
+    public State getState() {
+
+        return currentState;
     }
 }

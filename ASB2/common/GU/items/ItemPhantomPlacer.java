@@ -7,6 +7,7 @@ import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilEntity;
+import ASB2.vector.Vector3;
 import GU.BlockRegistry;
 
 public class ItemPhantomPlacer extends ItemBase {
@@ -23,7 +24,6 @@ public class ItemPhantomPlacer extends ItemBase {
 
         info.add("Hold shift to place above or below you.");
         info.add("or don't to place at cardinal directions");
-        info.add("Made just for you " + player.username);
     }
 
     @Override
@@ -40,7 +40,9 @@ public class ItemPhantomPlacer extends ItemBase {
 
         if (!world.isRemote) {
 
-            int[] coords = UtilDirection.translateDirectionToCoords(UtilEntity .getEntityDirection(player, !player.isSneaking()), (int) player.posX, (int) player.posY, (int) player.posZ);
+            Vector3 position = new Vector3(player);
+            
+            int[] coords = UtilDirection.translateDirectionToCoords(UtilEntity.getEntityDirection(player, !player.isSneaking()), position.intX() , position.intY(), position.intZ());
 
             if (UtilEntity.getEntityDirection(player, !player.isSneaking()) == ForgeDirection.DOWN) {
 

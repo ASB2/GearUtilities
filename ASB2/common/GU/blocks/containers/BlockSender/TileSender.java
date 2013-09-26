@@ -19,6 +19,7 @@ import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerHelper;
 import GU.api.power.PowerProvider;
+import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.entity.EntityCluster.EntityInfoCluster;
@@ -40,7 +41,7 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
 
         waitTimer = new Wait(5, this, 0);
         this.tileItemStacks = new ItemStack[9];    
-        this.powerProvider = new PowerProvider(PowerClass.LOW);
+        this.powerProvider = new PowerProvider(PowerClass.LOW, State.SINK);
     }
 
     public void updateEntity() {

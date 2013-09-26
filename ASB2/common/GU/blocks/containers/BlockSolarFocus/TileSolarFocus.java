@@ -10,6 +10,7 @@ import GU.api.power.IPowerMisc;
 import GU.api.power.IPowerProvider;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
+import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 
@@ -19,7 +20,7 @@ public class TileSolarFocus extends TileBase implements IPowerMisc, IInventory{
 
         waitTimer = new Wait(20, this, 0);
         tileItemStacks = new ItemStack[1];
-        powerProvider = new PowerProvider(PowerClass.LOW);
+        powerProvider = new PowerProvider(PowerClass.LOW, State.SOURCE);
     }
 
     public void updateEntity() {

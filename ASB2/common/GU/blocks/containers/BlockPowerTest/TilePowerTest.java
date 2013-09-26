@@ -8,13 +8,14 @@ import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerHelper;
 import GU.api.power.PowerProvider;
+import GU.api.power.State;
 import GU.blocks.containers.TileBase;
 
 public class TilePowerTest extends TileBase implements IPowerMisc {
 
     public TilePowerTest() {
 
-        this.powerProvider = new PowerProvider(PowerClass.LOW);
+        this.powerProvider = new PowerProvider(PowerClass.LOW, State.OTHER);
     }
 
     @Override

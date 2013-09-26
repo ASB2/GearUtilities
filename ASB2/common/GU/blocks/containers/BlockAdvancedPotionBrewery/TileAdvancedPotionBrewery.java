@@ -22,6 +22,7 @@ import GU.api.power.IPowerMisc;
 import GU.api.power.IPowerProvider;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
+import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.info.Variables;
@@ -30,14 +31,14 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class TileAdvancedPotionBrewery extends TileBase implements IInventory, IFluidHandler, IPowerMisc {
 
-    boolean shouldCraft = false;;
+    boolean shouldCraft = false;
 
     public TileAdvancedPotionBrewery() {
 
         this.waitTimer = new Wait(20 * 5, this, 1);
         tileItemStacks = new ItemStack[8];
         fluidTank = new FluidTank(1000 * 10);
-        powerProvider = new PowerProvider(PowerClass.LOW);
+        powerProvider = new PowerProvider(PowerClass.LOW, State.SINK);
     }
 
     @Override

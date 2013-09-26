@@ -7,6 +7,7 @@ import GU.api.power.IPowerProvider;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerHelper;
 import GU.api.power.PowerProvider;
+import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 
@@ -14,7 +15,7 @@ public class TileEnergyCube extends TileBase implements IPowerMisc {
 
     public TileEnergyCube() {
 
-        this.powerProvider = new PowerProvider(4000, PowerClass.LOW);
+        this.powerProvider = new PowerProvider(4000, PowerClass.LOW, State.OTHER);
         this.waitTimer = new Wait(10, this, 0);
     }
 

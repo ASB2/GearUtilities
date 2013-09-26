@@ -22,26 +22,26 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public void updateEntity() {
 
-        if(fluidTank.getFluid() != null) {
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
-            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
-                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+            if (tile != null) {
 
-                if (tile != null) {
+                if (tile instanceof IFluidHandler) {
 
-                    if (tile instanceof IFluidHandler) {
+                    IFluidHandler fTile = (IFluidHandler) tile;
 
-                        IFluidHandler fTile = (IFluidHandler) tile;
+                    if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
-                        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
+                        if(fluidTank.getFluid() != null) {
                             UtilFluid.addFluidToTank(fTile, direction, fluidTank.getFluid(), true);
-                        } 
-                        else {
-
-                            UtilFluid.removeFluidFromTank(fTile, direction, fluidTank.getFluid(), true);
                         }
+                    } 
+                    else {
+
+                        UtilFluid.removeFluidFromTank(fTile, direction, fluidTank.getFluid(), true);
                     }
                 }
             }
@@ -69,19 +69,13 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
 
-        if (resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
-
-            return null;
-        }
-
-        worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
-        return fluidTank.drain(resource.amount, doDrain);
+        return fluidTank.drain(resource.amount, false);
     }
 
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
 
-        return fluidTank.drain(maxDrain, doDrain);
+        return fluidTank.drain(maxDrain, false);
     }
 
     @Override
@@ -91,8 +85,7 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
 
             if (fluidTank.getFluidAmount() > 0) {
 
-                if (this.fluidTank.getFluid().isFluidEqual(
-                        new FluidStack(fluid, 1))) {
+                if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
 
                     return true;
                 }
