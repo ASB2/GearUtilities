@@ -1,4 +1,6 @@
-package GU.items;
+package GU.items.ItemPurificationHelmet;
+
+import java.awt.Color;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
@@ -19,6 +21,12 @@ public class ItemPurificationHelmet extends ItemArmor {
         this.setUnlocalizedName(Reference.MODDID + ":ItemPurificationHelmet");
     }
 
+    @SideOnly(Side.CLIENT)
+    public int getColorFromItemStack(ItemStack par1ItemStack, int par2) {
+        
+        return Color.WHITE.hashCode();
+    }
+    
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
 
         if(entity != null && entity instanceof EntityLivingBase) {
@@ -35,8 +43,8 @@ public class ItemPurificationHelmet extends ItemArmor {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister) {
+    public void registerIcons(IconRegister itemRegister) {
         
-        this.itemIcon = par1IconRegister.registerIcon(Reference.MODDID + ":ItemPurificationHelmet");
+        this.itemIcon = itemRegister.registerIcon(Reference.MODDID + ":ItemPurificationHelmet");
     } 
 }

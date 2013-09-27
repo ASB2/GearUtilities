@@ -21,7 +21,7 @@ import GU.items.ItemGearReader;
 import GU.items.ItemLifeStealingBludgeoningStick;
 import GU.items.ItemLinker;
 import GU.items.ItemPhantomPlacer;
-import GU.items.ItemPurificationHelmet;
+import GU.items.ItemPurificationHelmet.ItemPurificationHelmet;
 import GU.items.ItemRainBGone;
 import GU.items.ItemTeleporter;
 import GU.items.ItemTestItem;
@@ -185,7 +185,7 @@ public class ItemRegistry {
         LanguageRegistry.addName(ItemRunicHoe, "Runic Hoe");
         ItemRunicHoe.setCreativeTab(GearUtilities.tabGUItems);
 
-        ItemPurificationHelmet = new ItemPurificationHelmet(config.getItem("ItemPurificationHelmet", ItemRegistry.getNextBaseID()).getInt(), EnumArmorMaterial.CLOTH, 0, 0);
+        ItemPurificationHelmet = new ItemPurificationHelmet(config.getItem("ItemPurificationHelmet", ItemRegistry.getNextBaseID()).getInt(), EnumArmorMaterial.CLOTH, 5, 0);
         LanguageRegistry.addName(ItemPurificationHelmet, "Purification Helmet");
         ItemPurificationHelmet.setCreativeTab(GearUtilities.tabGUItems);
 

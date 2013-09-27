@@ -88,6 +88,8 @@ public class ClientProxy extends CommonProxy {
         
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemHandheldTank.itemID, new HandheldTankRenderer());
         
+//        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemPurificationHelmet.itemID, new SolarFocusRenderer());
+        
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());
         RenderingRegistry.registerBlockHandler(new BlockSimpleRenderer());
