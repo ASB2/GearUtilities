@@ -38,7 +38,7 @@ public class ItemPurificationHelmet extends ItemArmor {
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String layerType) {
         
-        return "";
+        return Reference.MODDID + ":ItemPurificationHelmetINGAME";
     }
 
     @Override
