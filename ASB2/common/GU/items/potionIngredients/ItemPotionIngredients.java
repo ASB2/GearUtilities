@@ -5,15 +5,11 @@ import java.util.List;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 import GU.api.potion.IPotionIngredient;
 import GU.info.Reference;
-import GU.info.Variables;
 import GU.items.ItemBase;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -22,10 +18,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemPotionIngredients extends ItemBase implements IPotionIngredient {
 
     private Icon[] INGREDIENT_ICONS = new Icon[INGREDIENTS];
-    private String[] INGREDIENT_NAMES_UNLOCALIZED = new String[] {"ItemSpiderEyeEssence", "ItemGhastTearExtract", "ItemEnergizedEnderPearl", "ItemSlightlyChangedRedstone"};
-    private String[] INGREDIENT_NAMES_IG = new String[] {"Boiled Spider Eye", "Slightly Changed Ghast Tear", "Energized Enderpearl", "Slight Changed Redstone"};
+    private String[] INGREDIENT_NAMES_UNLOCALIZED = new String[] {"ItemDurationChanger", "ItemStrengthChanger", "ItemSpiderEyeEssence", "ItemGhastTearExtract", "ItemEnergizedEnderPearl", "ItemSlightlyChangedRedstone"};
+    private String[] INGREDIENT_NAMES_IG = new String[] {"Duration Increaser", "Strength Increaser","Spider Eye Essence", "Ghast Tear Extract", "Energized Enderpearl", "Slight Changed Redstone"};
 
-    private static int INGREDIENTS = 4;
+    private static int INGREDIENTS = 6;
 
     public ItemPotionIngredients(int id) {
         super(id);
@@ -73,7 +69,7 @@ public class ItemPotionIngredients extends ItemBase implements IPotionIngredient
 
     public String getLocalizedName(ItemStack itemStack) {
         
-        return INGREDIENT_NAMES_IG[itemStack.getItemDamage()];
+        return super.getLocalizedName(itemStack);
     }
     
     @Override
@@ -90,8 +86,11 @@ public class ItemPotionIngredients extends ItemBase implements IPotionIngredient
     
     @Override
     public int getPowerChange(ItemStack stack) {
-        // TODO Auto-generated method stub
-        return 0;
+        
+        switch(stack.getItemDamage()) {
+            
+            default: return 0;
+        }
     }
 
     @Override
@@ -119,15 +118,13 @@ public class ItemPotionIngredients extends ItemBase implements IPotionIngredient
     }
 
     @Override
-    public void onThrownPotionHitEntity(World world, ItemStack potion,
-            EntityLivingBase entity) {
+    public void onThrownPotionHitEntity(World world, ItemStack potion, EntityLivingBase entity) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void onThrownPotionHitBlock(World world, ItemStack potion, int x,
-            int y, int z) {
+    public void onThrownPotionHitBlock(World world, ItemStack potion, int x, int y, int z) {
         // TODO Auto-generated method stub
 
     }

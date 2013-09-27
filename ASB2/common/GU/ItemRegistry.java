@@ -35,6 +35,7 @@ import GU.items.ItemRunicTools.ItemRunicHoe;
 import GU.items.ItemRunicTools.ItemRunicPickaxe;
 import GU.items.ItemRunicTools.ItemRunicSword;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
+import GU.items.potionIngredients.ItemPotionIngredients;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class ItemRegistry {
@@ -60,6 +61,7 @@ public class ItemRegistry {
     public static ItemArmor ItemPurificationHelmet;
     public static ItemBase ItemHandheldTank;
     public static Item ItemSmoothStoneSword, ItemSmoothStonePickaxe, ItemSmoothStoneShovel, ItemSmoothStoneAxe, ItemSmoothStoneHoe;
+    public static ItemBase ItemPotionIngredients;
 
     private static int id = 5000;
 
@@ -185,12 +187,12 @@ public class ItemRegistry {
 
         ItemPurificationHelmet = new ItemPurificationHelmet(config.getItem("ItemPurificationHelmet", ItemRegistry.getNextBaseID()).getInt(), EnumArmorMaterial.CLOTH, 0, 0);
         LanguageRegistry.addName(ItemPurificationHelmet, "Purification Helmet");
-//        ItemPurificationHelmet.setCreativeTab(GearUtilities.tabGUItems);
+        ItemPurificationHelmet.setCreativeTab(GearUtilities.tabGUItems);
 
         ItemHandheldTank = new ItemHandheldTank(config.getItem( "ItemHandheldTank", ItemRegistry.getNextBaseID()).getInt());
         ItemHandheldTank.setItemName("ItemHandheldTank");
         LanguageRegistry.addName(ItemHandheldTank, "Handheld Tank");
-        
+
         ItemSmoothStoneSword = new SwordBase(config.getItem("ItemSmoothStoneSword", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemSmoothStoneSword");
         LanguageRegistry.addName(ItemSmoothStoneSword, "Smooth Stone Sword");
         ItemSmoothStoneSword.setCreativeTab(GearUtilities.tabGUItems);
@@ -210,6 +212,8 @@ public class ItemRegistry {
         ItemSmoothStoneHoe = new HoeBase(config.getItem("ItemSmoothStoneHoe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID +  ":ItemSmoothStoneHoe");
         LanguageRegistry.addName(ItemSmoothStoneHoe, "Smooth Stone Hoe");
         ItemSmoothStoneHoe.setCreativeTab(GearUtilities.tabGUItems);
+
+        ItemPotionIngredients = new ItemPotionIngredients(config.getItem("ItemPotionIngredients", ItemRegistry.getNextBaseID()).getInt());
     }
 
     public static int getNextBaseID() {
