@@ -1,6 +1,7 @@
 package GU.blocks.containers.BlockConduitInterface;
 
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -14,11 +15,11 @@ import ASB2.vector.Vector3;
 import GU.api.network.IConductor;
 import GU.api.network.INetwork;
 import GU.api.network.INetworkInterface;
+import GU.api.network.UniversalConduitNetwork;
 import GU.api.power.IPowerMisc;
 import GU.api.power.PowerHelper;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
-import GU.network.UniversalConduitNetwork;
 
 public class TileConduitInterface extends TileBase implements INetworkInterface {
 
@@ -187,7 +188,17 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                                     if(avaliableTile != null && avaliableTile instanceof IInventory) {
 
-                                        UtilInventory.moveEntireInventory((IInventory)avaliableTile, (IInventory)tile);
+                                        if(avaliableTile != tile) {
+                                            
+                                            if(tile instanceof ISidedInventory) {
+
+                                                UtilInventory.moveEntireISidedInventory((IInventory)avaliableTile, direction.getOpposite(), (ISidedInventory)tile);
+                                            }
+                                            else {
+
+                                                UtilInventory.moveEntireInventory((IInventory)avaliableTile, (IInventory)tile);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -211,7 +222,7 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                                     if(avaliableTile != null && avaliableTile instanceof IFluidHandler) {
 
-                                        UtilFluid.moveFluid((IFluidHandler)avaliableTile, direction, (IFluidHandler)tile, 1000, true);
+                                        UtilFluid.moveFluid((IFluidHandler)avaliableTile, direction, (IFluidHandler)tile, true);
                                     }
                                 }
                             }

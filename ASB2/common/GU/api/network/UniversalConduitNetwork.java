@@ -1,13 +1,10 @@
-package GU.network;
+package GU.api.network;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import net.minecraft.world.World;
 import ASB2.vector.Vector3;
-import GU.api.network.IConductor;
-import GU.api.network.IFluidNetwork;
-import GU.api.network.IItemNetwork;
-import GU.api.network.IPowerNetwork;
 
 public class UniversalConduitNetwork implements IPowerNetwork, IItemNetwork, IFluidNetwork {
 
@@ -151,6 +148,28 @@ public class UniversalConduitNetwork implements IPowerNetwork, IItemNetwork, IFl
             return powerList.remove(vector);
         }
         return false;
+    }
+
+    public void recalculateNetwork(World world) {
+
+        Iterator<Vector3> stepByStep = conduitList.iterator();
+
+        while(stepByStep.hasNext()) {
+
+            Vector3 currentVector = (Vector3) stepByStep.next();
+
+            if(currentVector.getTileEntity(world) != null) {
+
+                if(currentVector.getTileEntity(world) instanceof IConductor) {
+
+                    ((IConductor)currentVector.getTileEntity(world)).setNetwork(new UniversalConduitNetwork());
+                }
+            }
+        }
+        conduitList.clear();
+        powerList.clear();
+        inventoryList.clear();
+        tankList.clear();
     }
 
     @Override

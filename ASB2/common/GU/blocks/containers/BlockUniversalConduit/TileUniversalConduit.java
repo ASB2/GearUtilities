@@ -6,9 +6,9 @@ import ASB2.utils.UtilDirection;
 import ASB2.vector.Vector3;
 import GU.api.network.IConductor;
 import GU.api.network.INetwork;
+import GU.api.network.UniversalConduitNetwork;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
-import GU.network.UniversalConduitNetwork;
 
 public class TileUniversalConduit extends TileBase implements IConductor {
 

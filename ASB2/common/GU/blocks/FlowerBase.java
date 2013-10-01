@@ -1,18 +1,16 @@
 package GU.blocks;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.BonemealEvent;
-import cpw.mods.fml.common.Mod.EventHandler;
 
 public class FlowerBase extends BlockBase {
 
-    public FlowerBase(int par1, Material par2Material) {
-        super(par1, par2Material);
+    public FlowerBase(int par1, Material material) {
+        super(par1, material);
 
         setHardness(0f);
         setResistance(0F);
@@ -21,19 +19,18 @@ public class FlowerBase extends BlockBase {
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
     }
 
-    @EventHandler
+    @ForgeSubscribe
     public void onUseBonemeal(BonemealEvent event) {
-
-        this.managGrowth(event, event.world, event.X, event.Y, event.Z, new Random());
-    }
-
-    private void managGrowth(BonemealEvent event, World world, int x, int y, int z, Random random) {
-
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x,
-            int y, int z) {
+    public int onBlockPlaced(World world, int x, int y, int z, int sideHit, float hitX, float hitY, float hitZ, int metaData) {
+
+        return 0;
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 
         return null;
     }

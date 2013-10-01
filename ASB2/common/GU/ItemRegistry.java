@@ -1,9 +1,7 @@
 package GU;
 
-import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraftforge.common.Configuration;
 import ASB2.items.AxeBase;
 import ASB2.items.HoeBase;
@@ -21,7 +19,6 @@ import GU.items.ItemGearReader;
 import GU.items.ItemLifeStealingBludgeoningStick;
 import GU.items.ItemLinker;
 import GU.items.ItemPhantomPlacer;
-import GU.items.ItemPurificationHelmet.ItemPurificationHelmet;
 import GU.items.ItemRainBGone;
 import GU.items.ItemTeleporter;
 import GU.items.ItemTestItem;
@@ -41,6 +38,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class ItemRegistry {
 
     public static ItemCrystal ItemCrystal;
+    public static ItemBase ItemPotionIngredients;
     public static ItemBase ItemBasicDestructionCatalyst;
     public static ItemBase ItemEnhancedDestructionCatalyst;
     public static ItemBase ItemLifeStealingBludgeoningStick;
@@ -58,16 +56,16 @@ public class ItemRegistry {
     public static Item ItemGarnetSword, ItemGarnetPickaxe, ItemGarnetShovel, ItemGarnetAxe, ItemGarnetHoe, ItemGarnetScythe;
     public static ItemBase ItemBloodStone;   
     public static Item ItemRunicSword, ItemRunicPickaxe, ItemRunicShovel, ItemRunicAxe, ItemRunicHoe;   
-    public static ItemArmor ItemPurificationHelmet;
     public static ItemBase ItemHandheldTank;
     public static Item ItemSmoothStoneSword, ItemSmoothStonePickaxe, ItemSmoothStoneShovel, ItemSmoothStoneAxe, ItemSmoothStoneHoe;
-    public static ItemBase ItemPotionIngredients;
 
     private static int id = 5000;
 
     public static void init(Configuration config) {
 
         ItemCrystal = new ItemCrystal(config.getItem("ItemCrystal", ItemRegistry.getNextBaseID()).getInt());
+
+        ItemPotionIngredients = new ItemPotionIngredients(config.getItem("ItemPotionIngredients", ItemRegistry.getNextBaseID()).getInt());
 
         ItemTestItem = new ItemTestItem(config.getItem("ItemTestItem",ItemRegistry.getNextBaseID()).getInt());
         ItemTestItem.setItemName("ItemTestItem");
@@ -185,10 +183,6 @@ public class ItemRegistry {
         LanguageRegistry.addName(ItemRunicHoe, "Runic Hoe");
         ItemRunicHoe.setCreativeTab(GearUtilities.tabGUItems);
 
-        ItemPurificationHelmet = new ItemPurificationHelmet(config.getItem("ItemPurificationHelmet", ItemRegistry.getNextBaseID()).getInt(), EnumArmorMaterial.CLOTH, 5, 0);
-        LanguageRegistry.addName(ItemPurificationHelmet, "Purification Helmet");
-        ItemPurificationHelmet.setCreativeTab(GearUtilities.tabGUItems);
-
         ItemHandheldTank = new ItemHandheldTank(config.getItem( "ItemHandheldTank", ItemRegistry.getNextBaseID()).getInt());
         ItemHandheldTank.setItemName("ItemHandheldTank");
         LanguageRegistry.addName(ItemHandheldTank, "Handheld Tank");
@@ -212,8 +206,6 @@ public class ItemRegistry {
         ItemSmoothStoneHoe = new HoeBase(config.getItem("ItemSmoothStoneHoe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID +  ":ItemSmoothStoneHoe");
         LanguageRegistry.addName(ItemSmoothStoneHoe, "Smooth Stone Hoe");
         ItemSmoothStoneHoe.setCreativeTab(GearUtilities.tabGUItems);
-
-        ItemPotionIngredients = new ItemPotionIngredients(config.getItem("ItemPotionIngredients", ItemRegistry.getNextBaseID()).getInt());
     }
 
     public static int getNextBaseID() {
