@@ -75,8 +75,7 @@ public class BlockConnectableTank extends ContainerBase {
 
         if (world.getBlockTileEntity(x, y, z) instanceof TileConnectableTank) {
 
-            TileConnectableTank tileTank = (TileConnectableTank) world.getBlockTileEntity(x,
-                    y, z);
+            TileConnectableTank tileTank = (TileConnectableTank) world.getBlockTileEntity(x, y, z);
 
             for (ForgeDirection direction : ForgeDirection.values()) {
 
@@ -102,8 +101,7 @@ public class BlockConnectableTank extends ContainerBase {
     }
 
     @Override
-    public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z,
-            int side) {
+    public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
 
         if (side == 0) {
 
