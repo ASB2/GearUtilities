@@ -45,8 +45,10 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
                     }
                 }
 
-                this.moveFluidBelow();
-                this.moveAround();
+                if(!this.moveFluidBelow()) {
+
+                    this.moveAround();
+                }                
             }
         }
     }
@@ -129,18 +131,23 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
         int fill = fluidTank.fill(resource, doFill);
 
-        if(fill == 0) {
+        if(((this.fluidTank.getFluid() != null && this.fluidTank.getFluid().isFluidEqual(resource)) || this.fluidTank.getCapacity() == this.fluidTank.getFluidAmount())) {            
 
-            if(UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP) != null && UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP) instanceof IFluidHandler) {
+            if(fill == 0) {
 
-                return ((IFluidHandler)UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP)).fill(ForgeDirection.DOWN, resource, doFill);
+                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP);
+                
+                if(tile != null && tile instanceof TileConnectableTank) {
+                    
+                    return ((TileConnectableTank)tile).fill(ForgeDirection.DOWN, resource, doFill);
+                }
             }
-        }
 
-        if(doFill) {
+            if(doFill) {
 
-            worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
-            this.trigger(0);
+                worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
+                this.trigger(0);
+            }
         }
         return fill;
     }
@@ -248,7 +255,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
     @Override
     public void trigger(int id) {
-        
+
         if(!worldObj.isRemote) {
 
             if(fluidTank.getFluid() != null) {

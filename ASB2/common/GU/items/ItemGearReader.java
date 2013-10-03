@@ -15,6 +15,7 @@ import ASB2.utils.UtilMisc;
 import GU.api.color.IColorable;
 import GU.api.color.IVanillaColorable;
 import GU.api.network.IConductor;
+import GU.api.network.IFluidNetwork;
 import GU.api.power.IPowerMisc;
 import GU.info.Reference;
 
@@ -29,110 +30,117 @@ public class ItemGearReader extends ItemBase {
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
 
-        TileEntity tile = world.getBlockTileEntity(x, y, z);
+        if(!world.isRemote) {
+            TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        if (tile != null) {
+            if (tile != null) {
 
-            if (tile instanceof IVanillaColorable) {
+                if (tile instanceof IVanillaColorable) {
 
-                IVanillaColorable mTile = (IVanillaColorable) tile;
+                    IVanillaColorable mTile = (IVanillaColorable) tile;
 
-                UtilEntity.sendChatToPlayer(player, "Block has color: " + mTile.getColorEnum().toString());
-            }
-
-            if (tile instanceof IPowerMisc) {
-
-                IPowerMisc mTile = (IPowerMisc) tile;
-
-                if (mTile.getPowerProvider() != null) {
-
-                    UtilEntity.sendChatToPlayer(player, "Tile has " + mTile.getPowerProvider().getPowerStored() + " out of " + mTile.getPowerProvider().getPowerMax() + " " + Reference.POWER_NAME + " Stored");
+                    UtilEntity.sendChatToPlayer(player, "Block has color: " + mTile.getColorEnum().toString());
                 }
-            }
 
-            if (tile instanceof ISidedInventory) {
+                if (tile instanceof IPowerMisc) {
 
-                ISidedInventory mTile = (ISidedInventory) tile;
+                    IPowerMisc mTile = (IPowerMisc) tile;
 
-                UtilEntity.sendChatToPlayer(player, "Inventory name is: " + mTile.getInvName());
-                UtilEntity.sendChatToPlayer(player, "Size of inventory is: " + mTile.getSizeInventory());
-                UtilEntity.sendChatToPlayer(player, "Accessible Slots From Side: " + mTile.getAccessibleSlotsFromSide(side).length);
-                UtilEntity.sendChatToPlayer(player, "Inventory stack limit is: " + mTile.getInventoryStackLimit());
-            }
+                    if (mTile.getPowerProvider() != null) {
 
-            else if (tile instanceof IInventory) {
+                        UtilEntity.sendChatToPlayer(player, "Tile has " + mTile.getPowerProvider().getPowerStored() + " out of " + mTile.getPowerProvider().getPowerMax() + " " + Reference.POWER_NAME + " Stored");
+                    }
+                }
 
-                IInventory mTile = (IInventory) tile;
+                if (tile instanceof ISidedInventory) {
 
-                UtilEntity.sendChatToPlayer(player, "Inventory name is: " + mTile.getInvName());
-                UtilEntity.sendChatToPlayer(player, "Size of inventory is: " + mTile.getSizeInventory());
-                UtilEntity.sendChatToPlayer(player, "Inventory stack limit is: " + mTile.getInventoryStackLimit());
-            }
+                    ISidedInventory mTile = (ISidedInventory) tile;
 
-            if (tile instanceof IFluidHandler) {
+                    UtilEntity.sendChatToPlayer(player, "Inventory name is: " + mTile.getInvName());
+                    UtilEntity.sendChatToPlayer(player, "Size of inventory is: " + mTile.getSizeInventory());
+                    UtilEntity.sendChatToPlayer(player, "Accessible Slots From Side: " + mTile.getAccessibleSlotsFromSide(side).length);
+                    UtilEntity.sendChatToPlayer(player, "Inventory stack limit is: " + mTile.getInventoryStackLimit());
+                }
 
-                IFluidHandler mTile = (IFluidHandler) tile;
+                else if (tile instanceof IInventory) {
 
-                int loop = 0;
+                    IInventory mTile = (IInventory) tile;
 
-                if (mTile.getTankInfo(ForgeDirection.getOrientation(side) .getOpposite()) != null) {
+                    UtilEntity.sendChatToPlayer(player, "Inventory name is: " + mTile.getInvName());
+                    UtilEntity.sendChatToPlayer(player, "Size of inventory is: " + mTile.getSizeInventory());
+                    UtilEntity.sendChatToPlayer(player, "Inventory stack limit is: " + mTile.getInventoryStackLimit());
+                }
 
-                    for (FluidTankInfo info : mTile.getTankInfo(ForgeDirection .getOrientation(side).getOpposite())) {
+                if (tile instanceof IFluidHandler) {
 
-                        loop++;
+                    IFluidHandler mTile = (IFluidHandler) tile;
 
-                        if (info != null) {
+                    int loop = 0;
 
-                            UtilEntity.sendChatToPlayer(player, "Tanks For Direction: " + loop);
+                    if (mTile.getTankInfo(ForgeDirection.getOrientation(side) .getOpposite()) != null) {
 
-                            if (info.fluid != null && info.fluid.getFluid() != null) {
+                        for (FluidTankInfo info : mTile.getTankInfo(ForgeDirection .getOrientation(side).getOpposite())) {
 
-                                UtilEntity.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount);
-                                UtilEntity.sendChatToPlayer(player, "Fluid Conained: " + UtilMisc.capitilizeFirst(info.fluid.getFluid().getName()));
-                            } else {
+                            loop++;
 
-                                UtilEntity.sendChatToPlayer(player, "Fluid Conained: " + info.fluid);
+                            if (info != null) {
+
+                                UtilEntity.sendChatToPlayer(player, "Tanks For Direction: " + loop);
+
+                                if (info.fluid != null && info.fluid.getFluid() != null) {
+
+                                    UtilEntity.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount);
+                                    UtilEntity.sendChatToPlayer(player, "Fluid Conained: " + UtilMisc.capitilizeFirst(info.fluid.getFluid().getName()));
+                                } else {
+
+                                    UtilEntity.sendChatToPlayer(player, "Fluid Conained: " + info.fluid);
+                                }
+
+                                UtilEntity.sendChatToPlayer(player, "Capasity: " + info.capacity);
                             }
-
-                            UtilEntity.sendChatToPlayer(player, "Capasity: " + info.capacity);
                         }
                     }
                 }
-            }
 
-            if (tile instanceof IColorable) {
+                if (tile instanceof IColorable) {
 
-                IColorable mTile = (IColorable) tile;
+                    IColorable mTile = (IColorable) tile;
 
-                if (mTile.getColor(ForgeDirection.getOrientation(side)) != null) {
+                    if (mTile.getColor(ForgeDirection.getOrientation(side)) != null) {
 
-                    UtilEntity.sendChatToPlayer(player, "Red: " + mTile.getColor(ForgeDirection.getOrientation(side)).getRed());
-                    UtilEntity.sendChatToPlayer(player, "Green: " + mTile.getColor(ForgeDirection.getOrientation(side)).getGreen());
-                    UtilEntity.sendChatToPlayer(player, "Blue: " + mTile.getColor(ForgeDirection.getOrientation(side)).getBlue());
-                    UtilEntity.sendChatToPlayer(player, "Alpha: " + mTile.getColor(ForgeDirection.getOrientation(side)).getAlpha());
+                        UtilEntity.sendChatToPlayer(player, "Red: " + mTile.getColor(ForgeDirection.getOrientation(side)).getRed());
+                        UtilEntity.sendChatToPlayer(player, "Green: " + mTile.getColor(ForgeDirection.getOrientation(side)).getGreen());
+                        UtilEntity.sendChatToPlayer(player, "Blue: " + mTile.getColor(ForgeDirection.getOrientation(side)).getBlue());
+                        UtilEntity.sendChatToPlayer(player, "Alpha: " + mTile.getColor(ForgeDirection.getOrientation(side)).getAlpha());
+                    }
+                }
+
+                if (tile instanceof IConductor) {
+
+                    IConductor mTile = (IConductor) tile;
+
+                    if (mTile.getNetwork() != null) {
+
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getAvaliableConductors().size());
+                    
+                        if(mTile.getNetwork() instanceof IFluidNetwork) {
+                            
+                            UtilEntity.sendChatToPlayer(player, "Blocks With Avaliable Tanks: " + ((IFluidNetwork)mTile.getNetwork()).getAvaliableTanks().size());
+                        }
+                    }
+                    else {
+
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network: null");
+                    }
                 }
             }
-
-            if (tile instanceof IConductor) {
-
-                IConductor mTile = (IConductor) tile;
-
-                if (mTile.getNetwork() != null) {
-
-                    UtilEntity.sendChatToPlayer(player, "Conduit Network: It Works");
-                    UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getAvaliableConductors().size());
-                }
-                else {
-
-                    UtilEntity.sendChatToPlayer(player, "Conduit Network: null");
-                }
-            }
+            UtilEntity.sendChatToPlayer(player, "Block id: " + world.getBlockId(x, y, z));
+            UtilEntity.sendChatToPlayer(player, "Block metadata: " + world.getBlockMetadata(x, y, z));
+            UtilEntity.sendChatToPlayer(player, "Block direction: " + ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)));
+            UtilEntity.sendChatToPlayer(player, "Block brightness: " + Block.blocksList[world.getBlockId(x, y, z)].getMixedBrightnessForBlock(world, x, y, z));
+            UtilEntity.sendChatToPlayer(player, "Block ambient acclusion: " + Block.blocksList[world.getBlockId(x, y, z)].getAmbientOcclusionLightValue(world, x, y, z));
+            UtilEntity.sendChatToPlayer(player, "--------");
         }
-        UtilEntity.sendChatToPlayer(player, "Block id: " + world.getBlockId(x, y, z));
-        UtilEntity.sendChatToPlayer(player, "Block metadata: " + world.getBlockMetadata(x, y, z));
-        UtilEntity.sendChatToPlayer(player, "Block direction: " + ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)));
-        UtilEntity.sendChatToPlayer(player, "Block brightness: " + Block.blocksList[world.getBlockId(x, y, z)].getMixedBrightnessForBlock(world, x, y, z));
-        UtilEntity.sendChatToPlayer(player, "--------");
         return true;
     }
 }

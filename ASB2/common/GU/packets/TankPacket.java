@@ -17,7 +17,6 @@ public class TankPacket extends GUPacketBase {
     int z;
     int liquidId;
     int liquidAmount;
-    boolean itWorked = false;
 
     public TankPacket(int x, int y, int z, int liquidId, int liquidAmount) {
 
@@ -50,14 +49,13 @@ public class TankPacket extends GUPacketBase {
         z = in.readInt();
         liquidId = in.readInt();
         liquidAmount = in.readInt();
-        itWorked = true;
     }
 
     @Override
     protected void execute(EntityPlayer player, Side side) throws ProtocolException {
 
-        if (itWorked && side == Side.CLIENT) {
-
+        if(side == Side.CLIENT) {
+            
             if (player.worldObj.getBlockTileEntity(x, y, z) != null && player.worldObj.getBlockTileEntity(x, y, z) instanceof TileBase) {
 
                 TileBase tank = (TileBase) player.worldObj.getBlockTileEntity(x, y, z);

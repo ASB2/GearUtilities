@@ -3,6 +3,7 @@ package GU;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.Configuration;
 import GU.blocks.BlockBase;
+import GU.blocks.BlockBloodPlant;
 import GU.blocks.BlockBurningFlower;
 import GU.blocks.BlockConnectedGlass;
 import GU.blocks.BlockEtherealConnectedGlass;
@@ -11,6 +12,7 @@ import GU.blocks.BlockFreezingFlower;
 import GU.blocks.BlockPhantomBlock;
 import GU.blocks.BlockSpeedyRoad;
 import GU.blocks.BlockTestBlock;
+import GU.blocks.FlowerBase;
 import GU.blocks.BlockMetadataOre.BlockMetadataOre;
 import GU.blocks.BlockTestRender.BlockTestRender;
 import GU.blocks.containers.ContainerBase;
@@ -65,6 +67,7 @@ public class BlockRegistry {
     public static ContainerBase BlockSolarFocus;
     public static ContainerBase BlockConduitInterface;
     public static ContainerBase BlockEnergyCube;
+    public static FlowerBase BlockBloodPlant;
     
     private static int id = 500;
 
@@ -179,6 +182,10 @@ public class BlockRegistry {
         BlockEnergyCube = new BlockEnergyCube(config.getBlock("BlockEnergyCube", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockEnergyCube.setBlockName("BlockEnergyCube");
         LanguageRegistry.addName(BlockEnergyCube, "Energy Cube");
+        
+        BlockBloodPlant = new BlockBloodPlant(config.getBlock("BlockBloodPlant", BlockRegistry.getNextBaseID()).getInt(), Material.plants);
+        BlockBloodPlant.setBlockName("BlockBloodPlant");
+        LanguageRegistry.addName(BlockBloodPlant, "Blood Plant");
     }
 
     public static void initTestBlocks(Configuration config) {
