@@ -131,24 +131,24 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
         int fill = fluidTank.fill(resource, doFill);
 
-        if(((this.fluidTank.getFluid() != null && this.fluidTank.getFluid().isFluidEqual(resource)) || this.fluidTank.getCapacity() == this.fluidTank.getFluidAmount())) {            
-
-            if(fill == 0) {
-
-                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP);
-                
-                if(tile != null && tile instanceof TileConnectableTank) {
-                    
-                    return ((TileConnectableTank)tile).fill(ForgeDirection.DOWN, resource, doFill);
-                }
-            }
-
-            if(doFill) {
-
-                worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
-                this.trigger(0);
-            }
-        }
+//        if(((this.fluidTank.getFluid() != null && this.fluidTank.getFluid().isFluidEqual(resource)) || this.fluidTank.getCapacity() == this.fluidTank.getFluidAmount())) {      
+//
+//            if(fill == 0) {
+//
+//                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP);
+//                
+//                if(tile != null && tile instanceof TileConnectableTank) {
+//                    
+//                    return ((TileConnectableTank)tile).fill(ForgeDirection.DOWN, resource, doFill);
+//                }
+//            }
+//
+//            if(doFill) {
+//
+//                worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
+//                this.trigger(0);
+//            }
+//        }
         return fill;
     }
 
