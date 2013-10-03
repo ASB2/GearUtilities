@@ -23,7 +23,7 @@ import GU.blocks.containers.TileBase;
 
 public class TileConduitInterface extends TileBase implements INetworkInterface {
 
-    UniversalConduitNetwork network;
+    INetwork network;
     boolean[] importing = new boolean[7];
 
     public TileConduitInterface() {
@@ -62,17 +62,17 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                         if(tile instanceof IInventory) {
 
-                            ((UniversalConduitNetwork)this.getNetwork()).removeAvaliableInventory(new Vector3(tile));
+                            this.getNetwork().removeAvaliableInventory(new Vector3(tile));
                         }
 
                         if(tile instanceof IFluidHandler) {
 
-                            ((UniversalConduitNetwork)this.getNetwork()).removeAvaliableTank(new Vector3(tile));
+                            this.getNetwork().removeAvaliableTank(new Vector3(tile));
                         }
 
                         if(tile instanceof IPowerMisc) {
 
-                            ((UniversalConduitNetwork)this.getNetwork()).removePowerRequest(new Vector3(tile));
+                            this.getNetwork().removePowerRequest(new Vector3(tile));
                         }
                     }
                 }
@@ -100,17 +100,17 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                         if(tile instanceof IInventory) {
 
-                            ((UniversalConduitNetwork)this.getNetwork()).removeAvaliableInventory(new Vector3(tile));
+                            this.getNetwork().removeAvaliableInventory(new Vector3(tile));
                         }
 
                         if(tile instanceof IFluidHandler) {
 
-                            ((UniversalConduitNetwork)this.getNetwork()).removeAvaliableTank(new Vector3(tile));
+                            this.getNetwork().removeAvaliableTank(new Vector3(tile));
                         }
 
                         if(tile instanceof IPowerMisc) {
 
-                            ((UniversalConduitNetwork)this.getNetwork()).removePowerRequest(new Vector3(tile));
+                            this.getNetwork().removePowerRequest(new Vector3(tile));
                         }
                     }
                 }
@@ -176,27 +176,41 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                     if(importing[direction.ordinal()]) {
 
-                        ((UniversalConduitNetwork)this.getNetwork()).addAvaliableInventory(new Vector3(this));
+                        this.getNetwork().addAvaliableInventory(new Vector3(this));
                     }
                     else {
 
-                        for(Vector3 vector : ((UniversalConduitNetwork)this.getNetwork()).getAvaliableInventorys()) {
+                        for(Vector3 vector : this.getNetwork().getAvaliableInventorys()) {
 
                             if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof IConductor) {
 
-                                for(TileEntity avaliableTile : ((IConductor)vector.getTileEntity(worldObj)).getAvaliableTileEntities()) {
+                                for(ForgeDirection avaliableTileDirections: ForgeDirection.VALID_DIRECTIONS) {
 
-                                    if(avaliableTile != null && avaliableTile instanceof IInventory) {
+                                    for(TileEntity avaliableTile : ((INetworkInterface)vector.getTileEntity(worldObj)).getAvaliableTileEntities(avaliableTileDirections)) {
 
-                                        if(avaliableTile != tile) {
-                                            
-                                            if(tile instanceof ISidedInventory) {
+                                        if(avaliableTile != null && avaliableTile instanceof IInventory) {
 
-                                                UtilInventory.moveEntireISidedInventory((IInventory)avaliableTile, direction.getOpposite(), (ISidedInventory)tile);
-                                            }
-                                            else {
+                                            if(avaliableTile != tile) {
 
-                                                UtilInventory.moveEntireInventory((IInventory)avaliableTile, (IInventory)tile);
+                                                if(tile instanceof ISidedInventory) {
+
+                                                    if(avaliableTile instanceof ISidedInventory) {
+
+                                                        UtilInventory.moveEntireISidedInventory((ISidedInventory)avaliableTile, direction, avaliableTileDirections.getOpposite(), (ISidedInventory)tile);
+                                                    }
+                                                    else {
+
+                                                        UtilInventory.moveEntireISidedInventory((IInventory)avaliableTile, direction, (ISidedInventory)tile);
+                                                    }
+                                                }
+                                                else if(avaliableTile instanceof ISidedInventory) {
+
+                                                    UtilInventory.moveEntireISidedInventory((ISidedInventory)avaliableTile, direction, (IInventory)tile);
+                                                }
+                                                else {
+
+                                                    UtilInventory.moveEntireInventory((IInventory)avaliableTile, (IInventory)tile);
+                                                }
                                             }
                                         }
                                     }
@@ -210,15 +224,15 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                     if(importing[direction.ordinal()]) {
 
-                        ((UniversalConduitNetwork)this.getNetwork()).addAvaliableTank(new Vector3(this));
+                        this.getNetwork().addAvaliableTank(new Vector3(this));
                     }
                     else {
 
-                        for(Vector3 vector : ((UniversalConduitNetwork)this.getNetwork()).getAvaliableTanks()) {
+                        for(Vector3 vector : this.getNetwork().getAvaliableTanks()) {
 
                             if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof IConductor) {
 
-                                for(TileEntity avaliableTile : ((IConductor)vector.getTileEntity(worldObj)).getAvaliableTileEntities()) {
+                                for(TileEntity avaliableTile : ((INetworkInterface)vector.getTileEntity(worldObj)).getAvaliableTileEntities(direction.getOpposite())) {
 
                                     if(avaliableTile != null && avaliableTile instanceof IFluidHandler) {
 
@@ -234,15 +248,15 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                     if(importing[direction.ordinal()]) {
 
-                        ((UniversalConduitNetwork)this.getNetwork()).addPowerRequest(new Vector3(this));
+                        this.getNetwork().addPowerRequest(new Vector3(this));
                     }
                     else {
 
-                        for(Vector3 vector : ((UniversalConduitNetwork)this.getNetwork()).getPowerRequests()) {
+                        for(Vector3 vector : this.getNetwork().getPowerRequests()) {
 
                             if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof IConductor) {
 
-                                for(TileEntity avaliableTile : ((IConductor)vector.getTileEntity(worldObj)).getAvaliableTileEntities()) {
+                                for(TileEntity avaliableTile : ((INetworkInterface)vector.getTileEntity(worldObj)).getAvaliableTileEntities(direction.getOpposite())) {
 
                                     if(avaliableTile != null && avaliableTile instanceof IPowerMisc) {
 
@@ -301,20 +315,17 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
     }
 
     @Override
-    public TileEntity[] getAvaliableTileEntities() {
+    public TileEntity[] getAvaliableTileEntities(ForgeDirection direction) {
 
-        TileEntity[] tileList = new TileEntity[6];
+        TileEntity[] tileList = new TileEntity[7];
 
-        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+        if(this.importing[direction.ordinal()]) {
 
-            if(this.importing[direction.ordinal()]) {
+            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
-                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+            if(tile != null && (tile instanceof IInventory || tile instanceof IFluidHandler || tile instanceof IPowerMisc)) {
 
-                if(tile != null && (tile instanceof IInventory || tile instanceof IFluidHandler || tile instanceof IPowerMisc)) {
-
-                    tileList[direction.ordinal()] = tile;
-                }
+                tileList[direction.ordinal()] = tile;
             }
         }
         return tileList;

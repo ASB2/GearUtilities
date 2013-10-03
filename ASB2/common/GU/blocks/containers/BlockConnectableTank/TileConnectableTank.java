@@ -131,24 +131,24 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
 
         int fill = fluidTank.fill(resource, doFill);
 
-//        if(((this.fluidTank.getFluid() != null && this.fluidTank.getFluid().isFluidEqual(resource)) || this.fluidTank.getCapacity() == this.fluidTank.getFluidAmount())) {      
-//
-//            if(fill == 0) {
-//
-//                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP);
-//                
-//                if(tile != null && tile instanceof TileConnectableTank) {
-//                    
-//                    return ((TileConnectableTank)tile).fill(ForgeDirection.DOWN, resource, doFill);
-//                }
-//            }
-//
-//            if(doFill) {
-//
-//                worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
-//                this.trigger(0);
-//            }
-//        }
+        if(((this.fluidTank.getFluid() != null && this.fluidTank.getFluid().isFluidEqual(resource)) || this.fluidTank.getCapacity() == this.fluidTank.getFluidAmount())) {      
+
+            //            if(fill == 0) {
+            //
+            //                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP);
+            //                
+            //                if(tile != null && tile instanceof TileConnectableTank) {
+            //                    
+            //                    return ((TileConnectableTank)tile).fill(ForgeDirection.DOWN, resource, doFill);
+            //                }
+            //            }
+
+            if(doFill) {
+
+                worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
+                this.trigger(0);
+            }
+        }
         return fill;
     }
 
@@ -175,7 +175,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
 
-        if(resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
+        if(resource == null || !resource.isFluidEqual(fluidTank.getFluid()) || worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
             return null;
         }
@@ -185,7 +185,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
             worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
             this.trigger(0);   
         }     
-        return fluidTank.drain(resource.amount, doDrain);
+        return drain(from, resource.amount, doDrain);
     }
 
     @Override

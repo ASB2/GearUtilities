@@ -12,7 +12,7 @@ import GU.blocks.containers.TileBase;
 
 public class TileUniversalConduit extends TileBase implements IConductor {
 
-    UniversalConduitNetwork network;
+    INetwork network;
 
     public TileUniversalConduit() {
 
@@ -80,12 +80,9 @@ public class TileUniversalConduit extends TileBase implements IConductor {
     @Override
     public boolean setNetwork(INetwork network) {
 
-        if(network instanceof UniversalConduitNetwork) {
-
-            this.network = (UniversalConduitNetwork)network;
-            return true;
-        }
-        return false;
+        this.network = network;
+        
+        return true;
     }
 
     @Override
@@ -98,11 +95,5 @@ public class TileUniversalConduit extends TileBase implements IConductor {
     public int[] getCoords() {
 
         return new int[]{xCoord, yCoord, zCoord};
-    }
-    
-    @Override
-    public TileEntity[] getAvaliableTileEntities() {
-
-        return new TileEntity[0];
     }
 }

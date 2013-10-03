@@ -15,7 +15,6 @@ import ASB2.utils.UtilMisc;
 import GU.api.color.IColorable;
 import GU.api.color.IVanillaColorable;
 import GU.api.network.IConductor;
-import GU.api.network.IFluidNetwork;
 import GU.api.power.IPowerMisc;
 import GU.info.Reference;
 
@@ -85,7 +84,7 @@ public class ItemGearReader extends ItemBase {
 
                             if (info != null) {
 
-                                UtilEntity.sendChatToPlayer(player, "Tanks For Direction: " + loop);
+                                UtilEntity.sendChatToPlayer(player, "Tanks For Side: " + loop);
 
                                 if (info.fluid != null && info.fluid.getFluid() != null) {
 
@@ -121,12 +120,10 @@ public class ItemGearReader extends ItemBase {
 
                     if (mTile.getNetwork() != null) {
 
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getAvaliableConductors().size());
-                    
-                        if(mTile.getNetwork() instanceof IFluidNetwork) {
-                            
-                            UtilEntity.sendChatToPlayer(player, "Blocks With Avaliable Tanks: " + ((IFluidNetwork)mTile.getNetwork()).getAvaliableTanks().size());
-                        }
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getAvaliableConductors().size());                    
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Blocks With Avaliable Tanks: " + mTile.getNetwork().getAvaliableTanks().size());
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Blocks With Avaliable Inventories: " + mTile.getNetwork().getAvaliableInventorys().size());
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Blocks With Avaliable Power Receptors: " + mTile.getNetwork().getPowerRequests().size());
                     }
                     else {
 

@@ -6,7 +6,7 @@ import java.util.Iterator;
 import net.minecraft.world.World;
 import ASB2.vector.Vector3;
 
-public class UniversalConduitNetwork implements IPowerNetwork, IItemNetwork, IFluidNetwork {
+public class UniversalConduitNetwork implements INetwork {
 
     ArrayList<Vector3> conduitList = new ArrayList<Vector3>();
     ArrayList<Vector3> powerList = new ArrayList<Vector3>();

@@ -27,4 +27,17 @@ public interface INetwork {
      * @return Conduits in the network
      */
     ArrayList<Vector3> getAvaliableConductors();
+    
+    
+    boolean addPowerRequest(Vector3 requesting);
+    boolean removePowerRequest(Vector3 requesting);    
+    ArrayList<Vector3> getPowerRequests();
+    
+    boolean addAvaliableInventory(Vector3 requesting);
+    boolean removeAvaliableInventory(Vector3 requesting);
+    ArrayList<Vector3> getAvaliableInventorys();
+    
+    boolean addAvaliableTank(Vector3 requesting);
+    boolean removeAvaliableTank(Vector3 requesting);    
+    ArrayList<Vector3> getAvaliableTanks();
 }
