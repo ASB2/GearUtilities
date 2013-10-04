@@ -232,11 +232,14 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                             if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof IConductor) {
 
-                                for(TileEntity avaliableTile : ((INetworkInterface)vector.getTileEntity(worldObj)).getAvaliableTileEntities(direction.getOpposite())) {
+                                for(ForgeDirection avaliableTileDirections: ForgeDirection.VALID_DIRECTIONS) {
+                                    
+                                    for(TileEntity avaliableTile : ((INetworkInterface)vector.getTileEntity(worldObj)).getAvaliableTileEntities(avaliableTileDirections)) {
 
-                                    if(avaliableTile != null && avaliableTile instanceof IFluidHandler) {
+                                        if(avaliableTile != null && avaliableTile instanceof IFluidHandler) {
 
-                                        UtilFluid.moveFluid((IFluidHandler)avaliableTile, direction, (IFluidHandler)tile, true);
+                                            UtilFluid.moveFluid((IFluidHandler)avaliableTile, direction, avaliableTileDirections.getOpposite(), (IFluidHandler)tile, true);
+                                        }
                                     }
                                 }
                             }

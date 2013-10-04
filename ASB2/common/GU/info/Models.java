@@ -17,6 +17,7 @@ public final class Models {
     public static IModelCustom ModelOctogon;
     public static IModelCustom ModelEnergyCube;
     public static IModelCustom ModelHandheldTank;
+    public static IModelCustom ModelRhombicuboctahedron;
     
     public static final String LAMP = Reference.RESOURCE_LOCATION + "models/ModelLamp.obj";
     public static final String CREATION_TABLE = Reference.RESOURCE_LOCATION + "models/ModelCreationTable.obj";
@@ -31,6 +32,7 @@ public final class Models {
     public static final String OCTOGON = Reference.RESOURCE_LOCATION + "models/ModelOctogon.obj";
     public static final String ENERGY_CUBE = Reference.RESOURCE_LOCATION + "models/ModelEnergyCube.obj";
     public static final String HANDHELD_TANK = Reference.RESOURCE_LOCATION + "models/ModelHandheldTank.obj";
+    public static final String RHOMBICUBOCTAHEDRON = Reference.RESOURCE_LOCATION + "models/RHOMBICUBOCTAHEDRON6.obj";
     
     public static void initModels() {
 
@@ -46,5 +48,6 @@ public final class Models {
         ModelOctogon = AdvancedModelLoader.loadModel(Models.OCTOGON);
         ModelEnergyCube = AdvancedModelLoader.loadModel(Models.ENERGY_CUBE);
         ModelHandheldTank = AdvancedModelLoader.loadModel(Models.HANDHELD_TANK);
+        ModelRhombicuboctahedron = AdvancedModelLoader.loadModel(Models.RHOMBICUBOCTAHEDRON);
     }
 }
