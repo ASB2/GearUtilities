@@ -9,9 +9,7 @@ import ASB2.vector.Vector3;
 public class UniversalConduitNetwork implements INetwork {
 
     ArrayList<Vector3> conduitList = new ArrayList<Vector3>();
-    ArrayList<Vector3> powerList = new ArrayList<Vector3>();
-    ArrayList<Vector3> inventoryList = new ArrayList<Vector3>();
-    ArrayList<Vector3> tankList = new ArrayList<Vector3>();
+    ArrayList<Vector3> interfaces = new ArrayList<Vector3>();
 
     public UniversalConduitNetwork() {
 
@@ -77,79 +75,31 @@ public class UniversalConduitNetwork implements INetwork {
     }
 
     @Override
-    public boolean addAvaliableTank(Vector3 vector) {
+    public boolean addNetworkInterface(Vector3 vector) {
 
-        if(vector != null && !tankList.contains(vector)) {
+        if(vector != null && !interfaces.contains(vector)) {
 
-            return tankList.add(vector);
-        }  
-        return false;
-    }
-
-    @Override
-    public boolean removeAvaliableTank(Vector3 vector) {
-
-        if(vector != null && tankList.contains(vector)) {
-
-            return tankList.remove(vector);            
+            return interfaces.add(vector);
         } 
         return false;
     }
 
     @Override
-    public ArrayList<Vector3> getAvaliableTanks() {
+    public boolean removeNetworkInterface(Vector3 vector) {
 
-        tankList.remove(null);
-        return tankList;
-    }
+        if(vector != null && interfaces.contains(vector)) {
 
-    @Override
-    public boolean addAvaliableInventory(Vector3 vector) {
-
-        if(vector != null && !inventoryList.contains(vector)) {
-
-            return inventoryList.add(vector);
-        } 
-        return false;
-    }
-
-    @Override
-    public boolean removeAvaliableInventory(Vector3 vector) {
-
-        if(vector != null && inventoryList.contains(vector)) {
-
-            return inventoryList.remove(vector);
+            return interfaces.remove(vector);
         }
         return false;
     }
+    
+ @Override
+    public ArrayList<Vector3> getNetworkInterfaces() {
 
-    @Override
-    public ArrayList<Vector3> getAvaliableInventorys() {
-
-        inventoryList.remove(null);
-        return inventoryList;
+        return interfaces;
     }
-
-    @Override
-    public boolean addPowerRequest(Vector3 vector) {
-
-        if(vector != null && !tankList.contains(vector)) {
-
-            return powerList.add(vector);
-        } 
-        return false;
-    }
-
-    @Override
-    public boolean removePowerRequest(Vector3 vector) {
-
-        if(vector != null && tankList.contains(vector)) {
-
-            return powerList.remove(vector);
-        }
-        return false;
-    }
-
+ 
     public void recalculateNetwork(World world) {
 
         Iterator<Vector3> stepByStep = conduitList.iterator();
@@ -167,14 +117,8 @@ public class UniversalConduitNetwork implements INetwork {
             }
         }
         conduitList.clear();
-        powerList.clear();
-        inventoryList.clear();
-        tankList.clear();
+        interfaces.clear();
     }
 
-    @Override
-    public ArrayList<Vector3> getPowerRequests() {
-
-        return powerList;
-    }
+   
 }

@@ -21,7 +21,7 @@ import GU.api.power.PowerHelper;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 
-public class TileConduitInterface extends TileBase implements INetworkInterface {
+public class TileConduitInterface extends TileBase implements IConductor, INetworkInterface {
 
     INetwork network;
     boolean[] importing = new boolean[7];
@@ -36,13 +36,7 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
         waitTimer.update();
 
-        if(this.getNetwork() != null) {
-
-            if(!this.getNetwork().getAvaliableConductors().contains(this)) {
-
-                this.getNetwork().addConductor(worldObj, new Vector3(this));
-            }
-        }
+        this.networkCheck((INetworkInterface)this);
     }
 
     @Override
@@ -62,17 +56,17 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                         if(tile instanceof IInventory) {
 
-                            this.getNetwork().removeAvaliableInventory(new Vector3(tile));
+                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
                         }
 
                         if(tile instanceof IFluidHandler) {
 
-                            this.getNetwork().removeAvaliableTank(new Vector3(tile));
+                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
                         }
 
                         if(tile instanceof IPowerMisc) {
 
-                            this.getNetwork().removePowerRequest(new Vector3(tile));
+                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
                         }
                     }
                 }
@@ -100,17 +94,17 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                         if(tile instanceof IInventory) {
 
-                            this.getNetwork().removeAvaliableInventory(new Vector3(tile));
+                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
                         }
 
                         if(tile instanceof IFluidHandler) {
 
-                            this.getNetwork().removeAvaliableTank(new Vector3(tile));
+                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
                         }
 
                         if(tile instanceof IPowerMisc) {
 
-                            this.getNetwork().removePowerRequest(new Vector3(tile));
+                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
                         }
                     }
                 }
@@ -139,7 +133,7 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                     if(conduit.getNetwork() != null) {
 
-                        if(conduit.getNetwork() != this.getNetwork()) {
+                        if((conduit.getNetwork() != this.getNetwork()) && !(this.getNetwork().getNetworkInterfaces().contains(new Vector3(tile)))) {
 
                             conduit.getNetwork().mergeNetworks(worldObj, this.getNetwork().getAvaliableConductors());
 
@@ -176,11 +170,11 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                     if(importing[direction.ordinal()]) {
 
-                        this.getNetwork().addAvaliableInventory(new Vector3(this));
+                        this.getNetwork().addNetworkInterface(new Vector3(this));
                     }
                     else {
 
-                        for(Vector3 vector : this.getNetwork().getAvaliableInventorys()) {
+                        for(Vector3 vector : this.getNetwork().getNetworkInterfaces()) {
 
                             if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof IConductor) {
 
@@ -224,16 +218,16 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                     if(importing[direction.ordinal()]) {
 
-                        this.getNetwork().addAvaliableTank(new Vector3(this));
+                        this.getNetwork().addNetworkInterface(new Vector3(this));
                     }
                     else {
 
-                        for(Vector3 vector : this.getNetwork().getAvaliableTanks()) {
+                        for(Vector3 vector : this.getNetwork().getNetworkInterfaces()) {
 
                             if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof IConductor) {
 
                                 for(ForgeDirection avaliableTileDirections: ForgeDirection.VALID_DIRECTIONS) {
-                                    
+
                                     for(TileEntity avaliableTile : ((INetworkInterface)vector.getTileEntity(worldObj)).getAvaliableTileEntities(avaliableTileDirections)) {
 
                                         if(avaliableTile != null && avaliableTile instanceof IFluidHandler) {
@@ -251,11 +245,11 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                     if(importing[direction.ordinal()]) {
 
-                        this.getNetwork().addPowerRequest(new Vector3(this));
+                        this.getNetwork().addNetworkInterface(new Vector3(this));
                     }
                     else {
 
-                        for(Vector3 vector : this.getNetwork().getPowerRequests()) {
+                        for(Vector3 vector : this.getNetwork().getNetworkInterfaces()) {
 
                             if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof IConductor) {
 
@@ -276,13 +270,9 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
     @Override
     public boolean setNetwork(INetwork network) {
-
-        if(network instanceof UniversalConduitNetwork) {
-
-            this.network = (UniversalConduitNetwork)network;
-            return true;
-        }
-        return false;
+        
+        this.network = network;
+        return true;
     }
 
     @Override

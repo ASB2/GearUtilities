@@ -108,12 +108,12 @@ public class TileSolarFocus extends TileBase implements IPowerMisc, IInventory{
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 
-        return itemstack.stackSize == 1;
+        return itemstack.getItem() instanceof ISolarFocus && itemstack.stackSize == 1;
     }
 
     @Override
     public String getInvName() {
-        // TODO Auto-generated method stub
+
         return "Solar Focus";
     }
 

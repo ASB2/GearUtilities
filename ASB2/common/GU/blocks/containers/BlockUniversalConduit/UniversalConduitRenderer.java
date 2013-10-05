@@ -29,8 +29,8 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
         
         GL11.glPushMatrix();
         GL11.glScalef(.5f, .5f, .5f);
-        GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
-        Models.ModelOctogon.renderAll();
+//        GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
+        Models.ModelRhombicuboctahedron.renderAll();
         GL11.glPopMatrix();
 
         for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
@@ -38,52 +38,48 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
             GL11.glPushMatrix();
 
             TileEntity tile = UtilDirection.translateDirectionToTile(tileEntity, tileEntity.worldObj, direction);
-
+ 
             if(tile != null) {
 
                 if(tile instanceof IConductor) {
 
+//                  GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1F, 0);
+                    
                     switch (direction) {
 
                         case UP: {
 
                             GL11.glTranslated(0, .9, 0);
-                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1F, 0);
                             break;
                         }
                         case DOWN: {
 
                             GL11.glTranslated(0, -.9, 0);
                             GL11.glRotatef(180F, 1F, 0F, 0F);
-                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1F, 0);
                             break;
                         }
                         case NORTH: {
 
                             GL11.glTranslated(0, 0, -.9);
                             GL11.glRotatef(-90F, 1F, 0F, 0F);
-                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
                             break;
                         }
                         case SOUTH: {
 
                             GL11.glTranslated(0, 0, .9);
                             GL11.glRotatef(90F, 1F, 0F, 0F);
-                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
                             break;
                         }
                         case WEST: {
 
                             GL11.glTranslated(-0.9, 0, 0);
                             GL11.glRotatef(90F, 0F, 0F, 1F);
-                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
                             break;
                         }
                         case EAST: {
 
                             GL11.glTranslated(0.9, 0, 0);
                             GL11.glRotatef(-90F, 0F, 0F, 1F);
-                            GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1, 0);
                             break;
                         }
                         default: {

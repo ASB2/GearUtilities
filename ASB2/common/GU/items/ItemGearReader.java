@@ -15,10 +15,14 @@ import ASB2.utils.UtilMisc;
 import GU.api.color.IColorable;
 import GU.api.color.IVanillaColorable;
 import GU.api.network.IConductor;
+import GU.api.network.INetwork;
+import GU.api.network.INetworkInterface;
 import GU.api.power.IPowerMisc;
 import GU.info.Reference;
 
 public class ItemGearReader extends ItemBase {
+
+    INetwork network;
 
     public ItemGearReader(int id) {
         super(id);
@@ -121,9 +125,22 @@ public class ItemGearReader extends ItemBase {
                     if (mTile.getNetwork() != null) {
 
                         UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getAvaliableConductors().size());                    
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Blocks With Avaliable Tanks: " + mTile.getNetwork().getAvaliableTanks().size());
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Blocks With Avaliable Inventories: " + mTile.getNetwork().getAvaliableInventorys().size());
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Blocks With Avaliable Power Receptors: " + mTile.getNetwork().getPowerRequests().size());
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Interfaces: " + mTile.getNetwork().getNetworkInterfaces().size());
+                    }
+                    else {
+
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network: null");
+                    }
+                }
+
+                if (tile instanceof INetworkInterface) {
+
+                    INetworkInterface mTile = (INetworkInterface) tile;
+
+                    if (mTile.getNetwork() != null) {
+
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getAvaliableConductors().size());                    
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Interfaces: " + mTile.getNetwork().getNetworkInterfaces().size());
                     }
                     else {
 

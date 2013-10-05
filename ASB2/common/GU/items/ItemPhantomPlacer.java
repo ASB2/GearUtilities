@@ -6,7 +6,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilDirection;
-import ASB2.utils.UtilEntity;
 import ASB2.vector.Vector3;
 import GU.BlockRegistry;
 
@@ -42,20 +41,9 @@ public class ItemPhantomPlacer extends ItemBase {
 
             Vector3 position = new Vector3(player);
             
-            int[] coords = UtilDirection.translateDirectionToCoords(UtilEntity.getEntityDirection(player, !player.isSneaking()), position.intX() , position.intY(), position.intZ());
+            int[] coords = UtilDirection.translateDirectionToCoords(ForgeDirection.UP, position.intX() , position.intY() + 2, position.intZ());
 
-            if (UtilEntity.getEntityDirection(player, !player.isSneaking()) == ForgeDirection.DOWN) {
-
-                UtilBlock.placeBlockInAir(world, coords[0], coords[1], coords[2] - 1, BlockRegistry.BlockPhantomBlock.blockID, 0);
-                return itemStack;
-            } 
-            else if (UtilEntity.getEntityDirection(player, !player.isSneaking()) == ForgeDirection.DOWN) {
-
-                UtilBlock.placeBlockInAir(world, coords[0] - 2, coords[1] + 1, coords[2] - 1, BlockRegistry.BlockPhantomBlock.blockID, 0);
-            } 
-            else {
-                UtilBlock.placeBlockInAir(world, coords[0] - 1, coords[1] + 1, coords[2] - 1, BlockRegistry.BlockPhantomBlock.blockID, 0);
-            }
+            UtilBlock.placeBlockInAir(world, coords[0], coords[1], coords[2], BlockRegistry.BlockPhantomBlock.blockID, 0);
         }
         return itemStack;
     }

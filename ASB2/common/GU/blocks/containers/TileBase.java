@@ -9,9 +9,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
+import ASB2.vector.Vector3;
 import GU.api.IWrenchable;
 import GU.api.color.IVanillaColorable;
 import GU.api.color.VanillaColor;
+import GU.api.network.IConductor;
+import GU.api.network.INetworkInterface;
 import GU.api.power.PowerProvider;
 import GU.api.wait.IWaitTrigger;
 import GU.api.wait.Wait;
@@ -22,7 +25,6 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
     int wait;
     protected PowerProvider powerProvider;
-    protected ForgeDirection orientation;
     protected VanillaColor color;
     protected ItemStack[] tileItemStacks = new ItemStack[0];
     public FluidTank fluidTank;
@@ -33,16 +35,35 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
         if (color == null)
             color = VanillaColor.NONE;
 
-        if (orientation == null)
-            orientation = ForgeDirection.DOWN;
-
         fluidTank = new FluidTank(0);
     }
 
     public void onButtonEvent(int buttonID) {
 
     }
+    
+    public void networkCheck(IConductor conductor) {
+    
+        if(conductor.getNetwork() != null) {
 
+            if(!conductor.getNetwork().getAvaliableConductors().contains(conductor)) {
+
+                conductor.getNetwork().addConductor(worldObj, new Vector3(conductor.getCoords()));
+            }
+        }
+    }
+    
+    public void networkCheck(INetworkInterface conductor) {
+        
+        if(conductor.getNetwork() != null) {
+
+            if(!conductor.getNetwork().getAvaliableConductors().contains(conductor)) {
+
+                conductor.getNetwork().addNetworkInterface(new Vector3(conductor.getCoords()));
+            }
+        }
+    }
+    
     public void sendReqularPowerPackets(int delay) {
 
         wait++;

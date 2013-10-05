@@ -11,23 +11,34 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilFluid;
+import ASB2.vector.Vector3;
+import GU.api.MiscHelpers;
+import GU.api.network.INetwork;
+import GU.api.network.INetworkInterface;
+import GU.api.network.UniversalConduitNetwork;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.packets.TankPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class TileConnectableTank extends TileBase implements IFluidHandler {
+public class TileConnectableTank extends TileBase implements IFluidHandler, INetworkInterface {
 
     public static int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 64;
 
+    INetwork network;
+
     public TileConnectableTank() {
 
-        this.waitTimer = new Wait(20 * 2, this, 0);
+        this.waitTimer = new Wait(20, this, 1);
         fluidTank = new FluidTank(maxLiquid);
+        network = new UniversalConduitNetwork();
     }
 
     @Override
     public void updateEntity() {
+
+        this.networkCheck(this);        
+        waitTimer.update();
 
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
@@ -256,16 +267,53 @@ public class TileConnectableTank extends TileBase implements IFluidHandler {
     @Override
     public void trigger(int id) {
 
-        if(!worldObj.isRemote) {
+        if(id == 0) {
+            
+            if(!worldObj.isRemote) {
 
-            if(fluidTank.getFluid() != null) {
+                if(fluidTank.getFluid() != null) {
 
-                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
-            } 
-            else {
+                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
+                } 
+                else {
 
-                PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
+                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
+                }
             }
         }
+        else {
+
+            if(this.getNetwork() != null) {
+
+                MiscHelpers.addConductorsAround(this, worldObj, this.getNetwork());
+                MiscHelpers.addNetworkInterfacesAround(this, worldObj, this.getNetwork());
+                this.getNetwork().addNetworkInterface(new Vector3(this));
+            }
+        }
+    }
+
+    @Override
+    public boolean setNetwork(INetwork network) {
+
+        this.network = network;
+        return true;
+    }
+
+    @Override
+    public INetwork getNetwork() {
+
+        return network;
+    }
+
+    @Override
+    public int[] getCoords() {
+
+        return new int[]{xCoord, yCoord, zCoord};
+    }
+
+    @Override
+    public TileEntity[] getAvaliableTileEntities(ForgeDirection direction) {
+
+        return new TileEntity[]{this};
     }
 }
