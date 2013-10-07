@@ -13,8 +13,8 @@ public class TestEntityRenderer extends Render {
     }
 
     @Override
-    protected ResourceLocation func_110775_a(Entity entity) {
-
+    protected ResourceLocation getEntityTexture(Entity entity) {
+        // TODO Auto-generated method stub
         return Textures.BLANK;
     }
 }

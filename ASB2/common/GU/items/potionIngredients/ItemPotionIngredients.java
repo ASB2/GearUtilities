@@ -66,11 +66,6 @@ public class ItemPotionIngredients extends ItemBase implements IPotionIngredient
             list.add(new ItemStack(this, 1, i));
         }
     }
-
-    public String getLocalizedName(ItemStack itemStack) {
-        
-        return super.getLocalizedName(itemStack);
-    }
     
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {

@@ -145,7 +145,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     @Override
     public final void onDataPacket(INetworkManager net, Packet132TileEntityData packet) {
 
-        NBTTagCompound nbt = packet.customParam1;
+        NBTTagCompound nbt = packet.data;
 
         if (nbt != null) {
 

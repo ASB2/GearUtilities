@@ -11,7 +11,7 @@ public class FXBase extends EntityFX {
     public FXBase(World world, double x, double y, double z, double motionX, double motionY, double motionZ, Icon texture, Color color) {
         super(world, x, y, z, motionX, motionY, motionZ);
 
-        this.func_110125_a(texture);
+        this.particleIcon = texture;
         this.particleScale = rand.nextFloat();
         this.particleRed = color.getRed();
         this.particleGreen = color.getGreen();

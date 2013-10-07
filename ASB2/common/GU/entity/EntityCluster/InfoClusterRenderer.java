@@ -27,8 +27,8 @@ public class InfoClusterRenderer extends Render {
     }
 
     @Override
-    protected ResourceLocation func_110775_a(Entity entity) {
-
-        return  Textures.ITEM_SENDER;
+    protected ResourceLocation getEntityTexture(Entity entity) {
+        // TODO Auto-generated method stub
+        return Textures.ITEM_SENDER;
     }
 }

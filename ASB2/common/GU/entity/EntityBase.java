@@ -106,14 +106,4 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
 
         return !isDead;
     }
-
-    @Override
-    public boolean func_130002_c(EntityPlayer player) {
-
-        if (!worldObj.isRemote && riddenByEntity == null) {
-
-            // player.mountEntity(this);
-        }
-        return false;
-    }
 }

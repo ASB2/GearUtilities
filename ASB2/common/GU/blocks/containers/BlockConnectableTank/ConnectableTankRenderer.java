@@ -34,7 +34,7 @@ public class ConnectableTankRenderer implements ISimpleBlockRenderingHandler {
 
             double min = .001, max = .9999;
 
-            renderer.setRenderBounds(min, min, min, max, UtilMisc.getAmountScaled(max  + (tile.worldObj.rand.nextDouble() * .001), tile.fluidTank.getFluidAmount(), tile.fluidTank.getCapacity()),max);
+            renderer.setRenderBounds(min, min, min, max, UtilMisc.getAmountScaled(max, tile.fluidTank.getFluidAmount(), tile.fluidTank.getCapacity()),max);
 
             Fluid fluid = tile.fluidTank.getFluid().getFluid();
             Color color = new Color(fluid.getColor());

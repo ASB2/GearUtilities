@@ -286,7 +286,6 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
             if(this.getNetwork() != null) {
 
                 MiscHelpers.addConductorsAround(this, worldObj, this.getNetwork());
-                MiscHelpers.addNetworkInterfacesAround(this, worldObj, this.getNetwork());
                 this.getNetwork().addNetworkInterface(new Vector3(this));
             }
         }

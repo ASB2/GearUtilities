@@ -29,12 +29,13 @@ public class ItemCrystal extends ItemBase implements ISolarFocus {
     public final ItemStack ItemBloodCrystalShard = new ItemStack(this, 1, 7);
     public final ItemStack ItemCrystalCasing = new ItemStack(this, 1, 8);
     public final ItemStack ItemGarnet = new ItemStack(this, 1, 9);
+    public final ItemStack ItemPlantBloodCrystalShard = new ItemStack(this, 1, 10);
     
     Icon[] CRYSTAL_ICONS = new Icon[CRYSTAL_SHARDS];
-    String[] CRYSTAL_NAMES_UNLOCALIZED = new String[] {"ItemAirCrystalShard", "ItemEarthCrystalShard", "ItemFireCrystalShard", "ItemWaterCrystalShard", "ItemEnergyCrystalShard", "ItemVoidCrystalShard", "ItemMetallicCrystalShard", "ItemBloodCrystalShard", "ItemCrystalCasing", "ItemGarnet"};
-    String[] CRYSTAL_NAMES_IG = new String[] {"Air Crystal Shard", "Earth Crystal Shard", "Fire Crystal Shard", "Water Crystal Shard", "Energy Crystal Shard", "Void Crystal Shard", "Metallic Crystal Shard", "Blood Crystal Shard", "Crystal Casing", "Garnet"};
+    String[] CRYSTAL_NAMES_UNLOCALIZED = new String[] {"ItemAirCrystalShard", "ItemEarthCrystalShard", "ItemFireCrystalShard", "ItemWaterCrystalShard", "ItemEnergyCrystalShard", "ItemVoidCrystalShard", "ItemMetallicCrystalShard", "ItemBloodCrystalShard", "ItemCrystalCasing", "ItemGarnet", "ItemPlantBloodCrystalShard"};
+    String[] CRYSTAL_NAMES_IG = new String[] {"Air Crystal Shard", "Earth Crystal Shard", "Fire Crystal Shard", "Water Crystal Shard", "Energy Crystal Shard", "Void Crystal Shard", "Metallic Crystal Shard", "Blood Crystal Shard", "Crystal Casing", "Garnet", "Plant Blood Crystal Shard"};
 
-    static int CRYSTAL_SHARDS = 10;
+    static int CRYSTAL_SHARDS = 11;
 
     public ItemCrystal(int id) {
         super(id);

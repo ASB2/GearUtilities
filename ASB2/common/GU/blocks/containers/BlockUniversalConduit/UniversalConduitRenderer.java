@@ -159,7 +159,7 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
         UtilRender.renderTexture(Textures.UNIVERSAL_CONDUIT);
         GL11.glScalef(.5f, .5f, .5f);
         GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
-        Models.ModelOctogon.renderAll();
+        Models.ModelRhombicuboctahedron.renderAll();
         GL11.glPopMatrix();
 
         GL11.glEnable(GL11.GL_LIGHTING);
