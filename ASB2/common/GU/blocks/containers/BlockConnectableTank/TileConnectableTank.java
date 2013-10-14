@@ -66,7 +66,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
 
         int amount = 0;
 
-        for (ForgeDirection direction : ForgeDirection.values()) {
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
             if(direction != ForgeDirection.UP && direction != ForgeDirection.DOWN) {
 

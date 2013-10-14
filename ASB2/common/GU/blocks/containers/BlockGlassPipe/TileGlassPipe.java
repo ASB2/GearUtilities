@@ -13,6 +13,7 @@ import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilFluid;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileFluidBase;
+import GU.blocks.containers.BlockConnectableTank.TileConnectableTank;
 
 public class TileGlassPipe extends TileFluidBase {
 
@@ -34,32 +35,37 @@ public class TileGlassPipe extends TileFluidBase {
     public void trigger(int id) {
 
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-            
-            for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+
+            int amount = 0;
+
+            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
                 TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
-                if(tile != null) {
+                if(tile != null && tile instanceof IFluidHandler) {
 
-                    if(tile instanceof TileGlassPipe) {
+                    amount++;
+                }
+            } 
 
-                        if(((TileGlassPipe)tile).fluidTank.getFluidAmount() < this.fluidTank.getFluidAmount()) {
+            if(this.fluidTank.getFluidAmount() >= amount * 500) {
 
-                            UtilFluid.moveFluid(this, direction, (TileGlassPipe)tile, true);
-                            return;
+                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+
+                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+
+                    if(tile != null) {
+
+                        if(tile instanceof TileGlassPipe) {
+
+                            if(((TileGlassPipe)tile).fluidTank.getFluidAmount() < this.fluidTank.getFluidAmount()) {
+
+                                UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 500, true);
+                            }
                         }
-                    }
-                    else if(tile instanceof IFluidHandler) {
+                        else if(tile instanceof IFluidHandler) {
 
-                        if(importing[direction.ordinal()]) {
-
-                            UtilFluid.moveFluid((IFluidHandler)tile, direction, this, true);
-                            return;
-                        }
-                        else {
-
-                            UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, true);
-                            return;
+                            UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 500, true);
                         }
                     }
                 }
