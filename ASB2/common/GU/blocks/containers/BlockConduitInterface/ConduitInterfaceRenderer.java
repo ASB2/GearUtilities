@@ -31,7 +31,7 @@ public class ConduitInterfaceRenderer extends TileEntitySpecialRenderer implemen
         GL11.glScalef(.5f, .5f, .5f);
 
         GL11.glPushMatrix();
-        UtilRender.renderTexture(Textures.BLACK);
+        UtilRender.renderTexture(Textures.CONDUIT_INTERFACE_CENTER);
         GL11.glScalef(.7f, .7f, .7f);
 //        GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0F, 1F, 0F);
         Models.ModelRhombicuboctahedron.renderAll();

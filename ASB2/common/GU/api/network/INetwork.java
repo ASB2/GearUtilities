@@ -18,17 +18,21 @@ public interface INetwork {
     boolean removeConductor(World world, Vector3 conduit);
     
     /**
-     * Should merge everything in the network the method is called in into the provided network.
-     */
-    void mergeNetworks(World world, ArrayList<Vector3> newNetwok);
-    
-    /**
      * A list of all the conduits that are in this network
      * @return Conduits in the network
      */
     ArrayList<Vector3> getAvaliableConductors();
     
+    
     boolean addNetworkInterface(Vector3 interfaces);
     boolean removeNetworkInterface(Vector3 interfaces);
     ArrayList<Vector3> getNetworkInterfaces();
+
+    
+    /**
+     * Should merge everything in the network the method is called in into the provided network.
+     */
+    void mergeNetworks(World world, ArrayList<Vector3> newNetwok);
+    
+    void onNetworkConductorBroken(World world, Vector3 tile);
 }

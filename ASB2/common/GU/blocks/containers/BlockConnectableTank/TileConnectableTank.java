@@ -11,8 +11,6 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilFluid;
-import ASB2.vector.Vector3;
-import GU.api.MiscHelpers;
 import GU.api.network.INetwork;
 import GU.api.network.INetworkInterface;
 import GU.api.network.UniversalConduitNetwork;
@@ -268,7 +266,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
     public void trigger(int id) {
 
         if(id == 0) {
-            
+
             if(!worldObj.isRemote) {
 
                 if(fluidTank.getFluid() != null) {
@@ -279,14 +277,6 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
 
                     PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
                 }
-            }
-        }
-        else {
-
-            if(this.getNetwork() != null) {
-
-                MiscHelpers.addConductorsAround(this, worldObj, this.getNetwork());
-                this.getNetwork().addNetworkInterface(new Vector3(this));
             }
         }
     }

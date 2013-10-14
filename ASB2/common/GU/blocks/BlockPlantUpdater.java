@@ -11,6 +11,8 @@ public class BlockPlantUpdater extends BlockBase {
 
     public BlockPlantUpdater(int id, Material material) {
         super(id, material);
+        
+        this.setTickRandomly(true);
     }
 
     @Override
@@ -24,7 +26,8 @@ public class BlockPlantUpdater extends BlockBase {
             if ((plant == this) && (world.getBlockMetadata(x, y + 1, z) == 1)) {
 
                 plant.updateTick(world, x, y + 1, z, random);
-            } else if ((plant instanceof IPlantable)) {
+            } 
+            else if ((plant instanceof IPlantable)) {
 
                 int topIncrement = 1;
                 int currentID = world.getBlockId(x, y + topIncrement, z);

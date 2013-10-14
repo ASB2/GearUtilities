@@ -156,7 +156,7 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
         GL11.glScalef(scale, scale, scale);
 
         GL11.glPushMatrix();
-        UtilRender.renderTexture(Textures.UNIVERSAL_CONDUIT);
+        UtilRender.renderTexture(Textures.BLACK);
         GL11.glScalef(.5f, .5f, .5f);
         GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
         Models.ModelRhombicuboctahedron.renderAll();

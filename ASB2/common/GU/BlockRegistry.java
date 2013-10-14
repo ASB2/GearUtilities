@@ -10,6 +10,7 @@ import GU.blocks.BlockEtherealConnectedGlass;
 import GU.blocks.BlockFalseBlock;
 import GU.blocks.BlockFreezingFlower;
 import GU.blocks.BlockPhantomBlock;
+import GU.blocks.BlockPlantUpdater;
 import GU.blocks.BlockSpeedyRoad;
 import GU.blocks.BlockTestBlock;
 import GU.blocks.FlowerBase;
@@ -27,6 +28,7 @@ import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
 import GU.blocks.containers.BlockEnergyCube.BlockEnergyCube;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
+import GU.blocks.containers.BlockGlassPipe.BlockGlassPipe;
 import GU.blocks.containers.BlockLamp.BlockLamp;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockRunicCube.BlockRunicCube;
@@ -68,6 +70,8 @@ public class BlockRegistry {
     public static ContainerBase BlockConduitInterface;
     public static ContainerBase BlockEnergyCube;
     public static FlowerBase BlockBloodPlant;
+    public static BlockBase BlockPlantUpdater;
+    public static ContainerBase BlockGlassPipe;
     
     private static int id = 500;
 
@@ -186,6 +190,14 @@ public class BlockRegistry {
         BlockBloodPlant = new BlockBloodPlant(config.getBlock("BlockBloodPlant", BlockRegistry.getNextBaseID()).getInt(), Material.plants);
         BlockBloodPlant.setBlockName("BlockBloodPlant");
         LanguageRegistry.addName(BlockBloodPlant, "Blood Plant");
+        
+        BlockPlantUpdater = new BlockPlantUpdater(config.getBlock("BlockPlantUpdater", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockPlantUpdater.setBlockName("BlockPlantUpdater");
+        LanguageRegistry.addName(BlockPlantUpdater, "Plant Updater");
+        
+        BlockGlassPipe = new BlockGlassPipe(config.getBlock("BlockGlassPipe", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockGlassPipe.setBlockName("BlockGlassPipe");
+        LanguageRegistry.addName(BlockGlassPipe, "Glass Pipe");
     }
 
     public static void initTestBlocks(Configuration config) {

@@ -99,9 +99,10 @@ public class UniversalConduitNetwork implements INetwork {
 
         return interfaces;
     }
- 
-    public void recalculateNetwork(World world) {
 
+    @Override
+    public void onNetworkConductorBroken(World world, Vector3 tile) {
+        
         Iterator<Vector3> stepByStep = conduitList.iterator();
 
         while(stepByStep.hasNext()) {
@@ -117,8 +118,6 @@ public class UniversalConduitNetwork implements INetwork {
             }
         }
         conduitList.clear();
-        interfaces.clear();
-    }
-
-   
+        interfaces.clear();        
+    }   
 }

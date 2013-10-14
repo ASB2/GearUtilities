@@ -34,6 +34,7 @@ public class ItemGearReader extends ItemBase {
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
 
         if(!world.isRemote) {
+            
             TileEntity tile = world.getBlockTileEntity(x, y, z);
 
             if (tile != null) {
@@ -88,8 +89,6 @@ public class ItemGearReader extends ItemBase {
 
                             if (info != null) {
 
-                                UtilEntity.sendChatToPlayer(player, "Tanks For Side: " + loop);
-
                                 if (info.fluid != null && info.fluid.getFluid() != null) {
 
                                     UtilEntity.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount);
@@ -102,6 +101,8 @@ public class ItemGearReader extends ItemBase {
                                 UtilEntity.sendChatToPlayer(player, "Capasity: " + info.capacity);
                             }
                         }
+
+                        UtilEntity.sendChatToPlayer(player, "Tanks For Side: " + loop);
                     }
                 }
 

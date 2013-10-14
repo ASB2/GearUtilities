@@ -6,7 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
-import net.minecraft.world.World;
 
 import org.lwjgl.input.Keyboard;
 
@@ -62,12 +61,6 @@ public class ItemBase extends Item {
 
         itemIcon = iconRegister.registerIcon(Reference.MODDID + ":ItemTestItem");
         texture = iconRegister.registerIcon(Reference.MODDID + ":" + itemName);
-    }
-
-    @Override
-    public boolean onItemUseFirst(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-       
-        return false;
     }
     
     public void setItemName(String texture) {

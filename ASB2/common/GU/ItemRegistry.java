@@ -20,6 +20,7 @@ import GU.items.ItemLifeStealingBludgeoningStick;
 import GU.items.ItemLinker;
 import GU.items.ItemPhantomPlacer;
 import GU.items.ItemRainBGone;
+import GU.items.ItemShifter;
 import GU.items.ItemTeleporter;
 import GU.items.ItemTestItem;
 import GU.items.ItemTradeStick;
@@ -58,7 +59,8 @@ public class ItemRegistry {
     public static Item ItemRunicSword, ItemRunicPickaxe, ItemRunicShovel, ItemRunicAxe, ItemRunicHoe;   
     public static ItemBase ItemHandheldTank;
     public static Item ItemSmoothStoneSword, ItemSmoothStonePickaxe, ItemSmoothStoneShovel, ItemSmoothStoneAxe, ItemSmoothStoneHoe;
-
+    public static ItemBase ItemShifter;
+    
     private static int id = 5000;
 
     public static void init(Configuration config) {
@@ -206,6 +208,10 @@ public class ItemRegistry {
         ItemSmoothStoneHoe = new HoeBase(config.getItem("ItemSmoothStoneHoe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID +  ":ItemSmoothStoneHoe");
         LanguageRegistry.addName(ItemSmoothStoneHoe, "Smooth Stone Hoe");
         ItemSmoothStoneHoe.setCreativeTab(GearUtilities.tabGUItems);
+    
+        ItemShifter = new ItemShifter(config.getItem("ItemShifter", ItemRegistry.getNextBaseID()).getInt());
+        ItemShifter.setItemName("ItemShifter");
+        LanguageRegistry.addName(ItemShifter, "Shifter");
     }
 
     public static int getNextBaseID() {

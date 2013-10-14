@@ -32,7 +32,7 @@ public final class Models {
     public static final String OCTOGON = Reference.RESOURCE_LOCATION + "models/ModelOctogon.obj";
     public static final String ENERGY_CUBE = Reference.RESOURCE_LOCATION + "models/ModelEnergyCube.obj";
     public static final String HANDHELD_TANK = Reference.RESOURCE_LOCATION + "models/ModelHandheldTank.obj";
-    public static final String RHOMBICUBOCTAHEDRON = Reference.RESOURCE_LOCATION + "models/RHOMBICUBOCTAHEDRON7.obj";
+    public static final String RHOMBICUBOCTAHEDRON = Reference.RESOURCE_LOCATION + "models/RHOMBICUBOCTAHEDRON.obj";
     
     public static void initModels() {
 

@@ -2,7 +2,6 @@ package GU.blocks.containers;
 
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
@@ -11,30 +10,27 @@ public class TileFluidBase extends TileBase implements IFluidHandler {
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-        
+
         return fluidTank.fill(resource, doFill);   
     }
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
 
-        if(fluid == FluidRegistry.WATER) {
+        if(fluidTank != null) {
 
-            if(fluidTank != null) {
+            if(fluid != null) {
 
-                if(fluid != null) {
+                if(fluidTank.getFluid() != null) {
 
-                    if(fluidTank.getFluid() != null) {
-
-                        if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
-
-                            return true;
-                        }
-                    } 
-                    else {
+                    if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
 
                         return true;
                     }
+                } 
+                else {
+
+                    return true;
                 }
             }
         }
@@ -48,7 +44,7 @@ public class TileFluidBase extends TileBase implements IFluidHandler {
 
             return null;
         }
-        
+
         return fluidTank.drain(resource.amount, doDrain);
     }
 
