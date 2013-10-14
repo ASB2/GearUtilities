@@ -13,7 +13,6 @@ import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilFluid;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileFluidBase;
-import GU.blocks.containers.BlockConnectableTank.TileConnectableTank;
 
 public class TileGlassPipe extends TileFluidBase {
 
@@ -48,7 +47,7 @@ public class TileGlassPipe extends TileFluidBase {
                 }
             } 
 
-            if(this.fluidTank.getFluidAmount() >= amount * 500) {
+            if(this.fluidTank.getFluidAmount() >= amount * 125) {
 
                 for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
@@ -60,12 +59,12 @@ public class TileGlassPipe extends TileFluidBase {
 
                             if(((TileGlassPipe)tile).fluidTank.getFluidAmount() < this.fluidTank.getFluidAmount()) {
 
-                                UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 500, true);
+                                UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 125, true);
                             }
                         }
                         else if(tile instanceof IFluidHandler) {
 
-                            UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 500, true);
+                            UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 125, true);
                         }
                     }
                 }
