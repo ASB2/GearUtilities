@@ -22,6 +22,8 @@ import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
 import GU.blocks.containers.BlockEnergyCube.EnergyCubeRenderer;
 import GU.blocks.containers.BlockEnergyCube.TileEnergyCube;
+import GU.blocks.containers.BlockGlassPipe.GlassPipeRenderer;
+import GU.blocks.containers.BlockGlassPipe.TileGlassPipe;
 import GU.blocks.containers.BlockRunicCube.RunicCubeRenderer;
 import GU.blocks.containers.BlockRunicCube.TileRunicCube;
 import GU.blocks.containers.BlockSender.GuiSender;
@@ -87,6 +89,9 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockEnergyCube.blockID, new EnergyCubeRenderer());
         
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemHandheldTank.itemID, new HandheldTankRenderer());
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileGlassPipe.class, new GlassPipeRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockGlassPipe.blockID, new GlassPipeRenderer());
         
 //        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemPurificationHelmet.itemID, new SolarFocusRenderer());
         

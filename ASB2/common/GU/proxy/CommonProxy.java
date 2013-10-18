@@ -38,11 +38,6 @@ public class CommonProxy implements IGuiHandler {
         EntityRegistry.registerModEntity(EntityInfoCluster.class, "Info Clustor", 2, GearUtilities.instance, 80, 3, true);    
     }
 
-    public int addArmor(String string) {
-
-        return 0;
-    }
-
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 

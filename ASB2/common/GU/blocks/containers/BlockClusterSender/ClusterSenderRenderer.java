@@ -9,7 +9,6 @@ import net.minecraftforge.common.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilRender;
-import ASB2.vector.*;
 import GU.info.Models;
 import GU.info.Textures;
 
@@ -20,7 +19,7 @@ public class ClusterSenderRenderer extends TileEntitySpecialRenderer implements 
 
         GL11.glPushMatrix();
 
-        switch (ForgeDirection.getOrientation(new Vector3(tileentity).getBlockMetadata(tileentity.worldObj))) {
+        switch (ForgeDirection.getOrientation(tileentity.worldObj.getBlockMetadata((int)x, (int)y, (int)z))) {
 
             case UP: {
                 

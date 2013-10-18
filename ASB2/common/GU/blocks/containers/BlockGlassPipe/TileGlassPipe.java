@@ -20,7 +20,7 @@ public class TileGlassPipe extends TileFluidBase {
 
     public TileGlassPipe() {
 
-        waitTimer = new Wait(1, this, 0);
+        waitTimer = new Wait(20 * 2, this, 0);
         fluidTank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME);
     }
 
