@@ -152,17 +152,10 @@ public class CraftRegistry {
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Block.torchWood, 6), ItemRegistry.ItemCrystal.ItemFireCrystalShard, Item.stick));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Item.coal, 1, 1), ItemRegistry.ItemCrystal.ItemFireCrystalShard, "logWood"));
 
-        GameRegistry.addSmelting(Item.axeWood.itemID, new ItemStack(
-                ItemRegistry.ItemCharcoalAxe), 1.F);
-
-        GameRegistry.addSmelting(Item.pickaxeWood.itemID, new ItemStack(
-                ItemRegistry.ItemCharcoalPickaxe), 1.F);
-
-        GameRegistry.addSmelting(Item.shovelWood.itemID, new ItemStack(
-                ItemRegistry.ItemCharcoalShovel), 1.F);
-
-        GameRegistry.addSmelting(Item.swordWood.itemID, new ItemStack(
-                ItemRegistry.ItemCharcoalSword), 1.F);
+        GameRegistry.addSmelting(Item.axeWood.itemID, new ItemStack(ItemRegistry.ItemCharcoalAxe), 1.F);
+        GameRegistry.addSmelting(Item.pickaxeWood.itemID, new ItemStack(ItemRegistry.ItemCharcoalPickaxe), 1.F);
+        GameRegistry.addSmelting(Item.shovelWood.itemID, new ItemStack(ItemRegistry.ItemCharcoalShovel), 1.F);
+        GameRegistry.addSmelting(Item.swordWood.itemID, new ItemStack(ItemRegistry.ItemCharcoalSword), 1.F);
 
         initTempRecipes();
     }

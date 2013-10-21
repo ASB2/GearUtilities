@@ -50,7 +50,7 @@ public abstract class ContainerBase extends BlockContainer {
         this.setBlockBoundsBasedOnState(world, x, y, z);
         return super.getSelectedBoundingBoxFromPool(world, x, y, z);
     }
-    
+
     @Override
     public boolean renderAsNormalBlock() {
 
@@ -66,7 +66,7 @@ public abstract class ContainerBase extends BlockContainer {
     @Override
     public int getRenderType() {
 
-        if (!useStandardRendering)
+        if(!useStandardRendering)
             return -1;
 
         return 0;
@@ -103,26 +103,25 @@ public abstract class ContainerBase extends BlockContainer {
 
     private void dropItems(World world, int x, int y, int z) {
 
-        Random prng = new Random();
+        Random rand = new Random();
 
-        if (world.getBlockTileEntity(x, y, z) instanceof IInventory) {
+        if(world.getBlockTileEntity(x, y, z) instanceof IInventory) {
 
-            IInventory tileEntity = (IInventory) world.getBlockTileEntity(x, y,
-                    z);
+            IInventory tileEntity = (IInventory) world.getBlockTileEntity(x, y, z);
 
-            if (tileEntity == null)
+            if(tileEntity == null)
                 return;
 
-            for (int slot = 0; slot < tileEntity.getSizeInventory(); slot++) {
+            for(int slot = 0; slot < tileEntity.getSizeInventory(); slot++) {
                 ItemStack item = tileEntity.getStackInSlot(slot);
 
-                if (item != null && item.stackSize > 0) {
-                    float rx = prng.nextFloat() * 0.8f + 0.1f;
-                    float ry = prng.nextFloat() * 0.8f + 0.1f;
-                    float rz = prng.nextFloat() * 0.8f + 0.1f;
+                if(item != null && item.stackSize > 0) {
+                    
+                    float rx = rand.nextFloat() * 0.8f + 0.1f;
+                    float ry = rand.nextFloat() * 0.8f + 0.1f;
+                    float rz = rand.nextFloat() * 0.8f + 0.1f;
 
-                    EntityItem entityItem = new EntityItem(world, x + rx, y
-                            + ry, z + rz, item.copy());
+                    EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, item.copy());
                     world.spawnEntityInWorld(entityItem);
                     item.stackSize = 0;
                 }
@@ -145,7 +144,7 @@ public abstract class ContainerBase extends BlockContainer {
     @Override
     public Icon getIcon(int side, int metadata) {
 
-        if (useDefaultTexture || texture == null)
+        if(useDefaultTexture || texture == null)
             return this.blockIcon;
 
         return texture;

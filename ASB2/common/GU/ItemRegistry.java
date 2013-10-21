@@ -11,6 +11,7 @@ import ASB2.items.ShovelBase;
 import ASB2.items.SwordBase;
 import GU.info.Reference;
 import GU.items.ItemAdvancedStick;
+import GU.items.ItemAquaBobber;
 import GU.items.ItemBase;
 import GU.items.ItemBasicDestructionCatalyst;
 import GU.items.ItemBrewedPotion;
@@ -60,6 +61,7 @@ public class ItemRegistry {
     public static ItemBase ItemHandheldTank;
     public static Item ItemSmoothStoneSword, ItemSmoothStonePickaxe, ItemSmoothStoneShovel, ItemSmoothStoneAxe, ItemSmoothStoneHoe;
     public static ItemBase ItemShifter;
+    public static ItemBase ItemAquaBobber;
     
     private static int id = 5000;
 
@@ -212,6 +214,10 @@ public class ItemRegistry {
         ItemShifter = new ItemShifter(config.getItem("ItemShifter", ItemRegistry.getNextBaseID()).getInt());
         ItemShifter.setItemName("ItemShifter");
         LanguageRegistry.addName(ItemShifter, "Shifter");
+        
+        ItemAquaBobber = new ItemAquaBobber(config.getItem("ItemAquaBobber", ItemRegistry.getNextBaseID()).getInt());
+        ItemAquaBobber.setItemName("ItemAquaBobber");
+        LanguageRegistry.addName(ItemAquaBobber, "Aqua Bobbber");
     }
 
     public static int getNextBaseID() {

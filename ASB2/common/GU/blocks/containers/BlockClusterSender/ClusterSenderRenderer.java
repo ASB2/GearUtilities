@@ -4,11 +4,11 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.common.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilRender;
+import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Textures;
 
@@ -19,7 +19,7 @@ public class ClusterSenderRenderer extends TileEntitySpecialRenderer implements 
 
         GL11.glPushMatrix();
 
-        switch (ForgeDirection.getOrientation(tileentity.worldObj.getBlockMetadata((int)x, (int)y, (int)z))) {
+        switch (((TileBase)tileentity).getOrientation()) {
 
             case UP: {
                 
@@ -62,8 +62,8 @@ public class ClusterSenderRenderer extends TileEntitySpecialRenderer implements 
             }
         }
         
-        GL11.glScalef(.5f, .5f, .5f);
 
+        GL11.glScalef(.5f, .5f, .5f);
         UtilRender.renderTexture(Textures.CLUSTER_SENDER);
         Models.ModelCulsterSender.renderAll();
 
@@ -77,8 +77,7 @@ public class ClusterSenderRenderer extends TileEntitySpecialRenderer implements 
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
-            ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
 
         return true;
     }
