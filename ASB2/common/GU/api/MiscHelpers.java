@@ -31,7 +31,7 @@ public class MiscHelpers {
 
                 if(((IConductor)tile).getNetwork() != null) {
 
-                    ((IConductor)tile).getNetwork().mergeNetworks(world, network.getAvaliableConductors());
+                    ((IConductor)tile).getNetwork().mergeNetworks(world, network.getConductors());
                 }
                 else {
 
@@ -61,7 +61,7 @@ public class MiscHelpers {
 
                 if(((INetworkInterface)tile).getNetwork() != null) {
 
-                    ((INetworkInterface)tile).getNetwork().mergeNetworks(world, network.getNetworkInterfaces());
+                    ((INetworkInterface)tile).getNetwork().mergeNetworks(world, network.getInterfaces());
                 }
                 else {
 

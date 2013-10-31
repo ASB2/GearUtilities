@@ -13,9 +13,4 @@ public interface IConductor {
      * return can be null.
      */
     INetwork getNetwork();
-    
-    /**
-     * The coordinates of the conduit
-     */
-    int[] getCoords();
 }

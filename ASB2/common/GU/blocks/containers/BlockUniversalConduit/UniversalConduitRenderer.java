@@ -29,7 +29,7 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
         
         GL11.glPushMatrix();
         GL11.glScalef(.5f, .5f, .5f);
-//        GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
+
         Models.ModelRhombicuboctahedron.renderAll();
         GL11.glPopMatrix();
 
@@ -42,8 +42,6 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
             if(tile != null) {
 
                 if(tile instanceof IConductor) {
-
-//                  GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0, 1F, 0);
                     
                     switch (direction) {
 
@@ -156,7 +154,7 @@ public class UniversalConduitRenderer extends TileEntitySpecialRenderer implemen
         GL11.glScalef(scale, scale, scale);
 
         GL11.glPushMatrix();
-        UtilRender.renderTexture(Textures.BLACK);
+        UtilRender.renderTexture(Textures.UNIVERSAL_CONDUIT_CENTER);
         GL11.glScalef(.5f, .5f, .5f);
         GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
         Models.ModelRhombicuboctahedron.renderAll();

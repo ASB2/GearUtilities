@@ -42,28 +42,6 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
     }
     
-    public void networkCheck(IConductor conductor) {
-    
-        if(conductor.getNetwork() != null) {
-
-            if(!conductor.getNetwork().getAvaliableConductors().contains(conductor)) {
-
-                conductor.getNetwork().addConductor(worldObj, new Vector3(conductor.getCoords()));
-            }
-        }
-    }
-    
-    public void networkCheck(INetworkInterface conductor) {
-        
-        if(conductor.getNetwork() != null) {
-
-            if(!conductor.getNetwork().getAvaliableConductors().contains(conductor)) {
-
-                conductor.getNetwork().addNetworkInterface(new Vector3(conductor.getCoords()));
-            }
-        }
-    }
-    
     public void sendReqularPowerPackets(int delay) {
 
         wait++;

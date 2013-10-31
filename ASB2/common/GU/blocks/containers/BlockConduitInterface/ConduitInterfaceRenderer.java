@@ -229,8 +229,7 @@ public class ConduitInterfaceRenderer extends TileEntitySpecialRenderer implemen
 
         UtilRender.renderTexture(Textures.CONDUIT_INTERFACE_CENTER);
         GL11.glPushMatrix();
-        GL11.glRotatef(-Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 1F, 1F);
-        Models.ModelOctogon.renderAll();
+        Models.ModelRhombicuboctahedron.renderAll();
         GL11.glPopMatrix();
 
 

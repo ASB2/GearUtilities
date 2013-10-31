@@ -125,8 +125,8 @@ public class ItemGearReader extends ItemBase {
 
                     if (mTile.getNetwork() != null) {
 
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getAvaliableConductors().size());                    
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Interfaces: " + mTile.getNetwork().getNetworkInterfaces().size());
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getConductors().size());                    
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Interfaces: " + mTile.getNetwork().getInterfaces().size());
                     }
                     else {
 
@@ -140,8 +140,8 @@ public class ItemGearReader extends ItemBase {
 
                     if (mTile.getNetwork() != null) {
 
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getAvaliableConductors().size());                    
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Interfaces: " + mTile.getNetwork().getNetworkInterfaces().size());
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getConductors().size());                    
+                        UtilEntity.sendChatToPlayer(player, "Conduit Network Interfaces: " + mTile.getNetwork().getInterfaces().size());
                     }
                     else {
 

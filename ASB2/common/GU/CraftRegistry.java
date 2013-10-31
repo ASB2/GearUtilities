@@ -162,6 +162,15 @@ public class CraftRegistry {
 
     public static void initTempRecipes() {     
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemBasicDestructionCatalyst, 1), new Object[] {
+            "PPP", 
+            "CCC", 
+            "GEG",
+
+            'P', Item.pickaxeDiamond,
+            'C', Variables.CRYSTALS_ALL,
+            'G', Item.ingotGold,
+            'E', Item.emerald}));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemTeleporter, 2), new Object[] {
             "ECE", 

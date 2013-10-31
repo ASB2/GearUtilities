@@ -22,7 +22,7 @@ import GU.api.power.PowerHelper;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 
-public class TileConduitInterface extends TileBase implements IConductor, INetworkInterface {
+public class TileConduitInterface extends TileBase implements INetworkInterface {
 
     INetwork network;
     boolean[] importing = new boolean[7];
@@ -36,8 +36,6 @@ public class TileConduitInterface extends TileBase implements IConductor, INetwo
     public void updateEntity() {
 
         waitTimer.update();
-
-        this.networkCheck((INetworkInterface) this);
     }
 
     @Override
@@ -57,17 +55,17 @@ public class TileConduitInterface extends TileBase implements IConductor, INetwo
 
                         if(tile instanceof IInventory) {
 
-                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
+                            this.getNetwork().removeItemInterface(new Vector3(tile));
                         }
 
                         if(tile instanceof IFluidHandler) {
 
-                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
+                            this.getNetwork().removeFluidInterface(new Vector3(tile));
                         }
 
                         if(tile instanceof IPowerMisc) {
 
-                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
+                            this.getNetwork().removePowerInterface(new Vector3(tile));
                         }
                     }
                 }
@@ -95,17 +93,17 @@ public class TileConduitInterface extends TileBase implements IConductor, INetwo
 
                         if(tile instanceof IInventory) {
 
-                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
+                            this.getNetwork().removeItemInterface(new Vector3(tile));
                         }
 
                         if(tile instanceof IFluidHandler) {
 
-                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
+                            this.getNetwork().removeFluidInterface(new Vector3(tile));
                         }
 
                         if(tile instanceof IPowerMisc) {
 
-                            this.getNetwork().removeNetworkInterface(new Vector3(tile));
+                            this.getNetwork().removePowerInterface(new Vector3(tile));
                         }
                     }
                 }
@@ -139,11 +137,11 @@ public class TileConduitInterface extends TileBase implements IConductor, INetwo
 
                         if(importing[direction.ordinal()]) {
 
-                            this.getNetwork().addNetworkInterface(new Vector3(this));
+                            this.getNetwork().addItemInterface(new Vector3(this));
                         }
                         else {
 
-                            for(Vector3 vector : this.getNetwork().getNetworkInterfaces()) {
+                            for(Vector3 vector : this.getNetwork().getInterfaces()) {
 
                                 if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof INetworkInterface) {
 
@@ -187,11 +185,11 @@ public class TileConduitInterface extends TileBase implements IConductor, INetwo
 
                         if(importing[direction.ordinal()]) {
 
-                            this.getNetwork().addNetworkInterface(new Vector3(this));
+                            this.getNetwork().addInterface(new Vector3(this));
                         }
                         else {
 
-                            for(Vector3 vector : this.getNetwork().getNetworkInterfaces()) {
+                            for(Vector3 vector : this.getNetwork().getInterfaces()) {
 
                                 if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof INetworkInterface) {
 
@@ -214,11 +212,11 @@ public class TileConduitInterface extends TileBase implements IConductor, INetwo
 
                         if(importing[direction.ordinal()]) {
 
-                            this.getNetwork().addNetworkInterface(new Vector3(this));
+                            this.getNetwork().addInterface(new Vector3(this));
                         }
                         else {
 
-                            for(Vector3 vector : this.getNetwork().getNetworkInterfaces()) {
+                            for(Vector3 vector : this.getNetwork().getInterfaces()) {
 
                                 if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof INetworkInterface) {
 

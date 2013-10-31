@@ -23,14 +23,6 @@ public class TileUniversalConduit extends TileBase implements IConductor {
     public void updateEntity() {
 
         waitTimer.update();
-
-        if(this.getNetwork() != null) {
-
-            if(!this.getNetwork().getAvaliableConductors().contains(this)) {
-
-                this.getNetwork().addConductor(worldObj, new Vector3(this));
-            }
-        }
     }
 
     @Override
@@ -52,9 +44,9 @@ public class TileUniversalConduit extends TileBase implements IConductor {
 
                             if(conduit.getNetwork() != this.getNetwork()) {
 
-                                conduit.getNetwork().mergeNetworks(worldObj, this.getNetwork().getAvaliableConductors());
+                                conduit.getNetwork().mergeNetworks(worldObj, this.getNetwork().getConductors());
                             
-                                for(Vector3 vector : conduit.getNetwork().getAvaliableConductors()) {
+                                for(Vector3 vector : conduit.getNetwork().getConductors()) {
 
                                     if(vector != null && vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof IConductor) {
 
@@ -89,11 +81,5 @@ public class TileUniversalConduit extends TileBase implements IConductor {
     public INetwork getNetwork() {
 
         return network;
-    }
-
-    @Override
-    public int[] getCoords() {
-
-        return new int[]{xCoord, yCoord, zCoord};
     }
 }
