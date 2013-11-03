@@ -9,12 +9,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
-import ASB2.vector.Vector3;
 import GU.api.IWrenchable;
 import GU.api.color.IVanillaColorable;
 import GU.api.color.VanillaColor;
-import GU.api.network.IConductor;
-import GU.api.network.INetworkInterface;
 import GU.api.power.PowerProvider;
 import GU.api.wait.IWaitTrigger;
 import GU.api.wait.Wait;
@@ -78,7 +75,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     @Override
     public boolean shouldTick(int id) {
 
-        return !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
+        return true;
     }
 
     @Override

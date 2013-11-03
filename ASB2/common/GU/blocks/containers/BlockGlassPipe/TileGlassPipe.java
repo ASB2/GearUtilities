@@ -59,12 +59,12 @@ public class TileGlassPipe extends TileFluidBase {
 
                             if(((TileGlassPipe)tile).fluidTank.getFluidAmount() < this.fluidTank.getFluidAmount()) {
 
-                                UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 125, true);
+                                UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, direction.getOpposite(), 125, true);
                             }
                         }
                         else if(tile instanceof IFluidHandler) {
 
-                            UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, 125, true);
+                            UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, direction.getOpposite(), 125, true);
                         }
                     }
                 }

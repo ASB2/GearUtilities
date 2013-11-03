@@ -13,7 +13,6 @@ import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
 import ASB2.vector.Vector3;
 import GU.api.MiscHelpers;
-import GU.api.network.IConductor;
 import GU.api.network.INetwork;
 import GU.api.network.INetworkInterface;
 import GU.api.network.UniversalConduitNetwork;
@@ -30,7 +29,7 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
     public TileConduitInterface() {
 
         this.waitTimer = new Wait(20, this, 0);
-        network = new UniversalConduitNetwork();
+        this.setNetwork(new UniversalConduitNetwork());
     }
 
     public void updateEntity() {
@@ -65,7 +64,7 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                         if(tile instanceof IPowerMisc) {
 
-                            this.getNetwork().removePowerInterface(new Vector3(tile));
+                            this.getNetwork().removeGUUPowerInterface(new Vector3(tile));
                         }
                     }
                 }
@@ -103,7 +102,7 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
                         if(tile instanceof IPowerMisc) {
 
-                            this.getNetwork().removePowerInterface(new Vector3(tile));
+                            this.getNetwork().removeGUUPowerInterface(new Vector3(tile));
                         }
                     }
                 }
@@ -125,52 +124,71 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
         if(this.getNetwork() != null) {
 
             MiscHelpers.addConductorsAround(this, worldObj, this.getNetwork());
-            MiscHelpers.addNetworkInterfacesAround(this, worldObj, this.getNetwork());
 
             if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
-                for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                for(ForgeDirection blockDirection : ForgeDirection.VALID_DIRECTIONS) {
 
-                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+                    TileEntity destinationTile = UtilDirection.translateDirectionToTile(this, worldObj, blockDirection);
 
-                    if(tile instanceof IInventory) {
+                    if(destinationTile != null) {
 
-                        if(importing[direction.ordinal()]) {
+                        if(importing[blockDirection.ordinal()]) {
 
-                            this.getNetwork().addItemInterface(new Vector3(this));
+                            if(destinationTile instanceof IInventory) {
+
+                                this.getNetwork().addItemInterface(new Vector3(this));
+                            }
+
+                            if(destinationTile instanceof IFluidHandler) {
+
+                                this.getNetwork().addFluidInterface(new Vector3(this));
+                            }
+
+                            if(destinationTile instanceof IPowerMisc) {
+
+                                this.getNetwork().addGUUPowerInterface(new Vector3(this));
+                            }
                         }
                         else {
 
-                            for(Vector3 vector : this.getNetwork().getInterfaces()) {
+                            if(destinationTile instanceof IInventory) {
 
-                                if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof INetworkInterface) {
+                                for(Vector3 vector : this.getNetwork().getItemInterfaces()) {
 
-                                    for(ForgeDirection avaliableTileDirections : ForgeDirection.VALID_DIRECTIONS) {
+                                    INetworkInterface interfaceTesting = (INetworkInterface) vector.getTileEntity(worldObj);
 
-                                        for(TileEntity avaliableTile : ((INetworkInterface) vector.getTileEntity(worldObj)).getAvaliableTileEntities(avaliableTileDirections)) {
+                                    for(ForgeDirection interfaceDirections : ForgeDirection.VALID_DIRECTIONS) {
 
-                                            if(avaliableTile != null && avaliableTile instanceof IInventory) {
+                                        TileEntity[] avaliableTiles = interfaceTesting.getAvaliableTileEntities(interfaceDirections);
 
-                                                if(avaliableTile != tile) {
+                                        for(TileEntity sourceTile : avaliableTiles) {
 
-                                                    if(tile instanceof ISidedInventory) {
+                                            if(sourceTile != null) {
 
-                                                        if(avaliableTile instanceof ISidedInventory) {
+                                                if(sourceTile instanceof IInventory) {
 
-                                                            UtilInventory.moveEntireISidedInventory((ISidedInventory) avaliableTile, direction, avaliableTileDirections.getOpposite(), (ISidedInventory) tile);
+                                                    if(sourceTile instanceof ISidedInventory) {
+
+                                                        if(destinationTile instanceof ISidedInventory) {
+
+                                                            UtilInventory.moveEntireISidedInventory((ISidedInventory) destinationTile, blockDirection, interfaceDirections, (ISidedInventory) destinationTile);
                                                         }
                                                         else {
 
-                                                            UtilInventory.moveEntireISidedInventory((IInventory) avaliableTile, direction, (ISidedInventory) tile);
+                                                            UtilInventory.moveEntireISidedInventory((IInventory) destinationTile, interfaceDirections, (ISidedInventory) destinationTile);
                                                         }
-                                                    }
-                                                    else if(avaliableTile instanceof ISidedInventory) {
-
-                                                        UtilInventory.moveEntireISidedInventory((ISidedInventory) avaliableTile, direction, (IInventory) tile);
                                                     }
                                                     else {
 
-                                                        UtilInventory.moveEntireInventory((IInventory) avaliableTile, (IInventory) tile);
+                                                        if(destinationTile instanceof ISidedInventory) {
+
+                                                            UtilInventory.moveEntireISidedInventory((ISidedInventory) destinationTile, blockDirection, (IInventory) destinationTile);
+                                                        }
+                                                        else {
+
+                                                            UtilInventory.moveEntireInventory((IInventory) destinationTile, (IInventory) destinationTile);
+                                                        }
                                                     }
                                                 }
                                             }
@@ -178,53 +196,50 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
                                     }
                                 }
                             }
-                        }
-                    }
 
-                    if(tile instanceof IFluidHandler) {
+                            if(destinationTile instanceof IFluidHandler) {
 
-                        if(importing[direction.ordinal()]) {
+                                for(Vector3 vector : this.getNetwork().getFluidInterfaces()) {
 
-                            this.getNetwork().addInterface(new Vector3(this));
-                        }
-                        else {
+                                    INetworkInterface interfaceTesting = (INetworkInterface) vector.getTileEntity(worldObj);
 
-                            for(Vector3 vector : this.getNetwork().getInterfaces()) {
+                                    for(ForgeDirection interfaceDirections : ForgeDirection.VALID_DIRECTIONS) {
 
-                                if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof INetworkInterface) {
+                                        TileEntity[] avaliableTiles = interfaceTesting.getAvaliableTileEntities(interfaceDirections);
 
-                                    for(ForgeDirection avaliableTileDirections : ForgeDirection.VALID_DIRECTIONS) {
+                                        for(TileEntity sourceTile : avaliableTiles) {
 
-                                        for(TileEntity avaliableTile : ((INetworkInterface) vector.getTileEntity(worldObj)).getAvaliableTileEntities(avaliableTileDirections)) {
+                                            if(sourceTile != null) {
 
-                                            if(avaliableTile != null && avaliableTile instanceof IFluidHandler) {
+                                                if(sourceTile instanceof IFluidHandler) {
 
-                                                UtilFluid.moveFluid((IFluidHandler) avaliableTile, direction, avaliableTileDirections.getOpposite(), (IFluidHandler) tile, true);
+                                                    UtilFluid.moveFluid((IFluidHandler) sourceTile, blockDirection, (IFluidHandler) destinationTile, interfaceDirections, true);
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
-                    }
 
-                    if(tile instanceof IPowerMisc) {
+                            if(destinationTile instanceof IPowerMisc) {
 
-                        if(importing[direction.ordinal()]) {
+                                for(Vector3 vector : this.getNetwork().getGUUPowerInterfaces()) {
 
-                            this.getNetwork().addInterface(new Vector3(this));
-                        }
-                        else {
+                                    INetworkInterface interfaceTesting = (INetworkInterface) vector.getTileEntity(worldObj);
 
-                            for(Vector3 vector : this.getNetwork().getInterfaces()) {
+                                    for(ForgeDirection interfaceDirections : ForgeDirection.VALID_DIRECTIONS) {
 
-                                if(vector.getTileEntity(worldObj) != null && vector.getTileEntity(worldObj) instanceof INetworkInterface) {
+                                        TileEntity[] avaliableTiles = interfaceTesting.getAvaliableTileEntities(interfaceDirections);
 
-                                    for(TileEntity avaliableTile : ((INetworkInterface) vector.getTileEntity(worldObj)).getAvaliableTileEntities(direction.getOpposite())) {
+                                        for(TileEntity sourceTile : avaliableTiles) {
 
-                                        if(avaliableTile != null && avaliableTile instanceof IPowerMisc) {
+                                            if(sourceTile != null) {
 
-                                            PowerHelper.moveEnergy((IPowerMisc) avaliableTile, (IPowerMisc) tile, direction, true);
+                                                if(sourceTile instanceof IPowerMisc) {
+
+                                                    PowerHelper.moveEnergy(((IPowerMisc)sourceTile).getPowerProvider(), ((IPowerMisc)destinationTile).getPowerProvider(), blockDirection, interfaceDirections, true);
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -240,6 +255,15 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
     public boolean setNetwork(INetwork network) {
 
         this.network = network;
+        
+
+        if(network != null) {            
+            
+            if(!network.getConductors().contains(new Vector3(this))) {
+                
+                network.addConductor(new Vector3(this));
+            }
+        }
         return true;
     }
 
@@ -247,12 +271,6 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
     public INetwork getNetwork() {
 
         return network;
-    }
-
-    @Override
-    public int[] getCoords() {
-
-        return new int[]{xCoord, yCoord, zCoord};
     }
 
     @Override
@@ -269,7 +287,7 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
 
-        for(int i = 0; i < importing.length; i++) {       
+        for(int i = 0; i < importing.length; i++) {
 
             tag.setBoolean("importing " + i, importing[i]);
         }

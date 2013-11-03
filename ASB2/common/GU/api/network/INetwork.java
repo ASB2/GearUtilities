@@ -31,13 +31,14 @@ public interface INetwork {
     boolean removeItemInterface(Vector3 vector);
     ArrayList<Vector3> getItemInterfaces();
     
-    boolean addPowerInterface(Vector3 vector);
-    boolean removePowerInterface(Vector3 vector);
-    ArrayList<Vector3> getPowerInterfaces();
+    boolean addGUUPowerInterface(Vector3 vector);
+    boolean removeGUUPowerInterface(Vector3 vector);
+    ArrayList<Vector3> getGUUPowerInterfaces();
+    
     /**
      * Should merge everything in the network the method is called in into the provided network.
      */
-    void mergeNetworks(World world, ArrayList<Vector3> newNetwok);
+    void mergeNetworks(World world, INetwork newNetwork);
     
     void onNetworkConductorBroken(World world, Vector3 tile);
 }

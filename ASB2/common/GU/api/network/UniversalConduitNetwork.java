@@ -18,7 +18,7 @@ public class UniversalConduitNetwork implements INetwork {
     }
 
     @Override
-    public void mergeNetworks(World world, ArrayList<Vector3> newNetwork) {
+    public void mergeNetworks(World world, INetwork newNetwork) {
 
         if(this.getConductors() != null && newNetwork != null) {
 
@@ -28,9 +28,9 @@ public class UniversalConduitNetwork implements INetwork {
 
                     if(vector.getBlockID(world) != 0) {
 
-                        if(!newNetwork.contains(vector)) {
+                        if(!newNetwork.getConductors().contains(vector)) {
 
-                            newNetwork.add(vector);
+                            newNetwork.addConductor(vector);
                         }
                     }
                 }
@@ -132,7 +132,7 @@ public class UniversalConduitNetwork implements INetwork {
     }
 
     @Override
-    public boolean addPowerInterface(Vector3 vector) {
+    public boolean addGUUPowerInterface(Vector3 vector) {
 
         if(vector != null && !powerInterfaces.contains(vector)) {
 
@@ -142,14 +142,14 @@ public class UniversalConduitNetwork implements INetwork {
     }
 
     @Override
-    public boolean removePowerInterface(Vector3 interfaces) {
+    public boolean removeGUUPowerInterface(Vector3 interfaces) {
 
         return powerInterfaces.remove(interfaces);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public ArrayList<Vector3> getPowerInterfaces() {
+    public ArrayList<Vector3> getGUUPowerInterfaces() {
 
         return (ArrayList<Vector3>) powerInterfaces.clone();
     }

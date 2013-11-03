@@ -85,7 +85,7 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
 
                         case EXTRACTING_MODE: {
 
-                            if(PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_ITEM_COST, true)) {
+                            if(PowerHelper.removeEnergyFromProvider(this.getPowerProvider(), side.getOpposite(), Variables.SENDER_ITEM_COST, true)) {
 
                                 UtilInventory.moveEntireInventory(sourceI, sinkI);
                                 clustor.stopClustor();
@@ -95,7 +95,7 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
 
                         case SMELTING_MODE: {
 
-                            if(PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_SMELT_COST, true)) {
+                            if(PowerHelper.removeEnergyFromProvider(this.getPowerProvider(), side.getOpposite(), Variables.SENDER_SMELT_COST, true)) {
 
                                 for(int i = 0; i < sourceI.getSizeInventory(); i++) {
 
@@ -129,10 +129,10 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
 
                         case POWER_MODE: {
 
-                            if(PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_POWERSEND_COST, false) && PowerHelper.moveEnergy(this, sinkI, side, Variables.SENDER_POWERSEND_AMOUNT, false)) {
+                            if(PowerHelper.removeEnergyFromProvider(this.getPowerProvider(), side.getOpposite(), Variables.SENDER_POWERSEND_COST, false) && PowerHelper.moveEnergy(this.getPowerProvider(), sinkI.getPowerProvider(), side, side.getOpposite(), Variables.SENDER_POWERSEND_AMOUNT, false)) {
 
-                                PowerHelper.removeEnergyFromProvider(this, side.getOpposite(), Variables.SENDER_POWERSEND_COST, false);
-                                PowerHelper.moveEnergy(this, sinkI, side, Variables.SENDER_POWERSEND_AMOUNT, true);
+                                PowerHelper.removeEnergyFromProvider(this.getPowerProvider(), side.getOpposite(), Variables.SENDER_POWERSEND_COST, false);
+                                PowerHelper.moveEnergy(this.getPowerProvider(), sinkI.getPowerProvider(), side, side.getOpposite(), Variables.SENDER_POWERSEND_AMOUNT, true);
                                 clustor.stopClustor();
                             }
                             break;
@@ -145,10 +145,10 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
                         
                         if(LIQUID_MODE == this.getMode()) {
                             
-                            if(PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, false) && UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, false)) {
+                            if(PowerHelper.removeEnergyFromProvider(this.getPowerProvider(), this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, false) && UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, side.getOpposite(), false)) {
                                 
-                                PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, true);
-                                UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, true);  
+                                PowerHelper.removeEnergyFromProvider(this.getPowerProvider(), this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, true);
+                                UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, side.getOpposite(), true);  
                             }                          
                         }
                     }
@@ -168,11 +168,11 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
 
         if(BLOCK_BREAK_MODE == this.getMode()) {
 
-            if(PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, false)) {
+            if(PowerHelper.removeEnergyFromProvider(this.getPowerProvider(), this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, false)) {
 
                 if(UtilBlock.breakAndAddToInventory(this, worldObj, xCoord + this.getOrientation().getOpposite().offsetX, yCoord + this.getOrientation().getOpposite().offsetY, zCoord + this.getOrientation().getOpposite().offsetZ, false)) {
 
-                    PowerHelper.removeEnergyFromProvider(this, this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, true);
+                    PowerHelper.removeEnergyFromProvider(this.getPowerProvider(), this.getOrientation().getOpposite(), Variables.SENDER_BREAKBLOCK_AMOUNT, true);
                     UtilBlock.breakAndAddToInventory(this, worldObj, xCoord + this.getOrientation().getOpposite().offsetX, yCoord + this.getOrientation().getOpposite().offsetY, zCoord + this.getOrientation().getOpposite().offsetZ, true);
                 }
             }

@@ -5,6 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilDirection;
+import ASB2.vector.Vector3;
 import GU.api.MiscHelpers;
 import GU.api.network.INetwork;
 import GU.api.network.INetworkInterface;
@@ -32,7 +33,6 @@ public class TileEnergyCube extends TileBase implements IPowerMisc, INetworkInte
     public void updateEntity() {    
 
         waitTimer.update();
-        this.networkCheck(this);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class TileEnergyCube extends TileBase implements IPowerMisc, INetworkInte
 
         if(tile != null && tile instanceof IPowerMisc) {
 
-            PowerHelper.moveEnergy(this, (IPowerMisc)tile, this.getOrientation(), true);
+            PowerHelper.moveEnergy(this.getPowerProvider(), ((IPowerMisc)tile).getPowerProvider(), this.getOrientation(), this.getOrientation().getOpposite(), true);
         }
     }
 
@@ -73,6 +73,19 @@ public class TileEnergyCube extends TileBase implements IPowerMisc, INetworkInte
     public boolean setNetwork(INetwork network) {
 
         this.network = network;
+        
+        if(network != null) {            
+
+            if(!network.getConductors().contains(new Vector3(this))) {
+
+                network.addConductor(new Vector3(this));
+            }
+            
+            if(!network.getGUUPowerInterfaces().contains(new Vector3(this))) {
+
+                network.addGUUPowerInterface(new Vector3(this));
+            }
+        }
         return true;
     }
 
@@ -80,12 +93,6 @@ public class TileEnergyCube extends TileBase implements IPowerMisc, INetworkInte
     public INetwork getNetwork() {
 
         return network;
-    }
-
-    @Override
-    public int[] getCoords() {
-
-        return new int[]{xCoord, yCoord, zCoord};
     }
 
     @Override

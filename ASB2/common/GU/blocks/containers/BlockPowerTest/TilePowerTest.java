@@ -55,11 +55,11 @@ public class TilePowerTest extends TileBase implements IPowerMisc {
 
                             if (isExporting) {
 
-                                PowerHelper.moveEnergy((IPowerMisc) tile, tileToAffectCasted, direction, true);
+                                PowerHelper.moveEnergy(((IPowerMisc)tile).getPowerProvider(), tileToAffectCasted.getPowerProvider(), direction, direction.getOpposite(), true);
                             } 
                             else {
 
-                                PowerHelper.moveEnergy(tileToAffectCasted, (IPowerMisc)tile, direction, true);
+                                PowerHelper.moveEnergy(tileToAffectCasted.getPowerProvider(), ((IPowerMisc)tile).getPowerProvider(), direction, direction.getOpposite(), true);
                             }
                         }
                     }

@@ -12,8 +12,8 @@ public enum VanillaColor {
 
     public static ItemStack getVinillaDye(VanillaColor color) {
 
-        switch (color) {
-            
+        switch(color) {
+
             case BLACK:
                 return new ItemStack(Item.dyePowder.itemID, 1, 0);
             case RED:
@@ -54,15 +54,15 @@ public enum VanillaColor {
 
     public static VanillaColor getItemColorValue(ItemStack item) {
 
-        if (item != null) {
+        if(item != null) {
 
-            if (item.getItem() != null) {
+            if(item.getItem() != null) {
 
                 Item itemI = item.getItem();
 
-                if (itemI instanceof ItemDye) {
+                if(itemI instanceof ItemDye) {
 
-                    switch (item.getItemDamage()) {
+                    switch(item.getItemDamage()) {
 
                         case 0:
                             return VanillaColor.BLACK;
@@ -105,16 +105,16 @@ public enum VanillaColor {
 
     public static boolean isItemDye(ItemStack item) {
 
-        if (item != null) {
+        if(item != null) {
 
-            if (item.getItem() != null) {
+            if(item.getItem() != null) {
 
                 Item itemI = item.getItem();
 
-                if (itemI instanceof ItemDye) {
+                if(itemI instanceof ItemDye) {
 
                     if(item.getItemDamage() <= 16) {
-                        
+
                         return true;
                     }
                 }
@@ -122,7 +122,7 @@ public enum VanillaColor {
         }
         return false;
     }
-    
+
     public static VanillaColor translateNumberToColor(int numb) {
 
         return VanillaColor.values()[numb];
@@ -132,10 +132,10 @@ public enum VanillaColor {
 
         return color.ordinal();
     }
-    
+
     public static Color getRGBValue(VanillaColor color) {
-     
-        switch (color) {
+
+        switch(color) {
 
             case WHITE:
                 return new Color(255, 255, 255);

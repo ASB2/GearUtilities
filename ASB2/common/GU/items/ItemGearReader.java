@@ -16,7 +16,6 @@ import GU.api.color.IColorable;
 import GU.api.color.IVanillaColorable;
 import GU.api.network.IConductor;
 import GU.api.network.INetwork;
-import GU.api.network.INetworkInterface;
 import GU.api.power.IPowerMisc;
 import GU.info.Reference;
 
@@ -125,23 +124,10 @@ public class ItemGearReader extends ItemBase {
 
                     if (mTile.getNetwork() != null) {
 
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getConductors().size());                    
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Interfaces: " + mTile.getNetwork().getInterfaces().size());
-                    }
-                    else {
-
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network: null");
-                    }
-                }
-
-                if (tile instanceof INetworkInterface) {
-
-                    INetworkInterface mTile = (INetworkInterface) tile;
-
-                    if (mTile.getNetwork() != null) {
-
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Size: " + mTile.getNetwork().getConductors().size());                    
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network Interfaces: " + mTile.getNetwork().getInterfaces().size());
+                        UtilEntity.sendChatToPlayer(player, "Network Conductors: " + mTile.getNetwork().getConductors().size());
+                        UtilEntity.sendChatToPlayer(player, "Network Item Interfaces: " + mTile.getNetwork().getItemInterfaces().size());
+                        UtilEntity.sendChatToPlayer(player, "Network Fluid Interfaces: " + mTile.getNetwork().getFluidInterfaces().size());
+                        UtilEntity.sendChatToPlayer(player, "Network GUU Power Interfaces: " + mTile.getNetwork().getGUUPowerInterfaces().size());
                     }
                     else {
 

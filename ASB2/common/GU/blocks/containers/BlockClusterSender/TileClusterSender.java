@@ -60,7 +60,7 @@ public class TileClusterSender extends TileBase implements IClusterTrigger {
 
                         if(sink instanceof IFluidHandler) {
 
-                            UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, true);
+                            UtilFluid.moveFluid((IFluidHandler)source, side, (IFluidHandler)sink, side.getOpposite(), true);
                             clustor.stopClustor();
                         }
                     }
@@ -69,7 +69,7 @@ public class TileClusterSender extends TileBase implements IClusterTrigger {
 
                         if(sink instanceof IPowerMisc) {
 
-                            PowerHelper.moveEnergy((IPowerMisc)source, (IPowerMisc)sink, side, true);
+                            PowerHelper.moveEnergy(((IPowerMisc)source).getPowerProvider(), ((IPowerMisc)sink).getPowerProvider(), side, side.getOpposite(), true);
                             clustor.stopClustor();
                         }
                     }

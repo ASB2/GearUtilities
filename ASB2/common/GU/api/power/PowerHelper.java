@@ -35,82 +35,28 @@ public class PowerHelper {
         return false;
     }
 
-    public static boolean addEnergyToProvider(IPowerMisc powerProvider, ForgeDirection direction, float power, boolean doWork) {
-
-        if(powerProvider != null) {
-
-            if(powerProvider.getPowerProvider() != null) {
-
-                if(powerProvider.getPowerProvider().gainPower(power, direction, doWork)) {
-
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public static boolean removeEnergyFromProvider(IPowerMisc powerProvider, ForgeDirection direction, float power, boolean doWork) {
-
-        if(powerProvider != null) {
-
-            if(powerProvider.getPowerProvider() != null) {
-
-                if(powerProvider.getPowerProvider().usePower(power, direction, doWork)) {
-
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public static boolean moveEnergy(IPowerMisc source, IPowerMisc sink, ForgeDirection direction, float power, boolean doWork) {
+    public static boolean moveEnergy(IPowerProvider source, IPowerProvider sink, ForgeDirection sourceDirection, ForgeDirection sinkDirection, boolean doWork) {
 
         if(source != null && sink != null) {
 
-            if(source.getPowerProvider() != null && sink.getPowerProvider() != null) {
-
-                if(PowerHelper.removeEnergyFromProvider(source, direction, power, false)) {
-
-                    if(PowerHelper.addEnergyToProvider(sink, direction, power, false)) {
-
-                        PowerHelper.removeEnergyFromProvider(source, direction, power, doWork);
-                        PowerHelper.addEnergyToProvider(sink, direction.getOpposite(), power, doWork);
-                        return true;
-                    }
-                }
-            }
+            float amount = source.getPowerClass().getPowerValue();
+            return PowerHelper.moveEnergy(source, sink, sourceDirection, sinkDirection, amount, doWork);
         }
         return false;
     }
 
-    public static boolean moveEnergy(IPowerMisc source, IPowerMisc sink, ForgeDirection direction, boolean doWork) {
-
-        if(source != null && sink != null) {
-
-            if(source.getPowerProvider() != null && sink.getPowerProvider() != null) {
-
-                float amount = source.getPowerProvider().getPowerClass().getPowerValue();
-                return PowerHelper.moveEnergy(source, sink, direction, amount, doWork);
-            }
-        }
-
-        return false;
-    }
-
-    public static boolean moveEnergy(IPowerProvider source, IPowerProvider sink, ForgeDirection direction, float power, boolean doWork) {
+    public static boolean moveEnergy(IPowerProvider source, IPowerProvider sink, ForgeDirection sourceDirection, ForgeDirection sinkDirection, float power, boolean doWork) {
 
         if(source != null && sink != null) {
 
             if(source != null && sink != null) {
 
-                if(PowerHelper.removeEnergyFromProvider(source, direction, power, false)) {
+                if(PowerHelper.removeEnergyFromProvider(source, sourceDirection, power, false)) {
 
-                    if(PowerHelper.addEnergyToProvider(sink, direction, power, false)) {
+                    if(PowerHelper.addEnergyToProvider(sink, sinkDirection, power, false)) {
 
-                        PowerHelper.removeEnergyFromProvider(source, direction, power, doWork);
-                        PowerHelper.addEnergyToProvider(sink, direction.getOpposite(), power, doWork);
+                        PowerHelper.removeEnergyFromProvider(source, sourceDirection, power, doWork);
+                        PowerHelper.addEnergyToProvider(sink, sinkDirection, power, doWork);
                         return true;
                     }
                 }
@@ -123,9 +69,12 @@ public class PowerHelper {
 
         if(powerProvider != null) {
 
-            if(powerProvider.gainPower(power, direction, doWork)) {
+            if(powerProvider.getState() == State.SINK || powerProvider.getState() == State.OTHER) {
 
-                return true;
+                if(powerProvider.gainPower(power, direction, doWork)) {
+
+                    return true;
+                }
             }
         }
         return false;
@@ -135,9 +84,12 @@ public class PowerHelper {
 
         if(powerProvider != null) {
 
-            if(powerProvider.usePower(power, direction, doWork)) {
+            if(powerProvider.getState() == State.SOURCE || powerProvider.getState() == State.OTHER) {
 
-                return true;
+                if(powerProvider.usePower(power, direction, doWork)) {
+
+                    return true;
+                }
             }
         }
         return false;
