@@ -3,6 +3,7 @@ package GU.api.network;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import ASB2.vector.Vector3;
 
@@ -11,28 +12,22 @@ public class UniversalConduitNetwork implements INetwork {
     ArrayList<Vector3> conduitList = new ArrayList<Vector3>();
     ArrayList<Vector3> fluidInterfaces = new ArrayList<Vector3>();
     ArrayList<Vector3> itemInterfaces = new ArrayList<Vector3>();
-    ArrayList<Vector3> powerInterfaces = new ArrayList<Vector3>();
+    ArrayList<Vector3> guuPowerInterfaces = new ArrayList<Vector3>();
 
     public UniversalConduitNetwork() {
 
     }
 
     @Override
-    public void mergeNetworks(World world, INetwork newNetwork) {
+    public void mergeNetworks(IBlockAccess world, INetwork newNetwork) {
 
-        if(this.getConductors() != null && newNetwork != null) {
+        if(newNetwork != null) {
 
             for(Vector3 vector : this.getConductors()) {
 
                 if(vector != null && vector.getTileEntity(world) != null && vector.getTileEntity(world) instanceof IConductor) {
 
-                    if(vector.getBlockID(world) != 0) {
-
-                        if(!newNetwork.getConductors().contains(vector)) {
-
-                            newNetwork.addConductor(vector);
-                        }
-                    }
+                        newNetwork.addConductor(vector);
                 }
             }
         }
@@ -40,6 +35,7 @@ public class UniversalConduitNetwork implements INetwork {
 
     @Override
     public boolean addConductor(Vector3 vector) {
+
 
         if(vector != null && !conduitList.contains(vector)) {
 
@@ -58,11 +54,16 @@ public class UniversalConduitNetwork implements INetwork {
         return false;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public ArrayList<Vector3> getConductors() {
 
-        return (ArrayList<Vector3>) conduitList.clone();
+        ArrayList<Vector3> copyList = new ArrayList<Vector3>();
+
+        for(Vector3 vector : conduitList) {
+
+            copyList.add(vector);
+        }
+        return copyList;
     }
 
     @Override
@@ -101,11 +102,16 @@ public class UniversalConduitNetwork implements INetwork {
         return fluidInterfaces.remove(interfaces);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public ArrayList<Vector3> getFluidInterfaces() {
 
-        return (ArrayList<Vector3>) fluidInterfaces.clone();
+        ArrayList<Vector3> copyList = new ArrayList<Vector3>();
+
+        for(Vector3 vector : fluidInterfaces) {
+
+            copyList.add(vector);
+        }
+        return copyList;
     }
 
     @Override
@@ -124,19 +130,24 @@ public class UniversalConduitNetwork implements INetwork {
         return itemInterfaces.remove(interfaces);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public ArrayList<Vector3> getItemInterfaces() {
 
-        return (ArrayList<Vector3>) itemInterfaces.clone();
+        ArrayList<Vector3> copyList = new ArrayList<Vector3>();
+
+        for(Vector3 vector : itemInterfaces) {
+
+            copyList.add(vector);
+        }
+        return copyList;
     }
 
     @Override
     public boolean addGUUPowerInterface(Vector3 vector) {
 
-        if(vector != null && !powerInterfaces.contains(vector)) {
+        if(vector != null && !guuPowerInterfaces.contains(vector)) {
 
-            return powerInterfaces.add(vector);
+            return guuPowerInterfaces.add(vector);
         }
         return false;
     }
@@ -144,13 +155,18 @@ public class UniversalConduitNetwork implements INetwork {
     @Override
     public boolean removeGUUPowerInterface(Vector3 interfaces) {
 
-        return powerInterfaces.remove(interfaces);
+        return guuPowerInterfaces.remove(interfaces);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public ArrayList<Vector3> getGUUPowerInterfaces() {
 
-        return (ArrayList<Vector3>) powerInterfaces.clone();
+        ArrayList<Vector3> copyList = new ArrayList<Vector3>();
+
+        for(Vector3 vector : guuPowerInterfaces) {
+
+            copyList.add(vector);
+        }
+        return copyList;
     }
 }

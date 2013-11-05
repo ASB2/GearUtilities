@@ -29,7 +29,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
     public TileBase() {
 
-        if (color == null)
+        if(color == null)
             color = VanillaColor.NONE;
 
         fluidTank = new FluidTank(0);
@@ -38,18 +38,18 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     public void onButtonEvent(int buttonID) {
 
     }
-    
+
     public void sendReqularPowerPackets(int delay) {
 
         wait++;
 
         if(wait >= delay) {
 
-            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId,(new PowerPacket(xCoord, yCoord, zCoord, this.powerProvider.getPowerStored(), this.powerProvider.getPowerMax()).makePacket()));
+            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, (new PowerPacket(xCoord, yCoord, zCoord, this.powerProvider.getPowerStored(), this.powerProvider.getPowerMax()).makePacket()));
             wait = 0;
         }
     }
-    
+
     public ForgeDirection getOrientation() {
 
         return ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
@@ -81,7 +81,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     @Override
     public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
 
-        switch (getOrientation()) {
+        switch(getOrientation()) {
 
             case DOWN:
                 worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, ForgeDirection.UP.ordinal(), 3);
@@ -111,7 +111,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     @Override
     public final Packet132TileEntityData getDescriptionPacket() {
 
-        NBTTagCompound nbt = new NBTTagCompound();        
+        NBTTagCompound nbt = new NBTTagCompound();
         this.writeToNBT(nbt);
 
         return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
@@ -122,7 +122,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
         NBTTagCompound nbt = packet.data;
 
-        if (nbt != null) {
+        if(nbt != null) {
 
             this.readFromNBT(nbt);
         }
@@ -130,13 +130,13 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
     public final void updateClients() {
 
-        if (!worldObj.isRemote) {
+        if(!worldObj.isRemote) {
 
             Packet132TileEntityData packet = this.getDescriptionPacket();
             PacketDispatcher.sendPacketToAllInDimension(packet, this.worldObj.provider.dimensionId);
         }
     }
-    
+
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
@@ -144,22 +144,22 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
         if(fluidTank != null)
             fluidTank.readFromNBT(tag);
 
-        if (color == VanillaColor.NONE || color == null)
+        if(color == VanillaColor.NONE || color == null)
             color = VanillaColor.translateNumberToColor(tag.getInteger("color"));
 
-        if (this.powerProvider != null)
+        if(this.powerProvider != null)
             this.powerProvider.readFromNBT(tag);
 
         NBTTagList nbttaglist = tag.getTagList("Items");
 
         tileItemStacks = new ItemStack[tileItemStacks.length];
 
-        for (int i = 0; i < nbttaglist.tagCount(); i++) {
+        for(int i = 0; i < nbttaglist.tagCount(); i++) {
 
             NBTTagCompound nbttagcompound = (NBTTagCompound) nbttaglist.tagAt(i);
             byte byte0 = nbttagcompound.getByte("Slot");
 
-            if (byte0 >= 0 && byte0 < tileItemStacks.length) {
+            if(byte0 >= 0 && byte0 < tileItemStacks.length) {
 
                 tileItemStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound);
             }
@@ -173,17 +173,17 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
         if(fluidTank != null)
             fluidTank.writeToNBT(tag);
 
-        if (this.getColorEnum() != VanillaColor.NONE)
+        if(this.getColorEnum() != VanillaColor.NONE)
             tag.setInteger("color", VanillaColor.translateColorToNumber(this.getColorEnum()));
 
-        if (this.powerProvider != null)
+        if(this.powerProvider != null)
             this.powerProvider.writeToNBT(tag);
 
         NBTTagList nbttaglist = new NBTTagList();
 
-        for (int i = 0; i < tileItemStacks.length; i++) {
+        for(int i = 0; i < tileItemStacks.length; i++) {
 
-            if (tileItemStacks[i] != null) {
+            if(tileItemStacks[i] != null) {
 
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
                 nbttagcompound.setByte("Slot", (byte) i);

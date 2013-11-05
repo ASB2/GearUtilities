@@ -2,6 +2,7 @@ package GU.api.network;
 
 import java.util.ArrayList;
 
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import ASB2.vector.Vector3;
 
@@ -38,7 +39,7 @@ public interface INetwork {
     /**
      * Should merge everything in the network the method is called in into the provided network.
      */
-    void mergeNetworks(World world, INetwork newNetwork);
+    void mergeNetworks(IBlockAccess world, INetwork newNetwork);
     
     void onNetworkConductorBroken(World world, Vector3 tile);
 }

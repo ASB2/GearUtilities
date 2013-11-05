@@ -14,7 +14,7 @@ public class TileUniversalConduit extends TileBase implements IConductor {
 
     public TileUniversalConduit() {
 
-        this.waitTimer = new Wait(20, this, 0);        
+        this.waitTimer = new Wait(10, this, 0);
         this.setNetwork(new UniversalConduitNetwork());
     }
 
@@ -35,12 +35,12 @@ public class TileUniversalConduit extends TileBase implements IConductor {
     @Override
     public boolean setNetwork(INetwork network) {
 
-        this.network = network;  
+        this.network = network;
 
-        if(network != null) {            
-            
+        if(network != null) {
+
             if(!network.getConductors().contains(new Vector3(this))) {
-                
+
                 network.addConductor(new Vector3(this));
             }
         }

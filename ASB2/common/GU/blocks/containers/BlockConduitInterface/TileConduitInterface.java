@@ -28,7 +28,7 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
 
     public TileConduitInterface() {
 
-        this.waitTimer = new Wait(20, this, 0);
+        this.waitTimer = new Wait(10, this, 0);
         this.setNetwork(new UniversalConduitNetwork());
     }
 
@@ -119,39 +119,39 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
     @Override
     public void trigger(int id) {
 
-        updateClients();
+        //        updateClients();
 
         if(this.getNetwork() != null) {
 
             MiscHelpers.addConductorsAround(this, worldObj, this.getNetwork());
 
-            if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+            for(ForgeDirection blockDirection : ForgeDirection.VALID_DIRECTIONS) {
 
-                for(ForgeDirection blockDirection : ForgeDirection.VALID_DIRECTIONS) {
+                TileEntity destinationTile = UtilDirection.translateDirectionToTile(this, worldObj, blockDirection);
 
-                    TileEntity destinationTile = UtilDirection.translateDirectionToTile(this, worldObj, blockDirection);
+                if(destinationTile != null) {
 
-                    if(destinationTile != null) {
+                    if(importing[blockDirection.ordinal()]) {
 
-                        if(importing[blockDirection.ordinal()]) {
+                        if(destinationTile instanceof IInventory) {
 
-                            if(destinationTile instanceof IInventory) {
-
-                                this.getNetwork().addItemInterface(new Vector3(this));
-                            }
-
-                            if(destinationTile instanceof IFluidHandler) {
-
-                                this.getNetwork().addFluidInterface(new Vector3(this));
-                            }
-
-                            if(destinationTile instanceof IPowerMisc) {
-
-                                this.getNetwork().addGUUPowerInterface(new Vector3(this));
-                            }
+                            this.getNetwork().addItemInterface(new Vector3(this));
                         }
-                        else {
 
+                        if(destinationTile instanceof IFluidHandler) {
+
+                            this.getNetwork().addFluidInterface(new Vector3(this));
+                        }
+
+                        if(destinationTile instanceof IPowerMisc) {
+
+                            this.getNetwork().addGUUPowerInterface(new Vector3(this));
+                        }
+                    }
+                    else {
+                        
+                        if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+                            
                             if(destinationTile instanceof IInventory) {
 
                                 for(Vector3 vector : this.getNetwork().getItemInterfaces()) {
@@ -254,13 +254,12 @@ public class TileConduitInterface extends TileBase implements INetworkInterface 
     @Override
     public boolean setNetwork(INetwork network) {
 
-        this.network = network;
-        
+        this.network = network;        
 
         if(network != null) {            
-            
+
             if(!network.getConductors().contains(new Vector3(this))) {
-                
+
                 network.addConductor(new Vector3(this));
             }
         }
