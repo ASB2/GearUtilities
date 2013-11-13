@@ -1,7 +1,5 @@
 package GU.items.ItemRunicTools;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,12 +11,16 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
+
+import org.lwjgl.input.Keyboard;
+
 import ASB2.items.HoeBase;
 import ASB2.utils.UtilMisc;
 import GU.api.power.IPowerItem;
 import GU.api.power.IPowerProvider;
 import GU.api.power.ItemPowerProvider;
 import GU.api.power.PowerHelper;
+import GU.api.power.State;
 import GU.info.Reference;
 
 public class ItemRunicHoe extends HoeBase implements IPowerItem {
@@ -29,15 +31,15 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
 
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
 
-        if (player.canPlayerEdit(x, y, z, side, stack)) {
+        if(player.canPlayerEdit(x, y, z, side, stack)) {
 
             UseHoeEvent event = new UseHoeEvent(player, stack, world, x, y, z);
-            if (MinecraftForge.EVENT_BUS.post(event)) {
+            if(MinecraftForge.EVENT_BUS.post(event)) {
 
                 return false;
             }
 
-            if (event.getResult() == Result.ALLOW) {
+            if(event.getResult() == Result.ALLOW) {
 
                 stack.damageItem(1, player);
                 return true;
@@ -46,17 +48,17 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
             int i1 = world.getBlockId(x, y, z);
             boolean air = world.isAirBlock(x, y + 1, z);
 
-            if (side != 0 && air && (i1 == Block.grass.blockID || i1 == Block.dirt.blockID))
-            {
+            if(side != 0 && air && (i1 == Block.grass.blockID || i1 == Block.dirt.blockID)) {
+                
                 Block block = Block.tilledField;
-                world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), block.stepSound.getStepSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+                world.playSoundEffect((double) ((float) x + 0.5F), (double) ((float) y + 0.5F), (double) ((float) z + 0.5F), block.stepSound.getStepSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
 
-                if (world.isRemote) {
-                    
+                if(world.isRemote) {
+
                     return true;
                 }
                 else {
-                    
+
                     world.setBlock(x, y, z, block.blockID);
 
                     if(!getPowerProvider(stack).usePower(10, ForgeDirection.UNKNOWN, true)) {
@@ -69,8 +71,7 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
                     return true;
                 }
             }
-            else
-            {
+            else {
                 return false;
             }
         }
@@ -86,7 +87,6 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
 
                 this.getPowerProvider(itemStack).gainPower(1000, ForgeDirection.UNKNOWN, true);
                 PowerHelper.useEnergyFromInventory(player.inventory, 1000, true);
-
                 return itemStack;
             }
 
@@ -129,7 +129,7 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
         return super.onItemRightClick(itemStack, world, player);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
 
@@ -141,11 +141,11 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
         }
         else {
 
-            info.add("Press " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Shift "+ UtilMisc.getColorCode(EnumChatFormatting.GRAY) + "to show more info");
+            info.add("Press " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Shift " + UtilMisc.getColorCode(EnumChatFormatting.GRAY) + "to show more info");
         }
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
 
         info.add("Stored Power: " + this.getPowerProvider(itemStack).getPowerStored());
@@ -158,11 +158,11 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
 
             if(entityHitting instanceof EntityPlayer) {
 
-                if(!PowerHelper.useEnergyFromInventory(((EntityPlayer)entityHitting).inventory, 10, true)) {
+                if(!PowerHelper.useEnergyFromInventory(((EntityPlayer) entityHitting).inventory, 10, true)) {
 
                     stack.damageItem(1, entityHitting);
                     return true;
-                }            
+                }
             }
         }
         return false;
@@ -174,14 +174,14 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
 
             if(entity instanceof EntityPlayer) {
 
-                if(!PowerHelper.useEnergyFromInventory(((EntityPlayer)entity).inventory, 10, true)) {
+                if(!PowerHelper.useEnergyFromInventory(((EntityPlayer) entity).inventory, 10, true)) {
 
-                    if ((double)Block.blocksList[x].getBlockHardness(world, y, z, side) != 0.0D) {
+                    if((double) Block.blocksList[x].getBlockHardness(world, y, z, side) != 0.0D) {
 
                         stack.damageItem(1, entity);
                     }
                 }
-            }            
+            }
         }
         return false;
     }
@@ -189,6 +189,6 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
     @Override
     public IPowerProvider getPowerProvider(ItemStack stack) {
 
-        return new ItemPowerProvider(stack, 1000);
+        return new ItemPowerProvider(stack, 1000, State.SINK);
     }
 }

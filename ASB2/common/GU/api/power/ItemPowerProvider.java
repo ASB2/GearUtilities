@@ -8,8 +8,15 @@ import ASB2.utils.UtilItemStack;
 public class ItemPowerProvider implements IPowerProvider {
 
     ItemStack item;
+    State currentState = State.OTHER;
 
-    public ItemPowerProvider(ItemStack stack, float powerMax)  {
+    public ItemPowerProvider(ItemStack stack, float powerMax, State state) {
+
+        this(stack, powerMax);
+        currentState = state;
+    }
+
+    public ItemPowerProvider(ItemStack stack, float powerMax) {
 
         this.item = stack;
         this.setPowerMax(powerMax);
@@ -29,7 +36,12 @@ public class ItemPowerProvider implements IPowerProvider {
 
     public boolean usePower(float power, ForgeDirection direction, boolean doUse) {
 
-        if(this.getMaxOutput() != -1 ) {
+        if(currentState == State.SINK) {
+
+            return false;
+        }
+
+        if(this.getMaxOutput() != -1) {
 
             if(power > this.getMaxOutput()) {
 
@@ -37,14 +49,14 @@ public class ItemPowerProvider implements IPowerProvider {
             }
         }
 
-        if(this.getMinOutput() != -1 ) {
+        if(this.getMinOutput() != -1) {
 
             if(power < this.getMinOutput()) {
 
                 return false;
             }
         }
-        
+
         if(this.getPowerStored() >= power) {
 
             if(doUse)
@@ -57,7 +69,12 @@ public class ItemPowerProvider implements IPowerProvider {
 
     public boolean gainPower(float power, ForgeDirection direction, boolean doUse) {
 
-        if(this.getMaxInput() != -1 ) {
+        if(currentState == State.SOURCE) {
+
+            return false;
+        }
+
+        if(this.getMaxInput() != -1) {
 
             if(power > this.getMaxInput()) {
 
@@ -65,7 +82,7 @@ public class ItemPowerProvider implements IPowerProvider {
             }
         }
 
-        if(this.getMinInput() != -1 ) {
+        if(this.getMinInput() != -1) {
 
             if(power < this.getMinInput()) {
 

@@ -10,6 +10,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import ASB2.utils.UtilRecipe;
 import GU.info.Variables;
 import cpw.mods.fml.common.registry.GameRegistry;
+import GU.api.color.*;
 
 public class CraftRegistry {
 
@@ -61,7 +62,7 @@ public class CraftRegistry {
             "IRI",
             'E', BlockRegistry.BlockEnhancedBricks,
             'T', Block.torchWood,
-            'R', Item.redstone,
+            'R', Block.cloth,
             'I', Item.ingotIron});
 
         GameRegistry.addRecipe(new ItemStack(BlockRegistry.BlockCanvas, 8), new Object[] {
@@ -72,7 +73,7 @@ public class CraftRegistry {
             'W', Block.cloth,
             'I', Item.ingotIron});
 
-        GameRegistry.addRecipe(new ItemStack(BlockRegistry.BlockConnectableTank), new Object[] {
+        GameRegistry.addRecipe(new ItemStack(BlockRegistry.BlockConnectableTank, 4), new Object[] {
             "QGQ", 
             "GEG", 
             "QGQ",
@@ -144,7 +145,7 @@ public class CraftRegistry {
         UtilRecipe.addHoe(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetHoe));
         UtilRecipe.addScythe(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetScythe));
 
-        GameRegistry.addShapelessRecipe(new ItemStack(Item.seeds), Item.wheat);
+        GameRegistry.addShapelessRecipe(new ItemStack(Item.seeds), Item.wheat, Item.wheat);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ItemTeleporter), ItemRegistry.ItemTeleporter);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ItemLinker), ItemRegistry.ItemLinker);
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockEtherealConnectedGlass), BlockRegistry.BlockConnectedGlass , BlockRegistry.BlockFalseBlock);
@@ -157,6 +158,18 @@ public class CraftRegistry {
         GameRegistry.addSmelting(Item.shovelWood.itemID, new ItemStack(ItemRegistry.ItemCharcoalShovel), 1.F);
         GameRegistry.addSmelting(Item.swordWood.itemID, new ItemStack(ItemRegistry.ItemCharcoalSword), 1.F);
 
+        GameRegistry.addSmelting(Item.hoeStone.itemID, new ItemStack(ItemRegistry.ItemSmoothStoneHoe), 1.F);
+        GameRegistry.addSmelting(Item.axeStone.itemID, new ItemStack(ItemRegistry.ItemSmoothStoneAxe), 1.F);
+        GameRegistry.addSmelting(Item.pickaxeStone.itemID, new ItemStack(ItemRegistry.ItemSmoothStonePickaxe), 1.F);
+        GameRegistry.addSmelting(Item.shovelStone.itemID, new ItemStack(ItemRegistry.ItemSmoothStoneShovel), 1.F);
+        GameRegistry.addSmelting(Item.swordStone.itemID, new ItemStack(ItemRegistry.ItemSmoothStoneSword), 1.F);
+        
+        UtilRecipe.addSword(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStoneSword));
+        UtilRecipe.addPickaxe(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStonePickaxe));
+        UtilRecipe.addShovel(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStoneShovel));
+        UtilRecipe.addAxe(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStoneAxe));
+        UtilRecipe.addHoe(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStoneHoe));
+        
         initTempRecipes();
     }
 
@@ -180,15 +193,6 @@ public class CraftRegistry {
             'D', Item.diamond,
             'C', Variables.CRYSTALS_ALL,
             'E', Item.enderPearl}));
-
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockSender, 1), new Object[] {
-            "CIC", 
-            "IBI", 
-            "CIC",
-
-            'C', Variables.CRYSTALS_ALL,
-            'I', Item.ingotIron,
-            'B', BlockRegistry.BlockEnhancedBricks}));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemBloodStone), new Object[] {
             "BSB", 
@@ -269,39 +273,6 @@ public class CraftRegistry {
             'E', BlockRegistry.BlockFalseBlock,
             'A',ItemRegistry.ItemAdvancedStick}));
 
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockSolarFocus), new Object[] {
-            "AAA", 
-            "EBE", 
-            "ICI",
-
-            'A', ItemRegistry.ItemCrystal.ItemAirCrystalShard,
-            'S', ItemRegistry.ItemBloodStone,
-            'E', BlockRegistry.BlockEnhancedBricks,
-            'I', Item.ingotIron,
-            'B', ItemRegistry.ItemBloodStone,
-            'C', Block.chest}));
-
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockUniversalConduit), new Object[] {
-            "IEI", 
-            "IBI", 
-            "ICI",
-
-            'E', ItemRegistry.ItemCrystal.ItemEnergyCrystalShard,
-            'I', Item.ingotIron,
-            'B', Item.bucketEmpty,
-            'C', Block.chest}));
-
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockConduitInterface), new Object[] {
-            "IBI", 
-            "CIE", 
-            "IRI",
-
-            'E', ItemRegistry.ItemCrystal.ItemEnergyCrystalShard,
-            'I', Item.ingotIron,
-            'R', Item.redstone,
-            'B', Item.bucketEmpty,
-            'C', Block.chest}));
-
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemTradeStick), new Object[] {
             "EDE", 
             "DAD", 
@@ -311,6 +282,16 @@ public class CraftRegistry {
             'D', Item.diamond,
             'A', ItemRegistry.ItemAdvancedStick}));
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemShifter), new Object[] {
+            "RCQ", 
+            "IQC", 
+            "RIR",
+
+            'C', Variables.CRYSTALS_ALL,
+            'I', Item.ingotIron,
+            'Q', Item.netherQuartz,
+            'R', VanillaColor.getVinillaDye(VanillaColor.RED)}));
+        
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 1), new ItemStack(BlockRegistry.BlockSender, 1, 0));
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 2), new ItemStack(BlockRegistry.BlockSender, 1, 1));
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 3), new ItemStack(BlockRegistry.BlockSender, 1, 2));

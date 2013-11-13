@@ -16,6 +16,7 @@ import GU.api.power.IPowerItem;
 import GU.api.power.IPowerProvider;
 import GU.api.power.ItemPowerProvider;
 import GU.api.power.PowerHelper;
+import GU.api.power.State;
 import GU.info.Reference;
 
 public class ItemRunicPickaxe extends PickaxeBase implements IPowerItem {
@@ -136,6 +137,6 @@ public class ItemRunicPickaxe extends PickaxeBase implements IPowerItem {
     @Override
     public IPowerProvider getPowerProvider(ItemStack stack) {
 
-        return new ItemPowerProvider(stack, 1000);
+        return new ItemPowerProvider(stack, 1000, State.SINK);
     }
 }

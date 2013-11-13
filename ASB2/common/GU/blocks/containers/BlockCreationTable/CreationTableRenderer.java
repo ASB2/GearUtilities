@@ -61,7 +61,7 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
 
             case INVENTORY: {
 
-                renderItemSwitched(type, 0f, 0f, 0f, .6F);
+                renderItemSwitched(type, 0f, 0f, 0f, .55F);
                 return;
             }
 

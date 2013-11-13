@@ -13,33 +13,37 @@ import GU.api.power.PowerProvider;
 import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
+import GU.blocks.containers.*;
 
 public class TileSolarFocus extends TileBase implements IPowerMisc, IInventory{
 
     public TileSolarFocus() {
 
         waitTimer = new Wait(20, this, 0);
-        tileItemStacks = new ItemStack[1];
+        tileInventory = new Inventory(1, 64, "Solar Focus", true);
         powerProvider = new PowerProvider(PowerClass.LOW, State.SOURCE);
     }
 
     public void updateEntity() {
 
         if((worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()) || worldObj.getBlockLightOpacity(xCoord, yCoord, zCoord) >= 10) {
-            
+
             waitTimer.update();
         }
     }
 
     public void trigger(int id) {
 
-        if(tileItemStacks[0] != null && tileItemStacks[0].getItem() instanceof ISolarFocus) {
+        if(tileInventory.getItemArray() != null && tileInventory.getItemArray().length > 0) {
 
-            if(((ISolarFocus)tileItemStacks[0].getItem()).canFocus(tileItemStacks[0], worldObj, xCoord, yCoord, zCoord, this.getPowerProvider().copy())) {
+            if(tileInventory.getItemArray()[0] != null && tileInventory.getItemArray()[0].getItem() instanceof ISolarFocus) {
 
-                if(this.getPowerProvider().gainPower(((ISolarFocus)tileItemStacks[0].getItem()).getPowerForTick(tileItemStacks[0], worldObj, xCoord, yCoord, zCoord, this.getPowerProvider().copy()), ForgeDirection.UP, true)) {
+                if(((ISolarFocus)tileInventory.getItemArray()[0].getItem()).canFocus(tileInventory.getItemArray()[0], worldObj, xCoord, yCoord, zCoord, this.getPowerProvider().copy())) {
 
-                    ((ISolarFocus)tileItemStacks[0].getItem()).damageFocus(tileItemStacks[0], worldObj, xCoord, yCoord, zCoord, this.getPowerProvider().copy());
+                    if(this.getPowerProvider().gainPower(((ISolarFocus)tileInventory.getItemArray()[0].getItem()).getPowerForTick(tileInventory.getItemArray()[0], worldObj, xCoord, yCoord, zCoord, this.getPowerProvider().copy()), ForgeDirection.UP, true)) {
+
+                        ((ISolarFocus)tileInventory.getItemArray()[0].getItem()).damageFocus(tileInventory.getItemArray()[0], worldObj, xCoord, yCoord, zCoord, this.getPowerProvider().copy());
+                    }
                 }
             }
         }                
@@ -48,31 +52,32 @@ public class TileSolarFocus extends TileBase implements IPowerMisc, IInventory{
     @Override
     public int getSizeInventory() {
 
-        return tileItemStacks.length;
+        return tileInventory.getSizeInventory();
     }
 
     @Override
     public ItemStack getStackInSlot(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlot(i);
     }
 
     @Override
-    public ItemStack decrStackSize(int i, int j) {
+    public ItemStack decrStackSize(int slot, int amount) {
 
-        return UtilInventory.decreaseSlotContents(this, i, j);
+
+        return UtilInventory.decreaseSlotContents(this, slot, amount);
     }
 
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlotOnClosing(i);
     }
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
 
-        tileItemStacks[i] = itemStack;
+        tileInventory.setInventorySlotContents(i, itemStack);
     }
 
     @Override

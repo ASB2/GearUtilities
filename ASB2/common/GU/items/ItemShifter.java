@@ -19,7 +19,7 @@ public class ItemShifter extends ItemBase {
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
 
         info.add("Made just for you " + player.username);
-        info.add("Shifts Things to Other Things");
+        info.add("Shifts things to other things");
     }
 
     @Override

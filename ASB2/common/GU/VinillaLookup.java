@@ -1,5 +1,6 @@
 package GU;
 
+import ASB2.utils.UtilBlock;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
@@ -11,6 +12,7 @@ public class VinillaLookup {
 
         if(id == Block.glass.blockID) {
 
+            UtilBlock.breakBlock(world, x, y, z);
             world.setBlock(x, y, z, BlockRegistry.BlockGlassPipe.blockID);
         }
     }

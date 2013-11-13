@@ -24,9 +24,28 @@ public class ItemBloodStone extends ItemBase implements IPowerItem {
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz) {
 
-        return true;
+        if(player.isSneaking()) {
+            if(player.capabilities.isCreativeMode) {
+
+                this.getPowerProvider(itemStack).setPowerStored(this.getPowerProvider(itemStack).getPowerMax());
+                return true;
+            }
+        }
+        return false;
     }
 
+    @Override
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+
+        if(player.isSneaking()) {
+
+            if(player.capabilities.isCreativeMode) {
+
+                this.getPowerProvider(itemStack).setPowerStored(this.getPowerProvider(itemStack).getPowerMax());
+            }
+        }
+        return super.onItemRightClick(itemStack, world, player);
+    }
     @Override
     public IPowerProvider getPowerProvider(ItemStack stack) {
 

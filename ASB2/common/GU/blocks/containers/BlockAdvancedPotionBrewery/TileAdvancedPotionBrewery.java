@@ -14,6 +14,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
+import GU.blocks.containers.*;
 import GU.ItemRegistry;
 import GU.api.potion.IPotion;
 import GU.api.potion.IPotionBottle;
@@ -36,7 +37,7 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     public TileAdvancedPotionBrewery() {
 
         this.waitTimer = new Wait(20 * 5, this, 1);
-        tileItemStacks = new ItemStack[8];
+        tileInventory = new Inventory(8, Inventory.STANDARD_STACKSIZE, "Advanced Potion Brewery", true);
         fluidTank = new FluidTank(1000 * 10);
         powerProvider = new PowerProvider(PowerClass.LOW, State.SINK);
     }
@@ -186,13 +187,13 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
 
         ArrayList<ItemStack> itemList = new ArrayList<ItemStack>();
 
-        itemList.add(tileItemStacks[0]);
-        itemList.add(tileItemStacks[1]);
-        itemList.add(tileItemStacks[2]);
-        itemList.add(tileItemStacks[3]);
-        itemList.add(tileItemStacks[4]);
-        itemList.add(tileItemStacks[5]);
-        itemList.add(tileItemStacks[6]);
+        itemList.add(tileInventory.getStackInSlot(0));
+        itemList.add(tileInventory.getStackInSlot(1));
+        itemList.add(tileInventory.getStackInSlot(2));
+        itemList.add(tileInventory.getStackInSlot(3));
+        itemList.add(tileInventory.getStackInSlot(4));
+        itemList.add(tileInventory.getStackInSlot(5));
+        itemList.add(tileInventory.getStackInSlot(6));
         return itemList;
     }
 
@@ -280,13 +281,13 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     @Override
     public int getSizeInventory() {
 
-        return tileItemStacks.length;
+        return tileInventory.getSizeInventory();
     }
 
     @Override
     public ItemStack getStackInSlot(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlot(i);
     }
 
     @Override
@@ -299,13 +300,13 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlotOnClosing(i);
     }
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
 
-        tileItemStacks[i] = itemStack;
+        tileInventory.setInventorySlotContents(i, itemStack);
     }
 
     @Override
@@ -317,7 +318,7 @@ public class TileAdvancedPotionBrewery extends TileBase implements IInventory, I
     @Override
     public int getInventoryStackLimit() {
 
-        return 64;
+        return tileInventory.getInventoryStackLimit();
     }
 
     @Override

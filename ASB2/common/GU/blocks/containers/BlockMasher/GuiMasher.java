@@ -12,7 +12,7 @@ public class GuiMasher extends GuiBase {
     public GuiMasher(InventoryPlayer inventory, TileEntity tile) {
         super(new ContainerMasher(inventory, (TileMasher) tile));
 
-        tileEntity = (TileMasher)tile;
+        tileEntity = (TileMasher) tile;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class GuiMasher extends GuiBase {
         this.renderDefaultGui();
         this.renderGuage(8, 6);
         this.scalePower(8, 6, UtilMisc.getAmountScaled(75, (int) tileEntity.getPowerProvider().getPowerStored(), (int) tileEntity.getPowerProvider().getPowerMax()));
-        
+        this.renderRightArrow(90, 32);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class GuiMasher extends GuiBase {
 
         drawTooltips(tileEntity, mouseX, mouseY, 8, 6, 18, 71);
     }
-    
+
     @Override
     public void initGui() {
         super.initGui();

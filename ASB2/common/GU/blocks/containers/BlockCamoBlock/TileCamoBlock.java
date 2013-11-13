@@ -5,24 +5,25 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import ASB2.utils.UtilInventory;
 import GU.blocks.containers.TileBase;
+import GU.blocks.containers.*;
 
 public class TileCamoBlock extends TileBase implements IInventory {
 
     public TileCamoBlock() {
 
-        tileItemStacks = new ItemStack[1];
+        tileInventory = new Inventory(1, 1, "Camo Block", true);
     }
 
     @Override
     public int getSizeInventory() {
 
-        return tileItemStacks.length;
+        return tileInventory.getSizeInventory();
     }
 
     @Override
     public ItemStack getStackInSlot(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlot(i);
     }
 
     @Override
@@ -35,13 +36,13 @@ public class TileCamoBlock extends TileBase implements IInventory {
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlotOnClosing(i);
     }
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
 
-        tileItemStacks[i] = itemStack;
+        tileInventory.setInventorySlotContents(i, itemStack);
     }
 
     @Override
@@ -89,6 +90,6 @@ public class TileCamoBlock extends TileBase implements IInventory {
     @Override
     public String getInvName() {
 
-        return "Camo Block";
+        return tileInventory.getInvName();
     }
 }

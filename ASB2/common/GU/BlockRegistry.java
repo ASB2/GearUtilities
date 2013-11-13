@@ -18,10 +18,10 @@ import GU.blocks.BlockMetadataOre.BlockMetadataOre;
 import GU.blocks.BlockTestRender.BlockTestRender;
 import GU.blocks.containers.ContainerBase;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.BlockAdvancedPotionBrewery;
+import GU.blocks.containers.BlockAreaBreaker.BlockAreaBreaker;
 import GU.blocks.containers.BlockBlockBreaker.BlockBlockBreaker;
 import GU.blocks.containers.BlockCamoBlock.BlockCamoBlock;
 import GU.blocks.containers.BlockCanvas.BlockCanvas;
-import GU.blocks.containers.BlockClusterSender.BlockClusterSender;
 import GU.blocks.containers.BlockConduitInterface.BlockConduitInterface;
 import GU.blocks.containers.BlockConnectableTank.BlockConnectableTank;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
@@ -30,8 +30,8 @@ import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockGlassPipe.BlockGlassPipe;
 import GU.blocks.containers.BlockLamp.BlockLamp;
+import GU.blocks.containers.BlockMasher.BlockMasher;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
-import GU.blocks.containers.BlockRunicCube.BlockRunicCube;
 import GU.blocks.containers.BlockSender.BlockSender;
 import GU.blocks.containers.BlockSolarFocus.BlockSolarFocus;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
@@ -62,9 +62,7 @@ public class BlockRegistry {
     public static ContainerBase BlockBlockBreaker;
     public static ContainerBase BlockCamoBlock;
     public static ContainerBase BlockEnhancedBricks;
-    public static ContainerBase BlockRunicCube;
     public static ContainerBase BlockUniversalConduit;
-    public static ContainerBase BlockClusterSender;
     public static ContainerBase BlockSender;
     public static ContainerBase BlockSolarFocus;
     public static ContainerBase BlockConduitInterface;
@@ -72,6 +70,8 @@ public class BlockRegistry {
     public static FlowerBase BlockBloodPlant;
     public static BlockBase BlockPlantUpdater;
     public static ContainerBase BlockGlassPipe;
+    public static ContainerBase BlockAreaBreaker;
+    public static ContainerBase BlockMasher;
     
     private static int id = 500;
 
@@ -158,18 +158,10 @@ public class BlockRegistry {
         BlockEnhancedBricks = new BlockEnhancedBricks(config.getBlock("BlockEnhancedBricks", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockEnhancedBricks.setBlockName("BlockEnhancedBricks");
         LanguageRegistry.addName(BlockEnhancedBricks, "Enhanced Brick");
-    
-        BlockRunicCube = new BlockRunicCube(config.getBlock("BlockRunicCube", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockRunicCube.setBlockName("BlockRunicCube");
-        LanguageRegistry.addName(BlockRunicCube, "Runic Cube");
         
         BlockUniversalConduit = new BlockUniversalConduit(config.getBlock("BlockUniversalConduit", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockUniversalConduit.setBlockName("BlockUniversalConduit");
         LanguageRegistry.addName(BlockUniversalConduit, "Universal Conduit");
-        
-        BlockClusterSender = new BlockClusterSender(config.getBlock("BlockClusterSender", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
-        BlockClusterSender.setBlockName("BlockClusterSender");
-        LanguageRegistry.addName(BlockClusterSender, "Cluster Redirector");
         
         BlockSender = new BlockSender(config.getBlock("BlockSender", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockSender.setBlockName("BlockSender");
@@ -198,6 +190,14 @@ public class BlockRegistry {
         BlockGlassPipe = new BlockGlassPipe(config.getBlock("BlockGlassPipe", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockGlassPipe.setBlockName("BlockGlassPipe");
         LanguageRegistry.addName(BlockGlassPipe, "Glass Pipe");
+        
+        BlockAreaBreaker = new BlockAreaBreaker(config.getBlock("BlockAreaBreaker", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockAreaBreaker.setBlockName("BlockAreaBreaker");
+        LanguageRegistry.addName(BlockAreaBreaker, "Area Breaker");
+        
+        BlockMasher = new BlockMasher(config.getBlock("BlockMasher", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockMasher.setBlockName("BlockMasher");
+        LanguageRegistry.addName(BlockMasher, "Masher");
     }
 
     public static void initTestBlocks(Configuration config) {

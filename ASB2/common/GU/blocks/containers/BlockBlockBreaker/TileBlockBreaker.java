@@ -10,13 +10,14 @@ import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilInventory;
 import GU.api.BlackLists;
+import GU.blocks.containers.Inventory;
 import GU.blocks.containers.TileBase;
 
 public class TileBlockBreaker extends TileBase implements IInventory {
 
     public TileBlockBreaker() {
-
-        tileItemStacks = new ItemStack[9];
+        
+        tileInventory = new Inventory(9, Inventory.STANDARD_STACKSIZE, "Block Breaker", true);
     }
 
     public void updateEntity( ){
@@ -57,13 +58,13 @@ public class TileBlockBreaker extends TileBase implements IInventory {
     @Override
     public int getSizeInventory() {
 
-        return tileItemStacks.length;
+        return tileInventory.getSizeInventory();
     }
 
     @Override
     public ItemStack getStackInSlot(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlot(i);
     }
 
     @Override
@@ -94,13 +95,13 @@ public class TileBlockBreaker extends TileBase implements IInventory {
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlotOnClosing(i);
     }
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
 
-        tileItemStacks[i] = itemStack;
+        tileInventory.setInventorySlotContents(i, itemStack);
     }
 
     @Override

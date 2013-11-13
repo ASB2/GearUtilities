@@ -12,9 +12,12 @@ import GU.blocks.containers.BlockCamoBlock.ContainerCamoBlock;
 import GU.blocks.containers.BlockCamoBlock.TileCamoBlock;
 import GU.blocks.containers.BlockCreationTable.ContainerCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
+import GU.blocks.containers.BlockMasher.ContainerMasher;
+import GU.blocks.containers.BlockMasher.TileMasher;
 import GU.blocks.containers.BlockSender.ContainerSender;
 import GU.blocks.containers.BlockSender.TileSender;
-import GU.blocks.containers.BlockSolarFocus.*;
+import GU.blocks.containers.BlockSolarFocus.ContainerSolarFocus;
+import GU.blocks.containers.BlockSolarFocus.TileSolarFocus;
 import GU.entity.EntityCluster.EntityInfoCluster;
 import GU.entity.EntityPotion.EntityModularPotion;
 import GU.entity.EntityTest.EntityTestEntity;
@@ -32,10 +35,10 @@ public class CommonProxy implements IGuiHandler {
 
         TickRegistry.registerTickHandler(new RetroGenManager(), Side.SERVER);
         SoundHandler.init();
-        
+
         EntityRegistry.registerModEntity(EntityTestEntity.class, "Test Entity", 0, GearUtilities.instance, 80, 3, true);
         EntityRegistry.registerModEntity(EntityModularPotion.class, "Modular Potion", 1, GearUtilities.instance, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityInfoCluster.class, "Info Clustor", 2, GearUtilities.instance, 80, 3, true);    
+        EntityRegistry.registerModEntity(EntityInfoCluster.class, "Info Clustor", 2, GearUtilities.instance, 80, 3, true);
     }
 
     @Override
@@ -43,25 +46,28 @@ public class CommonProxy implements IGuiHandler {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        switch (ID) {
+        switch(ID) {
 
             case Gui.CREATION_TABLE:
-                return new ContainerCreationTable(player.inventory, (TileCreationTable)tile);       
-                
+                return new ContainerCreationTable(player.inventory, (TileCreationTable) tile);
+
             case Gui.BLOCK_BREAKER:
-                return new ContainerBlockBreaker(player.inventory, (TileBlockBreaker)tile);
-        
+                return new ContainerBlockBreaker(player.inventory, (TileBlockBreaker) tile);
+
             case Gui.CAMO_BLOCK:
-                return new ContainerCamoBlock(player.inventory, (TileCamoBlock)tile);
-                
+                return new ContainerCamoBlock(player.inventory, (TileCamoBlock) tile);
+
             case Gui.ADVANCED_POTION_BREWERY:
-                return new ContainerAdvancedPotionBrewery(player.inventory, (TileAdvancedPotionBrewery)tile);
-                
+                return new ContainerAdvancedPotionBrewery(player.inventory, (TileAdvancedPotionBrewery) tile);
+
             case Gui.SENDER:
-                return new ContainerSender(player.inventory, (TileSender)tile);
-                
+                return new ContainerSender(player.inventory, (TileSender) tile);
+
             case Gui.SOLAR_FOCUS:
-                return new ContainerSolarFocus(player.inventory, (TileSolarFocus)tile);  
+                return new ContainerSolarFocus(player.inventory, (TileSolarFocus) tile);
+
+            case Gui.MASHER:
+                return new ContainerMasher(player.inventory, (TileMasher) tile);
         }
         return null;
     }

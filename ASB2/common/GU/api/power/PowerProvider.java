@@ -7,7 +7,7 @@ public class PowerProvider implements IPowerProvider {
 
     protected PowerClass powerClass;
     protected State currentState;
-    
+
     protected float powerStored;
     protected float powerMax;
 
@@ -39,7 +39,7 @@ public class PowerProvider implements IPowerProvider {
 
     public boolean usePower(float power, ForgeDirection direction, boolean doUse) {
 
-        if(this.getMaxOutput() != -1 ) {
+        if(this.getMaxOutput() != -1) {
 
             if(power > this.getMaxOutput()) {
 
@@ -47,7 +47,7 @@ public class PowerProvider implements IPowerProvider {
             }
         }
 
-        if(this.getMinOutput() != -1 ) {
+        if(this.getMinOutput() != -1) {
 
             if(power < this.getMinOutput()) {
 
@@ -67,7 +67,7 @@ public class PowerProvider implements IPowerProvider {
 
     public boolean gainPower(float power, ForgeDirection direction, boolean doUse) {
 
-        if(this.getMaxInput() != -1 ) {
+        if(this.getMaxInput() != -1) {
 
             if(power > this.getMaxInput()) {
 
@@ -75,7 +75,7 @@ public class PowerProvider implements IPowerProvider {
             }
         }
 
-        if(this.getMinInput() != -1 ) {
+        if(this.getMinInput() != -1) {
 
             if(power < this.getMinInput()) {
 

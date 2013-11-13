@@ -12,8 +12,6 @@ import GU.blocks.containers.BlockBlockBreaker.BlockBreakerRenderer;
 import GU.blocks.containers.BlockBlockBreaker.GuiBlockBreaker;
 import GU.blocks.containers.BlockBlockBreaker.TileBlockBreaker;
 import GU.blocks.containers.BlockCamoBlock.GuiCamoBlock;
-import GU.blocks.containers.BlockClusterSender.ClusterSenderRenderer;
-import GU.blocks.containers.BlockClusterSender.TileClusterSender;
 import GU.blocks.containers.BlockConduitInterface.ConduitInterfaceRenderer;
 import GU.blocks.containers.BlockConduitInterface.TileConduitInterface;
 import GU.blocks.containers.BlockConnectableTank.ConnectableTankRenderer;
@@ -24,8 +22,7 @@ import GU.blocks.containers.BlockEnergyCube.EnergyCubeRenderer;
 import GU.blocks.containers.BlockEnergyCube.TileEnergyCube;
 import GU.blocks.containers.BlockGlassPipe.GlassPipeRenderer;
 import GU.blocks.containers.BlockGlassPipe.TileGlassPipe;
-import GU.blocks.containers.BlockRunicCube.RunicCubeRenderer;
-import GU.blocks.containers.BlockRunicCube.TileRunicCube;
+import GU.blocks.containers.BlockMasher.GuiMasher;
 import GU.blocks.containers.BlockSender.GuiSender;
 import GU.blocks.containers.BlockSender.SenderRenderer;
 import GU.blocks.containers.BlockSender.TileSender;
@@ -62,12 +59,6 @@ public class ClientProxy extends CommonProxy {
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileBlockBreaker.class, new BlockBreakerRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockBlockBreaker.blockID, new BlockBreakerRenderer());
-        
-        ClientRegistry.bindTileEntitySpecialRenderer(TileRunicCube.class, new RunicCubeRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockRunicCube.blockID, new RunicCubeRenderer());
-        
-        ClientRegistry.bindTileEntitySpecialRenderer(TileClusterSender.class, new ClusterSenderRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockClusterSender.blockID, new ClusterSenderRenderer());
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileSender.class, new SenderRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSender.blockID, new SenderRenderer());
@@ -126,6 +117,9 @@ public class ClientProxy extends CommonProxy {
                     
                 case Gui.SOLAR_FOCUS:
                     return new GuiSolarFocus(player.inventory, tile);                    
+            
+                case Gui.MASHER:
+                    return new GuiMasher(player.inventory, tile);
             }
         }
         return null;

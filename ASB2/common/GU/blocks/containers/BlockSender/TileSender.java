@@ -21,6 +21,7 @@ import GU.api.power.PowerHelper;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
 import GU.api.wait.Wait;
+import GU.blocks.containers.Inventory;
 import GU.blocks.containers.TileBase;
 import GU.entity.EntityCluster.EntityInfoCluster;
 import GU.info.Variables;
@@ -40,7 +41,7 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
     public TileSender() {
 
         waitTimer = new Wait(5, this, 0);
-        this.tileItemStacks = new ItemStack[9];    
+        tileInventory = new Inventory(9, 64, "Sender", true);
         this.powerProvider = new PowerProvider(PowerClass.LOW, State.SINK);
     }
 
@@ -203,13 +204,13 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
     @Override
     public int getSizeInventory() {
 
-        return tileItemStacks.length;
+        return tileInventory.getSizeInventory();
     }
 
     @Override
     public ItemStack getStackInSlot(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlot(i);
     }
 
     @Override
@@ -222,14 +223,15 @@ public class TileSender extends TileBase implements IClusterTrigger, IInventory,
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlotOnClosing(i);
     }
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
 
-        tileItemStacks[i] = itemStack;
+        tileInventory.setInventorySlotContents(i, itemStack);
     }
+
 
     @Override
     public boolean isInvNameLocalized() {

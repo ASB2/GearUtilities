@@ -16,11 +16,12 @@ import GU.api.power.IPowerItem;
 import GU.api.power.IPowerProvider;
 import GU.api.power.ItemPowerProvider;
 import GU.api.power.PowerHelper;
+import GU.api.power.State;
 import GU.info.Reference;
 
-public class IRunicShovel extends ShovelBase implements IPowerItem {
+public class ItemRunicShovel extends ShovelBase implements IPowerItem {
 
-    public IRunicShovel(int id, EnumToolMaterial material, String iconLocation) {
+    public ItemRunicShovel(int id, EnumToolMaterial material, String iconLocation) {
         super(id, material, iconLocation);
     }
 
@@ -28,12 +29,12 @@ public class IRunicShovel extends ShovelBase implements IPowerItem {
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 
         if(player.isSneaking()) {
-            
+
             if(this.getPowerProvider(itemStack).gainPower(1000, ForgeDirection.UNKNOWN, false) && PowerHelper.useEnergyFromInventory(player.inventory, 1000, false)) {
 
                 this.getPowerProvider(itemStack).gainPower(1000, ForgeDirection.UNKNOWN, true);
                 PowerHelper.useEnergyFromInventory(player.inventory, 1000, true);
-                
+
                 return itemStack;
             }
 
@@ -50,28 +51,28 @@ public class IRunicShovel extends ShovelBase implements IPowerItem {
                 PowerHelper.useEnergyFromInventory(player.inventory, 50, true);
                 return itemStack;
             }
-            
+
             if(this.getPowerProvider(itemStack).gainPower(20, ForgeDirection.UNKNOWN, false) && PowerHelper.useEnergyFromInventory(player.inventory, 20, false)) {
 
                 this.getPowerProvider(itemStack).gainPower(20, ForgeDirection.UNKNOWN, true);
                 PowerHelper.useEnergyFromInventory(player.inventory, 20, true);
                 return itemStack;
             }
-            
+
             if(this.getPowerProvider(itemStack).gainPower(10, ForgeDirection.UNKNOWN, false) && PowerHelper.useEnergyFromInventory(player.inventory, 10, false)) {
 
                 this.getPowerProvider(itemStack).gainPower(10, ForgeDirection.UNKNOWN, true);
                 PowerHelper.useEnergyFromInventory(player.inventory, 10, true);
                 return itemStack;
             }
-            
+
             if(this.getPowerProvider(itemStack).gainPower(5, ForgeDirection.UNKNOWN, false) && PowerHelper.useEnergyFromInventory(player.inventory, 5, false)) {
 
                 this.getPowerProvider(itemStack).gainPower(5, ForgeDirection.UNKNOWN, true);
                 PowerHelper.useEnergyFromInventory(player.inventory, 5, true);
                 return itemStack;
             }
-            
+
             if(this.getPowerProvider(itemStack).gainPower(1, ForgeDirection.UNKNOWN, false) && PowerHelper.useEnergyFromInventory(player.inventory, 1, false)) {
 
                 this.getPowerProvider(itemStack).gainPower(1, ForgeDirection.UNKNOWN, true);
@@ -82,41 +83,41 @@ public class IRunicShovel extends ShovelBase implements IPowerItem {
         }
         return super.onItemRightClick(itemStack, world, player);
     }
-    
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
-        
+
         info.add("From: " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + Reference.NAME);
-        
+
         if(Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-            
+
             this.addInformationSneaking(itemStack, player, info, var1);
         }
         else {
 
-            info.add("Press " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Shift "+ UtilMisc.getColorCode(EnumChatFormatting.GRAY) + "to show more info");
+            info.add("Press " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Shift " + UtilMisc.getColorCode(EnumChatFormatting.GRAY) + "to show more info");
         }
     }
-    
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
 
         info.add("Stored Power: " + this.getPowerProvider(itemStack).getPowerStored());
         info.add("Maximum Power: " + this.getPowerProvider(itemStack).getPowerMax());
     }
-    
+
     public boolean hitEntity(ItemStack stack, EntityLivingBase entityHit, EntityLivingBase entityHitting) {
 
         if(!getPowerProvider(stack).usePower(10, ForgeDirection.UNKNOWN, true)) {
-            
+
             if(entityHitting instanceof EntityPlayer) {
 
-                if(!PowerHelper.useEnergyFromInventory(((EntityPlayer)entityHitting).inventory, 10, true)) {
+                if(!PowerHelper.useEnergyFromInventory(((EntityPlayer) entityHitting).inventory, 10, true)) {
 
                     stack.damageItem(1, entityHitting);
                     return true;
-                }            
+                }
             }
         }
         return false;
@@ -128,13 +129,13 @@ public class IRunicShovel extends ShovelBase implements IPowerItem {
 
             if(entity instanceof EntityPlayer) {
 
-                if(!PowerHelper.useEnergyFromInventory(((EntityPlayer)entity).inventory, 10, true)) {
+                if(!PowerHelper.useEnergyFromInventory(((EntityPlayer) entity).inventory, 10, true)) {
 
-                    if ((double)Block.blocksList[x].getBlockHardness(world, y, z, side) != 0.0D) {
+                    if((double) Block.blocksList[x].getBlockHardness(world, y, z, side) != 0.0D) {
 
                         stack.damageItem(1, entity);
                     }
-                }          
+                }
             }
         }
         return false;
@@ -143,6 +144,6 @@ public class IRunicShovel extends ShovelBase implements IPowerItem {
     @Override
     public IPowerProvider getPowerProvider(ItemStack stack) {
 
-        return new ItemPowerProvider(stack, 1000);
+        return new ItemPowerProvider(stack, 1000, State.SINK);
     }
 }

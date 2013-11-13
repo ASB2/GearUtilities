@@ -123,8 +123,11 @@ public class BlockLamp extends BlockColorable implements IBlockRender {
 
     @Override
     public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
-
-        renderer.setRenderBounds(0, 0, 0, 1, .5, 1);
+        
+        renderer.setRenderBounds(0, 0, 0, 1, .24, 1);
+        UtilRender.renderStandardInvBlock(renderer, block, overlay); 
+        
+        renderer.setRenderBounds(.001, 0, .01, .99, .22, .99);
         UtilRender.renderStandardInvBlock(renderer, block, meta); 
     }
 
@@ -142,43 +145,43 @@ public class BlockLamp extends BlockColorable implements IBlockRender {
 
                 case DOWN: {
 
-                    this.setBlockBounds(minWidth, maxWidth - maxHeight, minWidth, maxWidth, maxWidth, maxWidth);
+                    renderer.setRenderBounds(minWidth, maxWidth - maxHeight, minWidth, maxWidth, maxWidth, maxWidth);
                     break;
                 }
 
                 case UP: {
 
-                    this.setBlockBounds(minWidth, minHeight, minWidth, maxWidth, maxHeight, maxWidth);
+                    renderer.setRenderBounds(minWidth, minHeight, minWidth, maxWidth, maxHeight, maxWidth);
                     break;
                 }
 
                 case NORTH: {
 
-                    this.setBlockBounds(minWidth, minWidth, maxWidth - maxHeight, maxWidth, maxWidth, maxWidth);
+                    renderer.setRenderBounds(minWidth, minWidth, maxWidth - maxHeight, maxWidth, maxWidth, maxWidth);
                     break;
                 }
 
                 case SOUTH: {
 
-                    this.setBlockBounds(minWidth, minWidth, minWidth, maxWidth, maxWidth, maxHeight);
+                    renderer.setRenderBounds(minWidth, minWidth, minWidth, maxWidth, maxWidth, maxHeight);
                     break;
                 }
 
                 case WEST: {
 
-                    this.setBlockBounds(maxWidth - maxHeight, minWidth, minWidth, maxWidth, maxWidth, maxWidth);
+                    renderer.setRenderBounds(maxWidth - maxHeight, minWidth, minWidth, maxWidth, maxWidth, maxWidth);
                     break;
                 }
 
                 case EAST: {
 
-                    this.setBlockBounds(minWidth, minWidth, minWidth, maxHeight, maxWidth, maxWidth);
+                    renderer.setRenderBounds(minWidth, minWidth, minWidth, maxHeight, maxWidth, maxWidth);
                     break;
                 }
 
                 default: {
 
-                    this.setBlockBounds(0, 0, 0, 1, 1, 1);
+                    renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
                     break;
                 }
             }
@@ -200,43 +203,43 @@ public class BlockLamp extends BlockColorable implements IBlockRender {
 
                 case DOWN: {
 
-                    this.setBlockBounds(minWidthOut, maxWidthOut - maxHeightOut, minWidthOut, maxWidthOut, maxWidthOut, maxWidthOut);
+                    renderer.setRenderBounds(minWidthOut, maxWidthOut - maxHeightOut, minWidthOut, maxWidthOut, maxWidthOut, maxWidthOut);
                     break;
                 }
 
                 case UP: {
 
-                    this.setBlockBounds(minWidthOut, minHeightOut, minWidthOut, maxWidthOut, maxHeightOut, maxWidthOut);
+                    renderer.setRenderBounds(minWidthOut, minHeightOut, minWidthOut, maxWidthOut, maxHeightOut, maxWidthOut);
                     break;
                 }
 
                 case NORTH: {
 
-                    this.setBlockBounds(minWidthOut, minWidthOut, maxWidthOut - maxHeightOut, maxWidthOut, maxWidthOut, maxWidthOut);
+                    renderer.setRenderBounds(minWidthOut, minWidthOut, maxWidthOut - maxHeightOut, maxWidthOut, maxWidthOut, maxWidthOut);
                     break;
                 }
 
                 case SOUTH: {
 
-                    this.setBlockBounds(minWidthOut, minWidthOut, minWidthOut, maxWidthOut, maxWidthOut, maxHeightOut);
+                    renderer.setRenderBounds(minWidthOut, minWidthOut, minWidthOut, maxWidthOut, maxWidthOut, maxHeightOut);
                     break;
                 }
 
                 case WEST: {
 
-                    this.setBlockBounds(maxWidthOut - maxHeightOut, minWidthOut, minWidthOut, maxWidthOut, maxWidthOut, maxWidthOut);
+                    renderer.setRenderBounds(maxWidthOut - maxHeightOut, minWidthOut, minWidthOut, maxWidthOut, maxWidthOut, maxWidthOut);
                     break;
                 }
 
                 case EAST: {
 
-                    this.setBlockBounds(minWidthOut, minWidthOut, minWidthOut, maxHeightOut, maxWidthOut, maxWidthOut);
+                    renderer.setRenderBounds(minWidthOut, minWidthOut, minWidthOut, maxHeightOut, maxWidthOut, maxWidthOut);
                     break;
                 }
 
                 default: {
 
-                    this.setBlockBounds(0, 0, 0, 1, 1, 1);
+                    renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
                     break;
                 }
             }

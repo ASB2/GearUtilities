@@ -1,5 +1,6 @@
 package GU.blocks.containers.BlockConnectableTank;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -9,9 +10,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilFluid;
 import ASB2.vector.Vector3;
+import GU.BlockRegistry;
 import GU.api.network.INetwork;
 import GU.api.network.INetworkInterface;
 import GU.api.network.UniversalConduitNetwork;
@@ -25,7 +28,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
 
     INetwork network;
     public static int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 64;
-    
+
     public TileConnectableTank() {
 
         this.waitTimer = new Wait(20, this, 1);
@@ -47,7 +50,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
                     if(fluidTank.getCapacity() - fluidTank.getFluidAmount() >= 1000) {
 
                         UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, 1000), true);
-                    } 
+                    }
                     else {
 
                         UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, fluidTank.getCapacity() - fluidTank.getFluidAmount()), true);
@@ -57,16 +60,25 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
                 if(!this.moveFluidBelow()) {
 
                     this.moveAround();
-                }                
+                }
             }
         }
+    }
+
+    @Override
+    public void invalidate() {
+
+        ItemStack stack = new ItemStack(BlockRegistry.BlockConnectableTank, 1, 0);
+        ((ItemBlockConnectableTank) stack.getItem()).setFluidStack(stack, fluidTank.getFluid());
+        UtilBlock.spawnItemStackEntity(worldObj, xCoord, yCoord, zCoord, stack, 5);
+        super.invalidate();
     }
 
     public int getFluidHandlersAround() {
 
         int amount = 0;
 
-        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
             if(direction != ForgeDirection.UP && direction != ForgeDirection.DOWN) {
 
@@ -105,7 +117,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
 
         if(this.fluidTank.getFluidAmount() >= this.getFluidHandlersAround() * 1000) {
 
-            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
                 if(direction != ForgeDirection.UP && direction != ForgeDirection.DOWN) {
 
@@ -117,14 +129,14 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
 
                             if(tile instanceof TileConnectableTank) {
 
-                                if(((TileConnectableTank)tile).fluidTank.getFluidAmount() < this.fluidTank.getFluidAmount()) {
+                                if(((TileConnectableTank) tile).fluidTank.getFluidAmount() < this.fluidTank.getFluidAmount()) {
 
-                                    itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, direction.getOpposite(), 1000, true);
+                                    itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler) tile, direction.getOpposite(), 1000, true);
                                 }
                             }
                             else {
 
-                                itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, direction.getOpposite(), 1000, true);
+                                itWorked = UtilFluid.moveFluid(this, direction, (IFluidHandler) tile, direction.getOpposite(), 1000, true);
                             }
                         }
                     }
@@ -140,21 +152,23 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
 
         int fill = fluidTank.fill(resource, doFill);
 
-        if(((this.fluidTank.getFluid() != null && this.fluidTank.getFluid().isFluidEqual(resource)) || this.fluidTank.getCapacity() == this.fluidTank.getFluidAmount())) {      
+        if(((this.fluidTank.getFluid() != null && this.fluidTank.getFluid().isFluidEqual(resource)) || this.fluidTank.getCapacity() == this.fluidTank.getFluidAmount())) {
 
-            //            if(fill == 0) {
+            // if(fill == 0) {
             //
-            //                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, ForgeDirection.UP);
-            //                
-            //                if(tile != null && tile instanceof TileConnectableTank) {
-            //                    
-            //                    return ((TileConnectableTank)tile).fill(ForgeDirection.DOWN, resource, doFill);
-            //                }
-            //            }
+            // TileEntity tile = UtilDirection.translateDirectionToTile(this,
+            // worldObj, ForgeDirection.UP);
+            //
+            // if(tile != null && tile instanceof TileConnectableTank) {
+            //
+            // return ((TileConnectableTank)tile).fill(ForgeDirection.DOWN,
+            // resource, doFill);
+            // }
+            // }
 
             if(doFill) {
 
-                worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
+                worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
                 this.trigger(0);
             }
         }
@@ -172,7 +186,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
 
                     return true;
                 }
-            } 
+            }
             else {
 
                 return true;
@@ -192,8 +206,8 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
         if(doDrain) {
 
             worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
-            this.trigger(0);   
-        }     
+            this.trigger(0);
+        }
         return drain(from, resource.amount, doDrain);
     }
 
@@ -208,8 +222,8 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
         if(doDrain) {
 
             worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
-            this.trigger(0);   
-        }  
+            this.trigger(0);
+        }
         return fluidTank.drain(maxDrain, doDrain);
     }
 
@@ -235,7 +249,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
 
-        return new FluidTankInfo[] { fluidTank.getInfo() };
+        return new FluidTankInfo[]{fluidTank.getInfo()};
     }
 
     public IFluidHandler getTankBelow(TileEntity tile) {
@@ -261,14 +275,13 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
         return null;
     }
 
-
     @Override
     public void trigger(int id) {
 
         if(this.getNetwork() != null) {
 
             MiscHelpers.addConductorsAround(this, worldObj, this.getNetwork());
-        }        
+        }
 
         if(id == 0) {
 
@@ -277,7 +290,7 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
                 if(fluidTank.getFluid() != null) {
 
                     PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, fluidTank.getFluid().getFluid().getID(), fluidTank.getFluid().amount).makePacket());
-                } 
+                }
                 else {
 
                     PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new TankPacket(xCoord, yCoord, zCoord, 0, 0).makePacket());
@@ -291,13 +304,13 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
 
         this.network = network;
 
-        if(network != null) {            
+        if(network != null) {
 
             if(!network.getConductors().contains(new Vector3(this))) {
 
                 network.addConductor(new Vector3(this));
             }
-            
+
             if(!network.getFluidInterfaces().contains(new Vector3(this))) {
 
                 network.addFluidInterface(new Vector3(this));

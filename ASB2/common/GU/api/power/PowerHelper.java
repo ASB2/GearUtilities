@@ -6,32 +6,42 @@ import net.minecraftforge.common.ForgeDirection;
 
 public class PowerHelper {
 
-    public static boolean addEnergyToProviderFromInventory(IPowerProvider thingToAddPowerTo, IInventory inventory, float power, boolean doUse) {
-
-        if(thingToAddPowerTo.gainPower(power, ForgeDirection.UNKNOWN, false) && PowerHelper.useEnergyFromInventory(inventory, power, false)) {
-
-            PowerHelper.useEnergyFromInventory(inventory, power, true);
-            thingToAddPowerTo.gainPower(power, ForgeDirection.UNKNOWN, true);
-            return true;
-        }
-        return false;
-    }
-
     public static boolean useEnergyFromInventory(IInventory inventory, float power, boolean doUse) {
 
         for(int i = 0; i < inventory.getSizeInventory(); i++) {
 
-            ItemStack stack  = inventory.getStackInSlot(i);
+            ItemStack stack = inventory.getStackInSlot(i);
 
-            if(stack != null && stack.getItem() instanceof IPowerItem ) {
+            if(stack != null) {
 
-                if(((IPowerItem)stack.getItem()).getPowerProvider(stack).usePower(power, ForgeDirection.UNKNOWN, false)) {
+                stack = stack.copy();
 
-                    ((IPowerItem)stack.getItem()).getPowerProvider(stack).usePower(power, ForgeDirection.UNKNOWN, doUse);
-                    return true;
-                }  
+                if(stack.getItem() instanceof IPowerItem) {
+
+                    if(((IPowerItem) stack.getItem()).getPowerProvider(stack).usePower(power, ForgeDirection.UNKNOWN, false)) {
+
+                        return ((IPowerItem) stack.getItem()).getPowerProvider(stack).usePower(power, ForgeDirection.UNKNOWN, doUse);
+                    }
+                }
             }
-        } 
+        }
+        return false;
+    }
+
+    public static boolean addEnergyToInventory(IInventory inventory, float power, boolean doUse) {
+
+        for(int i = 0; i < inventory.getSizeInventory(); i++) {
+
+            ItemStack stack = inventory.getStackInSlot(i);
+
+            if(stack != null && stack.getItem() instanceof IPowerItem) {
+
+                if(((IPowerItem) stack.getItem()).getPowerProvider(stack).gainPower(power, ForgeDirection.UNKNOWN, false)) {
+
+                    return ((IPowerItem) stack.getItem()).getPowerProvider(stack).gainPower(power, ForgeDirection.UNKNOWN, doUse);
+                }
+            }
+        }
         return false;
     }
 
@@ -49,16 +59,13 @@ public class PowerHelper {
 
         if(source != null && sink != null) {
 
-            if(source != null && sink != null) {
+            if(PowerHelper.removeEnergyFromProvider(source, sourceDirection, power, false)) {
 
-                if(PowerHelper.removeEnergyFromProvider(source, sourceDirection, power, false)) {
+                if(PowerHelper.addEnergyToProvider(sink, sinkDirection, power, false)) {
 
-                    if(PowerHelper.addEnergyToProvider(sink, sinkDirection, power, false)) {
-
-                        PowerHelper.removeEnergyFromProvider(source, sourceDirection, power, doWork);
-                        PowerHelper.addEnergyToProvider(sink, sinkDirection, power, doWork);
-                        return true;
-                    }
+                    PowerHelper.removeEnergyFromProvider(source, sourceDirection, power, doWork);
+                    PowerHelper.addEnergyToProvider(sink, sinkDirection, power, doWork);
+                    return true;
                 }
             }
         }

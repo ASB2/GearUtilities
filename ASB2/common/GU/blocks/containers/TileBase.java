@@ -2,7 +2,6 @@ package GU.blocks.containers;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
@@ -23,7 +22,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     int wait;
     protected PowerProvider powerProvider;
     protected VanillaColor color;
-    protected ItemStack[] tileItemStacks = new ItemStack[0];
+    protected Inventory tileInventory;
     public FluidTank fluidTank;
     protected Wait waitTimer;
 
@@ -149,21 +148,9 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
         if(this.powerProvider != null)
             this.powerProvider.readFromNBT(tag);
-
-        NBTTagList nbttaglist = tag.getTagList("Items");
-
-        tileItemStacks = new ItemStack[tileItemStacks.length];
-
-        for(int i = 0; i < nbttaglist.tagCount(); i++) {
-
-            NBTTagCompound nbttagcompound = (NBTTagCompound) nbttaglist.tagAt(i);
-            byte byte0 = nbttagcompound.getByte("Slot");
-
-            if(byte0 >= 0 && byte0 < tileItemStacks.length) {
-
-                tileItemStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound);
-            }
-        }
+        
+        if(tileInventory != null)
+            tileInventory.load(tag);
     }
 
     @Override
@@ -178,20 +165,8 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
         if(this.powerProvider != null)
             this.powerProvider.writeToNBT(tag);
-
-        NBTTagList nbttaglist = new NBTTagList();
-
-        for(int i = 0; i < tileItemStacks.length; i++) {
-
-            if(tileItemStacks[i] != null) {
-
-                NBTTagCompound nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setByte("Slot", (byte) i);
-                tileItemStacks[i].writeToNBT(nbttagcompound);
-                nbttaglist.appendTag(nbttagcompound);
-            }
-        }
-
-        tag.setTag("Items", nbttaglist);
+        
+        if(tileInventory != null)
+            tileInventory.save(tag);
     }
 }

@@ -11,6 +11,7 @@ import GU.api.power.PowerProvider;
 import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
+import GU.blocks.containers.*;
 
 public class TileCreationTable extends TileBase implements IPowerMisc, IInventory {
 
@@ -18,7 +19,7 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
 
         this.waitTimer = new Wait(10, this, 0);
         powerProvider = new PowerProvider(PowerClass.LOW, State.SINK);
-        tileItemStacks = new ItemStack[11]; 
+        tileInventory = new Inventory(11, 64, "Creation", true);
     }
 
     @Override
@@ -38,13 +39,13 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     @Override
     public int getSizeInventory() {
 
-        return tileItemStacks.length;
+        return tileInventory.getSizeInventory();
     }
 
     @Override
     public ItemStack getStackInSlot(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlot(i);
     }
 
     @Override
@@ -56,13 +57,13 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
 
-        return tileItemStacks[i];
+        return tileInventory.getStackInSlotOnClosing(i);
     }
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
 
-        tileItemStacks[i] = itemStack;
+        tileInventory.setInventorySlotContents(i, itemStack);
     }
 
     @Override
@@ -97,13 +98,13 @@ public class TileCreationTable extends TileBase implements IPowerMisc, IInventor
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-        // TODO Auto-generated method stub
-        return true;
+
+        return tileInventory.isItemValidForSlot(i,  itemstack);
     }
 
     @Override
     public String getInvName() {
-        // TODO Auto-generated method stub
-        return "Creation Table";
+
+        return tileInventory.getInvName();
     }
 }

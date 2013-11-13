@@ -18,6 +18,7 @@ public final class Models {
     public static IModelCustom ModelEnergyCube;
     public static IModelCustom ModelHandheldTank;
     public static IModelCustom ModelRhombicuboctahedron;
+    public static IModelCustom ModelGlassPipe;
     
     public static final String LAMP = Reference.RESOURCE_LOCATION + "models/ModelLamp.obj";
     public static final String CREATION_TABLE = Reference.RESOURCE_LOCATION + "models/ModelCreationTable.obj";
@@ -33,7 +34,7 @@ public final class Models {
     public static final String ENERGY_CUBE = Reference.RESOURCE_LOCATION + "models/ModelEnergyCube.obj";
     public static final String HANDHELD_TANK = Reference.RESOURCE_LOCATION + "models/ModelHandheldTank.obj";
     public static final String RHOMBICUBOCTAHEDRON = Reference.RESOURCE_LOCATION + "models/Rhombicuboctahedron.obj";
-    
+    public static final String GLASS_PIPE = Reference.RESOURCE_LOCATION + "models/ModelGlassPipe.obj";
     public static void initModels() {
 
         ModelCrystalItem = AdvancedModelLoader.loadModel(Models.CRYSTAL_ITEM);
@@ -49,5 +50,6 @@ public final class Models {
         ModelEnergyCube = AdvancedModelLoader.loadModel(Models.ENERGY_CUBE);
         ModelHandheldTank = AdvancedModelLoader.loadModel(Models.HANDHELD_TANK);
         ModelRhombicuboctahedron = AdvancedModelLoader.loadModel(Models.RHOMBICUBOCTAHEDRON);
+        ModelGlassPipe = AdvancedModelLoader.loadModel(Models.GLASS_PIPE);
     }
 }
