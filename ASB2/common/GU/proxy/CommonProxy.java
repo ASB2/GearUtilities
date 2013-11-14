@@ -18,9 +18,9 @@ import GU.blocks.containers.BlockSender.ContainerSender;
 import GU.blocks.containers.BlockSender.TileSender;
 import GU.blocks.containers.BlockSolarFocus.ContainerSolarFocus;
 import GU.blocks.containers.BlockSolarFocus.TileSolarFocus;
-import GU.entity.EntityCluster.EntityInfoCluster;
 import GU.entity.EntityPotion.EntityModularPotion;
 import GU.entity.EntityTest.EntityTestEntity;
+import GU.entity.EntityTileFinder.EntityTileFinder;
 import GU.info.Gui;
 import GU.sounds.SoundHandler;
 import GU.worldGen.RetroGenManager;
@@ -38,7 +38,7 @@ public class CommonProxy implements IGuiHandler {
 
         EntityRegistry.registerModEntity(EntityTestEntity.class, "Test Entity", 0, GearUtilities.instance, 80, 3, true);
         EntityRegistry.registerModEntity(EntityModularPotion.class, "Modular Potion", 1, GearUtilities.instance, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityInfoCluster.class, "Info Clustor", 2, GearUtilities.instance, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityTileFinder.class, "Info Clustor", 2, GearUtilities.instance, 80, 3, true);
     }
 
     @Override

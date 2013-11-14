@@ -58,7 +58,7 @@ public abstract class GuiBase extends GuiContainer {
 
     public void renderSlotsInContainer() {
 
-        for (int i = 0; i < container.slotList.size(); i++) {
+        for(int i = 0; i < container.slotList.size(); i++) {
 
             renderSlot(posX + container.slotList.get(i).xDisplayPosition - 1, posY + container.slotList.get(i).yDisplayPosition - 1);
         }
@@ -94,7 +94,7 @@ public abstract class GuiBase extends GuiContainer {
         posY = (height - ySizeOfTexture) / 2;
 
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect( posX + x, posY + y, 176, 0, 14, 14);
+        drawTexturedModalRect(posX + x, posY + y, 176, 0, 14, 14);
     }
 
     public void scaleFlame(int x, int y, int scale) {
@@ -167,7 +167,7 @@ public abstract class GuiBase extends GuiContainer {
         posY = (height - ySizeOfTexture) / 2;
 
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(posX + x, posY +  y, 176, 51, 18, 71);
+        drawTexturedModalRect(posX + x, posY + y, 176, 51, 18, 71);
     }
 
     public void scalePower(int x, int y, int scale) {
@@ -176,14 +176,14 @@ public abstract class GuiBase extends GuiContainer {
         posY = (height - ySizeOfTexture) / 2;
 
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        
+
         if(75 == scale) {
 
-            drawTexturedModalRect(posX + x, posY + y + 75 - scale, 194, 51, 18, scale - 5);
+            drawTexturedModalRect(posX + x + 2, posY + y + 71 - scale + 6, 197, 53, 18, scale);
         }
         else {
 
-            drawTexturedModalRect(posX + x, posY + y + 71 - scale, 194, 51, 18, scale);
+            drawTexturedModalRect(posX + x + 2, posY + y + 71 - scale + 6, 197, 53, 18, scale);
         }
     }
 
@@ -195,12 +195,12 @@ public abstract class GuiBase extends GuiContainer {
             posY = (height - ySizeOfTexture) / 2;
 
             if(75 == scale) {
-                
-                drawTexturedModelRectFromIcon(posX + x, posY + y + 75 - scale, icon, 18, scale - 5);
+
+                drawTexturedModelRectFromIcon(posX + x + 2, posY + y + 75 - scale + 2, icon, 18 - 4, scale - 8);
             }
             else {
 
-                drawTexturedModelRectFromIcon(posX + x, posY + y + 71 - scale, icon, 18, scale);
+                drawTexturedModelRectFromIcon(posX + x + 2, posY + y + 71 - scale + 2, icon, 18 - 4, scale - 8);
             }
         }
     }
@@ -211,7 +211,7 @@ public abstract class GuiBase extends GuiContainer {
         posY = (height - ySizeOfTexture) / 2;
 
         UtilRender.renderTexture(Gui.GUI_DEFAULT);
-        drawTexturedModalRect(posX + x, posY +  y, 176, 123, 18, 71);
+        drawTexturedModalRect(posX + x, posY + y, 176, 123, 18, 71);
     }
 
     public void renderIcon(int x, int y, Icon icon, int width, int height) {
@@ -227,9 +227,9 @@ public abstract class GuiBase extends GuiContainer {
 
     protected void drawTooltips(IPowerMisc tileEntity, int mouseX, int mouseY, int coordX, int coordY, int maxX, int maxY) {
 
-        if (tileEntity != null && tileEntity.getPowerProvider() != null) {
+        if(tileEntity != null && tileEntity.getPowerProvider() != null) {
 
-            if (isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
+            if(isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
 
                 drawBarTooltip("Energy", "GUU", (int) tileEntity.getPowerProvider().getPowerStored(), (int) tileEntity.getPowerProvider().getPowerMax(), mouseX, mouseY);
             }
@@ -238,7 +238,7 @@ public abstract class GuiBase extends GuiContainer {
 
     protected void drawTooltips(int fluidMax, int fluidAmount, String fluidName, int mouseX, int mouseY, int coordX, int coordY, int maxX, int maxY) {
 
-        if (isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
+        if(isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
 
             drawBarTooltip("Fluid: " + fluidName, "mB", fluidAmount, fluidMax, mouseX, mouseY);
         }
@@ -260,12 +260,12 @@ public abstract class GuiBase extends GuiContainer {
         int xStart;
         int yStart;
 
-        for (int i = 0; i < stringList.size(); i++) {
-            
+        for(int i = 0; i < stringList.size(); i++) {
+
             tempWidth = this.fontRenderer.getStringWidth(stringList.get(i));
 
-            if (tempWidth > tooltipWidth) {
-                
+            if(tempWidth > tooltipWidth) {
+
                 tooltipWidth = tempWidth;
             }
         }
@@ -274,13 +274,13 @@ public abstract class GuiBase extends GuiContainer {
         yStart = y - 12;
         int tooltipHeight = 8;
 
-        if (stringList.size() > 1) {
-            
+        if(stringList.size() > 1) {
+
             tooltipHeight += 2 + (stringList.size() - 1) * 10;
         }
 
-        if (this.guiTop + yStart + tooltipHeight + 6 > this.height) {
-            
+        if(this.guiTop + yStart + tooltipHeight + 6 > this.height) {
+
             yStart = this.height - tooltipHeight - this.guiTop - 6;
         }
 
@@ -299,18 +299,19 @@ public abstract class GuiBase extends GuiContainer {
         this.drawGradientRect(xStart - 3, yStart - 3, xStart + tooltipWidth + 3, yStart - 3 + 1, color2, color2);
         this.drawGradientRect(xStart - 3, yStart + tooltipHeight + 2, xStart + tooltipWidth + 3, yStart + tooltipHeight + 3, color3, color3);
 
-        for (int stringIndex = 0; stringIndex < stringList.size(); ++stringIndex) {
+        for(int stringIndex = 0; stringIndex < stringList.size(); ++stringIndex) {
             String line = stringList.get(stringIndex);
 
-            if (stringIndex == 0) {
+            if(stringIndex == 0) {
                 line = "\u00a7" + Integer.toHexString(15) + line;
-            } else {
+            }
+            else {
                 line = "\u00a77" + line;
             }
 
             this.fontRenderer.drawStringWithShadow(line, xStart, yStart, -1);
 
-            if (stringIndex == 0) {
+            if(stringIndex == 0) {
                 yStart += 2;
             }
 

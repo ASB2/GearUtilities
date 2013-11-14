@@ -14,13 +14,14 @@ public class PowerHelper {
 
             if(stack != null) {
 
-                stack = stack.copy();
-
                 if(stack.getItem() instanceof IPowerItem) {
 
-                    if(((IPowerItem) stack.getItem()).getPowerProvider(stack).usePower(power, ForgeDirection.UNKNOWN, false)) {
+                    if(((IPowerItem) stack.getItem()).getPowerProvider(stack) != null) {
+                        
+                        if(((IPowerItem) stack.getItem()).getPowerProvider(stack).usePower(power, ForgeDirection.UNKNOWN, false)) {
 
-                        return ((IPowerItem) stack.getItem()).getPowerProvider(stack).usePower(power, ForgeDirection.UNKNOWN, doUse);
+                            return ((IPowerItem) stack.getItem()).getPowerProvider(stack).usePower(power, ForgeDirection.UNKNOWN, doUse);
+                        }
                     }
                 }
             }

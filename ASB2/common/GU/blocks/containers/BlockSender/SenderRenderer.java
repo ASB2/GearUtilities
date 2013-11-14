@@ -1,5 +1,6 @@
 package GU.blocks.containers.BlockSender;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -8,23 +9,25 @@ import net.minecraftforge.common.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
+import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilRender;
 import ASB2.vector.*;
 import GU.info.Models;
 import GU.info.Textures;
+import GU.info.Variables;
 
 public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
-        TileSender tile = (TileSender)tileentity;
+        TileSender tile = (TileSender) tileentity;
 
         GL11.glPushMatrix();
 
         GL11.glColor3d(1, 1, 1);
-        
-        switch (ForgeDirection.getOrientation(new Vector3(tileentity).getBlockMetadata(tileentity.worldObj))) {
+
+        switch(ForgeDirection.getOrientation(new Vector3(tileentity).getBlockMetadata(tileentity.worldObj))) {
 
             case UP: {
 
@@ -71,8 +74,8 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
 
         UtilRender.renderTexture(Textures.ITEM_SENDER);
         Models.ModelSender.renderPart("Panel");
-        
-        GL11.glRotatef(0F - tile.animationPosition, 0F, 1F, 0F);
+
+        GL11.glRotatef(Minecraft.getSystemTime() / (Variables.ANIMATION_SPEED + 10), 0F, 1F, 0F);
 
         for(int i = 0; i < 4; i++) {
 
@@ -98,7 +101,7 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
 
                 case 3: {
 
-                    GL11.glRotatef(90F, 0F, -1F , 0F);
+                    GL11.glRotatef(90F, 0F, -1F, 0F);
                     break;
                 }
             }
@@ -173,7 +176,7 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
-        switch (type) {
+        switch(type) {
 
             case ENTITY: {
 
@@ -215,6 +218,8 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
         UtilRender.renderTexture(Textures.ITEM_SENDER);
         Models.ModelSender.renderPart("Panel");
 
+        GL11.glRotatef(Minecraft.getSystemTime() / (Variables.ANIMATION_SPEED + 10), 0F, 1F, 0F);
+        
         for(int i = 0; i < 4; i++) {
 
             switch(i) {
@@ -239,12 +244,12 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
 
                 case 3: {
 
-                    GL11.glRotatef(90F, 0F, -1F , 0F);
+                    GL11.glRotatef(90F, 0F, -1F, 0F);
                     break;
                 }
             }
 
-            switch(item.getItemDamage()) {
+            switch(UtilItemStack.getNBTTagInt(item, "mode")) {
 
                 case 1: {
 
@@ -299,5 +304,4 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }
-
 }

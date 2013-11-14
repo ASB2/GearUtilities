@@ -4,11 +4,15 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import GU.api.WhiteLists;
+import GU.api.color.VanillaColor;
+import GU.api.recipe.SenderRecipe;
 import GU.info.Reference;
 import GU.info.Variables;
 import GU.packets.GUPacketHandler;
@@ -117,5 +121,48 @@ public final class GearUtilities {
         FluidRegistry.registerFluidContainers();
         CraftRegistry.init();
         WhiteLists.getInstance().addWrench(new ItemStack(ItemRegistry.ItemAdvancedStick));
+                
+        SenderRecipe.getInstance().addRecipe(Block.stone.blockID, 0, new ItemStack[]{new ItemStack(Block.cobblestone)});
+        SenderRecipe.getInstance().addRecipe(Block.cobblestone.blockID, -1, new ItemStack[]{new ItemStack(Block.sand)});
+        SenderRecipe.getInstance().addRecipe(Block.grass.blockID, -1, new ItemStack[]{new ItemStack(Block.dirt)});
+        SenderRecipe.getInstance().addRecipe(Block.gravel.blockID, -1, new ItemStack[]{new ItemStack(Item.flint)});
+        SenderRecipe.getInstance().addRecipe(Block.cloth.blockID, -1, new ItemStack[]{new ItemStack(Block.sponge)});
+
+        SenderRecipe.getInstance().addRecipe(Block.sandStone.blockID, 0, new ItemStack[]{new ItemStack(Block.sand, 4)});
+        SenderRecipe.getInstance().addRecipe(Block.sandStone.blockID, 1, new ItemStack[]{new ItemStack(Block.sand, 4)});
+        SenderRecipe.getInstance().addRecipe(Block.sandStone.blockID, 2, new ItemStack[]{new ItemStack(Block.sand, 4)});
+
+        SenderRecipe.getInstance().addRecipe(Block.wood.blockID, 0, new ItemStack[]{new ItemStack(Block.planks, 6, 0)});
+        SenderRecipe.getInstance().addRecipe(Block.wood.blockID, 1, new ItemStack[]{new ItemStack(Block.planks, 6, 1)});
+        SenderRecipe.getInstance().addRecipe(Block.wood.blockID, 2, new ItemStack[]{new ItemStack(Block.planks, 6, 2)});
+        SenderRecipe.getInstance().addRecipe(Block.wood.blockID, 3, new ItemStack[]{new ItemStack(Block.planks, 6, 3)});
+
+        SenderRecipe.getInstance().addRecipe(Block.oreCoal.blockID, -1, new ItemStack[]{new ItemStack(Item.coal, 6)});
+
+        ItemStack stack = VanillaColor.getVinillaDye(VanillaColor.BLUE);
+        stack.stackSize = 8;
+        SenderRecipe.getInstance().addRecipe(Block.oreLapis.blockID, -1, new ItemStack[]{stack});
+        stack.stackSize = 9;
+        SenderRecipe.getInstance().addRecipe(Block.blockLapis.blockID, -1, new ItemStack[]{stack});
+
+        SenderRecipe.getInstance().addRecipe(Block.blockGold.blockID, -1, new ItemStack[]{new ItemStack(Item.ingotGold, 9)});
+        SenderRecipe.getInstance().addRecipe(Block.blockIron.blockID, -1, new ItemStack[]{new ItemStack(Item.ingotIron, 9)});
+        SenderRecipe.getInstance().addRecipe(Block.blockDiamond.blockID, -1, new ItemStack[]{new ItemStack(Item.diamond, 9)});
+
+        SenderRecipe.getInstance().addRecipe(Block.web.blockID, 0, new ItemStack[]{new ItemStack(Item.silk, 4)});
+        SenderRecipe.getInstance().addRecipe(Block.pistonStickyBase.blockID, 0, new ItemStack[]{new ItemStack(Item.slimeBall), new ItemStack(Block.pistonBase)});
+        SenderRecipe.getInstance().addRecipe(Block.dispenser.blockID, -1, new ItemStack[]{new ItemStack(Block.cobblestone, 7), new ItemStack(Item.bow), new ItemStack(Item.redstone)});
+
+        stack = VanillaColor.getVinillaDye(VanillaColor.RED);
+        stack.stackSize = 4;
+        SenderRecipe.getInstance().addRecipe(Block.plantRed.blockID, -1, new ItemStack[]{stack});
+
+        stack = VanillaColor.getVinillaDye(VanillaColor.YELLOW);
+        stack.stackSize = 4;
+        SenderRecipe.getInstance().addRecipe(Block.plantYellow.blockID, -1, new ItemStack[]{stack});
+
+        SenderRecipe.getInstance().addRecipe(Block.tnt.blockID, -1, new ItemStack[]{new ItemStack(Item.gunpowder, 5), new ItemStack(Block.sand)});
+        SenderRecipe.getInstance().addRecipe(Block.brick.blockID, -1, new ItemStack[]{new ItemStack(Item.brick, 4)});
+        SenderRecipe.getInstance().addRecipe(Block.cobblestoneMossy.blockID, -1, new ItemStack[]{new ItemStack(Block.cobblestone), new ItemStack(Block.vine, 6)});
     }
 }

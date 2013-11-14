@@ -31,10 +31,10 @@ import GU.blocks.containers.BlockSolarFocus.SolarFocusRenderer;
 import GU.blocks.containers.BlockSolarFocus.TileSolarFocus;
 import GU.blocks.containers.BlockUniversalConduit.TileUniversalConduit;
 import GU.blocks.containers.BlockUniversalConduit.UniversalConduitRenderer;
-import GU.entity.EntityCluster.EntityInfoCluster;
-import GU.entity.EntityCluster.InfoClusterRenderer;
 import GU.entity.EntityTest.EntityTestEntity;
 import GU.entity.EntityTest.TestEntityRenderer;
+import GU.entity.EntityTileFinder.EntityTileFinder;
+import GU.entity.EntityTileFinder.InfoClusterRenderer;
 import GU.info.Gui;
 import GU.info.Models;
 import GU.items.ItemBloodStone.BloodStoneRenderer;
@@ -52,7 +52,7 @@ public class ClientProxy extends CommonProxy {
         Models.initModels();
 
         RenderingRegistry.registerEntityRenderingHandler(EntityTestEntity.class, new TestEntityRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(EntityInfoCluster.class, new InfoClusterRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(EntityTileFinder.class, new InfoClusterRenderer());
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class, new CreationTableRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());

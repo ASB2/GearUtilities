@@ -1,4 +1,4 @@
-package GU.entity.EntityCluster;
+package GU.entity.EntityTileFinder;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,7 +13,7 @@ import GU.info.GUDamageSource;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityInfoCluster extends EntityBase implements IClustor {
+public class EntityTileFinder extends EntityBase implements IClustor {
 
     Vector3 start;
     Vector3 position;
@@ -21,7 +21,7 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
     IClusterTrigger source;
     int id;
     
-    public EntityInfoCluster(World world, Vector3 start, ForgeDirection direction, IClusterTrigger source, int id) {
+    public EntityTileFinder(World world, Vector3 start, ForgeDirection direction, IClusterTrigger source, int id) {
         super(world, start);
 
         this.start = start;
@@ -32,7 +32,7 @@ public class EntityInfoCluster extends EntityBase implements IClustor {
         this.id = id;
     }
 
-    public EntityInfoCluster(World world) {
+    public EntityTileFinder(World world) {
         super(world);
     }
 

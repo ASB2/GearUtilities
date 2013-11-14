@@ -1,4 +1,4 @@
-package GU.entity.EntityCluster;
+package GU.entity.EntityTileFinder;
 
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;

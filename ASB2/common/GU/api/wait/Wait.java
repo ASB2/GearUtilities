@@ -14,19 +14,24 @@ public class Wait {
         this.id = id;
     }
 
+    public void setWaitTime(long newWaitTime) {
+
+        this.timeToWait = newWaitTime;
+    }
+
     public void update() {
 
-        if (thingToTrigger != null) {
+        if(thingToTrigger != null) {
 
-            if (thingToTrigger.shouldTick(id)) {
+            if(thingToTrigger.shouldTick(id)) {
 
                 timeKeeper++;
             }
         }
 
-        if (timeKeeper >= timeToWait) {
+        if(timeKeeper >= timeToWait) {
 
-            if (thingToTrigger != null) {
+            if(thingToTrigger != null) {
 
                 thingToTrigger.trigger(id);
                 timeKeeper = 0;

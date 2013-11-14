@@ -132,7 +132,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
         if(!worldObj.isRemote) {
 
             Packet132TileEntityData packet = this.getDescriptionPacket();
-            PacketDispatcher.sendPacketToAllInDimension(packet, this.worldObj.provider.dimensionId);
+            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 50, this.worldObj.provider.dimensionId, packet);
         }
     }
 
@@ -148,7 +148,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
         if(this.powerProvider != null)
             this.powerProvider.readFromNBT(tag);
-        
+
         if(tileInventory != null)
             tileInventory.load(tag);
     }
@@ -165,7 +165,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
 
         if(this.powerProvider != null)
             this.powerProvider.writeToNBT(tag);
-        
+
         if(tileInventory != null)
             tileInventory.save(tag);
     }

@@ -8,9 +8,11 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilItemStack;
 import GU.GearUtilities;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Gui;
@@ -28,24 +30,54 @@ public class BlockSender extends ContainerBase {
 
     @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
-        
+
         ArrayList<ItemStack> array = new ArrayList<ItemStack>();
-        
-        array.add(new ItemStack(this, 1, metadata));
+
         return array;
     }
     
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
+        
+        if(tile != null) {            
+            
+            ItemStack stack = new ItemStack(this);
+            UtilItemStack.setNBTTagInt(stack, "mode", ((TileSender)tile).getMode());
+            return stack;
+        }
+        return new ItemStack(this);
+    }
+
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void getSubBlocks(int unknown, CreativeTabs tab, List subItems) {
 
-        subItems.add(new ItemStack(this, 1, 1));
-        subItems.add(new ItemStack(this, 1, 2));
-        subItems.add(new ItemStack(this, 1, 3));
-        subItems.add(new ItemStack(this, 1, 4));
-        subItems.add(new ItemStack(this, 1, 5));
-        subItems.add(new ItemStack(this, 1, 6));
-        subItems.add(new ItemStack(this, 1, 7));
+        ItemStack stack = new ItemStack(this);
+        
+        UtilItemStack.setNBTTagInt(stack, "mode", 0);        
+        subItems.add(stack.copy());
+        
+        UtilItemStack.setNBTTagInt(stack, "mode", 1);        
+        subItems.add(stack.copy());
+        
+        UtilItemStack.setNBTTagInt(stack, "mode", 2);        
+        subItems.add(stack.copy());
+        
+        UtilItemStack.setNBTTagInt(stack, "mode", 3);        
+        subItems.add(stack.copy());
+        
+        UtilItemStack.setNBTTagInt(stack, "mode", 4);        
+        subItems.add(stack.copy());
+        
+        UtilItemStack.setNBTTagInt(stack, "mode", 5);        
+        subItems.add(stack.copy());
+        
+        UtilItemStack.setNBTTagInt(stack, "mode", 6);        
+        subItems.add(stack.copy());
+        
+        UtilItemStack.setNBTTagInt(stack, "mode", 7);        
+        subItems.add(stack.copy());
     }
 
     public ForgeDirection[] getValidRotations(World worldObj, int x, int y, int z) {
@@ -67,7 +99,7 @@ public class BlockSender extends ContainerBase {
 
         float maxWidth = 1, maxHeight = .65F;
 
-        switch (ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z))) {
+        switch(ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z))) {
 
             case DOWN: {
 
@@ -116,7 +148,7 @@ public class BlockSender extends ContainerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitX, float hitY, float hitZ, float par9) {
 
-        if (!player.isSneaking()) {
+        if(!player.isSneaking()) {
 
             player.openGui(GearUtilities.instance, Gui.SENDER, world, x, y, z);
             return true;
