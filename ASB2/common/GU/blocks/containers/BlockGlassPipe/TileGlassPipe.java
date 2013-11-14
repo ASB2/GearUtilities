@@ -37,7 +37,7 @@ public class TileGlassPipe extends TileFluidBase {
 
             int amount = 0;
 
-            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
                 TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
@@ -45,11 +45,11 @@ public class TileGlassPipe extends TileFluidBase {
 
                     amount++;
                 }
-            } 
+            }
 
             if(this.fluidTank.getFluidAmount() >= amount * 125) {
 
-                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
                     TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
@@ -57,14 +57,14 @@ public class TileGlassPipe extends TileFluidBase {
 
                         if(tile instanceof TileGlassPipe) {
 
-                            if(((TileGlassPipe)tile).fluidTank.getFluidAmount() < this.fluidTank.getFluidAmount()) {
+                            if(((TileGlassPipe) tile).fluidTank.getFluidAmount() < this.fluidTank.getFluidAmount()) {
 
-                                UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, direction.getOpposite(), 125, true);
+                                UtilFluid.moveFluid(this, direction, (IFluidHandler) tile, direction.getOpposite(), 125, true);
                             }
                         }
                         else if(tile instanceof IFluidHandler) {
 
-                            UtilFluid.moveFluid(this, direction, (IFluidHandler)tile, direction.getOpposite(), 125, true);
+                            UtilFluid.moveFluid(this, direction, (IFluidHandler) tile, direction.getOpposite(), 125, true);
                         }
                     }
                 }
@@ -81,14 +81,14 @@ public class TileGlassPipe extends TileFluidBase {
 
                 importing[side] = false;
                 updateClients();
-                UtilEntity.sendClientChat(""+importing[side]);
+                UtilEntity.sendClientChat("" + importing[side]);
                 return;
             }
             else {
 
                 importing[side] = true;
                 updateClients();
-                UtilEntity.sendClientChat( ""+importing[side]);
+                UtilEntity.sendClientChat("" + importing[side]);
                 return;
             }
         }
@@ -100,14 +100,14 @@ public class TileGlassPipe extends TileFluidBase {
 
                 importing[side] = false;
                 updateClients();
-                UtilEntity.sendClientChat( ""+importing[side]);
+                UtilEntity.sendClientChat("" + importing[side]);
                 return;
             }
             else {
 
                 importing[side] = true;
                 updateClients();
-                UtilEntity.sendClientChat( ""+importing[side]);
+                UtilEntity.sendClientChat("" + importing[side]);
                 return;
             }
         }
@@ -127,7 +127,7 @@ public class TileGlassPipe extends TileFluidBase {
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
 
-        for(int i = 0; i < importing.length; i++) {       
+        for(int i = 0; i < importing.length; i++) {
 
             tag.setBoolean("importing " + i, importing[i]);
         }

@@ -9,9 +9,6 @@ public final class SenderRecipe {
     private static SenderRecipe instance = new SenderRecipe();
     private ArrayList<SenderInfoHolder> recipeList = new ArrayList<SenderInfoHolder>();
 
-    public SenderRecipe() {
-    }
-
     public static SenderRecipe getInstance() {
 
         return instance;
@@ -40,7 +37,7 @@ public final class SenderRecipe {
         int blockMeta;
         ItemStack[] results;
 
-        SenderInfoHolder(int blockID, int blockMeta, ItemStack[] results) { 
+        SenderInfoHolder(int blockID, int blockMeta, ItemStack[] results) {
 
             this.blockId = blockID;
             this.blockMeta = blockMeta;

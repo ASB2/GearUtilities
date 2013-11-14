@@ -219,7 +219,7 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
         Models.ModelSender.renderPart("Panel");
 
         GL11.glRotatef(Minecraft.getSystemTime() / (Variables.ANIMATION_SPEED + 10), 0F, 1F, 0F);
-        
+
         for(int i = 0; i < 4; i++) {
 
             switch(i) {

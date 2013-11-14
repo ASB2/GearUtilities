@@ -24,7 +24,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     protected VanillaColor color;
     protected Inventory tileInventory;
     public FluidTank fluidTank;
-    protected Wait waitTimer;
+    public Wait waitTimer;
 
     public TileBase() {
 

@@ -166,14 +166,16 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
                                 }
                             }
 
-                            worldObj.destroyBlock(affecting.intX(), affecting.intY(), affecting.intZ(), false);
-
                             if(itWorked) {
 
                                 for(ItemStack item : itemStacks) {
 
                                     UtilInventory.addItemStackToInventory(this, item, true);
                                 }
+                            }
+                            if(itWorked) {
+                                
+                                worldObj.destroyBlock(affecting.intX(), affecting.intY(), affecting.intZ(), false);
                             }
                         }
                     }
@@ -299,11 +301,17 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
 
                     if(destination instanceof ISidedInventory) {
 
-                        UtilInventory.moveEntireISidedInventory(this, side.getOpposite(), (ISidedInventory) destination);
+                        if(UtilInventory.moveEntireISidedInventory(this, side.getOpposite(), (ISidedInventory) destination)) {
+
+                            clustor.stopClustor();
+                        }
                     }
                     else {
 
-                        UtilInventory.moveEntireInventory(this, (IInventory) destination);
+                        if(UtilInventory.moveEntireInventory(this, (IInventory) destination)) {
+
+                            clustor.stopClustor();
+                        }
                     }
                 }
                 break;
@@ -312,7 +320,10 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
 
                 if(destination != null && destination instanceof IFluidHandler) {
 
-                    UtilFluid.moveFluid(this, this.getOrientation(), (IFluidHandler) destination, side.getOpposite(), true);
+                    if(UtilFluid.moveFluid(this, this.getOrientation(), (IFluidHandler) destination, side.getOpposite(), true)) {
+
+                        clustor.stopClustor();
+                    }
                 }
                 break;
             }

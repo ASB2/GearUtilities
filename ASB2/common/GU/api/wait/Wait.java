@@ -38,4 +38,9 @@ public class Wait {
             }
         }
     }
+    
+    public long getRemainingTime() {
+        
+        return timeToWait - timeKeeper;
+    }
 }
