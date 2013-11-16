@@ -7,11 +7,13 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilRecipe;
+import GU.api.color.VanillaColor;
+import GU.api.recipe.SenderRecipe;
+import GU.blocks.containers.BlockSender.TileSender;
 import GU.info.Variables;
 import cpw.mods.fml.common.registry.GameRegistry;
-import GU.api.color.*;
-import GU.api.recipe.SenderRecipe;
 
 public class CraftRegistry {
 
@@ -115,7 +117,7 @@ public class CraftRegistry {
         SenderRecipe.getInstance().addRecipe(Block.enderChest.blockID, -1, new ItemStack[]{new ItemStack(Item.enderPearl), new ItemStack(Item.blazePowder), new ItemStack(Block.obsidian, 8)});
         SenderRecipe.getInstance().addRecipe(Block.glowStone.blockID, -1, new ItemStack[]{new ItemStack(Item.glowstone, 4)});
         SenderRecipe.getInstance().addRecipe(Block.flowerPot.blockID, -1, new ItemStack[]{new ItemStack(Item.brick, 3)});
-        
+
         SenderRecipe.getInstance().addRecipe(Block.snow.blockID, -1, new ItemStack[]{new ItemStack(Item.snowball, 4)});
         SenderRecipe.getInstance().addRecipe(Block.netherBrick.blockID, -1, new ItemStack[]{new ItemStack(Item.netherrackBrick, 4)});
         SenderRecipe.getInstance().addRecipe(Block.stoneBrick.blockID, -1, new ItemStack[]{new ItemStack(Block.stone, 4)});
@@ -225,14 +227,49 @@ public class CraftRegistry {
 
         'C', Variables.CRYSTALS_ALL, 'I', Item.ingotIron, 'Q', Item.netherQuartz, 'R', VanillaColor.getVinillaDye(VanillaColor.RED)}));
 
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 1), new ItemStack(BlockRegistry.BlockSender, 1, 0));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 2), new ItemStack(BlockRegistry.BlockSender, 1, 1));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 3), new ItemStack(BlockRegistry.BlockSender, 1, 2));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 4), new ItemStack(BlockRegistry.BlockSender, 1, 3));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 5), new ItemStack(BlockRegistry.BlockSender, 1, 4));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 6), new ItemStack(BlockRegistry.BlockSender, 1, 5));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 7), new ItemStack(BlockRegistry.BlockSender, 1, 6));
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender, 1, 0), new ItemStack(BlockRegistry.BlockSender, 1, 7));
+        ItemStack base = new ItemStack(BlockRegistry.BlockSender);
+        UtilItemStack.setNBTTagInt(base, "mode", 0);
+        GameRegistry.addRecipe(new ShapedOreRecipe(base, new Object[]{"ICI", "QDQ", "EBE",
+
+        'C', Variables.CRYSTALS_ALL, 'I', Item.ingotIron, 'Q', Item.netherQuartz, 'D', Item.diamond, 'E', BlockRegistry.BlockEnhancedBricks, 'B', ItemRegistry.ItemBloodStone}));
+
+        ItemStack itemMover = new ItemStack(BlockRegistry.BlockSender);
+        UtilItemStack.setNBTTagInt(itemMover, "mode", TileSender.ITEM_MOVEMENT);
+        GameRegistry.addRecipe(new ShapedOreRecipe(itemMover, new Object[]{"QCQ", "ESE", "CQC",
+
+        'C', ItemRegistry.ItemCrystal.ItemAirCrystalShard, 'Q', Item.netherQuartz, 'E', Item.enderPearl, 'S', base}));
+
+        ItemStack fluidMover = new ItemStack(BlockRegistry.BlockSender);
+        UtilItemStack.setNBTTagInt(fluidMover, "mode", TileSender.FLUID_MOVEMENT);
+        GameRegistry.addRecipe(new ShapedOreRecipe(fluidMover, new Object[]{"QCQ", "ESE", "CQC",
+
+        'C', ItemRegistry.ItemCrystal.ItemWaterCrystalShard, 'Q', Item.netherQuartz, 'E', Item.enderPearl, 'S', base}));
+        
+        ItemStack grinder = new ItemStack(BlockRegistry.BlockSender);
+        UtilItemStack.setNBTTagInt(grinder, "mode", TileSender.GRINDING);
+        GameRegistry.addRecipe(new ShapedOreRecipe(grinder, new Object[]{"DID", "CSC", "QCQ",
+
+        'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'Q', Item.netherQuartz, 'D', Item.diamond, 'S', base, 'I', Item.ingotIron}));
+        
+        ItemStack blockPlacer = new ItemStack(BlockRegistry.BlockSender);
+        UtilItemStack.setNBTTagInt(blockPlacer, "mode", TileSender.BLOCK_PLACE);
+        GameRegistry.addRecipe(new ShapedOreRecipe(blockPlacer, new Object[]{"DQD", "CSC", "QIQ",
+
+        'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'Q', Item.netherQuartz, 'D', Block.dispenser, 'S', base, 'I', Item.ingotIron}));
+        
+        ItemStack blockBreaker = new ItemStack(BlockRegistry.BlockSender);
+        UtilItemStack.setNBTTagInt(blockBreaker, "mode", TileSender.BLOCK_BREAK);
+        GameRegistry.addRecipe(new ShapedOreRecipe(blockBreaker, new Object[]{"IPI", "CSC", "QIQ",
+
+        'C', ItemRegistry.ItemCrystal.ItemGarnet, 'Q', Item.netherQuartz, 'P', Item.pickaxeDiamond, 'S', base, 'I', Item.ingotIron}));
+        
+        ItemStack smelter = new ItemStack(BlockRegistry.BlockSender);
+        UtilItemStack.setNBTTagInt(smelter, "mode", TileSender.SMELTER);
+        GameRegistry.addRecipe(new ShapedOreRecipe(smelter, new Object[]{"FCF", "QSQ", "CQC",
+
+        'C', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'Q', Item.netherQuartz, 'F', Block.furnaceIdle, 'S', base}));
+        
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockSender), base);
 
         initTempRecipesBlood();
     }

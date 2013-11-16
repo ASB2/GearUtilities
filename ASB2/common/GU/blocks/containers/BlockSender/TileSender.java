@@ -170,11 +170,11 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
 
                                 for(ItemStack item : itemStacks) {
 
-                                    UtilInventory.addItemStackToInventory(this, item, true);
+                                    itWorked = UtilInventory.addItemStackToInventory(this, item, true);
                                 }
                             }
                             if(itWorked) {
-                                
+
                                 worldObj.destroyBlock(affecting.intX(), affecting.intY(), affecting.intZ(), false);
                             }
                         }
@@ -261,16 +261,72 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
 
                     Vector3 affecting = new Vector3(this).add(this.getOrientation());
 
-                    ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(affecting.getBlockID(worldObj), 1, affecting.getBlockMetadata(worldObj)));
+                    if(affecting.getTileEntity(worldObj) != null && affecting.getTileEntity(worldObj) instanceof IInventory) {
 
-                    if(stack != null && UtilInventory.addItemStackToInventory(this, stack, false)) {
+                        if(affecting.getTileEntity(worldObj) instanceof ISidedInventory) {
 
-                        worldObj.destroyBlock(affecting.intX(), affecting.intY(), affecting.intZ(), false);
-                        UtilInventory.addItemStackToInventory(this, stack, true);
+                            ISidedInventory inventory = ((ISidedInventory) affecting.getTileEntity(worldObj));
+                            int[] avaliableSlots = inventory.getAccessibleSlotsFromSide(this.getOrientation().getOpposite().ordinal());
+
+                            for(int i = 0; i < avaliableSlots.length; i++) {
+
+                                ItemStack stack = inventory.getStackInSlot(avaliableSlots[i]);
+
+                                if(stack != null) {
+
+                                    stack = stack.copy();
+
+                                    ItemStack results = FurnaceRecipes.smelting().getSmeltingResult(stack);
+
+                                    if(results != null) {
+
+                                        if(UtilInventory.removeItemStackFromISidedSlot(inventory, this.getOrientation().getOpposite(), stack, avaliableSlots[i], 1, false) && UtilInventory.addItemStackToInventory(this, results, false)) {
+
+                                            UtilInventory.removeItemStackFromISidedSlot(inventory, this.getOrientation().getOpposite(), stack, avaliableSlots[i], 1, true);
+                                            UtilInventory.addItemStackToInventory(this, results, true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else {
+
+                            IInventory inventory = ((IInventory) affecting.getTileEntity(worldObj));
+
+                            for(int i = 0; i < inventory.getSizeInventory(); i++) {
+
+                                ItemStack stack = inventory.getStackInSlot(i);
+
+                                if(stack != null) {
+
+                                    stack = stack.copy();
+
+                                    ItemStack results = FurnaceRecipes.smelting().getSmeltingResult(stack);
+
+                                    if(results != null) {
+
+                                        if(UtilInventory.removeItemStackFromSlot(inventory, stack, i, 1, false) && UtilInventory.addItemStackToInventory(this, results, false)) {
+
+                                            UtilInventory.removeItemStackFromSlot(inventory, stack, i, 1, true);
+                                            UtilInventory.addItemStackToInventory(this, results, true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else {
+
+                        ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(affecting.getBlockID(worldObj), 1, affecting.getBlockMetadata(worldObj)));
+
+                        if(stack != null && UtilInventory.addItemStackToInventory(this, stack, false)) {
+
+                            worldObj.destroyBlock(affecting.intX(), affecting.intY(), affecting.intZ(), false);
+                            UtilInventory.addItemStackToInventory(this, stack, true);
+                        }
                     }
 
                     TileEntity destination = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
-
                     if(destination != null && destination instanceof IInventory) {
 
                         if(destination instanceof ISidedInventory) {
