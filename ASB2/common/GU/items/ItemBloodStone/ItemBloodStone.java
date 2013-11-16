@@ -12,6 +12,7 @@ public class ItemBloodStone extends ItemBase implements IPowerItem {
 
     public ItemBloodStone(int id) {
         super(id);
+        this.setMaxStackSize(1);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

@@ -35,15 +35,15 @@ public class BlockSender extends ContainerBase {
 
         return array;
     }
-    
+
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-        
+
         TileEntity tile = world.getBlockTileEntity(x, y, z);
-        
-        if(tile != null) {            
-            
+
+        if(tile != null) {
+
             ItemStack stack = new ItemStack(this);
-            UtilItemStack.setNBTTagInt(stack, "mode", ((TileSender)tile).getMode());
+            UtilItemStack.setNBTTagInt(stack, "mode", ((TileSender) tile).getMode());
             return stack;
         }
         return new ItemStack(this);
@@ -54,29 +54,29 @@ public class BlockSender extends ContainerBase {
     public void getSubBlocks(int unknown, CreativeTabs tab, List subItems) {
 
         ItemStack stack = new ItemStack(this);
-        
-        UtilItemStack.setNBTTagInt(stack, "mode", 0);        
+
+        UtilItemStack.setNBTTagInt(stack, "mode", 0);
         subItems.add(stack.copy());
-        
-        UtilItemStack.setNBTTagInt(stack, "mode", 1);        
+
+        UtilItemStack.setNBTTagInt(stack, "mode", 1);
         subItems.add(stack.copy());
-        
-        UtilItemStack.setNBTTagInt(stack, "mode", 2);        
+
+        UtilItemStack.setNBTTagInt(stack, "mode", 2);
         subItems.add(stack.copy());
-        
-        UtilItemStack.setNBTTagInt(stack, "mode", 3);        
+
+        UtilItemStack.setNBTTagInt(stack, "mode", 3);
         subItems.add(stack.copy());
-        
-        UtilItemStack.setNBTTagInt(stack, "mode", 4);        
+
+        UtilItemStack.setNBTTagInt(stack, "mode", 4);
         subItems.add(stack.copy());
-        
-        UtilItemStack.setNBTTagInt(stack, "mode", 5);        
+
+        UtilItemStack.setNBTTagInt(stack, "mode", 5);
         subItems.add(stack.copy());
-        
-        UtilItemStack.setNBTTagInt(stack, "mode", 6);        
+
+        UtilItemStack.setNBTTagInt(stack, "mode", 6);
         subItems.add(stack.copy());
-        
-        UtilItemStack.setNBTTagInt(stack, "mode", 7);        
+
+        UtilItemStack.setNBTTagInt(stack, "mode", 7);
         subItems.add(stack.copy());
     }
 

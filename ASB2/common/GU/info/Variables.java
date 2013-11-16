@@ -11,12 +11,8 @@ public class Variables {
     public static boolean DO_RETROGEN = false;
     
     public static int SENDER_ITEM_COST = 100;
-    public static int SENDER_SMELT_COST = 200 + SENDER_ITEM_COST;
-    public static int SENDER_POWERSEND_COST = 500 + SENDER_ITEM_COST;
-    public static int SENDER_POWERSEND_AMOUNT = 500 + SENDER_ITEM_COST;
-    public static int SENDER_BREAKBLOCK_AMOUNT = 50;
-    
-    public static int ANIMATION_SPEED = 5;    
+    public static final int ANIMATION_SPEED = 5;    
+    public static final int BRIGHT_BLOCK = 15728864;
     
     public static void updateVariables(Configuration config) {
         

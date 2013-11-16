@@ -22,10 +22,10 @@ public class BlockMetadataOre extends BlockBase {
     public final ItemStack BlockFireCrystalOre = new ItemStack(this, 1, FIRE_CRYSTAL_ORE);
     public final ItemStack BlockWaterCrystalOre = new ItemStack(this, 1, WATER_CRYSTAL_ORE);
     public final ItemStack BlockEnergyCrystalOre = new ItemStack(this, 1, ENERGY_CRYSTAL_ORE);
-    public final ItemStack BlockGarnetOre = new ItemStack(this, 1, GARNET_ORE);    
-    
+    public final ItemStack BlockGarnetOre = new ItemStack(this, 1, GARNET_ORE);
+
     public final ItemStack BlockGarnetBlock = new ItemStack(this, 1, GARNET_BLOCK);
-    
+
     Icon[] icons = new Icon[7];
 
     public static final int AIR_CRYSTAL_ORE = 0;
@@ -36,12 +36,12 @@ public class BlockMetadataOre extends BlockBase {
     public static final int GARNET_ORE = 5;
 
     public static final int GARNET_BLOCK = 6;
-    
+
     public BlockMetadataOre(int id, Material material) {
         super(id, material);
 
         GameRegistry.registerBlock(this, ItemBlockMetadataBlock.class, this.getUnlocalizedName());
-        
+
         LanguageRegistry.addName(BlockAirCrystalOre, "Air Crystal Ore");
         LanguageRegistry.addName(BlockEarthCrystalOre, "Earth Crystal Ore");
         LanguageRegistry.addName(BlockFireCrystalOre, "Fire Crystal Ore");
@@ -55,15 +55,23 @@ public class BlockMetadataOre extends BlockBase {
 
         switch(stack.getItemDamage()) {
 
-            case AIR_CRYSTAL_ORE : return  Reference.MODDID + ":" + "BlockAirCrystalOre";
-            case EARTH_CRYSTAL_ORE : return  Reference.MODDID + ":" + "BlockEarthCrystalOre";
-            case FIRE_CRYSTAL_ORE : return  Reference.MODDID + ":" + "BlockFireCrystalOre";
-            case WATER_CRYSTAL_ORE : return  Reference.MODDID + ":" + "BlockWaterCrystalOre";
-            case ENERGY_CRYSTAL_ORE : return  Reference.MODDID + ":" + "BlockEnergyCrystalOre";
-            case GARNET_ORE : return  Reference.MODDID + ":" + "BlockGarnetOre";
-            case GARNET_BLOCK : return  Reference.MODDID + ":" + "BlockGarnetBlock";
-            default: return "Notify ASB2";
-        }        
+            case AIR_CRYSTAL_ORE:
+                return Reference.MODDID + ":" + "BlockAirCrystalOre";
+            case EARTH_CRYSTAL_ORE:
+                return Reference.MODDID + ":" + "BlockEarthCrystalOre";
+            case FIRE_CRYSTAL_ORE:
+                return Reference.MODDID + ":" + "BlockFireCrystalOre";
+            case WATER_CRYSTAL_ORE:
+                return Reference.MODDID + ":" + "BlockWaterCrystalOre";
+            case ENERGY_CRYSTAL_ORE:
+                return Reference.MODDID + ":" + "BlockEnergyCrystalOre";
+            case GARNET_ORE:
+                return Reference.MODDID + ":" + "BlockGarnetOre";
+            case GARNET_BLOCK:
+                return Reference.MODDID + ":" + "BlockGarnetBlock";
+            default:
+                return "Notify ASB2";
+        }
     }
 
     @Override
@@ -92,7 +100,7 @@ public class BlockMetadataOre extends BlockBase {
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void getSubBlocks(int unknown, CreativeTabs tab, List subItems) {
 
         subItems.add(new ItemStack(this, 1, AIR_CRYSTAL_ORE));
@@ -111,28 +119,35 @@ public class BlockMetadataOre extends BlockBase {
 
         switch(metadata) {
 
-            case AIR_CRYSTAL_ORE: list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemAirCrystalShard, world.rand.nextInt(5) + 1));
-            break;
-            case EARTH_CRYSTAL_ORE: list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemEarthCrystalShard, world.rand.nextInt(5) + 1));
-            break;
-            case FIRE_CRYSTAL_ORE: list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemFireCrystalShard, world.rand.nextInt(5) + 1));
-            break;
-            case WATER_CRYSTAL_ORE: list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemWaterCrystalShard, world.rand.nextInt(5) + 1));
-            break;
-            case ENERGY_CRYSTAL_ORE: list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemEnergyCrystalShard, world.rand.nextInt(5) + 1));
-            break;
-            case GARNET_ORE: list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemGarnet, world.rand.nextInt(5) + 1));
-            break;
-            case GARNET_BLOCK: list.add(BlockGarnetOre);
-            break;
+            case AIR_CRYSTAL_ORE:
+                list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemAirCrystalShard, world.rand.nextInt(5) + 1));
+                break;
+            case EARTH_CRYSTAL_ORE:
+                list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemEarthCrystalShard, world.rand.nextInt(5) + 1));
+                break;
+            case FIRE_CRYSTAL_ORE:
+                list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemFireCrystalShard, world.rand.nextInt(5) + 1));
+                break;
+            case WATER_CRYSTAL_ORE:
+                list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemWaterCrystalShard, world.rand.nextInt(5) + 1));
+                break;
+            case ENERGY_CRYSTAL_ORE:
+                list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemEnergyCrystalShard, world.rand.nextInt(5) + 1));
+                break;
+            case GARNET_ORE:
+                list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemGarnet, world.rand.nextInt(5) + 1));
+                break;
+            case GARNET_BLOCK:
+                list.add(BlockGarnetOre);
+                break;
         }
         return list;
     }
-    
+
     public ItemStack changeDrop(ItemStack stack, int drop) {
-        
+
         ItemStack temp = stack.copy();
-        
+
         temp.stackSize = drop;
         return temp;
     }

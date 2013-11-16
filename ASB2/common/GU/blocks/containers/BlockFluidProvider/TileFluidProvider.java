@@ -22,27 +22,29 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public void updateEntity() {
 
-        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+        if(!worldObj.isRemote) {
 
-            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+            for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
-            if (tile != null) {
+                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
-                if (tile instanceof IFluidHandler) {
+                if(tile != null) {
 
-                    IFluidHandler fTile = (IFluidHandler) tile;
+                    if(tile instanceof IFluidHandler) {
 
-                    if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+                        IFluidHandler fTile = (IFluidHandler) tile;
 
+                        if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 
-                        if(fluidTank.getFluid() != null) {
-                            
-                            UtilFluid.addFluidToTank(fTile, direction, fluidTank.getFluid(), true);
+                            if(fluidTank.getFluid() != null) {
+
+                                UtilFluid.addFluidToTank(fTile, direction, fluidTank.getFluid(), true);
+                            }
                         }
-                    } 
-                    else {
+                        else {
 
-                        UtilFluid.removeFluidFromTank(fTile, direction, fluidTank.getFluid(), true);
+                            UtilFluid.removeFluidFromTank(fTile, direction, fluidTank.getFluid(), true);
+                        }
                     }
                 }
             }
@@ -82,11 +84,11 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
 
-        if (this.fluidTank.getFluid() != null) {
+        if(this.fluidTank.getFluid() != null) {
 
-            if (fluidTank.getFluidAmount() > 0) {
+            if(fluidTank.getFluidAmount() > 0) {
 
-                if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
+                if(this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
 
                     return true;
                 }
@@ -98,7 +100,7 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
 
-        return new FluidTankInfo[] { fluidTank.getInfo() };
+        return new FluidTankInfo[]{fluidTank.getInfo()};
     }
 
     @Override

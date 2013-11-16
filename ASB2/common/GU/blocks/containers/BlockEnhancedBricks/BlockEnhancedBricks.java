@@ -26,7 +26,7 @@ public class BlockEnhancedBricks extends BlockColorable implements IBlockRender 
     public BlockEnhancedBricks(int id, Material material) {
         super(id, material);
         this.useStandardRendering = false;
-        this.registerTile(TileEnchancedBricks.class);
+        this.registerTile(TileEnhancedBricks.class);
     }
 
     @Override
@@ -95,6 +95,6 @@ public class BlockEnhancedBricks extends BlockColorable implements IBlockRender 
     @Override
     public TileEntity createNewTileEntity(World world) {
 
-        return new TileEnchancedBricks();
+        return new TileEnhancedBricks();
     }
 }

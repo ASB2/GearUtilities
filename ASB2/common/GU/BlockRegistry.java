@@ -25,6 +25,7 @@ import GU.blocks.containers.BlockCanvas.BlockCanvas;
 import GU.blocks.containers.BlockConduitInterface.BlockConduitInterface;
 import GU.blocks.containers.BlockConnectableTank.BlockConnectableTank;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
+import GU.blocks.containers.BlockDissolver.BlockDissolver;
 import GU.blocks.containers.BlockEnergyCube.BlockEnergyCube;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
@@ -72,6 +73,7 @@ public class BlockRegistry {
     public static ContainerBase BlockGlassPipe;
     public static ContainerBase BlockAreaBreaker;
     public static ContainerBase BlockMasher;
+    public static ContainerBase BlockDissolver;
     
     private static int id = 500;
 
@@ -198,6 +200,10 @@ public class BlockRegistry {
         BlockMasher = new BlockMasher(config.getBlock("BlockMasher", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockMasher.setBlockName("BlockMasher");
         LanguageRegistry.addName(BlockMasher, "Masher");
+        
+        BlockDissolver = new BlockDissolver(config.getBlock("BlockDissolver", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockDissolver.setBlockName("BlockDissolver");
+        LanguageRegistry.addName(BlockDissolver, "Dissolver");
     }
 
     public static void initTestBlocks(Configuration config) {

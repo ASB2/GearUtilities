@@ -23,7 +23,7 @@ public final class SenderRecipe {
 
         for(SenderInfoHolder recipe : recipeList) {
 
-            if(recipe.getBlockInfo()[0] == blockID && (recipe.getBlockInfo()[1] == blockMeta) || recipe.getBlockInfo()[1] == -1) {
+            if(recipe.getBlockInfo()[0] == blockID && (recipe.getBlockInfo()[1] == blockMeta || recipe.getBlockInfo()[1] == -1)) {
 
                 return recipe.getResults();
             }

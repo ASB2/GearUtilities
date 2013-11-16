@@ -2,6 +2,6 @@ package GU.blocks.containers.BlockEnhancedBricks;
 
 import GU.color.TileColorable;
 
-public class TileEnchancedBricks extends TileColorable {
+public class TileEnhancedBricks extends TileColorable {
 
 }
