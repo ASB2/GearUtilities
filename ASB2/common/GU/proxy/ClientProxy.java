@@ -41,6 +41,7 @@ import GU.items.ItemBloodStone.BloodStoneRenderer;
 import GU.items.ItemHandheldTank.HandheldTankRenderer;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import GU.models.BlockSimpleRenderer;
+import GU.sounds.SoundHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -50,7 +51,8 @@ public class ClientProxy extends CommonProxy {
     public void register() {
         
         Models.initModels();
-
+        SoundHandler.init();
+        
         RenderingRegistry.registerEntityRenderingHandler(EntityTestEntity.class, new TestEntityRenderer());
         RenderingRegistry.registerEntityRenderingHandler(EntityTileFinder.class, new InfoClusterRenderer());
         

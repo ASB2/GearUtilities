@@ -43,6 +43,8 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
     public static final int SMELTER = 6;
     public static final int CUSTOM = 7;
 
+    public static int MAX_DISTANCE = 10;
+
     int currentMode;
 
     public TileSender() {
@@ -340,6 +342,31 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
                     }
                 }
                 break;
+            }
+        }
+    }
+
+    public TileEntity getNearestInventory(ForgeDirection direction) {
+
+        Vector3 location = new Vector3(this).add(direction);
+
+        location.add(direction);
+
+        int distance = 2;
+
+        while (true) {
+
+            if(distance < MAX_DISTANCE) {
+
+                if(location.getTileEntity(worldObj) != null && location.getTileEntity(worldObj) instanceof IInventory) {
+
+                    return location.getTileEntity(worldObj);
+                }
+                else {
+
+                    location.add(direction);
+                    distance++;
+                }
             }
         }
     }

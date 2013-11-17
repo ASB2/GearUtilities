@@ -22,7 +22,6 @@ import GU.entity.EntityPotion.EntityModularPotion;
 import GU.entity.EntityTest.EntityTestEntity;
 import GU.entity.EntityTileFinder.EntityTileFinder;
 import GU.info.Gui;
-import GU.sounds.SoundHandler;
 import GU.worldGen.RetroGenManager;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -34,7 +33,6 @@ public class CommonProxy implements IGuiHandler {
     public void register() {
 
         TickRegistry.registerTickHandler(new RetroGenManager(), Side.SERVER);
-        SoundHandler.init();
 
         EntityRegistry.registerModEntity(EntityTestEntity.class, "Test Entity", 0, GearUtilities.instance, 80, 3, true);
         EntityRegistry.registerModEntity(EntityModularPotion.class, "Modular Potion", 1, GearUtilities.instance, 80, 3, true);
