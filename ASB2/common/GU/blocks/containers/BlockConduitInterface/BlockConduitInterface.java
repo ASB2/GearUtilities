@@ -14,6 +14,7 @@ public class BlockConduitInterface extends ContainerBase {
         this.useStandardRendering = false;
     }
 
+    @Override
     public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
 
         super.breakBlock(world, x, y, z, par5, par6);

@@ -22,6 +22,7 @@ public abstract class BlockColorable extends ContainerBase {
         // TODO Auto-generated constructor stub
     }
 
+    @Override
     public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection side) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);

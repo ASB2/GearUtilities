@@ -34,6 +34,7 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
         this.posZ = position.z;
     }
 
+    @Override
     public void onUpdate() {
         super.onUpdate();
     }

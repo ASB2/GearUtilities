@@ -17,6 +17,7 @@ public class ItemBlockConnectableTank extends GUItemBlock {
         super(id);
     }
 
+    @Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
 
         boolean itWorked = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
@@ -35,6 +36,7 @@ public class ItemBlockConnectableTank extends GUItemBlock {
         return itWorked;
     }
 
+    @Override
     @SuppressWarnings({"rawtypes", "unchecked"})
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
 

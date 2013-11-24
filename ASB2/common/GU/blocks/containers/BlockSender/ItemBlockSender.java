@@ -15,6 +15,7 @@ public class ItemBlockSender extends GUItemBlock {
         this.setMaxDamage(0);
     }
 
+    @Override
     @SuppressWarnings({"rawtypes", "unchecked"})
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
 
@@ -60,6 +61,7 @@ public class ItemBlockSender extends GUItemBlock {
         return damageValue;
     }
 
+    @Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
 
         boolean itWorked = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);

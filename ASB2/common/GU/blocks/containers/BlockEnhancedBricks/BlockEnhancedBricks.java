@@ -36,6 +36,7 @@ public class BlockEnhancedBricks extends BlockColorable implements IBlockRender 
         overlay = iconRegister.registerIcon(Reference.MODDID + ":BlockEnhancedBricksOverlay");
     }
 
+    @Override
     public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
 
         int id = UtilDirection.translateDirectionToBlockId(world, ForgeDirection.getOrientation(side), x, y, z);
@@ -53,6 +54,7 @@ public class BlockEnhancedBricks extends BlockColorable implements IBlockRender 
         return true;
     }
 
+    @Override
     public int getRenderType() {
 
         return BlockSimpleRenderer.renderID;

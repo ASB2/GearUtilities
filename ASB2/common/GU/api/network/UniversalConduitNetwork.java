@@ -73,7 +73,7 @@ public class UniversalConduitNetwork implements INetwork {
 
         while (stepByStep.hasNext()) {
 
-            Vector3 currentVector = (Vector3) stepByStep.next();
+            Vector3 currentVector = stepByStep.next();
 
             if(currentVector.getTileEntity(world) != null) {
 

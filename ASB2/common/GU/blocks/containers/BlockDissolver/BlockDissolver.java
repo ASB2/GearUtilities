@@ -11,7 +11,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilRender;
+import GU.GearUtilities;
 import GU.blocks.containers.ContainerBase;
+import GU.info.Gui;
 import GU.info.Reference;
 import GU.info.Variables;
 import GU.models.BlockSimpleRenderer;
@@ -34,6 +36,7 @@ public class BlockDissolver extends ContainerBase implements IBlockRender {
 
         if(!player.isSneaking()) {
 
+            player.openGui(GearUtilities.instance, Gui.DISSOLVER, world, x, y, z);
             return true;
         }
         return false;
@@ -85,6 +88,7 @@ public class BlockDissolver extends ContainerBase implements IBlockRender {
     @Override
     public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
 
+        renderer.setRenderBounds(.01, .01, .01, .99, .99, .99);
         UtilRender.renderStandardInvBlock(renderer, block, meta);
     }
 

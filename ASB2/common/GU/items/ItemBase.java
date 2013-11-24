@@ -1,5 +1,6 @@
 package GU.items;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -30,18 +31,18 @@ public class ItemBase extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public boolean requiresMultipleRenderPasses() {
-        
+
         return true;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
-        
+
         info.add("From: " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + Reference.NAME);
-        
-        if(Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-            
+
+        if(Keyboard.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak.keyCode)) {
+
             this.addInformationSneaking(itemStack, player, info, var1);
         }
         else {
@@ -50,19 +51,19 @@ public class ItemBase extends Item {
         }
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
 
         info.add("Made just for you " + player.username);
     }
-    
+
     @Override
     public void registerIcons(IconRegister iconRegister) {
 
         itemIcon = iconRegister.registerIcon(Reference.MODDID + ":ItemTestItem");
         texture = iconRegister.registerIcon(Reference.MODDID + ":" + itemName);
     }
-    
+
     public void setItemName(String texture) {
 
         this.itemName = texture;
@@ -72,7 +73,7 @@ public class ItemBase extends Item {
     @Override
     public Icon getIcon(ItemStack stack, int pass) {
 
-        if (useDefaultTexture || texture == null)
+        if(useDefaultTexture || texture == null)
             return this.itemIcon;
 
         return texture;

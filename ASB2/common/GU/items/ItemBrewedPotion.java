@@ -29,6 +29,7 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
         info.add(UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Strength: " + this.getStrength(stack));
     }
 
+    @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void addInformationSneaking(ItemStack stack, EntityPlayer player, java.util.List info, boolean var1) {
 
@@ -43,6 +44,7 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
         }
     }
 
+    @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 
         if(!this.getThrowable(itemStack)) {
@@ -71,16 +73,19 @@ public class ItemBrewedPotion extends ItemBase implements IPotion {
         }
     }
 
+    @Override
     public int getMaxItemUseDuration(ItemStack stack) {
 
         return getDuration(stack);
     }
 
+    @Override
     public EnumAction getItemUseAction(ItemStack itemStack) {
 
         return EnumAction.eat;
     }
 
+    @Override
     public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player) {
 
         for(ItemStack stack : this.getModules(itemStack)) {

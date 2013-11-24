@@ -35,6 +35,7 @@ public class ItemPotionIngredients extends ItemBase implements IPotionIngredient
         }
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister) {
         super.registerIcons(iconRegister);
@@ -57,6 +58,7 @@ public class ItemPotionIngredients extends ItemBase implements IPotionIngredient
         return damageValue;
     }
 
+    @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)    
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List list) {

@@ -39,7 +39,7 @@ public class GuiSender extends GuiBase {
             Color color = new Color(tileEntity.fluidTank.getFluid().getFluid().getColor());
             
             GL11.glColor3f(color.getRed(), color.getGreen(), color.getBlue());
-            this.scaleFluid(38, 6, UtilMisc.getAmountScaled(75, (int) tileEntity.fluidTank.getFluidAmount(), (int) tileEntity.fluidTank.getCapacity()), tileEntity.fluidTank.getFluid().getFluid().getStillIcon());
+            this.scaleFluid(38, 6, UtilMisc.getAmountScaled(75, tileEntity.fluidTank.getFluidAmount(), tileEntity.fluidTank.getCapacity()), tileEntity.fluidTank.getFluid().getFluid().getStillIcon());
         }
         
         GL11.glEnable(GL11.GL_LIGHTING);

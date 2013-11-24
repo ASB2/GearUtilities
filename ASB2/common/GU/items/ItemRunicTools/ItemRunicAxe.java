@@ -101,6 +101,7 @@ public class ItemRunicAxe extends AxeBase implements IPowerItem {
         info.add("Maximum Power: " + this.getPowerProvider(itemStack).getPowerMax());
     }
     
+    @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase entityHit, EntityLivingBase entityHitting) {
 
         if(!getPowerProvider(stack).usePower(10, ForgeDirection.UNKNOWN, true)) {
@@ -117,6 +118,7 @@ public class ItemRunicAxe extends AxeBase implements IPowerItem {
         return super.hitEntity(stack, entityHit, entityHitting);
     }
 
+    @Override
     public boolean onBlockDestroyed(ItemStack stack, World world, int x, int y, int z, int side, EntityLivingBase entity) {
 
         if(!getPowerProvider(stack).usePower(10, ForgeDirection.UNKNOWN, true)) {
@@ -125,7 +127,7 @@ public class ItemRunicAxe extends AxeBase implements IPowerItem {
 
                 if(!PowerHelper.useEnergyFromInventory(((EntityPlayer)entity).inventory, 10, true)) {
 
-                    if ((double)Block.blocksList[x].getBlockHardness(world, y, z, side) != 0.0D) {
+                    if (Block.blocksList[x].getBlockHardness(world, y, z, side) != 0.0D) {
 
                         stack.damageItem(1, entity);
                     }

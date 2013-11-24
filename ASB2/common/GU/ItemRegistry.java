@@ -37,6 +37,7 @@ import GU.items.ItemRunicTools.ItemRunicSword;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
 import GU.items.potionIngredients.ItemPotionIngredients;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import GU.items.*;
 
 public class ItemRegistry {
 
@@ -64,6 +65,7 @@ public class ItemRegistry {
     public static ItemBase ItemShifter;
     public static ItemBase ItemAquaBobber;
     public static SwordBase ItemReaperSword;
+    public static ItemBase ItemFamilarEmbryo;
     
     private static int id = 5000;
 
@@ -223,6 +225,10 @@ public class ItemRegistry {
         
         ItemReaperSword = new ItemReaperSword(config.getItem("ItemReaperSword", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemReaperSword");
         LanguageRegistry.addName(ItemReaperSword, "Reaper's Sword");
+        
+        ItemFamilarEmbryo = new ItemFamilarEmbryo(config.getItem("ItemFamilarEmbryo", ItemRegistry.getNextBaseID()).getInt());
+        ItemFamilarEmbryo.setItemName("ItemFamilarEmbryo");
+        LanguageRegistry.addName(ItemFamilarEmbryo, "Familar Embryo");
     }
 
     public static int getNextBaseID() {

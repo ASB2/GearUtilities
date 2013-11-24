@@ -18,6 +18,7 @@ public class TileUniversalConduit extends TileBase implements IConductor {
         this.setNetwork(new UniversalConduitNetwork());
     }
 
+    @Override
     public void updateEntity() {
 
         waitTimer.update();

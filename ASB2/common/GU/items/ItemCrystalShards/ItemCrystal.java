@@ -52,6 +52,7 @@ public class ItemCrystal extends ItemBase implements ISolarFocus {
         }
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister) {
         super.registerIcons(iconRegister);
@@ -74,6 +75,7 @@ public class ItemCrystal extends ItemBase implements ISolarFocus {
         return damageValue;
     }
 
+    @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)    
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List list) {

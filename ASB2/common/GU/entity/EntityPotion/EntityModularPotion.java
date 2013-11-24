@@ -29,16 +29,19 @@ public class EntityModularPotion extends EntityThrowable {
         this.stack = itemStack;        
     }
 
+    @Override
     protected float getGravityVelocity() {
 
         return 0.05F;
     }
 
+    @Override
     protected float func_70182_d() {
 
         return 01.5F;
     }
 
+    @Override
     protected float func_70183_g() {
 
         return super.func_70183_g();
@@ -112,6 +115,7 @@ public class EntityModularPotion extends EntityThrowable {
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
+    @Override
     public void readEntityFromNBT(NBTTagCompound tag)
     {
         super.readEntityFromNBT(tag);
@@ -130,6 +134,7 @@ public class EntityModularPotion extends EntityThrowable {
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
+    @Override
     public void writeEntityToNBT(NBTTagCompound tag) {
 
         super.writeEntityToNBT(tag);

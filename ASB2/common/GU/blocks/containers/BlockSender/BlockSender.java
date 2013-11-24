@@ -36,6 +36,7 @@ public class BlockSender extends ContainerBase {
         return array;
     }
 
+    @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
@@ -80,11 +81,13 @@ public class BlockSender extends ContainerBase {
         subItems.add(stack.copy());
     }
 
+    @Override
     public ForgeDirection[] getValidRotations(World worldObj, int x, int y, int z) {
 
         return ForgeDirection.VALID_DIRECTIONS;
     }
 
+    @Override
     public void setBlockName(String texture) {
 
         this.blockName = texture;

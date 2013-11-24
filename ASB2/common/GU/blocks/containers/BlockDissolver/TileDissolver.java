@@ -3,6 +3,7 @@ package GU.blocks.containers.BlockDissolver;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -23,7 +24,7 @@ import GU.api.wait.Wait;
 import GU.blocks.containers.TileFluidBase;
 import GU.blocks.containers.BlockEnhancedBricks.TileEnhancedBricks;
 
-public class TileDissolver extends TileFluidBase implements IPowerMisc {
+public class TileDissolver extends TileFluidBase implements IPowerMisc, IInventory {
 
     public TileDissolver() {
 
@@ -31,6 +32,7 @@ public class TileDissolver extends TileFluidBase implements IPowerMisc {
         waitTimer = new Wait(10, this, 0);
     }
 
+    @Override
     public void updateEntity() {
 
         waitTimer.update();
@@ -321,5 +323,77 @@ public class TileDissolver extends TileFluidBase implements IPowerMisc {
     public IPowerProvider getPowerProvider() {
 
         return powerProvider;
+    }
+
+    @Override
+    public int getSizeInventory() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int i) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ItemStack decrStackSize(int i, int j) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ItemStack getStackInSlotOnClosing(int i) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void setInventorySlotContents(int i, ItemStack itemstack) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public String getInvName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean isInvNameLocalized() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public int getInventoryStackLimit() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void openChest() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void closeChest() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

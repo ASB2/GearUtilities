@@ -3,7 +3,7 @@ package GU.api;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.IFluidTank;
 
-public interface IAdvancedFluidContainer {
+public interface IAdvancedFluidHandler {
 
-    IFluidTank getTank(ItemStack stack);
+    IFluidTank[] getTank(ItemStack stack);
 }

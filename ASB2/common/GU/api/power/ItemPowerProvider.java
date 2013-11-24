@@ -34,6 +34,7 @@ public class ItemPowerProvider implements IPowerProvider {
         return UtilItemStack.getNBTTagFloat(item, "powerMax");
     }
 
+    @Override
     public boolean usePower(float power, ForgeDirection direction, boolean doUse) {
 
         if(currentState == State.SINK) {
@@ -67,6 +68,7 @@ public class ItemPowerProvider implements IPowerProvider {
         return false;
     }
 
+    @Override
     public boolean gainPower(float power, ForgeDirection direction, boolean doUse) {
 
         if(currentState == State.SOURCE) {

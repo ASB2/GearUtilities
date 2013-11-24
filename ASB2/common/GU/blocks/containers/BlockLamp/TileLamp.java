@@ -30,6 +30,7 @@ public class TileLamp extends TileColorable {
         return 15;
     }
     
+    @Override
     public void trigger(int id) {
 
         PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, new ColorPacket(xCoord, yCoord, zCoord, coloredSides[ForgeDirection.DOWN.ordinal()], ForgeDirection.DOWN.ordinal()).makePacket());

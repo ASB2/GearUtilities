@@ -15,6 +15,7 @@ public class ItemBloodStone extends ItemBase implements IPowerItem {
         this.setMaxStackSize(1);
     }
 
+    @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
 

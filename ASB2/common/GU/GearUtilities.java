@@ -73,7 +73,7 @@ public final class GearUtilities {
         FluidRegistry.initFluids();
         RetroGenManager.init();
         MinecraftForge.EVENT_BUS.register(new ForgeEvents());
-//        MinecraftForge.EVENT_BUS.register(BlockRegistry.BlockBloodPlant);
+        // MinecraftForge.EVENT_BUS.register(BlockRegistry.BlockBloodPlant);
         GameRegistry.registerFuelHandler(new GUFuelHandler());
         instance = this;
 
@@ -82,6 +82,8 @@ public final class GearUtilities {
         metadata.authorList = Arrays.asList("ASB2");
         metadata.description = "A mod from ASB2 to ASB2";
         metadata.logoFile = "questologybe:assets/questologybe/banner.png";
+
+        config.save();
     }
 
     @EventHandler
@@ -103,10 +105,11 @@ public final class GearUtilities {
         GameRegistry.registerWorldGenerator(new WorldGenBlockGarnetOre());
         GameRegistry.registerWorldGenerator(new WorldGenBlockFalseBlock());
 
+        GameRegistry.registerPlayerTracker(new PlayerTracker());
+
         // OreDictionary.registerOre("bioMass", Item.seeds);
         // GameRegistry.registerWorldGenerator(new
         // WorldGenBlockAirCrystalOre());
-        // GameRegistry.registerPlayerTracker(new TechCraftPlayerTracker ());
         // GameRegistry.registerPlayerTracker(new TechCraftPlayerTracker ());
         // MinecraftForge.EVENT_BUS.register(new TechCraftForgeEvents());
     }

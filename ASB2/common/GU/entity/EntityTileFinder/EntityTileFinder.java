@@ -80,12 +80,14 @@ public class EntityTileFinder extends EntityBase implements IClustor {
         UtilEntity.damageEntity(worldObj, entity, GUDamageSource.clusterCollision, 100);       
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public float getShadowSize() {
 
         return 0;
     }
 
+    @Override
     public boolean doesEntityNotTriggerPressurePlate() {
 
         return false;

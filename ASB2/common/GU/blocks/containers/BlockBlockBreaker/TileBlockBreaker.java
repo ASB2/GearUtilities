@@ -20,6 +20,7 @@ public class TileBlockBreaker extends TileBase implements IInventory {
         tileInventory = new Inventory(9, Inventory.STANDARD_STACKSIZE, "Block Breaker", true);
     }
 
+    @Override
     public void updateEntity( ){
 
         int[] coords = UtilDirection.translateDirectionToCoords(getOrientation(), this);

@@ -24,6 +24,7 @@ public class TileSolarFocus extends TileBase implements IPowerMisc, IInventory{
         powerProvider = new PowerProvider(PowerClass.LOW, State.SOURCE);
     }
 
+    @Override
     public void updateEntity() {
 
         if((worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()) || worldObj.getBlockLightOpacity(xCoord, yCoord, zCoord) >= 10) {
@@ -32,6 +33,7 @@ public class TileSolarFocus extends TileBase implements IPowerMisc, IInventory{
         }
     }
 
+    @Override
     public void trigger(int id) {
 
         if(tileInventory.getItemArray() != null && tileInventory.getItemArray().length > 0) {

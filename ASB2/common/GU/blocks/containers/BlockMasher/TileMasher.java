@@ -28,6 +28,7 @@ public class TileMasher extends TileFluidBase implements IPowerMisc, IInventory 
         fluidTank = new FluidTank(10000);
     }
 
+    @Override
     public void updateEntity() {
 
         if(shouldCraft || !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {

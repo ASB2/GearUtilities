@@ -12,6 +12,8 @@ import GU.blocks.containers.BlockCamoBlock.ContainerCamoBlock;
 import GU.blocks.containers.BlockCamoBlock.TileCamoBlock;
 import GU.blocks.containers.BlockCreationTable.ContainerCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
+import GU.blocks.containers.BlockDissolver.ContainerDissolver;
+import GU.blocks.containers.BlockDissolver.TileDissolver;
 import GU.blocks.containers.BlockMasher.ContainerMasher;
 import GU.blocks.containers.BlockMasher.TileMasher;
 import GU.blocks.containers.BlockSender.ContainerSender;
@@ -66,6 +68,9 @@ public class CommonProxy implements IGuiHandler {
 
             case Gui.MASHER:
                 return new ContainerMasher(player.inventory, (TileMasher) tile);
+                
+            case Gui.DISSOLVER:
+                return new ContainerDissolver(player.inventory, (TileDissolver) tile);
         }
         return null;
     }

@@ -29,6 +29,7 @@ public class FluidBase extends Fluid {
         return texture;
     }
 
+    @Override
     public int getColor() {
 
         return hexColor;

@@ -1,5 +1,7 @@
 package GU.blocks.containers.BlockSender;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -8,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.FakePlayer;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -20,8 +23,6 @@ import ASB2.utils.UtilInventory;
 import ASB2.utils.UtilItemStack;
 import ASB2.vector.Vector3;
 import GU.BlockRegistry;
-import GU.api.cluster.IClusterTrigger;
-import GU.api.cluster.IClustor;
 import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
@@ -30,10 +31,9 @@ import GU.api.recipe.SenderRecipe;
 import GU.api.wait.Wait;
 import GU.blocks.containers.Inventory;
 import GU.blocks.containers.TileFluidBase;
-import GU.entity.EntityTileFinder.EntityTileFinder;
 import GU.info.Reference;
 
-public class TileSender extends TileFluidBase implements IClusterTrigger, IInventory, IPowerMisc, IFluidHandler {
+public class TileSender extends TileFluidBase implements IInventory, IPowerMisc, IFluidHandler {
 
     public static final int ITEM_MOVEMENT = 1;
     public static final int FLUID_MOVEMENT = 2;
@@ -43,7 +43,7 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
     public static final int SMELTER = 6;
     public static final int CUSTOM = 7;
 
-    public static int MAX_DISTANCE = 10;
+    public static int MAX_DISTANCE = 20;
 
     int currentMode;
 
@@ -55,6 +55,7 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
         fluidTank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME);
     }
 
+    @Override
     public void updateEntity() {
 
         if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
@@ -112,7 +113,20 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
 
                     if(!worldObj.isRemote) {
 
-                        worldObj.spawnEntityInWorld(new EntityTileFinder(worldObj, new Vector3(this), this.getOrientation(), this, 0));
+                        TileEntity foundTiledestination = this.getNearestInventory(getOrientation());
+
+                        if(foundTiledestination != null && foundTiledestination instanceof IInventory) {
+
+                            if(foundTiledestination instanceof ISidedInventory) {
+
+                                UtilInventory.moveEntireISidedInventory(this, getOrientation().getOpposite(), (ISidedInventory) foundTiledestination);
+                            }
+                            else {
+
+                                UtilInventory.moveEntireInventory(this, (IInventory) foundTiledestination);
+                            }
+                            break;
+                        }
                     }
                 }
                 break;
@@ -136,7 +150,12 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
 
                     if(!worldObj.isRemote) {
 
-                        worldObj.spawnEntityInWorld(new EntityTileFinder(worldObj, new Vector3(this), this.getOrientation(), this, 0));
+                        TileEntity foundTiledestination = this.getNearestFluidHandler(getOrientation());
+
+                        if(foundTiledestination != null && foundTiledestination instanceof IFluidHandler) {
+
+                            UtilFluid.moveFluid(this, this.getOrientation(), (IFluidHandler) destination, getOrientation().getOpposite(), true);
+                        }
                     }
                 }
                 break;
@@ -371,44 +390,27 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
         }
     }
 
-    @Override
-    public void onSentClustorCollosion(IClusterTrigger sender, ForgeDirection side, Vector3 position, IClustor clustor, int id) {
+    public TileEntity getNearestFluidHandler(ForgeDirection direction) {
 
-        TileEntity destination = position.getTileEntity(worldObj);
+        Vector3 location = new Vector3(this).add(direction);
 
-        switch(this.getMode()) {
+        location.add(direction);
 
-            case ITEM_MOVEMENT: {
+        int distance = 2;
 
-                if(destination != null && destination instanceof IInventory) {
+        while (true) {
 
-                    if(destination instanceof ISidedInventory) {
+            if(distance < MAX_DISTANCE) {
 
-                        if(UtilInventory.moveEntireISidedInventory(this, side.getOpposite(), (ISidedInventory) destination)) {
+                if(location.getTileEntity(worldObj) != null && location.getTileEntity(worldObj) instanceof IFluidHandler) {
 
-                            clustor.stopClustor();
-                        }
-                    }
-                    else {
-
-                        if(UtilInventory.moveEntireInventory(this, (IInventory) destination)) {
-
-                            clustor.stopClustor();
-                        }
-                    }
+                    return location.getTileEntity(worldObj);
                 }
-                break;
-            }
-            case FLUID_MOVEMENT: {
+                else {
 
-                if(destination != null && destination instanceof IFluidHandler) {
-
-                    if(UtilFluid.moveFluid(this, this.getOrientation(), (IFluidHandler) destination, side.getOpposite(), true)) {
-
-                        clustor.stopClustor();
-                    }
+                    location.add(direction);
+                    distance++;
                 }
-                break;
             }
         }
     }
@@ -418,14 +420,22 @@ public class TileSender extends TileFluidBase implements IClusterTrigger, IInven
 
         ItemStack stack = new ItemStack(BlockRegistry.BlockSender);
         UtilItemStack.setNBTTagInt(stack, "mode", this.getMode());
-        UtilBlock.spawnItemStackEntity(worldObj, xCoord, yCoord, zCoord, stack, 5);
+        UtilBlock.spawnItemStackEntity(worldObj, xCoord, yCoord, zCoord, stack, 1);
         super.invalidate();
     }
 
     @Override
-    public void onClustorCollosion(IClusterTrigger source, ForgeDirection side, Vector3 position, IClustor clustor) {
-        // TODO Auto-generated method stub
+    public double getMaxRenderDistanceSquared() {
 
+        return 16384;
+    }
+
+    @SuppressWarnings("static-access")
+    @Override
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+
+        return this.INFINITE_EXTENT_AABB;
     }
 
     @Override

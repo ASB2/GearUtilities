@@ -22,21 +22,25 @@ public class PowerProvider implements IPowerProvider {
         this.currentState = state;
     }
 
+    @Override
     public float getPowerStored() {
 
         return powerStored;
     }
 
+    @Override
     public float getPowerMax() {
 
         return powerMax;
     }
 
+    @Override
     public PowerClass getPowerClass() {
 
         return this.powerClass;
     }
 
+    @Override
     public boolean usePower(float power, ForgeDirection direction, boolean doUse) {
 
         if(this.getMaxOutput() != -1) {
@@ -65,6 +69,7 @@ public class PowerProvider implements IPowerProvider {
         return false;
     }
 
+    @Override
     public boolean gainPower(float power, ForgeDirection direction, boolean doUse) {
 
         if(this.getMaxInput() != -1) {
@@ -93,22 +98,26 @@ public class PowerProvider implements IPowerProvider {
         return false;
     }
 
+    @Override
     public void setPowerStored(float newPower) {
 
         this.powerStored = newPower;
     }
 
+    @Override
     public void setPowerMax(float newMaxPower) {
 
         this.powerMax = newMaxPower;
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
 
         powerStored = tagCompound.getFloat("powerStored");
         powerMax = tagCompound.getFloat("powerMax");
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound tagCompound) {
 
         tagCompound.setFloat("powerStored", powerStored);

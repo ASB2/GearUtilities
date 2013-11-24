@@ -67,6 +67,7 @@ public class TileColorable extends TileBase implements IColorable, IPeripheral {
         }
     }
 
+    @Override
     public void trigger(int id) {
 
         if(!worldObj.isRemote) {

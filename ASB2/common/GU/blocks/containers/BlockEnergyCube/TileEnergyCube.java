@@ -30,6 +30,7 @@ public class TileEnergyCube extends TileBase implements IPowerMisc, INetworkInte
         network = new UniversalConduitNetwork();
     }
 
+    @Override
     public void updateEntity() {    
 
         waitTimer.update();
@@ -48,6 +49,7 @@ public class TileEnergyCube extends TileBase implements IPowerMisc, INetworkInte
         }
     }
 
+    @Override
     public void trigger(int id) {
 
         if(this.getNetwork() != null) {

@@ -38,6 +38,7 @@ public class BlockConnectableTank extends ContainerBase {
         useStandardRendering = false;
     }
 
+    @Override
     public void setBlockName(String texture) {
 
         this.blockName = texture;

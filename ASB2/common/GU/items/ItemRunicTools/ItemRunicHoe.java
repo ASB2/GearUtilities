@@ -29,6 +29,7 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
         super(id, material, iconLocation);
     }
 
+    @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
 
         if(player.canPlayerEdit(x, y, z, side, stack)) {
@@ -51,7 +52,7 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
             if(side != 0 && air && (i1 == Block.grass.blockID || i1 == Block.dirt.blockID)) {
                 
                 Block block = Block.tilledField;
-                world.playSoundEffect((double) ((float) x + 0.5F), (double) ((float) y + 0.5F), (double) ((float) z + 0.5F), block.stepSound.getStepSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+                world.playSoundEffect(x + 0.5F, y + 0.5F, z + 0.5F, block.stepSound.getStepSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
 
                 if(world.isRemote) {
 
@@ -152,6 +153,7 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
         info.add("Maximum Power: " + this.getPowerProvider(itemStack).getPowerMax());
     }
 
+    @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase entityHit, EntityLivingBase entityHitting) {
 
         if(!getPowerProvider(stack).usePower(10, ForgeDirection.UNKNOWN, true)) {
@@ -168,6 +170,7 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
         return false;
     }
 
+    @Override
     public boolean onBlockDestroyed(ItemStack stack, World world, int x, int y, int z, int side, EntityLivingBase entity) {
 
         if(!getPowerProvider(stack).usePower(10, ForgeDirection.UNKNOWN, true)) {
@@ -176,7 +179,7 @@ public class ItemRunicHoe extends HoeBase implements IPowerItem {
 
                 if(!PowerHelper.useEnergyFromInventory(((EntityPlayer) entity).inventory, 10, true)) {
 
-                    if((double) Block.blocksList[x].getBlockHardness(world, y, z, side) != 0.0D) {
+                    if(Block.blocksList[x].getBlockHardness(world, y, z, side) != 0.0D) {
 
                         stack.damageItem(1, entity);
                     }

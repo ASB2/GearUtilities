@@ -4,6 +4,7 @@ import net.minecraftforge.common.Configuration;
 
 public class Variables {
 
+    public final static String MISC_MEAT = "MISC_MEAT";
     public final static String CRYSTALS_ALL = "CRYSTALS_ALL";
     
     public static int POTION_BASE_COST = 100;    

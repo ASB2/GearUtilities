@@ -11,7 +11,8 @@ public class PotionBottleSlot extends Slot {
         super(par1iInventory, par2, par3, par4);
     }
 
- public boolean isItemValid(ItemStack itemStack) {
+ @Override
+public boolean isItemValid(ItemStack itemStack) {
         
         if(itemStack != null) {
             

@@ -12,6 +12,7 @@ public class Gui {
     public static final int SENDER = 5;
     public static final int SOLAR_FOCUS = 6;
     public static final int MASHER = 7;
+    public static final int DISSOLVER = 8;
     
     public static final ResourceLocation GUI_SMALL_BLANK = new ResourceLocation(Reference.MODDID + ":textures/blank/guiblank.png");
     public static final ResourceLocation GUI_DEFAULT = new ResourceLocation(Reference.MODDID + ":textures/blank/defaultGui.png");

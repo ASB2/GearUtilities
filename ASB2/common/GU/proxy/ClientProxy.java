@@ -18,6 +18,7 @@ import GU.blocks.containers.BlockConnectableTank.ConnectableTankRenderer;
 import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
+import GU.blocks.containers.BlockDissolver.GuiDissolver;
 import GU.blocks.containers.BlockEnergyCube.EnergyCubeRenderer;
 import GU.blocks.containers.BlockEnergyCube.TileEnergyCube;
 import GU.blocks.containers.BlockGlassPipe.GlassPipeRenderer;
@@ -122,6 +123,9 @@ public class ClientProxy extends CommonProxy {
             
                 case Gui.MASHER:
                     return new GuiMasher(player.inventory, tile);
+                    
+                case Gui.DISSOLVER:
+                    return new GuiDissolver(player.inventory, tile);
             }
         }
         return null;

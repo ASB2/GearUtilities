@@ -27,6 +27,7 @@ public class Packet implements IPacket {
         this.direction = direction;
     }
 
+    @Override
     public ForgeDirection getDirection() {
 
         return direction;
@@ -42,10 +43,12 @@ public class Packet implements IPacket {
         return storedFluid;
     }
 
+    @Override
     public void load(NBTTagCompound tag) {
 
     }
 
+    @Override
     public void save(NBTTagCompound tag) {
 
         if(storedItemStack != null) {

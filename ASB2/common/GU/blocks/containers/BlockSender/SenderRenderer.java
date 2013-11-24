@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilRender;
-import ASB2.vector.*;
+import ASB2.vector.Vector3;
 import GU.info.Models;
 import GU.info.Textures;
 import GU.info.Variables;
@@ -158,6 +158,51 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
                 }
             }
         }
+        
+        switch(tile.getOrientation()) {
+
+            case DOWN: {
+
+                UtilRender.renderBox(x, y + 1, z, 1, -TileSender.MAX_DISTANCE, 1);
+                break;
+            }
+            
+            case UP: {
+
+                UtilRender.renderBox(x, y, z, 1, TileSender.MAX_DISTANCE, 1);
+                break;
+            }
+            
+            case NORTH: {
+
+                UtilRender.renderBox(x, y, z + 1, 1, 1, -TileSender.MAX_DISTANCE);
+                break;
+            }
+            
+            case SOUTH: {
+
+                UtilRender.renderBox(x, y, z, 1, 1, TileSender.MAX_DISTANCE);
+                break;
+            }
+            
+            case WEST: {
+
+                UtilRender.renderBox(x + 1, y, z, -TileSender.MAX_DISTANCE, 1, 1);
+                break;
+            }
+            
+            case EAST: {
+
+                UtilRender.renderBox(x, y, z, TileSender.MAX_DISTANCE, 1, 1);
+                break;
+            }
+            
+            case UNKNOWN: break;
+        }
+        
+        GL11.glEnable(2896);
+        GL11.glEnable(3553);
+        
         GL11.glPopMatrix();
     }
 

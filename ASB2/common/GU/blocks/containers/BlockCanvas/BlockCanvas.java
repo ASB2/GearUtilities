@@ -33,6 +33,7 @@ public class BlockCanvas extends BlockColorable implements IBlockRender {
         this.registerTile(TileCanvas.class);
     }
 
+    @Override
     public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
 
         int id = UtilDirection.translateDirectionToBlockId(world, ForgeDirection.getOrientation(side), x, y, z);
@@ -56,6 +57,7 @@ public class BlockCanvas extends BlockColorable implements IBlockRender {
         return true;
     }
 
+    @Override
     public boolean isOpaqueCube() {
 
         return false;

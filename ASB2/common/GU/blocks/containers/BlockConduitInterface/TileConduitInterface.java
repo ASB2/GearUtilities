@@ -21,6 +21,7 @@ public class TileConduitInterface extends TileBase implements IPacketHandler {
         this.waitTimer = new Wait(10, this, 0);
     }
 
+    @Override
     public void updateEntity() {
 
         waitTimer.update();
