@@ -159,6 +159,15 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
             }
         }
         
+        GL11.glPopMatrix();
+        
+        GL11.glPushMatrix();
+        
+        GL11.glColor3d(1, 1, 1);
+        
+        GL11.glDisable(2896);
+        GL11.glDisable(3553);
+        
         switch(tile.getOrientation()) {
 
             case DOWN: {

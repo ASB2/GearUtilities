@@ -1,15 +1,11 @@
 package GU.blocks.containers.BlockEnergyCube;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilDirection;
-import ASB2.vector.Vector3;
-import GU.api.MiscHelpers;
-import GU.api.network.INetwork;
-import GU.api.network.INetworkInterface;
-import GU.api.network.UniversalConduitNetwork;
 import GU.api.power.IPowerMisc;
 import GU.api.power.IPowerProvider;
 import GU.api.power.PowerClass;
@@ -19,19 +15,18 @@ import GU.api.power.State;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 
-public class TileEnergyCube extends TileBase implements IPowerMisc, INetworkInterface {
+public class TileEnergyCube extends TileBase implements IPowerMisc {
 
-    INetwork network;
+    boolean[] importing = new boolean[ForgeDirection.values().length];
 
     public TileEnergyCube() {
 
         this.powerProvider = new PowerProvider(4000, PowerClass.LOW, State.OTHER);
         this.waitTimer = new Wait(10, this, 0);
-        network = new UniversalConduitNetwork();
     }
 
     @Override
-    public void updateEntity() {    
+    public void updateEntity() {
 
         waitTimer.update();
     }
@@ -39,29 +34,56 @@ public class TileEnergyCube extends TileBase implements IPowerMisc, INetworkInte
     @Override
     public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
 
-        if(isSneaking) {
+        if(!isSneaking) {
 
-            world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, ForgeDirection.getOrientation(side).ordinal(), 3);
+            if(importing[side]) {
+
+                importing[side] = false;
+                return;
+            }
+            else {
+
+                importing[side] = true;
+                return;
+            }
         }
         else {
 
-            world.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, ForgeDirection.getOrientation(side).getOpposite().ordinal(), 3);
+            side = ForgeDirection.getOrientation(side).getOpposite().ordinal();
+
+            if(importing[side]) {
+
+                importing[side] = false;
+                return;
+            }
+            else {
+
+                importing[side] = true;
+                return;
+            }
         }
     }
 
     @Override
     public void trigger(int id) {
 
-        if(this.getNetwork() != null) {
+        this.updateClients();
 
-            MiscHelpers.addConductorsAround(this, worldObj, this.getNetwork());        
-        }
-        
-        TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation());
+        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
-        if(tile != null && tile instanceof IPowerMisc) {
+            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
 
-            PowerHelper.moveEnergy(this.getPowerProvider(), ((IPowerMisc)tile).getPowerProvider(), this.getOrientation(), this.getOrientation().getOpposite(), true);
+            if(tile != null && tile instanceof IPowerMisc) {
+
+                if(!importing[direction.ordinal()]) {
+                    
+                    PowerHelper.moveEnergy(this.getPowerProvider(), ((IPowerMisc) tile).getPowerProvider(), direction, direction.getOpposite(), true);
+                }
+                else {
+                    
+                    PowerHelper.moveEnergy(((IPowerMisc) tile).getPowerProvider(), this.getPowerProvider(), direction, direction.getOpposite(), true);
+                }
+            }
         }
     }
 
@@ -72,34 +94,22 @@ public class TileEnergyCube extends TileBase implements IPowerMisc, INetworkInte
     }
 
     @Override
-    public boolean setNetwork(INetwork network) {
+    public void readFromNBT(NBTTagCompound tag) {
+        super.readFromNBT(tag);
 
-        this.network = network;
-        
-        if(network != null) {            
+        for(int i = 0; i < importing.length; i++) {
 
-            if(!network.getConductors().contains(new Vector3(this))) {
-
-                network.addConductor(new Vector3(this));
-            }
-            
-            if(!network.getGUUPowerInterfaces().contains(new Vector3(this))) {
-
-                network.addGUUPowerInterface(new Vector3(this));
-            }
+            importing[i] = tag.getBoolean("importing " + i);
         }
-        return true;
     }
 
     @Override
-    public INetwork getNetwork() {
+    public void writeToNBT(NBTTagCompound tag) {
+        super.writeToNBT(tag);
 
-        return network;
-    }
+        for(int i = 0; i < importing.length; i++) {
 
-    @Override
-    public TileEntity[] getAvaliableTileEntities(ForgeDirection direction) {
-
-        return new TileEntity[]{this};
+            tag.setBoolean("importing " + i, importing[i]);
+        }
     }
 }

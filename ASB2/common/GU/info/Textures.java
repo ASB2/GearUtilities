@@ -34,11 +34,11 @@ public final class Textures {
 
     public static final ResourceLocation UNIVERSAL_CONDUIT = new ResourceLocation(Reference.MODDID + ":textures/models/ModelUniversalConduit/ModelUniversalConduit.png");
     public static final ResourceLocation UNIVERSAL_CONDUIT_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelUniversalConduit/ModelUniversalConduitCenter.png");
-    
+
     public static final ResourceLocation CONDUIT_INTERFACE_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelConduitInterface/ModelConduitInterfaceCenter.png");
     public static final ResourceLocation CONDUIT_INTERFACE_IMPORTING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelConduitInterface/ModelConduitInterfaceImporting.png");
     public static final ResourceLocation CONDUIT_INTERFACE_EXPORTING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelConduitInterface/ModelConduitInterfaceExporting.png");
-    
+
     public static final ResourceLocation ENERGY_CUBE_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/ModelEnergyCubeCenter.png");
     public static final ResourceLocation ENERGY_CUBE_UP = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/ModelEnergyCubeUp.png");
     public static final ResourceLocation ENERGY_CUBE_DOWN = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/ModelEnergyCubeDown.png");
@@ -46,7 +46,7 @@ public final class Textures {
     public static final ResourceLocation ENERGY_CUBE_SOUTH = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/ModelEnergyCubeSouth.png");
     public static final ResourceLocation ENERGY_CUBE_EAST = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/ModelEnergyCubeEast.png");
     public static final ResourceLocation ENERGY_CUBE_WEST = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/ModelEnergyCubeWest.png");
-    
+
     public static final ResourceLocation ENERGY_CUBE_CENTER_EXPORTING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/exporting/ModelEnergyCubeCenter.png");
     public static final ResourceLocation ENERGY_CUBE_UP_EXPORTING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/exporting/ModelEnergyCubeUp.png");
     public static final ResourceLocation ENERGY_CUBE_DOWN_EXPORTING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/exporting/ModelEnergyCubeDown.png");
@@ -54,9 +54,13 @@ public final class Textures {
     public static final ResourceLocation ENERGY_CUBE_SOUTH_EXPORTING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/exporting/ModelEnergyCubeSouth.png");
     public static final ResourceLocation ENERGY_CUBE_EAST_EXPORTING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/exporting/ModelEnergyCubeEast.png");
     public static final ResourceLocation ENERGY_CUBE_WEST_EXPORTING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEnergyCube/exporting/ModelEnergyCubeWest.png");
-    
+
     public static final ResourceLocation HANDHELD_TANK_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelHandheldTank/ModelHandheldTankCenter.png");
     public static final ResourceLocation HANDHELD_TANK_OUTSIDE = new ResourceLocation(Reference.MODDID + ":textures/models/ModelHandheldTank/ModelHandheldTankOutside.png");
+
+    public static final ResourceLocation SOLAR_GYRO_BASE = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSolarGyro/ModelSolarGyroBase.png");
+    public static final ResourceLocation SOLAR_GYRO_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSolarGryo/ModelSolarGyroCenter.png");
+    public static final ResourceLocation SOLAR_GYRO_OUTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSolarGyro/ModelSolarGyroOuter.png");
 
     public static final ResourceLocation CRYSTAL_BLANK = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalBlank.png");
     public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalAir.png");

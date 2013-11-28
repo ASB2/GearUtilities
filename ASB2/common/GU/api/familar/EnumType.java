@@ -1,4 +1,4 @@
-package GU.api.embryo;
+package GU.api.familar;
 
 public enum EnumType {
 

@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL12;
 import ASB2.utils.UtilRender;
 import GU.api.power.IPowerMisc;
 import GU.info.Gui;
+import GU.info.Reference;
 import GU.packets.ButtonPressPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
@@ -231,7 +232,7 @@ public abstract class GuiBase extends GuiContainer {
 
             if(isPointInRegion(coordX, coordY, maxX, maxY, mouseX, mouseY)) {
 
-                drawBarTooltip("Energy", "GUU", (int) tileEntity.getPowerProvider().getPowerStored(), (int) tileEntity.getPowerProvider().getPowerMax(), mouseX, mouseY);
+                drawBarTooltip("Energy", Reference.POWER_NAME, (int) tileEntity.getPowerProvider().getPowerStored(), (int) tileEntity.getPowerProvider().getPowerMax(), mouseX, mouseY);
             }
         }
     }

@@ -65,7 +65,7 @@ public class ItemRegistry {
     public static ItemBase ItemShifter;
     public static ItemBase ItemAquaBobber;
     public static SwordBase ItemReaperSword;
-    public static ItemBase ItemFamilarEmbryo;
+    public static ItemBase ItemFamilarEgg;
     
     private static int id = 5000;
 
@@ -226,9 +226,9 @@ public class ItemRegistry {
         ItemReaperSword = new ItemReaperSword(config.getItem("ItemReaperSword", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemReaperSword");
         LanguageRegistry.addName(ItemReaperSword, "Reaper's Sword");
         
-        ItemFamilarEmbryo = new ItemFamilarEmbryo(config.getItem("ItemFamilarEmbryo", ItemRegistry.getNextBaseID()).getInt());
-        ItemFamilarEmbryo.setItemName("ItemFamilarEmbryo");
-        LanguageRegistry.addName(ItemFamilarEmbryo, "Familar Embryo");
+        ItemFamilarEgg = new ItemFamilarEgg(config.getItem("ItemFamilarEgg", ItemRegistry.getNextBaseID()).getInt());
+        ItemFamilarEgg.setItemName("ItemFamilarEgg");
+        LanguageRegistry.addName(ItemFamilarEgg, "Familar Egg");
     }
 
     public static int getNextBaseID() {

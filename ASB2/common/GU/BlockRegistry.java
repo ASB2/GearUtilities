@@ -30,6 +30,7 @@ import GU.blocks.containers.BlockEnergyCube.BlockEnergyCube;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockGlassPipe.BlockGlassPipe;
+import GU.blocks.containers.BlockGyro.BlockSolarGyro.BlockSolarGyro;
 import GU.blocks.containers.BlockLamp.BlockLamp;
 import GU.blocks.containers.BlockMasher.BlockMasher;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
@@ -74,6 +75,7 @@ public class BlockRegistry {
     public static ContainerBase BlockAreaBreaker;
     public static ContainerBase BlockMasher;
     public static ContainerBase BlockDissolver;
+    public static ContainerBase BlockSolarGyro;
     
     private static int id = 500;
 
@@ -204,6 +206,10 @@ public class BlockRegistry {
         BlockDissolver = new BlockDissolver(config.getBlock("BlockDissolver", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockDissolver.setBlockName("BlockDissolver");
         LanguageRegistry.addName(BlockDissolver, "Dissolver");
+        
+        BlockSolarGyro = new BlockSolarGyro(config.getBlock("BlockSolarGyro", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockSolarGyro.setBlockName("BlockSolarGyro");
+        LanguageRegistry.addName(BlockSolarGyro, "Solar Gyro");
     }
 
     public static void initTestBlocks(Configuration config) {

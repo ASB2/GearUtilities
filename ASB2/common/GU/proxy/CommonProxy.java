@@ -3,7 +3,6 @@ package GU.proxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import GU.GearUtilities;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.ContainerAdvancedPotionBrewery;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.TileAdvancedPotionBrewery;
 import GU.blocks.containers.BlockBlockBreaker.ContainerBlockBreaker;
@@ -20,13 +19,9 @@ import GU.blocks.containers.BlockSender.ContainerSender;
 import GU.blocks.containers.BlockSender.TileSender;
 import GU.blocks.containers.BlockSolarFocus.ContainerSolarFocus;
 import GU.blocks.containers.BlockSolarFocus.TileSolarFocus;
-import GU.entity.EntityPotion.EntityModularPotion;
-import GU.entity.EntityTest.EntityTestEntity;
-import GU.entity.EntityTileFinder.EntityTileFinder;
 import GU.info.Gui;
 import GU.worldGen.RetroGenManager;
 import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
@@ -35,10 +30,6 @@ public class CommonProxy implements IGuiHandler {
     public void register() {
 
         TickRegistry.registerTickHandler(new RetroGenManager(), Side.SERVER);
-
-        EntityRegistry.registerModEntity(EntityTestEntity.class, "Test Entity", 0, GearUtilities.instance, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityModularPotion.class, "Modular Potion", 1, GearUtilities.instance, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityTileFinder.class, "Info Clustor", 2, GearUtilities.instance, 80, 3, true);
     }
 
     @Override

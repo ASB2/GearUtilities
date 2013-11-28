@@ -9,7 +9,7 @@ public class BlockEnergyCube extends ContainerBase {
 
     public BlockEnergyCube(int id, Material material) {
         super(id, material);
-    
+
         this.registerTile(TileEnergyCube.class);
         this.useStandardRendering = false;
     }

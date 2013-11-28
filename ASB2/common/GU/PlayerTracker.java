@@ -16,14 +16,14 @@ public class PlayerTracker implements IPlayerTracker {
     
     @Override
     public void onPlayerLogin(EntityPlayer player) {
-        
-        switch(player.username) {
-            
-            case "ASB2": {
-                
-                player.addChatMessage("Welcome Master");
-            }
-        }
+//        
+//        switch(player.username) {
+//            
+//            case "ASB2": {
+//                
+//                player.addChatMessage("Welcome Master");
+//            }
+//        }
     }
 
     @Override

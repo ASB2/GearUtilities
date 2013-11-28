@@ -12,7 +12,7 @@ public class Variables {
     public static boolean DO_RETROGEN = false;
     
     public static int SENDER_ITEM_COST = 100;
-    public static final int ANIMATION_SPEED = 5;    
+    public static final int ANIMATION_SPEED = 7;    
     public static final int BRIGHT_BLOCK = 15728864;
     
     public static void updateVariables(Configuration config) {

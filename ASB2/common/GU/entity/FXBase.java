@@ -8,15 +8,17 @@ import net.minecraft.world.World;
 
 public class FXBase extends EntityFX {
 
-    public FXBase(World world, double x, double y, double z, double motionX, double motionY, double motionZ, Icon texture, Color color) {
+    public FXBase(World world, double x, double y, double z, double motionX, double motionY, double motionZ, int age, Icon texture, Color color) {
         super(world, x, y, z, motionX, motionY, motionZ);
 
         this.particleIcon = texture;
         this.particleScale = rand.nextFloat();
         this.particleRed = color.getRed();
         this.particleGreen = color.getGreen();
-        this.particleBlue = color .getBlue();
+        this.particleBlue = color.getBlue();
         this.particleAlpha = color.getAlpha();
+//        this.particleAge = age;
+
     }
 
     @Override

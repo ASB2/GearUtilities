@@ -5,6 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import GU.BlockRegistry;
+import GU.EntityRegistry;
 import GU.ItemRegistry;
 import GU.blocks.BlockTestRender.TestRenderRenderer;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.GuiAdvancedPotionBrewery;
@@ -23,6 +24,8 @@ import GU.blocks.containers.BlockEnergyCube.EnergyCubeRenderer;
 import GU.blocks.containers.BlockEnergyCube.TileEnergyCube;
 import GU.blocks.containers.BlockGlassPipe.GlassPipeRenderer;
 import GU.blocks.containers.BlockGlassPipe.TileGlassPipe;
+import GU.blocks.containers.BlockGyro.BlockSolarGyro.SolarGyroRenderer;
+import GU.blocks.containers.BlockGyro.BlockSolarGyro.TileSolarGyro;
 import GU.blocks.containers.BlockMasher.GuiMasher;
 import GU.blocks.containers.BlockSender.GuiSender;
 import GU.blocks.containers.BlockSender.SenderRenderer;
@@ -32,10 +35,6 @@ import GU.blocks.containers.BlockSolarFocus.SolarFocusRenderer;
 import GU.blocks.containers.BlockSolarFocus.TileSolarFocus;
 import GU.blocks.containers.BlockUniversalConduit.TileUniversalConduit;
 import GU.blocks.containers.BlockUniversalConduit.UniversalConduitRenderer;
-import GU.entity.EntityTest.EntityTestEntity;
-import GU.entity.EntityTest.TestEntityRenderer;
-import GU.entity.EntityTileFinder.EntityTileFinder;
-import GU.entity.EntityTileFinder.InfoClusterRenderer;
 import GU.info.Gui;
 import GU.info.Models;
 import GU.items.ItemBloodStone.BloodStoneRenderer;
@@ -53,9 +52,7 @@ public class ClientProxy extends CommonProxy {
         
         Models.initModels();
         SoundHandler.init();
-        
-        RenderingRegistry.registerEntityRenderingHandler(EntityTestEntity.class, new TestEntityRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(EntityTileFinder.class, new InfoClusterRenderer());
+        EntityRegistry.initClient();
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class, new CreationTableRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());
@@ -86,6 +83,9 @@ public class ClientProxy extends CommonProxy {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileGlassPipe.class, new GlassPipeRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockGlassPipe.blockID, new GlassPipeRenderer());
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileSolarGyro.class, new SolarGyroRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSolarGyro.blockID, new SolarGyroRenderer());
         
 //        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemPurificationHelmet.itemID, new SolarFocusRenderer());
         
