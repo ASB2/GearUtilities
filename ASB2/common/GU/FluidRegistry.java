@@ -42,6 +42,8 @@ public class FluidRegistry {
     public static FluidBase IgnisVitam;
     public static FluidBase AquaVitam;
 
+    public static FluidBase Steam;
+
     public static void initFluids() {
 
         MinecraftForge.EVENT_BUS.register(new FluidRegistry());
@@ -58,6 +60,8 @@ public class FluidRegistry {
         TerraeVitam = new FluidBase("Terrae Vitam", Color.GREEN.hashCode());
         IgnisVitam = new FluidBase("Ignis Vitam", Color.RED.hashCode());
         AquaVitam = new FluidBase("Aqua Vitam", Color.BLUE.hashCode());
+
+        Steam = new FluidBase("Steam", Color.WHITE.hashCode());
     }
 
     @ForgeSubscribe

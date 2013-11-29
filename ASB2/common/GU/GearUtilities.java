@@ -72,12 +72,12 @@ public final class GearUtilities {
         BlockRegistry.init(config);
         FluidRegistry.initFluids();
         RetroGenManager.init();
-        EntityRegistry.init();        
+        EntityRegistry.init();
 
         // MinecraftForge.EVENT_BUS.register(BlockRegistry.BlockBloodPlant);
         MinecraftForge.EVENT_BUS.register(new ForgeEvents());
         GameRegistry.registerFuelHandler(new GUFuelHandler());
-        
+
         instance = this;
 
         ModMetadata metadata = event.getModMetadata();

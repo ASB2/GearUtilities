@@ -14,7 +14,7 @@ public class TileSolarGyro extends TileBase implements IPowerMisc {
     public TileSolarGyro() {
 
         this.powerProvider = new PowerProvider(PowerClass.LOW, State.SOURCE);
-        waitTimer = new Wait(10, this, 0);
+        waitTimer = new Wait(20, this, 0);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class TileSolarGyro extends TileBase implements IPowerMisc {
 
         if(worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime()) {
 
-            powerProvider.gainPower(1, ForgeDirection.UP, true);
+            powerProvider.gainPower(.5f, ForgeDirection.UP, true);
         }
     }
 

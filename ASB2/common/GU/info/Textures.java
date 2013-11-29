@@ -62,6 +62,10 @@ public final class Textures {
     public static final ResourceLocation SOLAR_GYRO_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSolarGryo/ModelSolarGyroCenter.png");
     public static final ResourceLocation SOLAR_GYRO_OUTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSolarGyro/ModelSolarGyroOuter.png");
 
+    public static final ResourceLocation STEAM_GYRO_BASE = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSteamGyro/ModelSteamGyroBase.png");
+    public static final ResourceLocation STEAM_GYRO_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSteamGyro/ModelSteamGyroCenter.png");
+    public static final ResourceLocation STEAM_GYRO_OUTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSteamGyro/ModelSteamGyroOuter.png");
+
     public static final ResourceLocation CRYSTAL_BLANK = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalBlank.png");
     public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalAir.png");
     public static final ResourceLocation CRYSTAL_EARTH = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalEarth.png");

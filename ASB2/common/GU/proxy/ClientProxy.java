@@ -26,6 +26,8 @@ import GU.blocks.containers.BlockGlassPipe.GlassPipeRenderer;
 import GU.blocks.containers.BlockGlassPipe.TileGlassPipe;
 import GU.blocks.containers.BlockGyro.BlockSolarGyro.SolarGyroRenderer;
 import GU.blocks.containers.BlockGyro.BlockSolarGyro.TileSolarGyro;
+import GU.blocks.containers.BlockGyro.BlockSteamGyro.SteamGyroRenderer;
+import GU.blocks.containers.BlockGyro.BlockSteamGyro.TileSteamGyro;
 import GU.blocks.containers.BlockMasher.GuiMasher;
 import GU.blocks.containers.BlockSender.GuiSender;
 import GU.blocks.containers.BlockSender.SenderRenderer;
@@ -86,6 +88,9 @@ public class ClientProxy extends CommonProxy {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileSolarGyro.class, new SolarGyroRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSolarGyro.blockID, new SolarGyroRenderer());
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileSteamGyro.class, new SteamGyroRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSteamGyro.blockID, new SteamGyroRenderer());
         
 //        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemPurificationHelmet.itemID, new SolarFocusRenderer());
         

@@ -30,7 +30,6 @@ public class GyroRenderer extends TileEntitySpecialRenderer implements IItemRend
         Models.ModelGyro.renderPart("Center");
 
         GL11.glRotatef(Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 0F, 1F, 0F);
-
         GL11.glPushMatrix();
         UtilRender.renderTexture(this.getOuterTexture());
         Models.ModelGyro.renderPart("Outer");

@@ -17,7 +17,7 @@ public class PowerHelper {
                 if(stack.getItem() instanceof IPowerItem) {
 
                     if(((IPowerItem) stack.getItem()).getPowerProvider(stack) != null) {
-                        
+
                         if(((IPowerItem) stack.getItem()).getPowerProvider(stack).usePower(power, ForgeDirection.UNKNOWN, false)) {
 
                             return ((IPowerItem) stack.getItem()).getPowerProvider(stack).usePower(power, ForgeDirection.UNKNOWN, doUse);
@@ -77,11 +77,30 @@ public class PowerHelper {
 
         if(powerProvider != null) {
 
-            if(powerProvider.getState() == State.SINK || powerProvider.getState() == State.OTHER) {
+            return PowerHelper.addEnergyToProvider(powerProvider, direction, power, doWork, false);
+        }
+        return false;
+    }
+
+    public static boolean addEnergyToProvider(IPowerProvider powerProvider, ForgeDirection direction, float power, boolean doWork, boolean ignoreState) {
+
+        if(powerProvider != null) {
+
+            if(ignoreState) {
 
                 if(powerProvider.gainPower(power, direction, doWork)) {
 
                     return true;
+                }
+            }
+            else {
+
+                if(powerProvider.getState() == State.SINK || powerProvider.getState() == State.OTHER) {
+
+                    if(powerProvider.gainPower(power, direction, doWork)) {
+
+                        return true;
+                    }
                 }
             }
         }
