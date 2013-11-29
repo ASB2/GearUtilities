@@ -20,12 +20,11 @@ public class GlassPipeRenderer extends TileEntitySpecialRenderer implements IIte
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
         GL11.glPushMatrix();
-        GL11.glDisable(GL11.GL_LIGHTING);
 
         GL11.glTranslated(x + .5, y + .5, z + .5);
         GL11.glScalef(.7f, .7f, .7f);
 
-        UtilRender.renderTexture(Textures.BLACK);
+        UtilRender.renderTexture(Textures.GLASS_PIPE_CENTER);
         Models.ModelGlassPipe.renderPart("Center");
 
         for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
@@ -36,30 +35,71 @@ public class GlassPipeRenderer extends TileEntitySpecialRenderer implements IIte
 
                 switch(direction) {
 
-                    case UP:
-                        Models.ModelGlassPipe.renderPart("Up");
+                    case UP: {
+
+                        Models.ModelGlassPipe.renderPart("Cable");
                         break;
-                    case DOWN:
-                        Models.ModelGlassPipe.renderPart("Down");
+                    }
+                    case DOWN: {
+
+                        GL11.glPushMatrix();
+
+                        GL11.glRotated(180, 0, 0, 0);
+                        UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
+                        Models.ModelGlassPipe.renderPart("Cable");
+                        
+                        GL11.glPopMatrix();
                         break;
-                    case NORTH:
-                        Models.ModelGlassPipe.renderPart("South");
+                    }
+                    case NORTH: {
+
+                        GL11.glPushMatrix();
+
+                        GL11.glRotated(-90, 1, 0, 0);
+                        UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
+                        Models.ModelGlassPipe.renderPart("Cable");
+                        
+                        GL11.glPopMatrix();
                         break;
-                    case SOUTH:
-                        Models.ModelGlassPipe.renderPart("North");
+                    }
+                    case SOUTH: {
+
+                        GL11.glPushMatrix();
+
+                        GL11.glRotated(90, 1, 0, 0);
+                        UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
+                        Models.ModelGlassPipe.renderPart("Cable");
+                        
+                        GL11.glPopMatrix();
                         break;
-                    case WEST:
-                        Models.ModelGlassPipe.renderPart("West");
+                    }
+                    case WEST: {
+
+                        GL11.glPushMatrix();
+
+                        GL11.glRotated(90, 0, 0, 1);
+                        UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
+                        Models.ModelGlassPipe.renderPart("Cable");
+                        
+                        GL11.glPopMatrix();
                         break;
-                    case EAST:
-                        Models.ModelGlassPipe.renderPart("East");
+                    }
+                    case EAST: {
+
+                        GL11.glPushMatrix();
+
+                        GL11.glRotated(90, 0, 0, -1);
+                        UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
+                        Models.ModelGlassPipe.renderPart("Cable");
+                        
+                        GL11.glPopMatrix();
                         break;
+                    }
                     case UNKNOWN:
                         break;
                 }
             }
         }
-        GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }
 

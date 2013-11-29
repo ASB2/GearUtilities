@@ -1,6 +1,7 @@
 package GU.items;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -19,6 +20,12 @@ public class ItemTestItem extends ItemBase implements IBlockCycle, IPotionIngred
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
 
+        if(!world.isRemote) {
+
+            EntityZombie entity = new EntityZombie(world);
+            entity.setPosition(x, y + 1, z);
+            world.spawnEntityInWorld(entity);
+        }
         return true;
     }
 
@@ -60,7 +67,7 @@ public class ItemTestItem extends ItemBase implements IBlockCycle, IPotionIngred
 
     @Override
     public void onThrownPotionHitEntity(World world, ItemStack potion, EntityLivingBase entity) {
-        
+
         entity.addPotionEffect(new PotionEffect(1, 1000, 3));
     }
 

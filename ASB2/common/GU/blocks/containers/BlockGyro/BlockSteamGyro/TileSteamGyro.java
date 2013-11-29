@@ -36,12 +36,15 @@ public class TileSteamGyro extends TileFluidBase implements IPowerMisc {
 
         if(this.fluidTank.getFluidAmount() > 0) {
 
-            if(UtilFluid.removeFluidFromTank(this, ForgeDirection.UNKNOWN, this.fluidTank.getFluid(), false)) {
+            FluidStack stack = this.fluidTank.getFluid().copy();
+            stack.amount = 100;
+
+            if(UtilFluid.removeFluidFromTank(this, ForgeDirection.UNKNOWN, stack, false)) {
 
                 if(PowerHelper.addEnergyToProvider(this.getPowerProvider(), ForgeDirection.UNKNOWN, STEAM_WORTH, false, true)) {
 
                     PowerHelper.addEnergyToProvider(this.getPowerProvider(), ForgeDirection.UNKNOWN, STEAM_WORTH, true, true);
-                    UtilFluid.removeFluidFromTank(this, ForgeDirection.UNKNOWN, this.fluidTank.getFluid(), true);
+                    UtilFluid.removeFluidFromTank(this, ForgeDirection.UNKNOWN, stack, true);
                 }
             }
         }

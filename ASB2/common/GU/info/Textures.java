@@ -66,6 +66,14 @@ public final class Textures {
     public static final ResourceLocation STEAM_GYRO_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSteamGyro/ModelSteamGyroCenter.png");
     public static final ResourceLocation STEAM_GYRO_OUTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSteamGyro/ModelSteamGyroOuter.png");
 
+    public static final ResourceLocation GLASS_PIPE_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelGlassPipe/ModelGlassPipeCenter.png");
+    public static final ResourceLocation GLASS_PIPE_NORTH = new ResourceLocation(Reference.MODDID + ":textures/models/ModelGlassPipe/ModelGlassPipeWireNorth.png");
+    public static final ResourceLocation GLASS_PIPE_SOUTH = new ResourceLocation(Reference.MODDID + ":textures/models/ModelGlassPipe/ModelGlassPipeWireSouth.png");
+    public static final ResourceLocation GLASS_PIPE_WEST = new ResourceLocation(Reference.MODDID + ":textures/models/ModelGlassPipe/ModelGlassPipeWireWest.png");
+    public static final ResourceLocation GLASS_PIPE_EAST = new ResourceLocation(Reference.MODDID + ":textures/models/ModelGlassPipe/ModelGlassPipeWireeEast.png");
+    public static final ResourceLocation GLASS_PIPE_UP = new ResourceLocation(Reference.MODDID + ":textures/models/ModelGlassPipe/ModelGlassPipeWireUp.png");
+    public static final ResourceLocation GLASS_PIPE_DOWN = new ResourceLocation(Reference.MODDID + ":textures/models/ModelGlassPipe/ModelGlassPipeWireDown.png");
+
     public static final ResourceLocation CRYSTAL_BLANK = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalBlank.png");
     public static final ResourceLocation CRYSTAL_AIR = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalAir.png");
     public static final ResourceLocation CRYSTAL_EARTH = new ResourceLocation(Reference.MODDID + ":textures/items/ModelCrystalEarth.png");

@@ -13,27 +13,20 @@ import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilFluid;
-import ASB2.vector.Vector3;
 import GU.BlockRegistry;
-import GU.api.network.INetwork;
-import GU.api.network.INetworkInterface;
-import GU.api.network.UniversalConduitNetwork;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.packets.TankPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
-import GU.api.*;
 
-public class TileConnectableTank extends TileBase implements IFluidHandler, INetworkInterface {
-
-    INetwork network;
+public class TileConnectableTank extends TileBase implements IFluidHandler {
+    
     public static int maxLiquid = FluidContainerRegistry.BUCKET_VOLUME * 64;
 
     public TileConnectableTank() {
 
         this.waitTimer = new Wait(20, this, 1);
         fluidTank = new FluidTank(maxLiquid);
-        network = new UniversalConduitNetwork();
     }
 
     @Override
@@ -278,10 +271,6 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
     @Override
     public void trigger(int id) {
 
-        if(this.getNetwork() != null) {
-
-            MiscHelpers.addConductorsAround(this, worldObj, this.getNetwork());
-        }
 
         if(id == 0) {
 
@@ -297,37 +286,5 @@ public class TileConnectableTank extends TileBase implements IFluidHandler, INet
                 }
             }
         }
-    }
-
-    @Override
-    public boolean setNetwork(INetwork network) {
-
-        this.network = network;
-
-        if(network != null) {
-
-            if(!network.getConductors().contains(new Vector3(this))) {
-
-                network.addConductor(new Vector3(this));
-            }
-
-            if(!network.getFluidInterfaces().contains(new Vector3(this))) {
-
-                network.addFluidInterface(new Vector3(this));
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public INetwork getNetwork() {
-
-        return network;
-    }
-
-    @Override
-    public TileEntity[] getAvaliableTileEntities(ForgeDirection direction) {
-
-        return new TileEntity[]{this};
     }
 }
