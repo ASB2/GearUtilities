@@ -23,7 +23,7 @@ public class ItemTestItem extends ItemBase implements IBlockCycle, IPotionIngred
         if(!world.isRemote) {
 
             EntityZombie entity = new EntityZombie(world);
-            entity.setPosition(x, y + 1, z);
+            entity.setPosition(x + .5f, y + 1.5f, z + .5f);
             world.spawnEntityInWorld(entity);
         }
         return true;
