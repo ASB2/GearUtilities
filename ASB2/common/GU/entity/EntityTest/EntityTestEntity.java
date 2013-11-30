@@ -1,14 +1,13 @@
 package GU.entity.EntityTest;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import ASB2.vector.Vector3;
+import GU.api.wait.Wait;
 import GU.entity.EntityBase;
-import GU.api.wait.*;
+
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
 
 public class EntityTestEntity extends EntityBase {
 
@@ -26,22 +25,26 @@ public class EntityTestEntity extends EntityBase {
         waits[0] = new Wait(20, this, 0);
         vectors[0] = new Vector3(this);
         vectors[1] = new Vector3(x2, y2, z2);
-        vectors[1] = vectors[1].normalize().multiply(.2d);
-        motionX = vectors[1].x;
-        motionY = vectors[1].y;
-        motionZ = vectors[1].z;
+        Vector3 copy = vectors[1].clone().subtract(vectors[0]).normalize().multiply(.5);
+        motionX = copy.x;
+        motionY = copy.y;
+        motionZ = copy.z;
     }
 
     @Override
     public void onEntityUpdate() {
 
+        if(vectors != null && vectors[0] != null && vectors[1] != null) {
 
-        this.updateMovement();
-        
-        if(waits != null && waits[0] != null) {
+            vectors[0] = new Vector3(this);
 
-            waits[0].update();
+            if(!((vectors[0].intX() == vectors[1].intX()) && (vectors[0].intY() == vectors[1].intY()) && (vectors[0].intZ() == vectors[1].intZ()))) {
+                
+                this.updateMovement();
+                return;
+            }
         }
+//        this.setDead();
     }
 
     public void trigger(int id) {
@@ -55,19 +58,11 @@ public class EntityTestEntity extends EntityBase {
     @Override
     public void writeSpawnData(ByteArrayDataOutput data) {
         super.writeSpawnData(data);
-
-        data.writeDouble(motionX);
-        data.writeDouble(motionY);
-        data.writeDouble(motionZ);
     }
 
     @Override
     public void readSpawnData(ByteArrayDataInput data) {
         super.readSpawnData(data);
-
-        motionX = data.readDouble();
-        motionY = data.readDouble();
-        motionZ = data.readDouble();
     }
 
     @Override

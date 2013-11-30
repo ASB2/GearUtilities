@@ -34,6 +34,7 @@ import GU.blocks.containers.BlockGyro.BlockSolarGyro.BlockSolarGyro;
 import GU.blocks.containers.BlockGyro.BlockSteamGyro.BlockSteamGyro;
 import GU.blocks.containers.BlockLamp.BlockLamp;
 import GU.blocks.containers.BlockMasher.BlockMasher;
+import GU.blocks.containers.BlockMiniSteamBoiler.BlockMiniSteamBoiler;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockSender.BlockSender;
 import GU.blocks.containers.BlockSolarFocus.BlockSolarFocus;
@@ -78,7 +79,8 @@ public class BlockRegistry {
     public static ContainerBase BlockDissolver;
     public static ContainerBase BlockSolarGyro;
     public static ContainerBase BlockSteamGyro;
-
+    public static ContainerBase BlockMiniSteamBoiler;
+    
     private static int id = 500;
 
     public static void init(Configuration config) {
@@ -216,6 +218,10 @@ public class BlockRegistry {
         BlockSteamGyro = new BlockSteamGyro(config.getBlock("BlockSteamGyro", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockSteamGyro.setBlockName("BlockSteamGyro");
         LanguageRegistry.addName(BlockSteamGyro, "Steam Gyro");
+        
+        BlockMiniSteamBoiler = new BlockMiniSteamBoiler(config.getBlock("BlockMiniSteamBoiler", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockMiniSteamBoiler.setBlockName("BlockMiniSteamBoiler");
+        LanguageRegistry.addName(BlockMiniSteamBoiler, "Mini Steam Boiler");
     }
 
     public static void initTestBlocks(Configuration config) {

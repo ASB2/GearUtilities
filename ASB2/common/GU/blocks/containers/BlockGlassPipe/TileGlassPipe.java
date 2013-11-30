@@ -100,14 +100,12 @@ public class TileGlassPipe extends TileFluidBase {
 
                 importing[side] = false;
                 updateClients();
-                UtilEntity.sendClientChat("" + importing[side]);
                 return;
             }
             else {
 
                 importing[side] = true;
                 updateClients();
-                UtilEntity.sendClientChat("" + importing[side]);
                 return;
             }
         }

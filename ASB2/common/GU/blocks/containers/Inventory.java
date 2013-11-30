@@ -10,12 +10,16 @@ import net.minecraft.nbt.NBTTagList;
 public class Inventory implements IInventory {
 
     public final static int STANDARD_STACKSIZE = 64;
-    
+
     int inventorySize = 0;
     int maxStackSize = 64;
     ItemStack[] storedStacks;
     String inventoryName;
     boolean playerCanUse;
+
+    public Inventory(int inventorySize, String inventoryName, boolean useableByPlayer) {
+        this(inventorySize, 64, inventoryName, useableByPlayer);
+    }
 
     public Inventory(int inventorySize, int maxStackSize, String inventoryName, boolean useableByPlayer) {
 
@@ -27,10 +31,10 @@ public class Inventory implements IInventory {
     }
 
     public ItemStack[] getItemArray() {
-        
+
         return storedStacks;
     }
-    
+
     @Override
     public int getSizeInventory() {
 
