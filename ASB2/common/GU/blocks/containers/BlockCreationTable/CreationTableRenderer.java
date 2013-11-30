@@ -16,18 +16,15 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
-        if (tileentity instanceof TileCreationTable) {
+        GL11.glPushMatrix();
 
-            GL11.glPushMatrix();
+        GL11.glTranslated(x + .5f, y + .5f, z + .5f);
+        GL11.glScalef(.5f, .5f, .5f);
 
-            GL11.glTranslated(x + .5f, y + .5f, z + .5f);
-            GL11.glScalef(.5f, .5f, .5f);
+        UtilRender.renderTexture(Textures.CREATION_TABLE);
+        Models.ModelCreationTable.renderAll();
 
-            UtilRender.renderTexture(Textures.CREATION_TABLE);
-            Models.ModelCreationTable.renderAll();
-
-            GL11.glPopMatrix();
-        }
+        GL11.glPopMatrix();
     }
 
     @Override
@@ -45,7 +42,7 @@ public class CreationTableRenderer extends TileEntitySpecialRenderer implements 
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
-        switch (type) {
+        switch(type) {
 
             case ENTITY: {
 

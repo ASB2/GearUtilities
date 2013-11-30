@@ -8,13 +8,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import ASB2.utils.UtilBlock;
+import ASB2.utils.UtilDirection;
+import ASB2.utils.UtilInventory;
 import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilMisc;
 import ASB2.utils.UtilRender;
 import GU.GearUtilities;
+import GU.ItemRegistry;
 import GU.items.ItemBase;
 
 public class ItemStorageCrystal extends ItemBase {
@@ -74,33 +79,27 @@ public class ItemStorageCrystal extends ItemBase {
 
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz) {
-        //
-        // FluidStack stack = this.getFluidStack(itemStack);
-        // int[] coords = UtilDirection.translateDirectionToCoords(
-        // ForgeDirection.getOrientation(side), x, y, z);
-        //
-        // if(stack != null) {
-        //
-        // if(stack.getFluid().getBlockID() != -1 &&
-        // stack.getFluid().getBlockID() != 0) {
-        //
-        // if(!player.capabilities.isCreativeMode) {
-        //
-        // if(UtilInventory.consumeItemStack(player.inventory, itemStack, 1) &&
-        // UtilInventory.addItemStackToInventory(player.inventory, new
-        // ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0), true)) {
-        //
-        // return UtilBlock.placeBlockInAir(world, coords[0], coords[1],
-        // coords[2], stack.getFluid().getBlockID(), 0);
-        // }
-        // }
-        // else {
-        //
-        // return UtilBlock.placeBlockInAir(world, coords[0], coords[1],
-        // coords[2], stack.getFluid().getBlockID(), 0);
-        // }
-        // }
-        // }
+
+        FluidStack stack = this.getFluidStack(itemStack);
+        int[] coords = UtilDirection.translateDirectionToCoords(ForgeDirection.getOrientation(side), x, y, z);
+
+        if(stack != null) {
+
+            if(stack.getFluid().getBlockID() != -1 && stack.getFluid().getBlockID() != 0) {
+
+                if(!player.capabilities.isCreativeMode) {
+
+                    if(UtilInventory.consumeItemStack(player.inventory, itemStack, 1) && UtilInventory.addItemStackToInventory(player.inventory, new ItemStack(ItemRegistry.ItemStorageCrystal, 1, 0), true)) {
+
+                        return UtilBlock.placeBlockInAir(world, coords[0], coords[1], coords[2], stack.getFluid().getBlockID(), 0);
+                    }
+                }
+                else {
+                    
+                    return UtilBlock.placeBlockInAir(world, coords[0], coords[1], coords[2], stack.getFluid().getBlockID(), 0);
+                }
+            }
+        }
         // else {
         //
         // Fluid fluid = FluidRegistry.getFluid(world.getBlockId(coords[0],

@@ -19,21 +19,19 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f) {
 
-        double amount = .0;
-        
-        ForgeDirection direction = ForgeDirection.getOrientation(tileEntity.worldObj.getBlockMetadata((int)x, (int)y, (int)z));
+        double amount = -.8;
 
         GL11.glPushMatrix();
 
         GL11.glTranslated(x + .5f, y + .5, z + .5f);
         GL11.glScalef(.5f, .5f, .5f);
 
-        GL11.glPushMatrix();        
         UtilRender.renderTexture(Textures.ENERGY_CUBE_CENTER);
-
-        GL11.glRotatef(Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 0F, 1F);
         Models.ModelEnergyCube.renderPart("Center");
-        GL11.glPopMatrix();
+
+        GL11.glPushMatrix();
+
+        GL11.glScalef(.5f, .5f, .5f);
 
         for(ForgeDirection facing : ForgeDirection.VALID_DIRECTIONS) {
 
@@ -41,7 +39,7 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                 case NORTH: {
 
-                    if(facing == direction) {
+                    if(((TileEnergyCube) tileEntity).importing[facing.ordinal()]) {
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_NORTH_EXPORTING);
                     }
@@ -50,19 +48,18 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_NORTH);
                     }
 
-                    GL11.glPushMatrix();   
+                    GL11.glPushMatrix();
 
                     GL11.glTranslated(0, 0, amount);
 
-
-                    Models.ModelEnergyCube.renderPart("Front");  
+                    Models.ModelEnergyCube.renderPart("Front");
                     GL11.glPopMatrix();
                     break;
                 }
 
                 case SOUTH: {
 
-                    if(facing == direction) {
+                    if(((TileEnergyCube) tileEntity).importing[facing.ordinal()]) {
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_SOUTH_EXPORTING);
                     }
@@ -70,18 +67,18 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_SOUTH);
                     }
-                    
-                    GL11.glPushMatrix();   
+
+                    GL11.glPushMatrix();
 
                     GL11.glTranslated(0, 0, -amount);
-                    Models.ModelEnergyCube.renderPart("Back");  
+                    Models.ModelEnergyCube.renderPart("Back");
                     GL11.glPopMatrix();
                     break;
                 }
 
                 case EAST: {
 
-                    if(facing == direction) {
+                    if(((TileEnergyCube) tileEntity).importing[facing.ordinal()]) {
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_EAST_EXPORTING);
                     }
@@ -89,19 +86,19 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_EAST);
                     }
-                    
-                    GL11.glPushMatrix();   
+
+                    GL11.glPushMatrix();
 
                     GL11.glTranslated(-amount, 0, 0);
-                    
-                    Models.ModelEnergyCube.renderPart("Right"); 
+
+                    Models.ModelEnergyCube.renderPart("Right");
                     GL11.glPopMatrix();
                     break;
                 }
 
                 case WEST: {
 
-                    if(facing == direction) {
+                    if(((TileEnergyCube) tileEntity).importing[facing.ordinal()]) {
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_WEST_EXPORTING);
                     }
@@ -109,11 +106,11 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_WEST);
                     }
-                    
-                    GL11.glPushMatrix();   
+
+                    GL11.glPushMatrix();
 
                     GL11.glTranslated(amount, 0, 0);
-                    
+
                     Models.ModelEnergyCube.renderPart("Left");
                     GL11.glPopMatrix();
                     break;
@@ -121,7 +118,7 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                 case UP: {
 
-                    if(facing == direction) {
+                    if(((TileEnergyCube) tileEntity).importing[facing.ordinal()]) {
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_UP_EXPORTING);
                     }
@@ -129,11 +126,11 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_UP);
                     }
-                    
-                    GL11.glPushMatrix();   
+
+                    GL11.glPushMatrix();
 
                     GL11.glTranslated(0, -amount, 0);
-                    
+
                     Models.ModelEnergyCube.renderPart("Top");
                     GL11.glPopMatrix();
                     break;
@@ -141,7 +138,7 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                 case DOWN: {
 
-                    if(facing == direction) {
+                    if(((TileEnergyCube) tileEntity).importing[facing.ordinal()]) {
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_DOWN_EXPORTING);
                     }
@@ -149,11 +146,11 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
 
                         UtilRender.renderTexture(Textures.ENERGY_CUBE_DOWN);
                     }
-                    
-                    GL11.glPushMatrix();   
+
+                    GL11.glPushMatrix();
 
                     GL11.glTranslated(0, amount, 0);
-                    Models.ModelEnergyCube.renderPart("Bottom");  
+                    Models.ModelEnergyCube.renderPart("Bottom");
                     GL11.glPopMatrix();
                     break;
                 }
@@ -162,7 +159,8 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
                     break;
                 }
             }
-        }        
+        }
+        GL11.glPopMatrix();
         GL11.glPopMatrix();
     }
 
@@ -181,7 +179,7 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
-        switch (type) {
+        switch(type) {
 
             case ENTITY: {
 
@@ -220,7 +218,7 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
-        GL11.glPushMatrix();        
+        GL11.glPushMatrix();
         UtilRender.renderTexture(Textures.ENERGY_CUBE_CENTER);
 
         GL11.glRotatef(Minecraft.getSystemTime() / Variables.ANIMATION_SPEED, 1F, 0F, 1F);
@@ -228,13 +226,13 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
         GL11.glPopMatrix();
 
         UtilRender.renderTexture(Textures.ENERGY_CUBE_NORTH);
-        Models.ModelEnergyCube.renderPart("Front");     
+        Models.ModelEnergyCube.renderPart("Front");
 
         UtilRender.renderTexture(Textures.ENERGY_CUBE_SOUTH);
-        Models.ModelEnergyCube.renderPart("Back");  
+        Models.ModelEnergyCube.renderPart("Back");
 
         UtilRender.renderTexture(Textures.ENERGY_CUBE_EAST);
-        Models.ModelEnergyCube.renderPart("Right"); 
+        Models.ModelEnergyCube.renderPart("Right");
 
         UtilRender.renderTexture(Textures.ENERGY_CUBE_WEST);
         Models.ModelEnergyCube.renderPart("Left");
@@ -243,7 +241,7 @@ public class EnergyCubeRenderer extends TileEntitySpecialRenderer implements IIt
         Models.ModelEnergyCube.renderPart("Top");
 
         UtilRender.renderTexture(Textures.ENERGY_CUBE_DOWN);
-        Models.ModelEnergyCube.renderPart("Bottom");     
+        Models.ModelEnergyCube.renderPart("Bottom");
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();

@@ -51,49 +51,49 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void register() {
-        
+
         Models.initModels();
         SoundHandler.init();
         EntityRegistry.initClient();
-        
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileCreationTable.class, new CreationTableRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCreationTable.blockID, new CreationTableRenderer());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileBlockBreaker.class, new BlockBreakerRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockBlockBreaker.blockID, new BlockBreakerRenderer());
-        
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileSender.class, new SenderRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSender.blockID, new SenderRenderer());
-        
+
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemBloodStone.itemID, new BloodStoneRenderer());
-        
+
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
-        
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileSolarFocus.class, new SolarFocusRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSolarFocus.blockID, new SolarFocusRenderer());
-        
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileUniversalConduit.class, new UniversalConduitRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockUniversalConduit.blockID, new UniversalConduitRenderer());
-        
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileConduitInterface.class, new ConduitInterfaceRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockConduitInterface.blockID, new ConduitInterfaceRenderer());
-        
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileEnergyCube.class, new EnergyCubeRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockEnergyCube.blockID, new EnergyCubeRenderer());
-        
+
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemHandheldTank.itemID, new HandheldTankRenderer());
-        
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileGlassPipe.class, new GlassPipeRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockGlassPipe.blockID, new GlassPipeRenderer());
-        
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileSolarGyro.class, new SolarGyroRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSolarGyro.blockID, new SolarGyroRenderer());
-        
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileSteamGyro.class, new SteamGyroRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSteamGyro.blockID, new SteamGyroRenderer());
-        
-//        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemPurificationHelmet.itemID, new SolarFocusRenderer());
-        
+
+        // MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemPurificationHelmet.itemID, new SolarFocusRenderer());
+
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
         RenderingRegistry.registerBlockHandler(new TestRenderRenderer());
         RenderingRegistry.registerBlockHandler(new BlockSimpleRenderer());
@@ -104,9 +104,9 @@ public class ClientProxy extends CommonProxy {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        if (tile != null) {
+        if(tile != null) {
 
-            switch (ID) {
+            switch(ID) {
 
                 case Gui.CREATION_TABLE:
                     return new GuiCreationTable(player.inventory, tile);
@@ -119,16 +119,16 @@ public class ClientProxy extends CommonProxy {
 
                 case Gui.ADVANCED_POTION_BREWERY:
                     return new GuiAdvancedPotionBrewery(player.inventory, tile);
-                    
+
                 case Gui.SENDER:
                     return new GuiSender(player.inventory, tile);
-                    
+
                 case Gui.SOLAR_FOCUS:
-                    return new GuiSolarFocus(player.inventory, tile);                    
-            
+                    return new GuiSolarFocus(player.inventory, tile);
+
                 case Gui.MASHER:
                     return new GuiMasher(player.inventory, tile);
-                    
+
                 case Gui.DISSOLVER:
                     return new GuiDissolver(player.inventory, tile);
             }

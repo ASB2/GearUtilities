@@ -47,7 +47,7 @@ public class GlassPipeRenderer extends TileEntitySpecialRenderer implements IIte
                         GL11.glRotated(180, 0, 0, 0);
                         UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
                         Models.ModelGlassPipe.renderPart("Cable");
-                        
+
                         GL11.glPopMatrix();
                         break;
                     }
@@ -58,7 +58,7 @@ public class GlassPipeRenderer extends TileEntitySpecialRenderer implements IIte
                         GL11.glRotated(-90, 1, 0, 0);
                         UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
                         Models.ModelGlassPipe.renderPart("Cable");
-                        
+
                         GL11.glPopMatrix();
                         break;
                     }
@@ -69,7 +69,7 @@ public class GlassPipeRenderer extends TileEntitySpecialRenderer implements IIte
                         GL11.glRotated(90, 1, 0, 0);
                         UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
                         Models.ModelGlassPipe.renderPart("Cable");
-                        
+
                         GL11.glPopMatrix();
                         break;
                     }
@@ -80,7 +80,7 @@ public class GlassPipeRenderer extends TileEntitySpecialRenderer implements IIte
                         GL11.glRotated(90, 0, 0, 1);
                         UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
                         Models.ModelGlassPipe.renderPart("Cable");
-                        
+
                         GL11.glPopMatrix();
                         break;
                     }
@@ -88,10 +88,10 @@ public class GlassPipeRenderer extends TileEntitySpecialRenderer implements IIte
 
                         GL11.glPushMatrix();
 
-                        GL11.glRotated(90, 0, 0, -1);
+                        GL11.glRotated(-90, 0, 0, 1);
                         UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
                         Models.ModelGlassPipe.renderPart("Cable");
-                        
+
                         GL11.glPopMatrix();
                         break;
                     }
@@ -157,8 +157,77 @@ public class GlassPipeRenderer extends TileEntitySpecialRenderer implements IIte
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
-        UtilRender.renderTexture(Textures.BLACK);
-        Models.ModelGlassPipe.renderAll();
+        UtilRender.renderTexture(Textures.GLASS_PIPE_CENTER);
+        Models.ModelGlassPipe.renderPart("Center");
+
+        for(ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+
+            switch(direction) {
+
+                case UP: {
+
+                    Models.ModelGlassPipe.renderPart("Cable");
+                    break;
+                }
+                case DOWN: {
+
+                    GL11.glPushMatrix();
+
+                    GL11.glRotated(180, 0, 0, 0);
+                    UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
+                    Models.ModelGlassPipe.renderPart("Cable");
+
+                    GL11.glPopMatrix();
+                    break;
+                }
+                case NORTH: {
+
+                    GL11.glPushMatrix();
+
+                    GL11.glRotated(-90, 1, 0, 0);
+                    UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
+                    Models.ModelGlassPipe.renderPart("Cable");
+
+                    GL11.glPopMatrix();
+                    break;
+                }
+                case SOUTH: {
+
+                    GL11.glPushMatrix();
+
+                    GL11.glRotated(90, 1, 0, 0);
+                    UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
+                    Models.ModelGlassPipe.renderPart("Cable");
+
+                    GL11.glPopMatrix();
+                    break;
+                }
+                case WEST: {
+
+                    GL11.glPushMatrix();
+
+                    GL11.glRotated(90, 0, 0, 1);
+                    UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
+                    Models.ModelGlassPipe.renderPart("Cable");
+
+                    GL11.glPopMatrix();
+                    break;
+                }
+                case EAST: {
+
+                    GL11.glPushMatrix();
+
+                    GL11.glRotated(-90, 0, 0, 1);
+                    UtilRender.renderTexture(Textures.GLASS_PIPE_DOWN);
+                    Models.ModelGlassPipe.renderPart("Cable");
+
+                    GL11.glPopMatrix();
+                    break;
+                }
+                case UNKNOWN:
+                    break;
+            }
+        }
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();

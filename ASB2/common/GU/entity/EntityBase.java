@@ -11,8 +11,12 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
+import GU.api.wait.*;
 
-public abstract class EntityBase extends Entity implements IEntityAdditionalSpawnData {
+public abstract class EntityBase extends Entity implements IEntityAdditionalSpawnData, IWaitTrigger {
+
+    protected Wait[] waits;
+    protected Vector3[] vectors;
 
     public EntityBase(World world) {
         super(world);
@@ -34,6 +38,15 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
         this.posZ = position.z;
     }
 
+    public void trigger(int id) {
+
+    }
+
+    public boolean shouldTick(int id) {
+
+        return true;
+    }
+
     @Override
     public void onUpdate() {
         super.onUpdate();
@@ -46,14 +59,13 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
         super.onEntityUpdate();
     }
 
-
     @Override
     protected void entityInit() {
     }
 
     public void setPosition(Vector3 vector) {
 
-        this.setPosition(vector.x, vector.y, vector.z);    
+        this.setPosition(vector.x, vector.y, vector.z);
     }
 
     @Override
@@ -69,21 +81,49 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
 
     @Override
     protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
-        super.readFromNBT(nbttagcompound);
 
+        if(vectors != null) {
+
+            vectors = new Vector3[nbttagcompound.getInteger("vectorSize")];
+
+            for(int i = 0; i < vectors.length; i++) {
+
+                vectors[i] = Vector3.readFromNBT(nbttagcompound.getCompoundTag("vectors " + i));
+            }
+        }
     }
 
     @Override
     protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
-        super.writeToNBT(nbttagcompound);
+
+        if(vectors != null) {
+
+            for(int i = 0; i < vectors.length; i++) {
+
+                NBTTagCompound tag = new NBTTagCompound();
+
+                vectors[i].writeToNBT(tag);
+                nbttagcompound.setCompoundTag("vectors " + i, tag);
+            }
+
+            nbttagcompound.setInteger("vectorSize", vectors.length);
+        }
     }
 
     @Override
     public void writeSpawnData(ByteArrayDataOutput data) {
+
+        data.writeDouble(posX);
+        data.writeDouble(posY);
+        data.writeDouble(posZ);
     }
 
     @Override
     public void readSpawnData(ByteArrayDataInput data) {
+
+        posX = data.readDouble();
+        posY = data.readDouble();
+        posZ = data.readDouble();
     }
 
     @Override

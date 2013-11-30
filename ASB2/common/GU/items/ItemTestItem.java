@@ -10,6 +10,7 @@ import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.IBlockCycle;
 import ASB2.utils.UtilBlock;
 import GU.api.potion.IPotionIngredient;
+import GU.entity.EntityTest.EntityTestEntity;
 
 public class ItemTestItem extends ItemBase implements IBlockCycle, IPotionIngredient {
 
@@ -20,11 +21,22 @@ public class ItemTestItem extends ItemBase implements IBlockCycle, IPotionIngred
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
 
-        if(!world.isRemote) {
+        if(player.isSneaking()) {
 
-            EntityZombie entity = new EntityZombie(world);
-            entity.setPosition(x + .5f, y + 1.5f, z + .5f);
-            world.spawnEntityInWorld(entity);
+            if(!world.isRemote) {
+
+                EntityZombie entity = new EntityZombie(world);
+                entity.setPosition(x + .5, y + 1.5, z + .5);
+                world.spawnEntityInWorld(entity);
+            }
+        }
+        else {
+
+            if(!world.isRemote) {
+
+                EntityTestEntity entity = new EntityTestEntity(world, x, y + 1, z,  x, y + 100, z);
+                world.spawnEntityInWorld(entity);
+            }
         }
         return true;
     }

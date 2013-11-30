@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
+import GU.info.Variables;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -19,9 +20,6 @@ public class TestRenderRenderer implements ISimpleBlockRenderingHandler {
     @Override
     public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
 
-        renderer.setRenderBounds(0.001, 0.001, 0.001, .999, .999, .999);
-        UtilRender.renderStandardInvBlock(renderer, block, ((BlockTestRender) BlockRegistry.BlockTestRender).inner, random.nextInt(255), random.nextInt(255), random.nextInt(255), 255);
-
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderStandardInvBlock(renderer, block, meta);
     }
@@ -30,7 +28,7 @@ public class TestRenderRenderer implements ISimpleBlockRenderingHandler {
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 
         renderer.setRenderBounds(0.001, 0.001, 0.001, .999, .999, .999);
-        UtilRender.renderFakeBlock(renderer, block, x, y, z, ((BlockTestRender) BlockRegistry.BlockTestRender).inner, 0, 0, 0, 255, 255);
+        UtilRender.renderFakeBlock(renderer, block, x, y, z, ((BlockTestRender) BlockRegistry.BlockTestRender).inner, 255, 255, 255, 255, Variables.BRIGHT_BLOCK);
 
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         renderer.renderStandardBlock(block, x, y, z);

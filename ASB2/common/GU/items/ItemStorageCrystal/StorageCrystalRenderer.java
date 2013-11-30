@@ -27,22 +27,24 @@ public class StorageCrystalRenderer implements IItemRenderer {
     public void renderItem(ItemRenderType type, ItemStack stack, Object... data) {
 
         switch(type) {
-            case ENTITY:
+            case ENTITY: {
+
                 break;
+            }
             case EQUIPPED:
                 break;
             case EQUIPPED_FIRST_PERSON: {
-                
+
                 GL11.glPushMatrix();
                 GL11.glTranslatef(0, -10, 10);
-                if(((ItemStorageCrystal)stack.getItem()).getFluidStack(stack) != null && ((ItemStorageCrystal)stack.getItem()).getFluidStack(stack).getFluid().getStillIcon() != null) {
+                if(((ItemStorageCrystal) stack.getItem()).getFluidStack(stack) != null && ((ItemStorageCrystal) stack.getItem()).getFluidStack(stack).getFluid().getStillIcon() != null) {
 
                     GL11.glPushMatrix();
                     UtilRender.bindBlockTextures();
-                    Color color = new Color(((ItemStorageCrystal)stack.getItem()).getFluidStack(stack).getFluid().getColor());
+                    Color color = new Color(((ItemStorageCrystal) stack.getItem()).getFluidStack(stack).getFluid().getColor());
 
-                    GL11.glColor3f(color.getRed(), color.getGreen(), color.getBlue());            
-                    UtilRender.renderItemInstance.renderIcon(6, 2, ((ItemStorageCrystal)stack.getItem()).getFluidStack(stack).getFluid().getStillIcon(), 4, 11);            
+                    GL11.glColor3f(color.getRed(), color.getGreen(), color.getBlue());
+                    UtilRender.renderItemInstance.renderIcon(6, 2, ((ItemStorageCrystal) stack.getItem()).getFluidStack(stack).getFluid().getStillIcon(), 4, 11);
 
                     GL11.glColor3f(1, 1, 1);
                     GL11.glPopMatrix();
@@ -53,17 +55,17 @@ public class StorageCrystalRenderer implements IItemRenderer {
             }
                 break;
             case FIRST_PERSON_MAP: {
-                
+
                 GL11.glPushMatrix();
                 GL11.glTranslatef(10, 10, 10);
-                if(((ItemStorageCrystal)stack.getItem()).getFluidStack(stack) != null && ((ItemStorageCrystal)stack.getItem()).getFluidStack(stack).getFluid().getStillIcon() != null) {
+                if(((ItemStorageCrystal) stack.getItem()).getFluidStack(stack) != null && ((ItemStorageCrystal) stack.getItem()).getFluidStack(stack).getFluid().getStillIcon() != null) {
 
                     GL11.glPushMatrix();
                     UtilRender.bindBlockTextures();
-                    Color color = new Color(((ItemStorageCrystal)stack.getItem()).getFluidStack(stack).getFluid().getColor());
+                    Color color = new Color(((ItemStorageCrystal) stack.getItem()).getFluidStack(stack).getFluid().getColor());
 
-                    GL11.glColor3f(color.getRed(), color.getGreen(), color.getBlue());            
-                    UtilRender.renderItemInstance.renderIcon(6, 2, ((ItemStorageCrystal)stack.getItem()).getFluidStack(stack).getFluid().getStillIcon(), 4, 11);            
+                    GL11.glColor3f(color.getRed(), color.getGreen(), color.getBlue());
+                    UtilRender.renderItemInstance.renderIcon(6, 2, ((ItemStorageCrystal) stack.getItem()).getFluidStack(stack).getFluid().getStillIcon(), 4, 11);
 
                     GL11.glColor3f(1, 1, 1);
                     GL11.glPopMatrix();
@@ -73,15 +75,15 @@ public class StorageCrystalRenderer implements IItemRenderer {
             }
                 break;
             case INVENTORY: {
-                
-                if(((ItemStorageCrystal)stack.getItem()).getFluidStack(stack) != null && ((ItemStorageCrystal)stack.getItem()).getFluidStack(stack).getFluid().getStillIcon() != null) {
+
+                if(((ItemStorageCrystal) stack.getItem()).getFluidStack(stack) != null && ((ItemStorageCrystal) stack.getItem()).getFluidStack(stack).getFluid().getStillIcon() != null) {
 
                     GL11.glPushMatrix();
                     UtilRender.bindBlockTextures();
-                    Color color = new Color(((ItemStorageCrystal)stack.getItem()).getFluidStack(stack).getFluid().getColor());
+                    Color color = new Color(((ItemStorageCrystal) stack.getItem()).getFluidStack(stack).getFluid().getColor());
 
-                    GL11.glColor3f(color.getRed(), color.getGreen(), color.getBlue());            
-                    UtilRender.renderItemInstance.renderIcon(6, 2, ((ItemStorageCrystal)stack.getItem()).getFluidStack(stack).getFluid().getStillIcon(), 4, 11);            
+                    GL11.glColor3f(color.getRed(), color.getGreen(), color.getBlue());
+                    UtilRender.renderItemInstance.renderIcon(6, 2, ((ItemStorageCrystal) stack.getItem()).getFluidStack(stack).getFluid().getStillIcon(), 4, 11);
 
                     GL11.glColor3f(1, 1, 1);
                     GL11.glPopMatrix();
@@ -92,7 +94,7 @@ public class StorageCrystalRenderer implements IItemRenderer {
                 break;
             default:
                 break;
-            
+
         }
     }
 }

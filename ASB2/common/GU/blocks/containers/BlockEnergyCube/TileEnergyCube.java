@@ -76,11 +76,11 @@ public class TileEnergyCube extends TileBase implements IPowerMisc {
             if(tile != null && tile instanceof IPowerMisc) {
 
                 if(!importing[direction.ordinal()]) {
-                    
+
                     PowerHelper.moveEnergy(this.getPowerProvider(), ((IPowerMisc) tile).getPowerProvider(), direction, direction.getOpposite(), true);
                 }
                 else {
-                    
+
                     PowerHelper.moveEnergy(((IPowerMisc) tile).getPowerProvider(), this.getPowerProvider(), direction, direction.getOpposite(), true);
                 }
             }
