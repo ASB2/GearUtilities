@@ -28,6 +28,7 @@ public class BlockMiniSteamBoiler extends ContainerBase {
                 ((TileMiniSteamBoiler) world.getBlockTileEntity(x, y, z)).useFuel(GameRegistry.getFuelValue(stack));
 
                 UtilInventory.removeItemStackFromInventory(player.inventory, stack, 1, true);
+                return true;
             }
         }
         return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);

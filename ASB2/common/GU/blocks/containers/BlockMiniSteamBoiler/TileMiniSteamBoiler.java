@@ -43,13 +43,13 @@ public class TileMiniSteamBoiler extends TileFluidBase implements IInventory {
                     this.useFuel(GameRegistry.getFuelValue(stack));
                 }
             }
+        }
 
-            if(storedHeat > 100) {
+        if(storedHeat >= 100) {
 
-                if(UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(GU.FluidRegistry.Steam, 100), true)) {
+            if(UtilFluid.addFluidToTank(this, ForgeDirection.UNKNOWN, new FluidStack(GU.FluidRegistry.Steam, 100), true)) {
 
-                    storedHeat -= 100;
-                }
+                storedHeat -= 100;
             }
         }
 
@@ -59,7 +59,10 @@ public class TileMiniSteamBoiler extends TileFluidBase implements IInventory {
 
             if(tile != null && tile instanceof IFluidHandler) {
 
-                UtilFluid.moveFluid(this, direction, (IFluidHandler) tile, direction.getOpposite(), 100, true);
+                if(importing[direction.ordinal()]) {
+
+                    UtilFluid.moveFluid(this, direction, (IFluidHandler) tile, direction.getOpposite(), 100, true);
+                }
             }
         }
     }
