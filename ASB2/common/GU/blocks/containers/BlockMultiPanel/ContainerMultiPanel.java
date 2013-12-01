@@ -1,14 +1,14 @@
-package GU.blocks.containers.BlockSender;
+package GU.blocks.containers.BlockMultiPanel;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import GU.gui.ContainerBase;
 
-public class ContainerSender extends ContainerBase {
+public class ContainerMultiPanel extends ContainerBase {
 
-    TileSender tileEntity;
+    TileMultiPanel tileEntity;
 
-    public ContainerSender(InventoryPlayer inventory, TileSender tileEntity) {
+    public ContainerMultiPanel(InventoryPlayer inventory, TileMultiPanel tileEntity) {
         super(inventory, tileEntity);
         this.tileEntity = tileEntity;
         

@@ -17,14 +17,14 @@ public final class Textures {
     public static final ResourceLocation RUNIC_CUBE = new ResourceLocation(Reference.MODDID + ":textures/models/ModelRunicCube.png");
     public static final ResourceLocation CLUSTER_SENDER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelClusterSender/ModelClusterSender.png");
 
-    public static final ResourceLocation ITEM_SENDER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSender/ModelSender.png");
-    public static final ResourceLocation SENDER_ADDITION_1 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSender/ModelSenderRenderAddition1.png");
-    public static final ResourceLocation SENDER_ADDITION_2 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSender/ModelSenderRenderAddition2.png");
-    public static final ResourceLocation SENDER_ADDITION_3 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSender/ModelSenderRenderAddition3.png");
-    public static final ResourceLocation SENDER_ADDITION_4 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSender/ModelSenderRenderAddition4.png");
-    public static final ResourceLocation SENDER_ADDITION_5 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSender/ModelSenderRenderAddition5.png");
-    public static final ResourceLocation SENDER_ADDITION_6 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSender/ModelSenderRenderAddition6.png");
-    public static final ResourceLocation SENDER_ADDITION_7 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelSender/ModelSenderRenderAddition7.png");
+    public static final ResourceLocation MULTI_PANEL = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanel.png");
+    public static final ResourceLocation MULTI_PANEL_ADDITION_1 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanelRenderAddition1.png");
+    public static final ResourceLocation MULTI_PANEL_ADDITION_2 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanelRenderAddition2.png");
+    public static final ResourceLocation MULTI_PANEL_ADDITION_3 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanelRenderAddition3.png");
+    public static final ResourceLocation MULTI_PANEL_ADDITION_4 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanelRenderAddition4.png");
+    public static final ResourceLocation MULTI_PANEL_ADDITION_5 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanelRenderAddition5.png");
+    public static final ResourceLocation MULTI_PANEL_ADDITION_6 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanelRenderAddition6.png");
+    public static final ResourceLocation MULTI_PANEL_ADDITION_7 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanelRenderAddition7.png");
 
     public static final ResourceLocation BLOOD_STONE_CUBE = new ResourceLocation(Reference.MODDID + ":textures/models/ModelBloodStone/ModelBloodStoneCube.png");
     public static final ResourceLocation BLOOD_STONE_HEXAGON = new ResourceLocation(Reference.MODDID + ":textures/models/ModelBloodStone/ModelBloodStoneHexagon.png");

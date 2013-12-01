@@ -39,12 +39,12 @@ public class EntityTestEntity extends EntityBase {
             vectors[0] = new Vector3(this);
 
             if(!((vectors[0].intX() == vectors[1].intX()) && (vectors[0].intY() == vectors[1].intY()) && (vectors[0].intZ() == vectors[1].intZ()))) {
-                
+
                 this.updateMovement();
                 return;
             }
         }
-//        this.setDead();
+        // this.setDead();
     }
 
     public void trigger(int id) {

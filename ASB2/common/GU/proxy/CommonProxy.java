@@ -15,8 +15,8 @@ import GU.blocks.containers.BlockDissolver.ContainerDissolver;
 import GU.blocks.containers.BlockDissolver.TileDissolver;
 import GU.blocks.containers.BlockMasher.ContainerMasher;
 import GU.blocks.containers.BlockMasher.TileMasher;
-import GU.blocks.containers.BlockSender.ContainerSender;
-import GU.blocks.containers.BlockSender.TileSender;
+import GU.blocks.containers.BlockMultiPanel.ContainerMultiPanel;
+import GU.blocks.containers.BlockMultiPanel.TileMultiPanel;
 import GU.blocks.containers.BlockSolarFocus.ContainerSolarFocus;
 import GU.blocks.containers.BlockSolarFocus.TileSolarFocus;
 import GU.info.Gui;
@@ -52,7 +52,7 @@ public class CommonProxy implements IGuiHandler {
                 return new ContainerAdvancedPotionBrewery(player.inventory, (TileAdvancedPotionBrewery) tile);
 
             case Gui.SENDER:
-                return new ContainerSender(player.inventory, (TileSender) tile);
+                return new ContainerMultiPanel(player.inventory, (TileMultiPanel) tile);
 
             case Gui.SOLAR_FOCUS:
                 return new ContainerSolarFocus(player.inventory, (TileSolarFocus) tile);

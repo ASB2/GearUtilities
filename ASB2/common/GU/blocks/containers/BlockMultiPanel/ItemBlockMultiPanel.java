@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockSender;
+package GU.blocks.containers.BlockMultiPanel;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -7,9 +7,9 @@ import net.minecraft.world.World;
 import ASB2.utils.UtilItemStack;
 import GU.GUItemBlock;
 
-public class ItemBlockSender extends GUItemBlock {
+public class ItemBlockMultiPanel extends GUItemBlock {
 
-    public ItemBlockSender(int id) {
+    public ItemBlockMultiPanel(int id) {
         super(id);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
@@ -68,9 +68,9 @@ public class ItemBlockSender extends GUItemBlock {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        if(tile != null && tile instanceof TileSender) {
+        if(tile != null && tile instanceof TileMultiPanel) {
 
-            TileSender tank = (TileSender) tile;
+            TileMultiPanel tank = (TileMultiPanel) tile;
 
             tank.setMode(UtilItemStack.getNBTTagInt(stack, "mode"));
         }

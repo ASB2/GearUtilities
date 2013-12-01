@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockSender;
+package GU.blocks.containers.BlockMultiPanel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +19,13 @@ import GU.info.Gui;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class BlockSender extends ContainerBase {
+public class BlockMultiPanel extends ContainerBase {
 
-    public BlockSender(int id, Material material) {
+    public BlockMultiPanel(int id, Material material) {
         super(id, material);
 
         this.useStandardRendering = false;
-        this.registerTile(TileSender.class);
+        this.registerTile(TileMultiPanel.class);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class BlockSender extends ContainerBase {
         if(tile != null) {
 
             ItemStack stack = new ItemStack(this);
-            UtilItemStack.setNBTTagInt(stack, "mode", ((TileSender) tile).getMode());
+            UtilItemStack.setNBTTagInt(stack, "mode", ((TileMultiPanel) tile).getMode());
             return stack;
         }
         return new ItemStack(this);
@@ -92,7 +92,7 @@ public class BlockSender extends ContainerBase {
 
         this.blockName = texture;
         this.setUnlocalizedName(Reference.UNIQUE_ID + blockName);
-        GameRegistry.registerBlock(this, ItemBlockSender.class, this.getUnlocalizedName());
+        GameRegistry.registerBlock(this, ItemBlockMultiPanel.class, this.getUnlocalizedName());
     }
 
     @Override
@@ -162,6 +162,6 @@ public class BlockSender extends ContainerBase {
     @Override
     public TileEntity createNewTileEntity(World world) {
 
-        return new TileSender();
+        return new TileMultiPanel();
     }
 }

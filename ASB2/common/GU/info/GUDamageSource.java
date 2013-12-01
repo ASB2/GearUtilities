@@ -5,5 +5,5 @@ import ASB2.CustomDamageSource;
 
 public class GUDamageSource {
 
-    public static DamageSource clusterCollision = (new CustomDamageSource("clusterCollision")).setDeathMessage("").setDamageBypassesArmor().setDifficultyScaled();
+    public static DamageSource entityFinderCollision = (new CustomDamageSource("clusterCollision")).setDeathMessage("You dead sucker").setDamageBypassesArmor().setDifficultyScaled();
 }

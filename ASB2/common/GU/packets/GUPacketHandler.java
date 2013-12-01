@@ -34,16 +34,17 @@ public class GUPacketHandler implements IPacketHandler {
             demoPacket.execute(entityPlayer, entityPlayer.worldObj.isRemote ? Side.CLIENT : Side.SERVER);
         }
 
-        catch (ProtocolException e) {
+        catch(ProtocolException e) {
 
-            if (player instanceof EntityPlayerMP) {
+            if(player instanceof EntityPlayerMP) {
 
                 ((EntityPlayerMP) player).playerNetServerHandler.kickPlayerFromServer("Protocol Exception!");
-                Logger.getLogger(Reference.NAME).warning( "Player " + ((EntityPlayer) player).username + " caused a Protocol Exception!");
+                Logger.getLogger(Reference.NAME).warning("Player " + ((EntityPlayer) player).username + " caused a Protocol Exception!");
             }
-        } catch (ReflectiveOperationException e) {
+        }
+        catch(ReflectiveOperationException e) {
 
-            throw new RuntimeException( "Unexpected Reflection exception during Packet construction!", e);
+            throw new RuntimeException("Unexpected Reflection exception during Packet construction!", e);
         }
     }
 }

@@ -9,7 +9,6 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilDirection;
-import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilFluid;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileFluidBase;
@@ -81,14 +80,12 @@ public class TileGlassPipe extends TileFluidBase {
 
                 importing[side] = false;
                 updateClients();
-                UtilEntity.sendClientChat("" + importing[side]);
                 return;
             }
             else {
 
                 importing[side] = true;
                 updateClients();
-                UtilEntity.sendClientChat("" + importing[side]);
                 return;
             }
         }

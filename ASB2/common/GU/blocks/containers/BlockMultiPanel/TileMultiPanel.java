@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockSender;
+package GU.blocks.containers.BlockMultiPanel;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -33,7 +33,7 @@ import GU.blocks.containers.Inventory;
 import GU.blocks.containers.TileFluidBase;
 import GU.info.Reference;
 
-public class TileSender extends TileFluidBase implements IInventory, IPowerMisc, IFluidHandler {
+public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerMisc, IFluidHandler {
 
     public static final int ITEM_MOVEMENT = 1;
     public static final int FLUID_MOVEMENT = 2;
@@ -44,13 +44,14 @@ public class TileSender extends TileFluidBase implements IInventory, IPowerMisc,
     public static final int CUSTOM = 7;
 
     public static int MAX_DISTANCE = 20;
+    public final boolean[] wireless = new boolean[]{true, true, false, false, false, false, false};
 
     int currentMode;
 
-    public TileSender() {
+    public TileMultiPanel() {
 
         waitTimer = new Wait(10, this, 0);
-        tileInventory = new Inventory(9, 64, "Sender", true);
+        tileInventory = new Inventory(9, 64, "MultiPanel", true);
         this.powerProvider = new PowerProvider(PowerClass.LOW, State.SINK);
         fluidTank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME);
     }
@@ -483,7 +484,7 @@ public class TileSender extends TileFluidBase implements IInventory, IPowerMisc,
     @Override
     public int getInventoryStackLimit() {
 
-        return 64;
+        return tileInventory.getInventoryStackLimit();
     }
 
     @Override
@@ -513,7 +514,7 @@ public class TileSender extends TileFluidBase implements IInventory, IPowerMisc,
     @Override
     public String getInvName() {
 
-        return "Universal Sender";
+        return tileInventory.getInvName();
     }
 
     @Override

@@ -17,8 +17,8 @@ public class FamilarsRenderer extends Render {
 
         GL11.glPushMatrix();
 
-        UtilRender.renderTexture(Textures.ITEM_SENDER);
-        Models.ModelSender.renderPart("Panel");
+        UtilRender.renderTexture(Textures.MULTI_PANEL);
+        Models.ModelMultiPanel.renderPart("Panel");
 
         GL11.glPopMatrix();
     }
@@ -26,7 +26,7 @@ public class FamilarsRenderer extends Render {
     @Override
     protected ResourceLocation getEntityTexture(Entity entity) {
 
-        return Textures.ITEM_SENDER;
+        return Textures.MULTI_PANEL;
     }
 
 }

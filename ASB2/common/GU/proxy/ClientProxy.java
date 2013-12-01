@@ -19,6 +19,8 @@ import GU.blocks.containers.BlockConnectableTank.ConnectableTankRenderer;
 import GU.blocks.containers.BlockCreationTable.CreationTableRenderer;
 import GU.blocks.containers.BlockCreationTable.GuiCreationTable;
 import GU.blocks.containers.BlockCreationTable.TileCreationTable;
+import GU.blocks.containers.BlockDetachedRelocator.DetachedRelocatorRenderer;
+import GU.blocks.containers.BlockDetachedRelocator.TileDetachedRelocator;
 import GU.blocks.containers.BlockDissolver.GuiDissolver;
 import GU.blocks.containers.BlockEnergyCube.EnergyCubeRenderer;
 import GU.blocks.containers.BlockEnergyCube.TileEnergyCube;
@@ -29,9 +31,9 @@ import GU.blocks.containers.BlockGyro.BlockSolarGyro.TileSolarGyro;
 import GU.blocks.containers.BlockGyro.BlockSteamGyro.SteamGyroRenderer;
 import GU.blocks.containers.BlockGyro.BlockSteamGyro.TileSteamGyro;
 import GU.blocks.containers.BlockMasher.GuiMasher;
-import GU.blocks.containers.BlockSender.GuiSender;
-import GU.blocks.containers.BlockSender.SenderRenderer;
-import GU.blocks.containers.BlockSender.TileSender;
+import GU.blocks.containers.BlockMultiPanel.GuiMultiPanel;
+import GU.blocks.containers.BlockMultiPanel.MultiPanelRenderer;
+import GU.blocks.containers.BlockMultiPanel.TileMultiPanel;
 import GU.blocks.containers.BlockSolarFocus.GuiSolarFocus;
 import GU.blocks.containers.BlockSolarFocus.SolarFocusRenderer;
 import GU.blocks.containers.BlockSolarFocus.TileSolarFocus;
@@ -62,8 +64,8 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileBlockBreaker.class, new BlockBreakerRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockBlockBreaker.blockID, new BlockBreakerRenderer());
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileSender.class, new SenderRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSender.blockID, new SenderRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileMultiPanel.class, new MultiPanelRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSender.blockID, new MultiPanelRenderer());
 
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemBloodStone.itemID, new BloodStoneRenderer());
 
@@ -92,6 +94,9 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileSteamGyro.class, new SteamGyroRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSteamGyro.blockID, new SteamGyroRenderer());
 
+        ClientRegistry.bindTileEntitySpecialRenderer(TileDetachedRelocator.class, new DetachedRelocatorRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockDetachedRelocator.blockID, new DetachedRelocatorRenderer());
+        
         // MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemPurificationHelmet.itemID, new SolarFocusRenderer());
 
         RenderingRegistry.registerBlockHandler(new ConnectableTankRenderer());
@@ -121,7 +126,7 @@ public class ClientProxy extends CommonProxy {
                     return new GuiAdvancedPotionBrewery(player.inventory, tile);
 
                 case Gui.SENDER:
-                    return new GuiSender(player.inventory, tile);
+                    return new GuiMultiPanel(player.inventory, tile);
 
                 case Gui.SOLAR_FOCUS:
                     return new GuiSolarFocus(player.inventory, tile);

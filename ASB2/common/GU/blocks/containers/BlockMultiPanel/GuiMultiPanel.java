@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockSender;
+package GU.blocks.containers.BlockMultiPanel;
 
 import java.awt.Color;
 
@@ -11,14 +11,14 @@ import ASB2.utils.UtilMisc;
 import ASB2.utils.UtilRender;
 import GU.gui.GuiBase;
 
-public class GuiSender extends GuiBase {
+public class GuiMultiPanel extends GuiBase {
 
-    private TileSender tileEntity;
+    private TileMultiPanel tileEntity;
 
-    public GuiSender(InventoryPlayer inventory, TileEntity tile) {
-        super(new ContainerSender(inventory, (TileSender) tile));
+    public GuiMultiPanel(InventoryPlayer inventory, TileEntity tile) {
+        super(new ContainerMultiPanel(inventory, (TileMultiPanel) tile));
 
-        tileEntity = (TileSender) tile;
+        tileEntity = (TileMultiPanel) tile;
     }
 
     @Override

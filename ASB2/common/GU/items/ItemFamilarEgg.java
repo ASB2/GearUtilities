@@ -7,14 +7,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilItemStack;
-import ASB2.vector.Vector3;
 import GU.api.familar.EnumGenes;
 import GU.api.familar.EnumGrowthStage;
 import GU.api.familar.EnumType;
 import GU.api.familar.IFamilarEgg;
-import GU.entity.EntityFamilar.EntityFamilars;
 
 public class ItemFamilarEgg extends ItemBase implements IFamilarEgg {
 
@@ -36,7 +33,7 @@ public class ItemFamilarEgg extends ItemBase implements IFamilarEgg {
 
                 if(!world.isRemote) {
                     
-                    world.spawnEntityInWorld(new EntityFamilars(world, new Vector3(player).add(ForgeDirection.UP), UtilItemStack.getNBTTagString(itemStack, "owner")));
+//                    world.spawnEntityInWorld(new EntityFamilars(world, new Vector3(player).add(ForgeDirection.UP), UtilItemStack.getNBTTagString(itemStack, "owner")));
                     player.addChatMessage("Spawned");
                 }
             }

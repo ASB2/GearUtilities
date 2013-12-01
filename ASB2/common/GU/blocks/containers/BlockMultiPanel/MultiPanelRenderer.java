@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockSender;
+package GU.blocks.containers.BlockMultiPanel;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -16,15 +16,15 @@ import GU.info.Models;
 import GU.info.Textures;
 import GU.info.Variables;
 
-public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
+public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
-        TileSender tile = (TileSender) tileentity;
+        TileMultiPanel tile = (TileMultiPanel) tileentity;
 
         GL11.glPushMatrix();
-
+        GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glColor3d(1, 1, 1);
 
         switch(ForgeDirection.getOrientation(new Vector3(tileentity).getBlockMetadata(tileentity.worldObj))) {
@@ -72,8 +72,8 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
 
         GL11.glScalef(.5f, .5f, .5f);
 
-        UtilRender.renderTexture(Textures.ITEM_SENDER);
-        Models.ModelSender.renderPart("Panel");
+        UtilRender.renderTexture(Textures.MULTI_PANEL);
+        Models.ModelMultiPanel.renderPart("Panel");
 
         GL11.glRotatef(Minecraft.getSystemTime() / (Variables.ANIMATION_SPEED + 10), 0F, 1F, 0F);
 
@@ -110,109 +110,113 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
 
                 case 1: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_1);
-                    Models.ModelSender.renderPart("Render_Addition_1");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_1);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_1");
                     break;
                 }
 
                 case 2: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_2);
-                    Models.ModelSender.renderPart("Render_Addition_2");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_2);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_2");
                     break;
                 }
 
                 case 3: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_3);
-                    Models.ModelSender.renderPart("Render_Addition_3");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_3);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_3");
                     break;
                 }
 
                 case 4: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_4);
-                    Models.ModelSender.renderPart("Render_Addition_4");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_4);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_4");
                     break;
                 }
 
                 case 5: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_5);
-                    Models.ModelSender.renderPart("Render_Addition_5");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_5);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_5");
                     break;
                 }
 
                 case 6: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_6);
-                    Models.ModelSender.renderPart("Render_Addition_6");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_6);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_6");
                     break;
                 }
 
                 case 7: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_7);
-                    Models.ModelSender.renderPart("Render_Addition_7");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_7);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_7");
                     break;
                 }
             }
         }
-        
+
         GL11.glPopMatrix();
-        
-        GL11.glPushMatrix();
-        
-        GL11.glColor3d(1, 1, 1);
-        
-        GL11.glDisable(2896);
-        GL11.glDisable(3553);
-        
-        switch(tile.getOrientation()) {
 
-            case DOWN: {
+        if(((TileMultiPanel) tileentity).wireless[((TileMultiPanel) tileentity).getMode() - 1]) {
 
-                UtilRender.renderBox(x, y + 1, z, 1, -TileSender.MAX_DISTANCE, 1);
-                break;
+            GL11.glPushMatrix();
+
+            GL11.glColor3d(1, 1, 1);
+
+            GL11.glDisable(2896);
+            GL11.glDisable(3553);
+
+            switch(tile.getOrientation()) {
+
+                case DOWN: {
+
+                    UtilRender.renderBox(x, y + 1, z, 1, -TileMultiPanel.MAX_DISTANCE, 1);
+                    break;
+                }
+
+                case UP: {
+
+                    UtilRender.renderBox(x, y, z, 1, TileMultiPanel.MAX_DISTANCE, 1);
+                    break;
+                }
+
+                case NORTH: {
+
+                    UtilRender.renderBox(x, y, z + 1, 1, 1, -TileMultiPanel.MAX_DISTANCE);
+                    break;
+                }
+
+                case SOUTH: {
+
+                    UtilRender.renderBox(x, y, z, 1, 1, TileMultiPanel.MAX_DISTANCE);
+                    break;
+                }
+
+                case WEST: {
+
+                    UtilRender.renderBox(x + 1, y, z, -TileMultiPanel.MAX_DISTANCE, 1, 1);
+                    break;
+                }
+
+                case EAST: {
+
+                    UtilRender.renderBox(x, y, z, TileMultiPanel.MAX_DISTANCE, 1, 1);
+                    break;
+                }
+
+                case UNKNOWN:
+                    break;
             }
-            
-            case UP: {
 
-                UtilRender.renderBox(x, y, z, 1, TileSender.MAX_DISTANCE, 1);
-                break;
-            }
-            
-            case NORTH: {
-
-                UtilRender.renderBox(x, y, z + 1, 1, 1, -TileSender.MAX_DISTANCE);
-                break;
-            }
-            
-            case SOUTH: {
-
-                UtilRender.renderBox(x, y, z, 1, 1, TileSender.MAX_DISTANCE);
-                break;
-            }
-            
-            case WEST: {
-
-                UtilRender.renderBox(x + 1, y, z, -TileSender.MAX_DISTANCE, 1, 1);
-                break;
-            }
-            
-            case EAST: {
-
-                UtilRender.renderBox(x, y, z, TileSender.MAX_DISTANCE, 1, 1);
-                break;
-            }
-            
-            case UNKNOWN: break;
+            GL11.glEnable(2896);
+            GL11.glEnable(3553);
+            GL11.glEnable(GL11.GL_LIGHTING);
+            GL11.glPopMatrix();
         }
-        
-        GL11.glEnable(2896);
-        GL11.glEnable(3553);
-        
-        GL11.glPopMatrix();
     }
 
     @Override
@@ -269,8 +273,8 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
-        UtilRender.renderTexture(Textures.ITEM_SENDER);
-        Models.ModelSender.renderPart("Panel");
+        UtilRender.renderTexture(Textures.MULTI_PANEL);
+        Models.ModelMultiPanel.renderPart("Panel");
 
         GL11.glRotatef(Minecraft.getSystemTime() / (Variables.ANIMATION_SPEED + 10), 0F, 1F, 0F);
 
@@ -307,50 +311,50 @@ public class SenderRenderer extends TileEntitySpecialRenderer implements IItemRe
 
                 case 1: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_1);
-                    Models.ModelSender.renderPart("Render_Addition_1");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_1);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_1");
                     break;
                 }
 
                 case 2: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_2);
-                    Models.ModelSender.renderPart("Render_Addition_2");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_2);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_2");
                     break;
                 }
 
                 case 3: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_3);
-                    Models.ModelSender.renderPart("Render_Addition_3");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_3);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_3");
                     break;
                 }
 
                 case 4: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_4);
-                    Models.ModelSender.renderPart("Render_Addition_4");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_4);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_4");
                     break;
                 }
 
                 case 5: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_5);
-                    Models.ModelSender.renderPart("Render_Addition_5");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_5);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_5");
                     break;
                 }
 
                 case 6: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_6);
-                    Models.ModelSender.renderPart("Render_Addition_6");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_6);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_6");
                     break;
                 }
 
                 case 7: {
 
-                    UtilRender.renderTexture(Textures.SENDER_ADDITION_7);
-                    Models.ModelSender.renderPart("Render_Addition_7");
+                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_7);
+                    Models.ModelMultiPanel.renderPart("Render_Addition_7");
                     break;
                 }
             }

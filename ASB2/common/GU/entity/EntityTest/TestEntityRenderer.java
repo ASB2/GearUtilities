@@ -27,7 +27,7 @@ public class TestEntityRenderer extends Render {
 
     @Override
     protected ResourceLocation getEntityTexture(Entity entity) {
-        // TODO Auto-generated method stub
+
         return Textures.BLANK;
     }
 }

@@ -25,6 +25,7 @@ import GU.blocks.containers.BlockCanvas.BlockCanvas;
 import GU.blocks.containers.BlockConduitInterface.BlockConduitInterface;
 import GU.blocks.containers.BlockConnectableTank.BlockConnectableTank;
 import GU.blocks.containers.BlockCreationTable.BlockCreationTable;
+import GU.blocks.containers.BlockDetachedRelocator.BlockDetachedRelocator;
 import GU.blocks.containers.BlockDissolver.BlockDissolver;
 import GU.blocks.containers.BlockEnergyCube.BlockEnergyCube;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
@@ -35,8 +36,8 @@ import GU.blocks.containers.BlockGyro.BlockSteamGyro.BlockSteamGyro;
 import GU.blocks.containers.BlockLamp.BlockLamp;
 import GU.blocks.containers.BlockMasher.BlockMasher;
 import GU.blocks.containers.BlockMiniSteamBoiler.BlockMiniSteamBoiler;
+import GU.blocks.containers.BlockMultiPanel.BlockMultiPanel;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
-import GU.blocks.containers.BlockSender.BlockSender;
 import GU.blocks.containers.BlockSolarFocus.BlockSolarFocus;
 import GU.blocks.containers.BlockTestTile.BlockTestTile;
 import GU.blocks.containers.BlockUniversalConduit.BlockUniversalConduit;
@@ -80,6 +81,7 @@ public class BlockRegistry {
     public static ContainerBase BlockSolarGyro;
     public static ContainerBase BlockSteamGyro;
     public static ContainerBase BlockMiniSteamBoiler;
+    public static ContainerBase BlockDetachedRelocator;
     
     private static int id = 500;
 
@@ -171,7 +173,7 @@ public class BlockRegistry {
         BlockUniversalConduit.setBlockName("BlockUniversalConduit");
         LanguageRegistry.addName(BlockUniversalConduit, "Universal Conduit");
 
-        BlockSender = new BlockSender(config.getBlock("BlockSender", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockSender = new BlockMultiPanel(config.getBlock("BlockSender", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockSender.setBlockName("BlockSender");
         LanguageRegistry.addName(BlockSender, "Universal Sender");
 
@@ -218,10 +220,14 @@ public class BlockRegistry {
         BlockSteamGyro = new BlockSteamGyro(config.getBlock("BlockSteamGyro", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockSteamGyro.setBlockName("BlockSteamGyro");
         LanguageRegistry.addName(BlockSteamGyro, "Steam Gyro");
-        
+
         BlockMiniSteamBoiler = new BlockMiniSteamBoiler(config.getBlock("BlockMiniSteamBoiler", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
         BlockMiniSteamBoiler.setBlockName("BlockMiniSteamBoiler");
         LanguageRegistry.addName(BlockMiniSteamBoiler, "Mini Steam Boiler");
+        
+        BlockDetachedRelocator = new BlockDetachedRelocator(config.getBlock("BlockDetachedRelocator", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockDetachedRelocator.setBlockName("BlockDetachedRelocator");
+        LanguageRegistry.addName(BlockDetachedRelocator, "Detached Relocator");
     }
 
     public static void initTestBlocks(Configuration config) {

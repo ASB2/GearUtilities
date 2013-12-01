@@ -5,6 +5,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -17,7 +18,6 @@ import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilFluid;
 import GU.blocks.containers.Inventory;
 import GU.blocks.containers.TileFluidBase;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TileMiniSteamBoiler extends TileFluidBase implements IInventory {
 
@@ -38,9 +38,9 @@ public class TileMiniSteamBoiler extends TileFluidBase implements IInventory {
 
             for(ItemStack stack : tileInventory.getItemArray()) {
 
-                if(stack != null && GameRegistry.getFuelValue(stack) > 0) {
+                if(stack != null && TileEntityFurnace.getItemBurnTime(stack) > 0) {
 
-                    this.useFuel(GameRegistry.getFuelValue(stack));
+                    this.useFuel(TileEntityFurnace.getItemBurnTime(stack));
                 }
             }
         }

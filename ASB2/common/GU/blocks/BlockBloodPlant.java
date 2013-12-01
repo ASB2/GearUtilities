@@ -50,18 +50,23 @@ public class BlockBloodPlant extends FlowerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityplayer, int side, float par7, float par8, float par9) {
 
-        if(entityplayer.getCurrentEquippedItem() == null) {
+        if(world.getBlockMetadata(x, y, z) == FULLY_GROWN - 1) {
 
-            if(world.getBlockMetadata(x, y, z) == FULLY_GROWN - 1) {
+            ItemStack copy = ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard.copy();
+            copy.stackSize = world.rand.nextInt(5) + 1;
 
-                ItemStack copy = ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard.copy();
-                copy.stackSize += world.rand.nextInt(10);
+            if(UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, copy, x, y, z)) {
 
-                if(UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, copy, x, y, z)) {
+                world.setBlockMetadataWithNotify(x, y, z, 0, 3);
+                return true;
+            }
+        }
+        else {
 
-                    world.setBlockMetadataWithNotify(x, y, z, 0, 3);
-                    return true;
-                }
+            if(entityplayer.capabilities.isCreativeMode) {
+
+                world.setBlockMetadataWithNotify(x, y, z, FULLY_GROWN - 1, 3);
+                return true;
             }
         }
         return false;
@@ -77,7 +82,7 @@ public class BlockBloodPlant extends FlowerBase {
     public void updateTick(World world, int x, int y, int z, Random random) {
 
         if(!world.isRemote) {
-            
+
             if(random.nextInt(25) == 1) {
 
                 if(world.getBlockMetadata(x, y, z) < FULLY_GROWN - 1) {
@@ -111,7 +116,7 @@ public class BlockBloodPlant extends FlowerBase {
 
         itemStacks.add(new ItemStack(this, 0));
 
-        if(meta == FULLY_GROWN - 1){
+        if(meta == FULLY_GROWN - 1) {
 
             ItemStack copy = ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard.copy();
             copy.stackSize += world.rand.nextInt(5);

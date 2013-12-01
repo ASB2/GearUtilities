@@ -3,37 +3,32 @@ package GU.entity.EntityTileFinder;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilEntity;
 import ASB2.vector.Vector3;
-import GU.api.cluster.IClusterTrigger;
-import GU.api.cluster.IClustor;
+import GU.api.cluster.ITileFinderSource;
 import GU.entity.EntityBase;
 import GU.info.GUDamageSource;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityTileFinder extends EntityBase implements IClustor {
+public class EntityTileFinder extends EntityBase {
 
-    Vector3 start;
-    Vector3 position;
-    ForgeDirection direction;
-    IClusterTrigger source;
     int id;
-    
-    public EntityTileFinder(World world, Vector3 start, ForgeDirection direction, IClusterTrigger source, int id) {
-        super(world, start);
-
-        this.start = start;
-        position = start.clone();
-        this.direction = direction;
-        this.source = source;
-        this.setSize(.1f, .1f);
-        this.id = id;
-    }
 
     public EntityTileFinder(World world) {
         super(world);
+    }
+
+    public EntityTileFinder(World world, Vector3 start, Vector3 destination, Vector3 tileToCallin, int id) {
+        super(world, start);
+
+        vectors = new Vector3[3];
+        this.vectors[0] = start;
+        this.vectors[1] = destination;
+        this.vectors[2] = tileToCallin;
+        this.setSize(.1f, .1f);
+        this.id = id;
+        this.recalulateMotion(.2);
     }
 
     @Override
@@ -44,40 +39,33 @@ public class EntityTileFinder extends EntityBase implements IClustor {
         isImmuneToFire = true;
     }
 
-
     @Override
-    public void onUpdate() {
-        super.onUpdate();
+    public void onEntityUpdate() {
 
-        if(!worldObj.isRemote) {
+        if(vectors != null && vectors[0] != null && vectors[1] != null && vectors[2] != null) {
 
-            double divided = 1;            
-            position.add(direction.offsetX / divided, direction.offsetY / divided,direction.offsetZ / divided);
-            this.setPosition(position);
+            vectors[0] = new Vector3(this);
 
-            source.onSentClustorCollosion(source, direction, position, this, id);
+            if(!vectors[0].intEquals(vectors[1])) {
 
-            if(position.getTileEntity(worldObj) != null) {
-
-                if(position.getTileEntity(worldObj) instanceof IClusterTrigger) {
-
-                    ((IClusterTrigger)position.getTileEntity(worldObj)).onClustorCollosion(source, direction, position, this);
-                }
-            }      
+                this.updateMovement();
+                return;
+            }
         }
     }
 
-    @Override
-    public boolean stopClustor() {
+    public void recalulateMotion(double speedChange) {
 
-        this.setDead();
-        return false;
+        Vector3 tempVec = vectors[1].clone().subtract(vectors[0]).normalize().multiply(speedChange);
+        motionX = tempVec.x;
+        motionY = tempVec.y;
+        motionZ = tempVec.z;
     }
 
     @Override
     protected void onImpactEntity(Entity entity) {
 
-        UtilEntity.damageEntity(worldObj, entity, GUDamageSource.clusterCollision, 100);       
+        UtilEntity.damageEntity(worldObj, entity, GUDamageSource.entityFinderCollision, 100);
     }
 
     @Override
@@ -94,10 +82,14 @@ public class EntityTileFinder extends EntityBase implements IClustor {
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
+    protected void readEntityFromNBT(NBTTagCompound tag) {
+        super.readFromNBT(tag);
+        id = tag.getInteger("id");
     }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
+    protected void writeEntityToNBT(NBTTagCompound tag) {
+        super.writeEntityToNBT(tag);
+        tag.setInteger("id", id);
     }
 }

@@ -20,8 +20,8 @@ public class InfoClusterRenderer extends Render {
         GL11.glTranslated(x, y, z);
         GL11.glScalef(.5f, .5f, .5f);
         GL11.glRotated(0 - yaw, 0, 0, 0);
-        UtilRender.renderTexture(Textures.ITEM_SENDER);
-        Models.ModelSender.renderAll();
+        UtilRender.renderTexture(Textures.MULTI_PANEL);
+        Models.ModelMultiPanel.renderAll();
 
         GL11.glPopMatrix();
     }
@@ -29,6 +29,6 @@ public class InfoClusterRenderer extends Render {
     @Override
     protected ResourceLocation getEntityTexture(Entity entity) {
         // TODO Auto-generated method stub
-        return Textures.ITEM_SENDER;
+        return Textures.MULTI_PANEL;
     }
 }
