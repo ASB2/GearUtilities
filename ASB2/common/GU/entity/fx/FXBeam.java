@@ -1,4 +1,4 @@
-package GU.fx;
+package GU.entity.fx;
 
 import java.awt.Color;
 

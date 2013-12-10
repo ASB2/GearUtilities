@@ -17,8 +17,11 @@ public class FamilarsRenderer extends Render {
 
         GL11.glPushMatrix();
 
-        UtilRender.renderTexture(Textures.MULTI_PANEL);
-        Models.ModelMultiPanel.renderPart("Panel");
+        GL11.glTranslated(x, y, z );
+        GL11.glScalef(.5f, .5f, .5f);
+
+        UtilRender.renderTexture(Textures.CREATION_TABLE);
+        Models.ModelCreationTable.renderAll();
 
         GL11.glPopMatrix();
     }

@@ -62,7 +62,10 @@ public class TileConduitInterface extends TileBase implements IPacketHandler {
 
     @Override
     public void trigger(int id) {
-
+//
+//        if() {
+//            
+//        }
     }
 
     @Override

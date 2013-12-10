@@ -20,7 +20,7 @@ public class FXBase extends EntityFX {
 //        this.particleAge = age;
 
     }
-
+    
     @Override
     public void onUpdate() {
         super.onUpdate();

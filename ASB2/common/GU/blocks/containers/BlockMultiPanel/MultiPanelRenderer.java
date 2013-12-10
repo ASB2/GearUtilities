@@ -75,6 +75,9 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
         UtilRender.renderTexture(Textures.MULTI_PANEL);
         Models.ModelMultiPanel.renderPart("Panel");
 
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glColor4d(1, 1, 1, .5);
         GL11.glRotatef(Minecraft.getSystemTime() / (Variables.ANIMATION_SPEED + 10), 0F, 1F, 0F);
 
         for(int i = 0; i < 4; i++) {
@@ -159,6 +162,7 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
             }
         }
 
+        GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
 
         if(((TileMultiPanel) tileentity).wireless[((TileMultiPanel) tileentity).getMode() - 1]) {

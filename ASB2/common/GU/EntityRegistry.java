@@ -6,7 +6,7 @@ import GU.entity.EntityPotion.EntityModularPotion;
 import GU.entity.EntityTest.EntityTestEntity;
 import GU.entity.EntityTest.TestEntityRenderer;
 import GU.entity.EntityTileFinder.EntityTileFinder;
-import GU.entity.EntityTileFinder.InfoClusterRenderer;
+import GU.entity.EntityTileFinder.TileFinderRenderer;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class EntityRegistry {
@@ -22,7 +22,7 @@ public class EntityRegistry {
     public static void initClient() {
 
         RenderingRegistry.registerEntityRenderingHandler(EntityTestEntity.class, new TestEntityRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(EntityTileFinder.class, new InfoClusterRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(EntityTileFinder.class, new TileFinderRenderer());
         RenderingRegistry.registerEntityRenderingHandler(EntityFamilars.class, new FamilarsRenderer());
     }
 }

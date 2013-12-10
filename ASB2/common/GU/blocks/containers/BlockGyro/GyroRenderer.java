@@ -19,10 +19,10 @@ public class GyroRenderer extends TileEntitySpecialRenderer implements IItemRend
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
 
         GL11.glPushMatrix();
-
         GL11.glTranslated(x + .5f, y + .09f, z + .5f);
         GL11.glScalef(.5f, .5f, .5f);
-
+        
+        GL11.glColor4f(1, 1, 1, 1f);
         UtilRender.renderTexture(this.getBaseTexture());
         Models.ModelGyro.renderPart("Base");
 
@@ -46,7 +46,6 @@ public class GyroRenderer extends TileEntitySpecialRenderer implements IItemRend
         UtilRender.renderTexture(this.getOuterTexture());
         Models.ModelGyro.renderPart("Outer");
         GL11.glPopMatrix();
-
         GL11.glPopMatrix();
     }
 
@@ -100,7 +99,7 @@ public class GyroRenderer extends TileEntitySpecialRenderer implements IItemRend
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
-
+        
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
@@ -124,7 +123,6 @@ public class GyroRenderer extends TileEntitySpecialRenderer implements IItemRend
         GL11.glRotatef(-90f, 0, 1, 0);
         UtilRender.renderTexture(this.getOuterTexture());
         Models.ModelGyro.renderPart("Outer");
-
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }

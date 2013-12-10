@@ -5,7 +5,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import ASB2.utils.UtilEntity;
 import ASB2.vector.Vector3;
-import GU.api.cluster.ITileFinderSource;
 import GU.entity.EntityBase;
 import GU.info.GUDamageSource;
 import cpw.mods.fml.relauncher.Side;
@@ -13,22 +12,22 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityTileFinder extends EntityBase {
 
-    int id;
+    int range;
 
     public EntityTileFinder(World world) {
         super(world);
     }
 
-    public EntityTileFinder(World world, Vector3 start, Vector3 destination, Vector3 tileToCallin, int id) {
+    public EntityTileFinder(World world, Vector3 start, Vector3 destination, int range) {
         super(world, start);
 
         vectors = new Vector3[3];
         this.vectors[0] = start;
         this.vectors[1] = destination;
-        this.vectors[2] = tileToCallin;
-        this.setSize(.1f, .1f);
-        this.id = id;
-        this.recalulateMotion(.2);
+        this.vectors[2] = start;
+        this.setSize(0, 0);
+        this.range = range;
+        this.recalulateMotion(.1);
     }
 
     @Override
@@ -41,15 +40,28 @@ public class EntityTileFinder extends EntityBase {
 
     @Override
     public void onEntityUpdate() {
-
+        this.setDead();
         if(vectors != null && vectors[0] != null && vectors[1] != null && vectors[2] != null) {
 
             vectors[0] = new Vector3(this);
 
-            if(!vectors[0].intEquals(vectors[1])) {
+            if(!(vectors[0].distanceTo(vectors[2]) > range)) {
 
-                this.updateMovement();
-                return;
+                if(!vectors[0].intEquals(vectors[1])) {
+                    this.recalulateMotion(.1);
+                    
+                    this.updateMovement();
+                }
+                else {
+
+                    worldObj.setBlock(vectors[0].intX(), vectors[0].intY(), vectors[0].intZ(), 1);
+                    this.setDead();
+                }
+            }
+            else {
+
+                worldObj.setBlock(vectors[0].intX(), vectors[0].intY(), vectors[0].intZ(), 1);
+                this.setDead();
             }
         }
     }
@@ -84,12 +96,12 @@ public class EntityTileFinder extends EntityBase {
     @Override
     protected void readEntityFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        id = tag.getInteger("id");
+        range = tag.getInteger("range");
     }
 
     @Override
     protected void writeEntityToNBT(NBTTagCompound tag) {
         super.writeEntityToNBT(tag);
-        tag.setInteger("id", id);
+        tag.setInteger("range", range);
     }
 }

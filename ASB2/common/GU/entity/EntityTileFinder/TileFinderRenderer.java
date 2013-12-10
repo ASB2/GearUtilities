@@ -10,7 +10,7 @@ import ASB2.utils.UtilRender;
 import GU.info.Models;
 import GU.info.Textures;
 
-public class InfoClusterRenderer extends Render {
+public class TileFinderRenderer extends Render {
 
     @Override
     public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTick) {
@@ -20,15 +20,14 @@ public class InfoClusterRenderer extends Render {
         GL11.glTranslated(x, y, z);
         GL11.glScalef(.5f, .5f, .5f);
         GL11.glRotated(0 - yaw, 0, 0, 0);
-        UtilRender.renderTexture(Textures.MULTI_PANEL);
-        Models.ModelMultiPanel.renderAll();
-
+        UtilRender.renderTexture(Textures.BLACK);
+        Models.ModelCrystalItem.renderAll();
         GL11.glPopMatrix();
     }
 
     @Override
     protected ResourceLocation getEntityTexture(Entity entity) {
-        // TODO Auto-generated method stub
+
         return Textures.MULTI_PANEL;
     }
 }

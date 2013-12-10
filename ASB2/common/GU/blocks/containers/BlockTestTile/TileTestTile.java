@@ -1,70 +1,57 @@
 package GU.blocks.containers.BlockTestTile;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.IBlockCycle;
-import ASB2.utils.UtilDirection;
-import ASB2.utils.UtilRender;
+import ASB2.utils.UtilBlock;
 import ASB2.vector.Vector3;
-import GU.api.power.IPowerMisc;
+import GU.api.cluster.ITileFinderSource;
 import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
-import GU.fx.TestEffect;
+import GU.entity.EntityTileFinder.EntityTileFinder;
 
-public class TileTestTile extends TileBase implements IBlockCycle {
+public class TileTestTile extends TileBase implements IBlockCycle, ITileFinderSource {
 
     public TileTestTile() {
 
-        waitTimer = new Wait(1, this, 0);
+        waitTimer = new Wait(20, this, 0);
     }
 
     @Override
     public void updateEntity() {
 
-        // UtilBlock.cycle2DBlock(null, worldObj, xCoord, yCoord, zCoord,
-        // ForgeDirection.DOWN, 10, this, 0);
-
         waitTimer.update();
-
-        for (ForgeDirection direction : ForgeDirection.values()) {
-
-            TileEntity tile = UtilDirection.translateDirectionToTile(this,
-                    worldObj, direction);
-
-            if (tile != null) {
-
-                if (tile instanceof IPowerMisc) {
-
-                    IPowerMisc pTile = (IPowerMisc) tile;
-
-                    if (pTile.getPowerProvider() != null) {
-
-                        if (pTile.getPowerProvider().gainPower(pTile.getPowerProvider().getPowerClass().getPowerValue(), direction.getOpposite(), false)) {
-
-                            pTile.getPowerProvider().gainPower(pTile.getPowerProvider().getPowerClass().getPowerValue(), direction.getOpposite(), true);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     @Override
     public void trigger(int id) {
+
+        UtilBlock.cycle3DBlock(null, worldObj, xCoord, yCoord + 10, zCoord, ForgeDirection.DOWN, 10, 10, this, 0);
     }
 
     @Override
     public boolean execute(EntityLivingBase player, World world, int x, int y, int z, ForgeDirection side, int id) {
-        
-        Vector3 vector = new Vector3(x + .5, y + .5, z + .5);
 
-        if (world.isRemote) {
-            TestEffect test = new TestEffect(worldObj, vector, vector);
+        if(!world.isRemote) {
 
-            UtilRender.renderFX(test);
+            if(world.getBlockId(x, y, z) == Block.sand.blockID) {
+                
+                Vector3 vector = new Vector3(this);
+
+                EntityTileFinder finder = new EntityTileFinder(worldObj, vector.clone().add(ForgeDirection.DOWN), new Vector3(x, y, z), 20);
+
+                world.spawnEntityInWorld(finder);
+            }
         }
         return false;
+    }
+
+    @Override
+    public void onCollision(World world, Vector3 position, EntityTileFinder tile, int id) {
+
+        position.setBlock(world, 1);
+        tile.setDead();
     }
 }

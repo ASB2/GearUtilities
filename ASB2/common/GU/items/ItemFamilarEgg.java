@@ -7,11 +7,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilItemStack;
+import ASB2.vector.Vector3;
 import GU.api.familar.EnumGenes;
 import GU.api.familar.EnumGrowthStage;
 import GU.api.familar.EnumType;
 import GU.api.familar.IFamilarEgg;
+import GU.entity.EntityFamilar.EntityFamilars;
 
 public class ItemFamilarEgg extends ItemBase implements IFamilarEgg {
 
@@ -21,7 +24,7 @@ public class ItemFamilarEgg extends ItemBase implements IFamilarEgg {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+    public boolean onItemUseFirst(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 
         if(UtilItemStack.getNBTTagString(itemStack, "owner") == "") {
 
@@ -32,13 +35,20 @@ public class ItemFamilarEgg extends ItemBase implements IFamilarEgg {
             if(UtilItemStack.getNBTTagString(itemStack, "owner") == player.username) {
 
                 if(!world.isRemote) {
-                    
-//                    world.spawnEntityInWorld(new EntityFamilars(world, new Vector3(player).add(ForgeDirection.UP), UtilItemStack.getNBTTagString(itemStack, "owner")));
+
+                    world.spawnEntityInWorld(new EntityFamilars(world, new Vector3(x + .5, y + .5, z + .5).add(ForgeDirection.UP), UtilItemStack.getNBTTagString(itemStack, "owner")));
                     player.addChatMessage("Spawned");
+                    return true;
                 }
             }
         }
-        return super.onItemRightClick(itemStack, world, player);
+        return super.onItemUseFirst(itemStack, player, world, x, y, z, side, hitX, hitY, hitZ);
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+
+        return itemStack;
     }
 
     @Override

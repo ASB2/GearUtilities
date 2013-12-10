@@ -1,4 +1,4 @@
-package GU.fx;
+package GU.entity.fx;
 
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;

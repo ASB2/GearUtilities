@@ -22,7 +22,7 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 
-        if (player.isSneaking()) {
+        if(player.isSneaking()) {
 
             this.decrementLength(player);
 
@@ -42,7 +42,7 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
 
         UtilItemStack.setNBTTagInt(itemStack, "id", world.getBlockId(x, y, z));
 
-        UtilBlock.cycle3DBlock(player, world, x, y, z, ForgeDirection.getOrientation(side), 100, UtilItemStack.getNBTTagInt(itemStack, "length"), this, 0);
+        UtilBlock.cycle3DBlock(player, world, x, y, z, ForgeDirection.getOrientation(side), UtilItemStack.getNBTTagInt(itemStack, "length"), UtilItemStack.getNBTTagInt(itemStack, "length"), this, 0);
 
         UtilItemStack.setNBTTagInt(itemStack, "id", 0);
         return true;
@@ -52,7 +52,7 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
 
         ItemStack cItem = player.inventory.getCurrentItem();
 
-        if (UtilItemStack.getNBTTagInt(cItem, "length") > 0) {
+        if(UtilItemStack.getNBTTagInt(cItem, "length") > 0) {
 
             UtilItemStack.setNBTTagInt(cItem, "length", UtilItemStack.getNBTTagInt(cItem, "length") - 1);
         }
@@ -65,7 +65,7 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
         UtilItemStack.setNBTTagInt(cItem, "length", UtilItemStack.getNBTTagInt(cItem, "length") + 1);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
         super.addInformation(itemStack, player, info, var1);
@@ -75,32 +75,26 @@ public class ItemEnhancedDestructionCatalyst extends ItemBase implements IBlockC
     @Override
     public boolean execute(EntityLivingBase player, World world, int x, int y, int z, ForgeDirection side, int mid) {
 
-        int blockToBreak = UtilItemStack.getNBTTagInt(((EntityPlayer)player).inventory.getCurrentItem(), "id");
+        int blockToBreak = UtilItemStack.getNBTTagInt(((EntityPlayer) player).inventory.getCurrentItem(), "id");
 
-        if (world.blockExists(x, y, z)) {
+        if(world.blockExists(x, y, z)) {
 
             if(Block.blocksList[blockToBreak] != null) {
-                
-                if (Block.blocksList[blockToBreak].getBlockHardness(world, x, y, z) != -1) {
 
-                    if (world.getBlockTileEntity(x, y, z) == null) {
+                if(UtilBlock.isBreakable(world, x, y, z)) {
+                    
+                    if(world.getBlockId(x, y, z) == blockToBreak || (world.getBlockId(x, y, z) == Block.oreRedstone.blockID && blockToBreak == Block.oreRedstoneGlowing.blockID)) {
 
-                        if (world.getBlockId(x, y, z) == blockToBreak || (world.getBlockId(x, y, z) == Block.oreRedstone.blockID && blockToBreak == Block.oreRedstoneGlowing.blockID)) {
+                        if(UtilItemStack.damageItem(player, ((EntityPlayer) player).inventory.getCurrentItem(), 1)) {
 
-                            if(!((EntityPlayer)player).capabilities.isCreativeMode) {
-
-                                if (UtilItemStack.damageItem(player, ((EntityPlayer)player).inventory.getCurrentItem(), 1)) {
-
-                                    UtilBlock.breakAndAddToInventory(((EntityPlayer)player).inventory, world, x, y, z, true);
-                                    return true;
-                                }
-                            }
-                            else {
-
-                                world.setBlockToAir(x, y, z);
-                            }
+                            UtilBlock.breakAndAddToInventorySpawnExcess(((EntityPlayer) player).inventory, world, x, y, z, 1, false);
+                            return true;
                         }
-                    }
+                        else {
+
+                            world.setBlockToAir(x, y, z);
+                        }
+                }
                 }
             }
         }

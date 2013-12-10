@@ -26,9 +26,6 @@ public class BlockBloodPlant extends FlowerBase {
 
     public BlockBloodPlant(int id, Material material) {
         super(id, material);
-
-        float f = 0.4F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
     }
 
     @Override
@@ -75,6 +72,7 @@ public class BlockBloodPlant extends FlowerBase {
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 
+        this.setBlockBounds(0, 0, 0, 1, 1, 1);
         return AxisAlignedBB.getAABBPool().getAABB(x + this.minX, y + this.minY, z + this.minZ, x + this.maxX, y + this.maxY, z + this.maxZ);
     }
 
