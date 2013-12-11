@@ -9,9 +9,9 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
-public class BlockFalseBlock extends BlockBase {
+public class BlockEtherealStone extends BlockBase {
 
-    public BlockFalseBlock(int id, Material material) {
+    public BlockEtherealStone(int id, Material material) {
         super(id, material);
         useStandardRendering = false;
     }

@@ -14,14 +14,10 @@ import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilMisc;
 import GU.api.color.IColorable;
 import GU.api.color.IVanillaColorable;
-import GU.api.network.IConductor;
-import GU.api.network.INetwork;
 import GU.api.power.IPowerMisc;
 import GU.info.Reference;
 
 public class ItemGearReader extends ItemBase {
-
-    INetwork network;
 
     public ItemGearReader(int id) {
         super(id);
@@ -118,22 +114,22 @@ public class ItemGearReader extends ItemBase {
                     }
                 }
 
-                if (tile instanceof IConductor) {
-
-                    IConductor mTile = (IConductor) tile;
-
-                    if (mTile.getNetwork() != null) {
-
-                        UtilEntity.sendChatToPlayer(player, "Network Conductors: " + mTile.getNetwork().getConductors().size());
-                        UtilEntity.sendChatToPlayer(player, "Network Item Interfaces: " + mTile.getNetwork().getItemInterfaces().size());
-                        UtilEntity.sendChatToPlayer(player, "Network Fluid Interfaces: " + mTile.getNetwork().getFluidInterfaces().size());
-                        UtilEntity.sendChatToPlayer(player, "Network GUU Power Interfaces: " + mTile.getNetwork().getGUUPowerInterfaces().size());
-                    }
-                    else {
-
-                        UtilEntity.sendChatToPlayer(player, "Conduit Network: null");
-                    }
-                }
+//                if (tile instanceof IConductor) {
+//
+//                    IConductor mTile = (IConductor) tile;
+//
+//                    if (mTile.getNetwork() != null) {
+//
+//                        UtilEntity.sendChatToPlayer(player, "Network Conductors: " + mTile.getNetwork().getConductors().size());
+//                        UtilEntity.sendChatToPlayer(player, "Network Item Interfaces: " + mTile.getNetwork().getItemInterfaces().size());
+//                        UtilEntity.sendChatToPlayer(player, "Network Fluid Interfaces: " + mTile.getNetwork().getFluidInterfaces().size());
+//                        UtilEntity.sendChatToPlayer(player, "Network GUU Power Interfaces: " + mTile.getNetwork().getGUUPowerInterfaces().size());
+//                    }
+//                    else {
+//
+//                        UtilEntity.sendChatToPlayer(player, "Conduit Network: null");
+//                    }
+//                }
             }
             UtilEntity.sendChatToPlayer(player, "Block id: " + world.getBlockId(x, y, z));
             UtilEntity.sendChatToPlayer(player, "Block metadata: " + world.getBlockMetadata(x, y, z));

@@ -9,7 +9,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import GU.api.IItemInventory;
+import ASB2.advanced.IItemInventory;
 
 public abstract class ContainerBase extends Container {
 

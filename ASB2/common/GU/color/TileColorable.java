@@ -4,8 +4,8 @@ import java.awt.Color;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.wait.Wait;
 import GU.api.color.IColorable;
-import GU.api.wait.Wait;
 import GU.blocks.containers.TileBase;
 import GU.packets.ColorPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;

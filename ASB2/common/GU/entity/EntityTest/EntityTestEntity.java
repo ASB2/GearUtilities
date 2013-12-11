@@ -3,7 +3,7 @@ package GU.entity.EntityTest;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import ASB2.vector.Vector3;
-import GU.api.wait.Wait;
+import ASB2.wait.Wait;
 import GU.entity.EntityBase;
 
 import com.google.common.io.ByteArrayDataInput;

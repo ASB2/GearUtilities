@@ -1,9 +1,13 @@
 package GU.api.potion;
 
-import net.minecraft.item.ItemStack;
-import GU.api.module.item.IItemModuleAccepter;
+import java.util.ArrayList;
 
-public interface IPotion extends IItemModuleAccepter {
+import net.minecraft.item.ItemStack;
+
+public interface IPotion {
+    
+    void addItemModule(ItemStack accepter, ItemStack moduleToAdd);    
+    ArrayList<ItemStack> getModules(ItemStack stack);
     
     void setDuration(ItemStack stack, int amount);
     int getDuration(ItemStack stack);

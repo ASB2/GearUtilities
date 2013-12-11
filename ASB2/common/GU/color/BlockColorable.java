@@ -18,15 +18,12 @@ public abstract class BlockColorable extends ContainerBase {
 
     public BlockColorable(int id, Material material) {
         super(id, material);
-
-        // TODO Auto-generated constructor stub
     }
 
     @Override
     public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection side) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
-
         if(tile != null && tile instanceof IColorable ) {
 
             ((IColorable)tile).setColor(Color.WHITE, side);

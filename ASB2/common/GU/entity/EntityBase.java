@@ -6,12 +6,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import ASB2.vector.Vector3;
+import ASB2.wait.IWaitTrigger;
+import ASB2.wait.Wait;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
-import GU.api.wait.*;
 
 public abstract class EntityBase extends Entity implements IEntityAdditionalSpawnData, IWaitTrigger {
 

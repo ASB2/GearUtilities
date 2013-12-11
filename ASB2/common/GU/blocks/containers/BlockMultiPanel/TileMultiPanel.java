@@ -1,7 +1,5 @@
 package GU.blocks.containers.BlockMultiPanel;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -22,16 +20,18 @@ import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
 import ASB2.utils.UtilItemStack;
 import ASB2.vector.Vector3;
+import ASB2.wait.Wait;
 import GU.BlockRegistry;
 import GU.api.power.IPowerMisc;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
 import GU.api.recipe.SenderRecipe;
-import GU.api.wait.Wait;
 import GU.blocks.containers.Inventory;
 import GU.blocks.containers.TileFluidBase;
 import GU.info.Reference;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerMisc, IFluidHandler {
 
@@ -419,7 +419,7 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerM
     @Override
     public void invalidate() {
 
-        ItemStack stack = new ItemStack(BlockRegistry.BlockSender);
+        ItemStack stack = new ItemStack(BlockRegistry.BlockMultiPanel);
         UtilItemStack.setNBTTagInt(stack, "mode", this.getMode());
         UtilBlock.spawnItemStackEntity(worldObj, xCoord, yCoord, zCoord, stack, 1);
         super.invalidate();

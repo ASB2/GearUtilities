@@ -8,12 +8,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
+import ASB2.wait.IWaitTrigger;
+import ASB2.wait.Wait;
 import GU.api.IWrenchable;
 import GU.api.color.IVanillaColorable;
 import GU.api.color.VanillaColor;
 import GU.api.power.PowerProvider;
-import GU.api.wait.IWaitTrigger;
-import GU.api.wait.Wait;
 import GU.packets.PowerPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
 

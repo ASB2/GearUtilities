@@ -24,7 +24,7 @@ public class WorldGenBlockFalseBlock implements IWorldGenerator {
         int Ycoord = random.nextInt(100);
         int Zcoord = blockZ + random.nextInt(16);
 
-        (new WorldGenMinable(BlockRegistry.BlockFalseBlock.blockID, 55))
+        (new WorldGenMinable(BlockRegistry.BlockEtherealStone.blockID, 55))
                 .generate(world, random, Xcoord, Ycoord, Zcoord);
     }
 }
