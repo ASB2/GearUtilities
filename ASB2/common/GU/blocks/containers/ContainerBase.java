@@ -73,12 +73,10 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
         
         blockIcon = iconRegister.registerIcon(Reference.MODDID + ":" + this.getTextureName());
         
-        if (textures.length == 6) {
-            icons = new Icon[6];
-            for (int i = 0; i < textures.length; i++) {
-                
-                icons[i] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[i]);
-            }
+        icons = new Icon[textures.length];
+        for (int i = 0; i < textures.length; i++) {
+            
+            icons[i] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[i]);
         }
     }
     
@@ -164,10 +162,10 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
         // TODO Auto-generated method stub
         
     }
-
+    
     @Override
     public String getItemStackDisplayName(ItemStack itemStack) {
-
+        
         return StatCollector.translateToLocal(itemStack.getItem().getUnlocalizedName(itemStack) + ".name");
     }
 }

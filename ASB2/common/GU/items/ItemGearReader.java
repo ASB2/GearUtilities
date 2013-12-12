@@ -134,8 +134,9 @@ public class ItemGearReader extends ItemBase {
             UtilEntity.sendChatToPlayer(player, "Block id: " + world.getBlockId(x, y, z));
             UtilEntity.sendChatToPlayer(player, "Block metadata: " + world.getBlockMetadata(x, y, z));
             UtilEntity.sendChatToPlayer(player, "Block direction: " + ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)));
-            UtilEntity.sendChatToPlayer(player, "Block brightness: " + Block.blocksList[world.getBlockId(x, y, z)].getMixedBrightnessForBlock(world, x, y, z));
+            UtilEntity.sendChatToPlayer(player, "Block mixed brightness: " + Block.blocksList[world.getBlockId(x, y, z)].getMixedBrightnessForBlock(world, x, y, z));
             UtilEntity.sendChatToPlayer(player, "Block ambient acclusion: " + Block.blocksList[world.getBlockId(x, y, z)].getAmbientOcclusionLightValue(world, x, y, z));
+            UtilEntity.sendChatToPlayer(player, "Tile Entity: " + world.getBlockTileEntity(x, y, z));
             UtilEntity.sendChatToPlayer(player, "--------");
         }
         return true;

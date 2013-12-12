@@ -36,7 +36,7 @@ public class BlockRegistry {
     public static void init(Configuration config) {
         
         BlockMetadataOre = new BlockMetadataOre(BlockRegistry.getConfigID(config, "Metadata Ore"), Material.rock);
-        addBlock(BlockMetadataOre, "", "Metadata Ore");
+        addBlockNoLang(BlockMetadataOre, "", "Metadata Ore");
         
         BlockEtherealStone = new BlockEtherealStone(BlockRegistry.getConfigID(config, "BlockEtherealStone"), Material.rock);
         addBlock(BlockEtherealStone, "Ethereal Stone", "BlockEtherealStone");
@@ -63,8 +63,7 @@ public class BlockRegistry {
         GameRegistry.registerBlock(BlockMultiPanel, ItemBlockMultiPanel.class, "BlockMultiPanel");
         
         BlockBasicElemental = new BlockBasicElemental(BlockRegistry.getConfigID(config, "BlockBasicElemental"), Material.rock);
-        BlockBasicElemental.setTextureString(new String[] { "BlockFireCube", "BlockWaterCube", "BlockEarthCube" });
-        addBlock(BlockBasicElemental, "BlockBasicElemental", "BlockBasicElemental");
+        addBlockNoLang(BlockBasicElemental, "BlockBasicElemental", "BlockBasicElemental");
     }
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {
@@ -72,6 +71,15 @@ public class BlockRegistry {
         block.setUnlocalizedName(unlocalizedName);
         block.setTextureName(unlocalizedName);
         LanguageRegistry.addName(block, ign);
+        MinecraftForge.setBlockHarvestLevel(block, "pickaxe", 2);
+        GameRegistry.registerBlock(block, GUItemBlock.class, block.getUnlocalizedName());
+        return block;
+    }
+    
+    public static Block addBlockNoLang(Block block, String ign, String unlocalizedName) {
+        
+        block.setUnlocalizedName(unlocalizedName);
+        block.setTextureName(unlocalizedName);
         MinecraftForge.setBlockHarvestLevel(block, "pickaxe", 2);
         GameRegistry.registerBlock(block, GUItemBlock.class, block.getUnlocalizedName());
         return block;

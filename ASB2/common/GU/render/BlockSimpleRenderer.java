@@ -8,11 +8,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilRender;
+import GU.BlockRegistry;
 import GU.api.color.IColorable;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import GU.*;
 
 public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     
@@ -74,7 +74,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderMetadataBlock(block, world.getBlockMetadata(x, y, z), x, y, z, renderer, world);
-        return false;
+        return true;
     }
     
     @Override
