@@ -1,28 +1,33 @@
 package GU.blocks.containers;
 
+import java.util.List;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import GU.GearUtilities;
+import GU.IExtraItemBlockInfo;
 import GU.info.Reference;
 import GU.render.BlockSimpleRenderer;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public abstract class ContainerBase extends BlockContainer {
+public abstract class ContainerBase extends BlockContainer implements IExtraItemBlockInfo {
     
     protected boolean useStandardRendering = true;
     String[] textures = new String[0];
-    Icon[] icons;
+    protected Icon[] icons;
     
     public ContainerBase(int id, Material material) {
         super(id, material);
@@ -151,5 +156,18 @@ public abstract class ContainerBase extends BlockContainer {
                 }
             }
         }
+    }
+    
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, List info, boolean var1) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public String getItemStackDisplayName(ItemStack itemStack) {
+
+        return StatCollector.translateToLocal(itemStack.getItem().getUnlocalizedName(itemStack) + ".name");
     }
 }

@@ -44,7 +44,7 @@ public class BlockEnhancedBricks extends BlockColorable {
                 return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
             }
         }
-        return false;
+        return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
     }
     
     @Override

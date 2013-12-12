@@ -17,6 +17,7 @@ import GU.blocks.containers.BlockMultiPanel.ItemBlockMultiPanel;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import GU.blocks.containers.BlockBasicElemental.*;
 
 public class BlockRegistry {
     
@@ -28,37 +29,42 @@ public class BlockRegistry {
     public static ContainerBase BlockAdvancedPotionBrewery;
     public static ContainerBase BlockEnhancedBricks;
     public static ContainerBase BlockMultiPanel;
+    public static ContainerBase BlockBasicElemental;
     
     private static int id = 500;
     
     public static void init(Configuration config) {
         
-        BlockMetadataOre = new BlockMetadataOre(config.getBlock("Metadata Ore", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockMetadataOre = new BlockMetadataOre(BlockRegistry.getConfigID(config, "Metadata Ore"), Material.rock);
         addBlock(BlockMetadataOre, "", "Metadata Ore");
         
-        BlockEtherealStone = new BlockEtherealStone(config.getBlock("BlockEtherealStone", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockEtherealStone = new BlockEtherealStone(BlockRegistry.getConfigID(config, "BlockEtherealStone"), Material.rock);
         addBlock(BlockEtherealStone, "Ethereal Stone", "BlockEtherealStone");
         
-        BlockFluidProvider = new BlockFluidProvider(config.getBlock("BlockFluidProvider", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockFluidProvider = new BlockFluidProvider(BlockRegistry.getConfigID(config, "BlockFluidProvider"), Material.rock);
         addBlock(BlockFluidProvider, "Fluid Provider", "BlockFluidProvider");
         
-        BlockPhantomBlock = new BlockPhantomBlock(config.getBlock("BlockPhantomBlock", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockPhantomBlock = new BlockPhantomBlock(BlockRegistry.getConfigID(config, "BlockPhantomBlock"), Material.rock);
         addBlock(BlockPhantomBlock, "Phantom Block", "BlockPhantomBlock");
         
-        BlockPowerTest = new BlockPowerTest(config.getBlock("BlockPowerTest", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockPowerTest = new BlockPowerTest(BlockRegistry.getConfigID(config, "BlockPowerTest"), Material.rock);
         addBlock(BlockPowerTest, "Power Sink/Source", "BlockPowerTest");
         
-        BlockAdvancedPotionBrewery = new BlockAdvancedPotionBrewery(config.getBlock("BlockAdvancedPotionBrewery", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockAdvancedPotionBrewery = new BlockAdvancedPotionBrewery(BlockRegistry.getConfigID(config, "BlockAdvancedPotionBrewery"), Material.rock);
         addBlock(BlockAdvancedPotionBrewery, "Advanced Potion Brewery", "BlockAdvancedPotionBrewery");
         
-        BlockEnhancedBricks = new BlockEnhancedBricks(config.getBlock("BlockEnhancedBrick", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockEnhancedBricks = new BlockEnhancedBricks(BlockRegistry.getConfigID(config, "BlockEnhancedBrick"), Material.rock);
         addBlock(BlockEnhancedBricks, "Enhanced Brick", "BlockEnhancedBrick");
         
-        BlockMultiPanel = new BlockMultiPanel(config.getBlock("BlockMultiPanel", BlockRegistry.getNextBaseID()).getInt(), Material.rock);
+        BlockMultiPanel = new BlockMultiPanel(BlockRegistry.getConfigID(config, "BlockMultiPanel"), Material.rock);
         BlockMultiPanel.setUnlocalizedName("BlockMultiPanel");
         LanguageRegistry.addName(BlockMultiPanel, "Multi-Panel");
         MinecraftForge.setBlockHarvestLevel(BlockMultiPanel, "pickaxe", 2);
         GameRegistry.registerBlock(BlockMultiPanel, ItemBlockMultiPanel.class, "BlockMultiPanel");
+        
+        BlockBasicElemental = new BlockBasicElemental(BlockRegistry.getConfigID(config, "BlockBasicElemental"), Material.rock);
+        BlockBasicElemental.setTextureString(new String[] { "BlockFireCube", "BlockWaterCube", "BlockEarthCube" });
+        addBlock(BlockBasicElemental, "BlockBasicElemental", "BlockBasicElemental");
     }
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {
@@ -74,5 +80,10 @@ public class BlockRegistry {
     public static int getNextBaseID() {
         
         return id++;
+    }
+    
+    public static int getConfigID(Configuration config, String string) {
+        
+        return config.getBlock(string, BlockRegistry.getNextBaseID()).getInt();
     }
 }
