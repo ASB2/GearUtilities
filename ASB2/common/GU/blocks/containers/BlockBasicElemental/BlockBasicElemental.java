@@ -159,13 +159,13 @@ public class BlockBasicElemental extends ContainerBase {
     @Override
     public void updateTick(World world, int x, int y, int z, Random rand) {
         
-//        switch (world.getBlockMetadata(x, y, z)) {
-//        
-//            case WATER_CUBE: {
-//                ForgeDirection direction = ForgeDirection.VALID_DIRECTIONS[rand.nextInt(6)];
-//                UtilBlock.placeBlockInAir(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, Block.waterMoving.blockID, 8);
-//            }
-//        }
+        switch (world.getBlockMetadata(x, y, z)) {
+        
+            case EARTH_CUBE: {
+                
+                
+            }
+        }
         super.updateTick(world, x, y, z, rand);
     }
 }

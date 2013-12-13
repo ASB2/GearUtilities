@@ -34,16 +34,18 @@ public class TileBasicElemental extends TileBase {
             }
             case BlockBasicElemental.WATER_CUBE: {
                 
-                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-                    
-                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
-                    
-                    if (tile != null && tile instanceof IFluidHandler) {
+                if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+                    for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                         
-                        UtilFluid.addFluidToTank((IFluidHandler) tile, direction.getOpposite(), new FluidStack(FluidRegistry.WATER, 100), true);
+                        TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+                        
+                        if (tile != null && tile instanceof IFluidHandler) {
+                            
+                            UtilFluid.addFluidToTank((IFluidHandler) tile, direction.getOpposite(), new FluidStack(FluidRegistry.WATER, 100), true);
+                        }
                     }
+                    break;
                 }
-                break;
             }
         }
     }
