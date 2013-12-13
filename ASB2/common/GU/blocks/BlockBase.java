@@ -7,6 +7,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import GU.GearUtilities;
 import GU.info.Reference;
 import GU.render.BlockSimpleRenderer;
@@ -43,6 +44,10 @@ public class BlockBase extends Block {
         
         this.textures = textures;
         return this;
+    }
+    
+    public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
+        return true;
     }
     
     @Override

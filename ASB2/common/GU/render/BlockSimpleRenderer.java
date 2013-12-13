@@ -10,6 +10,7 @@ import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
 import GU.api.color.IColorable;
+import GU.blocks.containers.BlockBasicElemental.BlockBasicElemental;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -28,6 +29,9 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
             UtilRender.renderStandardInvBlock(renderer, block, ((BlockEnhancedBricks) block).overlay, 255, 255, 255, 255);
             return;
+        }
+        if (block.blockID == BlockRegistry.BlockBasicElemental.blockID && meta == BlockBasicElemental.FIRE_CUBE) {
+            
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderStandardInvBlock(renderer, block, meta);
@@ -71,6 +75,10 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             UtilRender.renderFakeBlock(renderer, block, x, y, z, ((BlockEnhancedBricks) block).overlay, 255, 255, 255, 255, block.getMixedBrightnessForBlock(world, x, y, z));
             
             return true;
+        }
+        if (block.blockID == BlockRegistry.BlockBasicElemental.blockID) {
+
+
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderMetadataBlock(block, world.getBlockMetadata(x, y, z), x, y, z, renderer, world);

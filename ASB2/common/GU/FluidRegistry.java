@@ -4,21 +4,13 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import GU.fluid.FluidBase;
-import GU.info.Reference;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class FluidRegistry {
     
@@ -44,8 +36,6 @@ public class FluidRegistry {
     
     public static void initFluids() {
         
-        MinecraftForge.EVENT_BUS.register(new FluidRegistry());
-        
         Blood = new FluidBase("Blood", Color.RED.hashCode());
         CapturedSoul = new FluidBase("Captured Soul", Color.LIGHT_GRAY.hashCode());
         Nutrients = new FluidBase("Nutrients", Color.GREEN.hashCode());
@@ -60,29 +50,6 @@ public class FluidRegistry {
         AquaVitam = new FluidBase("Aqua Vitam", Color.BLUE.hashCode());
         
         Steam = new FluidBase("Steam", Color.WHITE.hashCode());
-    }
-    
-    @ForgeSubscribe
-    @SideOnly(Side.CLIENT)
-    public void textureHook(TextureStitchEvent.Pre event) {
-        
-        String still = ":fluids/FluidBlankStill";
-        String flowing = ":fluids/FluidBlankFlowing";
-        
-        if (event.map.textureType == 0) {
-            
-            Icon stillIcon = event.map.registerIcon(Reference.MODDID + still);
-            Icon flowingIcon = event.map.registerIcon(Reference.MODDID + flowing);
-            
-            for (FluidBase base : GU_FLUIDS) {
-                
-                base.setStillIcon(stillIcon);
-                base.setFlowingIcon(flowingIcon);
-            }
-            
-            CapturedSoul.setStillIcon(Block.slowSand.getIcon(0, 0));
-            CapturedSoul.setFlowingIcon(Block.slowSand.getIcon(0, 0));
-        }
     }
     
     public static void registerFluidContainers() {

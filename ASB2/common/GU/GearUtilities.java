@@ -39,7 +39,7 @@ public final class GearUtilities {
     @Instance(Reference.MODDID)
     public static GearUtilities instance;
     
-    public static Logger logger = Logger.getLogger(Reference.MODDID);
+    private static Logger logger = Logger.getLogger(Reference.MODDID);
     
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.COMMON_PROXY)
     public static CommonProxy proxy;
@@ -55,7 +55,7 @@ public final class GearUtilities {
         
         instance = this;
         logger.setParent(FMLLog.getLogger());
-        
+
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
         Variables.updateVariables(config);

@@ -16,6 +16,7 @@ public class GUItemBlock extends ItemBlock {
     
     public GUItemBlock(int id) {
         super(id);
+        this.setHasSubtypes(true);
     }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -53,8 +54,40 @@ public class GUItemBlock extends ItemBlock {
     }
     
     @Override
+    public String getUnlocalizedName(ItemStack itemStack) {
+        
+        Block block = Block.blocksList[this.getBlockID()];
+        if (block != null && block instanceof IExtraItemBlockInfo) {
+            
+            String name = ((IExtraItemBlockInfo) block).getUnlocalizedName(itemStack);
+            
+            if (name.equalsIgnoreCase("")) {
+                
+                return super.getUnlocalizedName(itemStack);
+            } else {
+                
+                return name;
+            }
+        }
+        return super.getUnlocalizedName(itemStack);
+    }
+    
+    @Override
     public String getItemStackDisplayName(ItemStack itemStack) {
         
-        return Block.blocksList[this.getBlockID()] instanceof IExtraItemBlockInfo ? ((IExtraItemBlockInfo) Block.blocksList[this.getBlockID()]).getItemStackDisplayName(itemStack) : "I think you broke something";
+        Block block = Block.blocksList[this.getBlockID()];
+        if (block != null && block instanceof IExtraItemBlockInfo) {
+            
+            String name = ((IExtraItemBlockInfo) block).getItemStackDisplayName(itemStack);
+            
+            if (name.equalsIgnoreCase("")) {
+                
+                return super.getItemStackDisplayName(itemStack);
+            } else {
+                
+                return name;
+            }
+        }
+        return super.getItemStackDisplayName(itemStack);
     }
 }

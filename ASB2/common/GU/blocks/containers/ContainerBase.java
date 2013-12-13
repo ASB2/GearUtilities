@@ -13,8 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import GU.GearUtilities;
 import GU.IExtraItemBlockInfo;
 import GU.info.Reference;
@@ -34,6 +34,7 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
         this.setCreativeTab(GearUtilities.tabGUBlocks);
         setHardness(1.5f);
         setResistance(10F);
+        this.setLightOpacity(16);
     }
     
     public void registerTile(Class<? extends TileEntity> tileClass) {
@@ -45,6 +46,10 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
         
         this.textures = textures;
         return this;
+    }
+    
+    public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
+        return true;
     }
     
     @Override
@@ -64,7 +69,6 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
         
         if (!useStandardRendering)
             return -1;
-        
         return BlockSimpleRenderer.renderID;
     }
     
@@ -166,6 +170,12 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
     @Override
     public String getItemStackDisplayName(ItemStack itemStack) {
         
-        return StatCollector.translateToLocal(itemStack.getItem().getUnlocalizedName(itemStack) + ".name");
+        return "";
+    }
+    
+    @Override
+    public String getUnlocalizedName(ItemStack itemStack) {
+        
+        return this.getUnlocalizedName();
     }
 }
