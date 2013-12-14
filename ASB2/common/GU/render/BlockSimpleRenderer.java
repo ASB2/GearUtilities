@@ -14,6 +14,7 @@ import GU.blocks.containers.BlockBasicElemental.BlockBasicElemental;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import GU.blocks.containers.*;
 
 public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     
@@ -71,14 +72,26 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
                     }
                 }
             }
-            renderer.setRenderBounds(0 - .0001, 0 - .0001, 0 - .0001, 1 + .0001, 1 + .0001, 1 + .0001);
+            renderer.setRenderBounds(.0001, .0001, .0001, .9999, .9999, .9999);
             UtilRender.renderFakeBlock(renderer, block, x, y, z, ((BlockEnhancedBricks) block).overlay, 255, 255, 255, 255, block.getMixedBrightnessForBlock(world, x, y, z));
             
             return true;
         }
-        if (block.blockID == BlockRegistry.BlockBasicElemental.blockID) {
-
-
+        
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
+        
+        if (tile != null && tile instanceof TileBase) {
+            
+            renderer.setRenderBounds(-.001, -.001, -.001, 1.001, 1.001, 1.001);
+            
+            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                
+                if (((TileBase) tile).getSideStateArray(direction.ordinal()) != null) {
+                    
+                    UtilRender.renderFakeSide(renderer, block, direction, x, y, z, ((TileBase) tile).getSideStateArray(direction.ordinal()).getStateIcon(), 255, 255, 255, 255, 15728864);
+                    ;
+                }
+            }
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderMetadataBlock(block, world.getBlockMetadata(x, y, z), x, y, z, renderer, world);

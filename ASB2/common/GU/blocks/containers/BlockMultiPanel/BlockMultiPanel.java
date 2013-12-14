@@ -27,6 +27,12 @@ public class BlockMultiPanel extends ContainerBase {
     }
     
     @Override
+    public boolean isOpaqueCube() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    
+    @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
         
         ArrayList<ItemStack> array = new ArrayList<ItemStack>();

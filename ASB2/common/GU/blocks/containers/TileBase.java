@@ -26,7 +26,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     protected Inventory tileInventory;
     public FluidTank fluidTank;
     public Wait waitTimer;
-    EnumState[] sideState;
+    protected EnumState[] sideState;
     
     public TileBase() {
         
@@ -54,6 +54,16 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     public ForgeDirection getOrientation() {
         
         return ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+    }
+    
+    public EnumState getSideStateArray(int side) {
+        
+        if (sideState != null) {
+            
+            return sideState[side];
+        }
+        return EnumState.NONE;
+        
     }
     
     @Override
@@ -187,7 +197,10 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
             
             for (int i = 0; i < sideState.length; i++) {
                 
-                tag.setInteger("state" + i, sideState[i].ordinal());
+                if (sideState[i] != null) {
+                    
+                    tag.setInteger("state" + i, sideState[i].ordinal());
+                }
             }
         }
     }

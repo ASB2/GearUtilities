@@ -25,8 +25,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ForgeEvents {
     
-    public static Icon blankImage;
-    
     @ForgeSubscribe
     @SideOnly(Side.CLIENT)
     public void textureHook(TextureStitchEvent.Pre event) {
@@ -48,32 +46,26 @@ public class ForgeEvents {
             FluidRegistry.CapturedSoul.setStillIcon(Block.slowSand.getIcon(0, 0));
             FluidRegistry.CapturedSoul.setFlowingIcon(Block.slowSand.getIcon(0, 0));
             
-            blankImage = event.map.registerIcon(Reference.MODDID + ":LargeBlankTexture");
+            EnumState.SIDES[0] = event.map.registerIcon(Reference.MODDID + ":sides/BlockInput");
+            EnumState.SIDES[1] = event.map.registerIcon(Reference.MODDID + ":sides/BlockOutput");
+            EnumState.SIDES[2] = event.map.registerIcon(Reference.MODDID + ":sides/BlockBoth");
+            EnumState.SIDES[3] = event.map.registerIcon(Reference.MODDID + ":sides/BlockNone");
         }
     }
     
     @ForgeSubscribe
     public void onEntityDrop(LivingDropsEvent event) {
-
-        if(!event.entityLiving.worldObj.isRemote) {
-
-            if(!event.isCanceled() && !(event.entityLiving instanceof EntityPlayer)) {
-
-                    UtilBlock.spawnItemStackEntity(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemRegistry.ItemCrystal.ItemBloodCrystalShard, 1);
-
-                    if(event.entityLiving instanceof EntityPig 
-                            || event.entityLiving instanceof EntitySheep 
-                            || event.entityLiving instanceof EntityCow 
-                            || event.entityLiving instanceof EntityChicken 
-                            || event.entityLiving instanceof EntitySquid 
-                            || event.entityLiving instanceof EntityWolf 
-                            || event.entityLiving instanceof EntityMooshroom 
-                            || event.entityLiving instanceof EntityOcelot 
-                            || event.entityLiving instanceof EntityVillager
-                            || event.entityLiving instanceof EntityHorse) {
-
-                        event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemRegistry.ItemCrystal.ItemBloodCrystalShard));
-                    }
+        
+        if (!event.entityLiving.worldObj.isRemote) {
+            
+            if (!event.isCanceled() && !(event.entityLiving instanceof EntityPlayer)) {
+                
+                UtilBlock.spawnItemStackEntity(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemRegistry.ItemCrystal.ItemBloodCrystalShard, 1);
+                
+                if (event.entityLiving instanceof EntityPig || event.entityLiving instanceof EntitySheep || event.entityLiving instanceof EntityCow || event.entityLiving instanceof EntityChicken || event.entityLiving instanceof EntitySquid || event.entityLiving instanceof EntityWolf || event.entityLiving instanceof EntityMooshroom || event.entityLiving instanceof EntityOcelot || event.entityLiving instanceof EntityVillager || event.entityLiving instanceof EntityHorse) {
+                    
+                    event.drops.add(new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, ItemRegistry.ItemCrystal.ItemBloodCrystalShard));
+                }
             }
         }
     }

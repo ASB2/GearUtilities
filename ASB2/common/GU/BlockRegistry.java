@@ -10,15 +10,16 @@ import GU.blocks.BlockPhantomBlock;
 import GU.blocks.BlockMetadataOre.BlockMetadataOre;
 import GU.blocks.containers.ContainerBase;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.BlockAdvancedPotionBrewery;
+import GU.blocks.containers.BlockBasicElemental.BlockBasicElemental;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockMultiPanel.BlockMultiPanel;
 import GU.blocks.containers.BlockMultiPanel.ItemBlockMultiPanel;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
+import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
+import GU.info.GUItemBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import GU.blocks.containers.BlockBasicElemental.*;
-import GU.info.GUItemBlock;
 
 public class BlockRegistry {
     
@@ -32,6 +33,7 @@ public class BlockRegistry {
     public static ContainerBase BlockMultiPanel;
     public static ContainerBase BlockBasicElemental;
     public static BlockBase BlockStructureCube, BlockStructureCube2;
+    public static ContainerBase BlockSpacialProvider;
     
     private static int id = 500;
     
@@ -73,6 +75,9 @@ public class BlockRegistry {
         
         BlockStructureCube2 = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube2"), Material.rock);
         addBlock(BlockStructureCube2, "Structure Cube", "BlockStructureCube2");
+        
+        BlockSpacialProvider = new BlockSpacialProvider(BlockRegistry.getConfigID(config, "BlockSpacialProvider"), Material.rock);
+        addBlock(BlockSpacialProvider, "Spacial Provider", "BlockSpacialProvider");
     }
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {
