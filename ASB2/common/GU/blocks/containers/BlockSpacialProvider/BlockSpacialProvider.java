@@ -41,16 +41,6 @@ public class BlockSpacialProvider extends ContainerBase {
             
             TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
             
-            if (tile == null) {
-                
-                if (world.getBlockMetadata(x, y, z) == 1) {
-                    
-                    world.setBlockTileEntity(x, y, z, new TileFluidSpacialProvider());
-                } else {
-                    world.setBlockTileEntity(x, y, z, new TileSpacialProvider());
-                }
-            }
-            
             boolean hasAll = false;
             tile.multiBlockList.clear();
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
@@ -162,8 +152,21 @@ public class BlockSpacialProvider extends ContainerBase {
     }
     
     @Override
-    public TileEntity createNewTileEntity(World world) {
+    public TileEntity createTileEntity(World world, int metadata) {
         
+        switch (metadata) {
+        
+            case STANDARD:
+                return new TileSpacialProvider();
+            case FLUID:
+                return new TileFluidSpacialProvider();
+        }
+        return null;
+    }
+    
+    @Override
+    public TileEntity createNewTileEntity(World world) {
+        // TODO Auto-generated method stub
         return null;
     }
 }
