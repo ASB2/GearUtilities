@@ -18,6 +18,7 @@ import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import GU.blocks.containers.BlockBasicElemental.*;
+import GU.info.GUItemBlock;
 
 public class BlockRegistry {
     
@@ -30,6 +31,7 @@ public class BlockRegistry {
     public static ContainerBase BlockEnhancedBricks;
     public static ContainerBase BlockMultiPanel;
     public static ContainerBase BlockBasicElemental;
+    public static BlockBase BlockStructureCube, BlockStructureCube2;
     
     private static int id = 500;
     
@@ -52,6 +54,7 @@ public class BlockRegistry {
         
         BlockAdvancedPotionBrewery = new BlockAdvancedPotionBrewery(BlockRegistry.getConfigID(config, "BlockAdvancedPotionBrewery"), Material.rock);
         addBlock(BlockAdvancedPotionBrewery, "Advanced Potion Brewery", "BlockAdvancedPotionBrewery");
+        BlockAdvancedPotionBrewery.setTextureString(new String[] { "BlockAdvancedPotionBreweryBottom", "BlockAdvancedPotionBreweryTop", "BlockAdvancedPotionBrewerySide" });
         
         BlockEnhancedBricks = new BlockEnhancedBricks(BlockRegistry.getConfigID(config, "BlockEnhancedBrick"), Material.rock);
         addBlock(BlockEnhancedBricks, "Enhanced Brick", "BlockEnhancedBrick");
@@ -64,6 +67,12 @@ public class BlockRegistry {
         
         BlockBasicElemental = new BlockBasicElemental(BlockRegistry.getConfigID(config, "BlockBasicElemental"), Material.rock);
         addBlockNoLang(BlockBasicElemental, "BlockBasicElemental", "BlockBasicElemental");
+        
+        BlockStructureCube = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube"), Material.rock);
+        addBlock(BlockStructureCube, "Structure Cube", "BlockStructureCube");
+        
+        BlockStructureCube2 = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube2"), Material.rock);
+        addBlock(BlockStructureCube2, "Structure Cube", "BlockStructureCube2");
     }
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {

@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import ASB2.utils.UtilItemStack;
-import GU.GUItemBlock;
+import GU.info.GUItemBlock;
 
 public class ItemBlockMultiPanel extends GUItemBlock {
 

@@ -93,6 +93,16 @@ public class BlockBase extends Block {
                 
                 icons[i] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[i]);
             }
+        } else if (textures.length == 1) {
+            
+            icons = new Icon[1];
+            icons[0] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[0]);
+        } else if (textures.length == 3) {
+            
+            icons = new Icon[3];
+            icons[0] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[0]);
+            icons[1] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[1]);
+            icons[2] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[2]);
         }
     }
     
@@ -105,9 +115,20 @@ public class BlockBase extends Block {
                 
                 return icons[0];
             }
-            if (textures.length > 6) {
+            if (textures.length == 6) {
                 
                 return icons[side];
+            }
+            if (textures.length == 3) {
+                
+                if (side == 0) {
+                    return icons[0];
+                }
+                
+                if (side == 1) {
+                    return icons[1];
+                }
+                return icons[2];
             }
         }
         return blockIcon;

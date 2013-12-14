@@ -3,7 +3,6 @@ package GU.api.color;
 import java.awt.Color;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -58,57 +57,52 @@ public enum VanillaColor {
         
         if (item != null) {
             
-            if (item.getItem() != null) {
+            Item itemI = item.getItem();
+            
+            if (itemI == Item.dyePowder) {
                 
-                Item itemI = item.getItem();
+                switch (item.getItemDamage()) {
                 
-                if (itemI instanceof ItemDye) {
+                    case 0:
+                        return VanillaColor.BLACK;
+                    case 1:
+                        return VanillaColor.RED;
+                    case 2:
+                        return VanillaColor.GREEN;
+                    case 3:
+                        return VanillaColor.BROWN;
+                    case 4:
+                        return VanillaColor.BLUE;
+                    case 5:
+                        return VanillaColor.PURPLE;
+                    case 6:
+                        return VanillaColor.CYAN;
+                    case 7:
+                        return VanillaColor.LIGHT_GREY;
+                    case 8:
+                        return VanillaColor.GREY;
+                    case 9:
+                        return VanillaColor.PINK;
+                    case 10:
+                        return VanillaColor.LIME;
+                    case 11:
+                        return VanillaColor.YELLOW;
+                    case 12:
+                        return VanillaColor.LIGHT_BLUE;
+                    case 13:
+                        return VanillaColor.MAGENTA;
+                    case 14:
+                        return VanillaColor.ORANGE;
+                    case 15:
+                        return VanillaColor.WHITE;
+                }
+            }
+            
+            for (int i = 0; i < dyesOreDictionary.length; i++) {
+                
+                if (OreDictionary.getOres(dyesOreDictionary[i]).contains(item)) {
                     
-                    switch (item.getItemDamage()) {
-                    
-                        case 0:
-                            return VanillaColor.BLACK;
-                        case 1:
-                            return VanillaColor.RED;
-                        case 2:
-                            return VanillaColor.GREEN;
-                        case 3:
-                            return VanillaColor.BROWN;
-                        case 4:
-                            return VanillaColor.BLUE;
-                        case 5:
-                            return VanillaColor.PURPLE;
-                        case 6:
-                            return VanillaColor.CYAN;
-                        case 7:
-                            return VanillaColor.LIGHT_GREY;
-                        case 8:
-                            return VanillaColor.GREY;
-                        case 9:
-                            return VanillaColor.PINK;
-                        case 10:
-                            return VanillaColor.LIME;
-                        case 11:
-                            return VanillaColor.YELLOW;
-                        case 12:
-                            return VanillaColor.LIGHT_BLUE;
-                        case 13:
-                            return VanillaColor.MAGENTA;
-                        case 14:
-                            return VanillaColor.ORANGE;
-                        case 15:
-                            return VanillaColor.WHITE;
-                    }
-                } else {
-                    
-                    for (int i = 0; i < dyesOreDictionary.length; i++) {
-                        
-                        if (OreDictionary.getOres(dyesOreDictionary[i]).contains(item)) {
-                            
-                            return VanillaColor.values()[i];
-                        }
-                    }
-                    
+                    return VanillaColor.values()[i];
                 }
             }
         }
@@ -119,30 +113,24 @@ public enum VanillaColor {
         
         if (item != null) {
             
-            if (item.getItem() != null) {
+            Item itemI = item.getItem();
+            
+            if (itemI == Item.dyePowder) {
                 
-                Item itemI = item.getItem();
-                
-                if (itemI instanceof ItemDye) {
+                if (item.getItemDamage() <= 16) {
                     
-                    if (item.getItemDamage() <= 16) {
-                        
-                        return true;
-                    }
+                    return true;
+                }
+            }
+            for (int i = 0; i < dyesOreDictionary.length; i++) {
+                
+                if (OreDictionary.getOres(dyesOreDictionary[i]).contains(item)) {
+                    
+                    return VanillaColor.values()[i] != NONE;
                 }
             }
         }
         return false;
-    }
-    
-    public static VanillaColor translateNumberToColor(int numb) {
-        
-        return VanillaColor.values()[numb];
-    }
-    
-    public static int translateColorToNumber(VanillaColor color) {
-        
-        return color.ordinal();
     }
     
     public static Color getRGBValue(VanillaColor color) {

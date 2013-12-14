@@ -95,12 +95,6 @@ public class BlockBasicElemental extends ContainerBase {
     }
     
     @Override
-    public TileEntity createNewTileEntity(World world) {
-        
-        return new TileBasicElemental();
-    }
-    
-    @Override
     public String getItemStackDisplayName(ItemStack itemStack) {
         
         switch (itemStack.getItemDamage()) {
@@ -163,9 +157,14 @@ public class BlockBasicElemental extends ContainerBase {
         
             case EARTH_CUBE: {
                 
-                
             }
         }
         super.updateTick(world, x, y, z, rand);
+    }
+    
+    @Override
+    public TileEntity createNewTileEntity(World world) {
+        
+        return new TileBasicElemental();
     }
 }

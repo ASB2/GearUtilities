@@ -1,4 +1,4 @@
-package GU;
+package GU.info;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 
 import ASB2.utils.UtilMisc;
-import GU.info.Reference;
 
 public class GUItemBlock extends ItemBlock {
     

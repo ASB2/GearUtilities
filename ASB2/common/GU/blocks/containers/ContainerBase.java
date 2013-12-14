@@ -16,7 +16,7 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.GearUtilities;
-import GU.IExtraItemBlockInfo;
+import GU.info.IExtraItemBlockInfo;
 import GU.info.Reference;
 import GU.render.BlockSimpleRenderer;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -77,19 +77,49 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
         
         blockIcon = iconRegister.registerIcon(Reference.MODDID + ":" + this.getTextureName());
         
-        icons = new Icon[textures.length];
-        for (int i = 0; i < textures.length; i++) {
+        if (textures.length == 6) {
+            icons = new Icon[6];
+            for (int i = 0; i < textures.length; i++) {
+                
+                icons[i] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[i]);
+            }
+        } else if (textures.length == 1) {
             
-            icons[i] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[i]);
+            icons = new Icon[1];
+            icons[0] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[0]);
+        } else if (textures.length == 3) {
+            
+            icons = new Icon[3];
+            icons[0] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[0]);
+            icons[1] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[1]);
+            icons[2] = iconRegister.registerIcon(Reference.MODDID + ":" + textures[2]);
         }
     }
     
     @Override
     public Icon getIcon(int side, int metadata) {
         
-        if (textures.length > 6) {
+        if (icons != null) {
             
-            return icons[side];
+            if (textures.length == 1) {
+                
+                return icons[0];
+            }
+            if (textures.length == 6) {
+                
+                return icons[side];
+            }
+            if (textures.length == 3) {
+                
+                if (side == 0) {
+                    return icons[0];
+                }
+                
+                if (side == 1) {
+                    return icons[1];
+                }
+                return icons[2];
+            }
         }
         return blockIcon;
     }

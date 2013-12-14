@@ -3,7 +3,7 @@ package GU.blocks.BlockMetadataOre;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import GU.GUItemBlock;
+import GU.info.GUItemBlock;
 import GU.info.Reference;
 
 public class ItemBlockMetadataBlock extends GUItemBlock {
