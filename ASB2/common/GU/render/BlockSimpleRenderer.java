@@ -78,13 +78,16 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
         
         if (tile != null && tile instanceof TileBase) {
             
-            renderer.setRenderBounds(-.001, -.001, -.001, 1.001, 1.001, 1.001);
-            
-            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            if (((TileBase) tile).useSidesRendering) {
                 
-                if (((TileBase) tile).getSideStateArray(direction.ordinal()) != null) {
+                renderer.setRenderBounds(-.001, -.001, -.001, 1.001, 1.001, 1.001);
+                
+                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                     
-                    UtilRender.renderFakeSide(renderer, block, direction, x, y, z, ((TileBase) tile).getSideStateArray(direction.ordinal()).getStateIcon(), 255, 255, 255, 255, 15728864);
+                    if (((TileBase) tile).getSideStateArray(direction.ordinal()) != null) {
+                        
+                        UtilRender.renderFakeSide(renderer, block, direction, x, y, z, ((TileBase) tile).getSideStateArray(direction.ordinal()).getStateIcon(), 255, 255, 255, 255, 15728864);
+                    }
                 }
             }
         }

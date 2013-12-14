@@ -15,7 +15,7 @@ import GU.blocks.containers.TileBase;
 public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
     public static int MAX_DISTANCE = 16;
-    public Map<Vector3, ForgeDirection> tiles = new HashMap<Vector3, ForgeDirection>();
+    public Map<Vector3, ForgeDirection> firstTiles = new HashMap<Vector3, ForgeDirection>();
     
     public TileSpacialProvider() {
         
@@ -33,7 +33,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
                 
                 if (getNearestProvider(direction) != null) {
                     
-                    tiles.put(new Vector3(getNearestProvider(direction)), direction);
+                    firstTiles.put(new Vector3(getNearestProvider(direction)), direction);
                     hasAll = true;
                 } else {
                     hasAll = false;
@@ -41,7 +41,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             }
         }
         
-        if (hasAll && tiles.size() == 3) {
+        if (hasAll && firstTiles.size() == 3) {
             
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 

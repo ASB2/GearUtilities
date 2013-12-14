@@ -19,6 +19,7 @@ public class TileBasicElemental extends TileBase {
     public TileBasicElemental() {
         
         waitTimer = new Wait(this, 20, 0);
+        useSidesRendering = false;
     }
     
     @Override
