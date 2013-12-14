@@ -72,15 +72,19 @@ public class BlockRegistry {
         
         BlockStructureCube = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube"), Material.rock);
         addBlock(BlockStructureCube, "Structure Cube", "BlockStructureCube");
+        BlockStructureCube.setHardness(10);
         
         BlockStructureCube2 = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube2"), Material.rock);
         addBlock(BlockStructureCube2, "Structure Cube 2", "BlockStructureCube2");
+        BlockStructureCube2.setHardness(10);
         
         BlockStructureCube3 = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube3"), Material.rock);
         addBlock(BlockStructureCube3, "Structure Cube 3", "BlockStructureCube3");
+        BlockStructureCube3.setHardness(10);
         
         BlockStructureCube4 = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube4"), Material.rock);
         addBlock(BlockStructureCube4, "Structure Cube 4", "BlockStructureCube4");
+        BlockStructureCube4.setHardness(10);
         
         BlockSpacialProvider = new BlockSpacialProvider(BlockRegistry.getConfigID(config, "BlockSpacialProvider"), Material.rock);
         addBlock(BlockSpacialProvider, "Spacial Provider", "BlockSpacialProvider");
@@ -88,11 +92,8 @@ public class BlockRegistry {
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {
         
-        block.setUnlocalizedName(unlocalizedName);
-        block.setTextureName(unlocalizedName);
         LanguageRegistry.addName(block, ign);
-        MinecraftForge.setBlockHarvestLevel(block, "pickaxe", 2);
-        GameRegistry.registerBlock(block, GUItemBlock.class, block.getUnlocalizedName());
+        addBlockNoLang(block, ign, unlocalizedName);
         return block;
     }
     

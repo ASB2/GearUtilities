@@ -33,6 +33,11 @@ public class CraftRegistry {
         OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.rottenFlesh));
         OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.spiderEye));
         
+        OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube));
+        OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube2));
+        OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube3));
+        OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube4));
+        
         GameRegistry.addRecipe(new ItemStack(Item.bucketLava), new Object[] { "FFF", "FSF", "FBF", 'F', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'S', Block.stone, 'B', Item.bucketEmpty });
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockEnhancedBricks, 4), new Object[] { "CBC", "BRB", "CBC", 'C', Variables.CRYSTALS_ALL, 'B', Block.stoneBrick, 'R', Item.ingotIron }));
@@ -189,7 +194,7 @@ public class CraftRegistry {
         UtilItemStack.setNBTTagInt(base, "mode", 0);
         GameRegistry.addRecipe(new ShapedOreRecipe(base, new Object[] { "ICI", "QDQ", "EBE",
         
-        'C', Variables.CRYSTALS_ALL, 'I', Item.ingotIron, 'Q', Item.netherQuartz, 'D', Item.diamond, 'E', BlockRegistry.BlockEnhancedBricks}));
+        'C', Variables.CRYSTALS_ALL, 'I', Item.ingotIron, 'Q', Item.netherQuartz, 'D', Item.diamond, 'E', BlockRegistry.BlockEnhancedBricks }));
         
         ItemStack itemMover = new ItemStack(BlockRegistry.BlockMultiPanel);
         UtilItemStack.setNBTTagInt(itemMover, "mode", TileMultiPanel.ITEM_MOVEMENT);

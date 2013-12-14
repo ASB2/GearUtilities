@@ -6,6 +6,7 @@ public class Variables {
 
     public final static String MISC_MEAT = "MISC_MEAT";
     public final static String CRYSTALS_ALL = "CRYSTALS_ALL";
+    public final static String STRUCTURE_CUBE = "STRUCTURE_CUBE";
     
     public static int POTION_BASE_COST = 100;    
     public static boolean TESTING_MODE = true;
