@@ -14,10 +14,12 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilEntity;
 import ASB2.vector.Vector3;
 import GU.EnumState;
-import GU.api.ISpacialProvider;
+import GU.api.spacial.ISpacialProvider;
 import GU.blocks.containers.ContainerBase;
+import GU.entity.fx.FXBeamOld;
 import GU.info.Reference;
 
 public class BlockSpacialProvider extends ContainerBase {
@@ -35,49 +37,64 @@ public class BlockSpacialProvider extends ContainerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         
-        if (!world.isRemote) {
+        if (player.getHeldItem() == null) {
             
-            if (player.getHeldItem() == null) {
+            TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
+            
+            if (tile == null) {
                 
-                TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
-                
-                boolean hasAll = false;
-                tile.multiBlockList.clear();
-                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                if (world.getBlockMetadata(x, y, z) == 1) {
                     
-                    if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
+                    world.setBlockTileEntity(x, y, z, new TileFluidSpacialProvider());
+                } else {
+                    world.setBlockTileEntity(x, y, z, new TileSpacialProvider());
+                }
+            }
+            
+            boolean hasAll = false;
+            tile.multiBlockList.clear();
+            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                
+                if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
+                    
+                    TileEntity foundTile = tile.getNearestProvider(direction);
+                    if (foundTile != null) {
                         
-                        TileEntity foundTile = tile.getNearestProvider(direction);
-                        if (foundTile != null) {
-                            
-                            tile.multiBlockList.add(new Vector3(foundTile));
-                            hasAll = true;
-                        } else {
-                            hasAll = false;
-                        }
+                        tile.multiBlockList.add(new Vector3(foundTile));
+                        hasAll = true;
+                    } else {
+                        hasAll = false;
+                    }
+                }
+            }
+            
+            if (hasAll) {
+                
+                Set<Vector3> buffer = new HashSet<Vector3>();
+                
+                for (Vector3 vector : tile.multiBlockList) {
+                    
+                    Set<Vector3> tiles = ((ISpacialProvider) vector.getTileEntity(world)).getProvidedTiles();
+                    buffer.addAll(tiles);
+                    for (Vector3 vector2 : tiles) {
+                        
+                        Set<Vector3> tiles2 = ((ISpacialProvider) vector2.getTileEntity(world)).getProvidedTiles();
+                        buffer.addAll(tiles2);
+                    }
+                }
+                tile.multiBlockList.addAll(buffer);
+                
+                for (Vector3 vector : tile.multiBlockList) {
+                    
+                    if (!new Vector3(x + .5, y + .5, z + .5).equals(vector)) {
+                        FXBeamOld beam = new FXBeamOld(world, new Vector3(x + .5, y + .5, z + .5), vector, 255, 255, 255, 205);
+                        UtilEntity.spawnFX(beam);
                     }
                 }
                 
-                if (hasAll) {
-                    
-                    Set<Vector3> buffer = new HashSet<Vector3>();
-                    
-                    for (Vector3 vector : tile.multiBlockList) {
-                        
-                        Set<Vector3> tiles = ((ISpacialProvider) vector.getTileEntity(world)).getProvidedTiles();
-                        buffer.addAll(tiles);
-                        for (Vector3 vector2 : tiles) {
-                            
-                            Set<Vector3> tiles2 = ((ISpacialProvider) vector2.getTileEntity(world)).getProvidedTiles();
-                            buffer.addAll(tiles2);
-                        }
-                    }
-                    tile.multiBlockList.addAll(buffer);
-                    
-                    player.addChatMessage("--------");
-                    player.addChatMessage("We have " + tile.multiBlockList.size() + " tiles in the array");
-                    player.addChatMessage("--------");
-                }
+                player.addChatMessage("--------");
+                player.addChatMessage("We have " + tile.multiBlockList.size() + " tiles in the array");
+                player.addChatMessage("--------");
             }
         }
         return false;
@@ -147,6 +164,6 @@ public class BlockSpacialProvider extends ContainerBase {
     @Override
     public TileEntity createNewTileEntity(World world) {
         
-        return new TileSpacialProvider();
+        return null;
     }
 }

@@ -59,7 +59,7 @@ public class BlockBase extends Block {
     @Override
     public boolean isOpaqueCube() {
         
-        return useStandardRendering;
+        return false;
     }
     
     @Override

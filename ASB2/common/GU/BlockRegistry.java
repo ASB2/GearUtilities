@@ -32,7 +32,7 @@ public class BlockRegistry {
     public static ContainerBase BlockEnhancedBricks;
     public static ContainerBase BlockMultiPanel;
     public static ContainerBase BlockBasicElemental;
-    public static BlockBase BlockStructureCube, BlockStructureCube2, BlockStructureCube3, BlockStructureCube4;
+    public static BlockBase BlockStructureCube, BlockStructureCube2, BlockStructureCube3, BlockStructureCube4, BlockStructureGlass;
     public static ContainerBase BlockSpacialProvider;
     
     private static int id = 500;
@@ -85,6 +85,10 @@ public class BlockRegistry {
         BlockStructureCube4 = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube4"), Material.rock);
         addBlock(BlockStructureCube4, "Structure Cube 4", "BlockStructureCube4");
         BlockStructureCube4.setResistance(Block.obsidian.blockResistance);
+        
+        BlockStructureGlass = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureGlass"), Material.rock);
+        addBlock(BlockStructureGlass, "Structure Glass", "BlockStructureGlass");
+        BlockStructureGlass.setResistance(Block.obsidian.blockResistance);
         
         BlockSpacialProvider = new BlockSpacialProvider(BlockRegistry.getConfigID(config, "BlockSpacialProvider"), Material.rock);
         addBlock(BlockSpacialProvider, "Spacial Provider", "BlockSpacialProvider");

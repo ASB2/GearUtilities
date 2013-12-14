@@ -37,6 +37,7 @@ public class CraftRegistry {
         OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube2));
         OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube3));
         OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube4));
+        OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureGlass));
         
         GameRegistry.addRecipe(new ItemStack(Item.bucketLava), new Object[] { "FFF", "FSF", "FBF", 'F', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'S', Block.stone, 'B', Item.bucketEmpty });
         

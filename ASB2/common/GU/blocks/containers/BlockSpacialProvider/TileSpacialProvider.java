@@ -9,13 +9,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.vector.Vector3;
 import GU.EnumState;
-import GU.api.ISpacialProvider;
+import GU.api.spacial.ISpacialGoverner;
+import GU.api.spacial.ISpacialProvider;
 import GU.blocks.containers.TileBase;
 
 public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
     public static int MAX_DISTANCE = 16;
     public Set<Vector3> multiBlockList = new HashSet<Vector3>();
+    public ISpacialGoverner governer;
     
     public TileSpacialProvider() {
         
@@ -73,5 +75,17 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             }
         }
         return tileList;
+    }
+    
+    @Override
+    public void setSpacialGoverner(ISpacialGoverner newGoverner) {
+        
+        governer = newGoverner;
+    }
+    
+    @Override
+    public ISpacialGoverner getGoverner() {
+        
+        return governer;
     }
 }
