@@ -1,7 +1,9 @@
 package GU.blocks.containers.BlockBasicElemental;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -48,5 +50,9 @@ public class TileBasicElemental extends TileBase {
                 }
             }
         }
+    }
+    
+    @Override
+    public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
     }
 }

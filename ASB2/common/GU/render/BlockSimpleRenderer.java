@@ -10,11 +10,10 @@ import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
 import GU.api.color.IColorable;
-import GU.blocks.containers.BlockBasicElemental.BlockBasicElemental;
+import GU.blocks.containers.TileBase;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import GU.blocks.containers.*;
 
 public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     
@@ -30,9 +29,6 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
             UtilRender.renderStandardInvBlock(renderer, block, ((BlockEnhancedBricks) block).overlay, 255, 255, 255, 255);
             return;
-        }
-        if (block.blockID == BlockRegistry.BlockBasicElemental.blockID && meta == BlockBasicElemental.FIRE_CUBE) {
-            
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderStandardInvBlock(renderer, block, meta);
@@ -89,7 +85,6 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
                 if (((TileBase) tile).getSideStateArray(direction.ordinal()) != null) {
                     
                     UtilRender.renderFakeSide(renderer, block, direction, x, y, z, ((TileBase) tile).getSideStateArray(direction.ordinal()).getStateIcon(), 255, 255, 255, 255, 15728864);
-                    ;
                 }
             }
         }

@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
@@ -22,6 +23,12 @@ public class BlockSpacialProvider extends ContainerBase {
     public BlockSpacialProvider(int id, Material material) {
         super(id, material);
         this.registerTile(TileSpacialProvider.class);
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+        // TODO Auto-generated method stub
+        return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
     }
     
     @Override
