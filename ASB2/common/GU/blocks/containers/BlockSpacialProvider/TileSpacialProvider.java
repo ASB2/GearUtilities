@@ -1,7 +1,7 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -15,7 +15,7 @@ import GU.blocks.containers.TileBase;
 public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
     public static int MAX_DISTANCE = 16;
-    public Map<Vector3, ForgeDirection> firstTiles = new HashMap<Vector3, ForgeDirection>();
+    public Set<Vector3> multiBlockList = new HashSet<Vector3>();
     
     public TileSpacialProvider() {
         
@@ -25,33 +25,6 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     @Override
     public void updateEntity() {
         
-        boolean hasAll = false;
-        
-        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-            
-            if (sideState[direction.ordinal()] == EnumState.OUTPUT) {
-                
-                if (getNearestProvider(direction) != null) {
-                    
-                    firstTiles.put(new Vector3(getNearestProvider(direction)), direction);
-                    hasAll = true;
-                } else {
-                    hasAll = false;
-                }
-            }
-        }
-        
-        if (hasAll && firstTiles.size() == 3) {
-            
-            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-                
-                if (sideState[direction.ordinal()] == EnumState.OUTPUT) {
-                    
-                    hasAll = getNearestProvider(direction) != null;
-                }
-            }
-            // UtilEntity.sendClientChat("I got everything i need: Boom baby");
-        }
     }
     
     public TileEntity getNearestProvider(ForgeDirection direction) {
@@ -61,12 +34,9 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             Vector3 position = new Vector3(this).add(direction, i);
             TileEntity tile = position.getTileEntity(worldObj);
             
-            if (tile != null && tile instanceof ISpacialProvider) {
+            if (tile != null && tile != this && tile instanceof ISpacialProvider) {
                 
                 return tile;
-            } else {
-                
-                return null;
             }
         }
         return null;
@@ -83,5 +53,22 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             sideState[direction.ordinal()] = EnumState.OUTPUT;
         }
         world.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+    }
+    
+    @Override
+    public Set<Vector3> getProvidedTiles() {
+        
+        Set<Vector3> tileList = new HashSet<Vector3>();
+        
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            
+            TileEntity tile = this.getNearestProvider(direction);
+            
+            if (tile != null) {
+                
+                tileList.add(new Vector3(tile));
+            }
+        }
+        return tileList;
     }
 }

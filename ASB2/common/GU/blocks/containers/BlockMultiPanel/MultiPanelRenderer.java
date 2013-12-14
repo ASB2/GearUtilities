@@ -25,7 +25,6 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
         
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glColor3d(1, 1, 1);
         
         switch (ForgeDirection.getOrientation(new Vector3(tileentity).getBlockMetadata(tileentity.worldObj))) {
         
@@ -75,9 +74,6 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
         UtilRender.renderTexture(Textures.MULTI_PANEL);
         Models.ModelMultiPanel.renderPart("Panel");
         
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glColor4d(1, 1, 1, .5);
         GL11.glRotatef(Minecraft.getSystemTime() / (Variables.ANIMATION_SPEED + 10), 0F, 1F, 0F);
         
         for (int i = 0; i < 4; i++) {
@@ -161,69 +157,10 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
                 }
             }
         }
-        
-        GL11.glDisable(GL11.GL_BLEND);
+
+        GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
-        
-        if (((TileMultiPanel) tileentity).getMode() > 0) {
-            
-            if (((TileMultiPanel) tileentity).wireless[((TileMultiPanel) tileentity).getMode() - 1]) {
-                
-                GL11.glPushMatrix();
-                
-                GL11.glColor3d(1, 1, 1);
-                
-                GL11.glDisable(2896);
-                GL11.glDisable(3553);
-                
-                switch (tile.getOrientation()) {
-                
-                    case DOWN: {
-                        
-                        UtilRender.renderBox(x, y + 1, z, 1, -TileMultiPanel.MAX_DISTANCE, 1);
-                        break;
-                    }
-                    
-                    case UP: {
-                        
-                        UtilRender.renderBox(x, y, z, 1, TileMultiPanel.MAX_DISTANCE, 1);
-                        break;
-                    }
-                    
-                    case NORTH: {
-                        
-                        UtilRender.renderBox(x, y, z + 1, 1, 1, -TileMultiPanel.MAX_DISTANCE);
-                        break;
-                    }
-                    
-                    case SOUTH: {
-                        
-                        UtilRender.renderBox(x, y, z, 1, 1, TileMultiPanel.MAX_DISTANCE);
-                        break;
-                    }
-                    
-                    case WEST: {
-                        
-                        UtilRender.renderBox(x + 1, y, z, -TileMultiPanel.MAX_DISTANCE, 1, 1);
-                        break;
-                    }
-                    
-                    case EAST: {
-                        
-                        UtilRender.renderBox(x, y, z, TileMultiPanel.MAX_DISTANCE, 1, 1);
-                        break;
-                    }
-                    
-                    case UNKNOWN:
-                        break;
-                }
-                
-                GL11.glEnable(2896);
-                GL11.glEnable(3553);
-                GL11.glEnable(GL11.GL_LIGHTING);
-                GL11.glPopMatrix();
-            }
-        }
+
     }
     
     @Override

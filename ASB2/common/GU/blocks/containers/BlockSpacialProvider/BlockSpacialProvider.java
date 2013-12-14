@@ -1,6 +1,7 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
 import java.util.List;
+import java.util.Set;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -9,7 +10,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
+import ASB2.vector.Vector3;
+import GU.EnumState;
+import GU.api.ISpacialProvider;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
 
@@ -27,8 +33,57 @@ public class BlockSpacialProvider extends ContainerBase {
     
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        // TODO Auto-generated method stub
-        return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+        
+        if (!world.isRemote) {
+            
+            if (player.getHeldItem() == null) {
+                
+                TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
+                
+                boolean hasAll = false;
+                tile.multiBlockList.clear();
+                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                    
+                    if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
+                        
+                        TileEntity foundTile = tile.getNearestProvider(direction);
+                        if (foundTile != null) {
+                            
+                            tile.multiBlockList.add(new Vector3(foundTile));
+                            hasAll = true;
+                        } else {
+                            hasAll = false;
+                        }
+                    }
+                }
+                
+                if (hasAll) {
+                    
+                    for (Vector3 vector : tile.multiBlockList) {
+                        
+                        Set<Vector3> tiles = ((ISpacialProvider) vector.getTileEntity(world)).getProvidedTiles();
+                        tile.multiBlockList.addAll(tiles);
+                        for (Vector3 vector3 : tiles) {
+                            
+                            Set<Vector3> tiles2 = ((ISpacialProvider) vector3.getTileEntity(world)).getProvidedTiles();
+                            tile.multiBlockList.addAll(tiles2);
+                        }
+                    }
+                    
+
+                    player.addChatMessage("--------");
+                    player.addChatMessage("We have " + tile.multiBlockList.size() + " tiles in the array");
+                    player.addChatMessage("--------");
+                }
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        
+        return new ItemStack(this, 1, world.getBlockMetadata(x, y, z));
     }
     
     @Override
@@ -79,9 +134,9 @@ public class BlockSpacialProvider extends ContainerBase {
         switch (itemStack.getItemDamage()) {
         
             case STANDARD:
-                return "Standard Spacial Provider";
+                return "BlockStandardSpacialProvider";
             case FLUID:
-                return "Fluid Spacial Provider";
+                return "BlockFluidSpacialProvider";
         }
         return "";
     }

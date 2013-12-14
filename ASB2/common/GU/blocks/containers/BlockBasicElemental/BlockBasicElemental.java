@@ -10,6 +10,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.blocks.containers.ContainerBase;
@@ -95,6 +96,12 @@ public class BlockBasicElemental extends ContainerBase {
     }
     
     @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        
+        return new ItemStack(this, 1, world.getBlockMetadata(x, y, z));
+    }
+    
+    @Override
     public String getItemStackDisplayName(ItemStack itemStack) {
         
         switch (itemStack.getItemDamage()) {
@@ -115,11 +122,11 @@ public class BlockBasicElemental extends ContainerBase {
         switch (itemStack.getItemDamage()) {
         
             case FIRE_CUBE:
-                return "Fire Cube";
+                return "BlockFireCube";
             case WATER_CUBE:
-                return "Water Cube";
+                return "BlockWaterCube";
             case EARTH_CUBE:
-                return "Earth Cube";
+                return "BlockEarthCube";
         }
         return "";
     }
