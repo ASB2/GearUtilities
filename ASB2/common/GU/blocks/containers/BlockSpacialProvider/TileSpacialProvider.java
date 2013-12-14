@@ -62,11 +62,14 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         
         for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
             
-            TileEntity tile = this.getNearestProvider(direction);
-            
-            if (tile != null) {
+            if (getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
                 
-                tileList.add(new Vector3(tile));
+                TileEntity tile = this.getNearestProvider(direction);
+                
+                if (tile != null) {
+                    
+                    tileList.add(new Vector3(tile));
+                }
             }
         }
         return tileList;
