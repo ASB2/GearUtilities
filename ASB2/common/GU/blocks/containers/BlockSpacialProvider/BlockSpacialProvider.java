@@ -1,6 +1,6 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -60,24 +60,19 @@ public class BlockSpacialProvider extends ContainerBase {
                 
                 if (hasAll) {
                     
-                    Iterator<Vector3> firstLoop = tile.multiBlockList.iterator();
+                    Set<Vector3> buffer = new HashSet<Vector3>();
                     
-                    while (firstLoop.hasNext()) {
-                        
-                        Vector3 vector = firstLoop.next();
+                    for (Vector3 vector : tile.multiBlockList) {
                         
                         Set<Vector3> tiles = ((ISpacialProvider) vector.getTileEntity(world)).getProvidedTiles();
-                        tile.multiBlockList.addAll(tiles);
-                        
-                        Iterator<Vector3> secondLoop = tiles.iterator();
-                        
-                        while (secondLoop.hasNext()) {
+                        buffer.addAll(tiles);
+                        for (Vector3 vector2 : tiles) {
                             
-                            Vector3 vector2 = secondLoop.next();
                             Set<Vector3> tiles2 = ((ISpacialProvider) vector2.getTileEntity(world)).getProvidedTiles();
-                            tile.multiBlockList.addAll(tiles2);
+                            buffer.addAll(tiles2);
                         }
                     }
+                    tile.multiBlockList.addAll(buffer);
                     
                     player.addChatMessage("--------");
                     player.addChatMessage("We have " + tile.multiBlockList.size() + " tiles in the array");
