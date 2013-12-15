@@ -115,9 +115,12 @@ public class BlockSpacialProvider extends ContainerBase {
                 }
                 
                 if (hasAll) {
-                    
-                    MultiBlockTank tank = new MultiBlockTank(world, new Vector3(x, y, z), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
-                return tank.makeMultiBlockValid();
+                    if (!world.isRemote) {
+                        MultiBlockTank tank = new MultiBlockTank(world, new Vector3(x, y, z), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
+                        UtilEntity.sendClientChat(tank.isMultiBlockAreaValid() + "");
+                        tank.makeMultiBlockValid();
+                        UtilEntity.sendClientChat(tank.isMultiBlockAreaValid() + "");
+                    }
                 }
             }
         }

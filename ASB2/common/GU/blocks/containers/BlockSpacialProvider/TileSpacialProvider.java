@@ -45,31 +45,6 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         return null;
     }
     
-    public int getMultiBlockHeight() {
-        
-        int height = 0;
-        
-        if (sideState[ForgeDirection.DOWN.ordinal()] != EnumState.NONE) {
-            
-            if (this.getNearestProvider(ForgeDirection.DOWN) != null) {
-                
-                height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.DOWN))).intY();
-            }
-        }
-        
-        if (height == 0) {
-            
-            if (sideState[ForgeDirection.UP.ordinal()] != EnumState.NONE) {
-                
-                if (this.getNearestProvider(ForgeDirection.UP) != null) {
-                    
-                    height = -new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.UP))).intY();
-                }
-            }
-        }
-        return height;
-    }
-    
     public int getMultiBlockXChange() {
         
         int height = 0;
@@ -88,36 +63,61 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
                 
                 if (this.getNearestProvider(ForgeDirection.WEST) != null) {
                     
-                    height = -new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.WEST))).intX();
+                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.WEST))).intX();
                 }
             }
         }
-        return height;
+        return height * -1;
+    }
+    
+    public int getMultiBlockHeight() {
+        
+        int height = 0;
+        
+        if (sideState[ForgeDirection.UP.ordinal()] != EnumState.NONE) {
+            
+            if (this.getNearestProvider(ForgeDirection.UP) != null) {
+                
+                height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.UP))).intY();
+            }
+        }
+        
+        if (height == 0) {
+            
+            if (sideState[ForgeDirection.DOWN.ordinal()] != EnumState.NONE) {
+                
+                if (this.getNearestProvider(ForgeDirection.DOWN) != null) {
+                    
+                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.DOWN))).intY();
+                }
+            }
+        }
+        return height * -1;
     }
     
     public int getMultiBlockZChange() {
         
         int height = 0;
         
-        if (sideState[ForgeDirection.NORTH.ordinal()] != EnumState.NONE) {
+        if (sideState[ForgeDirection.SOUTH.ordinal()] != EnumState.NONE) {
             
-            if (this.getNearestProvider(ForgeDirection.NORTH) != null) {
+            if (this.getNearestProvider(ForgeDirection.SOUTH) != null) {
                 
-                height = -new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.NORTH))).intZ();
+                height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.SOUTH))).intZ();
             }
         }
         
         if (height == 0) {
             
-            if (sideState[ForgeDirection.SOUTH.ordinal()] != EnumState.NONE) {
+            if (sideState[ForgeDirection.NORTH.ordinal()] != EnumState.NONE) {
                 
-                if (this.getNearestProvider(ForgeDirection.SOUTH) != null) {
+                if (this.getNearestProvider(ForgeDirection.NORTH) != null) {
                     
-                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.SOUTH))).intZ();
+                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.NORTH))).intZ();
                 }
             }
         }
-        return height;
+        return height * -1;
     }
     
     @Override
@@ -125,6 +125,9 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         
         ForgeDirection direction = ForgeDirection.getOrientation(side);
         
+        if (isSneaking) {
+            direction = direction.getOpposite();
+        }
         if (sideState[direction.ordinal()] == EnumState.OUTPUT) {
             sideState[direction.ordinal()] = EnumState.NONE;
         } else {
