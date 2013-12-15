@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -12,6 +13,7 @@ import GU.EnumState;
 import GU.api.multiblock.MultiBlockManager;
 import GU.api.spacial.ISpacialProvider;
 import GU.blocks.containers.TileBase;
+import GU.multiblock.*;
 
 public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
@@ -41,6 +43,81 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             }
         }
         return null;
+    }
+    
+    public int getMultiBlockHeight() {
+        
+        int height = 0;
+        
+        if (sideState[ForgeDirection.DOWN.ordinal()] != EnumState.NONE) {
+            
+            if (this.getNearestProvider(ForgeDirection.DOWN) != null) {
+                
+                height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.DOWN))).intY();
+            }
+        }
+        
+        if (height == 0) {
+            
+            if (sideState[ForgeDirection.UP.ordinal()] != EnumState.NONE) {
+                
+                if (this.getNearestProvider(ForgeDirection.UP) != null) {
+                    
+                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.UP))).intY();
+                }
+            }
+        }
+        return height;
+    }
+    
+    public int getMultiBlockXChange() {
+        
+        int height = 0;
+        
+        if (sideState[ForgeDirection.EAST.ordinal()] != EnumState.NONE) {
+            
+            if (this.getNearestProvider(ForgeDirection.EAST) != null) {
+                
+                height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.EAST))).intX();
+            }
+        }
+        
+        if (height == 0) {
+            
+            if (sideState[ForgeDirection.WEST.ordinal()] != EnumState.NONE) {
+                
+                if (this.getNearestProvider(ForgeDirection.WEST) != null) {
+                    
+                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.WEST))).intX();
+                }
+            }
+        }
+        return height;
+    }
+    
+    public int getMultiBlockZChange() {
+        
+        int height = 0;
+        
+        if (sideState[ForgeDirection.NORTH.ordinal()] != EnumState.NONE) {
+            
+            if (this.getNearestProvider(ForgeDirection.NORTH) != null) {
+                
+                height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.NORTH))).intZ();
+            }
+        }
+        
+        if (height == 0) {
+            
+            if (sideState[ForgeDirection.NORTH.ordinal()] != EnumState.NONE) {
+                
+                if (this.getNearestProvider(ForgeDirection.NORTH) != null) {
+                    
+                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.NORTH))).intZ();
+                }
+            }
+        }
+        return height;
     }
     
     @Override
@@ -92,5 +169,32 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     public Set<MultiBlockManager> getComprizedStructures() {
         
         return multiBlocksIAmIn;
+    }
+    
+    @Override
+    public void writeToNBT(NBTTagCompound tag) {
+        super.writeToNBT(tag);
+        
+        for (int i = 0; i < multiBlocksIAmIn.toArray().length; i++) {
+            
+            MultiBlockManager core = (MultiBlockManager) multiBlocksIAmIn.toArray()[i];
+            
+            if (new Vector3(this).intEquals(core.getMultiBlockCore())) {
+                
+                tag.setCompoundTag("multiBlockClass" + i, core.save(new NBTTagCompound()));
+            }
+        }
+        tag.setInteger("multiBlockSide", multiBlocksIAmIn.size());
+    }
+    
+    @Override
+    public void readFromNBT(NBTTagCompound tag) {
+        super.readFromNBT(tag);
+        
+        for (int i = 0; i < tag.getInteger("multiBlockSide"); i++) {
+            
+            MultiBlockManager core = new MultiBlockTank(worldObj);
+            core.load(tag.getCompoundTag("multiBlockClass" + i));
+        }
     }
 }

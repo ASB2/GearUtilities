@@ -81,7 +81,7 @@ public abstract class MultiBlockManager {
         multiBlockCore = null;
     }
     
-    public void save(NBTTagCompound tag) {
+    public NBTTagCompound save(NBTTagCompound tag) {
         
         tag.setInteger("relativeXPlus", relativeXPlus);
         tag.setInteger("relativeYPlus", relativeYPlus);
@@ -102,9 +102,10 @@ public abstract class MultiBlockManager {
         }
         subTag.setInteger("vectorsSize", vectorTags.size());
         tag.setCompoundTag("multiBlock", subTag);
+        return tag;
     }
     
-    public void load(NBTTagCompound tag) {
+    public NBTTagCompound load(NBTTagCompound tag) {
         
         relativeXPlus = tag.getInteger("relativeXPlus");
         relativeYPlus = tag.getInteger("relativeYPlus");
@@ -118,5 +119,6 @@ public abstract class MultiBlockManager {
             
             comprisingBlocks.add(Vector3.readFromNBT(subTag.getCompoundTag("comprisingBlocks" + i)));
         }
+        return tag;
     }
 }

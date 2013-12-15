@@ -12,9 +12,9 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilBlock;
 import ASB2.vector.Vector3;
+import GU.BlockRegistry;
 import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.MultiBlockManager;
-import GU.*;
 
 public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     
@@ -27,7 +27,7 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     public MultiBlockTank(World worldObj, Vector3 multiBlockCore, int relativeXPlus, int relativeYPlus, int relativeZPlus) {
         super(worldObj, multiBlockCore, relativeXPlus, relativeYPlus, relativeZPlus);
         
-        fluidTank.setCapacity(relativeXPlus * relativeYPlus * relativeZPlus);
+        fluidTank.setCapacity(relativeXPlus * relativeYPlus * relativeZPlus * 16);
     }
     
     @Override
@@ -44,15 +44,22 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
                     Vector3 foundVec = this.getMultiBlockCore().add(x, y, z);
                     TileEntity tile = foundVec.getTileEntity(getWorld());
                     
-                    if (tile != null) {
+                    if (!UtilBlock.isBlockAir(getWorld(), foundVec.intX(), foundVec.intY(), foundVec.intZ())) {
                         
-                        if (tile instanceof IMultiBlockPart) {
+                        if (tile != null) {
                             
-                            itWorked = true;
-                            break;
+                            if (tile instanceof IMultiBlockPart) {
+                                
+                                itWorked = true;
+                            } else {
+                                
+                                return false;
+                            }
                         }
+                    } else {
+                        
+                        itWorked = true;
                     }
-                    itWorked = false;
                 }
             }
         }
@@ -101,17 +108,19 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     }
     
     @Override
-    public void save(NBTTagCompound tag) {
+    public NBTTagCompound save(NBTTagCompound tag) {
         super.save(tag);
         fluidTank.writeToNBT(tag);
+        return tag;
     }
     
     @Override
-    public void load(NBTTagCompound tag) {
+    public NBTTagCompound load(NBTTagCompound tag) {
         super.load(tag);
         
         fluidTank.readFromNBT(tag);
         fluidTank.setCapacity(relativeXPlus * relativeYPlus * relativeZPlus);
+        return tag;
     }
     
     @Override
