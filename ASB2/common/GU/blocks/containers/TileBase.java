@@ -61,7 +61,10 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
         
         if (sideState != null) {
             
-            return sideState[side];
+            if (sideState[side] != null) {
+                
+                return sideState[side];
+            }
         }
         return EnumState.NONE;
         
