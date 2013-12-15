@@ -36,13 +36,21 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
         
         boolean itWorked = false;
         
-        for (int x = 0; x < relativeXPlus; x++) {
+        int sx = relativeXPlus < 0 ? -1 : 1;
+        int sy = relativeYPlus < 0 ? -1 : 1;
+        int sz = relativeZPlus < 0 ? -1 : 1;
+        
+        int xplusABS = Math.abs(relativeXPlus);
+        int yplsuABS = Math.abs(relativeYPlus);
+        int zPlusABS = Math.abs(relativeZPlus);
+        
+        for (int x = 0; x < xplusABS; x++) {
             
-            for (int y = 0; y < relativeYPlus; y++) {
+            for (int y = 0; y < yplsuABS; y++) {
                 
-                for (int z = 0; z < relativeZPlus; z++) {
+                for (int z = 0; z < zPlusABS; z++) {
                     
-                    Vector3 foundVec = this.getMultiBlockCore().add(x, y, z);
+                    Vector3 foundVec = this.getMultiBlockCore().add(x * sx, y * sy, z * sz);
                     TileEntity tile = foundVec.getTileEntity(getWorld());
                     
                     if (!UtilBlock.isBlockAir(getWorld(), foundVec.intX(), foundVec.intY(), foundVec.intZ())) {
@@ -57,10 +65,11 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
                                 return false;
                             }
                         }
-                    } else {
-                        
-                        itWorked = true;
-                    }
+                    } 
+//                    else {
+//                        
+//                        // itWorked = true;
+//                    }
                 }
             }
         }
@@ -70,30 +79,42 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     @Override
     public boolean makeMultiBlockValid() {
         
-        // if (this.isMultiBlockAreaValid()) {
+        int sx = relativeXPlus < 0 ? -1 : 1;
+        int sy = relativeYPlus < 0 ? -1 : 1;
+        int sz = relativeZPlus < 0 ? -1 : 1;
         
-        for (int x = 0; x <= relativeXPlus; x++) {
+        int xplusABS = Math.abs(relativeXPlus);
+        int yplsuABS = Math.abs(relativeYPlus);
+        int zPlusABS = Math.abs(relativeZPlus);
+        
+        if (this.isMultiBlockAreaValid()) {
             
-            for (int y = 0; y <= relativeYPlus; y++) {
+            for (int x = 0; x <= xplusABS; x++) {
                 
-                for (int z = 0; z <= relativeZPlus; z++) {
+                for (int y = 0; y <= yplsuABS; y++) {
                     
-                    Vector3 foundVec = this.getMultiBlockCore().add(x, y, z);
-                    
-//                    if (x == 0 || y == 0 || z == 0) {
-//                        
-//                        UtilBlock.placeBlockInAir(worldObj, foundVec.intX(), foundVec.intY(), foundVec.intZ(), BlockRegistry.BlockMultiBlockBuilders.blockID, BlockMultiBlockBuilders.GLASS);
-//                    } else {
+                    for (int z = 0; z <= zPlusABS; z++) {
                         
-                        UtilBlock.placeBlockInAir(worldObj, foundVec.intX(), foundVec.intY(), foundVec.intZ(), BlockRegistry.BlockMultiBlockBuilders.blockID, BlockMultiBlockBuilders.CORNER);
-//                    }
-                    ((IMultiBlockPart) foundVec.getTileEntity(getWorld())).addToMultiBlock(this);
+                        Vector3 foundVec = this.getMultiBlockCore().add(x * sx, y * sy, z * sz);
+                        
+                        // if (x == 0 || y == 0 || z == 0) {
+                        //
+                        // UtilBlock.placeBlockInAir(worldObj, foundVec.intX(),
+                        // foundVec.intY(), foundVec.intZ(),
+                        // BlockRegistry.BlockMultiBlockBuilders.blockID,
+                        // BlockMultiBlockBuilders.GLASS);
+                        // } else {
+                        
+                        UtilBlock.placeBlockInAir(worldObj, foundVec.intX(), foundVec.intY(), foundVec.intZ(), BlockRegistry.BlockEtherealStone.blockID, BlockMultiBlockBuilders.CORNER);
+                        // }
+                        // ((IMultiBlockPart)
+                        // foundVec.getTileEntity(getWorld())).addToMultiBlock(this);
+                    }
                 }
             }
+            return this.isMultiBlockAreaValid();
         }
-        return this.isMultiBlockAreaValid();
-        // }
-        // return false;
+        return false;
     }
     
     @Override
