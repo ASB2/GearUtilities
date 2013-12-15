@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.vector.Vector3;
 import GU.EnumState;
-import GU.api.multiblock.MultiBlockManager;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
 import GU.multiblock.MultiBlockTank;
@@ -65,9 +64,7 @@ public class BlockSpacialProvider extends ContainerBase {
             if (player.getHeldItem() == null) {
                 
                 TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
-                
-                Set<Vector3> multiBlockList = new HashSet<Vector3>();
-                
+                                
                 boolean hasAll = false;
                 for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                     
@@ -75,19 +72,20 @@ public class BlockSpacialProvider extends ContainerBase {
                         
                         TileEntity foundTile = tile.getNearestProvider(direction);
                         if (foundTile != null) {
-                            
-                            multiBlockList.add(new Vector3(foundTile));
+
                             hasAll = true;
                         } else {
-                            hasAll = false;
+                            return false;
                         }
                     }
                 }
                 
                 if (hasAll) {
                     
-                    MultiBlockManager core = new MultiBlockTank(world, new Vector3(x, y, z), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
-                    
+                    MultiBlockTank core = new MultiBlockTank(world, new Vector3(x, y, z), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
+                    player.addChatMessage("--------");
+                    player.addChatMessage("" + core.isMultiBlockAreaValid());
+                    player.addChatMessage("--------");
                     return core.makeMultiBlockValid();
                     // Set<Vector3> buffer = new HashSet<Vector3>();
                     //

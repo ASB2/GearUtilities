@@ -18,9 +18,9 @@ public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart 
     @Override
     public void updateEntity() {
         
-//        if (multiBlocksIAmIn.isEmpty()) {
-//            worldObj.setBlockToAir(xCoord, yCoord, zCoord);
-//        }
+        // if (multiBlocksIAmIn.isEmpty()) {
+        // worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+        // }
         super.updateEntity();
     }
     

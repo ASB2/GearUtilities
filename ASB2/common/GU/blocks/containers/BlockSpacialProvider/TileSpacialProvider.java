@@ -63,7 +63,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
                 
                 if (this.getNearestProvider(ForgeDirection.UP) != null) {
                     
-                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.UP))).intY();
+                    height = -new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.UP))).intY();
                 }
             }
         }
@@ -88,7 +88,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
                 
                 if (this.getNearestProvider(ForgeDirection.WEST) != null) {
                     
-                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.WEST))).intX();
+                    height = -new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.WEST))).intX();
                 }
             }
         }
@@ -103,17 +103,17 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             
             if (this.getNearestProvider(ForgeDirection.NORTH) != null) {
                 
-                height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.NORTH))).intZ();
+                height = -new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.NORTH))).intZ();
             }
         }
         
         if (height == 0) {
             
-            if (sideState[ForgeDirection.NORTH.ordinal()] != EnumState.NONE) {
+            if (sideState[ForgeDirection.SOUTH.ordinal()] != EnumState.NONE) {
                 
-                if (this.getNearestProvider(ForgeDirection.NORTH) != null) {
+                if (this.getNearestProvider(ForgeDirection.SOUTH) != null) {
                     
-                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.NORTH))).intZ();
+                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.SOUTH))).intZ();
                 }
             }
         }

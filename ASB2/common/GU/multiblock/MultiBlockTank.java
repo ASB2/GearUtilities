@@ -27,7 +27,8 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     public MultiBlockTank(World worldObj, Vector3 multiBlockCore, int relativeXPlus, int relativeYPlus, int relativeZPlus) {
         super(worldObj, multiBlockCore, relativeXPlus, relativeYPlus, relativeZPlus);
         
-        fluidTank.setCapacity(relativeXPlus * relativeYPlus * relativeZPlus * 16);
+        int size = relativeXPlus * relativeYPlus * relativeZPlus * 16;
+        fluidTank.setCapacity(size < 0 ? -size : size);
     }
     
     @Override
@@ -69,30 +70,30 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     @Override
     public boolean makeMultiBlockValid() {
         
-        if (this.isMultiBlockAreaValid()) {
+        // if (this.isMultiBlockAreaValid()) {
+        
+        for (int x = 0; x <= relativeXPlus; x++) {
             
-            for (int x = 0; x < relativeXPlus; x++) {
+            for (int y = 0; y <= relativeYPlus; y++) {
                 
-                for (int y = 0; y < relativeYPlus; y++) {
+                for (int z = 0; z <= relativeZPlus; z++) {
                     
-                    for (int z = 0; z < relativeZPlus; z++) {
+                    Vector3 foundVec = this.getMultiBlockCore().add(x, y, z);
+                    
+//                    if (x == 0 || y == 0 || z == 0) {
+//                        
+//                        UtilBlock.placeBlockInAir(worldObj, foundVec.intX(), foundVec.intY(), foundVec.intZ(), BlockRegistry.BlockMultiBlockBuilders.blockID, BlockMultiBlockBuilders.GLASS);
+//                    } else {
                         
-                        Vector3 foundVec = this.getMultiBlockCore().add(x, y, z);
-                        
-                        if (x == 0 || y == 0 || z == 0) {
-                            
-                            UtilBlock.placeBlockInAir(worldObj, foundVec.intX(), foundVec.intY(), foundVec.intZ(), BlockRegistry.BlockMultiBlockBuilders.blockID, BlockMultiBlockBuilders.GLASS);
-                        } else {
-                            
-                            UtilBlock.placeBlockInAir(worldObj, foundVec.intX(), foundVec.intY(), foundVec.intZ(), BlockRegistry.BlockMultiBlockBuilders.blockID, BlockMultiBlockBuilders.CORNER);
-                        }
-                        ((IMultiBlockPart) foundVec.getTileEntity(getWorld())).addToMultiBlock(this);
-                    }
+                        UtilBlock.placeBlockInAir(worldObj, foundVec.intX(), foundVec.intY(), foundVec.intZ(), BlockRegistry.BlockMultiBlockBuilders.blockID, BlockMultiBlockBuilders.CORNER);
+//                    }
+                    ((IMultiBlockPart) foundVec.getTileEntity(getWorld())).addToMultiBlock(this);
                 }
             }
-            return this.isMultiBlockAreaValid();
         }
-        return false;
+        return this.isMultiBlockAreaValid();
+        // }
+        // return false;
     }
     
     @Override
@@ -119,7 +120,8 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
         super.load(tag);
         
         fluidTank.readFromNBT(tag);
-        fluidTank.setCapacity(relativeXPlus * relativeYPlus * relativeZPlus);
+        int size = relativeXPlus * relativeYPlus * relativeZPlus * 16;
+        fluidTank.setCapacity(size < 0 ? -size : size);
         return tag;
     }
     
