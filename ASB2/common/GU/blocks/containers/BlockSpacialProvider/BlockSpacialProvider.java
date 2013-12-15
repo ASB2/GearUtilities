@@ -14,11 +14,13 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilEntity;
 import ASB2.vector.Vector3;
 import GU.EnumState;
+import GU.api.spacial.ISpacialProvider;
 import GU.blocks.containers.ContainerBase;
+import GU.entity.fx.FXBeamOld;
 import GU.info.Reference;
-import GU.multiblock.MultiBlockTank;
 
 public class BlockSpacialProvider extends ContainerBase {
     
@@ -36,88 +38,56 @@ public class BlockSpacialProvider extends ContainerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         
-        // if (player.getHeldItem() == null) {
-        //
-        // boolean hasAll = false;
-        //
-        // TileSpacialProvider tile = (TileSpacialProvider)
-        // world.getBlockTileEntity(x, y, z);
-        //
-        // for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-        //
-        // if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT)
-        // {
-        //
-        // TileEntity foundTile = tile.getNearestProvider(direction);
-        // if (foundTile != null) {
-        //
-        // multiBlockList.add(new Vector3(foundTile));
-        // hasAll = true;
-        // } else {
-        // hasAll = false;
-        // }
-        // }
-        // }
-        // }
-        if (!world.isRemote) {
+        if (player.getHeldItem() == null) {
             
-            if (player.getHeldItem() == null) {
-                
-                TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
-                                
-                boolean hasAll = false;
-                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-                    
-                    if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
-                        
-                        TileEntity foundTile = tile.getNearestProvider(direction);
-                        if (foundTile != null) {
+            TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
 
-                            hasAll = true;
-                        } else {
-                            return false;
-                        }
+            Set<Vector3> multiBlockList = new HashSet<Vector3>();
+            
+            boolean hasAll = false;
+            multiBlockList.clear();
+            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                
+                if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
+                    
+                    TileEntity foundTile = tile.getNearestProvider(direction);
+                    if (foundTile != null) {
+                        
+                        multiBlockList.add(new Vector3(foundTile));
+                        hasAll = true;
+                    } else {
+                        hasAll = false;
+                    }
+                }
+            }
+            
+            if (hasAll) {
+                
+                Set<Vector3> buffer = new HashSet<Vector3>();
+                
+                for (Vector3 vector : multiBlockList) {
+                    
+                    Set<Vector3> tiles = ((ISpacialProvider) vector.getTileEntity(world)).getProvidedTiles();
+                    buffer.addAll(tiles);
+                    for (Vector3 vector2 : tiles) {
+                        
+                        Set<Vector3> tiles2 = ((ISpacialProvider) vector2.getTileEntity(world)).getProvidedTiles();
+                        buffer.addAll(tiles2);
+                    }
+                }
+                multiBlockList.addAll(buffer);
+                
+                for (Vector3 vector : multiBlockList) {
+                    
+                    if (!new Vector3(x + .5, y + .5, z + .5).equals(vector)) {
+                        FXBeamOld beam = new FXBeamOld(world, new Vector3(x + .5, y + .5, z + .5), vector, 255, 255, 255, 205);
+                        UtilEntity.spawnFX(beam);
                     }
                 }
                 
-                if (hasAll) {
-                    
-                    MultiBlockTank core = new MultiBlockTank(world, new Vector3(x, y, z), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
-                    player.addChatMessage("--------");
-                    player.addChatMessage("" + core.isMultiBlockAreaValid());
-                    player.addChatMessage("--------");
-                    return core.makeMultiBlockValid();
-                    // Set<Vector3> buffer = new HashSet<Vector3>();
-                    //
-                    // for (Vector3 vector : multiBlockList) {
-                    //
-                    // Set<Vector3> tiles = ((ISpacialProvider)
-                    // vector.getTileEntity(world)).getProvidedTiles();
-                    // buffer.addAll(tiles);
-                    // for (Vector3 vector2 : tiles) {
-                    //
-                    // Set<Vector3> tiles2 = ((ISpacialProvider)
-                    // vector2.getTileEntity(world)).getProvidedTiles();
-                    // buffer.addAll(tiles2);
-                    // }
-                    // }
-                    // multiBlockList.addAll(buffer);
-                    //
-                    // for (Vector3 vector : multiBlockList) {
-                    //
-                    // if (!new Vector3(x + .5, y + .5, z + .5).equals(vector))
-                    // {
-                    // FXBeamOld beam = new FXBeamOld(world, new Vector3(x + .5,
-                    // y + .5, z + .5), vector, 255, 255, 255, 205);
-                    // UtilEntity.spawnFX(beam);
-                    // }
-                    // }
-                    
-                    // player.addChatMessage("--------");
-                    // player.addChatMessage("We have " + multiBlockList.size()
-                    // + " tiles in the array");
-                    // player.addChatMessage("--------");
-                }
+                player.addChatMessage("--------");
+                player.addChatMessage("We have " + multiBlockList.size() + " tiles in the array");
+                player.addChatMessage("--------");
             }
         }
         return false;

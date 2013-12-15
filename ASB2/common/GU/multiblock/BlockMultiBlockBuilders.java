@@ -1,8 +1,9 @@
 package GU.multiblock;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -26,16 +27,20 @@ public class BlockMultiBlockBuilders extends ContainerBase {
         return false;
     }
     
-    
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void addCreativeItems(ArrayList itemList) {
-       itemList.add(new ItemStack(this, 1, GLASS));
+    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List list) {
+        
+        list.add(new ItemStack(this, 1, GLASS));
+        list.add(new ItemStack(this, 1, CORNER));
     }
+    
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         // TODO Auto-generated method stub
         return super.getPickBlock(target, world, x, y, z);
     }
+    
     @Override
     public TileEntity createNewTileEntity(World world) {
         

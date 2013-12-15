@@ -15,6 +15,7 @@ import GU.render.BlockSimpleRenderer;
 public class BlockBase extends Block {
     
     public boolean useStandardRendering = true;
+    protected boolean useEnumStateRendering = false;
     String[] textures = new String[0];
     Icon[] icons;
     

@@ -9,6 +9,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
+import GU.EnumState;
 import GU.api.color.IColorable;
 import GU.blocks.containers.TileBase;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
@@ -22,13 +23,18 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     @Override
     public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
         
-        if (block.blockID == BlockRegistry.BlockEnhancedBricks.blockID) {
+        if (block == BlockRegistry.BlockEnhancedBricks) {
             
             renderer.setRenderBounds(0.0001, 0.0001, 0.0001, .9999, .9999, .9999);
             UtilRender.renderStandardInvBlock(renderer, block, block.getIcon(0, 0), 255, 255, 255, 255);
             renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
             UtilRender.renderStandardInvBlock(renderer, block, ((BlockEnhancedBricks) block).overlay, 255, 255, 255, 255);
             return;
+        }
+        if (block == BlockRegistry.BlockSpacialProvider) {
+            
+            renderer.setRenderBounds(-.001, -.001, -.001, 1.001, 1.001, 1.001);
+            UtilRender.renderStandardInvBlock(renderer, block, EnumState.NONE.getStateIcon());
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderStandardInvBlock(renderer, block, meta);
