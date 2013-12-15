@@ -1,10 +1,10 @@
 package GU.api.multiblock;
 
-import java.util.List;
+import java.util.Set;
 
 public interface IMultiBlockPart {
     
-    MultiBlockManager getMultiBlockManager();
-    
-    List<MultiBlockManager> getComprizedStructures();
+    boolean addToMultiBlock(MultiBlockManager multiBlock);    
+    void removeMultiBlock(MultiBlockManager multiBlock);
+    Set<MultiBlockManager> getComprizedStructures();
 }

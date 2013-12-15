@@ -1,10 +1,14 @@
 package GU.api.multiblock;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import ASB2.vector.Vector3;
 
@@ -48,16 +52,71 @@ public abstract class MultiBlockManager {
         return new int[] { relativeXPlus, relativeYPlus, relativeZPlus };
     }
     
-    public abstract boolean isMultiBlockValid();
+    public abstract boolean isMultiBlockAreaValid();
+    
+    public abstract boolean makeMultiBlockValid();
     
     public abstract void update();
     
+    public abstract boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ);
+    
+    public void invalidate() {
+        
+        for (Vector3 vector : comprisingBlocks) {
+            
+            TileEntity tile = vector.getTileEntity(worldObj);
+            
+            if (tile != null && tile instanceof IMultiBlockPart) {
+                
+                ((IMultiBlockPart) tile).removeMultiBlock(this);
+            }
+        }
+        comprisingBlocks.clear();
+        
+        TileEntity tile = multiBlockCore.getTileEntity(worldObj);
+        if (tile != null && tile instanceof IMultiBlockPart) {
+            
+            ((IMultiBlockPart) tile).removeMultiBlock(this);
+        }
+        multiBlockCore = null;
+    }
+    
     public void save(NBTTagCompound tag) {
         
+        tag.setInteger("relativeXPlus", relativeXPlus);
+        tag.setInteger("relativeYPlus", relativeYPlus);
+        tag.setInteger("relativeZPlus", relativeZPlus);
+        tag.setCompoundTag("multiBlockCore", this.multiBlockCore.writeToNBT(new NBTTagCompound()));
         
+        NBTTagCompound subTag = new NBTTagCompound();
+        List<NBTTagCompound> vectorTags = new ArrayList<NBTTagCompound>();
+        
+        for (Vector3 vector : comprisingBlocks) {
+            
+            vectorTags.add(vector.writeToNBT(new NBTTagCompound()));
+        }
+        
+        for (int i = 0; i < vectorTags.size(); i++) {
+            
+            subTag.setCompoundTag("comprisingBlocks" + i, vectorTags.get(i));
+        }
+        subTag.setInteger("vectorsSize", vectorTags.size());
+        tag.setCompoundTag("multiBlock", subTag);
     }
     
     public void load(NBTTagCompound tag) {
         
+        relativeXPlus = tag.getInteger("relativeXPlus");
+        relativeYPlus = tag.getInteger("relativeYPlus");
+        relativeZPlus = tag.getInteger("relativeZPlus");
+        
+        multiBlockCore = Vector3.readFromNBT(tag.getCompoundTag("multiBlockCore"));
+        
+        NBTTagCompound subTag = tag.getCompoundTag("multiBlock");
+        
+        for (int i = 0; i < subTag.getInteger("vectorsSize"); i++) {
+            
+            comprisingBlocks.add(Vector3.readFromNBT(subTag.getCompoundTag("comprisingBlocks" + i)));
+        }
     }
 }

@@ -40,9 +40,11 @@ public class BlockSpacialProvider extends ContainerBase {
         if (player.getHeldItem() == null) {
             
             TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
+
+            Set<Vector3> multiBlockList = new HashSet<Vector3>();
             
             boolean hasAll = false;
-            tile.multiBlockList.clear();
+            multiBlockList.clear();
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 
                 if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
@@ -50,7 +52,7 @@ public class BlockSpacialProvider extends ContainerBase {
                     TileEntity foundTile = tile.getNearestProvider(direction);
                     if (foundTile != null) {
                         
-                        tile.multiBlockList.add(new Vector3(foundTile));
+                        multiBlockList.add(new Vector3(foundTile));
                         hasAll = true;
                     } else {
                         hasAll = false;
@@ -62,7 +64,7 @@ public class BlockSpacialProvider extends ContainerBase {
                 
                 Set<Vector3> buffer = new HashSet<Vector3>();
                 
-                for (Vector3 vector : tile.multiBlockList) {
+                for (Vector3 vector : multiBlockList) {
                     
                     Set<Vector3> tiles = ((ISpacialProvider) vector.getTileEntity(world)).getProvidedTiles();
                     buffer.addAll(tiles);
@@ -72,9 +74,9 @@ public class BlockSpacialProvider extends ContainerBase {
                         buffer.addAll(tiles2);
                     }
                 }
-                tile.multiBlockList.addAll(buffer);
+                multiBlockList.addAll(buffer);
                 
-                for (Vector3 vector : tile.multiBlockList) {
+                for (Vector3 vector : multiBlockList) {
                     
                     if (!new Vector3(x + .5, y + .5, z + .5).equals(vector)) {
                         FXBeamOld beam = new FXBeamOld(world, new Vector3(x + .5, y + .5, z + .5), vector, 255, 255, 255, 205);
@@ -83,7 +85,7 @@ public class BlockSpacialProvider extends ContainerBase {
                 }
                 
                 player.addChatMessage("--------");
-                player.addChatMessage("We have " + tile.multiBlockList.size() + " tiles in the array");
+                player.addChatMessage("We have " + multiBlockList.size() + " tiles in the array");
                 player.addChatMessage("--------");
             }
         }

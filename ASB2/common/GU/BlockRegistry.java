@@ -18,6 +18,7 @@ import GU.blocks.containers.BlockMultiPanel.ItemBlockMultiPanel;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
 import GU.info.GUItemBlock;
+import GU.multiblock.BlockMultiBlockBuilders;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -34,6 +35,7 @@ public class BlockRegistry {
     public static ContainerBase BlockBasicElemental;
     public static BlockBase BlockStructureCube, BlockStructureCube2, BlockStructureCube3, BlockStructureCube4, BlockStructureGlass;
     public static ContainerBase BlockSpacialProvider;
+    public static ContainerBase BlockMultiBlockBuilders;
     
     private static int id = 500;
     
@@ -92,6 +94,9 @@ public class BlockRegistry {
         
         BlockSpacialProvider = new BlockSpacialProvider(BlockRegistry.getConfigID(config, "BlockSpacialProvider"), Material.rock);
         addBlock(BlockSpacialProvider, "Spacial Provider", "BlockSpacialProvider");
+        
+        BlockMultiBlockBuilders = new BlockMultiBlockBuilders(BlockRegistry.getConfigID(config, "BlockMultiBlockBuilders"), Material.rock);
+        addBlock(BlockSpacialProvider, "Multi-Block Block", "BlockMultiBlockBuilders");
     }
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {
