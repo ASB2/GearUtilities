@@ -21,6 +21,7 @@ import GU.api.spacial.ISpacialProvider;
 import GU.blocks.containers.ContainerBase;
 import GU.entity.fx.FXBeamOld;
 import GU.info.Reference;
+import GU.multiblock.*;
 
 public class BlockSpacialProvider extends ContainerBase {
     
@@ -40,54 +41,84 @@ public class BlockSpacialProvider extends ContainerBase {
         
         if (player.getHeldItem() == null) {
             
-            TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
-
-            Set<Vector3> multiBlockList = new HashSet<Vector3>();
-            
-            boolean hasAll = false;
-            multiBlockList.clear();
-            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            if (world.getBlockMetadata(x, y, z) == STANDARD) {
+                TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
                 
-                if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
+                Set<Vector3> multiBlockList = new HashSet<Vector3>();
+                
+                boolean hasAll = false;
+                multiBlockList.clear();
+                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                     
-                    TileEntity foundTile = tile.getNearestProvider(direction);
-                    if (foundTile != null) {
+                    if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
                         
-                        multiBlockList.add(new Vector3(foundTile));
-                        hasAll = true;
-                    } else {
-                        hasAll = false;
+                        TileEntity foundTile = tile.getNearestProvider(direction);
+                        if (foundTile != null) {
+                            
+                            multiBlockList.add(new Vector3(foundTile));
+                            hasAll = true;
+                        } else {
+                            hasAll = false;
+                        }
                     }
                 }
-            }
-            
-            if (hasAll) {
                 
-                Set<Vector3> buffer = new HashSet<Vector3>();
-                
-                for (Vector3 vector : multiBlockList) {
+                if (hasAll) {
                     
-                    Set<Vector3> tiles = ((ISpacialProvider) vector.getTileEntity(world)).getProvidedTiles();
-                    buffer.addAll(tiles);
-                    for (Vector3 vector2 : tiles) {
+                    Set<Vector3> buffer = new HashSet<Vector3>();
+                    
+                    for (Vector3 vector : multiBlockList) {
                         
-                        Set<Vector3> tiles2 = ((ISpacialProvider) vector2.getTileEntity(world)).getProvidedTiles();
-                        buffer.addAll(tiles2);
+                        Set<Vector3> tiles = ((ISpacialProvider) vector.getTileEntity(world)).getProvidedTiles();
+                        buffer.addAll(tiles);
+                        for (Vector3 vector2 : tiles) {
+                            
+                            Set<Vector3> tiles2 = ((ISpacialProvider) vector2.getTileEntity(world)).getProvidedTiles();
+                            buffer.addAll(tiles2);
+                        }
                     }
-                }
-                multiBlockList.addAll(buffer);
-                
-                for (Vector3 vector : multiBlockList) {
+                    multiBlockList.addAll(buffer);
                     
-                    if (!new Vector3(x + .5, y + .5, z + .5).equals(vector)) {
-                        FXBeamOld beam = new FXBeamOld(world, new Vector3(x + .5, y + .5, z + .5), vector, 255, 255, 255, 205);
-                        UtilEntity.spawnFX(beam);
+                    for (Vector3 vector : multiBlockList) {
+                        
+                        if (!new Vector3(x + .5, y + .5, z + .5).equals(vector)) {
+                            FXBeamOld beam = new FXBeamOld(world, new Vector3(x + .5, y + .5, z + .5), vector, 255, 255, 255, 205);
+                            UtilEntity.spawnFX(beam);
+                        }
+                    }
+                    
+                    player.addChatMessage("--------");
+                    player.addChatMessage("We have " + multiBlockList.size() + " tiles in the array");
+                    player.addChatMessage("--------");
+                }
+            } else if (world.getBlockMetadata(x, y, z) == FLUID) {
+                
+                TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
+                
+                Set<Vector3> multiBlockList = new HashSet<Vector3>();
+                
+                boolean hasAll = false;
+                multiBlockList.clear();
+                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                    
+                    if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
+                        
+                        TileEntity foundTile = tile.getNearestProvider(direction);
+                        if (foundTile != null) {
+                            
+                            multiBlockList.add(new Vector3(foundTile));
+                            hasAll = true;
+                        } else {
+                            hasAll = false;
+                        }
                     }
                 }
                 
-                player.addChatMessage("--------");
-                player.addChatMessage("We have " + multiBlockList.size() + " tiles in the array");
-                player.addChatMessage("--------");
+                if (hasAll) {
+                    
+                    MultiBlockTank tank = new MultiBlockTank(world, new Vector3(x, y, z), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
+                return tank.makeMultiBlockValid();
+                }
             }
         }
         return false;
