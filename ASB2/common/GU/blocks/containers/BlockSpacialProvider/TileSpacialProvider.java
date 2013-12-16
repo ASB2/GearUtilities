@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilEntity;
 import ASB2.vector.Vector3;
 import GU.EnumState;
 import GU.api.multiblock.MultiBlockManager;
@@ -19,6 +20,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
     public static int MAX_DISTANCE = 16;
     Set<MultiBlockManager> multiBlocksIAmIn = new HashSet<MultiBlockManager>();
+    boolean isInMultiBlock = false, hasBufferedCreateMultiBlock = false;
     
     public TileSpacialProvider() {
         
@@ -28,6 +30,13 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     @Override
     public void updateEntity() {
         
+        if (hasBufferedCreateMultiBlock) {
+            
+            if (this.createMultiBlock()) {
+                
+                hasBufferedCreateMultiBlock = false;
+            }
+        }
     }
     
     public TileEntity getNearestProvider(ForgeDirection direction) {
@@ -158,7 +167,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
     @Override
     public boolean addToMultiBlock(MultiBlockManager multiBlock) {
-        
+        isInMultiBlock = true;
         return multiBlocksIAmIn.add(multiBlock);
     }
     
@@ -166,12 +175,46 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     public void removeMultiBlock(MultiBlockManager multiBlock) {
         
         multiBlocksIAmIn.remove(multiBlock);
+        
+        if (multiBlocksIAmIn.isEmpty()) {
+            isInMultiBlock = false;
+        }
     }
     
     @Override
     public Set<MultiBlockManager> getComprizedStructures() {
         
         return multiBlocksIAmIn;
+    }
+    
+    public boolean createMultiBlock() {
+        
+        TileSpacialProvider tile = (TileSpacialProvider) worldObj.getBlockTileEntity(xCoord, yCoord, zCoord);
+        
+        Set<Vector3> multiBlockList = new HashSet<Vector3>();
+        multiBlockList.clear();
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            
+            if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
+                
+                TileEntity foundTile = tile.getNearestProvider(direction);
+                if (foundTile != null) {
+                    
+                    multiBlockList.add(new Vector3(foundTile));
+                } else {
+                    return false;
+                }
+            }
+        }
+        
+        if (!worldObj.isRemote) {
+            MultiBlockTank tank = new MultiBlockTank(worldObj, new Vector3(xCoord, yCoord, zCoord), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
+            UtilEntity.sendClientChat(tank.isMultiBlockAreaValid() + "");
+            boolean valid = tank.makeMultiBlockValid();
+            UtilEntity.sendClientChat(valid + "");
+            return valid;
+        }
+        return false;
     }
     
     @Override
@@ -188,6 +231,8 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             }
         }
         tag.setInteger("multiBlockSide", multiBlocksIAmIn.size());
+        tag.setBoolean("isInMultiBlock", isInMultiBlock);
+        
     }
     
     @Override
@@ -199,5 +244,6 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             MultiBlockManager core = new MultiBlockTank(worldObj);
             core.load(tag.getCompoundTag("multiBlockClass" + i));
         }
+        hasBufferedCreateMultiBlock = tag.getBoolean("isInMultiBlock");
     }
 }
