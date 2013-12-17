@@ -1,9 +1,12 @@
 package GU.blocks;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
@@ -11,10 +14,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.GearUtilities;
+import GU.info.IExtraItemBlockInfo;
 import GU.info.Reference;
 import GU.render.BlockSimpleRenderer;
 
-public class BlockBase extends Block {
+public class BlockBase extends Block implements IExtraItemBlockInfo {
     
     public boolean useStandardRendering = true;
     protected boolean useEnumStateRendering = false;
@@ -141,5 +145,24 @@ public class BlockBase extends Block {
             }
         }
         return blockIcon;
+    }
+    
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, List info, boolean var1) {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    @Override
+    public String getUnlocalizedName(ItemStack itemStack) {
+        // TODO Auto-generated method stub
+        return getUnlocalizedName();
+    }
+    
+    @Override
+    public String getItemStackDisplayName(ItemStack itemStack) {
+        // TODO Auto-generated method stub
+        return "";
     }
 }

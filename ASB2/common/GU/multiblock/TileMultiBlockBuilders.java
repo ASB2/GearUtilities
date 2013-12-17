@@ -17,11 +17,6 @@ public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart 
     
     @Override
     public void updateEntity() {
-        
-        // if (multiBlocksIAmIn.isEmpty()) {
-        // worldObj.setBlockToAir(xCoord, yCoord, zCoord);
-        // }
-        super.updateEntity();
     }
     
     @Override
@@ -36,7 +31,7 @@ public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart 
     }
     
     @Override
-    public void removeStructure(MultiBlockManager multiBlock) {
+    public void removeStructure() {
         
         currentMultiBlock = null;
     }
@@ -45,6 +40,15 @@ public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart 
     public MultiBlockManager getCurrentStructure() {
         
         return currentMultiBlock;
+    }
+    
+    @Override
+    public void invalidate() {
+        
+        if (this.getCurrentStructure() != null) {
+            this.getCurrentStructure().invalidate();
+        }
+        super.invalidate();
     }
     
     @Override

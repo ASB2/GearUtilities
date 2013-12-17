@@ -10,7 +10,7 @@ import GU.blocks.BlockPhantomBlock;
 import GU.blocks.BlockMetadataOre.BlockMetadataOre;
 import GU.blocks.containers.ContainerBase;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.BlockAdvancedPotionBrewery;
-import GU.blocks.containers.BlockBasicElemental.BlockBasicElemental;
+import GU.blocks.BlockBasicElemental.BlockBasicElemental;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockMultiPanel.BlockMultiPanel;
@@ -32,7 +32,7 @@ public class BlockRegistry {
     public static ContainerBase BlockAdvancedPotionBrewery;
     public static ContainerBase BlockEnhancedBricks;
     public static ContainerBase BlockMultiPanel;
-    public static ContainerBase BlockBasicElemental;
+    public static BlockBase BlockBasicElemental;
     public static BlockBase BlockStructureCube, BlockStructureCube2, BlockStructureCube3, BlockStructureCube4, BlockStructureGlass;
     public static ContainerBase BlockSpacialProvider;
     public static ContainerBase BlockMultiBlockBuilders;

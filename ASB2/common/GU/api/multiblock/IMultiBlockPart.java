@@ -2,8 +2,7 @@ package GU.api.multiblock;
 
 public interface IMultiBlockPart {
     
-    boolean setStructure(MultiBlockManager multiBlock);    
-    //TODO Remove Parameter
-    void removeStructure(MultiBlockManager multiBlock);
+    boolean setStructure(MultiBlockManager multiBlock);
+    void removeStructure();
     MultiBlockManager getCurrentStructure();
 }

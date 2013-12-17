@@ -1,8 +1,5 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -32,12 +29,14 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         
         if (hasBufferedCreateMultiBlock) {
             
-            if (worldObj != null && !worldObj.isRemote && this.getCurrentStructure() != null) {
+            if (worldObj != null) {
                 
-                hasBufferedCreateMultiBlock = false;
-                this.getCurrentStructure().setWorld(worldObj);
-                if (!this.createMultiBlock(this.getCurrentStructure())) {
-                    this.removeStructure(null);
+                if (this.getCurrentStructure() != null) {
+                    
+                    if (this.createMultiBlock(true)) {
+                        
+                        hasBufferedCreateMultiBlock = false;
+                    }
                 }
             }
         }
@@ -102,7 +101,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         return height * -1;
     }
     
-    public int getMultiBlockHeight() {
+    public int getMultiBlockYChange() {
         
         int height = 0;
         
@@ -201,7 +200,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     }
     
     @Override
-    public void removeStructure(MultiBlockManager multiBlock) {
+    public void removeStructure() {
         
         isInMultiBlock = false;
         currentMultiBlock = null;
@@ -215,54 +214,70 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
     public boolean createMultiBlock() {
         
-        return createMultiBlock(null);
+        return createMultiBlock(false);
     }
     
-    public boolean createMultiBlock(MultiBlockManager currentMultiBlock) {
+    public boolean createMultiBlock(boolean hasStructure) {
         
         TileSpacialProvider tile = (TileSpacialProvider) worldObj.getBlockTileEntity(xCoord, yCoord, zCoord);
         
-        if (this.getCurrentStructure() == null) {
+        if (!hasStructure) {
             
-            Set<Vector3> list = new HashSet<Vector3>();
-            
-            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            if (this.getCurrentStructure() == null) {
                 
-                if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
+                int found = 0;
+                
+                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                     
-                    TileEntity foundTile = tile.getNearestProvider(direction);
-                    int distance = this.getDistanceToNearestProvider(direction);
-                    
-                    if (!(foundTile != null && distance > 0)) {
-                        list.add(new Vector3(foundTile));
-                        return false;
+                    if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
+                        
+                        TileEntity foundTile = tile.getNearestProvider(direction);
+                        
+                        if (foundTile != null) {
+                            
+                            found++;
+                        } else {
+                            
+                            return false;
+                        }
                     }
                 }
-            }
-            
-            if (list.size() > 1) {
                 
-                MultiBlockTank tank = new MultiBlockTank(worldObj, new Vector3(xCoord, yCoord, zCoord), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
-                UtilEntity.sendClientChat(tank.isMultiBlockAreaValid() + "");
-                boolean valid = tank.makeMultiBlockValid();
-                UtilEntity.sendClientChat(valid + "");
-                return valid;
-            }
-            else {
+                if (found > 1) {
+                    
+                    MultiBlockTank tank = new MultiBlockTank(worldObj, new Vector3(xCoord, yCoord, zCoord), tile.getMultiBlockXChange(), tile.getMultiBlockYChange(), tile.getMultiBlockZChange());
+                    UtilEntity.sendClientChat("First Check " + tank.isMultiBlockAreaValid());
+                    boolean valid = tank.makeMultiBlockValid();
+                    UtilEntity.sendClientChat("Second Check " + valid);
+                    return valid;
+                } else {
+                    return false;
+                }
+            } else {
                 
-                UtilEntity.sendClientChat("Tried to create a one block tank");
+                return false;
             }
         } else {
             
             if (this.getCurrentStructure().getWorld() == null) {
                 this.getCurrentStructure().setWorld(this.worldObj);
             }
+            hasBufferedCreateMultiBlock = false;
             UtilEntity.sendClientChat("First Check " + this.getCurrentStructure().isMultiBlockAreaValid());
             boolean valid = this.getCurrentStructure().makeMultiBlockValid();
             UtilEntity.sendClientChat("Second Check " + valid);
             return valid;
         }
-        return false;
+        // return false;
+    }
+    
+    @Override
+    public void invalidate() {
+        
+        if (this.getCurrentStructure() != null) {
+            this.getCurrentStructure().invalidate();
+        }
+        super.invalidate();
     }
     
     @Override
@@ -274,10 +289,9 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             if (new Vector3(this).intEquals(this.getCurrentStructure().getMultiBlockCore())) {
                 
                 tag.setCompoundTag("multiBlockSave", this.getCurrentStructure().save(new NBTTagCompound()));
+                tag.setBoolean("isInMultiBlock", isInMultiBlock);
             }
         }
-        tag.setBoolean("isInMultiBlock", isInMultiBlock);
-        
     }
     
     @Override

@@ -1,34 +1,38 @@
-package GU.blocks.containers.BlockBasicElemental;
+package GU.blocks.BlockBasicElemental;
 
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import GU.blocks.containers.ContainerBase;
+import GU.blocks.BlockBase;
 import GU.info.Reference;
 
-public class BlockBasicElemental extends ContainerBase {
+public class BlockBasicElemental extends BlockBase {
     
     public static final int FIRE_CUBE = 0;
     public static final int WATER_CUBE = 1;
     public static final int EARTH_CUBE = 2;
+    public static final int AIR_CUBE = 3;
+    public static final int VOID_CUBE = 4;
+    public static final int METALLIC_CUBE = 5;
+    public static final int BLOOD_CUBE = 6;
     
     Icon[] fireTextures = new Icon[6];
     Icon[] waterTextures = new Icon[6];
     Icon[] earthTextures = new Icon[6];
+    Icon[] airTextures = new Icon[6];
+    Icon[] voidTextures = new Icon[6];
+    Icon[] metallicTextures = new Icon[6];
+    Icon[] bloodTextures = new Icon[6];
     
     public BlockBasicElemental(int id, Material material) {
         super(id, material);
-        this.registerTile(TileBasicElemental.class);
         this.setTickRandomly(true);
     }
     
@@ -91,6 +95,26 @@ public class BlockBasicElemental extends ContainerBase {
                 
                 return earthTextures[side];
             }
+            
+            case AIR_CUBE: {
+                
+                return airTextures[side];
+            }
+            
+            case VOID_CUBE: {
+                
+                return voidTextures[side];
+            }
+            
+            case METALLIC_CUBE: {
+                
+                return metallicTextures[side];
+            }
+            
+            case BLOOD_CUBE: {
+                
+                return bloodTextures[side];
+            }
         }
         return fireTextures[0];
     }
@@ -136,42 +160,36 @@ public class BlockBasicElemental extends ContainerBase {
         
         switch (world.getBlockMetadata(x, y, z)) {
         
-            case WATER_CUBE: {
-                
-                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-                    
-                    int blockID = world.getBlockId(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ);
-                    
-                    if (blockID > 0) {
-                        if (blockID == Block.lavaStill.blockID) {
-                            
-                            world.setBlock(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, Block.obsidian.blockID);
-                        } else if (blockID == Block.lavaMoving.blockID) {
-                            
-                            world.setBlock(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, Block.cobblestone.blockID);
-                        }
-                    }
-                }
-            }
+//            case WATER_CUBE: {
+//                
+//                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+//                    
+//                    int blockID = world.getBlockId(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ);
+//                    
+//                    if (blockID > 0) {
+//                        if (blockID == Block.lavaStill.blockID) {
+//                            
+//                            world.setBlock(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, Block.obsidian.blockID);
+//                        } else if (blockID == Block.lavaMoving.blockID) {
+//                            
+//                            world.setBlock(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, Block.cobblestone.blockID);
+//                        }
+//                    }
+//                }
+//            }
         }
         super.onNeighborBlockChange(world, x, y, z, neightborId);
     }
     
     @Override
     public void updateTick(World world, int x, int y, int z, Random rand) {
-        
-        switch (world.getBlockMetadata(x, y, z)) {
-        
-            case EARTH_CUBE: {
-                
-            }
-        }
+//        
+//        switch (world.getBlockMetadata(x, y, z)) {
+//        
+//            case EARTH_CUBE: {
+//                
+//            }
+//        }
         super.updateTick(world, x, y, z, rand);
-    }
-    
-    @Override
-    public TileEntity createNewTileEntity(World world) {
-        
-        return new TileBasicElemental();
     }
 }

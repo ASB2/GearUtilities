@@ -10,7 +10,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
 import ASB2.vector.Vector3;
 import GU.api.multiblock.IMultiBlockPart;
@@ -34,9 +33,9 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
         
         boolean itWorked = false;
         
-        int sx = relativeXPlus <= 0 ? -1 : 1;
-        int sy = relativeYPlus <= 0 ? -1 : 1;
-        int sz = relativeZPlus <= 0 ? -1 : 1;
+        int sx = relativeXPlus < 0 ? -1 : 1;
+        int sy = relativeYPlus < 0 ? -1 : 1;
+        int sz = relativeZPlus < 0 ? -1 : 1;
         
         int xplusABS = Math.abs(relativeXPlus);
         int yplsuABS = Math.abs(relativeYPlus);
@@ -51,17 +50,14 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
                     Vector3 foundVec = this.getMultiBlockCore().add(x * sx, y * sy, z * sz);
                     TileEntity tile = foundVec.getTileEntity(getWorld());
                     
-                    if (!UtilBlock.isBlockAir(getWorld(), foundVec.intX(), foundVec.intY(), foundVec.intZ())) {
+                    if (tile != null) {
                         
-                        if (tile != null) {
+                        if (tile instanceof IMultiBlockPart) {
                             
-                            if (tile instanceof IMultiBlockPart) {
-                                
-                                itWorked = true;
-                            } else {
-                                
-                                return false;
-                            }
+                            itWorked = true;
+                        } else {
+                            
+                            return false;
                         }
                     } else {
                         
@@ -110,21 +106,6 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
                             this.invalidate();
                             return false;
                         }
-                        // if (x == 0 || y == 0 || z == 0) {
-                        //
-                        // UtilBlock.placeBlockInAir(worldObj, foundVec.intX(),
-                        // foundVec.intY(), foundVec.intZ(),
-                        // BlockRegistry.BlockMultiBlockBuilders.blockID,
-                        // BlockMultiBlockBuilders.GLASS);
-                        // } else {
-                        
-                        // UtilBlock.placeBlockInAir(worldObj, foundVec.intX(),
-                        // foundVec.intY(), foundVec.intZ(),
-                        // BlockRegistry.BlockEtherealStone.blockID,
-                        // BlockMultiBlockBuilders.CORNER);
-                        // }
-                        // ((IMultiBlockPart)
-                        // foundVec.getTileEntity(getWorld())).addToMultiBlock(this);
                     }
                 }
             }
@@ -231,13 +212,21 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         
+        if (this.getWorld() == null) {
+            
+            this.setWorld(world);
+        }
+        
         if (!world.isRemote) {
+            
             if (this.isMultiBlockAreaValid()) {
-                UtilEntity.sendClientChat("Fluid: " + this.fluidTank.getFluidAmount() + " / " + this.fluidTank.getCapacity());
+                
+                UtilEntity.sendClientChat("Fluid Amount: " + this.fluidTank.getFluidAmount() + " / " + this.fluidTank.getCapacity());
                 return true;
             } else {
                 
                 this.invalidate();
+                return false;
             }
         }
         return false;
