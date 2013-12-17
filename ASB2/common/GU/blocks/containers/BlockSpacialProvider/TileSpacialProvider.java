@@ -32,7 +32,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         
         if (hasBufferedCreateMultiBlock) {
             
-            if (worldObj != null && !worldObj.isRemote &&this.getCurrentStructure() != null) {
+            if (worldObj != null && !worldObj.isRemote && this.getCurrentStructure() != null) {
                 
                 hasBufferedCreateMultiBlock = false;
                 this.getCurrentStructure().setWorld(worldObj);
