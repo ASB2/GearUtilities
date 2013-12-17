@@ -43,6 +43,10 @@ public class BlockBasicElemental extends BlockBase {
         list.add(new ItemStack(this, 1, FIRE_CUBE));
         list.add(new ItemStack(this, 1, WATER_CUBE));
         list.add(new ItemStack(this, 1, EARTH_CUBE));
+        list.add(new ItemStack(this, 1, AIR_CUBE));
+        list.add(new ItemStack(this, 1, VOID_CUBE));
+        list.add(new ItemStack(this, 1, METALLIC_CUBE));
+        list.add(new ItemStack(this, 1, BLOOD_CUBE));
     }
     
     @Override
@@ -74,6 +78,15 @@ public class BlockBasicElemental extends BlockBase {
         earthTextures[3] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
         earthTextures[4] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
         earthTextures[5] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        
+        type = "Air";
+        
+        airTextures[0] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeBottom");
+        airTextures[1] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeTop");
+        airTextures[2] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        airTextures[3] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        airTextures[4] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        airTextures[5] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
     }
     
     @Override
@@ -100,21 +113,21 @@ public class BlockBasicElemental extends BlockBase {
                 
                 return airTextures[side];
             }
-            
-            case VOID_CUBE: {
-                
-                return voidTextures[side];
-            }
-            
-            case METALLIC_CUBE: {
-                
-                return metallicTextures[side];
-            }
-            
-            case BLOOD_CUBE: {
-                
-                return bloodTextures[side];
-            }
+            //
+            // case VOID_CUBE: {
+            //
+            // return voidTextures[side];
+            // }
+            //
+            // case METALLIC_CUBE: {
+            //
+            // return metallicTextures[side];
+            // }
+            //
+            // case BLOOD_CUBE: {
+            //
+            // return bloodTextures[side];
+            // }
         }
         return fireTextures[0];
     }
@@ -136,8 +149,16 @@ public class BlockBasicElemental extends BlockBase {
                 return "Water Cube";
             case EARTH_CUBE:
                 return "Earth Cube";
+            case AIR_CUBE:
+                return "Air Cube";
+            case VOID_CUBE:
+                return "Void Cube";
+            case METALLIC_CUBE:
+                return "Metallic Cube";
+            case BLOOD_CUBE:
+                return "Blood Cube";
         }
-        return "";
+        return "Somethings broken";
     }
     
     @Override
@@ -151,8 +172,16 @@ public class BlockBasicElemental extends BlockBase {
                 return "BlockWaterCube";
             case EARTH_CUBE:
                 return "BlockEarthCube";
+            case AIR_CUBE:
+                return "BlockAirCube";
+            case VOID_CUBE:
+                return "BlockVoidCube";
+            case METALLIC_CUBE:
+                return "BlockMetallicCube";
+            case BLOOD_CUBE:
+                return "BlockBloodCube";
         }
-        return "";
+        return "Unlocalized Name Broken";
     }
     
     @Override
@@ -160,36 +189,39 @@ public class BlockBasicElemental extends BlockBase {
         
         switch (world.getBlockMetadata(x, y, z)) {
         
-//            case WATER_CUBE: {
-//                
-//                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-//                    
-//                    int blockID = world.getBlockId(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ);
-//                    
-//                    if (blockID > 0) {
-//                        if (blockID == Block.lavaStill.blockID) {
-//                            
-//                            world.setBlock(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, Block.obsidian.blockID);
-//                        } else if (blockID == Block.lavaMoving.blockID) {
-//                            
-//                            world.setBlock(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, Block.cobblestone.blockID);
-//                        }
-//                    }
-//                }
-//            }
+        // case WATER_CUBE: {
+        //
+        // for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+        //
+        // int blockID = world.getBlockId(x + direction.offsetX, y +
+        // direction.offsetY, z + direction.offsetZ);
+        //
+        // if (blockID > 0) {
+        // if (blockID == Block.lavaStill.blockID) {
+        //
+        // world.setBlock(x + direction.offsetX, y + direction.offsetY, z +
+        // direction.offsetZ, Block.obsidian.blockID);
+        // } else if (blockID == Block.lavaMoving.blockID) {
+        //
+        // world.setBlock(x + direction.offsetX, y + direction.offsetY, z +
+        // direction.offsetZ, Block.cobblestone.blockID);
+        // }
+        // }
+        // }
+        // }
         }
         super.onNeighborBlockChange(world, x, y, z, neightborId);
     }
     
     @Override
     public void updateTick(World world, int x, int y, int z, Random rand) {
-//        
-//        switch (world.getBlockMetadata(x, y, z)) {
-//        
-//            case EARTH_CUBE: {
-//                
-//            }
-//        }
+        //
+        // switch (world.getBlockMetadata(x, y, z)) {
+        //
+        // case EARTH_CUBE: {
+        //
+        // }
+        // }
         super.updateTick(world, x, y, z, rand);
     }
 }
