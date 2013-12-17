@@ -87,6 +87,33 @@ public class BlockBasicElemental extends BlockBase {
         airTextures[3] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
         airTextures[4] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
         airTextures[5] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        
+        type = "Void";
+        
+        voidTextures[0] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeBottom");
+        voidTextures[1] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeTop");
+        voidTextures[2] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        voidTextures[3] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        voidTextures[4] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        voidTextures[5] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        
+        type = "Metallic";
+        
+        metallicTextures[0] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeBottom");
+        metallicTextures[1] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeTop");
+        metallicTextures[2] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        metallicTextures[3] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        metallicTextures[4] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        metallicTextures[5] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        
+        type = "Blood";
+        
+        bloodTextures[0] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeBottom");
+        bloodTextures[1] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeTop");
+        bloodTextures[2] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        bloodTextures[3] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        bloodTextures[4] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
+        bloodTextures[5] = iconRegister.registerIcon(Reference.MODDID + ":Block" + type + "CubeSides");
     }
     
     @Override
@@ -113,21 +140,21 @@ public class BlockBasicElemental extends BlockBase {
                 
                 return airTextures[side];
             }
-            //
-            // case VOID_CUBE: {
-            //
-            // return voidTextures[side];
-            // }
-            //
-            // case METALLIC_CUBE: {
-            //
-            // return metallicTextures[side];
-            // }
-            //
-            // case BLOOD_CUBE: {
-            //
-            // return bloodTextures[side];
-            // }
+            
+            case VOID_CUBE: {
+                
+                return voidTextures[side];
+            }
+            
+            case METALLIC_CUBE: {
+                
+                return metallicTextures[side];
+            }
+            
+             case BLOOD_CUBE: {
+            
+             return bloodTextures[side];
+             }
         }
         return fireTextures[0];
     }
