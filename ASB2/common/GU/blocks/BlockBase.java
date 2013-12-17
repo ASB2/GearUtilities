@@ -4,7 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -70,6 +72,12 @@ public class BlockBase extends Block {
             return -1;
         
         return BlockSimpleRenderer.renderID;
+    }
+    
+    @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        
+        return new ItemStack(this, 1, world.getBlockMetadata(x, y, z));
     }
     
     public boolean canCreatureSpawn(EnumCreatureType type, World world, int x, int y, int z) {

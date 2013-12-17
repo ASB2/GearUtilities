@@ -96,7 +96,7 @@ public class BlockRegistry {
         addBlock(BlockSpacialProvider, "Spacial Provider", "BlockSpacialProvider");
         
         BlockMultiBlockBuilders = new BlockMultiBlockBuilders(BlockRegistry.getConfigID(config, "BlockMultiBlockBuilders"), Material.rock);
-        addBlock(BlockSpacialProvider, "Multi-Block Block", "BlockMultiBlockBuilders");
+        addBlock(BlockMultiBlockBuilders, "Multi-Block Block", "BlockMultiBlockBuilders");
     }
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {

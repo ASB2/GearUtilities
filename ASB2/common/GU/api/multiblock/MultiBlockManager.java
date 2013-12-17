@@ -68,7 +68,7 @@ public abstract class MultiBlockManager {
             
             if (tile != null && tile instanceof IMultiBlockPart) {
                 
-                ((IMultiBlockPart) tile).removeMultiBlock(this);
+                ((IMultiBlockPart) tile).removeStructure(this);
             }
         }
         comprisingBlocks.clear();
@@ -76,7 +76,7 @@ public abstract class MultiBlockManager {
         TileEntity tile = multiBlockCore.getTileEntity(worldObj);
         if (tile != null && tile instanceof IMultiBlockPart) {
             
-            ((IMultiBlockPart) tile).removeMultiBlock(this);
+            ((IMultiBlockPart) tile).removeStructure(this);
         }
         multiBlockCore = null;
     }

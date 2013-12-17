@@ -21,7 +21,7 @@ public class BlockFluidProvider extends ContainerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityplayer, int par6, float par7, float par8, float par9) {
 
-        ItemStack current = entityplayer.inventory.getCurrentItem();
+        ItemStack current = entityplayer.getHeldItem();
 
         if (current != null && FluidContainerRegistry.getFluidForFilledItem(current) != null) {
 
@@ -33,7 +33,7 @@ public class BlockFluidProvider extends ContainerBase {
                 tank.setFluid(fluid);
                 return true;
             }
-        } else {
+        } else if(current == null) {
 
             TileFluidProvider tank = (TileFluidProvider) world.getBlockTileEntity(x, y, z);
 

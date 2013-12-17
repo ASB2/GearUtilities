@@ -1,11 +1,8 @@
 package GU.api.spacial;
 
-import java.util.Set;
-
-import ASB2.vector.Vector3;
-import GU.api.multiblock.*;
+import GU.api.multiblock.IMultiBlockPart;
 
 public interface ISpacialProvider extends IMultiBlockPart {
     
-    Set<Vector3> getProvidedTiles();
+//    Set<Vector3> getProvidedTiles();
 }

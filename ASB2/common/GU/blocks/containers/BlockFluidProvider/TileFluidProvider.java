@@ -64,6 +64,10 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
         
         ForgeDirection direction = ForgeDirection.getOrientation(side);
+        
+        if (isSneaking)
+            direction = direction.getOpposite();
+        
         sideState[direction.ordinal()] = sideState[direction.ordinal()].increment();
         world.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
     }

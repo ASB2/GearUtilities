@@ -1,14 +1,14 @@
 package GU.multiblock;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import GU.api.multiblock.IMultiBlockPart;
+import GU.api.multiblock.MultiBlockManager;
 import GU.blocks.containers.TileBase;
-import GU.api.multiblock.*;
 
 public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart {
     
-    Set<MultiBlockManager> multiBlocksIAmIn = new HashSet<MultiBlockManager>();
+    MultiBlockManager currentMultiBlock;
     
     public TileMultiBlockBuilders() {
         
@@ -25,20 +25,31 @@ public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart 
     }
     
     @Override
-    public boolean addToMultiBlock(MultiBlockManager multiBlock) {
+    public boolean setStructure(MultiBlockManager multiBlock) {
         
-        return multiBlocksIAmIn.add(multiBlock);
+        if (currentMultiBlock == null) {
+            
+            currentMultiBlock = multiBlock;
+            return true;
+        }
+        return false;
     }
     
     @Override
-    public void removeMultiBlock(MultiBlockManager multiBlock) {
+    public void removeStructure(MultiBlockManager multiBlock) {
         
-        multiBlocksIAmIn.remove(multiBlock);
+        currentMultiBlock = null;
     }
     
     @Override
-    public Set<MultiBlockManager> getComprizedStructures() {
+    public MultiBlockManager getCurrentStructure() {
         
-        return multiBlocksIAmIn;
+        return currentMultiBlock;
+    }
+    
+    @Override
+    public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
+        // TODO Auto-generated method stub
+        // super.triggerBlock(world, isSneaking, itemStack, x, y, z, side);
     }
 }

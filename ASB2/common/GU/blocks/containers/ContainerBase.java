@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.GearUtilities;
@@ -70,6 +71,12 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
         if (!useStandardRendering)
             return -1;
         return BlockSimpleRenderer.renderID;
+    }
+    
+    @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        
+        return new ItemStack(this, 1, world.getBlockMetadata(x, y, z));
     }
     
     @Override

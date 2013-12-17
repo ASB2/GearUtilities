@@ -11,14 +11,14 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilBlock;
+import ASB2.utils.UtilEntity;
 import ASB2.vector.Vector3;
-import GU.BlockRegistry;
 import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.MultiBlockManager;
 
 public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     
-    FluidTank fluidTank = new FluidTank(16000);
+    FluidTank fluidTank = new FluidTank(0);
     
     public MultiBlockTank(World world) {
         super(world);
@@ -43,11 +43,11 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
         int yplsuABS = Math.abs(relativeYPlus);
         int zPlusABS = Math.abs(relativeZPlus);
         
-        for (int x = 0; x < xplusABS; x++) {
+        for (int x = 0; x <= xplusABS; x++) {
             
-            for (int y = 0; y < yplsuABS; y++) {
+            for (int y = 0; y <= yplsuABS; y++) {
                 
-                for (int z = 0; z < zPlusABS; z++) {
+                for (int z = 0; z <= zPlusABS; z++) {
                     
                     Vector3 foundVec = this.getMultiBlockCore().add(x * sx, y * sy, z * sz);
                     TileEntity tile = foundVec.getTileEntity(getWorld());
@@ -100,16 +100,16 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
                             
                             if (foundVec.getTileEntity(getWorld()) instanceof IMultiBlockPart) {
                                 
-                                if (!((IMultiBlockPart) foundVec.getTileEntity(getWorld())).addToMultiBlock(this)) {
-                                    
+                                if (!((IMultiBlockPart) foundVec.getTileEntity(getWorld())).setStructure(this)) {
+                                    this.invalidate();
                                     return false;
                                 }
                             } else {
-                                
+                                this.invalidate();
                                 return false;
                             }
                         } else {
-                            
+                            this.invalidate();
                             return false;
                         }
                         // if (x == 0 || y == 0 || z == 0) {
@@ -159,8 +159,7 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
         super.load(tag);
         
         fluidTank.readFromNBT(tag);
-        int size = relativeXPlus * relativeYPlus * relativeZPlus * 16;
-        fluidTank.setCapacity(size < 0 ? -size : size);
+        fluidTank.setCapacity(((Math.abs(relativeXPlus) + 1) * (Math.abs(relativeYPlus) + 1) * (Math.abs(relativeZPlus) + 1)) * 16000);
         return tag;
     }
     
@@ -233,7 +232,8 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        // TODO Auto-generated method stub
+        if (!world.isRemote)
+            UtilEntity.sendClientChat("Fluid: " + this.fluidTank.getFluidAmount() + " / " + this.fluidTank.getCapacity());
         return false;
     }
 }

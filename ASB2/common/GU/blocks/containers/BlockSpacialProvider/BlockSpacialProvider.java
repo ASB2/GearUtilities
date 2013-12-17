@@ -13,7 +13,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
-import GU.api.multiblock.*;
 
 public class BlockSpacialProvider extends ContainerBase {
     
@@ -35,15 +34,12 @@ public class BlockSpacialProvider extends ContainerBase {
         
         if (player.getHeldItem() == null) {
             
-            if (tile.getComprizedStructures().isEmpty()) {
+            if (tile.getCurrentStructure() == null) {
+                
                 return tile.createMultiBlock();
             } else {
                 
-                for (MultiBlockManager multiBlock : tile.getComprizedStructures()) {
-                    
-                    multiBlock.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
-                }
-                return true;
+                return tile.getCurrentStructure().onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
             }
         }
         return false;

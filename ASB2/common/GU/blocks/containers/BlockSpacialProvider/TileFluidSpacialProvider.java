@@ -11,27 +11,19 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
         
-        return fluidTank.fill(resource, doFill);
+        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
+            
+            return ((IFluidHandler) this.getCurrentStructure()).fill(from, resource, doFill);
+        }
+        return 0;
     }
     
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
         
-        if (fluidTank != null) {
+        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
             
-            if (fluid != null) {
-                
-                if (fluidTank.getFluid() != null) {
-                    
-                    if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
-                        
-                        return true;
-                    }
-                } else {
-                    
-                    return true;
-                }
-            }
+            return ((IFluidHandler) this.getCurrentStructure()).canFill(from, fluid);
         }
         return false;
     }
@@ -39,32 +31,29 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
         
-        if (resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
+        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
             
-            return null;
+            return ((IFluidHandler) this.getCurrentStructure()).drain(from, resource, doDrain);
         }
-        
-        return fluidTank.drain(resource.amount, doDrain);
+        return null;
     }
     
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
         
-        return fluidTank.drain(maxDrain, doDrain);
+        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
+            
+            return ((IFluidHandler) this.getCurrentStructure()).drain(from, maxDrain, doDrain);
+        }
+        return null;
     }
     
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
         
-        if (this.fluidTank.getFluid() != null) {
+        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
             
-            if (fluidTank.getFluidAmount() > 0) {
-                
-                if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
-                    
-                    return true;
-                }
-            }
+            return ((IFluidHandler) this.getCurrentStructure()).canDrain(from, fluid);
         }
         return false;
     }
@@ -72,6 +61,10 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         
-        return new FluidTankInfo[] { fluidTank.getInfo() };
+        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
+            
+            return ((IFluidHandler) this.getCurrentStructure()).getTankInfo(from);
+        }
+        return null;
     }
 }
