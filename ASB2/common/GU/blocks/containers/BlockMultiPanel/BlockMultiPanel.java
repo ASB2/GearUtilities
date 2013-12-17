@@ -24,11 +24,12 @@ public class BlockMultiPanel extends ContainerBase {
         
         this.useStandardRendering = false;
         this.registerTile(TileMultiPanel.class);
+        setLightOpacity(0);
     }
     
     @Override
     public boolean isOpaqueCube() {
-        // TODO Auto-generated method stub
+
         return false;
     }
     
