@@ -231,8 +231,16 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        if (!world.isRemote)
-            UtilEntity.sendClientChat("Fluid: " + this.fluidTank.getFluidAmount() + " / " + this.fluidTank.getCapacity());
+        
+        if (!world.isRemote) {
+            if (this.isMultiBlockAreaValid()) {
+                UtilEntity.sendClientChat("Fluid: " + this.fluidTank.getFluidAmount() + " / " + this.fluidTank.getCapacity());
+                return true;
+            } else {
+                
+                this.invalidate();
+            }
+        }
         return false;
     }
 }

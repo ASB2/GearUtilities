@@ -1,8 +1,5 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -45,7 +42,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
     public TileEntity getNearestProvider(ForgeDirection direction) {
         
-        for (int i = 0; i < MAX_DISTANCE; i++) {
+        for (int i = 0; i <= MAX_DISTANCE; i++) {
             
             Vector3 position = new Vector3(this).add(direction, i);
             TileEntity tile = position.getTileEntity(worldObj);
@@ -56,6 +53,21 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             }
         }
         return null;
+    }
+    
+    public int getDistanceToNearestProvider(ForgeDirection direction) {
+        
+        for (int i = 0; i <= MAX_DISTANCE; i++) {
+            
+            Vector3 position = new Vector3(this).add(direction, i);
+            TileEntity tile = position.getTileEntity(worldObj);
+            
+            if (tile != null && tile != this && tile instanceof ISpacialProvider) {
+                
+                return i;
+            }
+        }
+        return 0;
     }
     
     public int getMultiBlockXChange() {
@@ -172,10 +184,9 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     @Override
     public boolean setStructure(MultiBlockManager multiBlock) {
         
-        isInMultiBlock = true;
-        
         if (currentMultiBlock == null) {
             
+            isInMultiBlock = true;
             currentMultiBlock = multiBlock;
             return true;
         }
@@ -204,39 +215,37 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         
         TileSpacialProvider tile = (TileSpacialProvider) worldObj.getBlockTileEntity(xCoord, yCoord, zCoord);
         
-        if (currentMultiBlock == null) {
-            
-            Set<Vector3> multiBlockList = new HashSet<Vector3>();
-            multiBlockList.clear();
+        if (this.getCurrentStructure() == null) {
             
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 
                 if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
                     
                     TileEntity foundTile = tile.getNearestProvider(direction);
-                    if (foundTile != null) {
+                    int distance = this.getDistanceToNearestProvider(direction);
+                    
+                    if (!(foundTile != null && distance > 0)) {
                         
-                        multiBlockList.add(new Vector3(foundTile));
-                    } else {
                         return false;
                     }
                 }
             }
             
-            if (!worldObj.isRemote) {
-                MultiBlockTank tank = new MultiBlockTank(worldObj, new Vector3(xCoord, yCoord, zCoord), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
-                UtilEntity.sendClientChat(tank.isMultiBlockAreaValid() + "");
-                boolean valid = tank.makeMultiBlockValid();
-                UtilEntity.sendClientChat(valid + "");
-                return valid;
-            }
+            MultiBlockTank tank = new MultiBlockTank(worldObj, new Vector3(xCoord, yCoord, zCoord), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
+            UtilEntity.sendClientChat(tank.isMultiBlockAreaValid() + "");
+            boolean valid = tank.makeMultiBlockValid();
+            UtilEntity.sendClientChat(valid + "");
+            return valid;
         } else {
-            UtilEntity.sendClientChat("First Check " + currentMultiBlock.isMultiBlockAreaValid());
-            boolean valid = currentMultiBlock.makeMultiBlockValid();
+            
+            if (this.getCurrentStructure().getWorld() == null) {
+                this.getCurrentStructure().setWorld(this.worldObj);
+            }
+            UtilEntity.sendClientChat("First Check " + this.getCurrentStructure().isMultiBlockAreaValid());
+            boolean valid = this.getCurrentStructure().makeMultiBlockValid();
             UtilEntity.sendClientChat("Second Check " + valid);
             return valid;
         }
-        return false;
     }
     
     @Override

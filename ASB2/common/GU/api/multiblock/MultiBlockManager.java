@@ -1,9 +1,7 @@
 package GU.api.multiblock;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -74,14 +72,6 @@ public abstract class MultiBlockManager {
                 ((IMultiBlockPart) tile).removeStructure(this);
             }
         }
-        comprisingBlocks.clear();
-        
-        TileEntity tile = multiBlockCore.getTileEntity(worldObj);
-        if (tile != null && tile instanceof IMultiBlockPart) {
-            
-            ((IMultiBlockPart) tile).removeStructure(this);
-        }
-        multiBlockCore = null;
     }
     
     public NBTTagCompound save(NBTTagCompound tag) {
