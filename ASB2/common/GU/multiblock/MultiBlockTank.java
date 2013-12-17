@@ -20,8 +20,7 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     
     FluidTank fluidTank = new FluidTank(0);
     
-    public MultiBlockTank(World world) {
-        super(world);
+    public MultiBlockTank() {
     }
     
     public MultiBlockTank(World worldObj, Vector3 multiBlockCore, int relativeXPlus, int relativeYPlus, int relativeZPlus) {
@@ -65,10 +64,10 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
                             }
                         }
                     }
-                    // else {
-                    //
-                    // // itWorked = true;
-                    // }
+                     else {
+                    
+                     return false;
+                     }
                 }
             }
         }

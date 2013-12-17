@@ -32,10 +32,13 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         
         if (hasBufferedCreateMultiBlock) {
             
-            if (worldObj != null && this.getCurrentStructure() != null) {
+            if (worldObj != null && !worldObj.isRemote &&this.getCurrentStructure() != null) {
                 
                 hasBufferedCreateMultiBlock = false;
-                this.createMultiBlock(this.getCurrentStructure());
+                this.getCurrentStructure().setWorld(worldObj);
+                if (!this.createMultiBlock(this.getCurrentStructure())) {
+                    this.removeStructure(null);
+                }
             }
         }
     }
@@ -182,6 +185,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     @Override
     public void removeStructure(MultiBlockManager multiBlock) {
         
+        isInMultiBlock = false;
         currentMultiBlock = null;
     }
     
@@ -227,9 +231,9 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
                 return valid;
             }
         } else {
-            UtilEntity.sendClientChat(this.getCurrentStructure().isMultiBlockAreaValid() + "");
-            boolean valid = this.getCurrentStructure().makeMultiBlockValid();
-            UtilEntity.sendClientChat(valid + "");
+            UtilEntity.sendClientChat("First Check " + currentMultiBlock.isMultiBlockAreaValid());
+            boolean valid = currentMultiBlock.makeMultiBlockValid();
+            UtilEntity.sendClientChat("Second Check " + valid);
             return valid;
         }
         return false;
@@ -254,7 +258,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
         
-        MultiBlockManager core = new MultiBlockTank(worldObj);
+        MultiBlockManager core = new MultiBlockTank();
         core.load(tag.getCompoundTag("multiBlockSave"));
         this.setStructure(core);
         hasBufferedCreateMultiBlock = tag.getBoolean("isInMultiBlock");

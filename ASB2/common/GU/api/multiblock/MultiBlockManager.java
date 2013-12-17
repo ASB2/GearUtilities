@@ -19,9 +19,7 @@ public abstract class MultiBlockManager {
     protected Vector3 multiBlockCore;
     protected int relativeXPlus, relativeYPlus, relativeZPlus;
     
-    public MultiBlockManager(World worldObj) {
-        
-        this.worldObj = worldObj;
+    public MultiBlockManager() {
     }
     
     public MultiBlockManager(World worldObj, Vector3 multiBlockCore, int relativeXPlus, int relativeYPlus, int relativeZPlus) {
@@ -31,6 +29,11 @@ public abstract class MultiBlockManager {
         this.relativeXPlus = relativeXPlus;
         this.relativeYPlus = relativeYPlus;
         this.relativeZPlus = relativeZPlus;
+    }
+    
+    public void setWorld(World world) {
+        
+        worldObj = world;
     }
     
     public World getWorld() {
@@ -87,21 +90,21 @@ public abstract class MultiBlockManager {
         tag.setInteger("relativeYPlus", relativeYPlus);
         tag.setInteger("relativeZPlus", relativeZPlus);
         tag.setCompoundTag("multiBlockCore", this.multiBlockCore.writeToNBT(new NBTTagCompound()));
-        
-        NBTTagCompound subTag = new NBTTagCompound();
-        List<NBTTagCompound> vectorTags = new ArrayList<NBTTagCompound>();
-        
-        for (Vector3 vector : comprisingBlocks) {
-            
-            vectorTags.add(vector.writeToNBT(new NBTTagCompound()));
-        }
-        
-        for (int i = 0; i < vectorTags.size(); i++) {
-            
-            subTag.setCompoundTag("comprisingBlocks" + i, vectorTags.get(i));
-        }
-        subTag.setInteger("vectorsSize", vectorTags.size());
-        tag.setCompoundTag("multiBlock", subTag);
+//        
+//        NBTTagCompound subTag = new NBTTagCompound();
+//        List<NBTTagCompound> vectorTags = new ArrayList<NBTTagCompound>();
+//        
+//        for (Vector3 vector : comprisingBlocks) {
+//            
+//            vectorTags.add(vector.writeToNBT(new NBTTagCompound()));
+//        }
+//        
+//        for (int i = 0; i < vectorTags.size(); i++) {
+//            
+//            subTag.setCompoundTag("comprisingBlocks" + i, vectorTags.get(i));
+//        }
+//        subTag.setInteger("vectorsSize", vectorTags.size());
+//        tag.setCompoundTag("multiBlock", subTag);
         return tag;
     }
     
@@ -112,13 +115,13 @@ public abstract class MultiBlockManager {
         relativeZPlus = tag.getInteger("relativeZPlus");
         
         multiBlockCore = Vector3.readFromNBT(tag.getCompoundTag("multiBlockCore"));
-        
-        NBTTagCompound subTag = tag.getCompoundTag("multiBlock");
-        
-        for (int i = 0; i < subTag.getInteger("vectorsSize"); i++) {
-            
-            comprisingBlocks.add(Vector3.readFromNBT(subTag.getCompoundTag("comprisingBlocks" + i)));
-        }
+//        
+//        NBTTagCompound subTag = tag.getCompoundTag("multiBlock");
+//        
+//        for (int i = 0; i < subTag.getInteger("vectorsSize"); i++) {
+//            
+//            comprisingBlocks.add(Vector3.readFromNBT(subTag.getCompoundTag("comprisingBlocks" + i)));
+//        }
         return tag;
     }
 }
