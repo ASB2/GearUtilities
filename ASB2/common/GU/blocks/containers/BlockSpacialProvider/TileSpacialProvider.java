@@ -1,5 +1,8 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -42,14 +45,18 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
     public TileEntity getNearestProvider(ForgeDirection direction) {
         
+        TileEntity last = this;
+        
         for (int i = 0; i <= MAX_DISTANCE; i++) {
             
-            Vector3 position = new Vector3(this).add(direction, i);
+            Vector3 position = new Vector3(last).add(direction, 1);
             TileEntity tile = position.getTileEntity(worldObj);
             
             if (tile != null && tile != this && tile instanceof ISpacialProvider) {
                 
                 return tile;
+            } else if (tile == this) {
+                return null;
             }
         }
         return null;
@@ -217,6 +224,8 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         
         if (this.getCurrentStructure() == null) {
             
+            Set<Vector3> list = new HashSet<Vector3>();
+            
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 
                 if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
@@ -225,17 +234,24 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
                     int distance = this.getDistanceToNearestProvider(direction);
                     
                     if (!(foundTile != null && distance > 0)) {
-                        
+                        list.add(new Vector3(foundTile));
                         return false;
                     }
                 }
             }
             
-            MultiBlockTank tank = new MultiBlockTank(worldObj, new Vector3(xCoord, yCoord, zCoord), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
-            UtilEntity.sendClientChat(tank.isMultiBlockAreaValid() + "");
-            boolean valid = tank.makeMultiBlockValid();
-            UtilEntity.sendClientChat(valid + "");
-            return valid;
+            if (list.size() > 1) {
+                
+                MultiBlockTank tank = new MultiBlockTank(worldObj, new Vector3(xCoord, yCoord, zCoord), tile.getMultiBlockXChange(), tile.getMultiBlockHeight(), tile.getMultiBlockZChange());
+                UtilEntity.sendClientChat(tank.isMultiBlockAreaValid() + "");
+                boolean valid = tank.makeMultiBlockValid();
+                UtilEntity.sendClientChat(valid + "");
+                return valid;
+            }
+            else {
+                
+                UtilEntity.sendClientChat("Tried to create a one block tank");
+            }
         } else {
             
             if (this.getCurrentStructure().getWorld() == null) {
@@ -246,6 +262,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             UtilEntity.sendClientChat("Second Check " + valid);
             return valid;
         }
+        return false;
     }
     
     @Override

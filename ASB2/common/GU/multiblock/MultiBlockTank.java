@@ -63,11 +63,10 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
                                 return false;
                             }
                         }
+                    } else {
+                        
+                        return false;
                     }
-                     else {
-                    
-                     return false;
-                     }
                 }
             }
         }
