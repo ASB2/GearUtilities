@@ -97,8 +97,9 @@ public class MultiBlockBase {
                 ((IMultiBlockPart) tile).removeStructure();
             }
         }
+        comprisingBlocks.clear();
         isInvalidated = true;
-    UtilEntity.sendClientChat("Invalidated Everythign");
+        UtilEntity.sendClientChat("Invalidated Everything");
     }
     
     public NBTTagCompound save(NBTTagCompound tag) {
