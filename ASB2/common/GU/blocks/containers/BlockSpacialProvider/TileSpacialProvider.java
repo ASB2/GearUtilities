@@ -51,9 +51,10 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             
             if (tile != null && tile != this && tile instanceof IMultiBlockPart) {
                 
-                return tile;
-            } else if (tile == this) {
-                return null;
+                last = tile;
+            } else if (tile == null) {
+                
+                return last == this ? null : last;
             }
         }
         return null;
@@ -204,6 +205,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     public void invalidate() {
         
         if (this.getCurrentStructure() != null) {
+            
             this.getCurrentStructure().invalidate();
         }
         super.invalidate();

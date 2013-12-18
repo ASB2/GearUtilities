@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
@@ -44,12 +43,6 @@ public class BlockSpacialProvider extends ContainerBase {
             }
         }
         return false;
-    }
-    
-    @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-        
-        return new ItemStack(this, 1, world.getBlockMetadata(x, y, z));
     }
     
     @Override
