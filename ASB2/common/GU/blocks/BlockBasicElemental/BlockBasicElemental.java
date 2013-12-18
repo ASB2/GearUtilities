@@ -3,13 +3,18 @@ package GU.blocks.BlockBasicElemental;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.IPlantable;
+import ASB2.utils.UtilBlock;
 import GU.blocks.BlockBase;
 import GU.info.Reference;
 
@@ -151,10 +156,10 @@ public class BlockBasicElemental extends BlockBase {
                 return metallicTextures[side];
             }
             
-             case BLOOD_CUBE: {
-            
-             return bloodTextures[side];
-             }
+            case BLOOD_CUBE: {
+                
+                return bloodTextures[side];
+            }
         }
         return fireTextures[0];
     }
@@ -216,39 +221,154 @@ public class BlockBasicElemental extends BlockBase {
         
         switch (world.getBlockMetadata(x, y, z)) {
         
-        // case WATER_CUBE: {
-        //
-        // for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-        //
-        // int blockID = world.getBlockId(x + direction.offsetX, y +
-        // direction.offsetY, z + direction.offsetZ);
-        //
-        // if (blockID > 0) {
-        // if (blockID == Block.lavaStill.blockID) {
-        //
-        // world.setBlock(x + direction.offsetX, y + direction.offsetY, z +
-        // direction.offsetZ, Block.obsidian.blockID);
-        // } else if (blockID == Block.lavaMoving.blockID) {
-        //
-        // world.setBlock(x + direction.offsetX, y + direction.offsetY, z +
-        // direction.offsetZ, Block.cobblestone.blockID);
-        // }
-        // }
-        // }
-        // }
+            case FIRE_CUBE: {
+                
+                if (world.isBlockIndirectlyGettingPowered(x, y, z)) {
+                    
+                    UtilBlock.placeBlockInAir(world, x, y + 1, z, Block.fire.blockID, 0);
+                } else {
+                    
+                    if (world.getBlockId(x, y + 1, z) == Block.fire.blockID) {
+                        
+                        world.setBlockToAir(x, y + 1, z);
+                    }
+                }
+                break;
+            }
+            // case WATER_CUBE: {
+            //
+            // for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
+            // {
+            //
+            // int blockID = world.getBlockId(x + direction.offsetX, y +
+            // direction.offsetY, z + direction.offsetZ);
+            //
+            // if (blockID > 0) {
+            // if (blockID == Block.lavaStill.blockID) {
+            //
+            // world.setBlock(x + direction.offsetX, y + direction.offsetY, z +
+            // direction.offsetZ, Block.obsidian.blockID);
+            // } else if (blockID == Block.lavaMoving.blockID) {
+            //
+            // world.setBlock(x + direction.offsetX, y + direction.offsetY, z +
+            // direction.offsetZ, Block.cobblestone.blockID);
+            // }
+            // }
+            // }
+            // }
         }
         super.onNeighborBlockChange(world, x, y, z, neightborId);
     }
     
     @Override
     public void updateTick(World world, int x, int y, int z, Random rand) {
-        //
-        // switch (world.getBlockMetadata(x, y, z)) {
-        //
-        // case EARTH_CUBE: {
-        //
-        // }
-        // }
+        
+        switch (world.getBlockMetadata(x, y, z)) {
+        
+            case EARTH_CUBE: {
+                
+                Block block = Block.blocksList[world.getBlockId(x, y + 1, z)];
+                
+                if (block instanceof IPlantable) {
+                    
+                    block.updateTick(world, x, y + 1, z, rand);
+                } else if (block == this && world.getBlockMetadata(x, y + 1, z) == EARTH_CUBE) {
+                    
+                    block.updateTick(world, x, y + 1, z, rand);
+                }
+                break;
+            }
+        }
         super.updateTick(world, x, y, z, rand);
+    }
+    
+    public boolean isFlammable(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face) {
+        
+        if (face == ForgeDirection.UP) {
+            
+            switch (metadata) {
+            
+                case FIRE_CUBE: {
+                    
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int getFireSpreadSpeed(World world, int x, int y, int z, int metadata, ForgeDirection face) {
+        
+        switch (metadata) {
+        
+            case FIRE_CUBE: {
+                
+                return 100;
+            }
+        }
+        return 0;
+    }
+    
+    @Override
+    public boolean isFertile(World world, int x, int y, int z) {
+        
+        switch (world.getBlockMetadata(x, y, z)) {
+        
+            case EARTH_CUBE: {
+                
+                return true;
+            }
+            
+            case BLOOD_CUBE: {
+                
+                return true;
+            }
+        }
+        return super.isFertile(world, x, y, z);
+    }
+    
+    public boolean canSustainPlant(World world, int x, int y, int z, ForgeDirection direction, IPlantable plant) {
+        
+        switch (world.getBlockMetadata(x, y, z)) {
+        
+            case EARTH_CUBE: {
+                
+                return true;
+            }
+            
+            case BLOOD_CUBE: {
+                
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void onPlantGrow(World world, int x, int y, int z, int sourceX, int sourceY, int sourceZ) {
+    }
+    
+    @Override
+    public boolean isFireSource(World world, int x, int y, int z, int metadata, ForgeDirection side) {
+        
+        switch (metadata) {
+        
+            case FIRE_CUBE: {
+                
+                return side == ForgeDirection.UP;
+            }
+        }
+        return false;
+    }
+    
+    public float getEnchantPowerBonus(World world, int x, int y, int z) {
+        
+        switch (world.getBlockMetadata(x, y, z)) {
+        
+            case BLOOD_CUBE: {
+                
+                return 1;
+            }
+        }
+        return 0;
     }
 }

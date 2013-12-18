@@ -16,32 +16,32 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class BlockMetadataOre extends BlockBase {
-
+    
     public final ItemStack BlockAirCrystalOre = new ItemStack(this, 1, AIR_CRYSTAL_ORE);
     public final ItemStack BlockEarthCrystalOre = new ItemStack(this, 1, EARTH_CRYSTAL_ORE);
     public final ItemStack BlockFireCrystalOre = new ItemStack(this, 1, FIRE_CRYSTAL_ORE);
     public final ItemStack BlockWaterCrystalOre = new ItemStack(this, 1, WATER_CRYSTAL_ORE);
     public final ItemStack BlockEnergyCrystalOre = new ItemStack(this, 1, ENERGY_CRYSTAL_ORE);
     public final ItemStack BlockGarnetOre = new ItemStack(this, 1, GARNET_ORE);
-
+    
     public final ItemStack BlockGarnetBlock = new ItemStack(this, 1, GARNET_BLOCK);
-
+    
     Icon[] icons = new Icon[7];
-
+    
     public static final int AIR_CRYSTAL_ORE = 0;
     public static final int EARTH_CRYSTAL_ORE = 1;
     public static final int FIRE_CRYSTAL_ORE = 2;
     public static final int WATER_CRYSTAL_ORE = 3;
     public static final int ENERGY_CRYSTAL_ORE = 4;
     public static final int GARNET_ORE = 5;
-
+    
     public static final int GARNET_BLOCK = 6;
-
+    
     public BlockMetadataOre(int id, Material material) {
         super(id, material);
-
+        
         GameRegistry.registerBlock(this, ItemBlockMetadataBlock.class, this.getUnlocalizedName());
-
+        
         LanguageRegistry.addName(BlockAirCrystalOre, "Air Crystal Ore");
         LanguageRegistry.addName(BlockEarthCrystalOre, "Earth Crystal Ore");
         LanguageRegistry.addName(BlockFireCrystalOre, "Fire Crystal Ore");
@@ -50,11 +50,11 @@ public class BlockMetadataOre extends BlockBase {
         LanguageRegistry.addName(BlockGarnetOre, "Garnet Ore");
         LanguageRegistry.addName(BlockGarnetBlock, "Garnet Block");
     }
-
+    
     public String getUnlocalizedName(ItemStack stack) {
-
-        switch(stack.getItemDamage()) {
-
+        
+        switch (stack.getItemDamage()) {
+        
             case AIR_CRYSTAL_ORE:
                 return Reference.MODDID + ":" + "BlockAirCrystalOre";
             case EARTH_CRYSTAL_ORE:
@@ -73,17 +73,17 @@ public class BlockMetadataOre extends BlockBase {
                 return "Notify ASB2";
         }
     }
-
+    
     @Override
     public int onBlockPlaced(World world, int x, int y, int z, int sideHit, float hitX, float hitY, float hitZ, int metaData) {
-
+        
         return 0;
     }
-
+    
     @Override
     public void registerIcons(IconRegister iconRegister) {
         super.registerIcons(iconRegister);
-
+        
         icons[AIR_CRYSTAL_ORE] = iconRegister.registerIcon(Reference.MODDID + ":" + "BlockAirCrystalOre");
         icons[EARTH_CRYSTAL_ORE] = iconRegister.registerIcon(Reference.MODDID + ":" + "BlockEarthCrystalOre");
         icons[FIRE_CRYSTAL_ORE] = iconRegister.registerIcon(Reference.MODDID + ":" + "BlockFireCrystalOre");
@@ -92,17 +92,17 @@ public class BlockMetadataOre extends BlockBase {
         icons[GARNET_ORE] = iconRegister.registerIcon(Reference.MODDID + ":" + "BlockGarnetOre");
         icons[GARNET_BLOCK] = iconRegister.registerIcon(Reference.MODDID + ":" + "BlockGarnetBlock");
     }
-
+    
     @Override
     public Icon getIcon(int side, int metadata) {
-
+        
         return icons[metadata];
     }
-
+    
     @Override
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void getSubBlocks(int unknown, CreativeTabs tab, List subItems) {
-
+        
         subItems.add(new ItemStack(this, 1, AIR_CRYSTAL_ORE));
         subItems.add(new ItemStack(this, 1, EARTH_CRYSTAL_ORE));
         subItems.add(new ItemStack(this, 1, FIRE_CRYSTAL_ORE));
@@ -111,14 +111,14 @@ public class BlockMetadataOre extends BlockBase {
         subItems.add(new ItemStack(this, 1, GARNET_ORE));
         subItems.add(new ItemStack(this, 1, GARNET_BLOCK));
     }
-
+    
     @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
-
+        
         ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-
-        switch(metadata) {
-
+        
+        switch (metadata) {
+        
             case AIR_CRYSTAL_ORE:
                 list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemAirCrystalShard, world.rand.nextInt(5) + 1));
                 break;
@@ -141,20 +141,24 @@ public class BlockMetadataOre extends BlockBase {
                 list.add(BlockGarnetOre);
                 break;
         }
+        if(metadata != GARNET_BLOCK && metadata != GARNET_ORE) { 
+
+            list.add(this.changeDrop(ItemRegistry.ItemCrystal.ItemVoidCrystalShard, world.rand.nextInt(1)));
+        }           
         return list;
     }
-
+    
     public ItemStack changeDrop(ItemStack stack, int drop) {
-
+        
         ItemStack temp = stack.copy();
-
+        
         temp.stackSize = drop;
         return temp;
     }
-
+    
     @Override
     public int damageDropped(int metadata) {
-
+        
         return metadata;
     }
 }
