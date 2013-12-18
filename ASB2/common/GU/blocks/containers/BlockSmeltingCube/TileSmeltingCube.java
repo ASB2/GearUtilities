@@ -88,7 +88,7 @@ public class TileSmeltingCube extends TileBase implements IPowerMisc {
                     
                     if (stack != null) {
 
-                        UtilEntity.sendClientChat("AAAAAAAAA");
+//                        UtilEntity.sendClientChat("AAAAAAAAA");
                         
                         ItemStack result = FurnaceRecipes.smelting().getSmeltingResult(stack);
                         
