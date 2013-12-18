@@ -27,6 +27,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public abstract class ContainerBase extends BlockContainer implements IExtraItemBlockInfo {
     
     protected boolean useStandardRendering = true;
+    protected boolean specialMetadata = false;
     String[] textures = new String[0];
     protected Icon[] icons;
     
@@ -224,7 +225,11 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
     
     @Override
     public int getPlacedMetadata(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
-        // TODO Auto-generated method stub
+        
+        if (specialMetadata) {
+            
+            return stack.getItemDamage();
+        }
         return side;
     }
 }

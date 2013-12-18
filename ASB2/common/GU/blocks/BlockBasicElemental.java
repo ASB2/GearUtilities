@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
@@ -44,6 +43,7 @@ public class BlockBasicElemental extends BlockBase {
     public BlockBasicElemental(int id, Material material) {
         super(id, material);
         this.setTickRandomly(true);
+        specialMetadata = true;
     }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -391,11 +391,5 @@ public class BlockBasicElemental extends BlockBase {
             }
         }
         return 0;
-    }
-    
-    @Override
-    public int getPlacedMetadata(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
-        
-        return stack.getItemDamage();
     }
 }

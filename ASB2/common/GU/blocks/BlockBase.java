@@ -22,6 +22,8 @@ public class BlockBase extends Block implements IExtraItemBlockInfo {
     
     public boolean useStandardRendering = true;
     protected boolean useEnumStateRendering = false;
+    protected boolean specialMetadata = false;
+    
     String[] textures = new String[0];
     Icon[] icons;
     
@@ -68,10 +70,10 @@ public class BlockBase extends Block implements IExtraItemBlockInfo {
         
         return false;
     }
-
+    
     @Override
     public boolean isBlockNormalCube(World world, int x, int y, int z) {
-
+        
         return true;
     }
     
@@ -171,10 +173,14 @@ public class BlockBase extends Block implements IExtraItemBlockInfo {
         // TODO Auto-generated method stub
         return "";
     }
-
+    
     @Override
     public int getPlacedMetadata(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
-        // TODO Auto-generated method stub
+        
+        if (specialMetadata) {
+            
+            return stack.getItemDamage();
+        }
         return side;
     }
 }

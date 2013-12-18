@@ -106,7 +106,6 @@ public class BlockRegistry {
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {
         
-        LanguageRegistry.addName(block, ign);
         addBlockNoLang(block, ign, unlocalizedName);
         return block;
     }
@@ -117,6 +116,7 @@ public class BlockRegistry {
         block.setTextureName(unlocalizedName);
         MinecraftForge.setBlockHarvestLevel(block, "pickaxe", 1);
         GameRegistry.registerBlock(block, GUItemBlock.class, block.getUnlocalizedName());
+        LanguageRegistry.addName(block, ign);
         return block;
     }
     
