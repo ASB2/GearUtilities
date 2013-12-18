@@ -1,4 +1,4 @@
-package GU.blocks.BlockBasicElemental;
+package GU.blocks;
 
 import java.util.List;
 import java.util.Random;
@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
@@ -20,7 +21,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilFluid;
-import GU.blocks.BlockBase;
 import GU.info.Reference;
 
 public class BlockBasicElemental extends BlockBase {
@@ -391,5 +391,11 @@ public class BlockBasicElemental extends BlockBase {
             }
         }
         return 0;
+    }
+    
+    @Override
+    public int getPlacedMetadata(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+        
+        return stack.getItemDamage();
     }
 }

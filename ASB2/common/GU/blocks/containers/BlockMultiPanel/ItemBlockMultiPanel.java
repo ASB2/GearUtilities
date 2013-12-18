@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import ASB2.utils.UtilItemStack;
-import GU.info.GUItemBlock;
+import GU.items.GUItemBlock;
 
 public class ItemBlockMultiPanel extends GUItemBlock {
     
@@ -75,7 +75,6 @@ public class ItemBlockMultiPanel extends GUItemBlock {
             
             tank.setMode(UtilItemStack.getNBTTagInt(stack, "mode"));
         }
-        world.setBlockMetadataWithNotify(x, y, z, Block.blocksList[this.getBlockID()].onBlockPlaced(world, x, y, z, side, hitX, hitY, hitZ, metadata), 3);
         return itWorked;
     }
 }

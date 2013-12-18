@@ -17,8 +17,8 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.GearUtilities;
-import GU.info.IExtraItemBlockInfo;
 import GU.info.Reference;
+import GU.items.IExtraItemBlockInfo;
 import GU.render.BlockSimpleRenderer;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -214,5 +214,17 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
     public String getUnlocalizedName(ItemStack itemStack) {
         
         return this.getUnlocalizedName();
+    }
+    
+    @Override
+    public TileEntity createNewTileEntity(World world) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+    @Override
+    public int getPlacedMetadata(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+        // TODO Auto-generated method stub
+        return side;
     }
 }

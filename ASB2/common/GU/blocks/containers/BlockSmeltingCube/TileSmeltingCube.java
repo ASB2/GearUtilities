@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
 import ASB2.utils.UtilDirection;
-import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilInventory;
 import ASB2.wait.Wait;
 import GU.api.power.IPowerMisc;
@@ -87,8 +86,6 @@ public class TileSmeltingCube extends TileBase implements IPowerMisc {
                     ItemStack stack = inventory.getStackInSlot(i);
                     
                     if (stack != null) {
-
-//                        UtilEntity.sendClientChat("AAAAAAAAA");
                         
                         ItemStack result = FurnaceRecipes.smelting().getSmeltingResult(stack);
                         

@@ -1,6 +1,6 @@
 package GU.color;
 
-import GU.info.GUItemBlock;
+import GU.items.GUItemBlock;
 
 public class ItemBlockColorable extends GUItemBlock {
 

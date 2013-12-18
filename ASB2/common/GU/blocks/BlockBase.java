@@ -14,8 +14,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.GearUtilities;
-import GU.info.IExtraItemBlockInfo;
 import GU.info.Reference;
+import GU.items.IExtraItemBlockInfo;
 import GU.render.BlockSimpleRenderer;
 
 public class BlockBase extends Block implements IExtraItemBlockInfo {
@@ -170,5 +170,11 @@ public class BlockBase extends Block implements IExtraItemBlockInfo {
     public String getItemStackDisplayName(ItemStack itemStack) {
         // TODO Auto-generated method stub
         return "";
+    }
+
+    @Override
+    public int getPlacedMetadata(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+        // TODO Auto-generated method stub
+        return side;
     }
 }
