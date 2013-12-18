@@ -13,13 +13,13 @@ import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilEntity;
 import ASB2.vector.Vector3;
 import GU.api.multiblock.IMultiBlockPart;
-import GU.api.multiblock.MultiBlockManager;
+import GU.api.multiblock.MultiBlockBase;
 
-public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
+public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     
-    FluidTank fluidTank = new FluidTank(0);
+    protected FluidTank fluidTank = new FluidTank(0);
     
-    public MultiBlockTank() {
+    protected MultiBlockTank() {
     }
     
     public MultiBlockTank(World worldObj, Vector3 multiBlockCore, int relativeXPlus, int relativeYPlus, int relativeZPlus) {
@@ -33,13 +33,13 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
         
         boolean itWorked = false;
         
-        int sx = relativeXPlus < 0 ? -1 : 1;
-        int sy = relativeYPlus < 0 ? -1 : 1;
-        int sz = relativeZPlus < 0 ? -1 : 1;
+        int sx = xSize < 0 ? -1 : 1;
+        int sy = ySize < 0 ? -1 : 1;
+        int sz = zSize < 0 ? -1 : 1;
         
-        int xplusABS = Math.abs(relativeXPlus);
-        int yplsuABS = Math.abs(relativeYPlus);
-        int zPlusABS = Math.abs(relativeZPlus);
+        int xplusABS = Math.abs(xSize);
+        int yplsuABS = Math.abs(ySize);
+        int zPlusABS = Math.abs(zSize);
         
         for (int x = 0; x <= xplusABS; x++) {
             
@@ -72,13 +72,13 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     @Override
     public boolean makeMultiBlockValid() {
         
-        int sx = relativeXPlus < 0 ? -1 : 1;
-        int sy = relativeYPlus < 0 ? -1 : 1;
-        int sz = relativeZPlus < 0 ? -1 : 1;
+        int sx = xSize < 0 ? -1 : 1;
+        int sy = ySize < 0 ? -1 : 1;
+        int sz = zSize < 0 ? -1 : 1;
         
-        int xplusABS = Math.abs(relativeXPlus);
-        int yplsuABS = Math.abs(relativeYPlus);
-        int zPlusABS = Math.abs(relativeZPlus);
+        int xplusABS = Math.abs(xSize);
+        int yplsuABS = Math.abs(ySize);
+        int zPlusABS = Math.abs(zSize);
         
         if (this.isMultiBlockAreaValid()) {
             
@@ -115,15 +115,19 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
     }
     
     @Override
-    public void update() {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    @Override
     public void invalidate() {
         super.invalidate();
-        
+//        
+//        Vector3 vector = this.getMultiBlockCore();
+//        TileEntity tile = vector.getTileEntity(worldObj);
+//        
+//        if (tile != null) {
+//            
+//            if (tile.getClass() == TileFluidSpacialProvider.class) {
+//                
+//                ((TileFluidSpacialProvider) tile).fluidTank = this.fluidTank;
+//            }
+//        }
     }
     
     @Override
@@ -133,13 +137,17 @@ public class MultiBlockTank extends MultiBlockManager implements IFluidHandler {
         return tag;
     }
     
-    @Override
-    public NBTTagCompound load(NBTTagCompound tag) {
-        super.load(tag);
+    public static MultiBlockTank load(NBTTagCompound tag) {
         
-        fluidTank.readFromNBT(tag);
-        fluidTank.setCapacity(((Math.abs(relativeXPlus) + 1) * (Math.abs(relativeYPlus) + 1) * (Math.abs(relativeZPlus) + 1)) * 16000);
-        return tag;
+        MultiBlockBase multiBlock = MultiBlockBase.load(tag);
+        MultiBlockTank tank = new MultiBlockTank();
+        tank.multiBlockCore = multiBlock.getMultiBlockCore();
+        tank.xSize = multiBlock.getRelativeSize()[0];
+        tank.ySize = multiBlock.getRelativeSize()[1];
+        tank.zSize = multiBlock.getRelativeSize()[2];
+        tank.fluidTank.readFromNBT(tag);
+        tank.fluidTank.setCapacity(((Math.abs(tank.xSize) + 1) * (Math.abs(tank.ySize) + 1) * (Math.abs(tank.zSize) + 1)) * 16000);
+        return tank;
     }
     
     @Override

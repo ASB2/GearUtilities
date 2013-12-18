@@ -22,6 +22,5 @@ public class BlockSmeltingCube extends ContainerBase {
     public TileEntity createNewTileEntity(World world) {
         
         return new TileSmeltingCube();
-    }
-    
+    }    
 }

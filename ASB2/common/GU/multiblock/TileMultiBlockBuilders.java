@@ -3,12 +3,12 @@ package GU.multiblock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import GU.api.multiblock.IMultiBlockPart;
-import GU.api.multiblock.MultiBlockManager;
+import GU.api.multiblock.MultiBlockBase;
 import GU.blocks.containers.TileBase;
 
 public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart {
     
-    MultiBlockManager currentMultiBlock;
+    MultiBlockBase currentMultiBlock;
     
     public TileMultiBlockBuilders() {
         
@@ -20,7 +20,7 @@ public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart 
     }
     
     @Override
-    public boolean setStructure(MultiBlockManager multiBlock) {
+    public boolean setStructure(MultiBlockBase multiBlock) {
         
         if (currentMultiBlock == null) {
             
@@ -37,7 +37,7 @@ public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart 
     }
     
     @Override
-    public MultiBlockManager getCurrentStructure() {
+    public MultiBlockBase getCurrentStructure() {
         
         return currentMultiBlock;
     }

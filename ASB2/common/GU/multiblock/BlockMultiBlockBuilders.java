@@ -23,6 +23,7 @@ public class BlockMultiBlockBuilders extends ContainerBase {
     public BlockMultiBlockBuilders(int id, Material material) {
         super(id, material);
         this.registerTile(TileMultiBlockBuilders.class);
+        specialMetadata = true;
     }
     
     @Override

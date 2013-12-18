@@ -1,22 +1,20 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import ASB2.utils.UtilEntity;
 import ASB2.vector.Vector3;
 import GU.EnumState;
-import GU.api.multiblock.MultiBlockManager;
+import GU.api.multiblock.IMultiBlockPart;
+import GU.api.multiblock.MultiBlockBase;
 import GU.api.spacial.ISpacialProvider;
 import GU.blocks.containers.TileBase;
-import GU.multiblock.MultiBlockTank;
 
 public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
     public static int MAX_DISTANCE = 16;
-    MultiBlockManager currentMultiBlock;
+    MultiBlockBase currentMultiBlock;
     boolean isInMultiBlock = false, hasBufferedCreateMultiBlock = false;
     
     public TileSpacialProvider() {
@@ -46,12 +44,12 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         
         TileEntity last = this;
         
-        for (int i = 0; i <= MAX_DISTANCE; i++) {
+        for (int i = 1; i <= MAX_DISTANCE; i++) {
             
             Vector3 position = new Vector3(last).add(direction, 1);
             TileEntity tile = position.getTileEntity(worldObj);
             
-            if (tile != null && tile != this && tile instanceof ISpacialProvider) {
+            if (tile != null && tile != this && tile instanceof IMultiBlockPart) {
                 
                 return tile;
             } else if (tile == this) {
@@ -63,12 +61,12 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
     public int getDistanceToNearestProvider(ForgeDirection direction) {
         
-        for (int i = 0; i <= MAX_DISTANCE; i++) {
+        for (int i = 1; i <= MAX_DISTANCE; i++) {
             
             Vector3 position = new Vector3(this).add(direction, i);
             TileEntity tile = position.getTileEntity(worldObj);
             
-            if (tile != null && tile != this && tile instanceof ISpacialProvider) {
+            if (tile != null && tile != this && tile instanceof IMultiBlockPart) {
                 
                 return i;
             }
@@ -167,28 +165,8 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         world.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
     }
     
-    // @Override
-    // public Set<Vector3> getProvidedTiles() {
-    //
-    // Set<Vector3> tileList = new HashSet<Vector3>();
-    //
-    // for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-    //
-    // if (getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
-    //
-    // TileEntity tile = this.getNearestProvider(direction);
-    //
-    // if (tile != null) {
-    //
-    // tileList.add(new Vector3(tile));
-    // }
-    // }
-    // }
-    // return tileList;
-    // }
-    
     @Override
-    public boolean setStructure(MultiBlockManager multiBlock) {
+    public boolean setStructure(MultiBlockBase multiBlock) {
         
         if (currentMultiBlock == null) {
             
@@ -207,7 +185,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     }
     
     @Override
-    public MultiBlockManager getCurrentStructure() {
+    public MultiBlockBase getCurrentStructure() {
         
         return currentMultiBlock;
     }
@@ -219,56 +197,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     
     public boolean createMultiBlock(boolean hasStructure) {
         
-        TileSpacialProvider tile = (TileSpacialProvider) worldObj.getBlockTileEntity(xCoord, yCoord, zCoord);
-        
-        if (!hasStructure) {
-            
-            if (this.getCurrentStructure() == null) {
-                
-                int found = 0;
-                
-                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-                    
-                    if (tile.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
-                        
-                        TileEntity foundTile = tile.getNearestProvider(direction);
-                        
-                        if (foundTile != null) {
-                            
-                            found++;
-                        } else {
-                            
-                            return false;
-                        }
-                    }
-                }
-                
-                if (found > 1) {
-                    
-                    MultiBlockTank tank = new MultiBlockTank(worldObj, new Vector3(xCoord, yCoord, zCoord), tile.getMultiBlockXChange(), tile.getMultiBlockYChange(), tile.getMultiBlockZChange());
-                    UtilEntity.sendClientChat("First Check " + tank.isMultiBlockAreaValid());
-                    boolean valid = tank.makeMultiBlockValid();
-                    UtilEntity.sendClientChat("Second Check " + valid);
-                    return valid;
-                } else {
-                    return false;
-                }
-            } else {
-                
-                return false;
-            }
-        } else {
-            
-            if (this.getCurrentStructure().getWorld() == null) {
-                this.getCurrentStructure().setWorld(this.worldObj);
-            }
-            hasBufferedCreateMultiBlock = false;
-            UtilEntity.sendClientChat("First Check " + this.getCurrentStructure().isMultiBlockAreaValid());
-            boolean valid = this.getCurrentStructure().makeMultiBlockValid();
-            UtilEntity.sendClientChat("Second Check " + valid);
-            return valid;
-        }
-        // return false;
+        return false;
     }
     
     @Override
@@ -278,29 +207,5 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             this.getCurrentStructure().invalidate();
         }
         super.invalidate();
-    }
-    
-    @Override
-    public void writeToNBT(NBTTagCompound tag) {
-        super.writeToNBT(tag);
-        
-        if (this.getCurrentStructure() != null) {
-            
-            if (new Vector3(this).intEquals(this.getCurrentStructure().getMultiBlockCore())) {
-                
-                tag.setCompoundTag("multiBlockSave", this.getCurrentStructure().save(new NBTTagCompound()));
-                tag.setBoolean("isInMultiBlock", isInMultiBlock);
-            }
-        }
-    }
-    
-    @Override
-    public void readFromNBT(NBTTagCompound tag) {
-        super.readFromNBT(tag);
-        
-        MultiBlockManager core = new MultiBlockTank();
-        core.load(tag.getCompoundTag("multiBlockSave"));
-        this.setStructure(core);
-        hasBufferedCreateMultiBlock = tag.getBoolean("isInMultiBlock");
     }
 }

@@ -10,13 +10,12 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
 import ASB2.wait.IWaitTrigger;
 import ASB2.wait.Wait;
+import GU.EnumState;
 import GU.api.IWrenchable;
 import GU.api.color.IVanillaColorable;
 import GU.api.color.VanillaColor;
 import GU.api.power.PowerProvider;
-import GU.packets.PowerPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
-import GU.*;
 
 public abstract class TileBase extends TileEntity implements IVanillaColorable, IWaitTrigger, IWrenchable {
     
@@ -39,17 +38,6 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     
     public void onButtonEvent(int buttonID) {
         
-    }
-    
-    public void sendReqularPowerPackets(int delay) {
-        
-        wait++;
-        
-        if (wait >= delay) {
-            
-            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, (new PowerPacket(xCoord, yCoord, zCoord, this.powerProvider.getPowerStored(), this.powerProvider.getPowerMax()).makePacket()));
-            wait = 0;
-        }
     }
     
     public ForgeDirection getOrientation() {
