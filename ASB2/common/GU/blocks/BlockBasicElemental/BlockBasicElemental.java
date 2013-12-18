@@ -267,14 +267,24 @@ public class BlockBasicElemental extends BlockBase {
         
             case EARTH_CUBE: {
                 
-                Block block = Block.blocksList[world.getBlockId(x, y + 1, z)];
+                int change = world.isBlockIndirectlyGettingPowered(x, y, z) ? -1 : 1;
+                
+                Block block = Block.blocksList[world.getBlockId(x, y + change, z)];
                 
                 if (block instanceof IPlantable) {
                     
                     block.updateTick(world, x, y + 1, z, rand);
-                } else if (block == this && world.getBlockMetadata(x, y + 1, z) == EARTH_CUBE) {
+                } else if (block == this && world.getBlockMetadata(x, y + change, z) == EARTH_CUBE) {
                     
                     block.updateTick(world, x, y + 1, z, rand);
+                }
+                break;
+            }
+            
+            case BLOOD_CUBE: {
+                
+                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                    
                 }
                 break;
             }
@@ -296,7 +306,7 @@ public class BlockBasicElemental extends BlockBase {
         }
         return false;
     }
-
+    
     public int getFireSpreadSpeed(World world, int x, int y, int z, int metadata, ForgeDirection face) {
         
         switch (metadata) {
