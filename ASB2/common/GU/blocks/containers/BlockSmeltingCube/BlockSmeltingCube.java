@@ -9,19 +9,19 @@ public class BlockSmeltingCube extends ContainerBase {
     
     public BlockSmeltingCube(int id, Material material) {
         super(id, material);
-        // TODO Auto-generated constructor stub
+        this.registerTile(TileSmeltingCube.class);
     }
     
     @Override
     public TileEntity createTileEntity(World world, int metadata) {
-        // TODO Auto-generated method stub
+        
         return super.createTileEntity(world, metadata);
     }
     
     @Override
     public TileEntity createNewTileEntity(World world) {
-        // TODO Auto-generated method stub
-        return null;
+        
+        return new TileSmeltingCube();
     }
     
 }

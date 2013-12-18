@@ -7,15 +7,16 @@ import net.minecraftforge.common.MinecraftForge;
 import GU.blocks.BlockBase;
 import GU.blocks.BlockEtherealStone;
 import GU.blocks.BlockPhantomBlock;
+import GU.blocks.BlockBasicElemental.BlockBasicElemental;
 import GU.blocks.BlockMetadataOre.BlockMetadataOre;
 import GU.blocks.containers.ContainerBase;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.BlockAdvancedPotionBrewery;
-import GU.blocks.BlockBasicElemental.BlockBasicElemental;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockMultiPanel.BlockMultiPanel;
 import GU.blocks.containers.BlockMultiPanel.ItemBlockMultiPanel;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
+import GU.blocks.containers.BlockSmeltingCube.BlockSmeltingCube;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
 import GU.info.GUItemBlock;
 import GU.multiblock.BlockMultiBlockBuilders;
@@ -36,6 +37,7 @@ public class BlockRegistry {
     public static BlockBase BlockStructureCube, BlockStructureCube2, BlockStructureCube3, BlockStructureCube4, BlockStructureGlass;
     public static ContainerBase BlockSpacialProvider;
     public static ContainerBase BlockMultiBlockBuilders;
+    public static ContainerBase BlockSmeltingCube;
     
     private static int id = 500;
     
@@ -97,6 +99,9 @@ public class BlockRegistry {
         
         BlockMultiBlockBuilders = new BlockMultiBlockBuilders(BlockRegistry.getConfigID(config, "BlockMultiBlockBuilders"), Material.rock);
         addBlock(BlockMultiBlockBuilders, "Multi-Block Block", "BlockMultiBlockBuilders");
+        
+        BlockSmeltingCube = new BlockSmeltingCube(BlockRegistry.getConfigID(config, "BlockSmeltingCube"), Material.rock);
+        addBlock(BlockSmeltingCube, "Smelting Cube", "BlockSmeltingCube");
     }
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {

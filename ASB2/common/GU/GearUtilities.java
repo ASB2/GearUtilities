@@ -44,8 +44,6 @@ public final class GearUtilities {
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.COMMON_PROXY)
     public static CommonProxy proxy;
     
-    // public static CreativeTabs tabGUBlocks = new
-    // GUCreativeTab(CreativeTabs.getNextID(), Reference.NAME + ": Blocks");
     public static CreativeTabs tabGUBlocks = new GUCreativeTab(Reference.NAME + ": Blocks");
     public static CreativeTabs tabGUItems = new GUCreativeTab(Reference.NAME + ": Items");
     public static CreativeTabs tabGUFluids = new GUCreativeTab(Reference.NAME + ": Fluids");
@@ -55,7 +53,7 @@ public final class GearUtilities {
         
         instance = this;
         logger.setParent(FMLLog.getLogger());
-
+        
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
         Variables.updateVariables(config);

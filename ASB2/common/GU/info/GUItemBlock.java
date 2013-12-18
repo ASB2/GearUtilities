@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 
 import ASB2.utils.UtilMisc;
+import GU.*;
 
 public class GUItemBlock extends ItemBlock {
     
@@ -47,8 +48,12 @@ public class GUItemBlock extends ItemBlock {
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
         
         boolean itWorked = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
-        
         world.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 3);
+        
+        if (this.getBlockID() == BlockRegistry.BlockSmeltingCube.blockID) {
+            world.setBlockMetadataWithNotify(x, y, z, Block.blocksList[this.getBlockID()].onBlockPlaced(world, x, y, z, side, hitX, hitY, hitZ, metadata), 3);
+        }
+        
         return itWorked;
     }
     
