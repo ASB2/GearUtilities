@@ -7,87 +7,101 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import ASB2.utils.UtilEntity;
+import ASB2.vector.Cuboid;
+import ASB2.vector.ICuboidIterator;
 import ASB2.vector.Vector3;
 
-public class MultiBlockBase {
+public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     
-    /*
-     * The world the multiblock is in
-     */
     protected World worldObj;
+    protected boolean isValid = false;
+    protected Set<Vector3> composingBlock = new HashSet<Vector3>();
+    protected Set<Vector3> multiBlockInterfaces = new HashSet<Vector3>();
+    protected Set<Vector3> multiBlockCores = new HashSet<Vector3>();
+    protected Cuboid size;
     
-    /*
-     * List of all the block the multiblock currently occupies
-     */
-    protected Set<Vector3> comprisingBlocks = new HashSet<Vector3>();
-    
-    /*
-     * The core of the multiblock where its extra data should be loaded
-     */
-    protected Vector3 multiBlockCore;
-    
-    /*
-     * The amount in each direction the multiblock extends from the core
-     */
-    protected int xSize, ySize, zSize;
-    
-    protected boolean isInvalidated = false;
-    
-    protected MultiBlockBase() {
-    }
-    
-    public MultiBlockBase(World worldObj, Vector3 multiBlockCore, int xChange, int yChange, int zChange) {
+    public MultiBlockBase(World world) {
         
-        this.worldObj = worldObj;
-        this.multiBlockCore = multiBlockCore;
-        this.xSize = xChange;
-        this.ySize = yChange;
-        this.zSize = zChange;
-    }
-    
-    public void setWorld(World world) {
         this.worldObj = world;
     }
     
-    public World getWorld() {
+    public MultiBlockBase(World world, Cuboid size) {
+        this(world);
+        this.size = size;
+    }
+    
+    @Override
+    public boolean create() {
+        
+        return isStructureValid();
+    }
+    
+    public boolean isStructureValid() {
+        composingBlock.clear();
+        multiBlockInterfaces.clear();
+        multiBlockCores.clear();
+        return size.iterate(this, (Object) null);
+    }
+    
+    @Override
+    public boolean iterate(Vector3 vector, Object... providedInfo) {
+        
+        TileEntity tile = vector.getTileEntity(this.getWorldObj());
+        
+        if (tile == null) {
+            return false;
+        }
+        if (!(tile instanceof IMultiBlockPart)) {
+            
+            return false;
+        }
+        if (tile instanceof IMultiBlockInterface) {
+            
+            multiBlockInterfaces.add(vector);
+        }
+        if (tile instanceof IMultiBlockCore) {
+            
+            multiBlockCores.add(vector);
+        }
+        return true;
+    }
+    
+    @Override
+    public void invalidate() {
+        
+        isValid = false;
+    }
+    
+    @Override
+    public void setWorld(World world) {
+        
+        worldObj = world;
+    }
+    
+    @Override
+    public World getWorldObj() {
+        
         return worldObj;
     }
     
-    public Set<Vector3> getComprisingBlocks() {
+    @Override
+    public Set<Vector3> getContainingBlocks() {
         
-        return new HashSet<Vector3>(comprisingBlocks);
+        return composingBlock;
     }
     
-    private void setMultiBlockCore(Vector3 vector) {
-        multiBlockCore = vector;
-    }
-    
-    public Vector3 getMultiBlockCore() {
-        return multiBlockCore.clone();
-    }
-    
-    public int[] getRelativeSize() {
-        return new int[] { xSize, ySize, zSize };
-    }
-    
-    public boolean isMultiBlockAreaValid() {
-        return false;
-    }
-    
-    public boolean makeMultiBlockValid() {
-        return false;
-    }
-    
-    public void update() {
-    }
-    
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        return false;
-    }
-    
-    public void invalidate() {
+    @Override
+    public Set<Vector3> getMultiBlockInterfaces() {
         
+        return multiBlockInterfaces;
+    }
+    
+    @Override
+    public Cuboid getSize() {
+        
+<<<<<<< HEAD
+        return size.clone();
+=======
         for (Vector3 vector : comprisingBlocks) {
             
             TileEntity tile = vector.getTileEntity(worldObj);
@@ -100,26 +114,25 @@ public class MultiBlockBase {
         comprisingBlocks.clear();
         isInvalidated = true;
         UtilEntity.sendClientChat("Invalidated Everything");
+>>>>>>> refs/heads/master
     }
     
+    @Override
     public NBTTagCompound save(NBTTagCompound tag) {
         
-        tag.setInteger("relativeXPlus", xSize);
-        tag.setInteger("relativeYPlus", ySize);
-        tag.setInteger("relativeZPlus", zSize);
-        tag.setCompoundTag("multiBlockCore", this.multiBlockCore.writeToNBT(new NBTTagCompound()));
-        tag.setBoolean("isInvalidated", isInvalidated);
+        tag.setCompoundTag("size", size.save(new NBTTagCompound()));
         return tag;
     }
     
-    public static MultiBlockBase load(NBTTagCompound tag) {
+    @Override
+    public void load(NBTTagCompound tag) {
         
-        MultiBlockBase multiBlock = new MultiBlockBase();
-        multiBlock.xSize = tag.getInteger("relativeXPlus");
-        multiBlock.ySize = tag.getInteger("relativeYPlus");
-        multiBlock.zSize = tag.getInteger("relativeZPlus");
-        multiBlock.setMultiBlockCore(Vector3.readFromNBT(tag.getCompoundTag("multiBlockCore")));
-        multiBlock.isInvalidated = tag.getBoolean("isInvalidated");
-        return multiBlock;
+        this.size = Cuboid.load(tag.getCompoundTag("size"));
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

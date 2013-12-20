@@ -8,11 +8,15 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilEntity;
+import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
 import GU.EnumState;
+import GU.api.multiblock.IMultiBlock;
 import GU.multiblock.MultiBlockTank;
 
 public class TileFluidSpacialProvider extends TileSpacialProvider implements IFluidHandler {
+    
+    NBTTagCompound bufferedTankData;
     
     public boolean createMultiBlock() {
         
@@ -25,7 +29,7 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
         
         if (!hasStructure) {
             
-            if (this.getCurrentStructure() == null) {
+            if (tile.getComprisedMultiBlocks().isEmpty()) {
                 
                 int found = 0;
                 
@@ -47,9 +51,9 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
                 
                 if (found > 1) {
                     
-                    MultiBlockTank tank = new MultiBlockTank(worldObj, new Vector3(xCoord, yCoord, zCoord), tile.getMultiBlockXChange(), tile.getMultiBlockYChange(), tile.getMultiBlockZChange());
-                    UtilEntity.sendClientChat("First Check " + tank.isMultiBlockAreaValid());
-                    boolean valid = tank.makeMultiBlockValid();
+                    MultiBlockTank tank = new MultiBlockTank(worldObj, new Cuboid(new Vector3(xCoord, yCoord, zCoord), tile.getMultiBlockXChange(), tile.getMultiBlockYChange(), tile.getMultiBlockZChange()));
+                    UtilEntity.sendClientChat("First Check " + tank.isStructureValid());
+                    boolean valid = tank.create();
                     UtilEntity.sendClientChat("Second Check " + valid);
                     return valid;
                 } else {
@@ -60,13 +64,12 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
                 return false;
             }
         } else {
+            MultiBlockTank tank = new MultiBlockTank(worldObj);
+            tank.load(bufferedTankData);
+            bufferedTankData = null;
             
-            if (this.getCurrentStructure().getWorld() == null) {
-                this.getCurrentStructure().setWorld(this.worldObj);
-            }
-            hasBufferedCreateMultiBlock = false;
-            UtilEntity.sendClientChat("First Check " + this.getCurrentStructure().isMultiBlockAreaValid());
-            boolean valid = this.getCurrentStructure().makeMultiBlockValid();
+            UtilEntity.sendClientChat("First Check " + tank.isStructureValid());
+            boolean valid = tank.create();
             UtilEntity.sendClientChat("Second Check " + valid);
             return valid;
         }
@@ -76,9 +79,12 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
         
-        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
+        for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
             
-            return ((IFluidHandler) this.getCurrentStructure()).fill(from, resource, doFill);
+            if (multi instanceof IFluidHandler) {
+                
+                return ((IFluidHandler) multi).fill(from, resource, doFill);
+            }
         }
         return 0;
     }
@@ -86,9 +92,12 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
         
-        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
+        for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
             
-            return ((IFluidHandler) this.getCurrentStructure()).canFill(from, fluid);
+            if (multi instanceof IFluidHandler) {
+                
+                return ((IFluidHandler) multi).canFill(from, fluid);
+            }
         }
         return false;
     }
@@ -96,9 +105,12 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
         
-        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
+        for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
             
-            return ((IFluidHandler) this.getCurrentStructure()).drain(from, resource, doDrain);
+            if (multi instanceof IFluidHandler) {
+                
+                ((IFluidHandler) multi).drain(from, resource, doDrain);
+            }
         }
         return null;
     }
@@ -106,9 +118,12 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
         
-        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
+        for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
             
-            return ((IFluidHandler) this.getCurrentStructure()).drain(from, maxDrain, doDrain);
+            if (multi instanceof IFluidHandler) {
+                
+                ((IFluidHandler) multi).drain(from, maxDrain, doDrain);
+            }
         }
         return null;
     }
@@ -116,9 +131,12 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
         
-        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
+        for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
             
-            return ((IFluidHandler) this.getCurrentStructure()).canDrain(from, fluid);
+            if (multi instanceof IFluidHandler) {
+                
+                return ((IFluidHandler) multi).canDrain(from, fluid);
+            }
         }
         return false;
     }
@@ -126,9 +144,12 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         
-        if (this.getCurrentStructure() != null && this.getCurrentStructure() instanceof IFluidHandler) {
+        for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
             
-            return ((IFluidHandler) this.getCurrentStructure()).getTankInfo(from);
+            if (multi instanceof IFluidHandler) {
+                
+                return ((IFluidHandler) multi).getTankInfo(from);
+            }
         }
         return null;
     }
@@ -137,20 +158,28 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
         
-        if (this.getCurrentStructure() != null) {
+        if (!this.getComprisedMultiBlocks().isEmpty()) {
             
-            if (new Vector3(this).intEquals(this.getCurrentStructure().getMultiBlockCore())) {
+            for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
                 
-                tag.setCompoundTag("multiBlockSave", this.getCurrentStructure().save(new NBTTagCompound()));
-                tag.setBoolean("isInMultiBlock", isInMultiBlock);
+                if (new Vector3(this).intEquals(multi.getSize().getCore())) {
+                    
+                    tag.setCompoundTag("multiBlockSave", multi.save(new NBTTagCompound()));
+                }
             }
+            tag.setBoolean("isInMultiBlock", isInMultiBlock);
         }
     }
     
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        this.setStructure(MultiBlockTank.load(tag.getCompoundTag("multiBlockSave")));
+        
         hasBufferedCreateMultiBlock = tag.getBoolean("isInMultiBlock");
+        
+        if (hasBufferedCreateMultiBlock) {
+            
+            bufferedTankData = tag.getCompoundTag("multiBlockSave");
+        }
     }
 }

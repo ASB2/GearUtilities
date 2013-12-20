@@ -1,26 +1,19 @@
-package GU.multiblock;
+package GU.blocks.containers;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockPart;
-import GU.blocks.containers.TileBase;
 
-public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart {
+public class TileMultiBase extends TileBase implements IMultiBlockPart {
     
+    boolean isInMultiBlock = false;
     Set<IMultiBlock> multiBlocks = new HashSet<IMultiBlock>();
     
-    public TileMultiBlockBuilders() {
-        
-        this.useSidesRendering = false;
-    }
-    
-    @Override
-    public void updateEntity() {
+    public TileMultiBase() {
+        // TODO Auto-generated constructor stub
     }
     
     @Override
@@ -34,7 +27,7 @@ public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart 
     
     @Override
     public boolean addMultiBlock(IMultiBlock multiBlock) {
-        
+        isInMultiBlock = true;
         return multiBlocks.add(multiBlock);
     }
     
@@ -42,17 +35,13 @@ public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart 
     public void removeMultiBlock(IMultiBlock multiBlock) {
         
         multiBlocks.remove(multiBlock);
+        
+        isInMultiBlock = multiBlocks.isEmpty() ? false : true;
     }
     
     @Override
     public Set<IMultiBlock> getComprisedMultiBlocks() {
         
         return Collections.unmodifiableSet(multiBlocks);
-    }
-    
-    @Override
-    public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
-        // TODO Auto-generated method stub
-        // super.triggerBlock(world, isSneaking, itemStack, x, y, z, side);
     }
 }
