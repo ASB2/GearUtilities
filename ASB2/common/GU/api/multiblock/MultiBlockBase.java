@@ -99,7 +99,22 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     @Override
     public Cuboid getSize() {
         
+<<<<<<< HEAD
         return size.clone();
+=======
+        for (Vector3 vector : comprisingBlocks) {
+            
+            TileEntity tile = vector.getTileEntity(worldObj);
+            
+            if (tile != null && tile instanceof IMultiBlockPart) {
+                
+                ((IMultiBlockPart) tile).removeStructure();
+            }
+        }
+        comprisingBlocks.clear();
+        isInvalidated = true;
+        UtilEntity.sendClientChat("Invalidated Everything");
+>>>>>>> refs/heads/master
     }
     
     @Override
