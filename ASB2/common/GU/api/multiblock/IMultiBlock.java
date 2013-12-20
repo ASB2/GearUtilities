@@ -10,7 +10,7 @@ import ASB2.vector.Vector3;
 
 public interface IMultiBlock {
     
-    boolean isStructureValid();
+    boolean create();
     
     void invalidate();
     

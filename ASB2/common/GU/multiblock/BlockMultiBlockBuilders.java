@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import GU.api.multiblock.IMultiBlock;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
 
@@ -44,13 +45,16 @@ public class BlockMultiBlockBuilders extends ContainerBase {
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         
         TileMultiBlockBuilders tile = (TileMultiBlockBuilders) world.getBlockTileEntity(x, y, z);
-        if (tile.getCurrentStructure() == null) {
+        
+        if (!tile.getComprisedMultiBlocks().isEmpty()) {
             
-            return false;
-        } else {
-            
-            return tile.getCurrentStructure().onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+            for (IMultiBlock multi : tile.getComprisedMultiBlocks()) {
+                
+                multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+            }
+            return true;
         }
+        return false;
     }
     
     @Override

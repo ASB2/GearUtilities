@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import GU.api.multiblock.IMultiBlock;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
 
@@ -26,7 +27,7 @@ public class BlockSpacialProvider extends ContainerBase {
         this.registerTile(TileSpacialProvider.class);
         this.registerTile(TileFluidSpacialProvider.class);
     }
-
+    
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         
@@ -34,12 +35,15 @@ public class BlockSpacialProvider extends ContainerBase {
             
             TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
             
-            if (tile.getCurrentStructure() == null) {
+            if (tile.getComprisedMultiBlocks().isEmpty()) {
                 
                 return tile.createMultiBlock();
             } else {
                 
-                return tile.getCurrentStructure().onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+                for (IMultiBlock multi : tile.getComprisedMultiBlocks()) {
+                    multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+                }
+                return true;
             }
         }
         return false;

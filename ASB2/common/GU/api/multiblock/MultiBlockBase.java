@@ -5,16 +5,19 @@ import java.util.Set;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import ASB2.vector.Cuboid;
+import ASB2.vector.ICuboidIterator;
 import ASB2.vector.Vector3;
 
-public class MultiBlockBase implements IMultiBlock {
+public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     
     protected World worldObj;
     protected boolean isValid = false;
     protected Set<Vector3> composingBlock = new HashSet<Vector3>();
     protected Set<Vector3> multiBlockInterfaces = new HashSet<Vector3>();
+    protected Set<Vector3> multiBlockCores = new HashSet<Vector3>();
     protected Cuboid size;
     
     public MultiBlockBase(World world) {
@@ -28,9 +31,39 @@ public class MultiBlockBase implements IMultiBlock {
     }
     
     @Override
-    public boolean isStructureValid() {
+    public boolean create() {
         
-        return isValid;
+        return isStructureValid();
+    }
+    
+    public boolean isStructureValid() {
+        composingBlock.clear();
+        multiBlockInterfaces.clear();
+        multiBlockCores.clear();
+        return size.iterate(this, (Object) null);
+    }
+    
+    @Override
+    public boolean iterate(Vector3 vector, Object... providedInfo) {
+        
+        TileEntity tile = vector.getTileEntity(this.getWorldObj());
+        
+        if (tile == null) {
+            return false;
+        }
+        if (!(tile instanceof IMultiBlockPart)) {
+            
+            return false;
+        }
+        if (tile instanceof IMultiBlockInterface) {
+            
+            multiBlockInterfaces.add(vector);
+        }
+        if (tile instanceof IMultiBlockCore) {
+            
+            multiBlockCores.add(vector);
+        }
+        return true;
     }
     
     @Override

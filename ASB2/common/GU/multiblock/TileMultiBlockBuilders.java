@@ -1,14 +1,18 @@
 package GU.multiblock;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockPart;
-import GU.api.multiblock.MultiBlockBase;
 import GU.blocks.containers.TileBase;
 
 public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart {
     
-    MultiBlockBase currentMultiBlock;
+    Set<IMultiBlock> multiBlocks = new HashSet<IMultiBlock>();
     
     public TileMultiBlockBuilders() {
         
@@ -20,35 +24,30 @@ public class TileMultiBlockBuilders extends TileBase implements IMultiBlockPart 
     }
     
     @Override
-    public boolean setStructure(MultiBlockBase multiBlock) {
-        
-        if (currentMultiBlock == null) {
-            
-            currentMultiBlock = multiBlock;
-            return true;
-        }
-        return false;
-    }
-    
-    @Override
-    public void removeStructure() {
-        
-        currentMultiBlock = null;
-    }
-    
-    @Override
-    public MultiBlockBase getCurrentStructure() {
-        
-        return currentMultiBlock;
-    }
-    
-    @Override
     public void invalidate() {
         
-        if (this.getCurrentStructure() != null) {
-            this.getCurrentStructure().invalidate();
-        }
+        for (IMultiBlock multi : multiBlocks)
+            multi.invalidate();
+        
         super.invalidate();
+    }
+    
+    @Override
+    public boolean addMultiBlock(IMultiBlock multiBlock) {
+        
+        return multiBlocks.add(multiBlock);
+    }
+    
+    @Override
+    public void removeMultiBlock(IMultiBlock multiBlock) {
+        
+        multiBlocks.remove(multiBlock);
+    }
+    
+    @Override
+    public Set<IMultiBlock> getComprisedMultiBlocks() {
+        
+        return Collections.unmodifiableSet(multiBlocks);
     }
     
     @Override

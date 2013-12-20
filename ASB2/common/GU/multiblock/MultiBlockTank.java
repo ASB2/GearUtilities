@@ -10,24 +10,20 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.vector.Cuboid;
-import ASB2.vector.ICuboidIterator;
 import ASB2.vector.Vector3;
-import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.MultiBlockBase;
 import GU.blocks.containers.BlockSpacialProvider.TileSpacialProvider;
 
-public class MultiBlockTank extends MultiBlockBase implements ICuboidIterator, IFluidHandler {
+public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     
     protected FluidTank fluidTank = new FluidTank(0);
     
-    public MultiBlockTank(World world, Cuboid size) {
-        super(world, size);
+    public MultiBlockTank(World world) {
+        super(world);
     }
     
-    @Override
-    public boolean isStructureValid() {
-        
-        return size.iterate(this, (Object) null);
+    public MultiBlockTank(World world, Cuboid size) {
+        super(world, size);
     }
     
     @Override
@@ -43,21 +39,6 @@ public class MultiBlockTank extends MultiBlockBase implements ICuboidIterator, I
                 // ((TileSpacialProvider)tile).fluidTank = this.fluidTank;
             }
         }
-    }
-    
-    @Override
-    public boolean iterate(Vector3 vector, Object... providedInfo) {
-        
-        TileEntity tile = vector.getTileEntity(this.getWorldObj());
-        
-        if (tile == null) {
-            return false;
-        }
-        if (tile instanceof IMultiBlockPart) {
-            
-            return true;
-        }
-        return false;
     }
     
     @Override

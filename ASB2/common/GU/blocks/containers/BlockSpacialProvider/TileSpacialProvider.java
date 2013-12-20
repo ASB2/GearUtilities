@@ -1,21 +1,25 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.vector.Vector3;
 import GU.EnumState;
+import GU.api.multiblock.IMultiBlock;
+import GU.api.multiblock.IMultiBlockCore;
 import GU.api.multiblock.IMultiBlockPart;
-import GU.api.multiblock.MultiBlockBase;
-import GU.api.spacial.ISpacialProvider;
 import GU.blocks.containers.TileBase;
 
-public class TileSpacialProvider extends TileBase implements ISpacialProvider {
+public class TileSpacialProvider extends TileBase implements IMultiBlockCore {
     
     public static int MAX_DISTANCE = 16;
-    MultiBlockBase currentMultiBlock;
     boolean isInMultiBlock = false, hasBufferedCreateMultiBlock = false;
+    Set<IMultiBlock> multiBlocks = new HashSet<IMultiBlock>();
     
     public TileSpacialProvider() {
         
@@ -29,7 +33,7 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             
             if (worldObj != null) {
                 
-                if (this.getCurrentStructure() != null) {
+                if (multiBlocks.size() == 1) {
                     
                     if (this.createMultiBlock(true)) {
                         
@@ -58,21 +62,6 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
             }
         }
         return null;
-    }
-    
-    public int getDistanceToNearestProvider(ForgeDirection direction) {
-        
-        for (int i = 1; i <= MAX_DISTANCE; i++) {
-            
-            Vector3 position = new Vector3(this).add(direction, i);
-            TileEntity tile = position.getTileEntity(worldObj);
-            
-            if (tile != null && tile != this && tile instanceof IMultiBlockPart) {
-                
-                return i;
-            }
-        }
-        return 0;
     }
     
     public int getMultiBlockXChange() {
@@ -166,31 +155,6 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
         world.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
     }
     
-    @Override
-    public boolean setStructure(MultiBlockBase multiBlock) {
-        
-        if (currentMultiBlock == null) {
-            
-            isInMultiBlock = true;
-            currentMultiBlock = multiBlock;
-            return true;
-        }
-        return false;
-    }
-    
-    @Override
-    public void removeStructure() {
-        
-        isInMultiBlock = false;
-        currentMultiBlock = null;
-    }
-    
-    @Override
-    public MultiBlockBase getCurrentStructure() {
-        
-        return currentMultiBlock;
-    }
-    
     public boolean createMultiBlock() {
         
         return createMultiBlock(false);
@@ -204,10 +168,29 @@ public class TileSpacialProvider extends TileBase implements ISpacialProvider {
     @Override
     public void invalidate() {
         
-        if (this.getCurrentStructure() != null) {
-            
-            this.getCurrentStructure().invalidate();
-        }
+        for (IMultiBlock multi : multiBlocks)
+            multi.invalidate();
+        
         super.invalidate();
+    }
+    
+    @Override
+    public boolean addMultiBlock(IMultiBlock multiBlock) {
+        isInMultiBlock = true;
+        return multiBlocks.add(multiBlock);
+    }
+    
+    @Override
+    public void removeMultiBlock(IMultiBlock multiBlock) {
+        
+        multiBlocks.remove(multiBlock);
+        
+        isInMultiBlock = multiBlocks.isEmpty() ? false : true;
+    }
+    
+    @Override
+    public Set<IMultiBlock> getComprisedMultiBlocks() {
+        
+        return Collections.unmodifiableSet(multiBlocks);
     }
 }
