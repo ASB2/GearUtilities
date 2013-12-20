@@ -57,24 +57,6 @@ public class TileSpacialProvider extends TileBase implements IMultiBlockCore {
                 
                 last = tile;
             } else if (tile == null) {
-<<<<<<< HEAD
-=======
-                
-                return last == this ? null : last;
-            }
-        }
-        return null;
-    }
-    
-    public int getDistanceToNearestProvider(ForgeDirection direction) {
-        
-        for (int i = 1; i <= MAX_DISTANCE; i++) {
-            
-            Vector3 position = new Vector3(this).add(direction, i);
-            TileEntity tile = position.getTileEntity(worldObj);
-            
-            if (tile != null && tile != this && tile instanceof IMultiBlockPart) {
->>>>>>> refs/heads/master
                 
                 return last == this ? null : last;
             }
@@ -209,14 +191,6 @@ public class TileSpacialProvider extends TileBase implements IMultiBlockCore {
     @Override
     public Set<IMultiBlock> getComprisedMultiBlocks() {
         
-<<<<<<< HEAD
         return Collections.unmodifiableSet(multiBlocks);
-=======
-        if (this.getCurrentStructure() != null) {
-            
-            this.getCurrentStructure().invalidate();
-        }
-        super.invalidate();
->>>>>>> refs/heads/master
     }
 }
