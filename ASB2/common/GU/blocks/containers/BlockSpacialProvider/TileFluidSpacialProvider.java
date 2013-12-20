@@ -42,14 +42,11 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
                         if (foundTile != null) {
                             
                             found++;
-                        } else {
-                            
-                            return false;
                         }
                     }
                 }
                 
-                if (found > 1) {
+                if (found > 0) {
                     
                     MultiBlockTank tank = new MultiBlockTank(worldObj, new Cuboid(new Vector3(xCoord, yCoord, zCoord), tile.getMultiBlockXChange(), tile.getMultiBlockYChange(), tile.getMultiBlockZChange()));
                     UtilEntity.sendClientChat("First Check " + tank.isStructureValid());

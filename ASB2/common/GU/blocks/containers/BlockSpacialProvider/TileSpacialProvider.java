@@ -33,12 +33,9 @@ public class TileSpacialProvider extends TileBase implements IMultiBlockCore {
             
             if (worldObj != null) {
                 
-                if (multiBlocks.size() == 1) {
+                if (this.createMultiBlock(true)) {
                     
-                    if (this.createMultiBlock(true)) {
-                        
-                        hasBufferedCreateMultiBlock = false;
-                    }
+                    hasBufferedCreateMultiBlock = false;
                 }
             }
         }
@@ -50,7 +47,7 @@ public class TileSpacialProvider extends TileBase implements IMultiBlockCore {
         
         for (int i = 1; i <= MAX_DISTANCE; i++) {
             
-            Vector3 position = new Vector3(last).add(direction, 1);
+            Vector3 position = new Vector3(last).add(direction, i);
             TileEntity tile = position.getTileEntity(worldObj);
             
             if (tile != null && tile != this && tile instanceof IMultiBlockPart) {
