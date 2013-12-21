@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import ASB2.utils.UtilRender;
-import GU.api.power.IPowerMisc;
+import GU.api.power.IPowerHandler;
 import GU.info.Gui;
 import GU.info.Reference;
 import GU.packets.ButtonPressPacket;
@@ -226,7 +226,7 @@ public abstract class GuiBase extends GuiContainer {
         }
     }
 
-    protected void drawTooltips(IPowerMisc tileEntity, int mouseX, int mouseY, int coordX, int coordY, int maxX, int maxY) {
+    protected void drawTooltips(IPowerHandler tileEntity, int mouseX, int mouseY, int coordX, int coordY, int maxX, int maxY) {
 
         if(tileEntity != null && tileEntity.getPowerProvider() != null) {
 

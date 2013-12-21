@@ -16,4 +16,6 @@ public final class Textures {
     public static final ResourceLocation MULTI_PANEL_ADDITION_5 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanelRenderAddition5.png");
     public static final ResourceLocation MULTI_PANEL_ADDITION_6 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanelRenderAddition6.png");
     public static final ResourceLocation MULTI_PANEL_ADDITION_7 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanelRenderAddition7.png");
+    
+    public static final ResourceLocation CRYSTAL_1 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelCrystal1.png");
 }

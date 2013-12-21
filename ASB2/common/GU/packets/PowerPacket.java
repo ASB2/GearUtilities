@@ -2,7 +2,7 @@ package GU.packets;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import GU.api.power.IPowerMisc;
+import GU.api.power.IPowerHandler;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
@@ -57,12 +57,12 @@ public class PowerPacket extends GUPacketBase {
 
         TileEntity tile = player.worldObj.getBlockTileEntity(x, y, z);
 
-        if(tile != null && tile instanceof IPowerMisc) {
+        if(tile != null && tile instanceof IPowerHandler) {
 
-            if(((IPowerMisc)tile).getPowerProvider() != null) {
+            if(((IPowerHandler)tile).getPowerProvider() != null) {
 
-                ((IPowerMisc)tile).getPowerProvider().setPowerStored(power);
-                ((IPowerMisc)tile).getPowerProvider().setPowerMax(max);
+                ((IPowerHandler)tile).getPowerProvider().setPowerStored(power);
+                ((IPowerHandler)tile).getPowerProvider().setPowerMax(max);
             }
         }
     }

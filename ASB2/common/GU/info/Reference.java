@@ -13,7 +13,7 @@ public final class Reference {
     public static final String RESOURCE_LOCATION = "/assets/" + MODDID.toLowerCase() + "/";
     public static final String POWER_NAME = "Gyro Units";
     
-    public static final int ANIMATION_SPEED = 7;
+    public static final int ANIMATION_SPEED = 17;
     public static final int BRIGHT_BLOCK = 15728864;
     
     public final static String MISC_MEAT = "MISC_MEAT";

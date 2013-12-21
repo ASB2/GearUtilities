@@ -8,14 +8,14 @@ import net.minecraft.tileentity.TileEntity;
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilInventory;
 import ASB2.wait.Wait;
-import GU.api.power.IPowerMisc;
+import GU.api.power.IPowerHandler;
 import GU.api.power.IPowerProvider;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
 import GU.blocks.containers.TileBase;
 
-public class TileSmeltingCube extends TileBase implements IPowerMisc {
+public class TileSmeltingCube extends TileBase implements IPowerHandler {
     
     public TileSmeltingCube() {
         

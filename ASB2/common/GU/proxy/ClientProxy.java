@@ -11,6 +11,8 @@ import GU.blocks.containers.BlockAdvancedPotionBrewery.GuiAdvancedPotionBrewery;
 import GU.blocks.containers.BlockMultiPanel.GuiMultiPanel;
 import GU.blocks.containers.BlockMultiPanel.MultiPanelRenderer;
 import GU.blocks.containers.BlockMultiPanel.TileMultiPanel;
+import GU.blocks.containers.BlockQuantaSender.QuantSenderRenderer;
+import GU.blocks.containers.BlockQuantaSender.TileQuantaSender;
 import GU.info.Gui;
 import GU.info.Models;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
@@ -30,7 +32,10 @@ public class ClientProxy extends CommonProxy {
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileMultiPanel.class, new MultiPanelRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockMultiPanel.blockID, new MultiPanelRenderer());
-
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileQuantaSender.class, new QuantSenderRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockQuantaSender.blockID, new QuantSenderRenderer());
+        
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
         
         RenderingRegistry.registerBlockHandler(new BlockSimpleRenderer());

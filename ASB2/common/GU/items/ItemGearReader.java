@@ -14,7 +14,7 @@ import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilMisc;
 import GU.api.color.IColorable;
 import GU.api.color.IVanillaColorable;
-import GU.api.power.IPowerMisc;
+import GU.api.power.IPowerHandler;
 import GU.info.Reference;
 
 public class ItemGearReader extends ItemBase {
@@ -41,9 +41,9 @@ public class ItemGearReader extends ItemBase {
                     UtilEntity.sendChatToPlayer(player, "Block has color: " + mTile.getColorEnum().toString());
                 }
                 
-                if (tile instanceof IPowerMisc) {
+                if (tile instanceof IPowerHandler) {
                     
-                    IPowerMisc mTile = (IPowerMisc) tile;
+                    IPowerHandler mTile = (IPowerHandler) tile;
                     
                     if (mTile.getPowerProvider() != null) {
                         

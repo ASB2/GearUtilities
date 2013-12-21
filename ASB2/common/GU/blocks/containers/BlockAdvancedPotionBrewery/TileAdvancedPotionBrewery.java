@@ -19,7 +19,7 @@ import GU.ItemRegistry;
 import GU.api.potion.IPotion;
 import GU.api.potion.IPotionBottle;
 import GU.api.potion.IPotionIngredient;
-import GU.api.power.IPowerMisc;
+import GU.api.power.IPowerHandler;
 import GU.api.power.IPowerProvider;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
@@ -29,7 +29,7 @@ import GU.blocks.containers.TileBase;
 import GU.packets.TankPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class TileAdvancedPotionBrewery extends TileBase implements IInventory, IFluidHandler, IPowerMisc {
+public class TileAdvancedPotionBrewery extends TileBase implements IInventory, IFluidHandler, IPowerHandler {
     
     boolean shouldCraft = false;
     

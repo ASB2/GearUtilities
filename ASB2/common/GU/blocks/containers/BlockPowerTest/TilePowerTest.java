@@ -4,14 +4,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilDirection;
-import GU.api.power.IPowerMisc;
+import GU.api.power.IPowerHandler;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerHelper;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
 import GU.blocks.containers.TileBase;
 
-public class TilePowerTest extends TileBase implements IPowerMisc {
+public class TilePowerTest extends TileBase implements IPowerHandler {
 
     public TilePowerTest() {
 
@@ -47,19 +47,19 @@ public class TilePowerTest extends TileBase implements IPowerMisc {
 
                 if (tileToAffect != null) {
 
-                    if (tileToAffect instanceof IPowerMisc) {
+                    if (tileToAffect instanceof IPowerHandler) {
 
-                        IPowerMisc tileToAffectCasted = ((IPowerMisc) tileToAffect);
+                        IPowerHandler tileToAffectCasted = ((IPowerHandler) tileToAffect);
 
                         if (tileToAffectCasted.getPowerProvider() != null) {
 
                             if (isExporting) {
 
-                                PowerHelper.moveEnergy(((IPowerMisc)tile).getPowerProvider(), tileToAffectCasted.getPowerProvider(), direction, direction.getOpposite(), true);
+                                PowerHelper.moveEnergy(((IPowerHandler)tile).getPowerProvider(), tileToAffectCasted.getPowerProvider(), direction, direction.getOpposite(), true);
                             } 
                             else {
 
-                                PowerHelper.moveEnergy(tileToAffectCasted.getPowerProvider(), ((IPowerMisc)tile).getPowerProvider(), direction, direction.getOpposite(), true);
+                                PowerHelper.moveEnergy(tileToAffectCasted.getPowerProvider(), ((IPowerHandler)tile).getPowerProvider(), direction, direction.getOpposite(), true);
                             }
                         }
                     }

@@ -57,7 +57,7 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
     @Override
     public boolean renderAsNormalBlock() {
         
-        return true;
+        return lightOpacity[this.blockID] != 0;
     }
     
     @Override
@@ -77,7 +77,7 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         
-        return new ItemStack(this, 1, world.getBlockMetadata(x, y, z));
+        return new ItemStack(this, 1, specialMetadata ? world.getBlockMetadata(x, y, z) : 0);
     }
     
     @Override
@@ -215,12 +215,6 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
     public String getUnlocalizedName(ItemStack itemStack) {
         
         return this.getUnlocalizedName();
-    }
-    
-    @Override
-    public TileEntity createNewTileEntity(World world) {
-        // TODO Auto-generated method stub
-        return null;
     }
     
     @Override

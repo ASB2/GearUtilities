@@ -33,12 +33,6 @@ public class CraftRegistry {
         OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.rottenFlesh));
         OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.spiderEye));
         
-        OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube));
-        OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube2));
-        OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube3));
-        OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube4));
-        OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureGlass));
-        
         GameRegistry.addRecipe(new ItemStack(Item.bucketLava), new Object[] { "FFF", "FSF", "FBF", 'F', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'S', Block.stone, 'B', Item.bucketEmpty });
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockEnhancedBricks, 4), new Object[] { "CBC", "BRB", "CBC", 'C', Reference.CRYSTALS_ALL, 'B', Block.stoneBrick, 'R', Item.ingotIron }));
@@ -57,6 +51,9 @@ public class CraftRegistry {
         
         'W', Item.swordIron, 'C', Block.workbench, 'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard, 'A', ItemRegistry.ItemAdvancedStick, 'S', Item.stick }));
         
+//        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockStructureCube, 1, 0), new Object[] { "", "ABA", "ASA",
+//        
+//        'W', Item.swordIron, 'C', Block.workbench, 'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard, 'A', ItemRegistry.ItemAdvancedStick, 'S', Item.stick }));
         // CraftingManager.getInstance().getRecipeList().add(new
         // ShapedOreRecipe(new ItemStack(file.bioMass), new Object[]{"XXX",
         // "XXX", "XXX", Character.valueOf('X'), "bioMass"}));
@@ -93,7 +90,73 @@ public class CraftRegistry {
         UtilRecipe.addHoe(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStoneHoe));
         
         initTempRecipes();
+        initTempRecipesBlood();
         initGrinderRecipies();
+    }
+    
+    public static void initTempRecipes() {
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemBasicDestructionCatalyst, 1), new Object[] { "PPP", "CCC", "GEG",
+        
+        'P', Item.pickaxeDiamond, 'C', Reference.CRYSTALS_ALL, 'G', Item.ingotGold, 'E', Item.emerald }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemTeleporter, 2), new Object[] { "ECE", "CDC", "ECE",
+        
+        'D', Item.diamond, 'C', Reference.CRYSTALS_ALL, 'E', Item.enderPearl }));
+        
+        ItemStack base = new ItemStack(BlockRegistry.BlockMultiPanel);
+        UtilItemStack.setNBTTagInt(base, "mode", 0);
+        GameRegistry.addRecipe(new ShapedOreRecipe(base, new Object[] { "ICI", "QDQ", "EBE",
+        
+        'C', Reference.CRYSTALS_ALL, 'I', Item.ingotIron, 'Q', Item.netherQuartz, 'D', Item.diamond, 'E', BlockRegistry.BlockEnhancedBricks }));
+        
+        ItemStack itemMover = new ItemStack(BlockRegistry.BlockMultiPanel);
+        UtilItemStack.setNBTTagInt(itemMover, "mode", TileMultiPanel.ITEM_MOVEMENT);
+        GameRegistry.addRecipe(new ShapedOreRecipe(itemMover, new Object[] { "QCQ", "ESE", "CQC",
+        
+        'C', ItemRegistry.ItemCrystal.ItemAirCrystalShard, 'Q', Item.netherQuartz, 'E', Item.enderPearl, 'S', base }));
+        
+        ItemStack fluidMover = new ItemStack(BlockRegistry.BlockMultiPanel);
+        UtilItemStack.setNBTTagInt(fluidMover, "mode", TileMultiPanel.FLUID_MOVEMENT);
+        GameRegistry.addRecipe(new ShapedOreRecipe(fluidMover, new Object[] { "QCQ", "ESE", "CQC",
+        
+        'C', ItemRegistry.ItemCrystal.ItemWaterCrystalShard, 'Q', Item.netherQuartz, 'E', Item.enderPearl, 'S', base }));
+        
+        ItemStack grinder = new ItemStack(BlockRegistry.BlockMultiPanel);
+        UtilItemStack.setNBTTagInt(grinder, "mode", TileMultiPanel.GRINDING);
+        GameRegistry.addRecipe(new ShapedOreRecipe(grinder, new Object[] { "DID", "CSC", "QCQ",
+        
+        'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'Q', Item.netherQuartz, 'D', Item.diamond, 'S', base, 'I', Item.ingotIron }));
+        
+        ItemStack blockPlacer = new ItemStack(BlockRegistry.BlockMultiPanel);
+        UtilItemStack.setNBTTagInt(blockPlacer, "mode", TileMultiPanel.BLOCK_PLACE);
+        GameRegistry.addRecipe(new ShapedOreRecipe(blockPlacer, new Object[] { "DQD", "CSC", "QIQ",
+        
+        'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'Q', Item.netherQuartz, 'D', Block.dispenser, 'S', base, 'I', Item.ingotIron }));
+        
+        ItemStack blockBreaker = new ItemStack(BlockRegistry.BlockMultiPanel);
+        UtilItemStack.setNBTTagInt(blockBreaker, "mode", TileMultiPanel.BLOCK_BREAK);
+        GameRegistry.addRecipe(new ShapedOreRecipe(blockBreaker, new Object[] { "IPI", "CSC", "QIQ",
+        
+        'C', ItemRegistry.ItemCrystal.ItemGarnet, 'Q', Item.netherQuartz, 'P', Item.pickaxeDiamond, 'S', base, 'I', Item.ingotIron }));
+        
+        ItemStack smelter = new ItemStack(BlockRegistry.BlockMultiPanel);
+        UtilItemStack.setNBTTagInt(smelter, "mode", TileMultiPanel.SMELTER);
+        GameRegistry.addRecipe(new ShapedOreRecipe(smelter, new Object[] { "FCF", "QSQ", "CQC",
+        
+        'C', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'Q', Item.netherQuartz, 'F', Block.furnaceIdle, 'S', base }));
+        
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockMultiPanel), base);
+    }
+    
+    public static void initTempRecipesBlood() {
+        
+        GameRegistry.addShapelessRecipe(FluidContainerRegistry.fillFluidContainer(new FluidStack(GU.FluidRegistry.Blood, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal)), new ItemStack(ItemRegistry.ItemStorageCrystal), ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard);
+        GameRegistry.addShapelessRecipe(FluidContainerRegistry.fillFluidContainer(new FluidStack(GU.FluidRegistry.Blood, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal)), new ItemStack(ItemRegistry.ItemStorageCrystal), ItemRegistry.ItemCrystal.ItemBloodCrystalShard, ItemRegistry.ItemCrystal.ItemBloodCrystalShard, ItemRegistry.ItemCrystal.ItemBloodCrystalShard, ItemRegistry.ItemCrystal.ItemBloodCrystalShard);
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(FluidContainerRegistry.fillFluidContainer(new FluidStack(GU.FluidRegistry.MeatMash, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal)), new Object[] { "BBB", "BSB", "BBB",
+        
+        'B', Reference.MISC_MEAT, 'S', ItemRegistry.ItemStorageCrystal }));
     }
     
     public static void initGrinderRecipies() {
@@ -179,73 +242,5 @@ public class CraftRegistry {
         stack = VanillaColor.getVinillaDye(VanillaColor.GREEN);
         stack.stackSize = 4;
         SenderRecipe.getInstance().addRecipe(Block.cactus.blockID, -1, new ItemStack[] { stack });
-    }
-    
-    public static void initTempRecipes() {
-        
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemBasicDestructionCatalyst, 1), new Object[] { "PPP", "CCC", "GEG",
-        
-        'P', Item.pickaxeDiamond, 'C', Reference.CRYSTALS_ALL, 'G', Item.ingotGold, 'E', Item.emerald }));
-        
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemTeleporter, 2), new Object[] { "ECE", "CDC", "ECE",
-        
-        'D', Item.diamond, 'C', Reference.CRYSTALS_ALL, 'E', Item.enderPearl }));
-        
-        ItemStack base = new ItemStack(BlockRegistry.BlockMultiPanel);
-        UtilItemStack.setNBTTagInt(base, "mode", 0);
-        GameRegistry.addRecipe(new ShapedOreRecipe(base, new Object[] { "ICI", "QDQ", "EBE",
-        
-        'C', Reference.CRYSTALS_ALL, 'I', Item.ingotIron, 'Q', Item.netherQuartz, 'D', Item.diamond, 'E', BlockRegistry.BlockEnhancedBricks }));
-        
-        ItemStack itemMover = new ItemStack(BlockRegistry.BlockMultiPanel);
-        UtilItemStack.setNBTTagInt(itemMover, "mode", TileMultiPanel.ITEM_MOVEMENT);
-        GameRegistry.addRecipe(new ShapedOreRecipe(itemMover, new Object[] { "QCQ", "ESE", "CQC",
-        
-        'C', ItemRegistry.ItemCrystal.ItemAirCrystalShard, 'Q', Item.netherQuartz, 'E', Item.enderPearl, 'S', base }));
-        
-        ItemStack fluidMover = new ItemStack(BlockRegistry.BlockMultiPanel);
-        UtilItemStack.setNBTTagInt(fluidMover, "mode", TileMultiPanel.FLUID_MOVEMENT);
-        GameRegistry.addRecipe(new ShapedOreRecipe(fluidMover, new Object[] { "QCQ", "ESE", "CQC",
-        
-        'C', ItemRegistry.ItemCrystal.ItemWaterCrystalShard, 'Q', Item.netherQuartz, 'E', Item.enderPearl, 'S', base }));
-        
-        ItemStack grinder = new ItemStack(BlockRegistry.BlockMultiPanel);
-        UtilItemStack.setNBTTagInt(grinder, "mode", TileMultiPanel.GRINDING);
-        GameRegistry.addRecipe(new ShapedOreRecipe(grinder, new Object[] { "DID", "CSC", "QCQ",
-        
-        'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'Q', Item.netherQuartz, 'D', Item.diamond, 'S', base, 'I', Item.ingotIron }));
-        
-        ItemStack blockPlacer = new ItemStack(BlockRegistry.BlockMultiPanel);
-        UtilItemStack.setNBTTagInt(blockPlacer, "mode", TileMultiPanel.BLOCK_PLACE);
-        GameRegistry.addRecipe(new ShapedOreRecipe(blockPlacer, new Object[] { "DQD", "CSC", "QIQ",
-        
-        'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'Q', Item.netherQuartz, 'D', Block.dispenser, 'S', base, 'I', Item.ingotIron }));
-        
-        ItemStack blockBreaker = new ItemStack(BlockRegistry.BlockMultiPanel);
-        UtilItemStack.setNBTTagInt(blockBreaker, "mode", TileMultiPanel.BLOCK_BREAK);
-        GameRegistry.addRecipe(new ShapedOreRecipe(blockBreaker, new Object[] { "IPI", "CSC", "QIQ",
-        
-        'C', ItemRegistry.ItemCrystal.ItemGarnet, 'Q', Item.netherQuartz, 'P', Item.pickaxeDiamond, 'S', base, 'I', Item.ingotIron }));
-        
-        ItemStack smelter = new ItemStack(BlockRegistry.BlockMultiPanel);
-        UtilItemStack.setNBTTagInt(smelter, "mode", TileMultiPanel.SMELTER);
-        GameRegistry.addRecipe(new ShapedOreRecipe(smelter, new Object[] { "FCF", "QSQ", "CQC",
-        
-        'C', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'Q', Item.netherQuartz, 'F', Block.furnaceIdle, 'S', base }));
-        
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockMultiPanel), base);
-        
-        initTempRecipesBlood();
-    }
-    
-    public static void initTempRecipesBlood() {
-        
-        GameRegistry.addShapelessRecipe(FluidContainerRegistry.fillFluidContainer(new FluidStack(GU.FluidRegistry.Blood, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal)), new ItemStack(ItemRegistry.ItemStorageCrystal), ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard);
-        GameRegistry.addShapelessRecipe(FluidContainerRegistry.fillFluidContainer(new FluidStack(GU.FluidRegistry.Blood, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal)), new ItemStack(ItemRegistry.ItemStorageCrystal), ItemRegistry.ItemCrystal.ItemBloodCrystalShard, ItemRegistry.ItemCrystal.ItemBloodCrystalShard, ItemRegistry.ItemCrystal.ItemBloodCrystalShard, ItemRegistry.ItemCrystal.ItemBloodCrystalShard);
-        
-        GameRegistry.addRecipe(new ShapedOreRecipe(FluidContainerRegistry.fillFluidContainer(new FluidStack(GU.FluidRegistry.MeatMash, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal)), new Object[] { "BBB", "BSB", "BBB",
-        
-        'B', Reference.MISC_MEAT, 'S', ItemRegistry.ItemStorageCrystal }));
-        
     }
 }

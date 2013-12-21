@@ -9,7 +9,7 @@ import GU.api.multiblock.IMultiBlockPart;
 
 public class TileMultiBase extends TileBase implements IMultiBlockPart {
     
-    boolean isInMultiBlock = false;
+    protected boolean isInMultiBlock = false;
     Set<IMultiBlock> multiBlocks = new HashSet<IMultiBlock>();
     
     public TileMultiBase() {

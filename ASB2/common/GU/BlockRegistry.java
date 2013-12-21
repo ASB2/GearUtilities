@@ -16,8 +16,10 @@ import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockMultiPanel.BlockMultiPanel;
 import GU.blocks.containers.BlockMultiPanel.ItemBlockMultiPanel;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
+import GU.blocks.containers.BlockQuantaSender.BlockQuantaSender;
 import GU.blocks.containers.BlockSmeltingCube.BlockSmeltingCube;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
+import GU.blocks.containers.BlockStructureCube.BlockStructureCube;
 import GU.items.GUItemBlock;
 import GU.multiblock.BlockMultiBlockBuilders;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -34,17 +36,18 @@ public class BlockRegistry {
     public static ContainerBase BlockEnhancedBricks;
     public static ContainerBase BlockMultiPanel;
     public static BlockBase BlockBasicElemental;
-    public static BlockBase BlockStructureCube, BlockStructureCube2, BlockStructureCube3, BlockStructureCube4, BlockStructureGlass;
+    public static ContainerBase BlockStructureCube;
     public static ContainerBase BlockSpacialProvider;
     public static ContainerBase BlockMultiBlockBuilders;
     public static ContainerBase BlockSmeltingCube;
+    public static ContainerBase BlockQuantaSender;
     
     private static int id = 500;
     
     public static void init(Configuration config) {
         
         BlockMetadataOre = new BlockMetadataOre(BlockRegistry.getConfigID(config, "Metadata Ore"), Material.rock);
-        addBlockNoLang(BlockMetadataOre, "", "Metadata Ore");
+        addBlock(BlockMetadataOre, "", "Metadata Ore");
         
         BlockEtherealStone = new BlockEtherealStone(BlockRegistry.getConfigID(config, "BlockEtherealStone"), Material.rock);
         addBlock(BlockEtherealStone, "Ethereal Stone", "BlockEtherealStone");
@@ -72,27 +75,11 @@ public class BlockRegistry {
         GameRegistry.registerBlock(BlockMultiPanel, ItemBlockMultiPanel.class, "BlockMultiPanel");
         
         BlockBasicElemental = new BlockBasicElemental(BlockRegistry.getConfigID(config, "BlockBasicElemental"), Material.rock);
-        addBlockNoLang(BlockBasicElemental, "BlockBasicElemental", "BlockBasicElemental");
+        addBlock(BlockBasicElemental, "BlockBasicElemental", "BlockBasicElemental");
         
-        BlockStructureCube = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube"), Material.rock);
+        BlockStructureCube = new BlockStructureCube(BlockRegistry.getConfigID(config, "BlockStructureCube"), Material.rock);
         addBlock(BlockStructureCube, "Structure Cube", "BlockStructureCube");
         BlockStructureCube.setResistance(Block.obsidian.blockResistance);
-        
-        BlockStructureCube2 = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube2"), Material.rock);
-        addBlock(BlockStructureCube2, "Structure Cube 2", "BlockStructureCube2");
-        BlockStructureCube2.setResistance(Block.obsidian.blockResistance);
-        
-        BlockStructureCube3 = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube3"), Material.rock);
-        addBlock(BlockStructureCube3, "Structure Cube 3", "BlockStructureCube3");
-        BlockStructureCube3.setResistance(Block.obsidian.blockResistance);
-        
-        BlockStructureCube4 = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureCube4"), Material.rock);
-        addBlock(BlockStructureCube4, "Structure Cube 4", "BlockStructureCube4");
-        BlockStructureCube4.setResistance(Block.obsidian.blockResistance);
-        
-        BlockStructureGlass = new BlockBase(BlockRegistry.getConfigID(config, "BlockStructureGlass"), Material.rock);
-        addBlock(BlockStructureGlass, "Structure Glass", "BlockStructureGlass");
-        BlockStructureGlass.setResistance(Block.obsidian.blockResistance);
         
         BlockSpacialProvider = new BlockSpacialProvider(BlockRegistry.getConfigID(config, "BlockSpacialProvider"), Material.rock);
         addBlock(BlockSpacialProvider, "Spacial Provider", "BlockSpacialProvider");
@@ -102,15 +89,12 @@ public class BlockRegistry {
         
         BlockSmeltingCube = new BlockSmeltingCube(BlockRegistry.getConfigID(config, "BlockSmeltingCube"), Material.rock);
         addBlock(BlockSmeltingCube, "Smelting Cube", "BlockSmeltingCube");
+        
+        BlockQuantaSender = new BlockQuantaSender(BlockRegistry.getConfigID(config, "BlockQuantaSender"), Material.rock);
+        addBlock(BlockQuantaSender, "Quanta Sender", "BlockQuantaSender");
     }
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {
-        
-        addBlockNoLang(block, ign, unlocalizedName);
-        return block;
-    }
-    
-    public static Block addBlockNoLang(Block block, String ign, String unlocalizedName) {
         
         block.setUnlocalizedName(unlocalizedName);
         block.setTextureName(unlocalizedName);

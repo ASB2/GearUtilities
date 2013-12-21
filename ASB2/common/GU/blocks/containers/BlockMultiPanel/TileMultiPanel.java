@@ -22,7 +22,7 @@ import ASB2.utils.UtilItemStack;
 import ASB2.vector.Vector3;
 import ASB2.wait.Wait;
 import GU.BlockRegistry;
-import GU.api.power.IPowerMisc;
+import GU.api.power.IPowerHandler;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
@@ -33,7 +33,7 @@ import GU.info.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerMisc, IFluidHandler {
+public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerHandler, IFluidHandler {
     
     public static final int ITEM_MOVEMENT = 1;
     public static final int FLUID_MOVEMENT = 2;
