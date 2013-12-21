@@ -19,9 +19,9 @@ public class BlockEnhancedBricks extends BlockColorable {
     public Icon overlay;
     
     public BlockEnhancedBricks(int id, Material material) {
-        
         super(id, material);
         this.registerTile(TileEnhancedBricks.class);
+        specialMetadata = true;
     }
     
     @Override

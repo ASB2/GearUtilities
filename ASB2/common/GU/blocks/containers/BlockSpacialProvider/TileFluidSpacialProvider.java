@@ -106,7 +106,7 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
             
             if (multi instanceof IFluidHandler) {
                 
-                ((IFluidHandler) multi).drain(from, resource, doDrain);
+                return ((IFluidHandler) multi).drain(from, resource, doDrain);
             }
         }
         return null;
@@ -119,7 +119,7 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
             
             if (multi instanceof IFluidHandler) {
                 
-                ((IFluidHandler) multi).drain(from, maxDrain, doDrain);
+                return ((IFluidHandler) multi).drain(from, maxDrain, doDrain);
             }
         }
         return null;

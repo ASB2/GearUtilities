@@ -3,7 +3,6 @@ package GU.api.multiblock;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -41,8 +40,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
         composingBlock.clear();
         multiBlockInterfaces.clear();
         multiBlockCores.clear();
-        /*return*/ size.iterate(this, (Object) null);
-    return false;
+        return size.iterate(this, (Object) null);
     }
     
     @Override
@@ -51,12 +49,14 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
         TileEntity tile = vector.getTileEntity(this.getWorldObj());
         
         if (tile == null) {
-            vector.setBlock(worldObj, Block.glowStone.blockID);
-//            return false;
+            
+            return false;
         }
         if (!(tile instanceof IMultiBlockPart)) {
-            vector.setBlock(worldObj, Block.glowStone.blockID);
-//            return false;
+            
+            return false;
+        } else {
+            ((IMultiBlockPart) tile).addMultiBlock(this);
         }
         if (tile instanceof IMultiBlockInterface) {
             
@@ -116,6 +116,11 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     public void load(NBTTagCompound tag) {
         
         this.size = Cuboid.load(tag.getCompoundTag("size"));
+        postLoad();
+    }
+    
+    public void postLoad() {
+        
     }
     
     @Override

@@ -13,45 +13,45 @@ import ASB2.utils.UtilRecipe;
 import GU.api.color.VanillaColor;
 import GU.api.recipe.SenderRecipe;
 import GU.blocks.containers.BlockMultiPanel.TileMultiPanel;
-import GU.info.Variables;
+import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftRegistry {
     
     public static void init() {
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.beefCooked));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.beefRaw));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.chickenCooked));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.chickenRaw));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.egg));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.fermentedSpiderEye));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.fishCooked));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.fishRaw));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.ghastTear));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.porkCooked));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.porkRaw));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.rottenFlesh));
-        OreDictionary.registerOre(Variables.MISC_MEAT, new ItemStack(Item.spiderEye));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.beefCooked));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.beefRaw));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.chickenCooked));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.chickenRaw));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.egg));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.fermentedSpiderEye));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.fishCooked));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.fishRaw));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.ghastTear));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.porkCooked));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.porkRaw));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.rottenFlesh));
+        OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.spiderEye));
         
-        OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube));
-        OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube2));
-        OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube3));
-        OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube4));
-        OreDictionary.registerOre(Variables.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureGlass));
+        OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube));
+        OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube2));
+        OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube3));
+        OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureCube4));
+        OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(BlockRegistry.BlockStructureGlass));
         
         GameRegistry.addRecipe(new ItemStack(Item.bucketLava), new Object[] { "FFF", "FSF", "FBF", 'F', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'S', Block.stone, 'B', Item.bucketEmpty });
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockEnhancedBricks, 4), new Object[] { "CBC", "BRB", "CBC", 'C', Variables.CRYSTALS_ALL, 'B', Block.stoneBrick, 'R', Item.ingotIron }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockEnhancedBricks, 4), new Object[] { "CBC", "BRB", "CBC", 'C', Reference.CRYSTALS_ALL, 'B', Block.stoneBrick, 'R', Item.ingotIron }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockEnhancedBricks, 8), new Object[] { "CBC", "BRB", "CBC", 'C', Variables.CRYSTALS_ALL, 'B', Block.stoneBrick, 'R', Item.ingotGold }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockEnhancedBricks, 8), new Object[] { "CBC", "BRB", "CBC", 'C', Reference.CRYSTALS_ALL, 'B', Block.stoneBrick, 'R', Item.ingotGold }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockEnhancedBricks, 16), new Object[] { "CBC", "BRB", "CBC", 'C', Variables.CRYSTALS_ALL, 'B', Block.stoneBrick, 'R', Item.diamond }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockEnhancedBricks, 16), new Object[] { "CBC", "BRB", "CBC", 'C', Reference.CRYSTALS_ALL, 'B', Block.stoneBrick, 'R', Item.diamond }));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemAdvancedStick), new Object[] { "IQI", "CSC", "IQI",
         
-        'S', Item.stick, 'Q', Item.netherQuartz, 'I', Item.ingotIron, 'C', Variables.CRYSTALS_ALL }));
+        'S', Item.stick, 'Q', Item.netherQuartz, 'I', Item.ingotIron, 'C', Reference.CRYSTALS_ALL }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemPhantomPlacer), new Object[] { "QIQ", "CAC", "CAC", 'A', ItemRegistry.ItemAdvancedStick, 'Q', Block.blockNetherQuartz, 'I', Item.ingotIron, 'C', Variables.CRYSTALS_ALL }));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemPhantomPlacer), new Object[] { "QIQ", "CAC", "CAC", 'A', ItemRegistry.ItemAdvancedStick, 'Q', Block.blockNetherQuartz, 'I', Item.ingotIron, 'C', Reference.CRYSTALS_ALL }));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemLifeStealingBludgeoningStick), new Object[] { "WWW", "ABA", "ASA",
         
@@ -185,17 +185,17 @@ public class CraftRegistry {
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemBasicDestructionCatalyst, 1), new Object[] { "PPP", "CCC", "GEG",
         
-        'P', Item.pickaxeDiamond, 'C', Variables.CRYSTALS_ALL, 'G', Item.ingotGold, 'E', Item.emerald }));
+        'P', Item.pickaxeDiamond, 'C', Reference.CRYSTALS_ALL, 'G', Item.ingotGold, 'E', Item.emerald }));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemTeleporter, 2), new Object[] { "ECE", "CDC", "ECE",
         
-        'D', Item.diamond, 'C', Variables.CRYSTALS_ALL, 'E', Item.enderPearl }));
+        'D', Item.diamond, 'C', Reference.CRYSTALS_ALL, 'E', Item.enderPearl }));
         
         ItemStack base = new ItemStack(BlockRegistry.BlockMultiPanel);
         UtilItemStack.setNBTTagInt(base, "mode", 0);
         GameRegistry.addRecipe(new ShapedOreRecipe(base, new Object[] { "ICI", "QDQ", "EBE",
         
-        'C', Variables.CRYSTALS_ALL, 'I', Item.ingotIron, 'Q', Item.netherQuartz, 'D', Item.diamond, 'E', BlockRegistry.BlockEnhancedBricks }));
+        'C', Reference.CRYSTALS_ALL, 'I', Item.ingotIron, 'Q', Item.netherQuartz, 'D', Item.diamond, 'E', BlockRegistry.BlockEnhancedBricks }));
         
         ItemStack itemMover = new ItemStack(BlockRegistry.BlockMultiPanel);
         UtilItemStack.setNBTTagInt(itemMover, "mode", TileMultiPanel.ITEM_MOVEMENT);
@@ -245,7 +245,7 @@ public class CraftRegistry {
         
         GameRegistry.addRecipe(new ShapedOreRecipe(FluidContainerRegistry.fillFluidContainer(new FluidStack(GU.FluidRegistry.MeatMash, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal)), new Object[] { "BBB", "BSB", "BBB",
         
-        'B', Variables.MISC_MEAT, 'S', ItemRegistry.ItemStorageCrystal }));
+        'B', Reference.MISC_MEAT, 'S', ItemRegistry.ItemStorageCrystal }));
         
     }
 }

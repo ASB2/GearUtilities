@@ -9,6 +9,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
 import GU.api.multiblock.MultiBlockBase;
@@ -24,6 +25,13 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     
     public MultiBlockTank(World world, Cuboid size) {
         super(world, size);
+        fluidTank.setCapacity((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1) * 16000);
+    }
+    
+    @Override
+    public void postLoad() {
+        
+        fluidTank.setCapacity((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1) * 16000);
     }
     
     @Override
@@ -36,7 +44,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
             
             if (tile.getClass() == TileSpacialProvider.class) {
                 
-                // ((TileSpacialProvider)tile).fluidTank = this.fluidTank;
+                ((TileSpacialProvider) tile).fluidTank = this.fluidTank;
             }
         }
     }
@@ -111,6 +119,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         
-        return false;
+        UtilEntity.sendChatToPlayer(player, "Fluid: " + this.fluidTank.getFluidAmount() + " / " + fluidTank.getCapacity());
+        return true;
     }
 }

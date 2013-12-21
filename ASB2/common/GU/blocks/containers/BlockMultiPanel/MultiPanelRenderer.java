@@ -13,8 +13,8 @@ import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilRender;
 import ASB2.vector.Vector3;
 import GU.info.Models;
+import GU.info.Reference;
 import GU.info.Textures;
-import GU.info.Variables;
 
 public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
     
@@ -74,7 +74,7 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
         UtilRender.renderTexture(Textures.MULTI_PANEL);
         Models.ModelMultiPanel.renderPart("Panel");
         
-        GL11.glRotatef(Minecraft.getSystemTime() / (Variables.ANIMATION_SPEED + 10), 0F, 1F, 0F);
+        GL11.glRotatef(Minecraft.getSystemTime() / (Reference.ANIMATION_SPEED + 10), 0F, 1F, 0F);
         
         for (int i = 0; i < 4; i++) {
             
@@ -157,10 +157,10 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
                 }
             }
         }
-
+        
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
-
+        
     }
     
     @Override
@@ -220,7 +220,7 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
         UtilRender.renderTexture(Textures.MULTI_PANEL);
         Models.ModelMultiPanel.renderPart("Panel");
         
-        GL11.glRotatef(Minecraft.getSystemTime() / (Variables.ANIMATION_SPEED + 10), 0F, 1F, 0F);
+        GL11.glRotatef(Minecraft.getSystemTime() / (Reference.ANIMATION_SPEED + 10), 0F, 1F, 0F);
         
         for (int i = 0; i < 4; i++) {
             

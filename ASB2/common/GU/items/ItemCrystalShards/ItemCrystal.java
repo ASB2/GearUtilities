@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraftforge.oredict.OreDictionary;
 import GU.info.Reference;
-import GU.info.Variables;
 import GU.items.ItemBase;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -45,7 +44,7 @@ public class ItemCrystal extends ItemBase {
             LanguageRegistry.addName(new ItemStack(this, 1, i), CRYSTAL_NAMES_IG[i]);
             
             if (CRYSTAL_SHARDS != 9)
-                OreDictionary.registerOre(Variables.CRYSTALS_ALL, new ItemStack(this, 1, i));
+                OreDictionary.registerOre(Reference.CRYSTALS_ALL, new ItemStack(this, 1, i));
         }
     }
     
