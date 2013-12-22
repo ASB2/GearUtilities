@@ -53,7 +53,9 @@ public abstract class EntityBase extends Entity implements IEntityAdditionalSpaw
         super.onUpdate();
     }
 
-    protected abstract void onImpactEntity(Entity entity);
+    protected void onImpactEntity(Entity entity) {
+        
+    }
 
     @Override
     public void onEntityUpdate() {

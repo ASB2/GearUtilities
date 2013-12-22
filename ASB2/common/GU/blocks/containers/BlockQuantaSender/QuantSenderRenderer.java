@@ -25,7 +25,7 @@ public class QuantSenderRenderer extends TileEntitySpecialRenderer implements II
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         
-        GL11.glColor4f(1, 1, 1, 0.5f);
+        GL11.glColor4f(1, 1, 1, 1.5f);
         
         switch (((TileQuantaSender) tileentity).getOrientation()) {
         
@@ -70,7 +70,7 @@ public class QuantSenderRenderer extends TileEntitySpecialRenderer implements II
             }
         }
         
-        GL11.glScalef(scale, scale, scale);        
+        GL11.glScalef(scale, scale, scale);
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         
         UtilRender.renderTexture(Textures.CRYSTAL_1);
