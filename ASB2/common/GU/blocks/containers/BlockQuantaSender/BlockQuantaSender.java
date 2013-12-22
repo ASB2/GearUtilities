@@ -1,16 +1,12 @@
 package GU.blocks.containers.BlockQuantaSender;
 
-import java.awt.Color;
 import java.util.Random;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import ASB2.utils.UtilEntity;
 import GU.blocks.containers.ContainerBase;
-import GU.entity.FXBase;
-import GU.info.Particles;
 
 public class BlockQuantaSender extends ContainerBase {
     

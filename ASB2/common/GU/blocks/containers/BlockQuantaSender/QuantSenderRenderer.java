@@ -22,10 +22,10 @@ public class QuantSenderRenderer extends TileEntitySpecialRenderer implements II
         float scale = .3f;
         
         GL11.glPushMatrix();
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glDisable(GL11.GL_SHADE_MODEL);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         
-        // GL11.glColor3f(25, 0, 189);
+        GL11.glColor4f(1, 1, 1, 0.5f);
         
         switch (((TileQuantaSender) tileentity).getOrientation()) {
         
@@ -70,15 +70,13 @@ public class QuantSenderRenderer extends TileEntitySpecialRenderer implements II
             }
         }
         
-        GL11.glScalef(scale, scale, scale);
-        
+        GL11.glScalef(scale, scale, scale);        
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         
         UtilRender.renderTexture(Textures.CRYSTAL_1);
         Models.ModelCrystal1.renderAll();
         
-        GL11.glEnable(GL11.GL_SHADE_MODEL);
-        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
         
     }
