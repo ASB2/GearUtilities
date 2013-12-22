@@ -6,7 +6,7 @@ import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilDirection;
 import GU.api.power.IPowerHandler;
 import GU.api.power.PowerClass;
-import GU.api.power.PowerHelper;
+import GU.api.power.UtilPower;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
 import GU.blocks.containers.TileBase;
@@ -55,11 +55,11 @@ public class TilePowerTest extends TileBase implements IPowerHandler {
 
                             if (isExporting) {
 
-                                PowerHelper.moveEnergy(((IPowerHandler)tile).getPowerProvider(), tileToAffectCasted.getPowerProvider(), direction, direction.getOpposite(), true);
+                                UtilPower.moveEnergy(((IPowerHandler)tile).getPowerProvider(), tileToAffectCasted.getPowerProvider(), direction, direction.getOpposite(), true);
                             } 
                             else {
 
-                                PowerHelper.moveEnergy(tileToAffectCasted.getPowerProvider(), ((IPowerHandler)tile).getPowerProvider(), direction, direction.getOpposite(), true);
+                                UtilPower.moveEnergy(tileToAffectCasted.getPowerProvider(), ((IPowerHandler)tile).getPowerProvider(), direction, direction.getOpposite(), true);
                             }
                         }
                     }

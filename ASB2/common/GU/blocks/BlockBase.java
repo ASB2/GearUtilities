@@ -35,6 +35,12 @@ public class BlockBase extends Block implements IExtraItemBlockInfo {
     }
     
     @Override
+    public boolean shouldSideBeRendered(IBlockAccess par1iBlockAccess, int par2, int par3, int par4, int par5) {
+
+        return true;
+    }
+    
+    @Override
     public int getLightOpacity(World world, int x, int y, int z) {
         
         if (useStandardRendering)

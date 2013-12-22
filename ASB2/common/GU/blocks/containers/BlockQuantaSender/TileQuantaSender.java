@@ -8,6 +8,7 @@ import GU.api.power.IPowerProvider;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
+import GU.api.power.UtilPower;
 import GU.blocks.containers.TileBase;
 
 public class TileQuantaSender extends TileBase implements IPowerHandler {
@@ -37,8 +38,8 @@ public class TileQuantaSender extends TileBase implements IPowerHandler {
             if (tile != null) {
                 
                 if (tile instanceof IPowerHandler) {
-                    
-                    ((IPowerHandler) tile).getPowerProvider().gainPower(10, this.getOrientation(), true);
+                    powerProvider.setPowerStored(100);            
+                    UtilPower.moveEnergy(this.getPowerProvider(), ((IPowerHandler) tile).getPowerProvider(), this.getOrientation(), this.getOrientation().getOpposite(), true);
                 } else {
                     return;
                 }

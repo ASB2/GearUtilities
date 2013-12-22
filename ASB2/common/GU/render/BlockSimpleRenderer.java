@@ -36,6 +36,19 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             renderer.setRenderBounds(-.001, -.001, -.001, 1.001, 1.001, 1.001);
             UtilRender.renderStandardInvBlock(renderer, block, EnumState.NONE.getStateIcon());
         }
+        
+//        if (block.blockID == BlockRegistry.BlockItemStand.blockID) {
+//            
+//            renderer.setRenderBounds(0, .85, 0, 1, 1, 1);
+//            UtilRender.renderStandardInvBlock(renderer, block, meta);
+//            
+//            renderer.setRenderBounds(.25, .2, .25, .75, .85, .75);
+//            UtilRender.renderStandardInvBlock(renderer, block, meta);
+//            
+//            renderer.setRenderBounds(0, 0, 0, 1, .2, 1);
+//            UtilRender.renderStandardInvBlock(renderer, block, meta);
+//            return;
+//        }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderStandardInvBlock(renderer, block, meta);
     }
@@ -79,6 +92,19 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             
             return true;
         }
+        
+//        if (block.blockID == BlockRegistry.BlockItemStand.blockID) {
+//            
+//            renderer.setRenderBounds(0, .85, 0, 1, 1, 1);
+//            UtilRender.renderMetadataBlock(block, world.getBlockMetadata(x, y, z), x, y, z, renderer, world);
+//            
+//            renderer.setRenderBounds(.25, .2, .25, .75, .85, .75);
+//            UtilRender.renderMetadataBlock(block, world.getBlockMetadata(x, y, z), x, y, z, renderer, world);
+//            
+//            renderer.setRenderBounds(0, 0, 0, 1, .2, 1);
+//            UtilRender.renderMetadataBlock(block, world.getBlockMetadata(x, y, z), x, y, z, renderer, world);
+//            return true;
+//        }
         
         TileEntity tile = world.getBlockTileEntity(x, y, z);
         

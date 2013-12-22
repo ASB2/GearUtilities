@@ -22,14 +22,14 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
-
+    
     @Override
     public void register() {
-
+        
         Models.initModels();
         SoundHandler.init();
         EntityRegistry.initClient();
-
+        
         ClientRegistry.bindTileEntitySpecialRenderer(TileMultiPanel.class, new MultiPanelRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockMultiPanel.blockID, new MultiPanelRenderer());
         
@@ -37,22 +37,21 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockQuantaSender.blockID, new QuantSenderRenderer());
         
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
-        
         RenderingRegistry.registerBlockHandler(new BlockSimpleRenderer());
     }
-
+    
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-
+        
         TileEntity tile = world.getBlockTileEntity(x, y, z);
-
-        if(tile != null) {
-
-            switch(ID) {
-
+        
+        if (tile != null) {
+            
+            switch (ID) {
+            
                 case Gui.ADVANCED_POTION_BREWERY:
                     return new GuiAdvancedPotionBrewery(player.inventory, tile);
-
+                    
                 case Gui.MULTI_PANEL:
                     return new GuiMultiPanel(player.inventory, tile);
             }
