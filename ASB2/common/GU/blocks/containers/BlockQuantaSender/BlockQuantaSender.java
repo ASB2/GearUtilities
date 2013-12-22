@@ -1,10 +1,16 @@
 package GU.blocks.containers.BlockQuantaSender;
 
+import java.awt.Color;
+import java.util.Random;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import GU.blocks.containers.*;
+import ASB2.utils.UtilEntity;
+import GU.blocks.containers.ContainerBase;
+import GU.entity.FXBase;
+import GU.info.Particles;
 
 public class BlockQuantaSender extends ContainerBase {
     
@@ -25,5 +31,11 @@ public class BlockQuantaSender extends ContainerBase {
     public TileEntity createNewTileEntity(World world) {
         
         return new TileQuantaSender();
+    }
+    
+    @Override
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
+        
+//        UtilEntity.spawnFX(new FXBase(world, x, y, z, rand.nextInt(), rand.nextInt(), rand.nextInt(), 10, Particles.TEST_PARTICLE, Color.WHITE));
     }
 }

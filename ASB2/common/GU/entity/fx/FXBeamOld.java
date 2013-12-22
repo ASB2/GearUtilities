@@ -7,8 +7,6 @@ import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
-import ASB2.utils.UtilRender;
-import GU.info.Particles;
 import ASB2.vector.Vector3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -113,7 +111,7 @@ public class FXBeamOld extends EntityFX {
             op = 0.5F - (4 - (this.particleMaxAge - this.particleAge)) * 0.1F;
         }
         
-        UtilRender.renderTexture(Particles.BEAM_FX);
+//        UtilRender.renderTexture(Particles.BEAM_FX);
         
         GL11.glTexParameterf(3553, 10242, 10497.0F);
         GL11.glTexParameterf(3553, 10243, 10497.0F);

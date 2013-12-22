@@ -96,52 +96,40 @@ public class ItemRegistry {
         addItem(ItemBrewedPotion, "Brewed Potion", "ItemBrewedPotion");
         
         ItemCharcoalSword = new SwordBase(config.getItem("ItemCharcoalSword", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.STONE, Reference.MODDID + ":ItemCharcoalSword");
-        LanguageRegistry.addName(ItemCharcoalSword, "Charcoal Sword");
-        ItemCharcoalSword.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemCharcoalSword, "Charcoal Sword", "ItemCharcoalSword");
         
         ItemCharcoalPickaxe = new PickaxeBase(config.getItem("ItemCharcoalPickaxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.STONE, Reference.MODDID + ":ItemCharcoalPickaxe");
-        LanguageRegistry.addName(ItemCharcoalPickaxe, "Charcoal Pickaxe");
-        ItemCharcoalPickaxe.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemCharcoalPickaxe, "Charcoal Pickaxe", "ItemCharcoalPickaxe");
         
         ItemCharcoalShovel = new ShovelBase(config.getItem("ItemCharcoalShovel", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.STONE, Reference.MODDID + ":ItemCharcoalShovel");
-        LanguageRegistry.addName(ItemCharcoalShovel, "Charcoal Shovel");
-        ItemCharcoalShovel.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemCharcoalShovel, "Charcoal Shovel", "ItemCharcoalShovel");
         
         ItemCharcoalAxe = new AxeBase(config.getItem("ItemCharcoalAxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.STONE, Reference.MODDID + ":ItemCharcoalAxe");
-        LanguageRegistry.addName(ItemCharcoalAxe, "Charcoal Axe");
-        ItemCharcoalAxe.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemCharcoalAxe, "Charcoal Axe", "ItemCharcoalAxe");
         
         ItemGarnetSword = new SwordBase(config.getItem("ItemGarnetSword", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemGarnetSword");
-        LanguageRegistry.addName(ItemGarnetSword, "Garnet Sword");
-        ItemGarnetSword.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemGarnetSword, "Garnet Sword", "ItemGarnetSword");
         
         ItemGarnetPickaxe = new PickaxeBase(config.getItem("ItemGarnetPickaxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemGarnetPickaxe");
-        LanguageRegistry.addName(ItemGarnetPickaxe, "Garnet Pickaxe");
-        ItemGarnetPickaxe.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemGarnetPickaxe, "Garnet Pickaxe", "ItemGarnetPickaxe");
         
         ItemGarnetShovel = new ShovelBase(config.getItem("ItemGarnetShovel", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemGarnetShovel");
-        LanguageRegistry.addName(ItemGarnetShovel, "Garnet Shovel");
-        ItemGarnetShovel.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemGarnetShovel, "Garnet Shovel", "ItemGarnetShovel");
         
         ItemGarnetAxe = new AxeBase(config.getItem("ItemGarnetAxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemGarnetAxe");
-        LanguageRegistry.addName(ItemGarnetAxe, "Garnet Axe");
-        ItemGarnetAxe.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemGarnetAxe, "Garnet Axe", "ItemGarnetAxe");
         
         ItemGarnetHoe = new HoeBase(config.getItem("ItemGarnetHoe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemGarnetHoe");
-        LanguageRegistry.addName(ItemGarnetHoe, "Garnet Hoe");
-        ItemGarnetHoe.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemGarnetHoe, "Garnet Hoe", "ItemGarnetHoe");
         
         ItemGarnetScythe = new ScytheBase(config.getItem("ItemGarnetScythe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemGarnetScythe");
-        LanguageRegistry.addName(ItemGarnetScythe, "Garnet Scythe");
-        ItemGarnetScythe.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemGarnetScythe, "Garnet Scythe", "ItemGarnetScythe");
         
         ItemSmoothStoneSword = new SwordBase(config.getItem("ItemSmoothStoneSword", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemSmoothStoneSword");
-        LanguageRegistry.addName(ItemSmoothStoneSword, "Smooth Stone Sword");
-        ItemSmoothStoneSword.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemSmoothStoneSword, "Smooth Stone Sword", "ItemSmoothStoneSword");
         
         ItemSmoothStonePickaxe = new PickaxeBase(config.getItem("ItemSmoothStonePickaxe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemSmoothStonePickaxe");
-        LanguageRegistry.addName(ItemSmoothStonePickaxe, "Smooth Stone Pickaxe");
-        ItemSmoothStonePickaxe.setCreativeTab(GearUtilities.tabGUItems);
+        addItem(ItemSmoothStonePickaxe, "Smooth Stone Pickaxe", "ItemSmoothStonePickaxe");
         
         ItemSmoothStoneShovel = new ShovelBase(config.getItem("ItemSmoothStoneShovel", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemSmoothStoneShovel");
         addItem(ItemSmoothStoneShovel, "Smooth Stone Shovel", "ItemSmoothStoneShovel");

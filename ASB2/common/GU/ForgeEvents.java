@@ -22,6 +22,7 @@ import GU.fluid.FluidBase;
 import GU.info.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import GU.info.*;
 
 public class ForgeEvents {
     
@@ -51,6 +52,8 @@ public class ForgeEvents {
             EnumState.SIDES[2] = event.map.registerIcon(Reference.MODDID + ":sides/BlockBoth");
             EnumState.SIDES[3] = event.map.registerIcon(Reference.MODDID + ":sides/BlockNone");
         }
+        
+        Particles.register(event);
     }
     
     @ForgeSubscribe
