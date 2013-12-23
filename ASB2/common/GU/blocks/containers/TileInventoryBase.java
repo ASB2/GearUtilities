@@ -8,7 +8,7 @@ public class TileInventoryBase extends TileBase implements IInventory {
     
     public TileInventoryBase() {
         
-        tileInventory = new Inventory(8, Inventory.STANDARD_STACKSIZE, "Inventory Base", true);
+        tileInventory = new Inventory(0, "Inventory Base", true);
     }
     
     @Override

@@ -19,15 +19,16 @@ import GU.items.ItemGearReader;
 import GU.items.ItemLifeStealingBludgeoningStick;
 import GU.items.ItemLinker;
 import GU.items.ItemPhantomPlacer;
+import GU.items.ItemShifter;
 import GU.items.ItemTeleporter;
 import GU.items.ItemTestItem;
 import GU.items.ItemTradeStick;
 import GU.items.ItemCrystalShards.ItemCrystal;
+import GU.items.ItemFocusGem.ItemFocusGem;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
 import GU.items.potionIngredients.ItemPotionIngredients;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import GU.items.*;
 
 public class ItemRegistry {
     
@@ -50,6 +51,7 @@ public class ItemRegistry {
     public static ItemBase ItemHandheldTank;
     public static Item ItemSmoothStoneSword, ItemSmoothStonePickaxe, ItemSmoothStoneShovel, ItemSmoothStoneAxe, ItemSmoothStoneHoe;
     public static ItemBase ItemShifter;
+    public static ItemBase ItemFocusGem;
     
     private static int id = 5000;
     
@@ -142,6 +144,9 @@ public class ItemRegistry {
         
         ItemShifter = new ItemShifter(config.getItem("ItemShifter", ItemRegistry.getNextBaseID()).getInt());
         addItem(ItemShifter, "Shifter", "ItemShifter");
+        
+        ItemFocusGem = new ItemFocusGem(config.getItem("ItemFocusGem", ItemRegistry.getNextBaseID()).getInt());
+        addItem(ItemFocusGem, "Focus Gem", "ItemFocusGem");
     }
     
     public static ItemBase addItem(ItemBase item, String ign, String unlocalized) {

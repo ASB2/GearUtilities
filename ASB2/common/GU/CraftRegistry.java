@@ -3,8 +3,6 @@ package GU;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -19,6 +17,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class CraftRegistry {
     
     public static void init() {
+        
         OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.beefCooked));
         OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.beefRaw));
         OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.chickenCooked));
@@ -51,9 +50,13 @@ public class CraftRegistry {
         
         'W', Item.swordIron, 'C', Block.workbench, 'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard, 'A', ItemRegistry.ItemAdvancedStick, 'S', Item.stick }));
         
-//        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockStructureCube, 1, 0), new Object[] { "", "ABA", "ASA",
-//        
-//        'W', Item.swordIron, 'C', Block.workbench, 'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard, 'A', ItemRegistry.ItemAdvancedStick, 'S', Item.stick }));
+        // GameRegistry.addRecipe(new ShapedOreRecipe(new
+        // ItemStack(BlockRegistry.BlockStructureCube, 1, 0), new Object[] { "",
+        // "ABA", "ASA",
+        //
+        // 'W', Item.swordIron, 'C', Block.workbench, 'B',
+        // ItemRegistry.ItemCrystal.ItemBloodCrystalShard, 'A',
+        // ItemRegistry.ItemAdvancedStick, 'S', Item.stick }));
         // CraftingManager.getInstance().getRecipeList().add(new
         // ShapedOreRecipe(new ItemStack(file.bioMass), new Object[]{"XXX",
         // "XXX", "XXX", Character.valueOf('X'), "bioMass"}));
@@ -90,8 +93,8 @@ public class CraftRegistry {
         UtilRecipe.addHoe(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStoneHoe));
         
         initTempRecipes();
-        initTempRecipesBlood();
         initGrinderRecipies();
+        
     }
     
     public static void initTempRecipes() {
@@ -147,16 +150,6 @@ public class CraftRegistry {
         'C', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'Q', Item.netherQuartz, 'F', Block.furnaceIdle, 'S', base }));
         
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockMultiPanel), base);
-    }
-    
-    public static void initTempRecipesBlood() {
-        
-        GameRegistry.addShapelessRecipe(FluidContainerRegistry.fillFluidContainer(new FluidStack(GU.FluidRegistry.Blood, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal)), new ItemStack(ItemRegistry.ItemStorageCrystal), ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard, ItemRegistry.ItemCrystal.ItemPlantBloodCrystalShard);
-        GameRegistry.addShapelessRecipe(FluidContainerRegistry.fillFluidContainer(new FluidStack(GU.FluidRegistry.Blood, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal)), new ItemStack(ItemRegistry.ItemStorageCrystal), ItemRegistry.ItemCrystal.ItemBloodCrystalShard, ItemRegistry.ItemCrystal.ItemBloodCrystalShard, ItemRegistry.ItemCrystal.ItemBloodCrystalShard, ItemRegistry.ItemCrystal.ItemBloodCrystalShard);
-        
-        GameRegistry.addRecipe(new ShapedOreRecipe(FluidContainerRegistry.fillFluidContainer(new FluidStack(GU.FluidRegistry.MeatMash, 1000), new ItemStack(ItemRegistry.ItemStorageCrystal)), new Object[] { "BBB", "BSB", "BBB",
-        
-        'B', Reference.MISC_MEAT, 'S', ItemRegistry.ItemStorageCrystal }));
     }
     
     public static void initGrinderRecipies() {

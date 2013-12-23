@@ -15,6 +15,7 @@ import GU.blocks.containers.BlockQuantaSender.QuantSenderRenderer;
 import GU.blocks.containers.BlockQuantaSender.TileQuantaSender;
 import GU.info.Gui;
 import GU.info.Models;
+import GU.items.ItemFocusGem.FocusGemRenderer;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import GU.render.BlockSimpleRenderer;
 import GU.sounds.SoundHandler;
@@ -30,14 +31,16 @@ public class ClientProxy extends CommonProxy {
         SoundHandler.init();
         EntityRegistry.initClient();
         
+        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
+        RenderingRegistry.registerBlockHandler(new BlockSimpleRenderer());
+        
         ClientRegistry.bindTileEntitySpecialRenderer(TileMultiPanel.class, new MultiPanelRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockMultiPanel.blockID, new MultiPanelRenderer());
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileQuantaSender.class, new QuantSenderRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockQuantaSender.blockID, new QuantSenderRenderer());
         
-        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
-        RenderingRegistry.registerBlockHandler(new BlockSimpleRenderer());
+        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemFocusGem.itemID, new FocusGemRenderer());        
     }
     
     @Override
