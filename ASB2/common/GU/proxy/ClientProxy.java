@@ -8,6 +8,8 @@ import GU.BlockRegistry;
 import GU.EntityRegistry;
 import GU.ItemRegistry;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.GuiAdvancedPotionBrewery;
+import GU.blocks.containers.BlockEssenceDiffuser.EssenceDiffuserRenderer;
+import GU.blocks.containers.BlockEssenceDiffuser.TileEssenceDiffuser;
 import GU.blocks.containers.BlockMultiPanel.GuiMultiPanel;
 import GU.blocks.containers.BlockMultiPanel.MultiPanelRenderer;
 import GU.blocks.containers.BlockMultiPanel.TileMultiPanel;
@@ -15,7 +17,6 @@ import GU.blocks.containers.BlockQuantaSender.QuantSenderRenderer;
 import GU.blocks.containers.BlockQuantaSender.TileQuantaSender;
 import GU.info.Gui;
 import GU.info.Models;
-import GU.items.ItemFocusGem.FocusGemRenderer;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import GU.render.BlockSimpleRenderer;
 import GU.sounds.SoundHandler;
@@ -40,7 +41,9 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileQuantaSender.class, new QuantSenderRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockQuantaSender.blockID, new QuantSenderRenderer());
         
-        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemFocusGem.itemID, new FocusGemRenderer());        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEssenceDiffuser.class, new EssenceDiffuserRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockEssenceDiffuser.blockID, new EssenceDiffuserRenderer());
+        
     }
     
     @Override

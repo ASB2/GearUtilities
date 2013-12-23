@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -17,39 +16,14 @@ public class FluidRegistry {
     public static List<ItemStack> STORAGE_CRYSTAL_LIST = new ArrayList<ItemStack>();
     public static List<FluidBase> GU_FLUIDS = new ArrayList<FluidBase>();
     
-    public static IconRegister iconProvider;
-    
-    public static FluidBase Blood;
-    public static FluidBase CapturedSoul;
-    
-    public static FluidBase Nutrients;
-    public static FluidBase VegetableMash;
-    public static FluidBase MeatMash;
-    
-    public static FluidBase Vitam;
-    public static FluidBase AerVitam;
-    public static FluidBase TerraeVitam;
-    public static FluidBase IgnisVitam;
-    public static FluidBase AquaVitam;
-    
-    public static FluidBase Steam;
+    public static FluidBase LifeEssenceGas, LifeEssenceLiquid;
     
     public static void initFluids() {
         
-        Blood = new FluidBase("Blood", Color.RED.hashCode());
-        CapturedSoul = new FluidBase("Captured Soul", Color.LIGHT_GRAY.hashCode());
-        Nutrients = new FluidBase("Nutrients", Color.GREEN.hashCode());
-        
-        VegetableMash = new FluidBase("Vegetable Mash", Color.GREEN.hashCode());
-        MeatMash = new FluidBase("Meat Mash", Color.GREEN.hashCode());
-        
-        Vitam = new FluidBase("Vitam", Color.BLUE.hashCode());
-        AerVitam = new FluidBase("Aer Vitam", Color.YELLOW.hashCode());
-        TerraeVitam = new FluidBase("Terrae Vitam", Color.GREEN.hashCode());
-        IgnisVitam = new FluidBase("Ignis Vitam", Color.RED.hashCode());
-        AquaVitam = new FluidBase("Aqua Vitam", Color.BLUE.hashCode());
-        
-        Steam = new FluidBase("Steam", Color.WHITE.hashCode());
+        LifeEssenceGas = new FluidBase("Life Essence Gas", Color.LIGHT_GRAY.hashCode());
+        LifeEssenceGas.setGaseous(true);
+        LifeEssenceGas.setLuminosity(8);
+        LifeEssenceLiquid = new FluidBase("Life Essence Liquid", Color.LIGHT_GRAY.hashCode());
     }
     
     public static void registerFluidContainers() {

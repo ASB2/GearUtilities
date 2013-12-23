@@ -1,6 +1,5 @@
 package GU;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
@@ -19,10 +18,10 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import ASB2.utils.UtilBlock;
 import GU.fluid.FluidBase;
+import GU.info.Particles;
 import GU.info.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import GU.info.*;
 
 public class ForgeEvents {
     
@@ -43,9 +42,6 @@ public class ForgeEvents {
                 base.setStillIcon(stillIcon);
                 base.setFlowingIcon(flowingIcon);
             }
-            
-            FluidRegistry.CapturedSoul.setStillIcon(Block.slowSand.getIcon(0, 0));
-            FluidRegistry.CapturedSoul.setFlowingIcon(Block.slowSand.getIcon(0, 0));
             
             EnumState.SIDES[0] = event.map.registerIcon(Reference.MODDID + ":sides/BlockInput");
             EnumState.SIDES[1] = event.map.registerIcon(Reference.MODDID + ":sides/BlockOutput");

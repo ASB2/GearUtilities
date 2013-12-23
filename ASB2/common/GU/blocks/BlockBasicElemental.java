@@ -8,18 +8,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilBlock;
-import ASB2.utils.UtilDirection;
-import ASB2.utils.UtilFluid;
 import GU.info.Reference;
 
 public class BlockBasicElemental extends BlockBase {
@@ -288,15 +283,20 @@ public class BlockBasicElemental extends BlockBase {
             
             case BLOOD_CUBE: {
                 
-                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-                    
-                    TileEntity tile = UtilDirection.translateDirectionToTile(world, direction, x, y, z);
-                    
-                    if (tile != null && tile instanceof IFluidHandler) {
-                        
-                        UtilFluid.addFluidToTank((IFluidHandler) tile, direction.getOpposite(), new FluidStack(GU.FluidRegistry.Blood, 100), true);
-                    }
-                }
+                // for (ForgeDirection direction :
+                // ForgeDirection.VALID_DIRECTIONS) {
+                //
+                // TileEntity tile =
+                // UtilDirection.translateDirectionToTile(world, direction, x,
+                // y, z);
+                //
+                // if (tile != null && tile instanceof IFluidHandler) {
+                //
+                // // UtilFluid.addFluidToTank((IFluidHandler) tile,
+                // direction.getOpposite(), new FluidStack(FluidRegistry.Blood,
+                // 100), true);
+                // }
+                // }
                 break;
             }
         }

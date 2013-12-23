@@ -18,5 +18,7 @@ public final class Textures {
     public static final ResourceLocation MULTI_PANEL_ADDITION_7 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelMultiPanel/ModelMultiPanelRenderAddition7.png");
     
     public static final ResourceLocation CRYSTAL_1 = new ResourceLocation(Reference.MODDID + ":textures/models/ModelCrystal1/ModelCrystal1.png");
-    public static final ResourceLocation FOCUS_GEM = new ResourceLocation(Reference.MODDID + ":textures/models/FocusGem.png");
+    
+    public static final ResourceLocation ESSENCE_DIFFUSER_ROTATING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEssenceDiffuser/ModelEssenceDiffuserRotating.png");
+    public static final ResourceLocation ESSENCE_DIFFUSER_STAND = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEssenceDiffuser/ModelEssenceDiffuserStand.png");
 }

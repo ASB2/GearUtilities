@@ -1,32 +1,29 @@
-package GU.blocks.containers.BlockMultiPanel;
+package GU.blocks.containers.BlockEssenceDiffuser;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.common.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
-import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilRender;
-import ASB2.vector.Vector3;
+import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
 
-public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
+public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
     
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
         
-        TileMultiPanel tile = (TileMultiPanel) tileentity;
+        float scale = .5f;
         
         GL11.glPushMatrix();
-        GL11.glDisable(GL11.GL_LIGHTING);
         
-        switch (ForgeDirection.getOrientation(new Vector3(tileentity).getBlockMetadata(tileentity.worldObj))) {
+        switch (((TileBase) tileentity).getOrientation()) {
         
             case UP: {
                 
@@ -35,7 +32,7 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
             }
             case DOWN: {
                 
-                GL11.glTranslatef((float) x + 0.5F, (float) y + .94F, (float) z + .5F);
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .97F, (float) z + .5F);
                 GL11.glRotatef(180F, 1F, 0F, 0F);
                 break;
             }
@@ -69,12 +66,14 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
             }
         }
         
-        GL11.glScalef(.5f, .5f, .5f);
+        GL11.glScalef(scale, scale, scale);
         
-        UtilRender.renderTexture(Textures.MULTI_PANEL);
-        Models.ModelMultiPanel.renderPart("Panel");
+        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_STAND);
+        Models.ModelEssenceDiffuser.renderPart("Stand");
         
-        GL11.glRotatef(Minecraft.getSystemTime() / (Reference.ANIMATION_SPEED + 10), 0F, 1F, 0F);
+        GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
+        
+        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
         
         for (int i = 0; i < 4; i++) {
             
@@ -104,63 +103,41 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
                     break;
                 }
             }
+            Models.ModelEssenceDiffuser.renderPart("Rotating");
+        }
+        
+        GL11.glTranslated(0, -.5f, 0);
+        for (int i = 0; i < 4; i++) {
             
-            switch (tile.getMode()) {
+            switch (i) {
             
+                case 0: {
+                    
+                    GL11.glRotatef(0F, 0F, 1F, 0F);
+                    break;
+                }
+                
                 case 1: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_1);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_1");
+                    GL11.glRotatef(90F, 0F, 1F, 0F);
                     break;
                 }
                 
                 case 2: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_2);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_2");
+                    GL11.glRotatef(180F, 0F, 1F, 0F);
                     break;
                 }
                 
                 case 3: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_3);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_3");
-                    break;
-                }
-                
-                case 4: {
-                    
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_4);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_4");
-                    break;
-                }
-                
-                case 5: {
-                    
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_5);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_5");
-                    break;
-                }
-                
-                case 6: {
-                    
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_6);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_6");
-                    break;
-                }
-                
-                case 7: {
-                    
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_7);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_7");
+                    GL11.glRotatef(90F, 0F, -1F, 0F);
                     break;
                 }
             }
+            Models.ModelEssenceDiffuser.renderPart("Rotating");
         }
-        
-        GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
-        
     }
     
     @Override
@@ -182,7 +159,7 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
         
             case ENTITY: {
                 
-                renderItemSwitched(type, item, 0f, 0, 0f, .7F);
+                renderItemSwitched(type, item, 0f, 0 - .3f, 0f, .9F);
                 return;
             }
             
@@ -194,13 +171,13 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
             
             case INVENTORY: {
                 
-                renderItemSwitched(type, item, 0f, 0f, 0f, .5F);
+                renderItemSwitched(type, item, 0f, 0f, 0f, .6F);
                 return;
             }
             
             case EQUIPPED_FIRST_PERSON: {
                 
-                renderItemSwitched(type, item, -.5F, 0f, 0f + .5F, .5F);
+                renderItemSwitched(type, item, -.5F, 1f, .5F, .5F);
                 return;
             }
             
@@ -217,11 +194,12 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
         
-        UtilRender.renderTexture(Textures.MULTI_PANEL);
-        Models.ModelMultiPanel.renderPart("Panel");
+        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_STAND);
+        Models.ModelEssenceDiffuser.renderPart("Stand");
         
-        GL11.glRotatef(Minecraft.getSystemTime() / (Reference.ANIMATION_SPEED + 10), 0F, 1F, 0F);
+        GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         
+        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
         for (int i = 0; i < 4; i++) {
             
             switch (i) {
@@ -250,59 +228,41 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
                     break;
                 }
             }
+            Models.ModelEssenceDiffuser.renderPart("Rotating");
+        }
+        
+        GL11.glTranslatef(0, -.5f, 0);
+        for (int i = 0; i < 4; i++) {
             
-            switch (UtilItemStack.getNBTTagInt(item, "mode")) {
+            switch (i) {
             
+                case 0: {
+                    
+                    GL11.glRotatef(0F, 0F, 1F, 0F);
+                    break;
+                }
+                
                 case 1: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_1);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_1");
+                    GL11.glRotatef(90F, 0F, 1F, 0F);
                     break;
                 }
                 
                 case 2: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_2);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_2");
+                    GL11.glRotatef(180F, 0F, 1F, 0F);
                     break;
                 }
                 
                 case 3: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_3);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_3");
-                    break;
-                }
-                
-                case 4: {
-                    
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_4);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_4");
-                    break;
-                }
-                
-                case 5: {
-                    
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_5);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_5");
-                    break;
-                }
-                
-                case 6: {
-                    
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_6);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_6");
-                    break;
-                }
-                
-                case 7: {
-                    
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_7);
-                    Models.ModelMultiPanel.renderPart("Render_Addition_7");
+                    GL11.glRotatef(90F, 0F, -1F, 0F);
                     break;
                 }
             }
+            Models.ModelEssenceDiffuser.renderPart("Rotating");
         }
+        
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }
