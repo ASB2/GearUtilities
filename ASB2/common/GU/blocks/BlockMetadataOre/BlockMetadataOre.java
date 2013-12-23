@@ -40,6 +40,7 @@ public class BlockMetadataOre extends BlockBase {
     public BlockMetadataOre(int id, Material material) {
         super(id, material);
         
+        this.specialMetadata = true;
         GameRegistry.registerBlock(this, ItemBlockMetadataBlock.class, this.getUnlocalizedName());
         
         LanguageRegistry.addName(BlockAirCrystalOre, "Air Crystal Ore");
@@ -76,7 +77,6 @@ public class BlockMetadataOre extends BlockBase {
     
     @Override
     public int onBlockPlaced(World world, int x, int y, int z, int sideHit, float hitX, float hitY, float hitZ, int metaData) {
-        
         return 0;
     }
     
