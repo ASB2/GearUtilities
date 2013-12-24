@@ -134,7 +134,7 @@ public class Inventory implements IInventory {
         return true;
     }
     
-    public void save(NBTTagCompound tag) {
+    public NBTTagCompound save(NBTTagCompound tag) {
         
         NBTTagList nbttaglist = new NBTTagList();
         
@@ -149,6 +149,7 @@ public class Inventory implements IInventory {
             }
         }
         tag.setTag("Items", nbttaglist);
+        return tag;
     }
     
     public void load(NBTTagCompound tag) {

@@ -66,11 +66,12 @@ public class CentrifugeRenderer extends TileEntitySpecialRenderer implements IIt
             }
         }
         
-        GL11.glScalef(.3f, .4f, .3f);
+        GL11.glScalef(.35f, .4f, .35f);
         
-        UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE);
-        Models.ModelCentrifgue.renderPart("Bottom");
+        UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE_TOP);
         Models.ModelCentrifgue.renderPart("Top");
+        UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE_BOTTOM);
+        Models.ModelCentrifgue.renderPart("Bottom");
         
         UtilRender.renderTexture(Textures.CENTRIFUGE_CENTER);
         Models.ModelCentrifgue.renderPart("Center");
@@ -79,9 +80,10 @@ public class CentrifugeRenderer extends TileEntitySpecialRenderer implements IIt
         
         UtilRender.renderTexture(Textures.CENTRIFUGE_ROTATING);
         
-        // GL11.glTranslatef(0, .5f, 0);
-        
         for (int i = 0; i < 4; i++) {
+            
+            // GL11.glRotatef(45 * i, 0, 0, 0);
+            // Models.ModelCentrifgue.renderPart("Rotating");
             
             switch (i) {
             
@@ -167,9 +169,10 @@ public class CentrifugeRenderer extends TileEntitySpecialRenderer implements IIt
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale + .1f, scale);
         
-        UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE);
-        Models.ModelCentrifgue.renderPart("Bottom");
+        UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE_TOP);
         Models.ModelCentrifgue.renderPart("Top");
+        UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE_BOTTOM);
+        Models.ModelCentrifgue.renderPart("Bottom");
         
         UtilRender.renderTexture(Textures.CENTRIFUGE_CENTER);
         Models.ModelCentrifgue.renderPart("Center");

@@ -48,7 +48,7 @@ public final class GearUtilities {
     public static CreativeTabs tabGUItems = new GUCreativeTab(Reference.NAME + ": Items");
     public static CreativeTabs tabGUFluids = new GUCreativeTab(Reference.NAME + ": Fluids");
     
-    @EventHandler
+    @EventHandler   
     public void preInit(FMLPreInitializationEvent event) {
         
         instance = this;

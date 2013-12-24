@@ -18,7 +18,7 @@ public class TileEssenceDiffuser extends TileFluidBase {
     @Override
     public void updateEntity() {
         
-        if (worldObj.rand.nextInt(1000) == 1) {
+        if (worldObj.rand.nextInt(500) == 1) {
             UtilFluid.addFluidToTank(this, this.getOrientation(), new FluidStack(GU.FluidRegistry.LifeEssenceGas, 100), true);
         }
         

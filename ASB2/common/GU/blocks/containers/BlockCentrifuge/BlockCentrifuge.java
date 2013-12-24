@@ -13,6 +13,8 @@ public class BlockCentrifuge extends ContainerBase {
         this.useStandardRendering = false;
         this.setLightOpacity(0);
         this.registerTile(TileCentrifuge.class);
+        this.maxWidth = .75f;
+        this.minWidth = .25f;
     }
     
     @Override
@@ -23,8 +25,7 @@ public class BlockCentrifuge extends ContainerBase {
     
     @Override
     public TileEntity createNewTileEntity(World world) {
-
+        
         return new TileCentrifuge();
     }
-    
 }

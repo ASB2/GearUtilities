@@ -145,7 +145,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
         super.readFromNBT(tag);
         
         if (fluidTank != null)
-            fluidTank.readFromNBT(tag);
+            fluidTank.readFromNBT(tag.getCompoundTag("fluidTank"));
         
         if (color == VanillaColor.NONE || color == null)
             color = VanillaColor.values()[tag.getInteger("color")];
@@ -172,7 +172,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
         super.writeToNBT(tag);
         
         if (fluidTank != null)
-            fluidTank.writeToNBT(tag);
+            tag.setCompoundTag("fluidTank", fluidTank.writeToNBT(new NBTTagCompound()));
         
         if (this.getColorEnum() != VanillaColor.NONE)
             tag.setInteger("color", this.getColorEnum().ordinal());

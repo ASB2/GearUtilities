@@ -26,28 +26,25 @@ public class TileFluidProvider extends TileBase implements IFluidHandler {
     @Override
     public void updateEntity() {
         
-        if (!worldObj.isRemote) {
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
             
-            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+            
+            if (tile != null) {
                 
-                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
-                
-                if (tile != null) {
+                if (tile instanceof IFluidHandler) {
                     
-                    if (tile instanceof IFluidHandler) {
+                    IFluidHandler fTile = (IFluidHandler) tile;
+                    
+                    if (this.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
                         
-                        IFluidHandler fTile = (IFluidHandler) tile;
-                        
-                        if (this.getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
+                        if (fluidTank.getFluid() != null) {
                             
-                            if (fluidTank.getFluid() != null) {
-                                
-                                UtilFluid.addFluidToTank(fTile, direction, fluidTank.getFluid(), true);
-                            }
-                        } else if (this.getSideStateArray(direction.ordinal()) == EnumState.INPUT) {
-                            
-                            UtilFluid.removeFluidFromTank(fTile, direction, fluidTank.getFluid(), true);
+                            UtilFluid.addFluidToTank(fTile, direction, fluidTank.getFluid(), true);
                         }
+                    } else if (this.getSideStateArray(direction.ordinal()) == EnumState.INPUT) {
+                        
+                        UtilFluid.removeFluidFromTank(fTile, direction, 100, true);
                     }
                 }
             }

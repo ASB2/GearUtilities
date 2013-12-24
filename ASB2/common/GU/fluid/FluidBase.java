@@ -5,7 +5,6 @@ import net.minecraftforge.fluids.Fluid;
 
 public class FluidBase extends Fluid {
     
-    Icon texture;
     int hexColor;
     
     public FluidBase(String fluidName, int hexColor) {
@@ -17,16 +16,9 @@ public class FluidBase extends Fluid {
     
     public Fluid setIcon(Icon icon) {
         
-        texture = icon;
         this.setStillIcon(icon);
         this.setFlowingIcon(icon);
         return this;
-    }
-    
-    @Override
-    public Icon getIcon() {
-        
-        return texture;
     }
     
     @Override
