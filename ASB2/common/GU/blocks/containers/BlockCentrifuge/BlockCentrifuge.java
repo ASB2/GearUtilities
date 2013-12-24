@@ -1,23 +1,18 @@
-package GU.blocks.containers.BlockEssenceDiffuser;
+package GU.blocks.containers.BlockCentrifuge;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import GU.blocks.containers.ContainerBase;
+import GU.blocks.containers.*;
 
-public class BlockEssenceDiffuser extends ContainerBase {
+public class BlockCentrifuge extends ContainerBase {
     
-    public BlockEssenceDiffuser(int id, Material material) {
+    public BlockCentrifuge(int id, Material material) {
         super(id, material);
-        
         this.useStandardRendering = false;
-        this.registerTile(TileEssenceDiffuser.class);
         this.setLightOpacity(0);
-        
-        this.maxHeight = .6f;
-        this.maxWidth = .75f;
-        this.minWidth = .25f;
+        this.registerTile(TileCentrifuge.class);
     }
     
     @Override
@@ -28,7 +23,8 @@ public class BlockEssenceDiffuser extends ContainerBase {
     
     @Override
     public TileEntity createNewTileEntity(World world) {
-        
-        return new TileEssenceDiffuser();
+
+        return new TileCentrifuge();
     }
+    
 }

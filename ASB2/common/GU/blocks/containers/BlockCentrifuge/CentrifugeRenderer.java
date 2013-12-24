@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockEssenceDiffuser;
+package GU.blocks.containers.BlockCentrifuge;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -14,14 +14,12 @@ import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
 
-public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
+public class CentrifugeRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
     
-    public static EssenceDiffuserRenderer instance = new EssenceDiffuserRenderer();
+    public static CentrifugeRenderer instance = new CentrifugeRenderer();
     
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
-        
-        float scale = .5f;
         
         GL11.glPushMatrix();
         
@@ -29,37 +27,37 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         
             case UP: {
                 
-                GL11.glTranslatef((float) x + 0.5F, (float) y + .07f, (float) z + .5F);
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5f, (float) z + .5F);
                 break;
             }
             case DOWN: {
                 
-                GL11.glTranslatef((float) x + 0.5F, (float) y + .93F, (float) z + .5F);
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5f, (float) z + .5F);
                 GL11.glRotatef(180F, 1F, 0F, 0F);
                 break;
             }
             
             case SOUTH: {
                 
-                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + 0.07F);
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + 0.5F);
                 GL11.glRotatef(90F, 1F, 0F, 0F);
                 break;
             }
             case NORTH: {
                 
-                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + .93F);
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + .5f);
                 GL11.glRotatef(-90F, 1F, 0F, 0F);
                 break;
             }
             case WEST: {
                 
-                GL11.glTranslatef((float) x + .94F, (float) y + .5F, (float) z + .5F);
+                GL11.glTranslatef((float) x + .5f, (float) y + .5F, (float) z + .5F);
                 GL11.glRotatef(90F, 0F, 0F, 1F);
                 break;
             }
             case EAST: {
                 
-                GL11.glTranslatef((float) x + .07F, (float) y + .5F, (float) z + .5F);
+                GL11.glTranslatef((float) x + .5f, (float) y + .5F, (float) z + .5F);
                 GL11.glRotatef(-90F, 0F, 0F, 1F);
                 break;
             }
@@ -68,14 +66,20 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
             }
         }
         
-        GL11.glScalef(scale, scale, scale);
+        GL11.glScalef(.3f, .4f, .3f);
         
-        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_STAND);
-        Models.ModelEssenceDiffuser.renderPart("Stand");
+        UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE);
+        Models.ModelCentrifgue.renderPart("Bottom");
+        Models.ModelCentrifgue.renderPart("Top");
+        
+        UtilRender.renderTexture(Textures.CENTRIFUGE_CENTER);
+        Models.ModelCentrifgue.renderPart("Center");
         
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         
-        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
+        UtilRender.renderTexture(Textures.CENTRIFUGE_ROTATING);
+        
+        // GL11.glTranslatef(0, .5f, 0);
         
         for (int i = 0; i < 4; i++) {
             
@@ -105,39 +109,7 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
                     break;
                 }
             }
-            Models.ModelEssenceDiffuser.renderPart("Rotating");
-        }
-        
-        GL11.glTranslated(0, -.5f, 0);
-        for (int i = 0; i < 4; i++) {
-            
-            switch (i) {
-            
-                case 0: {
-                    
-                    GL11.glRotatef(0F, 0F, 1F, 0F);
-                    break;
-                }
-                
-                case 1: {
-                    
-                    GL11.glRotatef(90F, 0F, 1F, 0F);
-                    break;
-                }
-                
-                case 2: {
-                    
-                    GL11.glRotatef(180F, 0F, 1F, 0F);
-                    break;
-                }
-                
-                case 3: {
-                    
-                    GL11.glRotatef(90F, 0F, -1F, 0F);
-                    break;
-                }
-            }
-            Models.ModelEssenceDiffuser.renderPart("Rotating");
+            Models.ModelCentrifgue.renderPart("Rotating");
         }
         GL11.glPopMatrix();
     }
@@ -161,25 +133,25 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         
             case ENTITY: {
                 
-                renderItemSwitched(type, item, 0f, 0 - .3f, 0f, .9F);
+                renderItemSwitched(type, item, 0f, 0, 0f, .7F);
                 return;
             }
             
             case EQUIPPED: {
                 
-                renderItemSwitched(type, item, 0f, 1, .5f, .7F);
+                renderItemSwitched(type, item, 0f, 1, .5f, .5F);
                 return;
             }
             
             case INVENTORY: {
                 
-                renderItemSwitched(type, item, 0f, -.4f, 0f, .7F);
+                renderItemSwitched(type, item, 0f, 0f, 0f, .4F);
                 return;
             }
             
             case EQUIPPED_FIRST_PERSON: {
                 
-                renderItemSwitched(type, item, -.5F, 1f, .5F, .5F);
+                renderItemSwitched(type, item, -.5F, 1f, .5F, .3F);
                 return;
             }
             
@@ -193,46 +165,19 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         GL11.glPushMatrix();
         
         GL11.glTranslatef(x, y, z);
-        GL11.glScalef(scale, scale, scale);
+        GL11.glScalef(scale, scale + .1f, scale);
         
-        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_STAND);
-        Models.ModelEssenceDiffuser.renderPart("Stand");
+        UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE);
+        Models.ModelCentrifgue.renderPart("Bottom");
+        Models.ModelCentrifgue.renderPart("Top");
+        
+        UtilRender.renderTexture(Textures.CENTRIFUGE_CENTER);
+        Models.ModelCentrifgue.renderPart("Center");
         
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         
-        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
-        for (int i = 0; i < 4; i++) {
-            
-            switch (i) {
-            
-                case 0: {
-                    
-                    GL11.glRotatef(0F, 0F, 1F, 0F);
-                    break;
-                }
-                
-                case 1: {
-                    
-                    GL11.glRotatef(90F, 0F, 1F, 0F);
-                    break;
-                }
-                
-                case 2: {
-                    
-                    GL11.glRotatef(180F, 0F, 1F, 0F);
-                    break;
-                }
-                
-                case 3: {
-                    
-                    GL11.glRotatef(90F, 0F, -1F, 0F);
-                    break;
-                }
-            }
-            Models.ModelEssenceDiffuser.renderPart("Rotating");
-        }
+        UtilRender.renderTexture(Textures.CENTRIFUGE_ROTATING);
         
-        GL11.glTranslatef(0, -.5f, 0);
         for (int i = 0; i < 4; i++) {
             
             switch (i) {
@@ -261,7 +206,7 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
                     break;
                 }
             }
-            Models.ModelEssenceDiffuser.renderPart("Rotating");
+            Models.ModelCentrifgue.renderPart("Rotating");
         }
         GL11.glPopMatrix();
     }

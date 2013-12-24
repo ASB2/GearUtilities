@@ -12,20 +12,21 @@ public class TileEssenceDiffuser extends TileFluidBase {
     
     public TileEssenceDiffuser() {
         
-        this.fluidTank = new FluidTank(1000);
+        this.fluidTank = new FluidTank(GU.FluidRegistry.LifeEssenceGas, 0, 1000);
     }
     
     @Override
     public void updateEntity() {
         
         if (worldObj.rand.nextInt(1000) == 1) {
+            UtilFluid.addFluidToTank(this, this.getOrientation(), new FluidStack(GU.FluidRegistry.LifeEssenceGas, 100), true);
+        }
+        
+        TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
+        
+        if (tile != null && tile instanceof IFluidHandler) {
             
-            TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
-            
-            if (tile != null && tile instanceof IFluidHandler) {
-                
-                UtilFluid.addFluidToTank(((IFluidHandler) tile), this.getOrientation(), new FluidStack(GU.FluidRegistry.LifeEssenceGas, 100), true);
-            }
+            UtilFluid.moveFluid(this, this.getOrientation(), ((IFluidHandler) tile), this.getOrientation().getOpposite(), 100, true);
         }
     }
 }

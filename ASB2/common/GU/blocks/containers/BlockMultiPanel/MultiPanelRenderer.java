@@ -5,18 +5,19 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.common.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilRender;
-import ASB2.vector.Vector3;
+import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
 
 public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
+    
+    public static MultiPanelRenderer instance = new MultiPanelRenderer();
     
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
@@ -26,7 +27,7 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
         
-        switch (ForgeDirection.getOrientation(new Vector3(tileentity).getBlockMetadata(tileentity.worldObj))) {
+        switch (((TileBase) tileentity).getOrientation()) {
         
             case UP: {
                 

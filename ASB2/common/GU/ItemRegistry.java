@@ -6,7 +6,6 @@ import net.minecraftforge.common.Configuration;
 import ASB2.items.AxeBase;
 import ASB2.items.HoeBase;
 import ASB2.items.PickaxeBase;
-import ASB2.items.ScytheBase;
 import ASB2.items.ShovelBase;
 import ASB2.items.SwordBase;
 import GU.info.Reference;
@@ -46,7 +45,7 @@ public class ItemRegistry {
     public static ItemBase ItemPhantomPlacer;
     public static ItemBase ItemBrewedPotion;
     public static Item ItemCharcoalSword, ItemCharcoalPickaxe, ItemCharcoalShovel, ItemCharcoalAxe;
-    public static Item ItemGarnetSword, ItemGarnetPickaxe, ItemGarnetShovel, ItemGarnetAxe, ItemGarnetHoe, ItemGarnetScythe;
+    public static Item ItemGarnetSword, ItemGarnetPickaxe, ItemGarnetShovel, ItemGarnetAxe, ItemGarnetHoe;
     public static ItemBase ItemHandheldTank;
     public static Item ItemSmoothStoneSword, ItemSmoothStonePickaxe, ItemSmoothStoneShovel, ItemSmoothStoneAxe, ItemSmoothStoneHoe;
     public static ItemBase ItemShifter;
@@ -121,9 +120,6 @@ public class ItemRegistry {
         
         ItemGarnetHoe = new HoeBase(config.getItem("ItemGarnetHoe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemGarnetHoe");
         addItem(ItemGarnetHoe, "Garnet Hoe", "ItemGarnetHoe");
-        
-        ItemGarnetScythe = new ScytheBase(config.getItem("ItemGarnetScythe", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemGarnetScythe");
-        addItem(ItemGarnetScythe, "Garnet Scythe", "ItemGarnetScythe");
         
         ItemSmoothStoneSword = new SwordBase(config.getItem("ItemSmoothStoneSword", ItemRegistry.getNextBaseID()).getInt(), EnumToolMaterial.IRON, Reference.MODDID + ":ItemSmoothStoneSword");
         addItem(ItemSmoothStoneSword, "Smooth Stone Sword", "ItemSmoothStoneSword");

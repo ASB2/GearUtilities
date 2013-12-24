@@ -8,6 +8,8 @@ import GU.BlockRegistry;
 import GU.EntityRegistry;
 import GU.ItemRegistry;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.GuiAdvancedPotionBrewery;
+import GU.blocks.containers.BlockCentrifuge.CentrifugeRenderer;
+import GU.blocks.containers.BlockCentrifuge.TileCentrifuge;
 import GU.blocks.containers.BlockEssenceDiffuser.EssenceDiffuserRenderer;
 import GU.blocks.containers.BlockEssenceDiffuser.TileEssenceDiffuser;
 import GU.blocks.containers.BlockMultiPanel.GuiMultiPanel;
@@ -35,15 +37,17 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
         RenderingRegistry.registerBlockHandler(new BlockSimpleRenderer());
         
-        ClientRegistry.bindTileEntitySpecialRenderer(TileMultiPanel.class, new MultiPanelRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockMultiPanel.blockID, new MultiPanelRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileMultiPanel.class, MultiPanelRenderer.instance);
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockMultiPanel.blockID, MultiPanelRenderer.instance);
         
-        ClientRegistry.bindTileEntitySpecialRenderer(TileQuantaSender.class, new QuantSenderRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockQuantaSender.blockID, new QuantSenderRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileQuantaSender.class, QuantSenderRenderer.instance);
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockQuantaSender.blockID, QuantSenderRenderer.instance);
         
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEssenceDiffuser.class, new EssenceDiffuserRenderer());
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockEssenceDiffuser.blockID, new EssenceDiffuserRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEssenceDiffuser.class, EssenceDiffuserRenderer.instance);
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockEssenceDiffuser.blockID, EssenceDiffuserRenderer.instance);
         
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCentrifuge.class, CentrifugeRenderer.instance);
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCentrifuge.blockID, CentrifugeRenderer.instance);
     }
     
     @Override

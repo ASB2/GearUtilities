@@ -15,6 +15,8 @@ import GU.info.Textures;
 
 public class QuantSenderRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
     
+    public static QuantSenderRenderer instance = new QuantSenderRenderer();
+    
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
         

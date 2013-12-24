@@ -14,6 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import GU.GearUtilities;
@@ -30,6 +31,9 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
     protected boolean specialMetadata = false;
     String[] textures = new String[0];
     protected Icon[] icons;
+    
+    protected float minWidth = 0, minHeight = 0;
+    protected float maxWidth = 1, maxHeight = 1;
     
     public ContainerBase(int id, Material material) {
         super(id, material);
@@ -145,6 +149,55 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
         
         this.setBlockBoundsBasedOnState(world, x, y, z);
         return super.getSelectedBoundingBoxFromPool(world, x, y, z);
+    }
+    
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
+        
+        switch (ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z))) {
+        
+            case DOWN: {
+                
+                this.setBlockBounds(minWidth, 1 - minHeight, minWidth, maxWidth, 1 - maxHeight, maxWidth);
+                return;
+            }
+            
+            case UP: {
+                
+                this.setBlockBounds(minWidth, minHeight, minWidth, maxWidth, maxHeight, maxWidth);
+                break;
+            }
+            
+            case NORTH: {
+                
+                this.setBlockBounds(minWidth, minWidth, 1 - maxHeight, maxWidth, maxWidth, 1 - minHeight);
+                break;
+            }
+            
+            case SOUTH: {
+                
+                this.setBlockBounds(minWidth, minWidth, minHeight, maxWidth, maxWidth, maxHeight);
+                break;
+            }
+            
+            case WEST: {
+                
+                this.setBlockBounds(1 - maxHeight, minWidth, minWidth, 1 - minHeight, maxWidth, maxWidth);
+                break;
+            }
+            
+            case EAST: {
+                
+                this.setBlockBounds(maxHeight, minWidth, minWidth, minHeight, maxWidth, maxWidth);
+                break;
+            }
+            
+            default: {
+                
+                this.setBlockBounds(0, 0, 0, 1, 1, 1);
+                break;
+            }
+        }
     }
     
     public boolean canCreatureSpawn(EnumCreatureType type, World world, int x, int y, int z) {

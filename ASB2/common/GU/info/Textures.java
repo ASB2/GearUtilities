@@ -21,4 +21,9 @@ public final class Textures {
     
     public static final ResourceLocation ESSENCE_DIFFUSER_ROTATING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEssenceDiffuser/ModelEssenceDiffuserRotating.png");
     public static final ResourceLocation ESSENCE_DIFFUSER_STAND = new ResourceLocation(Reference.MODDID + ":textures/models/ModelEssenceDiffuser/ModelEssenceDiffuserStand.png");
+
+    public static final ResourceLocation CENTRIFUGE_OUTSIDE = new ResourceLocation(Reference.MODDID + ":textures/models/ModelCentrifuge/ModelCentrifugeOutside.png");
+    public static final ResourceLocation CENTRIFUGE_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelCentrifuge/ModelCentrifugeCenter.png");
+    public static final ResourceLocation CENTRIFUGE_ROTATING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelCentrifuge/ModelCentrifugeRotating.png");
+
 }
