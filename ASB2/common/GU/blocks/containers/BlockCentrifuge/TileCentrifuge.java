@@ -42,25 +42,6 @@ public class TileCentrifuge extends TileFluidBase {
             
             UtilFluid.moveFluid(this, this.getOrientation().getOpposite(), this.getOrientation(), (IFluidHandler) destination, 1, true);
         }
-        
-        // if (source != null && source instanceof IFluidHandler && destination
-        // != null && destination instanceof IFluidHandler) {
-        //
-        // if (UtilFluid.removeFluidFromTank((IFluidHandler) source,
-        // this.getOrientation(), new
-        // FluidStack(GU.FluidRegistry.LifeEssenceGas, 2), false) &&
-        // UtilFluid.addFluidToTank((IFluidHandler) destination,
-        // this.getOrientation().getOpposite(), new
-        // FluidStack(GU.FluidRegistry.LifeEssenceLiquid, 1), false)) {
-        //
-        // UtilFluid.removeFluidFromTank((IFluidHandler) source,
-        // this.getOrientation(), new
-        // FluidStack(GU.FluidRegistry.LifeEssenceGas, 2), true);
-        // UtilFluid.addFluidToTank((IFluidHandler) destination,
-        // this.getOrientation().getOpposite(), new
-        // FluidStack(GU.FluidRegistry.LifeEssenceLiquid, 1), true);
-        // }
-        // }
     }
     
     @Override
