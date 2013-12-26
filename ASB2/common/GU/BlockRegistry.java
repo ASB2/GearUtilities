@@ -12,6 +12,7 @@ import GU.blocks.BlockMetadataOre.BlockMetadataOre;
 import GU.blocks.containers.ContainerBase;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.BlockAdvancedPotionBrewery;
 import GU.blocks.containers.BlockCentrifuge.BlockCentrifuge;
+import GU.blocks.containers.BlockElementalRefinery.BlockElementalRefinery;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockEssenceDiffuser.BlockEssenceDiffuser;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
@@ -45,6 +46,7 @@ public class BlockRegistry {
     public static ContainerBase BlockQuantaSender;
     public static ContainerBase BlockEssenceDiffuser;
     public static ContainerBase BlockCentrifuge;
+    public static ContainerBase BlockElementalRefinery;
     
     private static int id = 500;
     
@@ -102,6 +104,9 @@ public class BlockRegistry {
         
         BlockCentrifuge = new BlockCentrifuge(BlockRegistry.getConfigID(config, "BlockCentrifuge"), Material.rock);
         addBlock(BlockCentrifuge, "Centrifuge", "BlockCentrifuge");
+        
+        BlockElementalRefinery = new BlockElementalRefinery(BlockRegistry.getConfigID(config, "BlockElementalRefinery"), Material.rock);
+        addBlock(BlockElementalRefinery, "Elemental Refinery", "BlockElementalRefinery");
     }
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {

@@ -27,7 +27,7 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     public Wait waitTimer;
     protected EnumState[] sideState;
     public boolean useSidesRendering = true;
-    int[] renderIntegers;
+    public double[] renderDoubles;
     
     public TileBase() {
         

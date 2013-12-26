@@ -26,4 +26,9 @@ public final class Textures {
     public static final ResourceLocation CENTRIFUGE_OUTSIDE_BOTTOM = new ResourceLocation(Reference.MODDID + ":textures/models/ModelCentrifuge/ModelCentrifugeOutsideBottom.png");
     public static final ResourceLocation CENTRIFUGE_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelCentrifuge/ModelCentrifugeCenter.png");
     public static final ResourceLocation CENTRIFUGE_ROTATING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelCentrifuge/ModelCentrifugeRotating.png");
+    
+    public static final ResourceLocation ELEMENTAL_REFINERY_TOP = new ResourceLocation(Reference.MODDID + ":textures/models/ModelElementalRefinery/ModelElementalRefineryTop.png");
+    public static final ResourceLocation ELEMENTAL_REFINERY_BOTTOM = new ResourceLocation(Reference.MODDID + ":textures/models/ModelElementalRefinery/ModelElementalRefineryBottom.png");
+    public static final ResourceLocation ELEMENTAL_REFINERY_CENTER = new ResourceLocation(Reference.MODDID + ":textures/models/ModelElementalRefinery/ModelElementalRefineryCenter.png");
+    public static final ResourceLocation ELEMENTAL_REFINERY_MOVING = new ResourceLocation(Reference.MODDID + ":textures/models/ModelElementalRefinery/ModelElementalRefineryMoving.png");
 }

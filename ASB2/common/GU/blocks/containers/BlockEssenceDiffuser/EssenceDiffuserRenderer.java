@@ -13,6 +13,7 @@ import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
+import GU.render.*;
 
 public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
     
@@ -73,9 +74,10 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_STAND);
         Models.ModelEssenceDiffuser.renderPart("Stand");
         
-        GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
+        GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0f, tileentity.yCoord % 2 == 0 ? -1F : 1f, 0F);
         
-        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
+        // UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
+        BufferedImageTest.bindImage();
         
         for (int i = 0; i < 4; i++) {
             

@@ -10,6 +10,8 @@ import GU.ItemRegistry;
 import GU.blocks.containers.BlockAdvancedPotionBrewery.GuiAdvancedPotionBrewery;
 import GU.blocks.containers.BlockCentrifuge.CentrifugeRenderer;
 import GU.blocks.containers.BlockCentrifuge.TileCentrifuge;
+import GU.blocks.containers.BlockElementalRefinery.ElementalRefineryRenderer;
+import GU.blocks.containers.BlockElementalRefinery.TileElementalRefinery;
 import GU.blocks.containers.BlockEssenceDiffuser.EssenceDiffuserRenderer;
 import GU.blocks.containers.BlockEssenceDiffuser.TileEssenceDiffuser;
 import GU.blocks.containers.BlockMultiPanel.GuiMultiPanel;
@@ -21,9 +23,12 @@ import GU.info.Gui;
 import GU.info.Models;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import GU.render.BlockSimpleRenderer;
+import GU.render.NoiseRenderer;
 import GU.sounds.SoundHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 public class ClientProxy extends CommonProxy {
     
@@ -48,6 +53,11 @@ public class ClientProxy extends CommonProxy {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileCentrifuge.class, CentrifugeRenderer.instance);
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockCentrifuge.blockID, CentrifugeRenderer.instance);
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileElementalRefinery.class, ElementalRefineryRenderer.instance);
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockElementalRefinery.blockID, ElementalRefineryRenderer.instance);
+        
+        TickRegistry.registerTickHandler(new NoiseRenderer(), Side.CLIENT);
     }
     
     @Override

@@ -51,7 +51,7 @@ public abstract class BlockColorable extends ContainerBase {
                         }
                         return true;
                     }
-                } 
+                }
                 // else {
                 //
                 // Color color = ((IColorable)

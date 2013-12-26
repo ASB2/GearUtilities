@@ -159,7 +159,7 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
             case DOWN: {
                 
                 this.setBlockBounds(minWidth, 1 - minHeight, minWidth, maxWidth, 1 - maxHeight, maxWidth);
-                return;
+                break;
             }
             
             case UP: {
