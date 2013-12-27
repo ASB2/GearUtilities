@@ -16,7 +16,7 @@ public class BufferedImageTest {
     
     public static BufferedImage image = null;
     public static DynamicTexture textureImage = new DynamicTexture(BufferedImageTest.getImage());
-    public static ResourceLocation textureLocation = new ResourceLocation(Reference.MODDID.toLowerCase() + ":textures/LargeBlankTexture.png");
+    public static final ResourceLocation textureLocation = new ResourceLocation(Reference.MODDID.toLowerCase() + ":textures/LargeBlankTexture.png");
     
     public BufferedImageTest() {
         
