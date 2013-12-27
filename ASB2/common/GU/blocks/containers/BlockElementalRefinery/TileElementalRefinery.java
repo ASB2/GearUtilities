@@ -10,10 +10,7 @@ public class TileElementalRefinery extends TileFluidBase {
     }
     
     /*
-     * renderDoubles[1] == 0
-     * Moving Down
-     * renderDoubles[1] == 1
-     * Moving Up
+     * renderDoubles[1] == 0 Moving Down renderDoubles[1] == 1 Moving Up
      */
     
     @Override

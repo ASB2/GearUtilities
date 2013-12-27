@@ -1,6 +1,5 @@
 package GU.blocks.containers.BlockElementalRefinery;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -11,7 +10,6 @@ import org.lwjgl.opengl.GL11;
 import ASB2.utils.UtilRender;
 import GU.blocks.containers.TileBase;
 import GU.info.Models;
-import GU.info.Reference;
 import GU.info.Textures;
 
 public class ElementalRefineryRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
@@ -25,8 +23,6 @@ public class ElementalRefineryRenderer extends TileEntitySpecialRenderer impleme
         float scale = .3f;
         
         GL11.glPushMatrix();
-        
-        GL11.glColor4f(1, 1, 1, 1.5f);
         
         switch (((TileBase) tileentity).getOrientation()) {
         
@@ -154,7 +150,7 @@ public class ElementalRefineryRenderer extends TileEntitySpecialRenderer impleme
         UtilRender.renderTexture(Textures.ELEMENTAL_REFINERY_CENTER);
         Models.ModelElementalRefinery.renderPart("Center");
         
-//        GL11.glTranslated(0, ((TileBase) tileentity).renderDoubles[0], 0);
+        // GL11.glTranslated(0, ((TileBase) tileentity).renderDoubles[0], 0);
         
         UtilRender.renderTexture(Textures.ELEMENTAL_REFINERY_MOVING);
         Models.ModelElementalRefinery.renderPart("Moving");
