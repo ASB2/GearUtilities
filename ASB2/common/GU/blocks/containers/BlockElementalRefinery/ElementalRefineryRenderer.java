@@ -19,8 +19,7 @@ public class ElementalRefineryRenderer extends TileEntitySpecialRenderer impleme
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
         
-        float translationAmount = .275f;
-        float scale = .3f;
+        float translationAmount = .43f;
         
         GL11.glPushMatrix();
         
@@ -67,7 +66,7 @@ public class ElementalRefineryRenderer extends TileEntitySpecialRenderer impleme
             }
         }
         
-        GL11.glScalef(scale, scale, scale);
+        GL11.glScalef(.3f, .3f, .3f);
         
         UtilRender.renderTexture(Textures.ELEMENTAL_REFINERY_TOP);
         Models.ModelElementalRefinery.renderPart("Top");

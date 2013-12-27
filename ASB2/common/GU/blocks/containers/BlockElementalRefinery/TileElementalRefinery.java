@@ -18,7 +18,7 @@ public class TileElementalRefinery extends TileFluidBase {
         
         if (renderDoubles[1] == 0) {
             
-            renderDoubles[0] -= .01;
+            renderDoubles[0] -= .04;
             
             if (renderDoubles[0] <= -.8) {
                 
@@ -26,7 +26,7 @@ public class TileElementalRefinery extends TileFluidBase {
             }
         } else {
             
-            renderDoubles[0] += .01;
+            renderDoubles[0] += .04;
             
             if (renderDoubles[0] >= .8) {
                 

@@ -66,7 +66,7 @@ public class CentrifugeRenderer extends TileEntitySpecialRenderer implements IIt
             }
         }
         
-        GL11.glScalef(.35f, .4f, .35f);
+        GL11.glScalef(.3f, .35f, .3f);
         
         UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE_TOP);
         Models.ModelCentrifgue.renderPart("Top");

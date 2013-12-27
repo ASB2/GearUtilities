@@ -39,7 +39,7 @@ public final class GearUtilities {
     @Instance(Reference.MODDID)
     public static GearUtilities instance;
     
-    private static Logger logger = Logger.getLogger(Reference.MODDID);
+    public static Logger logger = Logger.getLogger(Reference.MODDID);
     
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.COMMON_PROXY)
     public static CommonProxy proxy;
