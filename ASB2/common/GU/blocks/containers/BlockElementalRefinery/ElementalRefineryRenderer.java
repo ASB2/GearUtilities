@@ -82,6 +82,11 @@ public class ElementalRefineryRenderer extends TileEntitySpecialRenderer impleme
         UtilRender.renderTexture(Textures.ELEMENTAL_REFINERY_CENTER);
         Models.ModelElementalRefinery.renderPart("Center");
         
+        GL11.glTranslated(0, ((TileBase) tileentity).renderDoubles[0], 0);
+        
+        UtilRender.renderTexture(Textures.ELEMENTAL_REFINERY_MOVING);
+        Models.ModelElementalRefinery.renderPart("Moving");
+        
         GL11.glPopMatrix();
         
     }
@@ -117,13 +122,13 @@ public class ElementalRefineryRenderer extends TileEntitySpecialRenderer impleme
             
             case INVENTORY: {
                 
-                renderItemSwitched(type, item, 0f, .5f, 0f, .5F);
+                renderItemSwitched(type, item, 0f, 0f, 0f, .5F);
                 return;
             }
             
             case EQUIPPED_FIRST_PERSON: {
                 
-                renderItemSwitched(type, item, -.5F, 1f, .5F, .5F);
+                renderItemSwitched(type, item, -.5F, .7f, .5F, .5F);
                 return;
             }
             
@@ -140,9 +145,19 @@ public class ElementalRefineryRenderer extends TileEntitySpecialRenderer impleme
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
         
-        GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
-        UtilRender.renderTexture(Textures.CRYSTAL_1);
-        Models.ModelCrystal1.renderAll();
+        UtilRender.renderTexture(Textures.ELEMENTAL_REFINERY_TOP);
+        Models.ModelElementalRefinery.renderPart("Top");
+        
+        UtilRender.renderTexture(Textures.ELEMENTAL_REFINERY_BOTTOM);
+        Models.ModelElementalRefinery.renderPart("Bottom");
+        
+        UtilRender.renderTexture(Textures.ELEMENTAL_REFINERY_CENTER);
+        Models.ModelElementalRefinery.renderPart("Center");
+        
+//        GL11.glTranslated(0, ((TileBase) tileentity).renderDoubles[0], 0);
+        
+        UtilRender.renderTexture(Textures.ELEMENTAL_REFINERY_MOVING);
+        Models.ModelElementalRefinery.renderPart("Moving");
         
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
