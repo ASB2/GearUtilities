@@ -7,16 +7,18 @@ import javax.imageio.ImageIO;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.util.ResourceLocation;
-import ASB2.utils.UtilRender;
 import GU.info.Reference;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class BufferedImageTest {
     
     public static BufferedImage image = null;
-    public static DynamicTexture textureImage = new DynamicTexture(BufferedImageTest.getImage());
-    public static final ResourceLocation textureLocation = new ResourceLocation(Reference.MODDID.toLowerCase() + ":textures/LargeBlankTexture.png");
+    
+    public static DynamicTexture textureImage;
+    
+    public static ResourceLocation textureLocation = new ResourceLocation(Reference.MODDID + ":textures/LargeBlankTexture.png");
     
     public BufferedImageTest() {
         
@@ -25,10 +27,14 @@ public class BufferedImageTest {
     public static BufferedImage init() {
         
         try {
+            
             image = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(textureLocation).getInputStream());
+            textureImage = new DynamicTexture(BufferedImageTest.getImage());
+            TextureUtil.allocateTexture(textureImage.getGlTextureId(), image.getWidth(), image.getHeight());
+            
         } catch (IOException e) {
-            e.printStackTrace();
-            FMLCommonHandler.instance().raiseException(e, "Cant Read Image At: " + textureLocation.getResourcePath(), false);
+            
+            FMLCommonHandler.instance().raiseException(e, "Can't read image at: " + textureLocation.getResourcePath(), true);
         }
         return image;
     }
@@ -39,11 +45,8 @@ public class BufferedImageTest {
     }
     
     public static void bindImage() {
-        // init();
-        // textureImage = new DynamicTexture(BufferedImageTest.getImage());
         
-        // Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("LargeBlankTexture",
-        // new DynamicTexture(BufferedImageTest.getImage()));
-        UtilRender.renderTexture(textureLocation);
+        image.getRGB(0, 0, image.getWidth(), image.getHeight(), textureImage.getTextureData(), 0, image.getWidth());
+        TextureUtil.uploadTexture(textureImage.getGlTextureId(), textureImage.getTextureData(), image.getWidth(), image.getHeight());
     }
 }

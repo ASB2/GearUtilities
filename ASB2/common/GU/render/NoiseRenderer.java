@@ -2,10 +2,10 @@ package GU.render;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.util.EnumSet;
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
@@ -20,15 +20,18 @@ public class NoiseRenderer implements ITickHandler {
     @Override
     public void tickStart(EnumSet<TickType> type, Object... tickData) {
         
-        if (type.equals(this.ticks()) && Minecraft.getMinecraft().thePlayer != null) {
+        if (BufferedImageTest.getImage() != null) {
             
-            Graphics2D graphics = (Graphics2D) BufferedImageTest.getImage().getGraphics();
-            
-            // if (graphics.getColor().equals(Color.WHITE)) {
-            // graphics.setColor(Color.BLUE);
-            // }
-            graphics.setColor(new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
-            graphics.fillRect(rand.nextInt(BufferedImageTest.getImage().getWidth()), rand.nextInt(BufferedImageTest.getImage().getHeight()), rand.nextInt(BufferedImageTest.getImage().getWidth()), rand.nextInt(BufferedImageTest.getImage().getHeight()));
+            if (type.equals(this.ticks())) {
+                
+                Graphics2D graphics = (Graphics2D) BufferedImageTest.getImage().getGraphics();
+                
+                // if (graphics.getColor().equals(Color.WHITE)) {
+                // graphics.setColor(Color.BLUE);
+                // }
+                graphics.setColor(new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+                graphics.fillRect(rand.nextInt(BufferedImageTest.getImage().getWidth()), rand.nextInt(BufferedImageTest.getImage().getHeight()), rand.nextInt(BufferedImageTest.getImage().getWidth()), rand.nextInt(BufferedImageTest.getImage().getHeight()));
+            }
         }
     }
     
