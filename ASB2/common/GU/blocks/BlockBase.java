@@ -8,11 +8,13 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilMisc;
 import GU.GearUtilities;
 import GU.info.Reference;
 import GU.items.IExtraItemBlockInfo;
@@ -36,7 +38,7 @@ public class BlockBase extends Block implements IExtraItemBlockInfo {
     
     @Override
     public boolean shouldSideBeRendered(IBlockAccess par1iBlockAccess, int par2, int par3, int par4, int par5) {
-
+        
         return true;
     }
     
@@ -161,11 +163,11 @@ public class BlockBase extends Block implements IExtraItemBlockInfo {
         return blockIcon;
     }
     
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, List info, boolean var1) {
-        // TODO Auto-generated method stub
         
+        info.add("Press " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Shift " + UtilMisc.getColorCode(EnumChatFormatting.GRAY) + "to show more info");
     }
     
     @Override

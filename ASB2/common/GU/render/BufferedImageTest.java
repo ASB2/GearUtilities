@@ -31,7 +31,6 @@ public class BufferedImageTest {
             image = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(textureLocation).getInputStream());
             textureImage = new DynamicTexture(BufferedImageTest.getImage());
             TextureUtil.allocateTexture(textureImage.getGlTextureId(), image.getWidth(), image.getHeight());
-            
         } catch (IOException e) {
             
             FMLCommonHandler.instance().raiseException(e, "Can't read image at: " + textureLocation.getResourcePath(), true);
