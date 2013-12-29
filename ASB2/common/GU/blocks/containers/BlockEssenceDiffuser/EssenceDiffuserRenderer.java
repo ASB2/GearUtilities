@@ -1,7 +1,6 @@
 package GU.blocks.containers.BlockEssenceDiffuser;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -14,7 +13,7 @@ import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
-import GU.render.*;
+import GU.render.BufferedImageTest;
 
 public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
     
@@ -22,8 +21,6 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
     
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
-        
-        float scale = .5f;
         
         GL11.glPushMatrix();
         
@@ -70,18 +67,16 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
             }
         }
         
-        GL11.glScalef(scale, scale, scale);
+        GL11.glScalef(.5f, .5f, .5f);
         
         UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_STAND);
-        // BufferedImageTest.bindImage();
         Models.ModelEssenceDiffuser.renderPart("Stand");
         
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0f, tileentity.yCoord % 2 == 0 ? -1F : 1f, 0F);
-        
-        GL11.glColor3d(255, 0, 0);
+
+        GL11.glColor3f(Minecraft.getSystemTime() % 2 == 0? 1:0, Minecraft.getSystemTime() % 3 == 0? 1:0, Minecraft.getSystemTime() % 4 == 0? 1:0);
 //        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
-         BufferedImageTest.bindImage();
-        
+        BufferedImageTest.bindImage();
         for (int i = 0; i < 4; i++) {
             
             switch (i) {
@@ -112,6 +107,7 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
             }
             Models.ModelEssenceDiffuser.renderPart("Rotating");
         }
+        
         GL11.glTranslated(0, -.5f, 0);
         
         for (int i = 0; i < 4; i++) {
@@ -196,7 +192,7 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
     private void renderItemSwitched(ItemRenderType type, ItemStack item, float x, float y, float z, float scale) {
         
         GL11.glPushMatrix();
-        
+        GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
         
@@ -204,9 +200,10 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         Models.ModelEssenceDiffuser.renderPart("Stand");
         
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
-        GL11.glColor3d(255, 0, 0);
+        
         BufferedImageTest.bindImage();
-        // UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
+//        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
+        
         for (int i = 0; i < 4; i++) {
             
             switch (i) {
@@ -239,6 +236,7 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         }
         
         GL11.glTranslatef(0, -.5f, 0);
+        
         for (int i = 0; i < 4; i++) {
             
             switch (i) {
@@ -269,6 +267,7 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
             }
             Models.ModelEssenceDiffuser.renderPart("Rotating");
         }
+        GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }
 }
