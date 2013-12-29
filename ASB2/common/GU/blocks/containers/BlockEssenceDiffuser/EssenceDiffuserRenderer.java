@@ -1,6 +1,7 @@
 package GU.blocks.containers.BlockEssenceDiffuser;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -72,12 +73,14 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         GL11.glScalef(scale, scale, scale);
         
         UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_STAND);
+        // BufferedImageTest.bindImage();
         Models.ModelEssenceDiffuser.renderPart("Stand");
         
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0f, tileentity.yCoord % 2 == 0 ? -1F : 1f, 0F);
         
-        // UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
-        BufferedImageTest.bindImage();
+        GL11.glColor3d(255, 0, 0);
+//        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
+         BufferedImageTest.bindImage();
         
         for (int i = 0; i < 4; i++) {
             
@@ -109,8 +112,8 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
             }
             Models.ModelEssenceDiffuser.renderPart("Rotating");
         }
-        
         GL11.glTranslated(0, -.5f, 0);
+        
         for (int i = 0; i < 4; i++) {
             
             switch (i) {
@@ -201,8 +204,9 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         Models.ModelEssenceDiffuser.renderPart("Stand");
         
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
-        
-        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
+        GL11.glColor3d(255, 0, 0);
+        BufferedImageTest.bindImage();
+        // UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
         for (int i = 0; i < 4; i++) {
             
             switch (i) {

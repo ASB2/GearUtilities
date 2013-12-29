@@ -6,61 +6,89 @@ import java.awt.image.BufferedImage;
 import java.util.EnumSet;
 import java.util.Random;
 
+import ASB2.FastNoise;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
 public class NoiseRenderer implements ITickHandler {
     
-    PerlinNoise noise = new PerlinNoise();
     Random rand = new Random();
     
     public NoiseRenderer() {
         // TODO Auto-generated constructor stub
     }
     
+    float[] renderDoubles = new float[10];
+    
     @Override
     public void tickStart(EnumSet<TickType> type, Object... tickData) {
         
-        BufferedImage image = BufferedImageTest.getImage();
+        float maxDensity = .3f, minDensity = .1f, changePerTick = .001f;
         
-        if (image != null) {
+        BufferedImage original = BufferedImageTest.getImage();
+        
+        if (original != null) {
+            
+            BufferedImage newImage = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_RGB);
             
             if (type.equals(this.ticks())) {
                 
-                Graphics2D graphics = (Graphics2D) image.createGraphics();
-                
-                int lastColor = 0, boxSize = 2;
-                
-                for (int x = 0; x < image.getWidth(); x+=boxSize) {
+                if (renderDoubles[0] == 0) {
                     
-                    for (int y = 0; y < image.getHeight(); y+=boxSize) {
-                        
-                        if (lastColor == 0) {
-                            
-                            Color color = Color.RED;
-                            
-                            graphics.setColor(color.darker());
-                            graphics.fillRect(x, y, boxSize, boxSize);
-                            lastColor = color.darker().getRGB();
-                        } else {
-                            
-                            int alpha = (lastColor) & 0xFF;
-                            int red = (lastColor) & 0xFF;
-                            int green = (lastColor >> 8) & 0xFF;
-                            int blue = lastColor & 0xFF;
-                            int pixelColor = (alpha << 24) + (red << 16) + (green << 8) + blue;
-                            
-                            Color color = new Color(pixelColor);
-                            
-                            graphics.setColor(color.darker());
-                            graphics.fillRect(x, y, boxSize, boxSize);
-                            lastColor = color.darker().getRed();
-                        }
-                    }
+                    renderDoubles[0] = 1;
+                } else if (renderDoubles[1] == 0) {
+                    
+                    renderDoubles[0] -= changePerTick;
+                } else if (renderDoubles[1] == 1) {
+                    renderDoubles[0] += changePerTick;
                 }
                 
+                if (renderDoubles[0] >= maxDensity) {
+                    
+                    renderDoubles[0] = maxDensity;
+                    renderDoubles[1] = 0;
+                } else if (renderDoubles[0] <= minDensity) {
+                    
+                    renderDoubles[0] = minDensity;
+                    renderDoubles[1] = 1;
+                }
+                
+                float density = renderDoubles[0];
+                int boxSize = 1;
+                
+                Graphics2D graphics = (Graphics2D) newImage.createGraphics();
+                
+                for (int x = 0; x < newImage.getWidth(); x += boxSize) {
+                    
+                    for (int y = 0; y < newImage.getHeight(); y += boxSize) {
+                        
+                        int col = FastNoise.noise(x * density, y * density, 7);
+                        
+                        int red = col;
+                        int green = col;
+                        int blue = col;
+                        
+                        int RGB = red;
+                        RGB = (RGB << 8) + green;
+                        RGB = (RGB << 8) + blue;
+                        graphics.setColor(new Color(RGB));
+                        graphics.fillRect(x, y, boxSize, boxSize);
+                    }
+                }
+                BufferedImageTest.image = newImage;
             }
         }
+    }
+    
+    public int getNextColor(int lastColor, int minColorChange, int maxColorChange) {
+        
+        int randName = rand.nextInt(255);
+        
+        if (randName <= maxColorChange && randName >= minColorChange) {
+            
+            lastColor += randName;
+        }
+        return Math.abs(lastColor);
     }
     
     @Override
