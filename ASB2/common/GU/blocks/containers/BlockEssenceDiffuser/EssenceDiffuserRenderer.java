@@ -74,8 +74,9 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0f, tileentity.yCoord % 2 == 0 ? -1F : 1f, 0F);
 
-        GL11.glColor3f(Minecraft.getSystemTime() % 2 == 0? 1:0, Minecraft.getSystemTime() % 3 == 0? 1:0, Minecraft.getSystemTime() % 4 == 0? 1:0);
-//        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
+//        GL11.glColor3d(1, 0, blue);
+//        GL11.glColor3f(Minecraft.getSystemTime() % 2 == 0? 1:0, Minecraft.getSystemTime() % 3 == 0? 1:0, Minecraft.getSystemTime() % 4 == 0? 1:0);
+        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
         BufferedImageTest.bindImage();
         for (int i = 0; i < 4; i++) {
             
