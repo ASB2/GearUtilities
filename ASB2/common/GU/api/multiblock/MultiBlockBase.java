@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.ICuboidIterator;
 import ASB2.vector.Vector3;
@@ -30,12 +31,6 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
         this.size = size;
     }
     
-    @Override
-    public boolean create() {
-        
-        return isStructureValid();
-    }
-    
     public boolean isStructureValid() {
         
         composingBlock.clear();
@@ -45,9 +40,29 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     }
     
     @Override
+    public boolean create() {
+        
+        return size.iterate(this, 1);
+    }
+    
+    @Override
     public boolean iterate(Vector3 vector, Object... providedInfo) {
         
         if ((Integer) providedInfo[0] == 0) {
+            
+            TileEntity tile = vector.getTileEntity(this.getWorldObj());
+            
+            if (tile != null) {
+                
+                if (tile instanceof IMultiBlockPart) {
+                    
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        if ((Integer) providedInfo[0] == 1) {
             
             TileEntity tile = vector.getTileEntity(this.getWorldObj());
             
@@ -72,7 +87,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
             return true;
         }
         
-        if ((Integer) providedInfo[0] == 1) {
+        if ((Integer) providedInfo[0] == 2) {
             
             TileEntity tile = vector.getTileEntity(this.getWorldObj());
             
@@ -91,8 +106,14 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     @Override
     public void invalidate() {
         
+        UtilEntity.sendClientChat("Structure Invalidated");
+        UtilEntity.sendClientChat("Core: " + this.size.getCore().toString());
+        
         isValid = false;
-        this.getSize().iterate(this, 1);
+        composingBlock.clear();
+        multiBlockInterfaces.clear();
+        multiBlockCores.clear();
+        this.getSize().iterate(this, 2);
     }
     
     @Override
@@ -128,7 +149,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     @Override
     public NBTTagCompound save(NBTTagCompound tag) {
         
-        tag.setCompoundTag("size", size.save(tag));
+        size.save(tag);
         return tag;
     }
     

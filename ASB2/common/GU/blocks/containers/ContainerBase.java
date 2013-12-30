@@ -156,6 +156,10 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
     @Override
     public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
         
+        if (minWidth == 0 && minHeight == 0 && maxHeight == 1 && maxWidth == 1) {
+            this.setBlockBounds(0, 0, 0, 1, 1, 1);
+            return;
+        }
         switch (ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z))) {
         
             case DOWN: {

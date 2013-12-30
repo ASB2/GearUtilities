@@ -1,6 +1,5 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,9 +12,9 @@ import GU.EnumState;
 import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockCore;
 import GU.api.multiblock.IMultiBlockPart;
-import GU.blocks.containers.TileBase;
+import GU.blocks.containers.TileMultiBase;
 
-public class TileSpacialProvider extends TileBase implements IMultiBlockCore {
+public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCore {
     
     public static int MAX_DISTANCE = 16;
     boolean isInMultiBlock = false, hasBufferedCreateMultiBlock = false;
@@ -35,7 +34,7 @@ public class TileSpacialProvider extends TileBase implements IMultiBlockCore {
         
         TileEntity last = this;
         
-        for (int i = 1; i < MAX_DISTANCE; i++) {
+        for (int i = 1; i <= MAX_DISTANCE; i++) {
             
             Vector3 position = new Vector3(last).add(direction, i);
             TileEntity tile = position.getTileEntity(worldObj);
@@ -150,33 +149,5 @@ public class TileSpacialProvider extends TileBase implements IMultiBlockCore {
     public boolean createMultiBlock(boolean hasStructure) {
         
         return false;
-    }
-    
-    @Override
-    public void invalidate() {        
-        super.invalidate();
-        
-        for (IMultiBlock multi : multiBlocks)
-            multi.invalidate();
-    }
-    
-    @Override
-    public boolean addMultiBlock(IMultiBlock multiBlock) {
-        isInMultiBlock = true;
-        return multiBlocks.add(multiBlock);
-    }
-    
-    @Override
-    public void removeMultiBlock(IMultiBlock multiBlock) {
-        
-        multiBlocks.remove(multiBlock);
-        
-        isInMultiBlock = multiBlocks.isEmpty() ? false : true;
-    }
-    
-    @Override
-    public Set<IMultiBlock> getComprisedMultiBlocks() {
-        
-        return Collections.unmodifiableSet(multiBlocks);
     }
 }

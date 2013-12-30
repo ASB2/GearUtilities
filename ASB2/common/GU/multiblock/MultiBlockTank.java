@@ -17,7 +17,7 @@ import GU.blocks.containers.BlockSpacialProvider.TileSpacialProvider;
 
 public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     
-    protected FluidTank fluidTank = new FluidTank(0);
+    public FluidTank fluidTank = new FluidTank(0);
     
     public MultiBlockTank(World world) {
         super(world);
@@ -36,6 +36,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     
     @Override
     public void invalidate() {
+        super.invalidate();
         
         Vector3 core = this.size.getCore();
         TileEntity tile = core != null ? core.getTileEntity(getWorldObj()) : null;
@@ -119,7 +120,11 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         
-        UtilEntity.sendChatToPlayer(player, "Fluid: " + this.fluidTank.getFluidAmount() + " / " + fluidTank.getCapacity());
+        // UtilEntity.sendChatToPlayer(player, "Fluid: " +
+        // this.fluidTank.getFluid() != null ?
+        // this.fluidTank.getFluid().getFluid() != null ?
+        // this.fluidTank.getFluid().getFluid().getName() : "null" : "null");
+        UtilEntity.sendChatToPlayer(player, "Fluid Amount: " + this.fluidTank.getFluidAmount() + " / " + fluidTank.getCapacity());
         return true;
     }
 }
