@@ -18,6 +18,21 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
     
     NBTTagCompound bufferedTankData;
     
+    @Override
+    public void updateEntity() {
+        
+        if (hasBufferedCreateMultiBlock) {
+            
+            if (worldObj != null) {
+                
+                if (this.createMultiBlock(true)) {
+                    
+                    hasBufferedCreateMultiBlock = false;
+                }
+            }
+        }
+    }
+    
     public boolean createMultiBlock() {
         
         return createMultiBlock(false);
@@ -161,7 +176,7 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
                 
                 if (new Vector3(this).intEquals(multi.getSize().getCore())) {
                     
-                    tag.setCompoundTag("multiBlockSave", multi.save(new NBTTagCompound()));
+                    tag.setCompoundTag("multiBlockSave", multi.save(tag));
                 }
             }
             tag.setBoolean("isInMultiBlock", isInMultiBlock);
@@ -176,7 +191,7 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
         
         if (hasBufferedCreateMultiBlock) {
             
-            bufferedTankData = tag.getCompoundTag("multiBlockSave");
+            bufferedTankData = tag;
         }
     }
 }

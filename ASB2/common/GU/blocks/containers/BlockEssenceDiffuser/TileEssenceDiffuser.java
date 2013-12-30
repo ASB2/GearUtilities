@@ -13,15 +13,42 @@ public class TileEssenceDiffuser extends TileFluidBase {
     public TileEssenceDiffuser() {
         
         this.fluidTank = new FluidTank(GU.FluidRegistry.LifeEssenceGas, 0, 1000);
-        renderDoubles = new double[1];
+        renderDoubles = new double[]{.1, 0, 0, 0};
     }
     
     @Override
     public void updateEntity() {
 
-        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+
+        if (renderDoubles[3] == 0) {
             
-            renderDoubles[0]+= 1;
+            if (renderDoubles[0] < 1) {
+                
+                renderDoubles[0] += .01;
+            } else if (renderDoubles[1] < 1) {
+                
+                renderDoubles[1] += .01;
+            } else if (renderDoubles[2] < 1) {
+                
+                renderDoubles[2] += .001;
+            } else {
+                renderDoubles[3] = 1;
+            }
+        } else {
+            
+            if (renderDoubles[0] > 0) {
+                
+                renderDoubles[0] -= .01;
+            } else if (renderDoubles[1] > 0) {
+                
+                renderDoubles[1] -= .01;
+            } else if (renderDoubles[2] > 0) {
+                
+                renderDoubles[2] -= .01;
+            } else {
+                
+                renderDoubles[3] = 0;
+            }
         }
         
         if (worldObj.rand.nextInt(500) == 1) {

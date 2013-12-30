@@ -23,6 +23,7 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
         
         GL11.glPushMatrix();
+        GL11.glDisable(GL11.GL_LIGHTING);
         
         switch (((TileBase) tileentity).getOrientation()) {
         
@@ -73,11 +74,11 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         Models.ModelEssenceDiffuser.renderPart("Stand");
         
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0f, tileentity.yCoord % 2 == 0 ? -1F : 1f, 0F);
-
-//        GL11.glColor3d(1, 0, blue);
-//        GL11.glColor3f(Minecraft.getSystemTime() % 2 == 0? 1:0, Minecraft.getSystemTime() % 3 == 0? 1:0, Minecraft.getSystemTime() % 4 == 0? 1:0);
-        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
+        
+        GL11.glColor3d(((TileBase) tileentity).renderDoubles[0], ((TileBase) tileentity).renderDoubles[1], ((TileBase) tileentity).renderDoubles[2]);
+        // UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
         BufferedImageTest.bindImage();
+        
         for (int i = 0; i < 4; i++) {
             
             switch (i) {
@@ -141,6 +142,7 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
             }
             Models.ModelEssenceDiffuser.renderPart("Rotating");
         }
+        GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }
     
@@ -203,7 +205,7 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         
         BufferedImageTest.bindImage();
-//        UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
+        // UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
         
         for (int i = 0; i < 4; i++) {
             

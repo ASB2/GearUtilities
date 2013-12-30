@@ -44,8 +44,10 @@ public class BufferedImageTest {
     }
     
     public static void bindImage() {
-
-        image.getRGB(0, 0, image.getWidth(), image.getHeight(), textureImage.getTextureData(), 0, image.getWidth());
+        
+        // UtilRender.renderTexture(textureLocation);
+        // image.getRGB(0, 0, image.getWidth(), image.getHeight(),
+        // textureImage.getTextureData(), 0, image.getWidth());
         TextureUtil.uploadTexture(textureImage.getGlTextureId(), textureImage.getTextureData(), image.getWidth(), image.getHeight());
     }
 }

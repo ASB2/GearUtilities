@@ -19,10 +19,10 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
     @Override
     public void invalidate() {
         
+        super.invalidate();
         for (IMultiBlock multi : multiBlocks)
             multi.invalidate();
         
-        super.invalidate();
     }
     
     @Override

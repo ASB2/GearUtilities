@@ -73,8 +73,10 @@ public class NoiseRenderer implements ITickHandler {
                         RGB = (RGB << 8) + blue;
                         graphics.setColor(new Color(RGB));
                         graphics.fillRect(x, y, boxSize, boxSize);
+                        
                     }
                 }
+                newImage.getRGB(0, 0, newImage.getWidth(), newImage.getHeight(), BufferedImageTest.textureImage.getTextureData(), 0, newImage.getWidth());
                 BufferedImageTest.image = newImage;
             }
         }

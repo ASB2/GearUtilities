@@ -37,42 +37,62 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     }
     
     public boolean isStructureValid() {
+        
         composingBlock.clear();
         multiBlockInterfaces.clear();
         multiBlockCores.clear();
-        return size.iterate(this, (Object) null);
+        return size.iterate(this, 0);
     }
     
     @Override
     public boolean iterate(Vector3 vector, Object... providedInfo) {
         
-        TileEntity tile = vector.getTileEntity(this.getWorldObj());
+        if ((Integer) providedInfo[0] == 0) {
+            
+            TileEntity tile = vector.getTileEntity(this.getWorldObj());
+            
+            if (tile == null) {
+                
+                return false;
+            }
+            if (!(tile instanceof IMultiBlockPart)) {
+                
+                return false;
+            } else {
+                ((IMultiBlockPart) tile).addMultiBlock(this);
+            }
+            if (tile instanceof IMultiBlockInterface) {
+                
+                multiBlockInterfaces.add(vector);
+            }
+            if (tile instanceof IMultiBlockCore) {
+                
+                multiBlockCores.add(vector);
+            }
+            return true;
+        }
         
-        if (tile == null) {
+        if ((Integer) providedInfo[0] == 1) {
             
-            return false;
-        }
-        if (!(tile instanceof IMultiBlockPart)) {
+            TileEntity tile = vector.getTileEntity(this.getWorldObj());
             
-            return false;
-        } else {
-            ((IMultiBlockPart) tile).addMultiBlock(this);
+            if (tile != null) {
+                
+                if (tile instanceof IMultiBlockPart) {
+                    
+                    ((IMultiBlockPart) tile).removeMultiBlock(this);
+                }
+            }
+            return true;
         }
-        if (tile instanceof IMultiBlockInterface) {
-            
-            multiBlockInterfaces.add(vector);
-        }
-        if (tile instanceof IMultiBlockCore) {
-            
-            multiBlockCores.add(vector);
-        }
-        return true;
+        return false;
     }
     
     @Override
     public void invalidate() {
         
         isValid = false;
+        this.getSize().iterate(this, 1);
     }
     
     @Override
@@ -108,14 +128,14 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     @Override
     public NBTTagCompound save(NBTTagCompound tag) {
         
-        tag.setCompoundTag("size", size.save(new NBTTagCompound()));
+        tag.setCompoundTag("size", size.save(tag));
         return tag;
     }
     
     @Override
     public void load(NBTTagCompound tag) {
         
-        this.size = Cuboid.load(tag.getCompoundTag("size"));
+        this.size = Cuboid.load(tag);
         postLoad();
     }
     

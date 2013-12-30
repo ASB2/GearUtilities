@@ -29,23 +29,13 @@ public class TileSpacialProvider extends TileBase implements IMultiBlockCore {
     @Override
     public void updateEntity() {
         
-        if (hasBufferedCreateMultiBlock) {
-            
-            if (worldObj != null) {
-                
-                if (this.createMultiBlock(true)) {
-                    
-                    hasBufferedCreateMultiBlock = false;
-                }
-            }
-        }
     }
     
     public TileEntity getNearestProvider(ForgeDirection direction) {
         
         TileEntity last = this;
         
-        for (int i = 1; i <= MAX_DISTANCE; i++) {
+        for (int i = 1; i < MAX_DISTANCE; i++) {
             
             Vector3 position = new Vector3(last).add(direction, i);
             TileEntity tile = position.getTileEntity(worldObj);
@@ -163,12 +153,11 @@ public class TileSpacialProvider extends TileBase implements IMultiBlockCore {
     }
     
     @Override
-    public void invalidate() {
+    public void invalidate() {        
+        super.invalidate();
         
         for (IMultiBlock multi : multiBlocks)
             multi.invalidate();
-        
-        super.invalidate();
     }
     
     @Override
