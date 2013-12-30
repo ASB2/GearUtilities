@@ -17,7 +17,7 @@ import GU.blocks.containers.TileMultiBase;
 public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCore {
     
     public static int MAX_DISTANCE = 16;
-    boolean isInMultiBlock = false, hasBufferedCreateMultiBlock = false;
+    boolean hasBufferedCreateMultiBlock = false;
     Set<IMultiBlock> multiBlocks = new HashSet<IMultiBlock>();
     
     public TileSpacialProvider() {
@@ -30,7 +30,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
         
     }
     
-    public TileEntity getNearestProvider(ForgeDirection direction) {
+    public TileEntity getFarthestProvider(ForgeDirection direction) {
         
         TileEntity last = this;
         
@@ -56,9 +56,9 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
         
         if (sideState[ForgeDirection.EAST.ordinal()] != EnumState.NONE) {
             
-            if (this.getNearestProvider(ForgeDirection.EAST) != null) {
+            if (this.getFarthestProvider(ForgeDirection.EAST) != null) {
                 
-                height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.EAST))).intX();
+                height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.EAST))).intX();
             }
         }
         
@@ -66,9 +66,9 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
             
             if (sideState[ForgeDirection.WEST.ordinal()] != EnumState.NONE) {
                 
-                if (this.getNearestProvider(ForgeDirection.WEST) != null) {
+                if (this.getFarthestProvider(ForgeDirection.WEST) != null) {
                     
-                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.WEST))).intX();
+                    height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.WEST))).intX();
                 }
             }
         }
@@ -81,9 +81,9 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
         
         if (sideState[ForgeDirection.UP.ordinal()] != EnumState.NONE) {
             
-            if (this.getNearestProvider(ForgeDirection.UP) != null) {
+            if (this.getFarthestProvider(ForgeDirection.UP) != null) {
                 
-                height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.UP))).intY();
+                height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.UP))).intY();
             }
         }
         
@@ -91,9 +91,9 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
             
             if (sideState[ForgeDirection.DOWN.ordinal()] != EnumState.NONE) {
                 
-                if (this.getNearestProvider(ForgeDirection.DOWN) != null) {
+                if (this.getFarthestProvider(ForgeDirection.DOWN) != null) {
                     
-                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.DOWN))).intY();
+                    height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.DOWN))).intY();
                 }
             }
         }
@@ -106,9 +106,9 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
         
         if (sideState[ForgeDirection.SOUTH.ordinal()] != EnumState.NONE) {
             
-            if (this.getNearestProvider(ForgeDirection.SOUTH) != null) {
+            if (this.getFarthestProvider(ForgeDirection.SOUTH) != null) {
                 
-                height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.SOUTH))).intZ();
+                height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.SOUTH))).intZ();
             }
         }
         
@@ -116,9 +116,9 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
             
             if (sideState[ForgeDirection.NORTH.ordinal()] != EnumState.NONE) {
                 
-                if (this.getNearestProvider(ForgeDirection.NORTH) != null) {
+                if (this.getFarthestProvider(ForgeDirection.NORTH) != null) {
                     
-                    height = new Vector3(this).subtract(new Vector3(this.getNearestProvider(ForgeDirection.NORTH))).intZ();
+                    height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.NORTH))).intZ();
                 }
             }
         }

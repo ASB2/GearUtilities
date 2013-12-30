@@ -22,7 +22,6 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
         super.invalidate();
         for (IMultiBlock multi : multiBlocks)
             multi.invalidate();
-        
     }
     
     @Override

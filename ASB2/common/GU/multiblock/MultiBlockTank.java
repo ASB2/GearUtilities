@@ -1,7 +1,7 @@
 package GU.multiblock;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -11,9 +11,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
-import ASB2.vector.Vector3;
 import GU.api.multiblock.MultiBlockBase;
-import GU.blocks.containers.BlockSpacialProvider.TileSpacialProvider;
 
 public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     
@@ -37,17 +35,6 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     @Override
     public void invalidate() {
         super.invalidate();
-        
-        Vector3 core = this.size.getCore();
-        TileEntity tile = core != null ? core.getTileEntity(getWorldObj()) : null;
-        
-        if (tile != null) {
-            
-            if (tile.getClass() == TileSpacialProvider.class) {
-                
-                ((TileSpacialProvider) tile).fluidTank = this.fluidTank;
-            }
-        }
     }
     
     @Override
@@ -126,5 +113,18 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
         // this.fluidTank.getFluid().getFluid().getName() : "null" : "null");
         UtilEntity.sendChatToPlayer(player, "Fluid Amount: " + this.fluidTank.getFluidAmount() + " / " + fluidTank.getCapacity());
         return true;
+    }
+    
+    @Override
+    public NBTTagCompound save(NBTTagCompound tag) {
+        super.save(tag);
+        fluidTank.writeToNBT(tag);
+        return tag;
+    }
+    
+    @Override
+    public void load(NBTTagCompound tag) {
+        super.load(tag);
+        fluidTank.readFromNBT(tag);
     }
 }

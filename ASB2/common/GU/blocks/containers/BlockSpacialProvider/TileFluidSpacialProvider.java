@@ -23,11 +23,10 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
         
         if (hasBufferedCreateMultiBlock) {
             
-            if (this.createMultiBlock(true)) {
-                
-                hasBufferedCreateMultiBlock = false;
-                bufferedTankData = null;
-            }
+            this.createMultiBlock(true);            
+            hasBufferedCreateMultiBlock = false;
+            bufferedTankData = null;
+            
         }
     }
     
@@ -48,7 +47,7 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
                     
                     if (getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
                         
-                        TileEntity foundTile = getNearestProvider(direction);
+                        TileEntity foundTile = getFarthestProvider(direction);
                         
                         if (foundTile != null) {
                             
@@ -82,7 +81,6 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
             
             MultiBlockTank tank = new MultiBlockTank(worldObj);
             tank.load(bufferedTankData);
-            tank.fluidTank = this.fluidTank;
             boolean spaceValid = tank.isStructureValid();
             UtilEntity.sendClientChat("Area Valid: " + spaceValid);
             
@@ -94,7 +92,6 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
             }
             return false;
         }
-        // return false;
     }
     
     @Override
