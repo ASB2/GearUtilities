@@ -5,12 +5,15 @@ import java.util.List;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import GU.api.multiblock.IMultiBlock;
+import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.ISpecialTileMultiBlock;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
@@ -27,6 +30,7 @@ public class BlockStructureCube extends ContainerBase implements ISpecialTileMul
         super(id, material);
         specialMetadata = true;
         this.registerTile(TileStructureCube.class);
+        
         for (int i = 0; i < MAX_META; i++) {
             
             OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(this, 1, i));
@@ -72,7 +76,7 @@ public class BlockStructureCube extends ContainerBase implements ISpecialTileMul
     
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
-        // TODO Auto-generated method stub
+        
         return super.getLightValue(world, x, y, z);
     }
     
@@ -83,22 +87,46 @@ public class BlockStructureCube extends ContainerBase implements ISpecialTileMul
     }
     
     @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+        
+        IMultiBlockPart tile = (IMultiBlockPart) world.getBlockTileEntity(x, y, z);
+        
+        if (tile != null) {
+            
+            if (!tile.getComprisedMultiBlocks().isEmpty()) {
+                
+                for (IMultiBlock multi : tile.getComprisedMultiBlocks()) {
+                    
+                    multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    @Override
     public TileEntity createTileEntity(World world, int metadata) {
         
-        this.setLightOpacity(0);
         return null;
     }
     
     @Override
     public TileEntity getBlockTileEntity(World world, int x, int y, int z) {
         
-        world.setBlockTileEntity(x, y, z, new TileStructureCube());
-        return world.getBlockTileEntity(x, y, z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
+        
+        if (tile == null) {
+            
+            tile = new TileStructureCube();
+            world.setBlockTileEntity(x, y, z, tile);
+        }
+        return tile;
     }
-
+    
     @Override
     public TileEntity createNewTileEntity(World world) {
-        // TODO Auto-generated method stub
+
         return null;
     }
 }

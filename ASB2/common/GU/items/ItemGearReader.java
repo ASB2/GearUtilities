@@ -16,6 +16,7 @@ import GU.api.color.IColorable;
 import GU.api.color.IVanillaColorable;
 import GU.api.power.IPowerHandler;
 import GU.info.Reference;
+import GU.api.multiblock.*;
 
 public class ItemGearReader extends ItemBase {
     
@@ -112,29 +113,12 @@ public class ItemGearReader extends ItemBase {
                     }
                 }
                 
-                // if (tile instanceof IConductor) {
-                //
-                // IConductor mTile = (IConductor) tile;
-                //
-                // if (mTile.getNetwork() != null) {
-                //
-                // UtilEntity.sendChatToPlayer(player, "Network Conductors: " +
-                // mTile.getNetwork().getConductors().size());
-                // UtilEntity.sendChatToPlayer(player,
-                // "Network Item Interfaces: " +
-                // mTile.getNetwork().getItemInterfaces().size());
-                // UtilEntity.sendChatToPlayer(player,
-                // "Network Fluid Interfaces: " +
-                // mTile.getNetwork().getFluidInterfaces().size());
-                // UtilEntity.sendChatToPlayer(player,
-                // "Network GUU Power Interfaces: " +
-                // mTile.getNetwork().getGUUPowerInterfaces().size());
-                // }
-                // else {
-                //
-                // UtilEntity.sendChatToPlayer(player, "Conduit Network: null");
-                // }
-                // }
+                if (tile instanceof IMultiBlockPart) {
+                    
+                    IMultiBlockPart mTile = (IMultiBlockPart) tile;
+                    
+                    UtilEntity.sendChatToPlayer(player, "Part of " + mTile.getComprisedMultiBlocks().size() + " multiblocks");
+                }
             }
             UtilEntity.sendChatToPlayer(player, "Block id: " + world.getBlockId(x, y, z));
             UtilEntity.sendChatToPlayer(player, "Block metadata: " + world.getBlockMetadata(x, y, z));

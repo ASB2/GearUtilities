@@ -24,7 +24,6 @@ import GU.blocks.containers.BlockSmeltingCube.BlockSmeltingCube;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
 import GU.blocks.containers.BlockStructureCube.BlockStructureCube;
 import GU.items.GUItemBlock;
-import GU.multiblock.BlockMultiBlockBuilders;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -41,7 +40,6 @@ public class BlockRegistry {
     public static BlockBase BlockBasicElemental;
     public static ContainerBase BlockStructureCube;
     public static ContainerBase BlockSpacialProvider;
-    public static ContainerBase BlockMultiBlockBuilders;
     public static ContainerBase BlockSmeltingCube;
     public static ContainerBase BlockQuantaSender;
     public static ContainerBase BlockEssenceDiffuser;
@@ -89,9 +87,6 @@ public class BlockRegistry {
         
         BlockSpacialProvider = new BlockSpacialProvider(BlockRegistry.getConfigID(config, "BlockSpacialProvider"), Material.rock);
         addBlock(BlockSpacialProvider, "Spacial Provider", "BlockSpacialProvider");
-        
-        BlockMultiBlockBuilders = new BlockMultiBlockBuilders(BlockRegistry.getConfigID(config, "BlockMultiBlockBuilders"), Material.rock);
-        addBlock(BlockMultiBlockBuilders, "Multi-Block Block", "BlockMultiBlockBuilders");
         
         BlockSmeltingCube = new BlockSmeltingCube(BlockRegistry.getConfigID(config, "BlockSmeltingCube"), Material.rock);
         addBlock(BlockSmeltingCube, "Smelting Cube", "BlockSmeltingCube");

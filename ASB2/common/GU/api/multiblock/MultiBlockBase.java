@@ -3,6 +3,7 @@ package GU.api.multiblock;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -58,6 +59,20 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
                     
                     return true;
                 }
+            } else {
+                
+                Block block = Block.blocksList[vector.getBlockID(this.getWorldObj())];
+                
+                if (block != null && block instanceof ISpecialTileMultiBlock) {
+                    
+                    tile = ((ISpecialTileMultiBlock) block).getBlockTileEntity(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ());
+                    
+                    if (tile != null && tile instanceof IMultiBlockPart) {
+                        
+                        return true;
+                    }
+                    return false;
+                }
             }
             return false;
         }
@@ -68,6 +83,17 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
             
             if (tile == null) {
                 
+                Block block = Block.blocksList[vector.getBlockID(this.getWorldObj())];
+                
+                if (block != null && block instanceof ISpecialTileMultiBlock) {
+                    
+                    tile = ((ISpecialTileMultiBlock) block).getBlockTileEntity(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ());
+                    
+                    if (tile == null) {
+                        
+                        return false;
+                    }
+                }
                 return false;
             }
             if (!(tile instanceof IMultiBlockPart)) {

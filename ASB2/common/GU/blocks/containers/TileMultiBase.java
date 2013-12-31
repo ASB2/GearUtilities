@@ -33,8 +33,7 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
     @Override
     public void removeMultiBlock(IMultiBlock multiBlock) {
         
-        multiBlocks.remove(multiBlock);
-        
+        multiBlocks.remove(multiBlock);        
         isInMultiBlock = multiBlocks.isEmpty() ? false : true;
     }
     

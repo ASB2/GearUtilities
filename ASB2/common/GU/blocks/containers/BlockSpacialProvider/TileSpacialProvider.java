@@ -1,24 +1,22 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.vector.Vector3;
 import GU.EnumState;
-import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockCore;
 import GU.api.multiblock.IMultiBlockPart;
+import GU.api.multiblock.ISpecialTileMultiBlock;
 import GU.blocks.containers.TileMultiBase;
 
 public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCore {
     
-    public static int MAX_DISTANCE = 16;
-    boolean hasBufferedCreateMultiBlock = false;
-    Set<IMultiBlock> multiBlocks = new HashSet<IMultiBlock>();
+    public static final int MAX_DISTANCE = 16;
+    protected boolean hasBufferedCreateMultiBlock = false;
     
     public TileSpacialProvider() {
         
@@ -27,22 +25,36 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     
     @Override
     public void updateEntity() {
-        
     }
     
     public TileEntity getFarthestProvider(ForgeDirection direction) {
         
         TileEntity last = this;
+        Vector3 myPosition = new Vector3(this);
         
         for (int i = 1; i <= MAX_DISTANCE; i++) {
             
-            Vector3 position = new Vector3(last).add(direction, i);
-            TileEntity tile = position.getTileEntity(worldObj);
+            Vector3 testingPosition = myPosition.clone().add(direction, i);
+            TileEntity tile = testingPosition.getTileEntity(worldObj);
             
+            if (tile == null) {
+                
+                Block block = testingPosition.getBlock((IBlockAccess) worldObj);
+                
+                if (block != null && block instanceof ISpecialTileMultiBlock) {
+                    
+                    TileEntity blockTile = ((ISpecialTileMultiBlock) block).getBlockTileEntity(worldObj, testingPosition.intX(), testingPosition.intY(), testingPosition.intZ());
+                    
+                    if (blockTile != null) {
+                        
+                        tile = blockTile;
+                    }
+                }
+            }
             if (tile != null && tile != this && tile instanceof IMultiBlockPart) {
                 
                 last = tile;
-            } else if (tile == null) {
+            } else {
                 
                 return last == this ? null : last;
             }
@@ -52,13 +64,15 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     
     public int getMultiBlockXChange() {
         
+        Vector3 myPosition = new Vector3(this);
+        
         int height = 0;
         
         if (sideState[ForgeDirection.EAST.ordinal()] != EnumState.NONE) {
             
             if (this.getFarthestProvider(ForgeDirection.EAST) != null) {
                 
-                height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.EAST))).intX();
+                height = myPosition.clone().subtract(new Vector3(this.getFarthestProvider(ForgeDirection.EAST))).intX();
             }
         }
         
@@ -68,7 +82,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
                 
                 if (this.getFarthestProvider(ForgeDirection.WEST) != null) {
                     
-                    height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.WEST))).intX();
+                    height = myPosition.clone().subtract(new Vector3(this.getFarthestProvider(ForgeDirection.WEST))).intX();
                 }
             }
         }
@@ -77,13 +91,15 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     
     public int getMultiBlockYChange() {
         
+        Vector3 myPosition = new Vector3(this);
+        
         int height = 0;
         
         if (sideState[ForgeDirection.UP.ordinal()] != EnumState.NONE) {
             
             if (this.getFarthestProvider(ForgeDirection.UP) != null) {
                 
-                height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.UP))).intY();
+                height = myPosition.clone().subtract(new Vector3(this.getFarthestProvider(ForgeDirection.UP))).intY();
             }
         }
         
@@ -93,7 +109,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
                 
                 if (this.getFarthestProvider(ForgeDirection.DOWN) != null) {
                     
-                    height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.DOWN))).intY();
+                    height = myPosition.clone().subtract(new Vector3(this.getFarthestProvider(ForgeDirection.DOWN))).intY();
                 }
             }
         }
@@ -102,13 +118,15 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     
     public int getMultiBlockZChange() {
         
+        Vector3 myPosition = new Vector3(this);
+        
         int height = 0;
         
         if (sideState[ForgeDirection.SOUTH.ordinal()] != EnumState.NONE) {
             
             if (this.getFarthestProvider(ForgeDirection.SOUTH) != null) {
                 
-                height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.SOUTH))).intZ();
+                height = myPosition.clone().subtract(new Vector3(this.getFarthestProvider(ForgeDirection.SOUTH))).intZ();
             }
         }
         
@@ -118,7 +136,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
                 
                 if (this.getFarthestProvider(ForgeDirection.NORTH) != null) {
                     
-                    height = new Vector3(this).subtract(new Vector3(this.getFarthestProvider(ForgeDirection.NORTH))).intZ();
+                    height = myPosition.clone().subtract(new Vector3(this.getFarthestProvider(ForgeDirection.NORTH))).intZ();
                 }
             }
         }

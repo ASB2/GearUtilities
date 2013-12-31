@@ -23,10 +23,9 @@ public class TileFluidSpacialProvider extends TileSpacialProvider implements IFl
         
         if (hasBufferedCreateMultiBlock) {
             
-            this.createMultiBlock(true);            
+            this.createMultiBlock(true);
             hasBufferedCreateMultiBlock = false;
             bufferedTankData = null;
-            
         }
     }
     
