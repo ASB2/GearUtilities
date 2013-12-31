@@ -37,6 +37,16 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
         composingBlock.clear();
         multiBlockInterfaces.clear();
         multiBlockCores.clear();
+        
+        for (Vector3 vector : size.getCornersBlocks()) {
+            
+            TileEntity tile = vector.getTileEntity(worldObj);
+            
+            if (tile == null || !(tile instanceof IMultiBlockCore)) {
+                
+                return false;
+            }
+        }
         return size.iterate(this, 0);
     }
     

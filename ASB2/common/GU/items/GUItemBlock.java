@@ -59,6 +59,7 @@ public class GUItemBlock extends ItemBlock {
     public String getUnlocalizedName(ItemStack itemStack) {
         
         Block block = Block.blocksList[this.getBlockID()];
+        
         if (block != null && block instanceof IExtraItemBlockInfo) {
             
             String name = ((IExtraItemBlockInfo) block).getUnlocalizedName(itemStack);

@@ -2,6 +2,8 @@ package GU.blocks.containers.BlockStructureCube;
 
 import java.util.List;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -11,29 +13,38 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.ISpecialTileMultiBlock;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
+import GU.items.GUItemBlock;
 
 public class BlockStructureCube extends ContainerBase implements ISpecialTileMultiBlock {
     
-    public static int MAX_META = 5;
+    public static final int MAX_META = 5;
     Icon[] texture = new Icon[MAX_META];
     String[] unlocalizedname = new String[] { "BlockStructureCube0", "BlockStructureCube1", "BlockStructureCube2", "BlockStructureCube3", "BlockStructureCube4" };
     String[] ign = new String[] { "Structure Cube 0", "Structure Cube 1", "Structure Cube 2", "Structure Cube 3", "Structure Glass" };
-    ItemStack[] STRUCTURE_CUBES = new ItemStack[] { new ItemStack(this, 1, 0), new ItemStack(this, 1, 1), new ItemStack(this, 1, 2), new ItemStack(this, 1, 3), new ItemStack(this, 1, 4) };
+    ItemStack[] STRUCTURE_CUBES = new ItemStack[MAX_META];
     
     public BlockStructureCube(int id, Material material) {
         super(id, material);
+        
         specialMetadata = true;
         this.registerTile(TileStructureCube.class);
+        this.setLightOpacity(0);
+        
+        MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 1);
+        GameRegistry.registerBlock(this, GUItemBlock.class, "BlockStructureCube");
         
         for (int i = 0; i < MAX_META; i++) {
             
-            OreDictionary.registerOre(Reference.STRUCTURE_CUBE, new ItemStack(this, 1, i));
+            STRUCTURE_CUBES[i] = new ItemStack(this, 1, i);
+            OreDictionary.registerOre(Reference.STRUCTURE_CUBE, STRUCTURE_CUBES[i]);
+            LanguageRegistry.addName(STRUCTURE_CUBES[i], ign[i]);
         }
     }
     
@@ -43,7 +54,7 @@ public class BlockStructureCube extends ContainerBase implements ISpecialTileMul
         
         for (int i = 0; i < MAX_META; i++) {
             
-            list.add(new ItemStack(this, 1, i));
+            list.add(STRUCTURE_CUBES[i]);
         }
     }
     
@@ -83,7 +94,7 @@ public class BlockStructureCube extends ContainerBase implements ISpecialTileMul
     @Override
     public int getLightOpacity(World world, int x, int y, int z) {
         
-        return world.getBlockMetadata(x, y, z) == 4 ? 0 : 16;
+        return world.getBlockMetadata(x, y, z) == 4 ? 0 : super.getLightOpacity(world, x, y, z);
     }
     
     @Override
@@ -126,7 +137,7 @@ public class BlockStructureCube extends ContainerBase implements ISpecialTileMul
     
     @Override
     public TileEntity createNewTileEntity(World world) {
-
+        
         return null;
     }
 }

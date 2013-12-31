@@ -82,7 +82,6 @@ public class BlockRegistry {
         addBlock(BlockBasicElemental, "BlockBasicElemental", "BlockBasicElemental");
         
         BlockStructureCube = new BlockStructureCube(BlockRegistry.getConfigID(config, "BlockStructureCube"), Material.rock);
-        addBlock(BlockStructureCube, "Structure Cube", "BlockStructureCube");
         BlockStructureCube.setResistance(Block.obsidian.blockResistance);
         
         BlockSpacialProvider = new BlockSpacialProvider(BlockRegistry.getConfigID(config, "BlockSpacialProvider"), Material.rock);

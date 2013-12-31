@@ -15,7 +15,7 @@ import GU.blocks.containers.TileMultiBase;
 
 public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCore {
     
-    public static final int MAX_DISTANCE = 16;
+    public static final int MAX_DISTANCE = 255;
     protected boolean hasBufferedCreateMultiBlock = false;
     
     public TileSpacialProvider() {
