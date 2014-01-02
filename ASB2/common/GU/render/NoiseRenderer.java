@@ -23,7 +23,7 @@ public class NoiseRenderer implements ITickHandler {
     @Override
     public void tickStart(EnumSet<TickType> type, Object... tickData) {
         
-        float maxDensity = .3f, minDensity = .1f, changePerTick = .001f;
+        float maxDensity = .3f, minDensity = .2f, changePerTick = .0002f;
         
         BufferedImage original = BufferedImageTest.getImage();
         

@@ -1,20 +1,42 @@
 package GU.blocks.containers.BlockMultiInterface;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import GU.blocks.containers.TileBase;
+import GU.api.multiblock.IMultiBlock;
+import GU.blocks.containers.TileMultiBase;
 
-public class TileMultiInterfaceInventory extends TileBase implements ISidedInventory {
+public class TileItemMultiInterface extends TileMultiBase implements ISidedInventory {
+        
+    public TileItemMultiInterface() {
+        
+        this.destoryTileWithNotMultiBlock = true;
+    }
     
-    public TileMultiInterfaceInventory() {
-        // TODO Auto-generated constructor stub
+    @Override
+    public boolean addMultiBlock(IMultiBlock multiBlock) {        
+        return super.addMultiBlock(multiBlock);
+    }
+    
+    @Override
+    public void removeMultiBlock(IMultiBlock multiBlock) {
+        super.removeMultiBlock(multiBlock);
     }
     
     @Override
     public int getSizeInventory() {
-        // TODO Auto-generated method stub
-        return 0;
+        
+    int sizeInventory = 0;
+    
+    for(IMultiBlock multi: this.getComprisedMultiBlocks()) {
+        
+        if(multi instanceof IInventory) {
+            
+            sizeInventory += ((IInventory)multi).getSizeInventory();
+        }
+    }
+        return sizeInventory;
     }
     
     @Override
@@ -44,7 +66,7 @@ public class TileMultiInterfaceInventory extends TileBase implements ISidedInven
     @Override
     public String getInvName() {
         // TODO Auto-generated method stub
-        return null;
+        return "";
     }
     
     @Override

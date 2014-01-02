@@ -2,6 +2,7 @@ package GU.multiblock;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -11,7 +12,9 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
+import ASB2.vector.Vector3;
 import GU.api.multiblock.MultiBlockBase;
+import GU.blocks.containers.BlockSpacialProvider.TileFluidSpacialProvider;
 
 public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     
@@ -24,6 +27,20 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     public MultiBlockTank(World world, Cuboid size) {
         super(world, size);
         fluidTank.setCapacity((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1) * 16000);
+    }
+    
+    public boolean isStructureValid() {
+        
+        for (Vector3 vector : size.getCornerBlocks()) {
+            
+            TileEntity tile = vector.getTileEntity(worldObj);
+            
+            if (tile == null || !(tile.getClass() == TileFluidSpacialProvider.class)) {
+                
+                return false;
+            }
+        }
+        return size.iterate(this, 0);
     }
     
     @Override
@@ -117,14 +134,15 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     
     @Override
     public NBTTagCompound save(NBTTagCompound tag) {
-        super.save(tag);
+        
         fluidTank.writeToNBT(tag);
-        return tag;
+        return super.save(tag);
     }
     
     @Override
     public void load(NBTTagCompound tag) {
-        super.load(tag);
+        
         fluidTank.readFromNBT(tag);
+        super.load(tag);
     }
 }

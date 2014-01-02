@@ -1,13 +1,13 @@
 package GU.blocks.containers;
 
-import ASB2.utils.UtilInventory;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import ASB2.utils.UtilInventory;
 
-public class Inventory implements IInventory {
+public class Inventory implements ISidedInventory {
     
     public final static int STANDARD_STACKSIZE = 64;
     
@@ -168,5 +168,23 @@ public class Inventory implements IInventory {
                 storedStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound);
             }
         }
+    }
+
+    @Override
+    public int[] getAccessibleSlotsFromSide(int var1) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean canInsertItem(int i, ItemStack itemstack, int j) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean canExtractItem(int i, ItemStack itemstack, int j) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

@@ -34,11 +34,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     
     public boolean isStructureValid() {
         
-        composingBlock.clear();
-        multiBlockInterfaces.clear();
-        multiBlockCores.clear();
-        
-        for (Vector3 vector : size.getCornersBlocks()) {
+        for (Vector3 vector : size.getCornerBlocks()) {
             
             TileEntity tile = vector.getTileEntity(worldObj);
             
@@ -53,13 +49,22 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     @Override
     public boolean create() {
         
-        return size.iterate(this, 1);
+        if (size.iterate(this, 1)) {
+            
+            createWorked();
+            return true;
+        }
+        return false;
+    }
+    
+    public void createWorked() {
+        
     }
     
     @Override
     public boolean iterate(Vector3 vector, Object... providedInfo) {
         
-        if ((Integer) providedInfo[0] == 0) {
+        if ((int) providedInfo[0] == 0) {
             
             TileEntity tile = vector.getTileEntity(this.getWorldObj());
             
@@ -71,7 +76,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
                 }
             } else {
                 
-                Block block = Block.blocksList[vector.getBlockID(this.getWorldObj())];
+                Block block = vector.getBlock(this.getWorldObj());
                 
                 if (block != null && block instanceof ISpecialTileMultiBlock) {
                     
@@ -81,13 +86,12 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
                         
                         return true;
                     }
-                    return false;
                 }
             }
             return false;
         }
         
-        if ((Integer) providedInfo[0] == 1) {
+        if ((int) providedInfo[0] == 1) {
             
             TileEntity tile = vector.getTileEntity(this.getWorldObj());
             
@@ -110,7 +114,11 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
                 
                 return false;
             } else {
-                ((IMultiBlockPart) tile).addMultiBlock(this);
+                
+                if (!((IMultiBlockPart) tile).addMultiBlock(this)) {
+                    
+                    return false;
+                }
             }
             if (tile instanceof IMultiBlockInterface) {
                 
@@ -123,7 +131,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
             return true;
         }
         
-        if ((Integer) providedInfo[0] == 2) {
+        if ((int) providedInfo[0] == 2) {
             
             TileEntity tile = vector.getTileEntity(this.getWorldObj());
             
@@ -143,7 +151,6 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     public void invalidate() {
         
         UtilEntity.sendClientChat("Structure Invalidated");
-        UtilEntity.sendClientChat("Core: " + this.size.getCore().toString());
         
         isValid = false;
         composingBlock.clear();

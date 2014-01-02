@@ -1,5 +1,6 @@
 package GU.blocks.containers;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
@@ -8,6 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
+import ASB2.vector.Vector3;
 import ASB2.wait.IWaitTrigger;
 import ASB2.wait.Wait;
 import GU.EnumState;
@@ -84,6 +86,11 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     
     @Override
     public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
+        Block block = new Vector3(this).getBlock(world);
+        
+        if (block instanceof ContainerBase && !((ContainerBase) block).specialMetadata) {
+            return;
+        }
         
         switch (getOrientation()) {
         

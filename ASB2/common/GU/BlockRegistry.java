@@ -16,6 +16,7 @@ import GU.blocks.containers.BlockElementalRefinery.BlockElementalRefinery;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockEssenceDiffuser.BlockEssenceDiffuser;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
+import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
 import GU.blocks.containers.BlockMultiPanel.BlockMultiPanel;
 import GU.blocks.containers.BlockMultiPanel.ItemBlockMultiPanel;
 import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
@@ -45,6 +46,7 @@ public class BlockRegistry {
     public static ContainerBase BlockEssenceDiffuser;
     public static ContainerBase BlockCentrifuge;
     public static ContainerBase BlockElementalRefinery;
+    public static ContainerBase BlockMultiInterface;
     
     private static int id = 500;
     
@@ -101,6 +103,9 @@ public class BlockRegistry {
         
         BlockElementalRefinery = new BlockElementalRefinery(BlockRegistry.getConfigID(config, "BlockElementalRefinery"), Material.rock);
         addBlock(BlockElementalRefinery, "Elemental Refinery", "BlockElementalRefinery");
+        
+        BlockMultiInterface = new BlockMultiInterface(BlockRegistry.getConfigID(config, "BlockMultiInterface"), Material.rock);
+        BlockMultiInterface.setResistance(Block.obsidian.blockResistance);
     }
     
     public static Block addBlock(Block block, String ign, String unlocalizedName) {

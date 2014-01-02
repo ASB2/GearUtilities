@@ -16,16 +16,16 @@ import GU.info.Reference;
 
 public class BlockSpacialProvider extends ContainerBase {
     
-    public static final int STANDARD = 0;
-    public static final int FLUID = 1;
+    public static final int STANDARD = 0, FLUID = 1, FURNACE = 2;
     
-    Icon standard, fluid;
+    Icon standard, fluid, furnace;
     
     public BlockSpacialProvider(int id, Material material) {
         super(id, material);
         specialMetadata = true;
         this.registerTile(TileSpacialProvider.class);
         this.registerTile(TileFluidSpacialProvider.class);
+        this.registerTile(TileFurnaceSpacialProvider.class);
     }
     
     @Override
@@ -41,6 +41,7 @@ public class BlockSpacialProvider extends ContainerBase {
             } else {
                 
                 for (IMultiBlock multi : tile.getComprisedMultiBlocks()) {
+                    
                     multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
                 }
                 return true;
@@ -54,6 +55,7 @@ public class BlockSpacialProvider extends ContainerBase {
         super.registerIcons(iconRegister);
         standard = iconRegister.registerIcon(Reference.MODDID + ":BlockStandardSpecialProvider");
         fluid = iconRegister.registerIcon(Reference.MODDID + ":BlockFluidSpecialProvider");
+        furnace = iconRegister.registerIcon(Reference.MODDID + ":BlockFurnaceSpecialProvider");
     }
     
     @Override
@@ -65,6 +67,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return standard;
             case FLUID:
                 return fluid;
+            case FURNACE:
+                return furnace;
             default:
                 return super.getIcon(side, metadata);
         }
@@ -76,6 +80,7 @@ public class BlockSpacialProvider extends ContainerBase {
         
         list.add(new ItemStack(this, 1, STANDARD));
         list.add(new ItemStack(this, 1, FLUID));
+        list.add(new ItemStack(this, 1, FURNACE));
     }
     
     @Override
@@ -87,6 +92,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return "Standard Spacial Provider";
             case FLUID:
                 return "Fluid Spacial Provider";
+            case FURNACE:
+                return "Furnace Spacial Provider";
         }
         return "";
     }
@@ -100,6 +107,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return "BlockStandardSpacialProvider";
             case FLUID:
                 return "BlockFluidSpacialProvider";
+            case FURNACE:
+                return "BlockFurnaceSpacialProvider";
         }
         return "";
     }
@@ -113,6 +122,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return new TileSpacialProvider();
             case FLUID:
                 return new TileFluidSpacialProvider();
+            case FURNACE:
+                return new TileFurnaceSpacialProvider();
         }
         return null;
     }

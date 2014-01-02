@@ -8,9 +8,9 @@ import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
 import GU.EnumState;
 import GU.api.multiblock.IMultiBlock;
-import GU.multiblock.MultiBlockTank;
+import GU.multiblock.MultiBlockFurnace;
 
-public class TileFluidSpacialProvider extends TileSpacialProvider {
+public class TileFurnaceSpacialProvider extends TileSpacialProvider {
     
     NBTTagCompound bufferedTankData;
     
@@ -54,14 +54,14 @@ public class TileFluidSpacialProvider extends TileSpacialProvider {
                 
                 if (found > 0) {
                     
-                    MultiBlockTank tank = new MultiBlockTank(worldObj, new Cuboid(new Vector3(xCoord, yCoord, zCoord), getMultiBlockXChange(), getMultiBlockYChange(), getMultiBlockZChange()));
+                    MultiBlockFurnace furnance = new MultiBlockFurnace(worldObj, new Cuboid(new Vector3(xCoord, yCoord, zCoord), getMultiBlockXChange(), getMultiBlockYChange(), getMultiBlockZChange()));
                     
-                    boolean spaceValid = tank.isStructureValid();
+                    boolean spaceValid = furnance.isStructureValid();
                     UtilEntity.sendClientChat("Area Valid: " + spaceValid);
                     
                     if (spaceValid) {
                         
-                        boolean valid = tank.create();
+                        boolean valid = furnance.create();
                         UtilEntity.sendClientChat("Structure Created:  " + valid);
                         return valid;
                     }
@@ -75,16 +75,12 @@ public class TileFluidSpacialProvider extends TileSpacialProvider {
             }
         } else {
             
-            MultiBlockTank tank = new MultiBlockTank(worldObj);
+            MultiBlockFurnace tank = new MultiBlockFurnace(worldObj);
             tank.load(bufferedTankData);
-            boolean spaceValid = tank.isStructureValid();
-            UtilEntity.sendClientChat("Area Valid: " + spaceValid);
             
-            if (spaceValid) {
-                
-                boolean valid = tank.create();
-                UtilEntity.sendClientChat("Structure Created:  " + valid);
-                return valid;
+            if (tank.isStructureValid()) {
+
+                return tank.create();
             }
             return false;
         }

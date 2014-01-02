@@ -15,7 +15,7 @@ import GU.blocks.containers.TileMultiBase;
 
 public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCore {
     
-    public static final int MAX_DISTANCE = 255;
+    public static final int MAX_DISTANCE = 16;
     protected boolean hasBufferedCreateMultiBlock = false;
     
     public TileSpacialProvider() {
@@ -25,6 +25,23 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     
     @Override
     public void updateEntity() {
+        
+//        int metadata = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+//        
+//        if (metadata == 0 && !(this.getClass() == TileSpacialProvider.class)) {
+//            worldObj.setBlockTileEntity(xCoord, yCoord, zCoord, new TileSpacialProvider());
+//            return;
+//        }
+//        
+//        if (metadata == 1 && !(this.getClass() == TileFluidSpacialProvider.class)) {
+//            worldObj.setBlockTileEntity(xCoord, yCoord, zCoord, new TileFluidSpacialProvider());
+//            return;
+//        }
+//        
+//        if (metadata == 2 && !(this.getClass() == TileFurnaceSpacialProvider.class)) {
+//            worldObj.setBlockTileEntity(xCoord, yCoord, zCoord, new TileFurnaceSpacialProvider());
+//            return;
+//        }
     }
     
     public TileEntity getFarthestProvider(ForgeDirection direction) {
