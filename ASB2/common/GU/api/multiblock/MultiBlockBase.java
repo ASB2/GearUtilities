@@ -64,7 +64,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     @Override
     public boolean iterate(Vector3 vector, Object... providedInfo) {
         
-        if ((int) providedInfo[0] == 0) {
+        if ((Integer) providedInfo[0] == 0) {
             
             TileEntity tile = vector.getTileEntity(this.getWorldObj());
             
@@ -91,7 +91,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
             return false;
         }
         
-        if ((int) providedInfo[0] == 1) {
+        if ((Integer) providedInfo[0] == 1) {
             
             TileEntity tile = vector.getTileEntity(this.getWorldObj());
             
@@ -131,7 +131,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
             return true;
         }
         
-        if ((int) providedInfo[0] == 2) {
+        if ((Integer) providedInfo[0] == 2) {
             
             TileEntity tile = vector.getTileEntity(this.getWorldObj());
             
