@@ -8,15 +8,38 @@ import GU.api.multiblock.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
 
 public class TileItemMultiInterface extends TileMultiBase implements ISidedInventory {
-        
+    
+    private SlotWrapper[] slots;
+    
     public TileItemMultiInterface() {
-        
         this.destoryTileWithNotMultiBlock = true;
+        resetMultiBlock();
+    }
+    
+    // ON MULTIBLOCK CHANGE: call this method //
+    private void resetMultiBlock() {
+    	// TODO: recalculate comprisedMultiBlocks
+    	// TODO: idealy recalculate overall inventorySize and return that in getSizeInventory(). would be better in performance than calculating it everytime.
+    
+    	slots = new SlotWrapper[getSizeInventory()];
+    
+    	int currentSlotIndex = 0;
+    
+    	for(IMultiBlock multi: getComprisedMultiBlocks()) {
+            if(multi instanceof IInventory) {
+                IInventory inventory = ((IInventory)multi)
+                for(int subIndex = 0; subIndex<inventory.getSizeInventory(); subIndex++) {
+    				slots[currentSlotIndex] = new SlotWrapper(inventory, subIndex);
+    				currentSlotIndex++;
+    			}
+            }
+        }
     }
     
     @Override
     public boolean addMultiBlock(IMultiBlock multiBlock) {        
-        return super.addMultiBlock(multiBlock);
+        boolean result = super.addMultiBlock(multiBlock);
+        
     }
     
     @Override
@@ -41,26 +64,26 @@ public class TileItemMultiInterface extends TileMultiBase implements ISidedInven
     
     @Override
     public ItemStack getStackInSlot(int i) {
-        // TODO Auto-generated method stub
-        return null;
+        if (i>= getSizeInventory()) return null; // TODO: check if something should happen in this case
+        else return slots[i].getStack();
     }
     
     @Override
     public ItemStack decrStackSize(int i, int j) {
-        // TODO Auto-generated method stub
-        return null;
+        if (i>= getSizeInventory()) return null; // TODO: check if something should happen in this case
+        else return slots[i].decrStack(j);
     }
     
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
-        // TODO Auto-generated method stub
-        return null;
+        if (i>= getSizeInventory()) return null; // TODO: check if something should happen in this case
+        else return slots[i].getStackOnClosing();
     }
     
     @Override
     public void setInventorySlotContents(int i, ItemStack itemstack) {
-        // TODO Auto-generated method stub
-        
+        if (i>= getSizeInventory()) return; // TODO: check if something should happen in this case
+        else slots[i].setSlotContents(itemstack);
     }
     
     @Override
@@ -121,6 +144,36 @@ public class TileItemMultiInterface extends TileMultiBase implements ISidedInven
     public boolean canExtractItem(int i, ItemStack itemstack, int j) {
         // TODO Auto-generated method stub
         return false;
+    }
+    
+    /**
+     * Inner class to wrap the slots of the contained inventories
+     */
+    private class SlotWrapper {
+    	private final int index;
+    	private final IInventory inventory;
+    
+    	public SlotWrapper(IInventory inventory, int index) {
+    		this.inventory = inventory;
+    		this.index = index;
+    	}
+    
+    	public ItemStack getStack() {
+    		return inventory.getStackInSlot(index);
+    	}
+    
+    	public ItemStack decrStack(int j) {
+    		return inventory.decrStackInSlot(index, j);
+    	}
+    
+    	public ItemStack getStackOnClosing() {
+            return inventory.getStackInSlotOnClosing(index);
+        }
+        
+        @Override
+        public void setSlotContents(ItemStack itemstack) {
+            inventory.setInventorySlotContents(index, itemstack);
+        }
     }
     
 }
