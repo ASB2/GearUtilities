@@ -39,12 +39,15 @@ public class TileItemMultiInterface extends TileMultiBase implements ISidedInven
     @Override
     public boolean addMultiBlock(IMultiBlock multiBlock) {        
         boolean result = super.addMultiBlock(multiBlock);
-        
+        resetMultiBlock();
+        return result;
     }
     
     @Override
     public void removeMultiBlock(IMultiBlock multiBlock) {
-        super.removeMultiBlock(multiBlock);
+        boolean result = super.removeMultiBlock(multiBlock);
+        resetMultiBlock();
+        return result;
     }
     
     @Override
