@@ -8,14 +8,14 @@ import GU.api.multiblock.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
 
 public class TileItemMultiInterface extends TileMultiBase implements ISidedInventory {
-        
+    
     public TileItemMultiInterface() {
         
         this.destoryTileWithNotMultiBlock = true;
     }
     
     @Override
-    public boolean addMultiBlock(IMultiBlock multiBlock) {        
+    public boolean addMultiBlock(IMultiBlock multiBlock) {
         return super.addMultiBlock(multiBlock);
     }
     
@@ -27,15 +27,15 @@ public class TileItemMultiInterface extends TileMultiBase implements ISidedInven
     @Override
     public int getSizeInventory() {
         
-    int sizeInventory = 0;
-    
-    for(IMultiBlock multi: this.getComprisedMultiBlocks()) {
+        int sizeInventory = 0;
         
-        if(multi instanceof IInventory) {
+        for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
             
-            sizeInventory += ((IInventory)multi).getSizeInventory();
+            if (multi instanceof IInventory) {
+                
+                sizeInventory += ((IInventory) multi).getSizeInventory();
+            }
         }
-    }
         return sizeInventory;
     }
     

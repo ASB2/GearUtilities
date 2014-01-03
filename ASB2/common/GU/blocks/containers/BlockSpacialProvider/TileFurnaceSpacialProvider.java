@@ -79,7 +79,7 @@ public class TileFurnaceSpacialProvider extends TileSpacialProvider {
             tank.load(bufferedTankData);
             
             if (tank.isStructureValid()) {
-
+                
                 return tank.create();
             }
             return false;

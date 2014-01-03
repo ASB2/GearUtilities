@@ -1,5 +1,6 @@
 package GU.multiblock;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -17,6 +18,7 @@ import ASB2.vector.Vector3;
 import GU.api.multiblock.MultiBlockBase;
 import GU.blocks.containers.Inventory;
 import GU.blocks.containers.BlockSpacialProvider.TileFurnaceSpacialProvider;
+import ASB2.utils.*;
 
 public class MultiBlockFurnace extends MultiBlockBase implements ISidedInventory, IFluidHandler {
     
@@ -35,15 +37,25 @@ public class MultiBlockFurnace extends MultiBlockBase implements ISidedInventory
     
     public boolean isStructureValid() {
         
-        for (Vector3 vector : size.getCornerBlocks()) {
-            
-            TileEntity tile = vector.getTileEntity(worldObj);
-            
-            if (tile == null || !(tile instanceof TileFurnaceSpacialProvider)) {
-                
-                return false;
-            }
-        }
+//        for (Vector3 vector : size.getCornerBlocks()) {
+//            
+//            TileEntity tile = vector.getTileEntity(worldObj);
+//            
+//            if (tile == null || !(tile instanceof TileFurnaceSpacialProvider)) {
+//                
+//                return false;
+//            }
+//        }
+//        
+//        for (Vector3 vector : size.getCorners()) {
+//            
+//            Block block = vector.getBlock(getWorldObj());
+//            
+//            if (block == null || !block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+//                
+//                return false;
+//            }
+//        }
         
         if (size.getXSize() + 1 < 3 || size.getYSize() + 1 < 5 || size.getZSize() + 1 < 3) {
             
@@ -80,7 +92,7 @@ public class MultiBlockFurnace extends MultiBlockBase implements ISidedInventory
     
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        
+        UtilEntity.sendChatToPlayer(player, "Furnace Size: " + this.size);
         return false;
     }
     

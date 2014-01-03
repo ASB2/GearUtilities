@@ -24,6 +24,7 @@ import GU.items.GUItemBlock;
 
 public class BlockStructureCube extends ContainerBase implements ISpecialTileMultiBlock {
     
+    public static final int CUBE0 = 0, CUBE1 = 1, CUBE2 = 2, CUBE3 = 3, CUBE4 = 4, GLASS5 = 5;
     public static final int MAX_META = 5;
     Icon[] texture = new Icon[MAX_META];
     String[] unlocalizedname = new String[] { "BlockStructureCube0", "BlockStructureCube1", "BlockStructureCube2", "BlockStructureCube3", "BlockStructureCube4" };
@@ -114,6 +115,12 @@ public class BlockStructureCube extends ContainerBase implements ISpecialTileMul
             }
         }
         return false;
+    }
+    
+    @Override
+    public boolean isBlockNormalCube(World world, int x, int y, int z) {
+        
+        return world.getBlockMetadata(x, y, z) != GLASS5 ? true : false;
     }
     
     @Override

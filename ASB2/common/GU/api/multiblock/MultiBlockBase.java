@@ -43,6 +43,16 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
                 return false;
             }
         }
+        
+        for (Vector3 vector : size.getCorners()) {
+            
+          Block block = vector.getBlock(getWorldObj());
+        
+          if(block == null || !block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+              
+              return false;
+          }
+        }
         return size.iterate(this, 0);
     }
     

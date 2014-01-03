@@ -12,13 +12,11 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import ASB2.utils.UtilMisc;
 import GU.GearUtilities;
 import GU.info.Reference;
 import GU.items.IExtraItemBlockInfo;
@@ -261,7 +259,7 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
     @Override
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, List info, boolean var1) {
         
-        info.add("Press " + UtilMisc.getColorCode(EnumChatFormatting.GOLD) + "Shift " + UtilMisc.getColorCode(EnumChatFormatting.GRAY) + "to show more info");
+        info.add("Made just for you " + player.username);
     }
     
     @Override
