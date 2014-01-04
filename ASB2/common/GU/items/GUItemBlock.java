@@ -47,15 +47,16 @@ public class GUItemBlock extends ItemBlock {
     @Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
         
-        if (!world.setBlock(x, y, z, this.getBlockID(), ((IExtraItemBlockInfo) Block.blocksList[this.getBlockID()]).getPlacedMetadata(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata), 3)) {
+        Block block = Block.blocksList[this.getBlockID()];
+        if (!world.setBlock(x, y, z, this.getBlockID(), ((IExtraItemBlockInfo) block).getPlacedMetadata(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata), 3)) {
             
             return false;
         }
         
         if (world.getBlockId(x, y, z) == this.getBlockID()) {
             
-            Block.blocksList[this.getBlockID()].onBlockPlacedBy(world, x, y, z, player, stack);
-            Block.blocksList[this.getBlockID()].onPostBlockPlaced(world, x, y, z, metadata);
+            block.onBlockPlacedBy(world, x, y, z, player, stack);
+            block.onPostBlockPlaced(world, x, y, z, metadata);
         }
         return true;
     }

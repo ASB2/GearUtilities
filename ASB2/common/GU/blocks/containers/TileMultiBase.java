@@ -12,7 +12,7 @@ import GU.api.multiblock.IMultiBlockPart;
 public class TileMultiBase extends TileBase implements IMultiBlockPart {
     
     protected boolean isInMultiBlock = false, destoryTileWithNotMultiBlock = false;
-    Set<IMultiBlock> multiBlocks = new HashSet<IMultiBlock>();
+    Set<IMultiBlock> multiBlocks = new HashSet<IMultiBlock>(), unchangable = new HashSet<IMultiBlock>();
     protected int fluidMultiBlocks, itemMultiBlock;
     
     public TileMultiBase() {
@@ -46,9 +46,12 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
         if (multiBlock instanceof IInventory) {
             itemMultiBlock += 1;
         }
-        
-        isInMultiBlock = true;
-        return multiBlocks.add(multiBlock);
+        if (multiBlocks.add(multiBlock)) {
+            isInMultiBlock = true;
+            unchangable = Collections.unmodifiableSet(multiBlocks);
+            return true;
+        }
+        return false;
     }
     
     @Override
@@ -63,12 +66,13 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
         }
         
         multiBlocks.remove(multiBlock);
+        unchangable = Collections.unmodifiableSet(multiBlocks);
         isInMultiBlock = multiBlocks.isEmpty() ? false : true;
     }
     
     @Override
     public Set<IMultiBlock> getComprisedMultiBlocks() {
         
-        return Collections.unmodifiableSet(multiBlocks);
+        return unchangable;
     }
 }

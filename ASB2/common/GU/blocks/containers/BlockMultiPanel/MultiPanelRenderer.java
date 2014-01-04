@@ -14,6 +14,7 @@ import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
+import GU.render.BufferedImageTest;
 
 public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
     
@@ -106,53 +107,54 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
                 }
             }
             
+            BufferedImageTest.bindImage();
             switch (tile.getMode()) {
             
                 case 1: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_1);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_1);
                     Models.ModelMultiPanel.renderPart("Render_Addition_1");
                     break;
                 }
                 
                 case 2: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_2);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_2);
                     Models.ModelMultiPanel.renderPart("Render_Addition_2");
                     break;
                 }
                 
                 case 3: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_3);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_3);
                     Models.ModelMultiPanel.renderPart("Render_Addition_3");
                     break;
                 }
                 
                 case 4: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_4);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_4);
                     Models.ModelMultiPanel.renderPart("Render_Addition_4");
                     break;
                 }
                 
                 case 5: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_5);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_5);
                     Models.ModelMultiPanel.renderPart("Render_Addition_5");
                     break;
                 }
                 
                 case 6: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_6);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_6);
                     Models.ModelMultiPanel.renderPart("Render_Addition_6");
                     break;
                 }
                 
                 case 7: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_7);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_7);
                     Models.ModelMultiPanel.renderPart("Render_Addition_7");
                     break;
                 }
@@ -251,54 +253,54 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
                     break;
                 }
             }
-            
+            BufferedImageTest.bindImage();
             switch (UtilItemStack.getNBTTagInt(item, "mode")) {
             
                 case 1: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_1);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_1);
                     Models.ModelMultiPanel.renderPart("Render_Addition_1");
                     break;
                 }
                 
                 case 2: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_2);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_2);
                     Models.ModelMultiPanel.renderPart("Render_Addition_2");
                     break;
                 }
                 
                 case 3: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_3);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_3);
                     Models.ModelMultiPanel.renderPart("Render_Addition_3");
                     break;
                 }
                 
                 case 4: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_4);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_4);
                     Models.ModelMultiPanel.renderPart("Render_Addition_4");
                     break;
                 }
                 
                 case 5: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_5);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_5);
                     Models.ModelMultiPanel.renderPart("Render_Addition_5");
                     break;
                 }
                 
                 case 6: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_6);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_6);
                     Models.ModelMultiPanel.renderPart("Render_Addition_6");
                     break;
                 }
                 
                 case 7: {
                     
-                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_7);
+//                    UtilRender.renderTexture(Textures.MULTI_PANEL_ADDITION_7);
                     Models.ModelMultiPanel.renderPart("Render_Addition_7");
                     break;
                 }

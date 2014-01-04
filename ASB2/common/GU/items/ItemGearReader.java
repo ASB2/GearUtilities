@@ -127,6 +127,7 @@ public class ItemGearReader extends ItemBase {
             UtilEntity.sendChatToPlayer(player, "Block ambient acclusion: " + Block.blocksList[world.getBlockId(x, y, z)].getAmbientOcclusionLightValue(world, x, y, z));
             UtilEntity.sendChatToPlayer(player, "Tile Entity: " + world.getBlockTileEntity(x, y, z));
             UtilEntity.sendChatToPlayer(player, "Block Opaque: " + world.isBlockOpaqueCube(x, y, z));
+            UtilEntity.sendChatToPlayer(player, "Normal Cube: " + world.isBlockNormalCube(x, y, z));
             UtilEntity.sendChatToPlayer(player, "--------");
         }
         return true;

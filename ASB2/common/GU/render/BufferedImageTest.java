@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -48,6 +50,9 @@ public class BufferedImageTest {
         // UtilRender.renderTexture(textureLocation);
         // image.getRGB(0, 0, image.getWidth(), image.getHeight(),
         // textureImage.getTextureData(), 0, image.getWidth());
-        TextureUtil.uploadTexture(textureImage.getGlTextureId(), textureImage.getTextureData(), image.getWidth(), image.getHeight());
+        // TextureUtil.uploadTexture(textureImage.getGlTextureId(),
+        // textureImage.getTextureData(), image.getWidth(), image.getHeight());
+        
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureImage.getGlTextureId());
     }
 }

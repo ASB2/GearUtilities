@@ -13,6 +13,7 @@ import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
+import GU.render.BufferedImageTest;
 
 public class CentrifugeRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
     
@@ -73,7 +74,8 @@ public class CentrifugeRenderer extends TileEntitySpecialRenderer implements IIt
         UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE_BOTTOM);
         Models.ModelCentrifgue.renderPart("Bottom");
         
-        UtilRender.renderTexture(Textures.CENTRIFUGE_CENTER);
+        BufferedImageTest.bindImage();
+//        UtilRender.renderTexture(Textures.CENTRIFUGE_CENTER);
         Models.ModelCentrifgue.renderPart("Center");
         
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);

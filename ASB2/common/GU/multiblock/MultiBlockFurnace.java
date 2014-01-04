@@ -37,33 +37,43 @@ public class MultiBlockFurnace extends MultiBlockBase implements ISidedInventory
     
     public boolean isStructureValid() {
         
-//        for (Vector3 vector : size.getCornerBlocks()) {
-//            
-//            TileEntity tile = vector.getTileEntity(worldObj);
-//            
-//            if (tile == null || !(tile instanceof TileFurnaceSpacialProvider)) {
-//                
-//                return false;
-//            }
-//        }
-//        
-//        for (Vector3 vector : size.getCorners()) {
-//            
-//            Block block = vector.getBlock(getWorldObj());
-//            
-//            if (block == null || !block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
-//                
-//                return false;
-//            }
-//        }
+        if ((this.size.getXSize() + 1) % 2 == 0 || (this.size.getYSize() + 1) % 2 == 0 || (this.size.getZSize() + 1) % 2 == 0) {
+            
+            return false;
+        }
         
         if (size.getXSize() + 1 < 3 || size.getYSize() + 1 < 5 || size.getZSize() + 1 < 3) {
             
             return false;
         }
+        
+        for (Vector3 vector : size.getCornerBlocks()) {
+            
+            TileEntity tile = vector.getTileEntity(worldObj);
+            
+            if (tile == null || !(tile instanceof TileFurnaceSpacialProvider)) {
+                
+                return false;
+            }
+        }
+        
+        for (Vector3 vector : size.getCorners()) {
+            
+            Block block = vector.getBlock(getWorldObj());
+            
+            if (block == null || !block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+                
+                return false;
+            }
+        }
         return size.iterate(this, 0);
     }
     
+ public boolean isValidCore(Vector3 vector, TileEntity tile) {
+        
+        return false;
+    }
+ 
     @Override
     public void createWorked() {
         

@@ -37,7 +37,7 @@ public class BlockSpacialProvider extends ContainerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         
-        if (!world.isRemote && player.getHeldItem() == null) {
+        if (player.getHeldItem() == null) {
             
             TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
             

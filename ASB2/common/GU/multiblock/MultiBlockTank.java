@@ -14,7 +14,6 @@ import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
 import GU.api.multiblock.MultiBlockBase;
-import GU.blocks.containers.BlockSpacialProvider.TileFluidSpacialProvider;
 
 public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     
@@ -30,17 +29,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     }
     
     public boolean isStructureValid() {
-        
-        for (Vector3 vector : size.getCornerBlocks()) {
-            
-            TileEntity tile = vector.getTileEntity(worldObj);
-            
-            if (tile == null || !(tile.getClass() == TileFluidSpacialProvider.class)) {
-                
-                return false;
-            }
-        }
-        return size.iterate(this, 0);
+        return super.isStructureValid();
     }
     
     @Override
@@ -52,6 +41,11 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     @Override
     public void invalidate() {
         super.invalidate();
+    }
+    
+    public boolean isValidCore(Vector3 vector, TileEntity tile) {
+        
+        return true;
     }
     
     @Override

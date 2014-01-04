@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.EnumSet;
 import java.util.Random;
 
+import net.minecraft.client.renderer.texture.TextureUtil;
 import ASB2.FastNoise;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
@@ -24,12 +25,9 @@ public class NoiseRenderer implements ITickHandler {
     public void tickStart(EnumSet<TickType> type, Object... tickData) {
         
         float maxDensity = .3f, minDensity = .2f, changePerTick = .0002f;
+        BufferedImage newImage = BufferedImageTest.getImage();
         
-        BufferedImage original = BufferedImageTest.getImage();
-        
-        if (original != null) {
-            
-            BufferedImage newImage = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_RGB);
+        if (newImage != null) {
             
             if (type.equals(this.ticks())) {
                 
@@ -77,7 +75,7 @@ public class NoiseRenderer implements ITickHandler {
                     }
                 }
                 newImage.getRGB(0, 0, newImage.getWidth(), newImage.getHeight(), BufferedImageTest.textureImage.getTextureData(), 0, newImage.getWidth());
-                BufferedImageTest.image = newImage;
+                TextureUtil.uploadTexture(BufferedImageTest.textureImage.getGlTextureId(), BufferedImageTest.textureImage.getTextureData(), BufferedImageTest.image.getWidth(), BufferedImageTest.image.getHeight());
             }
         }
     }

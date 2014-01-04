@@ -34,11 +34,17 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     
     public boolean isStructureValid() {
         
+        // if ((this.size.getXSize() + 1) % 2 == 0 || (this.size.getYSize() + 1)
+        // % 2 == 0 || (this.size.getZSize() + 1) % 2 == 0) {
+        //
+        // return false;
+        // }
+        
         for (Vector3 vector : size.getCornerBlocks()) {
             
             TileEntity tile = vector.getTileEntity(worldObj);
             
-            if (tile == null || !(tile instanceof IMultiBlockCore)) {
+            if (tile == null || !(tile instanceof IMultiBlockCore) || !isValidCore(vector, tile)) {
                 
                 return false;
             }
@@ -46,12 +52,12 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
         
         for (Vector3 vector : size.getCorners()) {
             
-          Block block = vector.getBlock(getWorldObj());
-        
-          if(block == null || !block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
-              
-              return false;
-          }
+            Block block = vector.getBlock(getWorldObj());
+            
+            if (block == null || !block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+                
+                return false;
+            }
         }
         return size.iterate(this, 0);
     }
@@ -65,6 +71,11 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
             return true;
         }
         return false;
+    }
+    
+    public boolean isValidCore(Vector3 vector, TileEntity tile) {
+        
+        return true;
     }
     
     public void createWorked() {
