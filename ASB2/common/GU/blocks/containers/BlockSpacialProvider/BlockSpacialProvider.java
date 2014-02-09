@@ -15,11 +15,11 @@ import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
 
 public class BlockSpacialProvider extends ContainerBase {
-    
+
     public static final int STANDARD = 0, FLUID = 1, FURNACE = 2;
-    
+
     Icon standard, fluid, furnace;
-    
+
     public BlockSpacialProvider(int id, Material material) {
         super(id, material);
         specialMetadata = true;
@@ -27,35 +27,31 @@ public class BlockSpacialProvider extends ContainerBase {
         this.registerTile(TileFluidSpacialProvider.class);
         this.registerTile(TileFurnaceSpacialProvider.class);
     }
-    
+
     @Override
     public boolean isBlockNormalCube(World world, int x, int y, int z) {
-        
+
         return true;
     }
-    
+
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        
-        if (player.getHeldItem() == null) {
-            
-            TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
-            
-            if (tile.getComprisedMultiBlocks().isEmpty()) {
-                
-                return tile.createMultiBlock();
-            } else {
-                
-                for (IMultiBlock multi : tile.getComprisedMultiBlocks()) {
-                    
-                    multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
-                }
-                return true;
+
+        TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
+
+        if (tile.getComprisedMultiBlocks().isEmpty()) {
+
+            return tile.createMultiBlock();
+        } else {
+
+            for (IMultiBlock multi : tile.getComprisedMultiBlocks()) {
+
+                multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
             }
+            return true;
         }
-        return false;
     }
-    
+
     @Override
     public void registerIcons(IconRegister iconRegister) {
         super.registerIcons(iconRegister);
@@ -63,12 +59,12 @@ public class BlockSpacialProvider extends ContainerBase {
         fluid = iconRegister.registerIcon(Reference.MODDID + ":BlockFluidSpecialProvider");
         furnace = iconRegister.registerIcon(Reference.MODDID + ":BlockFurnaceSpecialProvider");
     }
-    
+
     @Override
     public Icon getIcon(int side, int metadata) {
-        
+
         switch (metadata) {
-        
+
             case STANDARD:
                 return standard;
             case FLUID:
@@ -79,21 +75,21 @@ public class BlockSpacialProvider extends ContainerBase {
                 return super.getIcon(side, metadata);
         }
     }
-    
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List list) {
-        
+
         list.add(new ItemStack(this, 1, STANDARD));
         list.add(new ItemStack(this, 1, FLUID));
         list.add(new ItemStack(this, 1, FURNACE));
     }
-    
+
     @Override
     public String getItemStackDisplayName(ItemStack itemStack) {
-        
+
         switch (itemStack.getItemDamage()) {
-        
+
             case STANDARD:
                 return "Standard Spacial Provider";
             case FLUID:
@@ -103,12 +99,12 @@ public class BlockSpacialProvider extends ContainerBase {
         }
         return "";
     }
-    
+
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
-        
+
         switch (itemStack.getItemDamage()) {
-        
+
             case STANDARD:
                 return "BlockStandardSpacialProvider";
             case FLUID:
@@ -118,12 +114,12 @@ public class BlockSpacialProvider extends ContainerBase {
         }
         return "";
     }
-    
+
     @Override
     public TileEntity createTileEntity(World world, int metadata) {
-        
+
         switch (metadata) {
-        
+
             case STANDARD:
                 return new TileSpacialProvider();
             case FLUID:
@@ -133,7 +129,7 @@ public class BlockSpacialProvider extends ContainerBase {
         }
         return null;
     }
-    
+
     @Override
     public TileEntity createNewTileEntity(World world) {
         // TODO Auto-generated method stub

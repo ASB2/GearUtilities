@@ -86,9 +86,10 @@ public abstract class TileBase extends TileEntity implements IVanillaColorable, 
     
     @Override
     public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
+        
         Block block = new Vector3(this).getBlock(world);
         
-        if (block instanceof ContainerBase && !((ContainerBase) block).specialMetadata) {
+        if (block instanceof ContainerBase && ((ContainerBase) block).specialMetadata) {
             return;
         }
         
