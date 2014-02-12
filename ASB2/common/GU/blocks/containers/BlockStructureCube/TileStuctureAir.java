@@ -1,27 +1,32 @@
 package GU.blocks.containers.BlockStructureCube;
 
+import ASB2.wait.Wait;
 import GU.api.multiblock.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
 
 public class TileStuctureAir extends TileMultiBase {
 
     public TileStuctureAir() {
-        // TODO Auto-generated constructor stub
+        waitTimer = new Wait(this, 10, 0);
+        this.maxMultiBlocks = 1;
     }
 
     @Override
     public void updateEntity() {
-
-        if (this.getComprisedMultiBlocks().size() == 0) {
-
-            worldObj.setBlockToAir(xCoord, yCoord, zCoord);
-        }
-        super.updateEntity();
+        waitTimer.update();
     }
 
     @Override
     public void removeMultiBlock(IMultiBlock multiBlock) {
         super.removeMultiBlock(multiBlock);
-        worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+    }
+
+    @Override
+    public void trigger(int id) {
+
+        if (this.getComprisedMultiBlocks().isEmpty() && !worldObj.isRemote) {
+
+            worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+        }
     }
 }

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -13,14 +12,13 @@ import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.ICuboidIterator;
 import ASB2.vector.Vector3;
-import GU.BlockRegistry;
 
 public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
 
     protected World worldObj;
     protected boolean isValid = false;
     protected Set<Vector3> composingBlock = new HashSet<Vector3>();
-    protected Set<Vector3> multiBlockInterfaces = new HashSet<Vector3>();
+    protected Set<Vector3> fluidMultiBlockInterfaces = new HashSet<Vector3>(), itemMultiBlockInterfaces = new HashSet<Vector3>(), powerMultiBlockInterfaces = new HashSet<Vector3>();
     protected Set<Vector3> multiBlockCores = new HashSet<Vector3>();
     protected Cuboid size;
 
@@ -87,94 +85,130 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     @Override
     public boolean iterate(Vector3 vector, Object... providedInfo) {
 
+        // Is Area Valid
         if ((Integer) providedInfo[0] == 0) {
 
-            TileEntity tile = vector.getTileEntity(this.getWorldObj());
-
-            if (tile != null) {
-
-                if (tile instanceof IMultiBlockPart) {
-
-                    return true;
-                }
-            } else {
-
-                Block block = vector.getBlock(this.getWorldObj());
-
-                if (block != null && block instanceof ISpecialTileMultiBlock) {
-
-                    tile = ((ISpecialTileMultiBlock) block).getBlockTileEntity(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ());
-
-                    if (tile != null && tile instanceof IMultiBlockPart) {
-
-                        return true;
-                    }
-                } else if (block == null || vector.getBlockMaterial(getWorldObj()) == Material.air) {
-
-                    return true;
-                }
-            }
-            return false;
+            return checkArea(vector);
         }
 
+        // Create Multiblock
         if ((Integer) providedInfo[0] == 1) {
 
-            TileEntity tile = vector.getTileEntity(this.getWorldObj());
-
-            if (tile == null) {
-
-                Block block = Block.blocksList[vector.getBlockID(this.getWorldObj())];
-
-                if (block != null && block instanceof ISpecialTileMultiBlock) {
-
-                    tile = ((ISpecialTileMultiBlock) block).getBlockTileEntity(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ());
-
-                    if (tile == null) {
-
-                        return false;
-                    }
-                } else if (block == null || vector.getBlockMaterial(getWorldObj()) == Material.air) {
-
-                    this.getWorldObj().setBlock(vector.intX(), vector.intY(), vector.intZ(), BlockRegistry.BlockStructureAir.blockID);
-                    return true;
-                }
-                return false;
-            }
-            if (!(tile instanceof IMultiBlockPart)) {
-
-                return false;
-            } else {
-
-                if (!((IMultiBlockPart) tile).addMultiBlock(this)) {
-
-                    return false;
-                }
-            }
-            if (tile instanceof IMultiBlockInterface) {
-
-                multiBlockInterfaces.add(vector);
-            }
-            if (tile instanceof IMultiBlockCore) {
-
-                multiBlockCores.add(vector);
-            }
-            return true;
+            return createMultiblock(vector);
         }
 
+        // Destroy Multiblock
         if ((Integer) providedInfo[0] == 2) {
 
-            TileEntity tile = vector.getTileEntity(this.getWorldObj());
-
-            if (tile != null) {
-
-                if (tile instanceof IMultiBlockPart) {
-
-                    ((IMultiBlockPart) tile).removeMultiBlock(this);
-                }
-            }
+            destoryMultiblock(vector);
             return true;
         }
         return false;
+    }
+
+    protected boolean checkArea(Vector3 vector) {
+
+        TileEntity tile = vector.getTileEntity(this.getWorldObj());
+
+        if (tile != null) {
+
+            if (tile instanceof IMultiBlockPart) {
+
+                return true;
+            }
+        } else {
+
+            Block block = vector.getBlock(this.getWorldObj());
+
+            if (block != null && block instanceof ISpecialTileMultiBlock) {
+
+                return true;
+            }/*
+              * else if (block == null || vector.getBlockMaterial(getWorldObj()) == Material.air) {
+              * 
+              * return true; }
+              */
+        }
+        return false;
+    }
+
+    protected boolean createMultiblock(Vector3 vector) {
+
+        TileEntity tile = vector.getTileEntity(this.getWorldObj());
+
+        if (tile == null) {
+
+            Block block = vector.getBlock(this.getWorldObj());
+
+            if (block != null && block instanceof ISpecialTileMultiBlock) {
+
+                tile = ((ISpecialTileMultiBlock) block).getBlockTileEntity(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ());
+
+                if (tile == null) {
+
+                    return false;
+                }
+            }/*
+              * else if (block == null || vector.getBlockMaterial(getWorldObj()) == Material.air) {
+              * 
+              * this.getWorldObj().setBlock(vector.intX(), vector.intY(), vector.intZ(), BlockRegistry.BlockStructureAir.blockID); return
+              * true; }
+              */
+            return false;
+
+        }
+        if (!(tile instanceof IMultiBlockPart)) {
+
+            return false;
+        } else {
+
+            if (!((IMultiBlockPart) tile).addMultiBlock(this)) {
+
+                return false;
+            }
+        }
+        if (tile instanceof IMultiBlockInterface) {
+
+            switch (((IMultiBlockInterface) tile).getInterfaceType()) {
+
+                case FLUID: {
+
+                    fluidMultiBlockInterfaces.add(vector);
+                    break;
+                }
+                case ITEM: {
+
+                    itemMultiBlockInterfaces.add(vector);
+                    break;
+                }
+                case POWER: {
+
+                    powerMultiBlockInterfaces.add(vector);
+                    break;
+                }
+                default:
+                    break;
+
+            }
+
+        }
+
+        if (tile instanceof IMultiBlockCore) {
+
+            multiBlockCores.add(vector);
+        }
+
+        return true;
+    }
+
+    protected void destoryMultiblock(Vector3 vector) {
+
+        TileEntity tile = vector.getTileEntity(this.getWorldObj());
+
+        if (tile != null && tile instanceof IMultiBlockPart) {
+
+            ((IMultiBlockPart) tile).removeMultiBlock(this);
+        }
     }
 
     @Override
@@ -184,7 +218,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
 
         isValid = false;
         composingBlock.clear();
-        multiBlockInterfaces.clear();
+        fluidMultiBlockInterfaces.clear();
         multiBlockCores.clear();
         this.getSize().iterate(this, 2);
     }
@@ -210,7 +244,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     @Override
     public Set<Vector3> getMultiBlockInterfaces() {
 
-        return multiBlockInterfaces;
+        return fluidMultiBlockInterfaces;
     }
 
     @Override

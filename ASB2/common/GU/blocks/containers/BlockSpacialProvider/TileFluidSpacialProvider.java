@@ -65,10 +65,9 @@ public class TileFluidSpacialProvider extends TileSpacialProvider {
                         UtilEntity.sendClientChat("Structure Created:  " + valid);
                         return valid;
                     }
-                    return false;
-                } else {
-                    return false;
                 }
+                return false;
+
             } else {
 
                 return false;
