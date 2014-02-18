@@ -16,6 +16,7 @@ import GU.info.Reference;
 
 public class BlockSpacialProvider extends ContainerBase {
 
+    public final ItemStack STANDARD_SPACIAL_PROVIDER = new ItemStack(this, 1, STANDARD), FLUID_SPACIAL_PROVIDER = new ItemStack(this, 1, FLUID), FURNACE_SPACIAL_PROVIDER = new ItemStack(this, 1, FURNACE);
     public static final int STANDARD = 0, FLUID = 1, FURNACE = 2;
 
     Icon standard, fluid, furnace;

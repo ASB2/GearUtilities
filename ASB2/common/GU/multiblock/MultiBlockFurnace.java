@@ -97,7 +97,7 @@ public class MultiBlockFurnace extends MultiBlockBase implements ISidedInventory
     }
 
     @Override
-    public void postLoad() {
+    public void init() {
 
         fluidTank.setCapacity((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1) * 1000);
     }

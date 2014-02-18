@@ -23,6 +23,8 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class BlockMultiInterface extends ContainerBase implements ISpecialTileMultiBlock {
 
+    public final ItemStack ITEM_INTERFACE = new ItemStack(this, 1, 0), FLUID_INTERFACE = new ItemStack(this, 1, 1), POWER_INTERFACE = new ItemStack(this, 1, 2);
+
     public static final int MAX_META = 3;
     Icon[] texture = new Icon[MAX_META];
     String[] unlocalizedname = new String[] { "BlockItemMultiInterface", "BlockFluidMultiInterface", "BlockPowerMultiInterface" };

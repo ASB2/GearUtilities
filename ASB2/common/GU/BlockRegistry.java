@@ -40,14 +40,14 @@ public class BlockRegistry {
     public static ContainerBase BlockEnhancedBricks;
     public static ContainerBase BlockMultiPanel;
     public static BlockBase BlockBasicElemental;
-    public static ContainerBase BlockStructureCube;
-    public static ContainerBase BlockSpacialProvider;
+    public static BlockStructureCube BlockStructureCube;
+    public static BlockSpacialProvider BlockSpacialProvider;
     public static ContainerBase BlockSmeltingCube;
     public static ContainerBase BlockQuantaSender;
     public static ContainerBase BlockEssenceDiffuser;
     public static ContainerBase BlockCentrifuge;
     public static ContainerBase BlockElementalRefinery;
-    public static ContainerBase BlockMultiInterface;
+    public static BlockMultiInterface BlockMultiInterface;
     public static ContainerBase BlockStructureAir;
 
     private static int id = 500;

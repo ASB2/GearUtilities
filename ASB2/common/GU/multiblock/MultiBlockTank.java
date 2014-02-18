@@ -24,10 +24,11 @@ import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.ISpecialTileMultiBlock;
 import GU.api.multiblock.MultiBlockBase;
 import GU.blocks.containers.BlockSpacialProvider.TileFluidSpacialProvider;
+import GU.info.Variables;
 
 public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
-    public FluidTank fluidTank = new FluidTank(0);
+    public FluidTank fluidTank = new FluidTank(1000);
     public Cuboid airBlocks;
 
     public MultiBlockTank(World world) {
@@ -36,9 +37,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
     public MultiBlockTank(World world, Cuboid size) {
         super(world, size);
-        fluidTank.setCapacity((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
-
-        airBlocks = this.getSize().squareShrink(2, 2, 2);
+        init();
     }
 
     public boolean isStructureValid() {
@@ -51,6 +50,16 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
         for (Vector3 vector : airBlocks.getComposingBlock()) {
 
             if (!UtilBlock.isBlockAir(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+
+                return false;
+            }
+        }
+
+        for (Vector3 vector : size.getEdges()) {
+
+            Block block = vector.getBlock(getWorldObj());
+
+            if (block != null && !block.isBlockNormalCube(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
 
                 return false;
             }
@@ -111,7 +120,6 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
         if (tile instanceof IMultiBlockPart && !((IMultiBlockPart) tile).addMultiBlock(this)) {
 
-            this.size.iterate(this, 2);
             return false;
         }
         if (tile instanceof IMultiBlockInterface) {
@@ -148,10 +156,17 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     }
 
     @Override
-    public void postLoad() {
+    protected void init() {
 
-        fluidTank.setCapacity((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1) * 16000);
         airBlocks = this.getSize().squareShrink(2, 2, 2);
+
+        if (Variables.COUNT_JUST_TANK_AIR_BLOCKS) {
+
+            fluidTank.setCapacity((airBlocks.getXSize() + 1) * (airBlocks.getYSize() + 1) * (airBlocks.getZSize() + 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
+        } else {
+
+            fluidTank.setCapacity(((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1)) * 16000);
+        }
     }
 
     @Override

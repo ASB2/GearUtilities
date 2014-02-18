@@ -66,12 +66,9 @@ public class TileFluidSpacialProvider extends TileSpacialProvider {
                         return valid;
                     }
                 }
-                return false;
-
-            } else {
-
-                return false;
             }
+            return false;
+
         } else {
 
             MultiBlockTank tank = new MultiBlockTank(worldObj);

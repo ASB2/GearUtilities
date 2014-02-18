@@ -15,9 +15,9 @@ import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftRegistry {
-    
+
     public static void init() {
-        
+
         OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.beefCooked));
         OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.beefRaw));
         OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.chickenCooked));
@@ -31,25 +31,25 @@ public class CraftRegistry {
         OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.porkRaw));
         OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.rottenFlesh));
         OreDictionary.registerOre(Reference.MISC_MEAT, new ItemStack(Item.spiderEye));
-        
+
         GameRegistry.addRecipe(new ItemStack(Item.bucketLava), new Object[] { "FFF", "FSF", "FBF", 'F', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'S', Block.stone, 'B', Item.bucketEmpty });
-        
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockEnhancedBricks, 4), new Object[] { "CBC", "BRB", "CBC", 'C', Reference.CRYSTALS_ALL, 'B', Block.stoneBrick, 'R', Item.ingotIron }));
-        
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockEnhancedBricks, 8), new Object[] { "CBC", "BRB", "CBC", 'C', Reference.CRYSTALS_ALL, 'B', Block.stoneBrick, 'R', Item.ingotGold }));
-        
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.BlockEnhancedBricks, 16), new Object[] { "CBC", "BRB", "CBC", 'C', Reference.CRYSTALS_ALL, 'B', Block.stoneBrick, 'R', Item.diamond }));
-        
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemAdvancedStick), new Object[] { "IQI", "CSC", "IQI",
-        
+
         'S', Item.stick, 'Q', Item.netherQuartz, 'I', Item.ingotIron, 'C', Reference.CRYSTALS_ALL }));
-        
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemPhantomPlacer), new Object[] { "QIQ", "CAC", "CAC", 'A', ItemRegistry.ItemAdvancedStick, 'Q', Block.blockNetherQuartz, 'I', Item.ingotIron, 'C', Reference.CRYSTALS_ALL }));
-        
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemLifeStealingBludgeoningStick), new Object[] { "WWW", "ABA", "ASA",
-        
+
         'W', Item.swordIron, 'C', Block.workbench, 'B', ItemRegistry.ItemCrystal.ItemBloodCrystalShard, 'A', ItemRegistry.ItemAdvancedStick, 'S', Item.stick }));
-        
+
         // GameRegistry.addRecipe(new ShapedOreRecipe(new
         // ItemStack(BlockRegistry.BlockStructureCube, 1, 0), new Object[] { "",
         // "ABA", "ASA",
@@ -60,99 +60,175 @@ public class CraftRegistry {
         // CraftingManager.getInstance().getRecipeList().add(new
         // ShapedOreRecipe(new ItemStack(file.bioMass), new Object[]{"XXX",
         // "XXX", "XXX", Character.valueOf('X'), "bioMass"}));
-        
+
         UtilRecipe.addStorageBlock9(BlockRegistry.BlockMetadataOre.BlockGarnetBlock, ItemRegistry.ItemCrystal.ItemGarnet);
         UtilRecipe.addSword(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetSword));
         UtilRecipe.addPickaxe(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetPickaxe));
         UtilRecipe.addShovel(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetShovel));
         UtilRecipe.addAxe(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetAxe));
         UtilRecipe.addHoe(ItemRegistry.ItemCrystal.ItemGarnet, new ItemStack(ItemRegistry.ItemGarnetHoe));
-        
+
         GameRegistry.addShapelessRecipe(new ItemStack(Item.seeds), Item.wheat, Item.wheat);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ItemTeleporter), ItemRegistry.ItemTeleporter);
         GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ItemLinker), ItemRegistry.ItemLinker);
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Block.torchWood, 6), ItemRegistry.ItemCrystal.ItemFireCrystalShard, Item.stick));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Item.coal, 1, 1), ItemRegistry.ItemCrystal.ItemFireCrystalShard, "logWood"));
-        
+
         GameRegistry.addSmelting(Item.axeWood.itemID, new ItemStack(ItemRegistry.ItemCharcoalAxe), 1.F);
         GameRegistry.addSmelting(Item.pickaxeWood.itemID, new ItemStack(ItemRegistry.ItemCharcoalPickaxe), 1.F);
         GameRegistry.addSmelting(Item.shovelWood.itemID, new ItemStack(ItemRegistry.ItemCharcoalShovel), 1.F);
         GameRegistry.addSmelting(Item.swordWood.itemID, new ItemStack(ItemRegistry.ItemCharcoalSword), 1.F);
-        
+
         GameRegistry.addSmelting(Item.hoeStone.itemID, new ItemStack(ItemRegistry.ItemSmoothStoneHoe), 1.F);
         GameRegistry.addSmelting(Item.axeStone.itemID, new ItemStack(ItemRegistry.ItemSmoothStoneAxe), 1.F);
         GameRegistry.addSmelting(Item.pickaxeStone.itemID, new ItemStack(ItemRegistry.ItemSmoothStonePickaxe), 1.F);
         GameRegistry.addSmelting(Item.shovelStone.itemID, new ItemStack(ItemRegistry.ItemSmoothStoneShovel), 1.F);
         GameRegistry.addSmelting(Item.swordStone.itemID, new ItemStack(ItemRegistry.ItemSmoothStoneSword), 1.F);
-        
+
         UtilRecipe.addSword(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStoneSword));
         UtilRecipe.addPickaxe(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStonePickaxe));
         UtilRecipe.addShovel(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStoneShovel));
         UtilRecipe.addAxe(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStoneAxe));
         UtilRecipe.addHoe(new ItemStack(Block.stone), new ItemStack(ItemRegistry.ItemSmoothStoneHoe));
-        
+
         initTempRecipes();
         initGrinderRecipies();
-        
+
     }
-    
+
     public static void initTempRecipes() {
-        
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemBasicDestructionCatalyst, 1), new Object[] { "PPP", "CCC", "GEG",
-        
+
         'P', Item.pickaxeDiamond, 'C', Reference.CRYSTALS_ALL, 'G', Item.ingotGold, 'E', Item.emerald }));
-        
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemTeleporter, 2), new Object[] { "ECE", "CDC", "ECE",
-        
+
         'D', Item.diamond, 'C', Reference.CRYSTALS_ALL, 'E', Item.enderPearl }));
-        
+
         ItemStack base = new ItemStack(BlockRegistry.BlockMultiPanel);
         UtilItemStack.setNBTTagInt(base, "mode", 0);
         GameRegistry.addRecipe(new ShapedOreRecipe(base, new Object[] { "ICI", "QDQ", "EBE",
-        
+
         'C', Reference.CRYSTALS_ALL, 'I', Item.ingotIron, 'Q', Item.netherQuartz, 'D', Item.diamond, 'E', BlockRegistry.BlockEnhancedBricks }));
-        
+
         ItemStack itemMover = new ItemStack(BlockRegistry.BlockMultiPanel);
         UtilItemStack.setNBTTagInt(itemMover, "mode", TileMultiPanel.ITEM_MOVEMENT);
         GameRegistry.addRecipe(new ShapedOreRecipe(itemMover, new Object[] { "QCQ", "ESE", "CQC",
-        
+
         'C', ItemRegistry.ItemCrystal.ItemAirCrystalShard, 'Q', Item.netherQuartz, 'E', Item.enderPearl, 'S', base }));
-        
+
         ItemStack fluidMover = new ItemStack(BlockRegistry.BlockMultiPanel);
         UtilItemStack.setNBTTagInt(fluidMover, "mode", TileMultiPanel.FLUID_MOVEMENT);
         GameRegistry.addRecipe(new ShapedOreRecipe(fluidMover, new Object[] { "QCQ", "ESE", "CQC",
-        
+
         'C', ItemRegistry.ItemCrystal.ItemWaterCrystalShard, 'Q', Item.netherQuartz, 'E', Item.enderPearl, 'S', base }));
-        
+
         ItemStack grinder = new ItemStack(BlockRegistry.BlockMultiPanel);
         UtilItemStack.setNBTTagInt(grinder, "mode", TileMultiPanel.GRINDING);
         GameRegistry.addRecipe(new ShapedOreRecipe(grinder, new Object[] { "DID", "CSC", "QCQ",
-        
+
         'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'Q', Item.netherQuartz, 'D', Item.diamond, 'S', base, 'I', Item.ingotIron }));
-        
+
         ItemStack blockPlacer = new ItemStack(BlockRegistry.BlockMultiPanel);
         UtilItemStack.setNBTTagInt(blockPlacer, "mode", TileMultiPanel.BLOCK_PLACE);
         GameRegistry.addRecipe(new ShapedOreRecipe(blockPlacer, new Object[] { "DQD", "CSC", "QIQ",
-        
+
         'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'Q', Item.netherQuartz, 'D', Block.dispenser, 'S', base, 'I', Item.ingotIron }));
-        
+
         ItemStack blockBreaker = new ItemStack(BlockRegistry.BlockMultiPanel);
         UtilItemStack.setNBTTagInt(blockBreaker, "mode", TileMultiPanel.BLOCK_BREAK);
         GameRegistry.addRecipe(new ShapedOreRecipe(blockBreaker, new Object[] { "IPI", "CSC", "QIQ",
-        
+
         'C', ItemRegistry.ItemCrystal.ItemGarnet, 'Q', Item.netherQuartz, 'P', Item.pickaxeDiamond, 'S', base, 'I', Item.ingotIron }));
-        
+
         ItemStack smelter = new ItemStack(BlockRegistry.BlockMultiPanel);
         UtilItemStack.setNBTTagInt(smelter, "mode", TileMultiPanel.SMELTER);
         GameRegistry.addRecipe(new ShapedOreRecipe(smelter, new Object[] { "FCF", "QSQ", "CQC",
-        
+
         'C', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'Q', Item.netherQuartz, 'F', Block.furnaceIdle, 'S', base }));
-        
+
         GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.BlockMultiPanel), base);
-    }
-    
-    public static void initGrinderRecipies() {
+
+        // Breaker
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ItemStorageCrystal), new Object[] { " G ", "GCG", " G ",
+
+        'G', Block.glass, 'C', Reference.CRYSTALS_ALL }));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.BlockSpacialProvider.STANDARD_SPACIAL_PROVIDER, new Object[] { "ICI", "CEC", "ICI",
+
+        'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.BlockSpacialProvider.FLUID_SPACIAL_PROVIDER, new Object[] { "ICI", "CEC", "ICI",
+
+        'C', ItemRegistry.ItemCrystal.ItemWaterCrystalShard, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.BlockSpacialProvider.FURNACE_SPACIAL_PROVIDER, new Object[] { "ICI", "CEC", "ICI",
+
+        'C', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
+
+        // Breaker
+        ItemStack structureBrick0 = BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[0].copy();
+        structureBrick0.stackSize = 16;
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(structureBrick0, new Object[] { "SSS", "SES", "SSS",
+
+        'S', Block.stone, 'E', BlockRegistry.BlockEnhancedBricks }));
+
+        ItemStack structureBrick1 = BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[1].copy();
+        structureBrick1.stackSize = 16;
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(structureBrick1, new Object[] { "SSS", "SES", "SSS",
+
+        'S', Block.stone, 'E', BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[0] }));
+
+        ItemStack structureBrick2 = BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[2].copy();
+        structureBrick2.stackSize = 16;
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(structureBrick2, new Object[] { "SSS", "SES", "SSS",
+
+        'S', BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[0], 'E', Item.ingotIron }));
+
+        ItemStack structureBrick3 = BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[3].copy();
+        structureBrick3.stackSize = 16;
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(structureBrick3, new Object[] { "SSS", "SES", "SSS",
+
+        'S', BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[2], 'E', Item.ingotIron }));
+
+        ItemStack structureGlass4 = BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[4].copy();
+        structureGlass4.stackSize = 16;
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(structureGlass4, new Object[] { "GSG", "GEG", "GSG",
+
+        'S', Block.stone, 'E', BlockRegistry.BlockEnhancedBricks, 'G', Block.glass }));
+
+        ItemStack structureBrick5 = BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[5].copy();
+        structureBrick5.stackSize = 16;
+        GameRegistry.addRecipe(new ShapedOreRecipe(structureBrick5, new Object[] { "SSS", "SES", "SSS",
+
+        'S', Block.stoneBrick, 'E', BlockRegistry.BlockEnhancedBricks}));
         
+        GameRegistry.addShapelessRecipe(BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[6], BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[5]);
+     
+        // Breaker
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.BlockMultiInterface.ITEM_INTERFACE, new Object[] { "ICI", "CEC", "ICI",
+
+        'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.BlockMultiInterface.FLUID_INTERFACE, new Object[] { "ICI", "CEC", "ICI",
+
+        'C', ItemRegistry.ItemCrystal.ItemWaterCrystalShard, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.BlockMultiInterface.POWER_INTERFACE, new Object[] { "ICI", "CEC", "ICI",
+
+        'C', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
+
+        // Breaker
+    }
+
+    public static void initGrinderRecipies() {
+
         SenderRecipe.getInstance().addRecipe(Block.stone.blockID, 0, new ItemStack[] { new ItemStack(Block.cobblestone) });
         SenderRecipe.getInstance().addRecipe(Block.cobblestone.blockID, -1, new ItemStack[] { new ItemStack(Block.sand) });
         SenderRecipe.getInstance().addRecipe(Block.grass.blockID, -1, new ItemStack[] { new ItemStack(Block.dirt) });
@@ -176,32 +252,32 @@ public class CraftRegistry {
         SenderRecipe.getInstance().addRecipe(Block.enderChest.blockID, -1, new ItemStack[] { new ItemStack(Item.enderPearl), new ItemStack(Item.blazePowder), new ItemStack(Block.obsidian, 8) });
         SenderRecipe.getInstance().addRecipe(Block.glowStone.blockID, -1, new ItemStack[] { new ItemStack(Item.glowstone, 4) });
         SenderRecipe.getInstance().addRecipe(Block.flowerPot.blockID, -1, new ItemStack[] { new ItemStack(Item.brick, 3) });
-        
+
         SenderRecipe.getInstance().addRecipe(Block.snow.blockID, -1, new ItemStack[] { new ItemStack(Item.snowball, 4) });
         SenderRecipe.getInstance().addRecipe(Block.netherBrick.blockID, -1, new ItemStack[] { new ItemStack(Item.netherrackBrick, 4) });
         SenderRecipe.getInstance().addRecipe(Block.stoneBrick.blockID, -1, new ItemStack[] { new ItemStack(Block.stone, 4) });
         SenderRecipe.getInstance().addRecipe(Block.melon.blockID, -1, new ItemStack[] { new ItemStack(Item.melon, 4) });
         SenderRecipe.getInstance().addRecipe(Block.mycelium.blockID, -1, new ItemStack[] { new ItemStack(Block.dirt), new ItemStack(Block.mushroomBrown), new ItemStack(Block.mushroomRed) });
         SenderRecipe.getInstance().addRecipe(Block.hay.blockID, -1, new ItemStack[] { new ItemStack(Item.wheat, 9) });
-        
+
         SenderRecipe.getInstance().addRecipe(Block.hardenedClay.blockID, -1, new ItemStack[] { new ItemStack(Item.clay, 4) });
         SenderRecipe.getInstance().addRecipe(Block.stainedClay.blockID, -1, new ItemStack[] { new ItemStack(Item.clay, 4) });
-        
+
         SenderRecipe.getInstance().addRecipe(Block.sandStone.blockID, 0, new ItemStack[] { new ItemStack(Block.sand, 4) });
         SenderRecipe.getInstance().addRecipe(Block.sandStone.blockID, 1, new ItemStack[] { new ItemStack(Block.sand, 4) });
         SenderRecipe.getInstance().addRecipe(Block.sandStone.blockID, 2, new ItemStack[] { new ItemStack(Block.sand, 4) });
-        
+
         SenderRecipe.getInstance().addRecipe(Block.wood.blockID, 0, new ItemStack[] { new ItemStack(Block.planks, 6, 0) });
         SenderRecipe.getInstance().addRecipe(Block.wood.blockID, 1, new ItemStack[] { new ItemStack(Block.planks, 6, 1) });
         SenderRecipe.getInstance().addRecipe(Block.wood.blockID, 2, new ItemStack[] { new ItemStack(Block.planks, 6, 2) });
         SenderRecipe.getInstance().addRecipe(Block.wood.blockID, 3, new ItemStack[] { new ItemStack(Block.planks, 6, 3) });
-        
+
         SenderRecipe.getInstance().addRecipe(Block.oreCoal.blockID, -1, new ItemStack[] { new ItemStack(Item.coal, 6) });
         SenderRecipe.getInstance().addRecipe(Block.oreNetherQuartz.blockID, -1, new ItemStack[] { new ItemStack(Item.netherQuartz, 6) });
         SenderRecipe.getInstance().addRecipe(Block.oreRedstone.blockID, -1, new ItemStack[] { new ItemStack(Item.redstone, 6) });
         SenderRecipe.getInstance().addRecipe(Block.oreDiamond.blockID, -1, new ItemStack[] { new ItemStack(Item.diamond, 3) });
         SenderRecipe.getInstance().addRecipe(Block.oreEmerald.blockID, -1, new ItemStack[] { new ItemStack(Item.emerald, 3) });
-        
+
         SenderRecipe.getInstance().addRecipe(Block.coalBlock.blockID, -1, new ItemStack[] { new ItemStack(Item.coal, 9) });
         SenderRecipe.getInstance().addRecipe(Block.blockNetherQuartz.blockID, -1, new ItemStack[] { new ItemStack(Item.netherQuartz, 4) });
         SenderRecipe.getInstance().addRecipe(Block.blockIron.blockID, -1, new ItemStack[] { new ItemStack(Item.ingotIron, 9) });
@@ -209,28 +285,28 @@ public class CraftRegistry {
         SenderRecipe.getInstance().addRecipe(Block.blockRedstone.blockID, -1, new ItemStack[] { new ItemStack(Item.redstone, 9) });
         SenderRecipe.getInstance().addRecipe(Block.blockDiamond.blockID, -1, new ItemStack[] { new ItemStack(Item.diamond, 9) });
         SenderRecipe.getInstance().addRecipe(Block.blockEmerald.blockID, -1, new ItemStack[] { new ItemStack(Item.emerald, 9) });
-        
+
         SenderRecipe.getInstance().addRecipe(Block.web.blockID, 0, new ItemStack[] { new ItemStack(Item.silk, 8) });
         SenderRecipe.getInstance().addRecipe(Block.pistonStickyBase.blockID, 0, new ItemStack[] { new ItemStack(Item.slimeBall), new ItemStack(Block.pistonBase) });
         SenderRecipe.getInstance().addRecipe(Block.dispenser.blockID, -1, new ItemStack[] { new ItemStack(Block.cobblestone, 7), new ItemStack(Item.bow), new ItemStack(Item.redstone) });
         SenderRecipe.getInstance().addRecipe(Block.tnt.blockID, -1, new ItemStack[] { new ItemStack(Item.gunpowder, 5), new ItemStack(Block.sand, 4) });
         SenderRecipe.getInstance().addRecipe(Block.brick.blockID, -1, new ItemStack[] { new ItemStack(Item.brick, 4) });
         SenderRecipe.getInstance().addRecipe(Block.cobblestoneMossy.blockID, -1, new ItemStack[] { new ItemStack(Block.cobblestone), new ItemStack(Block.vine, 6) });
-        
+
         ItemStack stack = VanillaColor.getVinillaDye(VanillaColor.BLUE);
         stack.stackSize = 8;
         SenderRecipe.getInstance().addRecipe(Block.oreLapis.blockID, -1, new ItemStack[] { stack });
         stack.stackSize = 9;
         SenderRecipe.getInstance().addRecipe(Block.blockLapis.blockID, -1, new ItemStack[] { stack });
-        
+
         stack = VanillaColor.getVinillaDye(VanillaColor.RED);
         stack.stackSize = 4;
         SenderRecipe.getInstance().addRecipe(Block.plantRed.blockID, -1, new ItemStack[] { stack });
-        
+
         stack = VanillaColor.getVinillaDye(VanillaColor.YELLOW);
         stack.stackSize = 4;
         SenderRecipe.getInstance().addRecipe(Block.plantYellow.blockID, -1, new ItemStack[] { stack });
-        
+
         stack = VanillaColor.getVinillaDye(VanillaColor.GREEN);
         stack.stackSize = 4;
         SenderRecipe.getInstance().addRecipe(Block.cactus.blockID, -1, new ItemStack[] { stack });

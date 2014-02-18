@@ -23,7 +23,6 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     protected Cuboid size;
 
     public MultiBlockBase(World world) {
-
         this.worldObj = world;
     }
 
@@ -94,7 +93,12 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
         // Create Multiblock
         if ((Integer) providedInfo[0] == 1) {
 
-            return createMultiblock(vector);
+            if (!createMultiblock(vector)) {
+
+                this.size.iterate(this, 2);
+                return false;
+            }
+            return true;
         }
 
         // Destroy Multiblock
@@ -264,10 +268,10 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     public void load(NBTTagCompound tag) {
 
         this.size = Cuboid.load(tag);
-        postLoad();
+        init();
     }
 
-    public void postLoad() {
+    protected void init() {
 
     }
 

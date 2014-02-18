@@ -7,14 +7,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public enum VanillaColor {
-    
+
     BLACK, RED, GREEN, BROWN, BLUE, PURPLE, CYAN, LIGHT_GREY, GREY, PINK, LIME, YELLOW, LIGHT_BLUE, MAGENTA, ORANGE, WHITE, NONE;
     public static final String[] dyesOreDictionary = { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray", "dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite" };
-    
+
     public static ItemStack getVinillaDye(VanillaColor color) {
-        
+
         switch (color) {
-        
+
             case BLACK:
                 return new ItemStack(Item.dyePowder.itemID, 1, 0);
             case RED:
@@ -47,22 +47,22 @@ public enum VanillaColor {
                 return new ItemStack(Item.dyePowder.itemID, 2, 14);
             case WHITE:
                 return new ItemStack(Item.dyePowder.itemID, 1, 15);
-                
+
             default:
                 return null;
         }
     }
-    
+
     public static VanillaColor getItemColorValue(ItemStack item) {
-        
+
         if (item != null) {
-            
+
             Item itemI = item.getItem();
-            
+
             if (itemI == Item.dyePowder) {
-                
+
                 switch (item.getItemDamage()) {
-                
+
                     case 0:
                         return VanillaColor.BLACK;
                     case 1:
@@ -97,46 +97,46 @@ public enum VanillaColor {
                         return VanillaColor.WHITE;
                 }
             }
-            
+
             for (int i = 0; i < dyesOreDictionary.length; i++) {
-                
+
                 if (OreDictionary.getOres(dyesOreDictionary[i]).contains(item)) {
-                    
+
                     return VanillaColor.values()[i];
                 }
             }
         }
         return VanillaColor.NONE;
     }
-    
+
     public static boolean isItemDye(ItemStack item) {
-        
+
         if (item != null) {
-            
+
             Item itemI = item.getItem();
-            
+
             if (itemI == Item.dyePowder) {
-                
+
                 if (item.getItemDamage() <= 16) {
-                    
+
                     return true;
                 }
             }
             for (int i = 0; i < dyesOreDictionary.length; i++) {
-                
+
                 if (OreDictionary.getOres(dyesOreDictionary[i]).contains(item)) {
-                    
+
                     return VanillaColor.values()[i] != NONE;
                 }
             }
         }
         return false;
     }
-    
+
     public static Color getRGBValue(VanillaColor color) {
-        
+
         switch (color) {
-        
+
             case WHITE:
                 return new Color(255, 255, 255);
             case ORANGE:
