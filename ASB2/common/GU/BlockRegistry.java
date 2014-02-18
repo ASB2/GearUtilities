@@ -23,6 +23,7 @@ import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockQuantaSender.BlockQuantaSender;
 import GU.blocks.containers.BlockSmeltingCube.BlockSmeltingCube;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
+import GU.blocks.containers.BlockStructureCube.BlockReplacementStructureCube;
 import GU.blocks.containers.BlockStructureCube.BlockStructureAir;
 import GU.blocks.containers.BlockStructureCube.BlockStructureCube;
 import GU.items.GUItemBlock;
@@ -49,7 +50,8 @@ public class BlockRegistry {
     public static ContainerBase BlockElementalRefinery;
     public static BlockMultiInterface BlockMultiInterface;
     public static ContainerBase BlockStructureAir;
-
+    public static ContainerBase BlockReplacementStructureCube;
+    
     private static int id = 500;
 
     public static void init(Configuration config) {
@@ -111,6 +113,9 @@ public class BlockRegistry {
 
         BlockStructureAir = new BlockStructureAir(BlockRegistry.getConfigID(config, "BlockStructureAir"), Material.air);
         addBlock(BlockStructureAir, "Structure Air", "BlockStructureAir");
+        
+        BlockReplacementStructureCube = new BlockReplacementStructureCube(BlockRegistry.getConfigID(config, "BlockReplacementStructureCube"), Material.rock);
+        addBlock(BlockReplacementStructureCube, "Replacement Structure Cube", "BlockReplacementStructureCube");
     }
 
     public static Block addBlock(Block block, String ign, String unlocalizedName) {

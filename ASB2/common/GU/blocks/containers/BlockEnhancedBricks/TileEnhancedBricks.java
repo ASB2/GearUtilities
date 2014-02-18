@@ -15,21 +15,21 @@ public class TileEnhancedBricks extends TileColorable {
 
     @Override
     public void updateEntity() {
-        waitTimer.update();
+//        waitTimer.update();
     }
 
     @Override
     public void trigger(int id) {
 
-        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-
-            Color color = this.getColor(direction);
-
-            if (!(color.getRed() == 255 && color.getGreen() == 255 && color.getBlue() == 255)) {
-
-                return;
-            }
-        }
-        worldObj.removeBlockTileEntity(xCoord, yCoord, zCoord);
+//        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+//
+//            Color color = this.getColor(direction);
+//
+//            if (!(color.getRed() == 255 && color.getGreen() == 255 && color.getBlue() == 255)) {
+//
+//                return;
+//            }
+//        }
+//        worldObj.removeBlockTileEntity(xCoord, yCoord, zCoord);
     }
 }

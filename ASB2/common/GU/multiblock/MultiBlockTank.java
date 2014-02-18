@@ -84,9 +84,20 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
             if (block != null && block instanceof ISpecialTileMultiBlock) {
 
                 return true;
-            } else if (block == null || vector.getBlockMaterial(getWorldObj()) == Material.air) {
+            } else if (block == null || block.isAirBlock(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
 
-                return airBlocks.contains(vector);
+                if (airBlocks.contains(vector)) {
+
+                    return true;
+                }
+
+                if (Variables.CAN_USE_NON_STRUCURE_TANK_BLOCKS) {
+
+                    if (block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+
+                        return !block.hasTileEntity(vector.getBlockMetadata(getWorldObj()));
+                    }
+                }
             }
         }
         return false;
@@ -104,12 +115,27 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
                 tile = ((ISpecialTileMultiBlock) block).getBlockTileEntity(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ());
 
-            } else if (block == null || vector.getBlockMaterial(getWorldObj()) == Material.air) {
+            } else if (block == null || block.isAirBlock(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
 
                 if (airBlocks.contains(vector)) {
 
                     vector.setBlock(this.getWorldObj(), BlockRegistry.BlockStructureAir.blockID);
                     return true;
+                } else {
+
+                    if (Variables.CAN_USE_NON_STRUCURE_TANK_BLOCKS) {
+
+                        if (block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+
+                            if (!block.hasTileEntity(vector.getBlockMetadata(getWorldObj()))) {
+
+                                vector.setBlock(getWorldObj(), BlockRegistry.BlockReplacementStructureCube.blockID, vector.getBlockMetadata(getWorldObj()));
+                                tile = vector.getTileEntity(this.getWorldObj());
+                            
+                                
+                            }
+                        }
+                    }
                 }
             } else if (tile == null) {
 
