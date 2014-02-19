@@ -93,8 +93,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
                     return true;
                 }
-            } 
-            else {
+            } else {
 
                 if (Variables.CAN_USE_NON_STRUCURE_TANK_BLOCKS) {
 
@@ -205,7 +204,6 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
     @Override
     public void invalidate() {
-        super.invalidate();
 
         for (Vector3 vector : this.placeHolderBlocks) {
 
@@ -218,6 +216,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
                 vector.setBlock(this.getWorldObj(), replace.getSavedID(), replace.getSavedMetadata());
             }
         }
+        super.invalidate();
     }
 
     public boolean isValidCore(Vector3 vector, TileEntity tile) {

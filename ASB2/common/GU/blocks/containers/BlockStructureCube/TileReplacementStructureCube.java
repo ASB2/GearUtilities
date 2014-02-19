@@ -1,6 +1,7 @@
 package GU.blocks.containers.BlockStructureCube;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.packet.Packet;
 import GU.blocks.containers.TileMultiBase;
 
 public class TileReplacementStructureCube extends TileMultiBase {
@@ -29,6 +30,18 @@ public class TileReplacementStructureCube extends TileMultiBase {
     public void setSavedMetadata(int newSavedMetadata) {
 
         savedMetadata = newSavedMetadata;
+    }
+
+    @Override
+    public void validate() {
+        super.validate();
+        // this.updateClients();
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+
+        return super.createCustomDescriptionPacket();
     }
 
     @Override

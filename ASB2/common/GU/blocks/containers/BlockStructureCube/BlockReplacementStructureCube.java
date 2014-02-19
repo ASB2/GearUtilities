@@ -602,6 +602,7 @@ public class BlockReplacementStructureCube extends ContainerBase {
 
         if (tile.getSavedID() == 0 || block == null) {
 
+            world.setBlockToAir(x, y, z);
             return;
         }
 

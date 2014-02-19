@@ -218,13 +218,13 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     @Override
     public void invalidate() {
 
-        UtilEntity.sendClientChat("Structure Invalidated");
-
         isValid = false;
         composingBlock.clear();
         fluidMultiBlockInterfaces.clear();
         multiBlockCores.clear();
         size.iterate(this, 2);
+
+        UtilEntity.sendClientChat("Structure Invalidated");
     }
 
     @Override
