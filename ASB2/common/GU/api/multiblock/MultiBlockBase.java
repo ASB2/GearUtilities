@@ -95,7 +95,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
 
             if (!createMultiblock(vector)) {
 
-                this.size.iterate(this, 2);
+                invalidate();
                 return false;
             }
             return true;
@@ -224,7 +224,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
         composingBlock.clear();
         fluidMultiBlockInterfaces.clear();
         multiBlockCores.clear();
-        this.getSize().iterate(this, 2);
+        size.iterate(this, 2);
     }
 
     @Override

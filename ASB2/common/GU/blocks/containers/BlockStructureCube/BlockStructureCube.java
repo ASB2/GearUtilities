@@ -24,11 +24,11 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class BlockStructureCube extends ContainerBase implements ISpecialTileMultiBlock {
 
-    public static final int CUBE0 = 0, CUBE1 = 1, CUBE2 = 2, CUBE3 = 3, GLASS4 = 4, BRICK5 = 5, BRICK6 = 6;
-    public static final int MAX_META = 7;
+    public static final int CUBE0 = 0, CUBE1 = 1, CUBE2 = 2, CUBE3 = 3, GLASS4 = 4, BRICK5 = 5, BRICK6 = 6,  CUBE7 = 7;
+    public static final int MAX_META = 8;
     Icon[] texture = new Icon[MAX_META];
     String unlocalizedname = "BlockStructureCube";
-    String[] ign = new String[] { "Structure Cube 0", "Structure Cube 1", "Structure Cube 2", "Structure Cube 3", "Structure Glass", "Structure Brick 1", "Structure Brick 2" };
+    String[] ign = new String[] { "Structure Cube 0", "Structure Cube 1", "Structure Cube 2", "Structure Cube 3", "Structure Glass", "Structure Brick 1", "Structure Brick 2", "Metallic Structure Cube" };
     public ItemStack[] STRUCTURE_CUBES = new ItemStack[MAX_META];
 
     public BlockStructureCube(int id, Material material) {

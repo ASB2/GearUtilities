@@ -14,10 +14,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.IPlantable;
+import GU.EnumState;
 import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockPart;
 import GU.blocks.containers.ContainerBase;
@@ -73,9 +75,13 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public float getBlockHardness(World world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].blockHardness;
+        if (block == null) {
+
+            return super.getBlockHardness(world, x, y, z);
+        }
+        return block.getBlockHardness(world, x, y, z);
     }
 
     @SideOnly(Side.CLIENT)
@@ -84,9 +90,13 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public float getBlockBrightness(IBlockAccess world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].getBlockBrightness(world, x, y, z);
+        if (block == null) {
+
+            return super.getBlockBrightness(world, x, y, z);
+        }
+        return block.getBlockBrightness(world, x, y, z);
     }
 
     @SideOnly(Side.CLIENT)
@@ -95,9 +105,14 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public int getMixedBrightnessForBlock(IBlockAccess world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].getMixedBrightnessForBlock(world, x, y, z);
+        if (block == null) {
+
+            return super.getMixedBrightnessForBlock(world, x, y, z);
+        }
+
+        return block.getMixedBrightnessForBlock(world, x, y, z);
 
     }
 
@@ -108,9 +123,13 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].shouldSideBeRendered(world, x, y, z, side);
+        if (block == null) {
+
+            return super.shouldSideBeRendered(world, x, y, z, side);
+        }
+        return block.shouldSideBeRendered(world, x, y, z, side);
     }
 
     /**
@@ -119,9 +138,14 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public boolean isBlockSolid(IBlockAccess world, int x, int y, int z, int side) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].isBlockSolid(world, x, y, z, side);
+        if (block == null) {
+
+            return super.isBlockSolid(world, x, y, z, side);
+        }
+
+        return block.isBlockSolid(world, x, y, z, side);
     }
 
     @SideOnly(Side.CLIENT)
@@ -130,9 +154,14 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].getBlockTexture(world, x, y, z, side);
+        if (block == null) {
+
+            return EnumState.BOTH.getStateIcon();
+        }
+
+        return block.getBlockTexture(world, x, y, z, side);
     }
 
     @SideOnly(Side.CLIENT)
@@ -141,9 +170,14 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].getSelectedBoundingBoxFromPool(world, x, y, z);
+        if (block == null) {
+
+            return super.getSelectedBoundingBoxFromPool(world, x, y, z);
+        }
+
+        return block.getSelectedBoundingBoxFromPool(world, x, y, z);
     }
 
     /**
@@ -151,9 +185,13 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].getCollisionBoundingBoxFromPool(world, x, y, z);
+        if (block == null) {
+
+            return super.getCollisionBoundingBoxFromPool(world, x, y, z);
+        }
+        return block.getCollisionBoundingBoxFromPool(world, x, y, z);
     }
 
     /**
@@ -161,16 +199,25 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public void randomDisplayTick(World world, int x, int y, int z, Random random) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        Block.blocksList[tile.getSavedID()].randomDisplayTick(world, x, y, z, random);
+        if (block == null) {
+
+            super.randomDisplayTick(world, x, y, z, random);
+            return;
+        }
+        block.randomDisplayTick(world, x, y, z, random);
     }
 
     public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].getPlayerRelativeBlockHardness(player, world, x, y, z);
+        if (block == null) {
+
+            return super.getPlayerRelativeBlockHardness(player, world, x, y, z);
+        }
+        return block.getPlayerRelativeBlockHardness(player, world, x, y, z);
     }
 
     /**
@@ -178,9 +225,15 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public void dropBlockAsItemWithChance(World world, int x, int y, int z, int par5, float par6, int par7) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        Block.blocksList[tile.getSavedID()].dropBlockAsItemWithChance(world, x, y, z, par5, par6, par7);
+        if (block == null) {
+
+            super.dropBlockAsItemWithChance(world, x, y, z, par5, par6, par7);
+            return;
+        }
+
+        block.dropBlockAsItemWithChance(world, x, y, z, par5, par6, par7);
     }
 
     // TODO CHECK THIS OUT
@@ -190,9 +243,14 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public void harvestBlock(World world, EntityPlayer player, int x, int y, int z, int par6) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        // return Block.blocksList[tile.getSavedID()].getPlayerRelativeBlockHardness(player, world, x, y, z);
+        if (block == null) {
+
+            super.harvestBlock(world, player, x, y, z, par6);
+            return;
+        }
+        block.harvestBlock(world, player, x, y, z, par6);
     }
 
     /**
@@ -200,9 +258,14 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public float getAmbientOcclusionLightValue(IBlockAccess world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].getAmbientOcclusionLightValue(world, x, y, z);
+        if (block == null) {
+
+            return super.getAmbientOcclusionLightValue(world, x, y, z);
+        }
+
+        return block.getAmbientOcclusionLightValue(world, x, y, z);
     }
 
     @SideOnly(Side.CLIENT)
@@ -228,9 +291,18 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].getLightValue(world, x, y, z);
+        if (tile != null && tile instanceof TileReplacementStructureCube) {
+
+            Block block = Block.blocksList[((TileReplacementStructureCube) tile).getSavedID()];
+
+            if(block != null) {
+                
+                return lightValue[((TileReplacementStructureCube)tile).getSavedID()];
+            }
+        }
+        return super.getLightValue(world, x, y, z);
     }
 
     /**
@@ -249,9 +321,14 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public boolean isBlockNormalCube(World world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].isBlockNormalCube(world, x, y, z);
+        if (block == null) {
+
+            return super.isBlockNormalCube(world, x, y, z);
+        }
+
+        return block.isBlockNormalCube(world, x, y, z);
     }
 
     /**
@@ -271,9 +348,14 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].isBlockSolidOnSide(world, x, y, z, side);
+        if (block == null) {
+
+            return super.isBlockSolidOnSide(world, x, y, z, side);
+        }
+
+        return block.isBlockSolidOnSide(world, x, y, z, side);
     }
 
     /**
@@ -292,9 +374,14 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public boolean isBlockReplaceable(World world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].isBlockReplaceable(world, x, y, z);
+        if (block == null) {
+
+            return super.isBlockReplaceable(world, x, y, z);
+        }
+
+        return block.isBlockReplaceable(world, x, y, z);
     }
 
     /**
@@ -312,9 +399,14 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public boolean isBlockBurning(World world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].isBlockBurning(world, x, y, z);
+        if (block == null) {
+
+            return super.isBlockBurning(world, x, y, z);
+        }
+
+        return block.isBlockBurning(world, x, y, z);
     }
 
     /**
@@ -333,9 +425,13 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public boolean isAirBlock(World world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].isAirBlock(world, x, y, z);
+        if (block == null) {
+
+            return super.isBlockBurning(world, x, y, z);
+        }
+        return block.isAirBlock(world, x, y, z);
     }
 
     /**
@@ -357,9 +453,13 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].getBlockDropped(world, x, y, z, tile.getBlockMetadata(), fortune);
+        if (block == null) {
+
+            return super.getBlockDropped(world, x, y, z, metadata, fortune);
+        }
+        return block.getBlockDropped(world, x, y, z, metadata, fortune);
     }
 
     /**
@@ -371,9 +471,13 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].getPickBlock(target, world, x, y, z);
+        if (block == null) {
+
+            return super.getPickBlock(target, world, x, y, z);
+        }
+        return block.getPickBlock(target, world, x, y, z);
     }
 
     /**
@@ -391,9 +495,13 @@ public class BlockReplacementStructureCube extends ContainerBase {
     @SideOnly(Side.CLIENT)
     public boolean addBlockHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(target.blockX, target.blockY, target.blockZ);
+        Block block = this.getFalseBlock(world, target.blockX, target.blockY, target.blockZ);
 
-        return Block.blocksList[tile.getSavedID()].addBlockHitEffects(world, target, effectRenderer);
+        if (block == null) {
+
+            return super.addBlockHitEffects(world, target, effectRenderer);
+        }
+        return block.addBlockHitEffects(world, target, effectRenderer);
     }
 
     /**
@@ -417,9 +525,14 @@ public class BlockReplacementStructureCube extends ContainerBase {
     @SideOnly(Side.CLIENT)
     public boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].addBlockDestroyEffects(world, x, y, z, meta, effectRenderer);
+        if (block == null) {
+
+            return super.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer);
+        }
+
+        return block.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer);
     }
 
     /**
@@ -443,20 +556,69 @@ public class BlockReplacementStructureCube extends ContainerBase {
      */
     public boolean canSustainPlant(World world, int x, int y, int z, ForgeDirection direction, IPlantable plant) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].canSustainPlant(world, x, y, z, direction, plant);
+        if (block == null) {
+
+            return super.canSustainPlant(world, x, y, z, direction, plant);
+        }
+
+        return block.canSustainPlant(world, x, y, z, direction, plant);
     }
 
     @Override
     public int getLightOpacity(World world, int x, int y, int z) {
 
-        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+        Block block = this.getFalseBlock(world, x, y, z);
 
-        return Block.blocksList[tile.getSavedID()].getLightOpacity(world, x, y, z);
+        if (block == null) {
+
+            return super.getLightOpacity(world, x, y, z);
+        }
+        return block.getLightOpacity(world, x, y, z);
     }
 
     // Breaker
+
+    @Override
+    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explostion) {
+        destryLogic(world, x, y, z);
+    }
+
+    @Override
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metaData) {
+        destryLogic(world, x, y, z);
+    }
+
+    public void destryLogic(World world, int x, int y, int z) {
+
+        TileReplacementStructureCube tile = (TileReplacementStructureCube) world.getBlockTileEntity(x, y, z);
+
+        if (tile == null) {
+            return;
+        }
+        Block block = Block.blocksList[tile.getSavedID()];
+
+        if (tile.getSavedID() == 0 || block == null) {
+
+            return;
+        }
+
+        world.setBlock(x, y, z, tile.getSavedID(), tile.getSavedMetadata(), 3);
+    }
+
+    public Block getFalseBlock(IBlockAccess world, int x, int y, int z) {
+
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
+
+        if (tile != null && tile instanceof TileReplacementStructureCube) {
+
+            Block block = Block.blocksList[((TileReplacementStructureCube) tile).getSavedID()];
+
+            return block != null ? block : null;
+        }
+        return null;
+    }
 
     @Override
     public TileEntity createNewTileEntity(World world) {

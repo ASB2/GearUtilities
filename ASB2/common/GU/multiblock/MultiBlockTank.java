@@ -1,7 +1,8 @@
 package GU.multiblock;
 
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -24,12 +25,14 @@ import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.ISpecialTileMultiBlock;
 import GU.api.multiblock.MultiBlockBase;
 import GU.blocks.containers.BlockSpacialProvider.TileFluidSpacialProvider;
+import GU.blocks.containers.BlockStructureCube.TileReplacementStructureCube;
 import GU.info.Variables;
 
 public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
     public FluidTank fluidTank = new FluidTank(1000);
     public Cuboid airBlocks;
+    public ArrayList<Vector3> placeHolderBlocks = new ArrayList<Vector3>();
 
     public MultiBlockTank(World world) {
         super(world);
@@ -90,6 +93,8 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
                     return true;
                 }
+            } 
+            else {
 
                 if (Variables.CAN_USE_NON_STRUCURE_TANK_BLOCKS) {
 
@@ -121,26 +126,29 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
                     vector.setBlock(this.getWorldObj(), BlockRegistry.BlockStructureAir.blockID);
                     return true;
-                } else {
-
-                    if (Variables.CAN_USE_NON_STRUCURE_TANK_BLOCKS) {
-
-                        if (block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
-
-                            if (!block.hasTileEntity(vector.getBlockMetadata(getWorldObj()))) {
-
-                                vector.setBlock(getWorldObj(), BlockRegistry.BlockReplacementStructureCube.blockID, vector.getBlockMetadata(getWorldObj()));
-                                tile = vector.getTileEntity(this.getWorldObj());
-                            
-                                
-                            }
-                        }
-                    }
                 }
             } else if (tile == null) {
 
-                this.size.iterate(this, 2);
-                return false;
+                if (Variables.CAN_USE_NON_STRUCURE_TANK_BLOCKS) {
+
+                    if (block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+
+                        int metadata = vector.getBlockMetadata(getWorldObj());
+
+                        if (!block.hasTileEntity(metadata)) {
+
+                            vector.setBlock(getWorldObj(), BlockRegistry.BlockReplacementStructureCube.blockID, vector.getBlockMetadata(getWorldObj()));
+                            tile = vector.getTileEntity(this.getWorldObj());
+
+                            TileReplacementStructureCube castedTile = (TileReplacementStructureCube) tile;
+
+                            castedTile.setSavedID(block.blockID);
+                            castedTile.setSavedMetadata(metadata);
+                            placeHolderBlocks.add(vector);
+                        }
+                    }
+                } else
+                    return false;
             }
         }
 
@@ -198,6 +206,18 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     @Override
     public void invalidate() {
         super.invalidate();
+
+        for (Vector3 vector : this.placeHolderBlocks) {
+
+            TileEntity tile = vector.getTileEntity(this.getWorldObj());
+
+            if (tile != null && tile.getClass() == TileReplacementStructureCube.class) {
+
+                TileReplacementStructureCube replace = (TileReplacementStructureCube) tile;
+
+                vector.setBlock(this.getWorldObj(), replace.getSavedID(), replace.getSavedMetadata());
+            }
+        }
     }
 
     public boolean isValidCore(Vector3 vector, TileEntity tile) {
