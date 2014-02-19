@@ -39,12 +39,6 @@ public class TileReplacementStructureCube extends TileMultiBase {
     }
 
     @Override
-    public Packet getDescriptionPacket() {
-
-        return super.createCustomDescriptionPacket();
-    }
-
-    @Override
     public void readFromNBT(NBTTagCompound tag) {
 
         savedId = tag.getInteger("savedId");
