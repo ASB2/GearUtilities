@@ -97,7 +97,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
                 if (Variables.CAN_USE_NON_STRUCURE_TANK_BLOCKS) {
 
-                    if (block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+                    if (block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ()) || !this.size.getEdges().contains(vector)) {
 
                         return !block.hasTileEntity(vector.getBlockMetadata(getWorldObj()));
                     }
@@ -130,7 +130,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
                 if (Variables.CAN_USE_NON_STRUCURE_TANK_BLOCKS) {
 
-                    if (block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+                    if (block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ()) || !this.size.getEdges().contains(vector)) {
 
                         int metadata = vector.getBlockMetadata(getWorldObj());
 
@@ -214,7 +214,9 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
                 TileReplacementStructureCube replace = (TileReplacementStructureCube) tile;
 
                 vector.setBlock(this.getWorldObj(), replace.getSavedID(), replace.getSavedMetadata());
+                break;
             }
+//            this.getWorldObj().setBlockToAir(vector.intX(), vector.intY(), vector.intZ());
         }
         super.invalidate();
     }

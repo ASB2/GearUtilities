@@ -1,7 +1,6 @@
 package GU.blocks.containers.BlockStructureCube;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet;
 import GU.blocks.containers.TileMultiBase;
 
 public class TileReplacementStructureCube extends TileMultiBase {
@@ -40,14 +39,14 @@ public class TileReplacementStructureCube extends TileMultiBase {
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
-
+        super.readFromNBT(tag);
         savedId = tag.getInteger("savedId");
         savedMetadata = tag.getInteger("savedMetadata");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
-
+        super.writeToNBT(tag);
         tag.setInteger("savedId", savedId);
         tag.setInteger("savedMetadata", savedMetadata);
     }
