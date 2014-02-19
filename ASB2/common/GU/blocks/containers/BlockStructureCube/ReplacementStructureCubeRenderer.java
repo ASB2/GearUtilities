@@ -16,7 +16,6 @@ public class ReplacementStructureCubeRenderer implements ISimpleBlockRenderingHa
 
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 
@@ -25,8 +24,8 @@ public class ReplacementStructureCubeRenderer implements ISimpleBlockRenderingHa
             Block fakeBlock = ((BlockReplacementStructureCube) block).getFalseBlock(world, x, y, z);
 
             if (fakeBlock != null) {
-                
-                return RenderingRegistry.instance().renderWorldBlock(renderer, world, x, y, z, fakeBlock, fakeBlock.getRenderType());
+
+                return renderer.renderBlockByRenderType(fakeBlock, x, y, z);
             }
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);

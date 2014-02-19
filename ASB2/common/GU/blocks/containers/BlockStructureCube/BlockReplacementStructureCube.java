@@ -268,6 +268,7 @@ public class BlockReplacementStructureCube extends ContainerBase {
         return block.getAmbientOcclusionLightValue(world, x, y, z);
     }
 
+    @SuppressWarnings("rawtypes")
     @SideOnly(Side.CLIENT)
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
@@ -614,7 +615,7 @@ public class BlockReplacementStructureCube extends ContainerBase {
         if (tile != null && tile instanceof TileReplacementStructureCube) {
 
             Block block = Block.blocksList[((TileReplacementStructureCube) tile).getSavedID()];
-
+//            UtilEntity.sendClientChat("Saved ID " + ((TileReplacementStructureCube) tile).getSavedID() + " " + "Saved Meatadata: " + ((TileReplacementStructureCube) tile).getSavedMetadata());
             return block != null ? block : null;
         }
         return null;
