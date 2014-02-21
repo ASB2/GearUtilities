@@ -90,7 +90,7 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
                 }
             } else {
 
-                if (Variables.CAN_USE_NON_STRUCURE_MULTI_TANK_BLOCKS) {
+                if (Variables.CAN_USE_NON_STRUCURE_MULTI_CHEST_BLOCKS) {
 
                     if (!block.hasTileEntity(vector.getBlockMetadata(getWorldObj())) && block != null) {
 
@@ -132,7 +132,7 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
                 }
             } else if (tile == null) {
 
-                if (Variables.CAN_USE_NON_STRUCURE_MULTI_TANK_BLOCKS) {
+                if (Variables.CAN_USE_NON_STRUCURE_MULTI_CHEST_BLOCKS) {
 
                     int metadata = vector.getBlockMetadata(getWorldObj());
 
@@ -158,7 +158,11 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
             }
         }
 
-        if (tile instanceof IMultiBlockPart && !((IMultiBlockPart) tile).addMultiBlock(this)) {
+        if (!(tile instanceof IMultiBlockPart)) {
+            
+            return false;
+        }
+        if (!((IMultiBlockPart) tile).addMultiBlock(this)) {
 
             return false;
         }

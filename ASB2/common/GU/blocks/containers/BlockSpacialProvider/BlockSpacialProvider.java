@@ -10,9 +10,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import GU.api.multiblock.IMultiBlock;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
+import GU.items.GUItemBlock;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class BlockSpacialProvider extends ContainerBase {
 
@@ -30,6 +34,14 @@ public class BlockSpacialProvider extends ContainerBase {
         this.registerTile(TileFluidSpacialProvider.class);
         this.registerTile(TileFurnaceSpacialProvider.class);
         this.registerTile(TileChestSpacialProvider.class);
+
+        MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 1);
+        GameRegistry.registerBlock(this, GUItemBlock.class, "BlockSpacialProvider");
+
+        LanguageRegistry.addName(STANDARD_SPACIAL_PROVIDER, this.getItemStackDisplayName(STANDARD_SPACIAL_PROVIDER));
+        LanguageRegistry.addName(FLUID_SPACIAL_PROVIDER, this.getItemStackDisplayName(FLUID_SPACIAL_PROVIDER));
+        LanguageRegistry.addName(FURNACE_SPACIAL_PROVIDER, this.getItemStackDisplayName(FURNACE_SPACIAL_PROVIDER));
+        LanguageRegistry.addName(CHEST_SPACIAL_PROVIDER, this.getItemStackDisplayName(CHEST_SPACIAL_PROVIDER));
     }
 
     @Override

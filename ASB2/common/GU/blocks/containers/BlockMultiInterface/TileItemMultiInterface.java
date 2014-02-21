@@ -52,6 +52,7 @@ public class TileItemMultiInterface extends TileMultiBase implements IInventory 
         if (super.addMultiBlock(multiBlock)) {
 
             recalculate();
+            return true;
         }
         return false;
     }

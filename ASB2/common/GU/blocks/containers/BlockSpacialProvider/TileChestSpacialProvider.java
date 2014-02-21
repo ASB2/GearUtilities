@@ -60,14 +60,14 @@ public class TileChestSpacialProvider extends TileSpacialProvider {
 
                 if (found > 0) {
 
-                    MultiBlockChest tank = new MultiBlockChest(worldObj, new Cuboid(new Vector3(xCoord, yCoord, zCoord), getMultiBlockXChange(), getMultiBlockYChange(), getMultiBlockZChange()));
+                    MultiBlockChest chest = new MultiBlockChest(worldObj, new Cuboid(new Vector3(xCoord, yCoord, zCoord), getMultiBlockXChange(), getMultiBlockYChange(), getMultiBlockZChange()));
 
-                    boolean spaceValid = tank.isStructureValid();
+                    boolean spaceValid = chest.isStructureValid();
                     UtilEntity.sendClientChat("Area Valid: " + spaceValid);
 
                     if (spaceValid) {
 
-                        boolean valid = tank.create();
+                        boolean valid = chest.create();
                         UtilEntity.sendClientChat("Structure Created:  " + valid);
                         return valid;
                     }
@@ -77,14 +77,14 @@ public class TileChestSpacialProvider extends TileSpacialProvider {
 
         } else {
 
-            MultiBlockChest tank = new MultiBlockChest(worldObj);
-            tank.load(bufferedTankData);
-            boolean spaceValid = tank.isStructureValid();
+            MultiBlockChest chest = new MultiBlockChest(worldObj);
+            chest.load(bufferedTankData);
+            boolean spaceValid = chest.isStructureValid();
             UtilEntity.sendClientChat("Area Valid: " + spaceValid);
 
             if (spaceValid) {
 
-                boolean valid = tank.create();
+                boolean valid = chest.create();
                 UtilEntity.sendClientChat("Structure Created:  " + valid);
                 return valid;
             }
