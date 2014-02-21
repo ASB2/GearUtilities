@@ -16,10 +16,10 @@ import GU.info.Reference;
 
 public class BlockSpacialProvider extends ContainerBase {
 
-    public final ItemStack STANDARD_SPACIAL_PROVIDER = new ItemStack(this, 1, STANDARD), FLUID_SPACIAL_PROVIDER = new ItemStack(this, 1, FLUID), FURNACE_SPACIAL_PROVIDER = new ItemStack(this, 1, FURNACE);
-    public static final int STANDARD = 0, FLUID = 1, FURNACE = 2;
+    public final ItemStack STANDARD_SPACIAL_PROVIDER = new ItemStack(this, 1, STANDARD), FLUID_SPACIAL_PROVIDER = new ItemStack(this, 1, FLUID), FURNACE_SPACIAL_PROVIDER = new ItemStack(this, 1, FURNACE), CHEST_SPACIAL_PROVIDER = new ItemStack(this, 1, CHEST);
+    public static final int STANDARD = 0, FLUID = 1, FURNACE = 2, CHEST = 3;
 
-    Icon standard, fluid, furnace;
+    Icon standard, fluid, furnace, chest;
 
     public BlockSpacialProvider(int id, Material material) {
         super(id, material);
@@ -29,6 +29,7 @@ public class BlockSpacialProvider extends ContainerBase {
         this.registerTile(TileSpacialProvider.class);
         this.registerTile(TileFluidSpacialProvider.class);
         this.registerTile(TileFurnaceSpacialProvider.class);
+        this.registerTile(TileChestSpacialProvider.class);
     }
 
     @Override
@@ -66,6 +67,7 @@ public class BlockSpacialProvider extends ContainerBase {
         standard = iconRegister.registerIcon(Reference.MODDID + ":BlockStandardSpecialProvider");
         fluid = iconRegister.registerIcon(Reference.MODDID + ":BlockFluidSpecialProvider");
         furnace = iconRegister.registerIcon(Reference.MODDID + ":BlockFurnaceSpecialProvider");
+        chest = iconRegister.registerIcon(Reference.MODDID + ":BlockChestSpecialProvider");
     }
 
     @Override
@@ -79,6 +81,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return fluid;
             case FURNACE:
                 return furnace;
+            case CHEST:
+                return chest;
             default:
                 return super.getIcon(side, metadata);
         }
@@ -91,6 +95,7 @@ public class BlockSpacialProvider extends ContainerBase {
         list.add(new ItemStack(this, 1, STANDARD));
         list.add(new ItemStack(this, 1, FLUID));
         list.add(new ItemStack(this, 1, FURNACE));
+        list.add(new ItemStack(this, 1, CHEST));
     }
 
     @Override
@@ -104,6 +109,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return "Fluid Spacial Provider";
             case FURNACE:
                 return "Furnace Spacial Provider";
+            case CHEST:
+                return "Chest Spacial Provider";
         }
         return "";
     }
@@ -119,6 +126,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return "BlockFluidSpacialProvider";
             case FURNACE:
                 return "BlockFurnaceSpacialProvider";
+            case CHEST:
+                return "BlockChestSpacialProvider";
         }
         return "";
     }
@@ -134,6 +143,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return new TileFluidSpacialProvider();
             case FURNACE:
                 return new TileFurnaceSpacialProvider();
+            case CHEST:
+                return new TileChestSpacialProvider();
         }
         return null;
     }

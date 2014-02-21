@@ -2,18 +2,13 @@ package GU.multiblock;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilBlock;
-import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
 import GU.BlockRegistry;
@@ -23,22 +18,24 @@ import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.ISpecialMultiBlockOpaque;
 import GU.api.multiblock.ISpecialTileMultiBlock;
 import GU.api.multiblock.MultiBlockBase;
-import GU.blocks.containers.BlockSpacialProvider.TileFluidSpacialProvider;
+import GU.blocks.containers.Inventory;
+import GU.blocks.containers.BlockSpacialProvider.TileChestSpacialProvider;
 import GU.blocks.containers.BlockStructureCube.TileReplacementStructureCube;
 import GU.info.Variables;
 
-public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
+public class MultiBlockChest extends MultiBlockBase implements IInventory {
 
-    public FluidTank fluidTank = new FluidTank(1000);
     public Cuboid airBlocks;
+    Inventory multiInventory = new Inventory(6, "Multi Furnace", true);
 
-    public MultiBlockTank(World world) {
-        super(world);
-    }
-
-    public MultiBlockTank(World world, Cuboid size) {
+    public MultiBlockChest(World world, Cuboid size) {
         super(world, size);
         init();
+    }
+
+    public MultiBlockChest(World world) {
+        super(world);
+        // TODO Auto-generated constructor stub
     }
 
     public boolean isStructureValid() {
@@ -203,117 +200,108 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
         if (Variables.COUNT_JUST_MULTI_TANK_AIR_BLOCKS) {
 
-            fluidTank.setCapacity((airBlocks.getXSize() + 1) * (airBlocks.getYSize() + 1) * (airBlocks.getZSize() + 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
+            multiInventory.setSizeInventory((airBlocks.getXSize() + 1) * (airBlocks.getYSize() + 1) * (airBlocks.getZSize() + 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
         } else {
 
-            fluidTank.setCapacity(((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1)) * 16000);
+            multiInventory.setSizeInventory(((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1)) * 16000);
         }
-    }
-
-    @Override
-    public void invalidate() {
-        super.invalidate();
     }
 
     public boolean isValidCore(Vector3 vector, TileEntity tile) {
 
-        return tile.getClass() == TileFluidSpacialProvider.class;
-    }
-
-    @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-
-        return fluidTank.fill(resource, doFill);
-    }
-
-    @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid) {
-
-        if (fluidTank != null) {
-
-            if (fluid != null) {
-
-                if (fluidTank.getFluid() != null) {
-
-                    if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
-
-                        return true;
-                    }
-                } else {
-
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-
-        if (resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
-
-            return null;
-        }
-
-        return fluidTank.drain(resource.amount, doDrain);
-    }
-
-    @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-
-        return fluidTank.drain(maxDrain, doDrain);
-    }
-
-    @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid) {
-
-        if (this.fluidTank.getFluid() != null) {
-
-            if (fluidTank.getFluidAmount() > 0) {
-
-                if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
-
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-
-        return new FluidTankInfo[] { fluidTank.getInfo() };
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-
-        if (this.isValid) {
-            // UtilEntity.sendChatToPlayer(player, "Fluid: " +
-            // this.fluidTank.getFluid() != null ?
-            // this.fluidTank.getFluid().getFluid() != null ?
-            // this.fluidTank.getFluid().getFluid().getName() : "null" : "null");
-            UtilEntity.sendChatToPlayer(player, this.size.toString());
-            UtilEntity.sendChatToPlayer(player, "Fluid Amount: " + this.fluidTank.getFluidAmount() + " / " + fluidTank.getCapacity());
-        } else {
-            UtilEntity.sendChatToPlayer(player, "Fix me idiot");
-        }
-        return false;
+        return tile.getClass() == TileChestSpacialProvider.class;
     }
 
     @Override
     public NBTTagCompound save(NBTTagCompound tag) {
 
-        fluidTank.writeToNBT(tag);
+        multiInventory.save(tag);
         return super.save(tag);
     }
 
     @Override
     public void load(NBTTagCompound tag) {
 
-        fluidTank.readFromNBT(tag);
+        multiInventory.load(tag);
         super.load(tag);
     }
+
+    @Override
+    public int getSizeInventory() {
+
+        return multiInventory.getSizeInventory();
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int i) {
+
+        return multiInventory.getStackInSlot(i);
+    }
+
+    @Override
+    public ItemStack decrStackSize(int slot, int amount) {
+
+        return multiInventory.decrStackSize(slot, amount);
+    }
+
+    @Override
+    public ItemStack getStackInSlotOnClosing(int i) {
+
+        return multiInventory.getStackInSlotOnClosing(i);
+    }
+
+    @Override
+    public void setInventorySlotContents(int i, ItemStack itemStack) {
+
+        multiInventory.setInventorySlotContents(i, itemStack);
+    }
+
+    @Override
+    public boolean isInvNameLocalized() {
+
+        return multiInventory.isInvNameLocalized();
+    }
+
+    @Override
+    public int getInventoryStackLimit() {
+
+        return multiInventory.getInventoryStackLimit();
+    }
+
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+
+        return multiInventory.isUseableByPlayer(entityplayer);
+    }
+
+    @Override
+    public void openChest() {
+
+        multiInventory.openChest();
+    }
+
+    @Override
+    public void closeChest() {
+
+        multiInventory.closeChest();
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+
+        return multiInventory.isItemValidForSlot(i, itemstack);
+    }
+
+    @Override
+    public String getInvName() {
+
+        return multiInventory.getInvName();
+    }
+
+    @Override
+    public void onInventoryChanged() {
+
+        multiInventory.onInventoryChanged();
+    }
+
 }

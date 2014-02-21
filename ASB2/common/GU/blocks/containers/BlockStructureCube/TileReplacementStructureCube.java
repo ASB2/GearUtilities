@@ -1,12 +1,7 @@
 package GU.blocks.containers.BlockStructureCube;
 
-import java.util.List;
-
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import ASB2.utils.UtilBlock;
-import ASB2.utils.UtilEntity;
 import GU.api.multiblock.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
 

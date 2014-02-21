@@ -157,7 +157,7 @@ public class CraftRegistry {
 
         GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.BlockSpacialProvider.STANDARD_SPACIAL_PROVIDER, new Object[] { "ICI", "CEC", "ICI",
 
-        'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
+        'C', Reference.CRYSTALS_ALL, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.BlockSpacialProvider.FLUID_SPACIAL_PROVIDER, new Object[] { "ICI", "CEC", "ICI",
 
@@ -167,6 +167,11 @@ public class CraftRegistry {
 
         'C', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.BlockSpacialProvider.CHEST_SPACIAL_PROVIDER, new Object[] { "ICI", "CEC", "ICI",
+
+                'C', ItemRegistry.ItemCrystal.ItemEarthCrystalShard, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
+
+        
         // Breaker
         ItemStack structureBrick0 = BlockRegistry.BlockStructureCube.STRUCTURE_CUBES[0].copy();
         structureBrick0.stackSize = 16;
