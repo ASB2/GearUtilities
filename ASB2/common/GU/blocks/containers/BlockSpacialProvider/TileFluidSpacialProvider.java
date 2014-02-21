@@ -1,5 +1,8 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
@@ -13,6 +16,7 @@ import GU.multiblock.MultiBlockTank;
 public class TileFluidSpacialProvider extends TileSpacialProvider {
 
     NBTTagCompound bufferedTankData;
+    public Set<MultiBlockTank> fluidMultiBlock = new HashSet<MultiBlockTank>();
 
     @Override
     public void updateEntity() {
@@ -24,6 +28,16 @@ public class TileFluidSpacialProvider extends TileSpacialProvider {
             hasBufferedCreateMultiBlock = false;
             bufferedTankData = null;
         }
+    }
+
+    @Override
+    public boolean addMultiBlock(IMultiBlock multiBlock) {
+
+        if (multiBlock.getClass() == MultiBlockTank.class) {
+
+            fluidMultiBlock.add((MultiBlockTank) multiBlock);
+        }
+        return super.addMultiBlock(multiBlock);
     }
 
     public boolean createMultiBlock() {

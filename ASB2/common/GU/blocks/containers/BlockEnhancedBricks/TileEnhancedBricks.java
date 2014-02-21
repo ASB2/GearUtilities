@@ -1,8 +1,5 @@
 package GU.blocks.containers.BlockEnhancedBricks;
 
-import java.awt.Color;
-
-import net.minecraftforge.common.ForgeDirection;
 import ASB2.wait.Wait;
 import GU.color.TileColorable;
 

@@ -6,6 +6,7 @@ import java.util.Map;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import ASB2.vector.Vector3;
 import GU.api.multiblock.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
 
@@ -14,6 +15,12 @@ public class TileItemMultiInterface extends TileMultiBase implements IInventory 
 
     Map<SlotHolder, IMultiBlock> inventorise = new HashMap<SlotHolder, IMultiBlock>();
     int maxSizeInventory = 0;
+
+    public TileItemMultiInterface() {
+
+        this.destoryTileWithNotMultiBlock = true;
+        this.useSidesRendering = true;
+    }
 
     private class SlotHolder {
 
@@ -35,13 +42,13 @@ public class TileItemMultiInterface extends TileMultiBase implements IInventory 
         }
     }
 
-    public TileItemMultiInterface() {
-
-        this.destoryTileWithNotMultiBlock = true;
-    }
-
     @Override
     public boolean addMultiBlock(IMultiBlock multiBlock) {
+
+        if (multiBlock.getSize().getEdges().contains(new Vector3(this))) {
+
+            return false;
+        }
 
         if (super.addMultiBlock(multiBlock)) {
 
@@ -79,6 +86,13 @@ public class TileItemMultiInterface extends TileMultiBase implements IInventory 
 
     public IInventory redirectSlot(int slot) {
 
+        for(SlotHolder slots : inventorise.keySet()) {
+            
+            if(slots.getMinSlot() <= slot && slots.getMaxSlot() >= slot) {
+                
+                return (IInventory) inventorise.get(slots);
+            }
+        }
         return null;
     }
 

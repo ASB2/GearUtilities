@@ -3,6 +3,7 @@ package GU.blocks.containers.BlockStructureCube;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,11 +23,12 @@ import net.minecraftforge.common.IPlantable;
 import GU.EnumState;
 import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockPart;
+import GU.api.multiblock.ISpecialMultiBlockOpaque;
 import GU.blocks.containers.ContainerBase;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockReplacementStructureCube extends ContainerBase {
+public class BlockReplacementStructureCube extends ContainerBase implements ISpecialMultiBlockOpaque {
 
     public BlockReplacementStructureCube(int id, Material material) {
         super(id, material);
@@ -42,9 +44,16 @@ public class BlockReplacementStructureCube extends ContainerBase {
 
         if (tile != null) {
 
-            if (!tile.getComprisedMultiBlocks().isEmpty()) {
+            Set<IMultiBlock> multiBlocks = tile.getComprisedMultiBlocks();
 
-                for (IMultiBlock multi : tile.getComprisedMultiBlocks()) {
+            if (!multiBlocks.isEmpty()) {
+
+                if (multiBlocks.size() == 1) {
+
+                    return multiBlocks.iterator().next().onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+                }
+
+                for (IMultiBlock multi : multiBlocks) {
 
                     multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
                 }
@@ -298,9 +307,9 @@ public class BlockReplacementStructureCube extends ContainerBase {
 
             Block block = Block.blocksList[((TileReplacementStructureCube) tile).getSavedID()];
 
-            if(block != null) {
-                
-                return lightValue[((TileReplacementStructureCube)tile).getSavedID()];
+            if (block != null) {
+
+                return lightValue[((TileReplacementStructureCube) tile).getSavedID()];
             }
         }
         return super.getLightValue(world, x, y, z);
@@ -458,7 +467,7 @@ public class BlockReplacementStructureCube extends ContainerBase {
 
         if (block == null) {
 
-            return super.getBlockDropped(world, x, y, z, metadata, fortune);
+            return new ArrayList<ItemStack>();
         }
         return block.getBlockDropped(world, x, y, z, metadata, fortune);
     }
@@ -609,6 +618,11 @@ public class BlockReplacementStructureCube extends ContainerBase {
         world.setBlock(x, y, z, tile.getSavedID(), tile.getSavedMetadata(), 3);
     }
 
+    @Override
+    public void onBlockHarvested(World world, int x, int y, int z, int par5, EntityPlayer par6EntityPlayer) {
+        destryLogic(world, x, y, z);
+    }
+
     public Block getFalseBlock(IBlockAccess world, int x, int y, int z) {
 
         TileEntity tile = world.getBlockTileEntity(x, y, z);
@@ -616,15 +630,28 @@ public class BlockReplacementStructureCube extends ContainerBase {
         if (tile != null && tile instanceof TileReplacementStructureCube) {
 
             Block block = Block.blocksList[((TileReplacementStructureCube) tile).getSavedID()];
-//            UtilEntity.sendClientChat("Saved ID " + ((TileReplacementStructureCube) tile).getSavedID() + " " + "Saved Meatadata: " + ((TileReplacementStructureCube) tile).getSavedMetadata());
+            // UtilEntity.sendClientChat("Saved ID " + ((TileReplacementStructureCube) tile).getSavedID() + " " + "Saved Meatadata: " +
+            // ((TileReplacementStructureCube) tile).getSavedMetadata());
             return block != null ? block : null;
         }
         return null;
     }
 
     @Override
+    public boolean isOpaqueCube() {
+
+        return false;
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World world) {
 
         return new TileReplacementStructureCube();
+    }
+
+    @Override
+    public boolean isTrueOpaqueCube(IBlockAccess world, int x, int y, int z) {
+        // TODO Auto-generated method stub
+        return true;
     }
 }

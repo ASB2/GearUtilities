@@ -69,6 +69,6 @@ public class BlockEnhancedBricks extends BlockColorable {
     @Override
     public TileEntity createNewTileEntity(World world) {
 
-        return /*new TileEnhancedBricks();*/ null;
+        return new TileEnhancedBricks();
     }
 }

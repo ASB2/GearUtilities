@@ -35,6 +35,7 @@ public class BlockMultiInterface extends ContainerBase implements ISpecialTileMu
         super(id, material);
 
         specialMetadata = true;
+        dropMetadata = true;
         this.registerTile(TileItemMultiInterface.class);
         this.registerTile(TileFluidMultiInterface.class);
 
@@ -108,7 +109,7 @@ public class BlockMultiInterface extends ContainerBase implements ISpecialTileMu
     @Override
     public boolean isBlockNormalCube(World world, int x, int y, int z) {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override

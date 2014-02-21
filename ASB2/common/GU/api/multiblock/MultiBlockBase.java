@@ -223,8 +223,6 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
         fluidMultiBlockInterfaces.clear();
         multiBlockCores.clear();
         size.iterate(this, 2);
-
-        UtilEntity.sendClientChat("Structure Invalidated");
     }
 
     @Override
@@ -272,7 +270,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     }
 
     protected void init() {
-
+        isValid = true;
     }
 
     @Override

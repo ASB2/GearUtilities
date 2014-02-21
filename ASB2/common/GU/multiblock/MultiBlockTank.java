@@ -22,6 +22,7 @@ import GU.BlockRegistry;
 import GU.api.multiblock.IMultiBlockCore;
 import GU.api.multiblock.IMultiBlockInterface;
 import GU.api.multiblock.IMultiBlockPart;
+import GU.api.multiblock.ISpecialMultiBlockOpaque;
 import GU.api.multiblock.ISpecialTileMultiBlock;
 import GU.api.multiblock.MultiBlockBase;
 import GU.blocks.containers.BlockSpacialProvider.TileFluidSpacialProvider;
@@ -62,7 +63,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
             Block block = vector.getBlock(getWorldObj());
 
-            if (block != null && !block.isBlockNormalCube(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+            if (block == null || (!block.isOpaqueCube() && !(block instanceof ISpecialMultiBlockOpaque && ((ISpecialMultiBlockOpaque) block).isTrueOpaqueCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())))) {
 
                 return false;
             }
@@ -97,9 +98,18 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
                 if (Variables.CAN_USE_NON_STRUCURE_TANK_BLOCKS) {
 
-                    if (block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ()) || !this.size.getEdges().contains(vector)) {
+                    if (!block.hasTileEntity(vector.getBlockMetadata(getWorldObj())) && block != null) {
 
-                        return !block.hasTileEntity(vector.getBlockMetadata(getWorldObj()));
+                        if (size.getEdges().contains(vector)) {
+
+                            if (block.isOpaqueCube() || (block instanceof ISpecialMultiBlockOpaque && ((ISpecialMultiBlockOpaque) block).isTrueOpaqueCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ()))) {
+
+                                return true;
+                            }
+                        } else {
+
+                            return true;
+                        }
                     }
                 }
             }
@@ -130,24 +140,28 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
                 if (Variables.CAN_USE_NON_STRUCURE_TANK_BLOCKS) {
 
-                    if (block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ()) || !this.size.getEdges().contains(vector)) {
+                    int metadata = vector.getBlockMetadata(getWorldObj());
 
-                        int metadata = vector.getBlockMetadata(getWorldObj());
+                    if (!block.hasTileEntity(metadata) && block != null) {
 
-                        if (!block.hasTileEntity(metadata)) {
+                        if (size.getEdges().contains(vector)) {
 
-                            vector.setBlock(getWorldObj(), BlockRegistry.BlockReplacementStructureCube.blockID, vector.getBlockMetadata(getWorldObj()));
-                            tile = vector.getTileEntity(this.getWorldObj());
+                            if (!block.isOpaqueCube() && !(block instanceof ISpecialMultiBlockOpaque && ((ISpecialMultiBlockOpaque) block).isTrueOpaqueCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ()))) {
 
-                            TileReplacementStructureCube castedTile = (TileReplacementStructureCube) tile;
-
-                            castedTile.setSavedID(block.blockID);
-                            castedTile.setSavedMetadata(metadata);
-                            placeHolderBlocks.add(vector);
+                                return false;
+                            }
                         }
                     }
-                } else
-                    return false;
+
+                    vector.setBlock(getWorldObj(), BlockRegistry.BlockReplacementStructureCube.blockID, vector.getBlockMetadata(getWorldObj()));
+                    tile = vector.getTileEntity(this.getWorldObj());
+
+                    TileReplacementStructureCube castedTile = (TileReplacementStructureCube) tile;
+
+                    castedTile.setSavedID(block.blockID);
+                    castedTile.setSavedMetadata(metadata);
+                    placeHolderBlocks.add(vector);
+                }
             }
         }
 
@@ -190,7 +204,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
     @Override
     protected void init() {
-
+        isValid = true;
         airBlocks = this.getSize().squareShrink(2, 2, 2);
 
         if (Variables.COUNT_JUST_TANK_AIR_BLOCKS) {
@@ -216,7 +230,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
                 vector.setBlock(this.getWorldObj(), replace.getSavedID(), replace.getSavedMetadata());
                 break;
             }
-//            this.getWorldObj().setBlockToAir(vector.intX(), vector.intY(), vector.intZ());
+            // this.getWorldObj().setBlockToAir(vector.intX(), vector.intY(), vector.intZ());
         }
         super.invalidate();
     }
@@ -296,13 +310,17 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 
-        // UtilEntity.sendChatToPlayer(player, "Fluid: " +
-        // this.fluidTank.getFluid() != null ?
-        // this.fluidTank.getFluid().getFluid() != null ?
-        // this.fluidTank.getFluid().getFluid().getName() : "null" : "null");
-        UtilEntity.sendChatToPlayer(player, this.size.toString());
-        UtilEntity.sendChatToPlayer(player, "Fluid Amount: " + this.fluidTank.getFluidAmount() + " / " + fluidTank.getCapacity());
-        return true;
+        if (this.isValid) {
+            // UtilEntity.sendChatToPlayer(player, "Fluid: " +
+            // this.fluidTank.getFluid() != null ?
+            // this.fluidTank.getFluid().getFluid() != null ?
+            // this.fluidTank.getFluid().getFluid().getName() : "null" : "null");
+            UtilEntity.sendChatToPlayer(player, this.size.toString());
+            UtilEntity.sendChatToPlayer(player, "Fluid Amount: " + this.fluidTank.getFluidAmount() + " / " + fluidTank.getCapacity());
+        } else {
+            UtilEntity.sendChatToPlayer(player, "Fix me idiot");
+        }
+        return false;
     }
 
     @Override

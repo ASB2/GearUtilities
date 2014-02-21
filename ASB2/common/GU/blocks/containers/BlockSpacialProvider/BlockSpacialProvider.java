@@ -24,6 +24,8 @@ public class BlockSpacialProvider extends ContainerBase {
     public BlockSpacialProvider(int id, Material material) {
         super(id, material);
         specialMetadata = true;
+        dropMetadata = true;
+
         this.registerTile(TileSpacialProvider.class);
         this.registerTile(TileFluidSpacialProvider.class);
         this.registerTile(TileFurnaceSpacialProvider.class);

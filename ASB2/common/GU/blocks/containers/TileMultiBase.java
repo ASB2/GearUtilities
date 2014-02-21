@@ -17,7 +17,7 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
     protected int maxMultiBlocks = -1;
 
     public TileMultiBase() {
-
+        this.useSidesRendering = false;
     }
 
     @Override

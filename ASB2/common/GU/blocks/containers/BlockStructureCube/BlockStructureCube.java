@@ -15,6 +15,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockPart;
+import GU.api.multiblock.ISpecialMultiBlockOpaque;
 import GU.api.multiblock.ISpecialTileMultiBlock;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Reference;
@@ -22,9 +23,9 @@ import GU.items.GUItemBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-public class BlockStructureCube extends ContainerBase implements ISpecialTileMultiBlock {
+public class BlockStructureCube extends ContainerBase implements ISpecialTileMultiBlock, ISpecialMultiBlockOpaque {
 
-    public static final int CUBE0 = 0, CUBE1 = 1, CUBE2 = 2, CUBE3 = 3, GLASS4 = 4, BRICK5 = 5, BRICK6 = 6,  CUBE7 = 7;
+    public static final int CUBE0 = 0, CUBE1 = 1, CUBE2 = 2, CUBE3 = 3, GLASS4 = 4, BRICK5 = 5, BRICK6 = 6, CUBE7 = 7;
     public static final int MAX_META = 8;
     Icon[] texture = new Icon[MAX_META];
     String unlocalizedname = "BlockStructureCube";
@@ -35,6 +36,7 @@ public class BlockStructureCube extends ContainerBase implements ISpecialTileMul
         super(id, material);
 
         specialMetadata = true;
+        dropMetadata = true;
         this.registerTile(TileStructureCube.class);
         this.setLightOpacity(0);
 
@@ -120,7 +122,7 @@ public class BlockStructureCube extends ContainerBase implements ISpecialTileMul
     @Override
     public boolean isBlockNormalCube(World world, int x, int y, int z) {
 
-        return world.getBlockMetadata(x, y, z) != GLASS4 ? true : false;
+        return true;
     }
 
     @Override
@@ -146,5 +148,17 @@ public class BlockStructureCube extends ContainerBase implements ISpecialTileMul
             world.setBlockTileEntity(x, y, z, tile);
         }
         return tile;
+    }
+
+    @Override
+    public boolean isTrueOpaqueCube(IBlockAccess world, int x, int y, int z) {
+
+        return world.getBlockMetadata(x, y, z) != GLASS4 ? true : false;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+
+        return false;
     }
 }

@@ -39,6 +39,7 @@ public class BlockBasicElemental extends BlockBase {
         super(id, material);
         this.setTickRandomly(true);
         specialMetadata = true;
+        dropMetadata = true;
     }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })

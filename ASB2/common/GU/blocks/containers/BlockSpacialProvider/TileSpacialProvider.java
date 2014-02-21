@@ -20,6 +20,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     public TileSpacialProvider() {
 
         sideState = new EnumState[] { EnumState.NONE, EnumState.NONE, EnumState.NONE, EnumState.NONE, EnumState.NONE, EnumState.NONE };
+        useSidesRendering = true;
     }
 
     @Override
@@ -70,12 +71,13 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
             }
             if (tile != null && tile != this && tile instanceof IMultiBlockCore) {
 
-//                last = tile;
+                // last = tile;
                 return tile;
-            }/* else {
-
-                return last == this ? null : last;
-            }*/
+            }/*
+              * else {
+              * 
+              * return last == this ? null : last; }
+              */
         }
         return null;
     }

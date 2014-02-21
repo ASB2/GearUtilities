@@ -8,6 +8,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import ASB2.vector.Vector3;
 import GU.api.multiblock.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
 
@@ -16,6 +17,18 @@ public class TileFluidMultiInterface extends TileMultiBase implements IFluidHand
     public TileFluidMultiInterface() {
 
         this.destoryTileWithNotMultiBlock = true;
+        this.useSidesRendering = true;
+    }
+
+    @Override
+    public boolean addMultiBlock(IMultiBlock multiBlock) {
+
+        if (multiBlock.getSize().getEdges().contains(new Vector3(this))) {
+
+            return false;
+        }
+
+        return super.addMultiBlock(multiBlock);
     }
 
     @Override
