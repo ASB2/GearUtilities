@@ -190,9 +190,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
                 }
                 default:
                     break;
-
             }
-
         }
 
         if (tile instanceof IMultiBlockCore) {
@@ -219,19 +217,19 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     @Override
     public void invalidate() {
 
-        for (Vector3 vector : this.placeHolderBlocks) {
-
-            TileEntity tile = vector.getTileEntity(this.getWorldObj());
-
-            if (tile != null && tile.getClass() == TileReplacementStructureCube.class) {
-
-                TileReplacementStructureCube replace = (TileReplacementStructureCube) tile;
-
-                vector.setBlock(this.getWorldObj(), replace.getSavedID(), replace.getSavedMetadata());
-                break;
-            }
-            // this.getWorldObj().setBlockToAir(vector.intX(), vector.intY(), vector.intZ());
-        }
+        // for (Vector3 vector : this.placeHolderBlocks) {
+        //
+        // TileEntity tile = vector.getTileEntity(this.getWorldObj());
+        //
+        // if (tile != null && tile.getClass() == TileReplacementStructureCube.class) {
+        //
+        // TileReplacementStructureCube replace = (TileReplacementStructureCube) tile;
+        //
+        // vector.setBlock(this.getWorldObj(), replace.getSavedID(), replace.getSavedMetadata());
+        // break;
+        // }
+        // // this.getWorldObj().setBlockToAir(vector.intX(), vector.intY(), vector.intZ());
+        // }
         super.invalidate();
     }
 

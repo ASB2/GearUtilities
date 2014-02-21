@@ -20,6 +20,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.IPlantable;
+import ASB2.utils.UtilBlock;
 import GU.EnumState;
 import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockPart;
@@ -591,13 +592,30 @@ public class BlockReplacementStructureCube extends ContainerBase implements ISpe
     // Breaker
 
     @Override
-    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explostion) {
-        destryLogic(world, x, y, z);
+    public void onBlockPreDestroy(World world, int x, int y, int z, int metadata) {
+
+        // ArrayList<ItemStack> items = this.getBlockDropped(world, x, y, z, metadata, 1);
+        //
+        // for (ItemStack item : items) {
+        //
+        // UtilBlock.spawnItemStackEntity(world, x, y, z, item, 1);
+        // }
     }
 
     @Override
-    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metaData) {
-        destryLogic(world, x, y, z);
+    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explostion) {
+        // destryLogic(world, x, y, z);
+    }
+
+    @Override
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) {
+        //
+        // ArrayList<ItemStack> items = this.getBlockDropped(world, x, y, z, metadata, 1);
+        //
+        // for (ItemStack item : items) {
+        //
+        // UtilBlock.spawnItemStackEntity(world, x, y, z, item, 1);
+        // }
     }
 
     public void destryLogic(World world, int x, int y, int z) {
@@ -619,8 +637,15 @@ public class BlockReplacementStructureCube extends ContainerBase implements ISpe
     }
 
     @Override
-    public void onBlockHarvested(World world, int x, int y, int z, int par5, EntityPlayer par6EntityPlayer) {
-        destryLogic(world, x, y, z);
+    public void onBlockHarvested(World world, int x, int y, int z, int metadata, EntityPlayer par6EntityPlayer) {
+        // destryLogic(world, x, y, z);
+
+        ArrayList<ItemStack> items = this.getBlockDropped(world, x, y, z, metadata, 1);
+
+        for (ItemStack item : items) {
+
+            UtilBlock.spawnItemStackEntity(world, x, y, z, item, 1);
+        }
     }
 
     public Block getFalseBlock(IBlockAccess world, int x, int y, int z) {

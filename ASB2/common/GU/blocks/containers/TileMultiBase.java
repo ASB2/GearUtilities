@@ -12,7 +12,7 @@ import GU.api.multiblock.IMultiBlockPart;
 public class TileMultiBase extends TileBase implements IMultiBlockPart {
 
     protected boolean isInMultiBlock = false, destoryTileWithNotMultiBlock = false;
-    Set<IMultiBlock> multiBlocks = new HashSet<IMultiBlock>(), unchangable = new HashSet<IMultiBlock>();
+    protected Set<IMultiBlock> multiBlocks = new HashSet<IMultiBlock>(), unchangable = new HashSet<IMultiBlock>();
     protected int fluidMultiBlocks, itemMultiBlock;
     protected int maxMultiBlocks = -1;
 

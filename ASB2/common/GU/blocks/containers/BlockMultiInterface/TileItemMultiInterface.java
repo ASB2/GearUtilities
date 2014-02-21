@@ -10,7 +10,6 @@ import ASB2.vector.Vector3;
 import GU.api.multiblock.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
 
-@SuppressWarnings("unused")
 public class TileItemMultiInterface extends TileMultiBase implements IInventory {
 
     Map<SlotHolder, IMultiBlock> inventorise = new HashMap<SlotHolder, IMultiBlock>();
@@ -86,10 +85,10 @@ public class TileItemMultiInterface extends TileMultiBase implements IInventory 
 
     public IInventory redirectSlot(int slot) {
 
-        for(SlotHolder slots : inventorise.keySet()) {
-            
-            if(slots.getMinSlot() <= slot && slots.getMaxSlot() >= slot) {
-                
+        for (SlotHolder slots : inventorise.keySet()) {
+
+            if (slots.getMinSlot() <= slot && slots.getMaxSlot() >= slot) {
+
                 return (IInventory) inventorise.get(slots);
             }
         }

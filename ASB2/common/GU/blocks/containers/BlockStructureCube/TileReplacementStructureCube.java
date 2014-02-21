@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
+import GU.api.multiblock.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
 
 public class TileReplacementStructureCube extends TileMultiBase {
@@ -40,17 +41,15 @@ public class TileReplacementStructureCube extends TileMultiBase {
     @Override
     public void invalidate() {
         super.invalidate();
+    }
 
-        Block block = getFalseBlock();
-        
-        if(block != null) {
-            
-            List<ItemStack> things = block.getBlockDropped(worldObj, xCoord, yCoord, zCoord, worldObj.getBlockMetadata(xCoord, yCoord, zCoord), 1);
-        
-            for(ItemStack stack: things) {
-                
-                UtilBlock.spawnItemStackEntity(worldObj, xCoord, yCoord, zCoord, stack, 2);
-            }
+    @Override
+    public void removeMultiBlock(IMultiBlock multiBlock) {
+        super.removeMultiBlock(multiBlock);
+
+        if (this.multiBlocks.isEmpty()) {
+
+            worldObj.setBlock(xCoord, yCoord, zCoord, this.getSavedID(), this.getSavedMetadata(), 3);
         }
     }
 
