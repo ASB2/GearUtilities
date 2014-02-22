@@ -1,6 +1,7 @@
 package GU.inventory;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -14,7 +15,7 @@ public class Inventory implements ISidedInventory {
 
     int inventorySize = 0;
     int maxStackSize = 64;
-    ArrayList<MegaObjectHolder<ItemStack>> storedStacks;
+    Map<Integer, ItemStack> storedStacks;
     String inventoryName;
     boolean playerCanUse;
     boolean localized = true;
@@ -31,28 +32,19 @@ public class Inventory implements ISidedInventory {
 
         this.inventorySize = inventorySize;
         this.maxStackSize = maxStackSize;
-        storedStacks = new ArrayList<MegaObjectHolder<ItemStack>>((int)((inventorySize / MegaObjectHolder.USUAL_MAX_OBJECTS) + 1));
+        storedStacks = new HashMap<Integer, ItemStack>();
         this.inventoryName = inventoryName;
         playerCanUse = useableByPlayer;
-
-        for (int i = 0; i <= storedStacks.size(); i++) {
-
-            storedStacks.add(i, new MegaObjectHolder<ItemStack>());
-        }
     }
 
-    public ArrayList<MegaObjectHolder<ItemStack>> getItemArray() {
+    public Map<Integer, ItemStack> getItemArray() {
 
         return storedStacks;
     }
 
     public void setSizeInventory(int newSize) {
 
-        if (newSize > 0) {
-
-            this.inventorySize = newSize;
-            storedStacks.ensureCapacity(newSize);
-        }
+        this.inventorySize = newSize;
     }
 
     @Override
@@ -64,7 +56,7 @@ public class Inventory implements ISidedInventory {
     @Override
     public ItemStack getStackInSlot(int i) {
 
-        return this.getObjectHolderForSlot(i).getObject(i / MegaObjectHolder.USUAL_MAX_OBJECTS);
+        return storedStacks.get(i);
     }
 
     @Override
@@ -82,7 +74,7 @@ public class Inventory implements ISidedInventory {
     @Override
     public void setInventorySlotContents(int i, ItemStack itemstack) {
 
-        this.getObjectHolderForSlot(i).setObject(i / MegaObjectHolder.USUAL_MAX_OBJECTS, itemstack);
+        storedStacks.put(i, itemstack);
     }
 
     public void setInventoryName(String newName) {
@@ -150,52 +142,30 @@ public class Inventory implements ISidedInventory {
 
     public NBTTagCompound save(NBTTagCompound tag) {
 
-        int numberStoredStacks = 0;
+        for (int objectsIterator = 0; objectsIterator < storedStacks.size(); objectsIterator++) {
 
-        for (int megaObjectsHolderIterator = 0; megaObjectsHolderIterator < storedStacks.size(); megaObjectsHolderIterator++) {
+            ItemStack stack = storedStacks.get(objectsIterator);
 
-            MegaObjectHolder<ItemStack> objects = storedStacks.get(megaObjectsHolderIterator);
+            if (stack != null) {
 
-            ArrayList<ItemStack> items = objects.getObjects();
-
-            for (int objectsIterator = 0; objectsIterator < items.size(); objectsIterator++) {
-
-                numberStoredStacks++;
-
-                ItemStack stack = items.get(objectsIterator);
-
-                if (stack != null) {
-
-                    tag.setCompoundTag("Slot" + numberStoredStacks, stack.writeToNBT(new NBTTagCompound()));
-                }
+                tag.setCompoundTag("Slot" + objectsIterator, stack.writeToNBT(new NBTTagCompound()));
             }
         }
-        tag.setInteger("StoredMegaObjects", storedStacks.size());
+        tag.setInteger("SizeInventory", storedStacks.size());
         return tag;
     }
 
     public void load(NBTTagCompound tag) {
 
-        int processedStacks = 0;
-        int storedMegaObjects = tag.getInteger("StoredMegaObjects");
+        storedStacks = new HashMap<Integer, ItemStack>(tag.getInteger("SizeInventory"));
 
-        storedStacks = new ArrayList<MegaObjectHolder<ItemStack>>(storedMegaObjects);
+        for (int currentItem = 0; currentItem < storedStacks.size(); currentItem++) {
 
-        for (int currentMegaObject = 0; currentMegaObject < storedStacks.size(); currentMegaObject++) {
+            ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Slot" + currentItem));
 
-            MegaObjectHolder<ItemStack> currentObjects = storedStacks.get(currentMegaObject);
-            ArrayList<ItemStack> items = currentObjects.getObjects();
+            if (stack != null) {
 
-            for (int currentItem = 0; currentItem < items.size(); currentItem++) {
-
-                processedStacks++;
-
-                ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Slot" + processedStacks));
-
-                if (stack != null) {
-
-                    currentObjects.setObject(processedStacks, stack);
-                }
+                storedStacks.put(currentItem, stack);
             }
         }
     }
@@ -216,12 +186,5 @@ public class Inventory implements ISidedInventory {
     public boolean canExtractItem(int i, ItemStack itemstack, int j) {
         // TODO Auto-generated method stub
         return false;
-    }
-
-    public MegaObjectHolder<ItemStack> getObjectHolderForSlot(int slot) {
-
-        int divided = slot / MegaObjectHolder.USUAL_MAX_OBJECTS;
-
-        return storedStacks.get(divided);
     }
 }
