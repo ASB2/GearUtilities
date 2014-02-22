@@ -15,7 +15,7 @@ public class MegaObjectHolder<CurrentType> {
 
     public MegaObjectHolder(int maxObjects) {
 
-        storedObjects = new ArrayList<CurrentType>();
+        storedObjects = new ArrayList<CurrentType>(maxObjects);
         this.maxObjects = maxObjects;
     }
 

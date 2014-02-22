@@ -31,13 +31,13 @@ public class Inventory implements ISidedInventory {
 
         this.inventorySize = inventorySize;
         this.maxStackSize = maxStackSize;
-        storedStacks = new ArrayList<MegaObjectHolder<ItemStack>>((inventorySize / MegaObjectHolder.USUAL_MAX_OBJECTS) + 1);
+        storedStacks = new ArrayList<MegaObjectHolder<ItemStack>>((int)((inventorySize / MegaObjectHolder.USUAL_MAX_OBJECTS) + 1));
         this.inventoryName = inventoryName;
         playerCanUse = useableByPlayer;
 
-        for (int i = 0; i < storedStacks.size(); i++) {
+        for (int i = 0; i <= storedStacks.size(); i++) {
 
-            storedStacks.set(i, new MegaObjectHolder<ItemStack>());
+            storedStacks.add(i, new MegaObjectHolder<ItemStack>());
         }
     }
 
