@@ -18,6 +18,7 @@ import GU.api.IWrenchable;
 import GU.api.color.IVanillaColorable;
 import GU.api.color.VanillaColor;
 import GU.api.power.PowerProvider;
+import GU.inventory.Inventory;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public abstract class TileBase extends TileEntity implements IVanillaColorable, IWaitTrigger, IWrenchable {

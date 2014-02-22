@@ -18,15 +18,15 @@ import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.ISpecialMultiBlockOpaque;
 import GU.api.multiblock.ISpecialTileMultiBlock;
 import GU.api.multiblock.MultiBlockBase;
-import GU.blocks.containers.Inventory;
 import GU.blocks.containers.BlockSpacialProvider.TileChestSpacialProvider;
 import GU.blocks.containers.BlockStructureCube.TileReplacementStructureCube;
 import GU.info.Variables;
+import GU.inventory.Inventory;
 
 public class MultiBlockChest extends MultiBlockBase implements IInventory {
 
     public Cuboid airBlocks;
-    Inventory multiInventory = new Inventory(6, "Multi Furnace", true);
+    Inventory multiInventory = new Inventory(1, "Multi Furnace");
 
     public MultiBlockChest(World world, Cuboid size) {
         super(world, size);
@@ -202,7 +202,7 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
         isValid = true;
         airBlocks = this.getSize().squareShrink(2, 2, 2);
 
-        if (Variables.COUNT_JUST_MULTI_TANK_AIR_BLOCKS) {
+        if (Variables.COUNT_JUST_MULTI_CHEST_AIR_BLOCKS) {
 
             multiInventory.setSizeInventory((airBlocks.getXSize() + 1) * (airBlocks.getYSize() + 1) * (airBlocks.getZSize() + 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
         } else {

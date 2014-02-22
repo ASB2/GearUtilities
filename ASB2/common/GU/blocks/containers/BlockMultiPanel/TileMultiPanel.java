@@ -27,9 +27,9 @@ import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
 import GU.api.recipe.SenderRecipe;
-import GU.blocks.containers.Inventory;
 import GU.blocks.containers.TileFluidBase;
 import GU.info.Reference;
+import GU.inventory.Inventory;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

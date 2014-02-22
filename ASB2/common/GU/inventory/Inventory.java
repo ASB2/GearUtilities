@@ -1,10 +1,11 @@
-package GU.blocks.containers;
+package GU.inventory;
+
+import java.util.ArrayList;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import ASB2.utils.UtilInventory;
 
 public class Inventory implements ISidedInventory {
@@ -13,25 +14,34 @@ public class Inventory implements ISidedInventory {
 
     int inventorySize = 0;
     int maxStackSize = 64;
-    ItemStack[] storedStacks;
+    ArrayList<MegaObjectHolder<ItemStack>> storedStacks;
     String inventoryName;
     boolean playerCanUse;
     boolean localized = true;
 
+    public Inventory(int inventorySize, String inventoryName) {
+        this(inventorySize, inventoryName, true);
+    }
+
     public Inventory(int inventorySize, String inventoryName, boolean useableByPlayer) {
-        this(inventorySize, 64, inventoryName, useableByPlayer);
+        this(inventorySize, STANDARD_STACKSIZE, inventoryName, useableByPlayer);
     }
 
     public Inventory(int inventorySize, int maxStackSize, String inventoryName, boolean useableByPlayer) {
 
         this.inventorySize = inventorySize;
         this.maxStackSize = maxStackSize;
-        storedStacks = new ItemStack[inventorySize];
+        storedStacks = new ArrayList<MegaObjectHolder<ItemStack>>((inventorySize / MegaObjectHolder.USUAL_MAX_OBJECTS) + 1);
         this.inventoryName = inventoryName;
         playerCanUse = useableByPlayer;
+
+        for (int i = 0; i < storedStacks.size(); i++) {
+
+            storedStacks.set(i, new MegaObjectHolder<ItemStack>());
+        }
     }
 
-    public ItemStack[] getItemArray() {
+    public ArrayList<MegaObjectHolder<ItemStack>> getItemArray() {
 
         return storedStacks;
     }
@@ -39,17 +49,9 @@ public class Inventory implements ISidedInventory {
     public void setSizeInventory(int newSize) {
 
         if (newSize > 0) {
-            ItemStack[] items = new ItemStack[newSize];
 
-            for (int i = 0; i < storedStacks.length; i++) {
-
-                if (items.length < i) {
-
-                    items[i] = storedStacks[i];
-                }
-            }
-            storedStacks = items;
             this.inventorySize = newSize;
+            storedStacks.ensureCapacity(newSize);
         }
     }
 
@@ -62,7 +64,7 @@ public class Inventory implements ISidedInventory {
     @Override
     public ItemStack getStackInSlot(int i) {
 
-        return storedStacks[i];
+        return this.getObjectHolderForSlot(i).getObject(i / MegaObjectHolder.USUAL_MAX_OBJECTS);
     }
 
     @Override
@@ -74,13 +76,13 @@ public class Inventory implements ISidedInventory {
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
 
-        return storedStacks[i];
+        return getStackInSlot(i);
     }
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemstack) {
 
-        storedStacks[i] = itemstack;
+        this.getObjectHolderForSlot(i).setObject(i / MegaObjectHolder.USUAL_MAX_OBJECTS, itemstack);
     }
 
     public void setInventoryName(String newName) {
@@ -148,36 +150,52 @@ public class Inventory implements ISidedInventory {
 
     public NBTTagCompound save(NBTTagCompound tag) {
 
-        NBTTagList nbttaglist = new NBTTagList();
+        int numberStoredStacks = 0;
 
-        for (int i = 0; i < storedStacks.length; i++) {
+        for (int megaObjectsHolderIterator = 0; megaObjectsHolderIterator < storedStacks.size(); megaObjectsHolderIterator++) {
 
-            if (storedStacks[i] != null) {
+            MegaObjectHolder<ItemStack> objects = storedStacks.get(megaObjectsHolderIterator);
 
-                NBTTagCompound nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setByte("Slot", (byte) i);
-                storedStacks[i].writeToNBT(nbttagcompound);
-                nbttaglist.appendTag(nbttagcompound);
+            ArrayList<ItemStack> items = objects.getObjects();
+
+            for (int objectsIterator = 0; objectsIterator < items.size(); objectsIterator++) {
+
+                numberStoredStacks++;
+
+                ItemStack stack = items.get(objectsIterator);
+
+                if (stack != null) {
+
+                    tag.setCompoundTag("Slot" + numberStoredStacks, stack.writeToNBT(new NBTTagCompound()));
+                }
             }
         }
-        tag.setTag("Items", nbttaglist);
+        tag.setInteger("StoredMegaObjects", storedStacks.size());
         return tag;
     }
 
     public void load(NBTTagCompound tag) {
 
-        NBTTagList nbttaglist = tag.getTagList("Items");
+        int processedStacks = 0;
+        int storedMegaObjects = tag.getInteger("StoredMegaObjects");
 
-        storedStacks = new ItemStack[storedStacks.length];
+        storedStacks = new ArrayList<MegaObjectHolder<ItemStack>>(storedMegaObjects);
 
-        for (int i = 0; i < nbttaglist.tagCount(); i++) {
+        for (int currentMegaObject = 0; currentMegaObject < storedStacks.size(); currentMegaObject++) {
 
-            NBTTagCompound nbttagcompound = (NBTTagCompound) nbttaglist.tagAt(i);
-            byte byte0 = nbttagcompound.getByte("Slot");
+            MegaObjectHolder<ItemStack> currentObjects = storedStacks.get(currentMegaObject);
+            ArrayList<ItemStack> items = currentObjects.getObjects();
 
-            if (byte0 >= 0 && byte0 < storedStacks.length) {
+            for (int currentItem = 0; currentItem < items.size(); currentItem++) {
 
-                storedStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound);
+                processedStacks++;
+
+                ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Slot" + processedStacks));
+
+                if (stack != null) {
+
+                    currentObjects.setObject(processedStacks, stack);
+                }
             }
         }
     }
@@ -198,5 +216,12 @@ public class Inventory implements ISidedInventory {
     public boolean canExtractItem(int i, ItemStack itemstack, int j) {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    public MegaObjectHolder<ItemStack> getObjectHolderForSlot(int slot) {
+
+        int divided = slot / MegaObjectHolder.USUAL_MAX_OBJECTS;
+
+        return storedStacks.get(divided);
     }
 }

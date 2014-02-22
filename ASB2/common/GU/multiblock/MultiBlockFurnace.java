@@ -17,8 +17,8 @@ import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
 import GU.api.multiblock.MultiBlockBase;
-import GU.blocks.containers.Inventory;
 import GU.blocks.containers.BlockSpacialProvider.TileFurnaceSpacialProvider;
+import GU.inventory.Inventory;
 
 public class MultiBlockFurnace extends MultiBlockBase implements ISidedInventory, IFluidHandler {
 

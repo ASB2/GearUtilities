@@ -24,8 +24,8 @@ import GU.api.power.IPowerProvider;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
-import GU.blocks.containers.Inventory;
 import GU.blocks.containers.TileBase;
+import GU.inventory.Inventory;
 import GU.packets.TankPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
