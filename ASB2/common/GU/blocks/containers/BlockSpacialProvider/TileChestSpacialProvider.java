@@ -79,16 +79,10 @@ public class TileChestSpacialProvider extends TileSpacialProvider {
 
             MultiBlockChest chest = new MultiBlockChest(worldObj);
             chest.load(bufferedTankData);
-            boolean spaceValid = chest.isStructureValid();
-            UtilEntity.sendClientChat("Area Valid: " + spaceValid);
 
-            if (spaceValid) {
-
-                boolean valid = chest.create();
-                UtilEntity.sendClientChat("Structure Created:  " + valid);
-                return valid;
+            if (chest.isStructureValid()) {
+                return chest.create();
             }
-            UtilEntity.sendClientChat("Structure Created: false");
             return false;
         }
     }

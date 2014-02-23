@@ -32,7 +32,7 @@ public class Inventory implements ISidedInventory {
 
         this.inventorySize = inventorySize;
         this.maxStackSize = maxStackSize;
-        storedStacks = new HashMap<Integer, ItemStack>();
+        storedStacks = new HashMap<Integer, ItemStack>(inventorySize);
         this.inventoryName = inventoryName;
         playerCanUse = useableByPlayer;
     }
@@ -45,6 +45,7 @@ public class Inventory implements ISidedInventory {
     public void setSizeInventory(int newSize) {
 
         this.inventorySize = newSize;
+        storedStacks = new HashMap<Integer, ItemStack>();
     }
 
     @Override

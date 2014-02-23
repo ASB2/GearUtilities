@@ -222,7 +222,7 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerH
 
                     Vector3 affecting = new Vector3(this).add(this.getOrientation());
 
-                    for (ItemStack item : tileInventory.getItemArray()) {
+                    for (ItemStack item : tileInventory.getItemArray().values()) {
 
                         if (item != null) {
 

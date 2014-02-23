@@ -87,16 +87,11 @@ public class TileFluidSpacialProvider extends TileSpacialProvider {
 
             MultiBlockTank tank = new MultiBlockTank(worldObj);
             tank.load(bufferedTankData);
-            boolean spaceValid = tank.isStructureValid();
-            UtilEntity.sendClientChat("Area Valid: " + spaceValid);
 
-            if (spaceValid) {
-
-                boolean valid = tank.create();
-                UtilEntity.sendClientChat("Structure Created:  " + valid);
-                return valid;
+            if (tank.isStructureValid()) {
+                
+                return tank.create();
             }
-            UtilEntity.sendClientChat("Structure Created: false");
             return false;
         }
     }
