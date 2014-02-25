@@ -16,21 +16,14 @@ import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
-import GU.BlockRegistry;
-import GU.api.multiblock.IMultiBlockCore;
-import GU.api.multiblock.IMultiBlockInterface;
-import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.ISpecialMultiBlockOpaque;
-import GU.api.multiblock.ISpecialTileMultiBlock;
 import GU.api.multiblock.MultiBlockBase;
 import GU.blocks.containers.BlockSpacialProvider.TileFluidSpacialProvider;
-import GU.blocks.containers.BlockStructureCube.TileReplacementStructureCube;
 import GU.info.Variables;
 
 public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
     public FluidTank fluidTank = new FluidTank(1000);
-    public Cuboid airBlocks;
 
     public MultiBlockTank(World world) {
         super(world);
@@ -48,7 +41,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
             return false;
         }
 
-        for (Vector3 vector : airBlocks.getComposingBlock()) {
+        for (Vector3 vector : centerBlocks.getComposingBlock()) {
 
             if (!UtilBlock.isBlockAir(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
 
@@ -68,142 +61,15 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
         return super.isStructureValid();
     }
 
-    public boolean checkArea(Vector3 vector) {
-
-        TileEntity tile = vector.getTileEntity(this.getWorldObj());
-
-        if (tile != null) {
-
-            if (tile instanceof IMultiBlockPart) {
-
-                return true;
-            }
-        } else {
-
-            Block block = vector.getBlock(this.getWorldObj());
-
-            if (block != null && block instanceof ISpecialTileMultiBlock) {
-
-                return true;
-            } else if (block == null || block.isAirBlock(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
-
-                if (airBlocks.contains(vector)) {
-
-                    return true;
-                }
-            } else {
-
-                if (Variables.CAN_USE_NON_STRUCURE_MULTI_TANK_BLOCKS) {
-
-                    if (!block.hasTileEntity(vector.getBlockMetadata(getWorldObj())) && block != null) {
-
-                        if (size.getEdges().contains(vector)) {
-
-                            if (block.isOpaqueCube() || (block instanceof ISpecialMultiBlockOpaque && ((ISpecialMultiBlockOpaque) block).isTrueOpaqueCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ()))) {
-
-                                return true;
-                            }
-                        } else {
-
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean createMultiblock(Vector3 vector) {
-
-        TileEntity tile = vector.getTileEntity(this.getWorldObj());
-
-        if (tile == null) {
-
-            Block block = vector.getBlock(this.getWorldObj());
-
-            if (block != null && block instanceof ISpecialTileMultiBlock) {
-
-                tile = ((ISpecialTileMultiBlock) block).getBlockTileEntity(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ());
-
-            } else if (block == null || block.isAirBlock(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
-
-                if (airBlocks.contains(vector)) {
-
-                    vector.setBlock(this.getWorldObj(), BlockRegistry.BlockStructureAir.blockID);
-                    return true;
-                }
-            } else if (tile == null) {
-
-                if (Variables.CAN_USE_NON_STRUCURE_MULTI_TANK_BLOCKS) {
-
-                    int metadata = vector.getBlockMetadata(getWorldObj());
-
-                    if (!block.hasTileEntity(metadata) && block != null) {
-
-                        if (size.getEdges().contains(vector)) {
-
-                            if (!block.isOpaqueCube() && !(block instanceof ISpecialMultiBlockOpaque && ((ISpecialMultiBlockOpaque) block).isTrueOpaqueCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ()))) {
-
-                                return false;
-                            }
-                        }
-                    }
-
-                    vector.setBlock(getWorldObj(), BlockRegistry.BlockReplacementStructureCube.blockID, vector.getBlockMetadata(getWorldObj()));
-                    tile = vector.getTileEntity(this.getWorldObj());
-
-                    TileReplacementStructureCube castedTile = (TileReplacementStructureCube) tile;
-
-                    castedTile.setSavedID(block.blockID);
-                    castedTile.setSavedMetadata(metadata);
-                }
-            }
-        }
-
-        if (tile instanceof IMultiBlockPart && !((IMultiBlockPart) tile).addMultiBlock(this)) {
-
-            return false;
-        }
-        if (tile instanceof IMultiBlockInterface) {
-
-            switch (((IMultiBlockInterface) tile).getInterfaceType()) {
-
-                case FLUID: {
-
-                    fluidMultiBlockInterfaces.add(vector);
-                    break;
-                }
-                case ITEM: {
-
-                    itemMultiBlockInterfaces.add(vector);
-                    break;
-                }
-                case POWER: {
-
-                    powerMultiBlockInterfaces.add(vector);
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
-
-        if (tile instanceof IMultiBlockCore) {
-
-            multiBlockCores.add(vector);
-        }
-        return true;
-    }
-
     @Override
     protected void init() {
+
         isValid = true;
-        airBlocks = this.getSize().squareShrink(2, 2, 2);
+        centerBlocks = this.getSize().squareShrink(2, 2, 2);
 
         if (Variables.COUNT_JUST_MULTI_TANK_AIR_BLOCKS) {
 
-            fluidTank.setCapacity((airBlocks.getXSize() + 1) * (airBlocks.getYSize() + 1) * (airBlocks.getZSize() + 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
+            fluidTank.setCapacity((centerBlocks.getXSize() + 1) * (centerBlocks.getYSize() + 1) * (centerBlocks.getZSize() + 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
         } else {
 
             fluidTank.setCapacity(((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1)) * 16000);

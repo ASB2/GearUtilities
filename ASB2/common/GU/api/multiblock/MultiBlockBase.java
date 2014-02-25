@@ -12,6 +12,11 @@ import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.ICuboidIterator;
 import ASB2.vector.Vector3;
+import GU.BlockRegistry;
+import GU.blocks.containers.BlockStructureCube.TileReplacementStructureCube;
+import GU.info.Variables;
+import GU.multiblock.MultiBlockChest;
+import GU.multiblock.MultiBlockTank;
 
 public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
 
@@ -21,6 +26,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     protected Set<Vector3> fluidMultiBlockInterfaces = new HashSet<Vector3>(), itemMultiBlockInterfaces = new HashSet<Vector3>(), powerMultiBlockInterfaces = new HashSet<Vector3>();
     protected Set<Vector3> multiBlockCores = new HashSet<Vector3>();
     protected Cuboid size;
+    protected Cuboid centerBlocks;
 
     public MultiBlockBase(World world) {
         this.worldObj = world;
@@ -110,7 +116,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
         return false;
     }
 
-    protected boolean checkArea(Vector3 vector) {
+    public boolean checkArea(Vector3 vector) {
 
         TileEntity tile = vector.getTileEntity(this.getWorldObj());
 
@@ -127,16 +133,36 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
             if (block != null && block instanceof ISpecialTileMultiBlock) {
 
                 return true;
-            }/*
-              * else if (block == null || vector.getBlockMaterial(getWorldObj()) == Material.air) {
-              * 
-              * return true; }
-              */
+            } else if (block == null || block.isAirBlock(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+
+                if (centerBlocks.contains(vector)) {
+
+                    return true;
+                }
+            } else {
+
+                if ((this instanceof MultiBlockChest && Variables.CAN_USE_NON_STRUCURE_MULTI_CHEST_BLOCKS) || (this instanceof MultiBlockTank && Variables.CAN_USE_NON_STRUCURE_MULTI_TANK_BLOCKS)) {
+
+                    if (!block.hasTileEntity(vector.getBlockMetadata(getWorldObj())) && block != null) {
+
+                        if (size.getEdges().contains(vector)) {
+
+                            if (block.isOpaqueCube() || (block instanceof ISpecialMultiBlockOpaque && ((ISpecialMultiBlockOpaque) block).isTrueOpaqueCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ()))) {
+
+                                return true;
+                            }
+                        } else {
+
+                            return true;
+                        }
+                    }
+                }
+            }
         }
         return false;
     }
 
-    protected boolean createMultiblock(Vector3 vector) {
+    public boolean createMultiblock(Vector3 vector) {
 
         TileEntity tile = vector.getTileEntity(this.getWorldObj());
 
@@ -148,28 +174,48 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
 
                 tile = ((ISpecialTileMultiBlock) block).getBlockTileEntity(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ());
 
-                if (tile == null) {
+            } else if (block == null || block.isAirBlock(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
 
-                    return false;
+                if (centerBlocks.contains(vector)) {
+
+                    vector.setBlock(this.getWorldObj(), BlockRegistry.BlockStructureAir.blockID);
+                    return true;
                 }
-            }/*
-              * else if (block == null || vector.getBlockMaterial(getWorldObj()) == Material.air) {
-              * 
-              * this.getWorldObj().setBlock(vector.intX(), vector.intY(), vector.intZ(), BlockRegistry.BlockStructureAir.blockID); return
-              * true; }
-              */
-            return false;
+            } else if (tile == null) {
 
+                if (Variables.CAN_USE_NON_STRUCURE_MULTI_CHEST_BLOCKS) {
+
+                    int metadata = vector.getBlockMetadata(getWorldObj());
+
+                    if (!block.hasTileEntity(metadata) && block != null) {
+
+                        if (size.getEdges().contains(vector)) {
+
+                            if (!block.isOpaqueCube() && !(block instanceof ISpecialMultiBlockOpaque && ((ISpecialMultiBlockOpaque) block).isTrueOpaqueCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ()))) {
+
+                                return false;
+                            }
+                        }
+                    }
+
+                    vector.setBlock(getWorldObj(), BlockRegistry.BlockReplacementStructureCube.blockID, vector.getBlockMetadata(getWorldObj()));
+                    tile = vector.getTileEntity(this.getWorldObj());
+
+                    TileReplacementStructureCube castedTile = (TileReplacementStructureCube) tile;
+
+                    castedTile.setSavedID(block.blockID);
+                    castedTile.setSavedMetadata(metadata);
+                }
+            }
         }
+
         if (!(tile instanceof IMultiBlockPart)) {
 
             return false;
-        } else {
+        }
+        if (!((IMultiBlockPart) tile).addMultiBlock(this)) {
 
-            if (!((IMultiBlockPart) tile).addMultiBlock(this)) {
-
-                return false;
-            }
+            return false;
         }
         if (tile instanceof IMultiBlockInterface) {
 
@@ -192,16 +238,13 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
                 }
                 default:
                     break;
-
             }
-
         }
 
         if (tile instanceof IMultiBlockCore) {
 
             multiBlockCores.add(vector);
         }
-
         return true;
     }
 

@@ -227,7 +227,7 @@ public class CraftRegistry {
 
         GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.BlockMultiInterface.POWER_INTERFACE, new Object[] { "ICI", "CEC", "ICI",
 
-        'C', ItemRegistry.ItemCrystal.ItemFireCrystalShard, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
+        'C', ItemRegistry.ItemCrystal.ItemAirCrystalShard, 'I', Item.ingotIron, 'E', BlockRegistry.BlockEnhancedBricks }));
 
         // Breaker
     }

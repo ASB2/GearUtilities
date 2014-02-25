@@ -20,6 +20,8 @@ public class Inventory implements ISidedInventory {
     boolean playerCanUse;
     boolean localized = true;
 
+    boolean hasLoaded = false;
+
     public Inventory(int inventorySize, String inventoryName) {
         this(inventorySize, inventoryName, true);
     }
@@ -35,6 +37,11 @@ public class Inventory implements ISidedInventory {
         storedStacks = new HashMap<Integer, ItemStack>(inventorySize);
         this.inventoryName = inventoryName;
         playerCanUse = useableByPlayer;
+    }
+
+    public boolean hasLoaded() {
+
+        return hasLoaded;
     }
 
     public Map<Integer, ItemStack> getItemArray() {
@@ -159,6 +166,7 @@ public class Inventory implements ISidedInventory {
     public void load(NBTTagCompound tag) {
 
         storedStacks = new HashMap<Integer, ItemStack>(tag.getInteger("SizeInventory"));
+        hasLoaded = true;
 
         for (int currentItem = 0; currentItem < storedStacks.size(); currentItem++) {
 

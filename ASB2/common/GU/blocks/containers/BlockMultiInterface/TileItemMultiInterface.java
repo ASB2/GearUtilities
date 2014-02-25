@@ -75,13 +75,12 @@ public class TileItemMultiInterface extends TileMultiBase implements IInventory 
 
                 if (size > 0) {
 
-                    lastSlotMin++;
                     this.inventorise.put(new SlotHolder(lastSlotMin, ((IInventory) multi).getSizeInventory() + lastSlotMin), multi);
                     lastSlotMin += ((IInventory) multi).getSizeInventory();
                 }
             }
-            maxSizeInventory = lastSlotMin;
         }
+        maxSizeInventory = lastSlotMin;
     }
 
     public IInventory redirectSlot(int slot) {
