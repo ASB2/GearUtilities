@@ -34,33 +34,6 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
         init();
     }
 
-    public boolean isStructureValid() {
-
-        if (this.getSize().getXSize() < 2 || this.getSize().getYSize() < 2 || this.getSize().getZSize() < 2) {
-
-            return false;
-        }
-
-        for (Vector3 vector : centerBlocks.getComposingBlock()) {
-
-            if (!UtilBlock.isBlockAir(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
-
-                return false;
-            }
-        }
-
-        for (Vector3 vector : size.getEdges()) {
-
-            Block block = vector.getBlock(getWorldObj());
-
-            if (block == null || (!block.isOpaqueCube() && !(block instanceof ISpecialMultiBlockOpaque && ((ISpecialMultiBlockOpaque) block).isTrueOpaqueCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())))) {
-
-                return false;
-            }
-        }
-        return super.isStructureValid();
-    }
-
     @Override
     protected void init() {
 

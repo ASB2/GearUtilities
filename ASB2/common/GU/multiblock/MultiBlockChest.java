@@ -1,16 +1,13 @@
 package GU.multiblock;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import ASB2.utils.UtilBlock;
 import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
-import GU.api.multiblock.ISpecialMultiBlockOpaque;
 import GU.api.multiblock.MultiBlockBase;
 import GU.blocks.containers.BlockSpacialProvider.TileChestSpacialProvider;
 import GU.info.Variables;
@@ -28,33 +25,6 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
     public MultiBlockChest(World world) {
         super(world);
         // TODO Auto-generated constructor stub
-    }
-
-    public boolean isStructureValid() {
-
-        if (this.getSize().getXSize() < 2 || this.getSize().getYSize() < 2 || this.getSize().getZSize() < 2) {
-
-            return false;
-        }
-
-        for (Vector3 vector : centerBlocks.getComposingBlock()) {
-
-            if (!UtilBlock.isBlockAir(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
-
-                return false;
-            }
-        }
-
-        for (Vector3 vector : size.getEdges()) {
-
-            Block block = vector.getBlock(getWorldObj());
-
-            if (block == null || (!block.isOpaqueCube() && !(block instanceof ISpecialMultiBlockOpaque && ((ISpecialMultiBlockOpaque) block).isTrueOpaqueCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())))) {
-
-                return false;
-            }
-        }
-        return super.isStructureValid();
     }
 
     @Override

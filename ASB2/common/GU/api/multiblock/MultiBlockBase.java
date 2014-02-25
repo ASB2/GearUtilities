@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.ICuboidIterator;
@@ -45,11 +46,14 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
         // return false;
         // }
 
-        for (Vector3 vector : size.getCornerBlocks()) {
+        if (this.getSize().getXSize() < 2 || this.getSize().getYSize() < 2 || this.getSize().getZSize() < 2) {
 
-            TileEntity tile = vector.getTileEntity(worldObj);
+            return false;
+        }
 
-            if (tile == null || !(tile instanceof IMultiBlockCore) || !isValidCore(vector, tile)) {
+        for (Vector3 vector : centerBlocks.getComposingBlock()) {
+
+            if (!UtilBlock.isBlockAir(this.getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
 
                 return false;
             }
@@ -59,7 +63,17 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
 
             Block block = vector.getBlock(getWorldObj());
 
-            if (block == null || !block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
+            if (block == null || (!block.isOpaqueCube() && !(block instanceof ISpecialMultiBlockOpaque && ((ISpecialMultiBlockOpaque) block).isTrueOpaqueCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())))) {
+
+                return false;
+            }
+        }
+
+        for (Vector3 vector : size.getCornerBlocks()) {
+
+            TileEntity tile = vector.getTileEntity(worldObj);
+
+            if (tile == null || !(tile instanceof IMultiBlockCore) || !isValidCore(vector, tile)) {
 
                 return false;
             }
