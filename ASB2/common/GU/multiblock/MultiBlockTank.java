@@ -1,6 +1,5 @@
 package GU.multiblock;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -12,11 +11,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
-import GU.api.multiblock.ISpecialMultiBlockOpaque;
 import GU.api.multiblock.MultiBlockBase;
 import GU.blocks.containers.BlockSpacialProvider.TileFluidSpacialProvider;
 import GU.info.Variables;
