@@ -86,11 +86,11 @@ public class FlameFocusRenderer implements IItemRenderer {
         GL11.glPopMatrix();
 
         color.darker().darker().darker().darker().darker().darker();
-        GL11.glColor3d(1,1,1);
+        GL11.glColor3d(1, 1, 1);
         GL11.glPushMatrix();
         GL11.glRotatef(-Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 1F, 1F, 1F);
         UtilRender.renderTexture(Textures.FLAME_FOCUS_HEXAGON);
-//         GL11.glColor3d(color.getRed(), color.getGreen(), color.getBlue());
+        // GL11.glColor3d(color.getRed(), color.getGreen(), color.getBlue());
         // BufferedImageTest.bindImage();
         Models.ModelFlameFocus.renderPart("Hexagon");
         GL11.glPopMatrix();
