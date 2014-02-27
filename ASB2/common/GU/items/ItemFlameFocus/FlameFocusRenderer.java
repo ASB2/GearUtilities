@@ -1,5 +1,7 @@
 package GU.items.ItemFlameFocus;
 
+import java.awt.Color;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
@@ -8,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilRender;
+import GU.api.flame.EnumFlameType;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
@@ -65,12 +68,7 @@ public class FlameFocusRenderer implements IItemRenderer {
 
     private void renderItemSwitched(ItemStack item, ItemRenderType type, float x, float y, float z, float scale) {
 
-        
-        float r = UtilItemStack.getNBTTagFloat(item, "red"), g = UtilItemStack.getNBTTagFloat(item, "green"), b = UtilItemStack.getNBTTagFloat(item, "blue");
-
-        r = 255f;
-        g = 0;
-        b = 0;
+        Color color = EnumFlameType.values()[UtilItemStack.getNBTTagInt(item, "Flame")].getFlameColor();
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -79,32 +77,26 @@ public class FlameFocusRenderer implements IItemRenderer {
         GL11.glScalef(scale, scale, scale);
 
         GL11.glPushMatrix();
-        GL11.glRotatef(-Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 1F, 1F, 1F);
-        // UtilRender.renderTexture(Textures.FLAME_FOCUS_HEXAGON);
-        GL11.glColor3d(r, g, b);
-        BufferedImageTest.bindImage();
-        Models.ModelFlameFocus.renderPart("Hexagon");
-        GL11.glPopMatrix();
-
-        r = 0;
-        g = 128;
-        b = 255;
-
-        GL11.glPushMatrix();
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 1F, 1, 1F);
         // UtilRender.renderTexture(Textures.FLAME_FOCUS_CUBE);
 
-        GL11.glColor3d(r, g, b);
+        GL11.glColor3f(color.getRed(), color.getGreen(), color.getBlue());
         BufferedImageTest.bindImage();
         Models.ModelFlameFocus.renderPart("Cube");
         GL11.glPopMatrix();
 
-        GL11.glEnable(GL11.GL_LIGHTING);
+        color.darker().darker().darker().darker().darker().darker();
+        GL11.glColor3d(1,1,1);
+        GL11.glPushMatrix();
+        GL11.glRotatef(-Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 1F, 1F, 1F);
+        UtilRender.renderTexture(Textures.FLAME_FOCUS_HEXAGON);
+//         GL11.glColor3d(color.getRed(), color.getGreen(), color.getBlue());
+        // BufferedImageTest.bindImage();
+        Models.ModelFlameFocus.renderPart("Hexagon");
         GL11.glPopMatrix();
 
-        UtilItemStack.setNBTTagFloat(item, "red", r);
-        UtilItemStack.setNBTTagFloat(item, "green", g);
-        UtilItemStack.setNBTTagFloat(item, "blue", b);
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glPopMatrix();
     }
 
 }
