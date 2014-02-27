@@ -24,7 +24,6 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
 
     public MultiBlockChest(World world) {
         super(world);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -33,7 +32,7 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
         isValid = true;
         centerBlocks = this.getSize().squareShrink(2, 2, 2);
 
-        if (multiInventory.hasLoaded()) {
+        if (!multiInventory.hasLoaded()) {
 
             if (Variables.COUNT_JUST_MULTI_CHEST_AIR_BLOCKS) {
 
@@ -53,14 +52,14 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
     @Override
     public NBTTagCompound save(NBTTagCompound tag) {
 
-        multiInventory.save(tag);
+        tag.setCompoundTag("Inventory", multiInventory.save(new NBTTagCompound()));
         return super.save(tag);
     }
 
     @Override
     public void load(NBTTagCompound tag) {
 
-        multiInventory.load(tag);
+        multiInventory.load(tag.getCompoundTag("Inventory"));
         super.load(tag);
     }
 

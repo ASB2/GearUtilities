@@ -150,32 +150,33 @@ public class Inventory implements ISidedInventory {
 
     public NBTTagCompound save(NBTTagCompound tag) {
 
-        for (int objectsIterator = 0; objectsIterator < storedStacks.size(); objectsIterator++) {
+        int slots = 0;
 
-            ItemStack stack = storedStacks.get(objectsIterator);
+        for (ItemStack stack : storedStacks.values()) {
+
+            slots++;
 
             if (stack != null) {
 
-                tag.setCompoundTag("Slot" + objectsIterator, stack.writeToNBT(new NBTTagCompound()));
+                tag.setCompoundTag("Slot: " + slots, stack.writeToNBT(new NBTTagCompound()));
             }
         }
-        tag.setInteger("SizeInventory", storedStacks.size());
+        tag.setInteger("SizeInventory", slots);
         return tag;
     }
 
     public void load(NBTTagCompound tag) {
 
-        storedStacks = new HashMap<Integer, ItemStack>(tag.getInteger("SizeInventory"));
         hasLoaded = true;
+        this.inventorySize = tag.getInteger("SizeInventory");
 
-        for (int currentItem = 0; currentItem < storedStacks.size(); currentItem++) {
+        storedStacks = new HashMap<Integer, ItemStack>();
 
-            ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Slot" + currentItem));
+        for (int currentItem = 0; currentItem < inventorySize; currentItem++) {
 
-            if (stack != null) {
+            ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Slot: " + currentItem));
 
-                storedStacks.put(currentItem, stack);
-            }
+            storedStacks.put(currentItem, stack);
         }
     }
 
