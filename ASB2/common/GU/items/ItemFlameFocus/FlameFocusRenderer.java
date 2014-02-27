@@ -80,7 +80,7 @@ public class FlameFocusRenderer implements IItemRenderer {
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 1F, 1, 1F);
         // UtilRender.renderTexture(Textures.FLAME_FOCUS_CUBE);
 
-        GL11.glColor3f(color.getRed(), color.getGreen(), color.getBlue());
+        GL11.glColor3f(color.getRed()/255.0f, color.getGreen()/255.0f, color.getBlue()/255.0f);
         BufferedImageTest.bindImage();
         Models.ModelFlameFocus.renderPart("Cube");
         GL11.glPopMatrix();

@@ -62,7 +62,7 @@ public enum EnumFlameType {
             }
 
             case SUN: {
-                return new Color(255, 10, 0);
+                return new Color(255, 150, 0);
             }
 
             case SKY: {
@@ -82,11 +82,11 @@ public enum EnumFlameType {
             }
 
             case MIST: {
-                return new Color(143, 0, 255);
+                return new Color(143, 0, 255).brighter();
             }
 
             case DARK: {
-                return Color.BLACK;
+                return Color.DARK_GRAY;
             }
 
             case LIGHT: {
