@@ -18,6 +18,8 @@ import GU.blocks.containers.BlockFlameAltar.FlameAltarRenderer;
 import GU.blocks.containers.BlockFlameAltar.TileFlameAltar;
 import GU.blocks.containers.BlockFlameConduit.FlameConduitRenderer;
 import GU.blocks.containers.BlockFlameConduit.TileFlameConduit;
+import GU.blocks.containers.BlockGlassPipe.GlassPipeRenderer;
+import GU.blocks.containers.BlockGlassPipe.TileGlassPipe;
 import GU.blocks.containers.BlockMultiPanel.GuiMultiPanel;
 import GU.blocks.containers.BlockMultiPanel.MultiPanelRenderer;
 import GU.blocks.containers.BlockMultiPanel.TileMultiPanel;
@@ -75,6 +77,9 @@ public class ClientProxy extends CommonProxy {
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileFlameConduit.class, FlameConduitRenderer.instance);
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockFlameConduit.blockID, FlameConduitRenderer.instance);
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileGlassPipe.class, new GlassPipeRenderer());
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockGlassPipe.blockID, new GlassPipeRenderer());
         
         TickRegistry.registerTickHandler(new NoiseRenderer(), Side.CLIENT);
     }

@@ -9,11 +9,9 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilItemStack;
-import ASB2.utils.UtilRender;
 import GU.api.flame.EnumFlameType;
 import GU.info.Models;
 import GU.info.Reference;
-import GU.info.Textures;
 import GU.render.BufferedImageTest;
 
 public class FlameFocusRenderer implements IItemRenderer {

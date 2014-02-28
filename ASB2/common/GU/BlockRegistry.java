@@ -18,6 +18,7 @@ import GU.blocks.containers.BlockEssenceDiffuser.BlockEssenceDiffuser;
 import GU.blocks.containers.BlockFlameAltar.BlockFlameAltar;
 import GU.blocks.containers.BlockFlameConduit.BlockFlameConduit;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
+import GU.blocks.containers.BlockGlassPipe.BlockGlassPipe;
 import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
 import GU.blocks.containers.BlockMultiPanel.BlockMultiPanel;
 import GU.blocks.containers.BlockMultiPanel.ItemBlockMultiPanel;
@@ -55,7 +56,8 @@ public class BlockRegistry {
     public static ContainerBase BlockReplacementStructureCube;
     public static ContainerBase BlockFlameAltar;
     public static ContainerBase BlockFlameConduit;
-
+    public static ContainerBase BlockGlassPipe;
+    
     private static int id = 500;
 
     public static void init(Configuration config) {
@@ -126,6 +128,9 @@ public class BlockRegistry {
 
         BlockFlameConduit = new BlockFlameConduit(BlockRegistry.getConfigID(config, "BlockFlameConduit"), Material.rock);
         addBlock(BlockFlameConduit, "Flame Conduit", "BlockFlameConduit");
+    
+        BlockGlassPipe = new BlockGlassPipe(BlockRegistry.getConfigID(config, "BlockGlassPipe"), Material.rock);
+        addBlock(BlockGlassPipe, "Glass Pipe", "BlockGlassPipe");
     }
 
     public static Block addBlock(Block block, String ign, String unlocalizedName) {

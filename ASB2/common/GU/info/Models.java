@@ -12,6 +12,8 @@ public final class Models {
     public static WavefrontObject ModelElementalRefinery;
     public static WavefrontObject ModelFlameFocus;
     public static WavefrontObject ModelFlameAltar;
+    public static WavefrontObject ModelGlassPipe;
+    public static WavefrontObject ModelGyro;
 
     private static final String MULTI_PANEL = Reference.RESOURCE_LOCATION + "models/ModelMultiPanel.obj";
     private static final String CRYSTAL_1 = Reference.RESOURCE_LOCATION + "models/ModelCrystal1.obj";
@@ -20,6 +22,8 @@ public final class Models {
     private static final String ELEMENTAL_REFINERY = Reference.RESOURCE_LOCATION + "models/ModelElementalRefinery.obj";
     private static final String FLAME_FOCUS = Reference.RESOURCE_LOCATION + "models/ModelFlameFocus.obj";
     private static final String FLAME_ALTAR = Reference.RESOURCE_LOCATION + "models/ModelFlameAltar.obj";
+    public static final String GLASS_PIPE = Reference.RESOURCE_LOCATION + "models/ModelGlassPipe.obj";
+    public static final String GYRO = Reference.RESOURCE_LOCATION + "models/ModelGyro.obj";
 
     public static void initModels() {
 
@@ -30,5 +34,7 @@ public final class Models {
         ModelElementalRefinery = (WavefrontObject) AdvancedModelLoader.loadModel(Models.ELEMENTAL_REFINERY);
         ModelFlameFocus = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_FOCUS);
         ModelFlameAltar = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_ALTAR);
+        ModelGlassPipe = (WavefrontObject) AdvancedModelLoader.loadModel(Models.GLASS_PIPE);
+        ModelGyro = (WavefrontObject) AdvancedModelLoader.loadModel(Models.GYRO);
     }
 }
