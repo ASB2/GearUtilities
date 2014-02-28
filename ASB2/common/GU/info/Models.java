@@ -11,6 +11,7 @@ public final class Models {
     public static WavefrontObject ModelCentrifgue;
     public static WavefrontObject ModelElementalRefinery;
     public static WavefrontObject ModelFlameFocus;
+    public static WavefrontObject ModelFlameAltar;
 
     private static final String MULTI_PANEL = Reference.RESOURCE_LOCATION + "models/ModelMultiPanel.obj";
     private static final String CRYSTAL_1 = Reference.RESOURCE_LOCATION + "models/ModelCrystal1.obj";
@@ -18,6 +19,7 @@ public final class Models {
     private static final String CENTRIFUGE = Reference.RESOURCE_LOCATION + "models/ModelCentrifuge.obj";
     private static final String ELEMENTAL_REFINERY = Reference.RESOURCE_LOCATION + "models/ModelElementalRefinery.obj";
     private static final String FLAME_FOCUS = Reference.RESOURCE_LOCATION + "models/ModelFlameFocus.obj";
+    private static final String FLAME_ALTAR = Reference.RESOURCE_LOCATION + "models/ModelFlameAltar.obj";
 
     public static void initModels() {
 
@@ -27,5 +29,6 @@ public final class Models {
         ModelCentrifgue = (WavefrontObject) AdvancedModelLoader.loadModel(Models.CENTRIFUGE);
         ModelElementalRefinery = (WavefrontObject) AdvancedModelLoader.loadModel(Models.ELEMENTAL_REFINERY);
         ModelFlameFocus = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_FOCUS);
+        ModelFlameAltar = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_ALTAR);
     }
 }

@@ -18,6 +18,8 @@ public class BufferedImageTest {
     
     public static BufferedImage image = null;
     
+    int[][] imageArray;
+    
     public static DynamicTexture textureImage;
     
     public static ResourceLocation textureLocation = new ResourceLocation(Reference.MODDID + ":textures/LargeBlankTexture.png");

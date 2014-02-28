@@ -1,8 +1,10 @@
 package GU.blocks.containers.BlockStructureCube;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -17,6 +19,12 @@ public class BlockStructureAir extends ContainerBase {
         super(id, material);
         this.useStandardRendering = false;
         this.registerTile(TileStuctureAir.class);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) {
+
     }
 
     @Override

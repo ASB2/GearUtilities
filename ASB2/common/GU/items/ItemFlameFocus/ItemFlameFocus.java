@@ -23,35 +23,11 @@ public class ItemFlameFocus extends ItemBase {
 
         ItemStack stack = new ItemStack(this);
 
-        UtilItemStack.setNBTTagInt(stack, "Flame", EnumFlameType.STORM.ordinal());
-        list.add(stack.copy());
+        for (EnumFlameType type : EnumFlameType.values()) {
 
-        UtilItemStack.setNBTTagInt(stack, "Flame", EnumFlameType.SUN.ordinal());
-        list.add(stack.copy());
-
-        UtilItemStack.setNBTTagInt(stack, "Flame", EnumFlameType.SKY.ordinal());
-        list.add(stack.copy());
-
-        UtilItemStack.setNBTTagInt(stack, "Flame", EnumFlameType.LIGHTNING.ordinal());
-        list.add(stack.copy());
-
-        UtilItemStack.setNBTTagInt(stack, "Flame", EnumFlameType.RAIN.ordinal());
-        list.add(stack.copy());
-
-        UtilItemStack.setNBTTagInt(stack, "Flame", EnumFlameType.CLOUD.ordinal());
-        list.add(stack.copy());
-
-        UtilItemStack.setNBTTagInt(stack, "Flame", EnumFlameType.MIST.ordinal());
-        list.add(stack.copy());
-
-        UtilItemStack.setNBTTagInt(stack, "Flame", EnumFlameType.DARK.ordinal());
-        list.add(stack.copy());
-
-        UtilItemStack.setNBTTagInt(stack, "Flame", EnumFlameType.LIGHT.ordinal());
-        list.add(stack.copy());
-
-        UtilItemStack.setNBTTagInt(stack, "Flame", EnumFlameType.UNTYPED.ordinal());
-        list.add(stack.copy());
+            UtilItemStack.setNBTTagInt(stack, "Flame", type.ordinal());
+            list.add(stack.copy());
+        }
     }
 
     @Override
@@ -59,19 +35,21 @@ public class ItemFlameFocus extends ItemBase {
     public void addInformationSneaking(ItemStack itemStack, EntityPlayer player, java.util.List info, boolean var1) {
         super.addInformationSneaking(itemStack, player, info, var1);
 
-        info.add("Flame Type: " + EnumFlameType.values()[UtilItemStack.getNBTTagInt(itemStack, "Flame")]);
+        info.add("Flame Type: " + EnumFlameType.values()[UtilItemStack.getNBTTagInt(itemStack, "Flame")].getIGN());
     }
 
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz) {
 
-        // if (player.isSneaking()) {
-        // if (player.capabilities.isCreativeMode) {
-        //
-        // this.getPowerProvider(itemStack).setPowerStored(this.getPowerProvider(itemStack).getPowerMax());
-        // return true;
-        // }
-        // }
-        return false;
+        int flame = UtilItemStack.getNBTTagInt(itemStack, "Flame");
+
+        if (flame < EnumFlameType.values().length - 1) {
+
+            UtilItemStack.setNBTTagInt(itemStack, "Flame", flame + 1);
+        } else {
+
+            UtilItemStack.setNBTTagInt(itemStack, "Flame", EnumFlameType.STORM.ordinal());
+        }
+        return true;
     }
 }

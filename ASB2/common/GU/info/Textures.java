@@ -34,4 +34,7 @@ public final class Textures {
 
     public static final ResourceLocation FLAME_FOCUS_CUBE = new ResourceLocation(Reference.MODDID + ":textures/models/ModelFlameFocus/ModelFlameFocusCube.png");
     public static final ResourceLocation FLAME_FOCUS_HEXAGON = new ResourceLocation(Reference.MODDID + ":textures/models/ModelFlameFocus/ModelFlameFocusHexagon.png");
+
+    public static final ResourceLocation FLAME_ALTAR_CUBE = new ResourceLocation(Reference.MODDID + ":textures/models/ModelFlameAltar/ModelFlameAltarBase.png");
+    public static final ResourceLocation FLAME_ALTAR_HEXAGON = new ResourceLocation(Reference.MODDID + ":textures/models/ModelFlameAltar/ModelFlameAltarHexagon.png");
 }

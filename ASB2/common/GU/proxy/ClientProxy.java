@@ -14,6 +14,10 @@ import GU.blocks.containers.BlockElementalRefinery.ElementalRefineryRenderer;
 import GU.blocks.containers.BlockElementalRefinery.TileElementalRefinery;
 import GU.blocks.containers.BlockEssenceDiffuser.EssenceDiffuserRenderer;
 import GU.blocks.containers.BlockEssenceDiffuser.TileEssenceDiffuser;
+import GU.blocks.containers.BlockFlameAltar.FlameAltarRenderer;
+import GU.blocks.containers.BlockFlameAltar.TileFlameAltar;
+import GU.blocks.containers.BlockFlameConduit.FlameConduitRenderer;
+import GU.blocks.containers.BlockFlameConduit.TileFlameConduit;
 import GU.blocks.containers.BlockMultiPanel.GuiMultiPanel;
 import GU.blocks.containers.BlockMultiPanel.MultiPanelRenderer;
 import GU.blocks.containers.BlockMultiPanel.TileMultiPanel;
@@ -66,6 +70,12 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileSpacialProvider.class, SpacialProviderRenderer.instance);
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSpacialProvider.blockID, SpacialProviderRenderer.instance);
 
+        ClientRegistry.bindTileEntitySpecialRenderer(TileFlameAltar.class, FlameAltarRenderer.instance);
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockFlameAltar.blockID, FlameAltarRenderer.instance);
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileFlameConduit.class, FlameConduitRenderer.instance);
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockFlameConduit.blockID, FlameConduitRenderer.instance);
+        
         TickRegistry.registerTickHandler(new NoiseRenderer(), Side.CLIENT);
     }
 

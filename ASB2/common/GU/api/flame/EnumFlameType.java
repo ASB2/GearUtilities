@@ -90,7 +90,7 @@ public enum EnumFlameType {
             }
 
             case LIGHT: {
-                return Color.LIGHT_GRAY;
+                return Color.LIGHT_GRAY.darker();
             }
 
             case UNTYPED: {

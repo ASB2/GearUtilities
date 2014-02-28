@@ -15,6 +15,8 @@ import GU.blocks.containers.BlockCentrifuge.BlockCentrifuge;
 import GU.blocks.containers.BlockElementalRefinery.BlockElementalRefinery;
 import GU.blocks.containers.BlockEnhancedBricks.BlockEnhancedBricks;
 import GU.blocks.containers.BlockEssenceDiffuser.BlockEssenceDiffuser;
+import GU.blocks.containers.BlockFlameAltar.BlockFlameAltar;
+import GU.blocks.containers.BlockFlameConduit.BlockFlameConduit;
 import GU.blocks.containers.BlockFluidProvider.BlockFluidProvider;
 import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
 import GU.blocks.containers.BlockMultiPanel.BlockMultiPanel;
@@ -51,7 +53,9 @@ public class BlockRegistry {
     public static BlockMultiInterface BlockMultiInterface;
     public static ContainerBase BlockStructureAir;
     public static ContainerBase BlockReplacementStructureCube;
-    
+    public static ContainerBase BlockFlameAltar;
+    public static ContainerBase BlockFlameConduit;
+
     private static int id = 500;
 
     public static void init(Configuration config) {
@@ -113,9 +117,15 @@ public class BlockRegistry {
 
         BlockStructureAir = new BlockStructureAir(BlockRegistry.getConfigID(config, "BlockStructureAir"), Material.air);
         addBlock(BlockStructureAir, "Structure Air", "BlockStructureAir");
-        
+
         BlockReplacementStructureCube = new BlockReplacementStructureCube(BlockRegistry.getConfigID(config, "BlockReplacementStructureCube"), Material.rock);
         addBlock(BlockReplacementStructureCube, "Replacement Structure Cube", "BlockReplacementStructureCube");
+
+        BlockFlameAltar = new BlockFlameAltar(BlockRegistry.getConfigID(config, "BlockFlameAltar"), Material.rock);
+        addBlock(BlockFlameAltar, "Flame Altar", "BlockFlameAltar");
+
+        BlockFlameConduit = new BlockFlameConduit(BlockRegistry.getConfigID(config, "BlockFlameConduit"), Material.rock);
+        addBlock(BlockFlameConduit, "Flame Conduit", "BlockFlameConduit");
     }
 
     public static Block addBlock(Block block, String ign, String unlocalizedName) {
