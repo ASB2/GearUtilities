@@ -1,6 +1,7 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
 import java.util.List;
+import java.util.Set;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -20,10 +21,10 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class BlockSpacialProvider extends ContainerBase {
 
-    public final ItemStack STANDARD_SPACIAL_PROVIDER = new ItemStack(this, 1, STANDARD), FLUID_SPACIAL_PROVIDER = new ItemStack(this, 1, FLUID), FURNACE_SPACIAL_PROVIDER = new ItemStack(this, 1, FURNACE), CHEST_SPACIAL_PROVIDER = new ItemStack(this, 1, CHEST);
-    public static final int STANDARD = 0, FLUID = 1, FURNACE = 2, CHEST = 3;
+    public final ItemStack STANDARD_SPACIAL_PROVIDER = new ItemStack(this, 1, STANDARD), FLUID_SPACIAL_PROVIDER = new ItemStack(this, 1, FLUID), FURNACE_SPACIAL_PROVIDER = new ItemStack(this, 1, FURNACE), CHEST_SPACIAL_PROVIDER = new ItemStack(this, 1, CHEST), FLAME_SPACIAL_PROVIDER = new ItemStack(this, 1, FLAME);;
+    public static final int STANDARD = 0, FLUID = 1, FURNACE = 2, CHEST = 3, FLAME = 4;
 
-    Icon standard, fluid, furnace, chest;
+    Icon standard, fluid, furnace, chest, flame;
 
     public BlockSpacialProvider(int id, Material material) {
         super(id, material);
@@ -34,6 +35,7 @@ public class BlockSpacialProvider extends ContainerBase {
         this.registerTile(TileFluidSpacialProvider.class);
         this.registerTile(TileFurnaceSpacialProvider.class);
         this.registerTile(TileChestSpacialProvider.class);
+        this.registerTile(TileFlameSpacialProvider.class);
 
         MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 1);
         GameRegistry.registerBlock(this, GUItemBlock.class, "BlockSpacialProvider");
@@ -42,6 +44,7 @@ public class BlockSpacialProvider extends ContainerBase {
         LanguageRegistry.addName(FLUID_SPACIAL_PROVIDER, this.getItemStackDisplayName(FLUID_SPACIAL_PROVIDER));
         LanguageRegistry.addName(FURNACE_SPACIAL_PROVIDER, this.getItemStackDisplayName(FURNACE_SPACIAL_PROVIDER));
         LanguageRegistry.addName(CHEST_SPACIAL_PROVIDER, this.getItemStackDisplayName(CHEST_SPACIAL_PROVIDER));
+        LanguageRegistry.addName(FLAME_SPACIAL_PROVIDER, this.getItemStackDisplayName(FLAME_SPACIAL_PROVIDER));
     }
 
     @Override
@@ -57,15 +60,17 @@ public class BlockSpacialProvider extends ContainerBase {
 
             TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
 
-            if (tile.getComprisedMultiBlocks().isEmpty()) {
+            Set<IMultiBlock> multiBlocks = tile.getComprisedMultiBlocks();
+
+            if (multiBlocks.isEmpty()) {
 
                 tile.createMultiBlock();
                 return true;
             } else {
 
-                for (IMultiBlock multi : tile.getComprisedMultiBlocks()) {
+                for (IMultiBlock multi : multiBlocks) {
 
-                    multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+                    multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ, multiBlocks.size() == 1);
                 }
                 return true;
             }
@@ -76,10 +81,11 @@ public class BlockSpacialProvider extends ContainerBase {
     @Override
     public void registerIcons(IconRegister iconRegister) {
         super.registerIcons(iconRegister);
-        standard = iconRegister.registerIcon(Reference.MODDID + ":BlockStandardSpecialProvider");
-        fluid = iconRegister.registerIcon(Reference.MODDID + ":BlockFluidSpecialProvider");
-        furnace = iconRegister.registerIcon(Reference.MODDID + ":BlockFurnaceSpecialProvider");
-        chest = iconRegister.registerIcon(Reference.MODDID + ":BlockChestSpecialProvider");
+        standard = iconRegister.registerIcon(Reference.MODDID + ":BlockStandardSpacialProvider");
+        fluid = iconRegister.registerIcon(Reference.MODDID + ":BlockFluidSpacialProvider");
+        furnace = iconRegister.registerIcon(Reference.MODDID + ":BlockFurnaceSpacialProvider");
+        chest = iconRegister.registerIcon(Reference.MODDID + ":BlockChestSpacialProvider");
+        flame = iconRegister.registerIcon(Reference.MODDID + ":BlockFlameSpacialProvider");
     }
 
     @Override
@@ -95,6 +101,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return furnace;
             case CHEST:
                 return chest;
+            case FLAME:
+                return flame;
             default:
                 return super.getIcon(side, metadata);
         }
@@ -108,6 +116,7 @@ public class BlockSpacialProvider extends ContainerBase {
         list.add(new ItemStack(this, 1, FLUID));
         list.add(new ItemStack(this, 1, FURNACE));
         list.add(new ItemStack(this, 1, CHEST));
+        list.add(new ItemStack(this, 1, FLAME));
     }
 
     @Override
@@ -123,6 +132,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return "Furnace Spacial Provider";
             case CHEST:
                 return "Chest Spacial Provider";
+            case FLAME:
+                return "Flame Spacial Provider";
         }
         return "";
     }
@@ -140,6 +151,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return "BlockFurnaceSpacialProvider";
             case CHEST:
                 return "BlockChestSpacialProvider";
+            case FLAME:
+                return "BlockFlameSpacialProvider";
         }
         return "";
     }
@@ -157,6 +170,8 @@ public class BlockSpacialProvider extends ContainerBase {
                 return new TileFurnaceSpacialProvider();
             case CHEST:
                 return new TileChestSpacialProvider();
+            case FLAME:
+                return new TileFlameSpacialProvider();
         }
         return null;
     }

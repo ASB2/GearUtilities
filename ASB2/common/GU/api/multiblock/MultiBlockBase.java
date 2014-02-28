@@ -331,9 +331,15 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ, boolean hi) {
 
         UtilEntity.sendChatToPlayer(player, "Cuboid Size: " + this.size);
         return false;
+    }
+
+    @Override
+    public void update() {
+        // TODO Auto-generated method stub
+        
     }
 }

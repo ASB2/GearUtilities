@@ -3,7 +3,6 @@ package GU.blocks.containers.BlockSpacialProvider;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.utils.UtilEntity;
@@ -15,20 +14,7 @@ import GU.multiblock.MultiBlockTank;
 
 public class TileFluidSpacialProvider extends TileSpacialProvider {
 
-    NBTTagCompound bufferedTankData;
     public Set<MultiBlockTank> fluidMultiBlock = new HashSet<MultiBlockTank>();
-
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-
-        if (hasBufferedCreateMultiBlock) {
-
-            this.createMultiBlock(true);
-            hasBufferedCreateMultiBlock = false;
-            bufferedTankData = null;
-        }
-    }
 
     @Override
     public boolean addMultiBlock(IMultiBlock multiBlock) {
@@ -89,39 +75,10 @@ public class TileFluidSpacialProvider extends TileSpacialProvider {
             tank.load(bufferedTankData);
 
             if (tank.isStructureValid()) {
-                
+
                 return tank.create();
             }
             return false;
-        }
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound tag) {
-        super.writeToNBT(tag);
-
-        if (!this.getComprisedMultiBlocks().isEmpty()) {
-
-            for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
-
-                if (new Vector3(this).intEquals(multi.getSize().getCore())) {
-
-                    tag.setCompoundTag("multiBlockSave", multi.save(new NBTTagCompound()));
-                }
-            }
-            tag.setBoolean("isInMultiBlock", isInMultiBlock);
-        }
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound tag) {
-        super.readFromNBT(tag);
-
-        hasBufferedCreateMultiBlock = tag.getBoolean("isInMultiBlock");
-
-        if (hasBufferedCreateMultiBlock) {
-
-            bufferedTankData = tag.getCompoundTag("multiBlockSave");
         }
     }
 }

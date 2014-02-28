@@ -124,14 +124,14 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ, boolean isAlone) {
 
         if (this.isValid) {
             // UtilEntity.sendChatToPlayer(player, "Fluid: " +
             // this.fluidTank.getFluid() != null ?
             // this.fluidTank.getFluid().getFluid() != null ?
             // this.fluidTank.getFluid().getFluid().getName() : "null" : "null");
-            UtilEntity.sendChatToPlayer(player, this.size.toString());
+
             UtilEntity.sendChatToPlayer(player, "Fluid Amount: " + this.fluidTank.getFluidAmount() + " / " + fluidTank.getCapacity());
         } else {
             UtilEntity.sendChatToPlayer(player, "Fix me idiot");

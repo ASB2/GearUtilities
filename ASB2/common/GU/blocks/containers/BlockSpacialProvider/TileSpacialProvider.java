@@ -2,12 +2,14 @@ package GU.blocks.containers.BlockSpacialProvider;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import ASB2.vector.Vector3;
 import GU.EnumState;
+import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockCore;
 import GU.api.multiblock.ISpecialTileMultiBlock;
 import GU.blocks.containers.TileMultiBase;
@@ -16,6 +18,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
 
     public static final int MAX_DISTANCE = 16;
     protected boolean hasBufferedCreateMultiBlock = false;
+    protected NBTTagCompound bufferedTankData;
 
     public TileSpacialProvider() {
 
@@ -25,23 +28,14 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
 
     @Override
     public void updateEntity() {
+        super.updateEntity();
 
-        // int metadata = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-        //
-        // if (metadata == 0 && !(this.getClass() == TileSpacialProvider.class)) {
-        // worldObj.setBlockTileEntity(xCoord, yCoord, zCoord, new TileSpacialProvider());
-        // return;
-        // }
-        //
-        // if (metadata == 1 && !(this.getClass() == TileFluidSpacialProvider.class)) {
-        // worldObj.setBlockTileEntity(xCoord, yCoord, zCoord, new TileFluidSpacialProvider());
-        // return;
-        // }
-        //
-        // if (metadata == 2 && !(this.getClass() == TileFurnaceSpacialProvider.class)) {
-        // worldObj.setBlockTileEntity(xCoord, yCoord, zCoord, new TileFurnaceSpacialProvider());
-        // return;
-        // }
+        if (hasBufferedCreateMultiBlock) {
+
+            this.createMultiBlock(true);
+            hasBufferedCreateMultiBlock = false;
+            bufferedTankData = null;
+        }
     }
 
     @SuppressWarnings("unused")
@@ -187,5 +181,34 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     public boolean createMultiBlock(boolean hasStructure) {
 
         return false;
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound tag) {
+        super.writeToNBT(tag);
+
+        if (!this.getComprisedMultiBlocks().isEmpty()) {
+
+            for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
+
+                if (new Vector3(this).intEquals(multi.getSize().getCore())) {
+
+                    tag.setCompoundTag("multiBlockSave", multi.save(new NBTTagCompound()));
+                }
+            }
+            tag.setBoolean("isInMultiBlock", isInMultiBlock);
+        }
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag) {
+        super.readFromNBT(tag);
+
+        hasBufferedCreateMultiBlock = tag.getBoolean("isInMultiBlock");
+
+        if (hasBufferedCreateMultiBlock) {
+
+            bufferedTankData = tag.getCompoundTag("multiBlockSave");
+        }
     }
 }

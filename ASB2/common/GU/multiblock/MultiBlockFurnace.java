@@ -13,7 +13,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
 import GU.api.multiblock.MultiBlockBase;
@@ -100,12 +99,6 @@ public class MultiBlockFurnace extends MultiBlockBase implements ISidedInventory
     public void init() {
 
         fluidTank.setCapacity((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1) * 1000);
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        UtilEntity.sendChatToPlayer(player, this.size.toString());
-        return false;
     }
 
     @Override

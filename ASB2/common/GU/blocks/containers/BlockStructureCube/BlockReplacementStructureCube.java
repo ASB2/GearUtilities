@@ -49,14 +49,9 @@ public class BlockReplacementStructureCube extends ContainerBase implements ISpe
 
             if (!multiBlocks.isEmpty()) {
 
-                if (multiBlocks.size() == 1) {
-
-                    return multiBlocks.iterator().next().onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
-                }
-
                 for (IMultiBlock multi : multiBlocks) {
 
-                    multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+                    multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ, multiBlocks.size() == 1);
                 }
                 return true;
             }

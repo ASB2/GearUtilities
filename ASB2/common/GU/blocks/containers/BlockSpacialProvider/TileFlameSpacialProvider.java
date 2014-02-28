@@ -6,9 +6,13 @@ import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
 import GU.EnumState;
-import GU.multiblock.MultiBlockChest;
+import GU.multiblock.MultBlockFlameSource;
 
-public class TileChestSpacialProvider extends TileSpacialProvider {
+public class TileFlameSpacialProvider extends TileSpacialProvider {
+
+    public TileFlameSpacialProvider() {
+        // TODO Auto-generated constructor stub
+    }
 
     public boolean createMultiBlock() {
 
@@ -38,7 +42,7 @@ public class TileChestSpacialProvider extends TileSpacialProvider {
 
                 if (found > 0) {
 
-                    MultiBlockChest chest = new MultiBlockChest(worldObj, new Cuboid(new Vector3(xCoord, yCoord, zCoord), getMultiBlockXChange(), getMultiBlockYChange(), getMultiBlockZChange()));
+                    MultBlockFlameSource chest = new MultBlockFlameSource(worldObj, new Cuboid(new Vector3(xCoord, yCoord, zCoord), getMultiBlockXChange(), getMultiBlockYChange(), getMultiBlockZChange()));
 
                     boolean spaceValid = chest.isStructureValid();
                     UtilEntity.sendClientChat("Area Valid: " + spaceValid);
@@ -55,7 +59,7 @@ public class TileChestSpacialProvider extends TileSpacialProvider {
 
         } else {
 
-            MultiBlockChest chest = new MultiBlockChest(worldObj);
+            MultBlockFlameSource chest = new MultBlockFlameSource(worldObj);
             chest.load(bufferedTankData);
 
             if (chest.isStructureValid()) {
