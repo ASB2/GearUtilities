@@ -7,12 +7,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilRender;
+import ASB2.vector.Cuboid;
+import ASB2.vector.Vector3;
+import GU.BlockRegistry;
+import GU.info.Reference;
 import GU.multiblock.MultiBlockTank;
-import GU.*;
 
 public class SpacialProviderRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
@@ -28,13 +32,30 @@ public class SpacialProviderRenderer extends TileEntitySpecialRenderer implement
             Set<MultiBlockTank> multiBlocks = part.fluidMultiBlock;
 
             if (!multiBlocks.isEmpty()) {
+
                 GL11.glPushMatrix();
 
-                GL11.glTranslated(x, y + 1, z);
-                GL11.glEnable(2896);
-                 GL11.glDisable(2896);
-                UtilRender.renderCube(0, 0, 0, 1, 2, 1, BlockRegistry.BlockSpacialProvider, FluidRegistry.LAVA.getFlowingIcon(), 0);
-                 GL11.glEnable(2896);
+                for (MultiBlockTank multi : multiBlocks) {
+
+                    Cuboid size = multi.getSize();
+
+                    if (size.getCore().intEquals(new Vector3(tile))) {
+
+                        FluidStack fluid = multi.fluidTank.getFluid();
+
+                        if (fluid != null) {
+
+                            GL11.glTranslated(x, y + 1, z);
+                            UtilRender.renderCube(0, 0, 0, 1, 1, 1, BlockRegistry.BlockSpacialProvider, fluid.getFluid().getFlowingIcon(), 0, Reference.BRIGHT_BLOCK);
+
+                        } else {
+
+                            GL11.glTranslated(x, y + 1, z);
+                            UtilRender.renderCube(0, 0, 0, 1, 1, 1, BlockRegistry.BlockSpacialProvider, FluidRegistry.WATER.getFlowingIcon(), 0, Reference.BRIGHT_BLOCK);
+
+                        }
+                    }
+                }
                 GL11.glPopMatrix();
             }
         }

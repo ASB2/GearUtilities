@@ -1,5 +1,8 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,6 +22,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     public static final int MAX_DISTANCE = 16;
     protected boolean hasBufferedCreateMultiBlock = false;
     protected NBTTagCompound bufferedTankData;
+    public Set<IMultiBlock> iAmCoreOfMultiBlocks = new HashSet<IMultiBlock>();
 
     public TileSpacialProvider() {
 
