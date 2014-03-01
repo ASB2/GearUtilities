@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.IPlantable;
 import ASB2.utils.UtilBlock;
+import ASB2.utils.UtilDirection;
 import GU.EnumState;
 import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockPart;
@@ -128,13 +129,18 @@ public class BlockReplacementStructureCube extends ContainerBase implements ISpe
      */
     public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
 
-        Block block = this.getFalseBlock(world, x, y, z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        if (block == null) {
+        if (tile != null && tile instanceof TileReplacementStructureCube) {
 
-            return super.shouldSideBeRendered(world, x, y, z, side);
+            Block block = Block.blocksList[((TileReplacementStructureCube) tile).getSavedID()];
+
+            if (block != null) {
+
+                return ((TileReplacementStructureCube) tile).getSavedID() == UtilDirection.translateDirectionToBlockId(world, ForgeDirection.getOrientation(side), tile);
+            }
         }
-        return block.shouldSideBeRendered(world, x, y, z, side);
+        return false;
     }
 
     /**

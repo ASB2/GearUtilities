@@ -6,7 +6,13 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.fluids.FluidRegistry;
+
+import org.lwjgl.opengl.GL11;
+
+import ASB2.utils.UtilRender;
 import GU.multiblock.MultiBlockTank;
+import GU.*;
 
 public class SpacialProviderRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
@@ -22,26 +28,23 @@ public class SpacialProviderRenderer extends TileEntitySpecialRenderer implement
             Set<MultiBlockTank> multiBlocks = part.fluidMultiBlock;
 
             if (!multiBlocks.isEmpty()) {
+                GL11.glPushMatrix();
 
-                // for (MultiBlockTank multiBlock : multiBlocks) {
-
-//                GL11.glPushMatrix();
-//
-//                GL11.glTranslated(x, y, z);
-//                UtilRender.renderBlockInstance.renderFaceXNeg(Block.grass, x, y+1, z, EnumState.BOTH.getStateIcon());
-//                UtilRender.renderBlockInstance.renderFaceXPos(Block.stone, x, y+1, z, EnumState.BOTH.getStateIcon());
-//
-//                UtilRender.renderBlockInstance.renderFaceYNeg(Block.stone, x, y+1, z, EnumState.BOTH.getStateIcon());
-//                UtilRender.renderBlockInstance.renderFaceYPos(Block.stone, x, y+1, z, EnumState.BOTH.getStateIcon());
-//
-//                UtilRender.renderBlockInstance.renderFaceZNeg(Block.stone, x, y+1, z, EnumState.BOTH.getStateIcon());
-//                UtilRender.renderBlockInstance.renderFaceZPos(Block.stone, x, y+1, z, EnumState.BOTH.getStateIcon());
-//
-//                GL11.glPopMatrix();
-                // }
+                GL11.glTranslated(x, y + 1, z);
+                GL11.glEnable(2896);
+                 GL11.glDisable(2896);
+                UtilRender.renderCube(0, 0, 0, 1, 2, 1, BlockRegistry.BlockSpacialProvider, FluidRegistry.LAVA.getFlowingIcon(), 0);
+                 GL11.glEnable(2896);
+                GL11.glPopMatrix();
             }
         }
+    }
 
+    public static void setGLColorFromInt(int color) {
+        float red = (float) (color >> 16 & 255) / 255.0F;
+        float green = (float) (color >> 8 & 255) / 255.0F;
+        float blue = (float) (color & 255) / 255.0F;
+        GL11.glColor4f(red, green, blue, 1.0F);
     }
 
     @Override

@@ -15,7 +15,6 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
-import GU.api.multiblock.MultiBlockBase;
 import GU.blocks.containers.BlockSpacialProvider.TileFurnaceSpacialProvider;
 import GU.inventory.Inventory;
 

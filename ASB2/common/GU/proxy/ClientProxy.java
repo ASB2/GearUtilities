@@ -77,10 +77,10 @@ public class ClientProxy extends CommonProxy {
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileFlameConduit.class, FlameConduitRenderer.instance);
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockFlameConduit.blockID, FlameConduitRenderer.instance);
-        
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileGlassPipe.class, new GlassPipeRenderer());
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockGlassPipe.blockID, new GlassPipeRenderer());
-        
+
         TickRegistry.registerTickHandler(new NoiseRenderer(), Side.CLIENT);
     }
 

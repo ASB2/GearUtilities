@@ -120,8 +120,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
 
             if (((TileBase) tile).useSidesRendering) {
 
-                renderer.setRenderBounds(-.001, -.001, -.001, 1.001, 1.001, 1.001);
-
+                renderer.setRenderBounds(-.0015, -.0015, -.0015, 1.0015, 1.0015, 1.0015);
                 for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 
                     if (((TileBase) tile).getSideStateArray(direction.ordinal()) != null) {
