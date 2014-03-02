@@ -43,7 +43,7 @@ public class TileFurnaceSpacialProvider extends TileSpacialProvider {
                     
                     if (getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
                         
-                        TileEntity foundTile = getFarthestProvider(direction);
+                        TileEntity foundTile = getNearesthestProvider(direction);
                         
                         if (foundTile != null) {
                             

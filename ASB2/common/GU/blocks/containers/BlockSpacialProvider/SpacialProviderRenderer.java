@@ -1,22 +1,11 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
-import java.util.Set;
-
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
-
-import ASB2.utils.UtilRender;
-import ASB2.vector.Cuboid;
-import ASB2.vector.Vector3;
-import GU.BlockRegistry;
-import GU.info.Reference;
-import GU.multiblock.MultiBlockTank;
 
 public class SpacialProviderRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
@@ -27,37 +16,37 @@ public class SpacialProviderRenderer extends TileEntitySpecialRenderer implement
 
         if (tile instanceof TileFluidSpacialProvider) {
 
-            TileFluidSpacialProvider part = (TileFluidSpacialProvider) tile;
+//            TileFluidSpacialProvider part = (TileFluidSpacialProvider) tile;
 
-            Set<MultiBlockTank> multiBlocks = part.fluidMultiBlock;
+//            Set<MultiBlockTank> multiBlocks = part.fluidMultiBlock;
 
-            if (!multiBlocks.isEmpty()) {
-
-                GL11.glPushMatrix();
-
-                for (MultiBlockTank multi : multiBlocks) {
-
-                    Cuboid size = multi.getSize();
-
-                    if (size.getCore().intEquals(new Vector3(tile))) {
-
-                        FluidStack fluid = multi.fluidTank.getFluid();
-
-                        if (fluid != null) {
-
-                            GL11.glTranslated(x, y + 1, z);
-                            UtilRender.renderCube(0, 0, 0, 1, 1, 1, BlockRegistry.BlockSpacialProvider, fluid.getFluid().getFlowingIcon(), 0, Reference.BRIGHT_BLOCK);
-
-                        } else {
-
-                            GL11.glTranslated(x, y + 1, z);
-                            UtilRender.renderCube(0, 0, 0, 1, 1, 1, BlockRegistry.BlockSpacialProvider, FluidRegistry.WATER.getFlowingIcon(), 0, Reference.BRIGHT_BLOCK);
-
-                        }
-                    }
-                }
-                GL11.glPopMatrix();
-            }
+//            if (!multiBlocks.isEmpty()) {
+//
+//                GL11.glPushMatrix();
+//
+//                for (MultiBlockTank multi : multiBlocks) {
+//
+//                    Cuboid size = multi.getSize();
+//
+//                    if (size.getCore().intEquals(new Vector3(tile))) {
+//
+//                        FluidStack fluid = multi.fluidTank.getFluid();
+//
+//                        if (fluid != null) {
+//
+//                            GL11.glTranslated(x, y + 1, z);
+//                            UtilRender.renderCube(0, 0, 0, 1, 1, 1, BlockRegistry.BlockSpacialProvider, fluid.getFluid().getFlowingIcon(), 0, Reference.BRIGHT_BLOCK);
+//
+//                        } else {
+//
+//                            GL11.glTranslated(x, y + 1, z);
+//                            UtilRender.renderCube(0, 0, 0, 1, 1, 1, BlockRegistry.BlockSpacialProvider, FluidRegistry.WATER.getFlowingIcon(), 0, Reference.BRIGHT_BLOCK);
+//
+//                        }
+//                    }
+//                }
+//                GL11.glPopMatrix();
+//            }
         }
     }
 
