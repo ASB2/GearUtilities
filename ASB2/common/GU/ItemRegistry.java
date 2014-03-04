@@ -24,6 +24,7 @@ import GU.items.ItemTestItem;
 import GU.items.ItemTradeStick;
 import GU.items.ItemCrystalShards.ItemCrystal;
 import GU.items.ItemFlameFocus.ItemFlameFocus;
+import GU.items.ItemFlameShard.ItemFlameShard;
 import GU.items.ItemStorageCrystal.ItemStorageCrystal;
 import GU.items.potionIngredients.ItemPotionIngredients;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -51,6 +52,7 @@ public class ItemRegistry {
     public static Item ItemSmoothStoneSword, ItemSmoothStonePickaxe, ItemSmoothStoneShovel, ItemSmoothStoneAxe, ItemSmoothStoneHoe;
     public static ItemBase ItemShifter;
     public static ItemBase ItemFlameFocus;
+    public static ItemBase ItemFlameShard;
 
     private static int id = 5000;
 
@@ -143,6 +145,9 @@ public class ItemRegistry {
 
         ItemFlameFocus = new ItemFlameFocus(config.getItem("ItemFlameFocus", ItemRegistry.getNextBaseID()).getInt());
         addItem(ItemFlameFocus, "Flame Focus", "ItemFlameFocus");
+    
+        ItemFlameShard = new ItemFlameShard(config.getItem("ItemFlameShard", ItemRegistry.getNextBaseID()).getInt());
+        addItem(ItemFlameShard, "Flame Shard", "ItemFlameShard");
     }
 
     public static ItemBase addItem(ItemBase item, String ign, String unlocalized) {

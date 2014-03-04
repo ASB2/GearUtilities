@@ -27,10 +27,7 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
 
     @Override
     protected void init() {
-
-        isValid = true;
-        centerBlocks = this.getSize().squareShrink(2, 2, 2);
-
+        super.init();
         if (!multiInventory.hasLoaded()) {
 
             if (Variables.COUNT_JUST_MULTI_CHEST_AIR_BLOCKS) {

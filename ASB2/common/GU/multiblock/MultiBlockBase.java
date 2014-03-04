@@ -326,6 +326,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
 
     protected void init() {
         isValid = true;
+        centerBlocks = this.getSize().squareShrink(2, 2, 2);
     }
 
     @Override

@@ -10,6 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
 import GU.EnumState;
 import GU.api.multiblock.IMultiBlock;
@@ -35,11 +36,31 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
 
         if (hasBufferedCreateMultiBlock) {
 
-            this.createMultiBlock(true);
+            this.createMultiBlock();
             hasBufferedCreateMultiBlock = false;
             bufferedTankData = null;
         }
+
+        for (IMultiBlock multi : iAmCoreOfMultiBlocks) {
+
+            multi.update();
+        }
         super.updateEntity();
+    }
+
+    @Override
+    public boolean addMultiBlock(IMultiBlock multiBlock) {
+
+        if (multiBlock.getSize().getCore().intEquals(this)) {
+            iAmCoreOfMultiBlocks.add(multiBlock);
+        }
+        return super.addMultiBlock(multiBlock);
+    }
+
+    @Override
+    public void removeMultiBlock(IMultiBlock multiBlock) {
+        iAmCoreOfMultiBlocks.remove(multiBlock);
+        super.removeMultiBlock(multiBlock);
     }
 
     public TileEntity getNearesthestProvider(ForgeDirection direction) {
@@ -180,10 +201,43 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
 
     public boolean createMultiBlock() {
 
-        return createMultiBlock(false);
+        if (getComprisedMultiBlocks().isEmpty()) {
+
+            int found = 0;
+
+            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+
+                if (getSideStateArray(direction.ordinal()) == EnumState.OUTPUT) {
+
+                    TileEntity foundTile = getNearesthestProvider(direction);
+
+                    if (foundTile != null) {
+
+                        found++;
+                    }
+                }
+            }
+
+            if (found > 0) {
+
+                return createNewStructure(new Cuboid(new Vector3(xCoord, yCoord, zCoord), getMultiBlockXChange(), getMultiBlockYChange(), getMultiBlockZChange()));
+
+            }
+            return false;
+
+        } else if (this.bufferedTankData != null) {
+
+            createLoadedStructure();
+            return true;
+        }
+        return false;
     }
 
-    public boolean createMultiBlock(boolean hasStructure) {
+    public void createLoadedStructure() {
+
+    }
+
+    public boolean createNewStructure(Cuboid size) {
 
         return false;
     }
@@ -194,9 +248,11 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
 
         if (!this.getComprisedMultiBlocks().isEmpty()) {
 
+            Vector3 pos = new Vector3(this);
+
             for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
 
-                if (new Vector3(this).intEquals(multi.getSize().getCore())) {
+                if (pos.intEquals(multi.getSize().getCore())) {
 
                     tag.setCompoundTag("multiBlockSave", multi.save(new NBTTagCompound()));
                 }

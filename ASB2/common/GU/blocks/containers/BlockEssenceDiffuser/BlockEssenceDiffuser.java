@@ -26,6 +26,13 @@ public class BlockEssenceDiffuser extends ContainerBase {
         return false;
     }
     
+
+    @Override
+    public boolean isOpaqueCube() {
+
+        return false;
+    }
+    
     @Override
     public TileEntity createNewTileEntity(World world) {
         

@@ -26,7 +26,7 @@ import GU.api.power.IPowerHandler;
 import GU.api.power.PowerClass;
 import GU.api.power.PowerProvider;
 import GU.api.power.State;
-import GU.api.recipe.SenderRecipe;
+import GU.api.recipe.MultiPanelGrinderRecipe;
 import GU.blocks.containers.TileFluidBase;
 import GU.info.Reference;
 import GU.inventory.Inventory;
@@ -47,13 +47,11 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerH
     public final boolean[] wireless = new boolean[] { true, true, false, false, false, false, false };
 
     int currentMode;
-    Wait packetUpdate;
 
     public TileMultiPanel() {
 
-        packetUpdate = new Wait(20, this, 0);
-        waitTimer = new Wait(10, this, 1);
-        tileInventory = new Inventory(9, 64, "MultiPanel", true);
+        waitTimer = new Wait(this, 5, 0);
+        tileInventory = new Inventory(9, "MultiPanel");
         this.powerProvider = new PowerProvider(PowerClass.LOW, State.SINK);
         fluidTank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME);
     }
@@ -61,10 +59,7 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerH
     @Override
     public void updateEntity() {
 
-        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-
-            this.waitTimer.update();
-        }
+        this.waitTimer.update();
     }
 
     public void setMode(int mode) {
@@ -80,56 +75,37 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerH
     @Override
     public void trigger(int id) {
 
-        if (getMode() != 0) {
+        if (getMode() != 0 && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && !worldObj.isRemote) {
 
-            if (id == 0) {
+            ForgeDirection orientation = this.getOrientation();
+            ForgeDirection oppositeOrientation = orientation.getOpposite();
 
-                this.updateClients();
-            }
             switch (this.getMode()) {
 
                 case ITEM_MOVEMENT: {
 
-                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
-                    TileEntity destination = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation());
+                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, oppositeOrientation);
+                    TileEntity foundTiledestination = this.getNearestInventory(orientation);
 
                     if (tile != null && tile instanceof IInventory) {
 
                         if (tile instanceof ISidedInventory) {
 
-                            UtilInventory.moveEntireISidedInventory((ISidedInventory) tile, this.getOrientation(), this);
+                            UtilInventory.moveEntireISidedInventory((ISidedInventory) tile, orientation, this);
                         } else {
 
                             UtilInventory.moveEntireInventory((IInventory) tile, this);
                         }
                     }
 
-                    if (destination != null && destination instanceof IInventory) {
+                    if (foundTiledestination != null && foundTiledestination instanceof IInventory) {
 
-                        if (destination instanceof ISidedInventory) {
+                        if (foundTiledestination instanceof ISidedInventory) {
 
-                            UtilInventory.moveEntireISidedInventory(this, this.getOrientation(), (ISidedInventory) destination);
+                            UtilInventory.moveEntireISidedInventory(this, oppositeOrientation, (ISidedInventory) foundTiledestination);
                         } else {
 
-                            UtilInventory.moveEntireInventory(this, (IInventory) destination);
-                        }
-                    } else {
-
-                        if (!worldObj.isRemote) {
-
-                            TileEntity foundTiledestination = this.getNearestInventory(getOrientation());
-
-                            if (foundTiledestination != null && foundTiledestination instanceof IInventory) {
-
-                                if (foundTiledestination instanceof ISidedInventory) {
-
-                                    UtilInventory.moveEntireISidedInventory(this, getOrientation().getOpposite(), (ISidedInventory) foundTiledestination);
-                                } else {
-
-                                    UtilInventory.moveEntireInventory(this, (IInventory) foundTiledestination);
-                                }
-                                break;
-                            }
+                            UtilInventory.moveEntireInventory(this, (IInventory) foundTiledestination);
                         }
                     }
                     break;
@@ -137,27 +113,19 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerH
 
                 case FLUID_MOVEMENT: {
 
-                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
-                    TileEntity destination = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation());
+                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, oppositeOrientation);
+                    TileEntity destination = this.getNearestFluidHandler(orientation);
 
                     if (tile != null && tile instanceof IFluidHandler) {
 
-                        UtilFluid.moveFluid((IFluidHandler) tile, this.getOrientation(), this, this.getOrientation().getOpposite(), true);
+                        UtilFluid.moveFluid((IFluidHandler) tile, orientation, this, oppositeOrientation, true);
                     }
 
-                    if (destination != null && destination instanceof IFluidHandler) {
+                    if (destination != null) {
 
-                        UtilFluid.moveFluid(this, this.getOrientation(), (IFluidHandler) destination, this.getOrientation().getOpposite(), true);
-                    } else {
+                        if (destination instanceof IFluidHandler) {
 
-                        if (!worldObj.isRemote) {
-
-                            TileEntity foundTiledestination = this.getNearestFluidHandler(getOrientation());
-
-                            if (foundTiledestination != null && foundTiledestination instanceof IFluidHandler) {
-
-                                UtilFluid.moveFluid(this, this.getOrientation(), (IFluidHandler) destination, getOrientation().getOpposite(), true);
-                            }
+                            UtilFluid.moveFluid(this, orientation, (IFluidHandler) destination, oppositeOrientation, true);
                         }
                     }
                     break;
@@ -165,54 +133,51 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerH
 
                 case GRINDING: {
 
-                    if (!worldObj.isRemote) {
+                    Vector3 affecting = new Vector3(this).add(orientation);
 
-                        Vector3 affecting = new Vector3(this).add(this.getOrientation());
+                    if (!UtilBlock.isBlockAir(worldObj, affecting.intX(), affecting.intY(), affecting.intZ())) {
 
-                        if (!UtilBlock.isBlockAir(worldObj, affecting.intX(), affecting.intY(), affecting.intZ())) {
+                        ItemStack[] itemStacks = MultiPanelGrinderRecipe.getInstance().getResultsForBlock(affecting.getBlockID(worldObj), affecting.getBlockMetadata(worldObj));
 
-                            ItemStack[] itemStacks = SenderRecipe.getInstance().getResultsForBlock(affecting.getBlockID(worldObj), affecting.getBlockMetadata(worldObj));
+                        if (itemStacks != null && itemStacks.length > 0) {
 
-                            if (itemStacks != null && itemStacks.length > 0) {
+                            boolean itWorked = false;
 
-                                boolean itWorked = false;
+                            for (ItemStack item : itemStacks) {
+
+                                if (UtilInventory.addItemStackToInventory(this, item, false)) {
+
+                                    itWorked = true;
+                                } else {
+
+                                    itWorked = false;
+                                }
+                            }
+
+                            if (itWorked) {
 
                                 for (ItemStack item : itemStacks) {
 
-                                    if (UtilInventory.addItemStackToInventory(this, item, false)) {
-
-                                        itWorked = true;
-                                    } else {
-
-                                        itWorked = false;
-                                    }
+                                    itWorked = UtilInventory.addItemStackToInventory(this, item, true);
                                 }
+                            }
+                            if (itWorked) {
 
-                                if (itWorked) {
-
-                                    for (ItemStack item : itemStacks) {
-
-                                        itWorked = UtilInventory.addItemStackToInventory(this, item, true);
-                                    }
-                                }
-                                if (itWorked) {
-
-                                    worldObj.destroyBlock(affecting.intX(), affecting.intY(), affecting.intZ(), false);
-                                }
+                                worldObj.destroyBlock(affecting.intX(), affecting.intY(), affecting.intZ(), false);
                             }
                         }
+                    }
 
-                        TileEntity destination = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
+                    TileEntity destination = UtilDirection.translateDirectionToTile(this, worldObj, oppositeOrientation);
 
-                        if (destination != null && destination instanceof IInventory) {
+                    if (destination != null && destination instanceof IInventory) {
 
-                            if (destination instanceof ISidedInventory) {
+                        if (destination instanceof ISidedInventory) {
 
-                                UtilInventory.moveEntireISidedInventory(this, this.getOrientation().getOpposite(), (ISidedInventory) destination);
-                            } else {
+                            UtilInventory.moveEntireISidedInventory(this, oppositeOrientation, (ISidedInventory) destination);
+                        } else {
 
-                                UtilInventory.moveEntireInventory(this, (IInventory) destination);
-                            }
+                            UtilInventory.moveEntireInventory(this, (IInventory) destination);
                         }
                     }
                     break;
@@ -228,7 +193,7 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerH
 
                             if (item.getItem() instanceof ItemBlock) {
 
-                                if (((ItemBlock) item.getItem()).placeBlockAt(item, new FakePlayer(worldObj, Reference.NAME), worldObj, affecting.intX(), affecting.intY(), affecting.intZ(), this.getOrientation().getOpposite().ordinal(), 0, 0, 0, item.getItemDamage())) {
+                                if (((ItemBlock) item.getItem()).placeBlockAt(item, new FakePlayer(worldObj, Reference.NAME), worldObj, affecting.intX(), affecting.intY(), affecting.intZ(), oppositeOrientation.ordinal(), 0, 0, 0, item.getItemDamage())) {
 
                                     UtilInventory.removeItemStackFromInventory(this, item, 1, true);
                                 }
@@ -236,13 +201,13 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerH
                         }
                     }
 
-                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
+                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, oppositeOrientation);
 
                     if (tile != null && tile instanceof IInventory) {
 
                         if (tile instanceof ISidedInventory) {
 
-                            UtilInventory.moveEntireISidedInventory((ISidedInventory) tile, this.getOrientation(), this);
+                            UtilInventory.moveEntireISidedInventory((ISidedInventory) tile, orientation, this);
                         } else {
 
                             UtilInventory.moveEntireInventory((IInventory) tile, this);
@@ -253,22 +218,19 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerH
 
                 case BLOCK_BREAK: {
 
-                    if (!worldObj.isRemote) {
+                    Vector3 affecting = new Vector3(this).add(orientation);
+                    UtilBlock.breakAndAddToInventory(this, worldObj, affecting.intX(), affecting.intY(), affecting.intZ(), true);
 
-                        Vector3 affecting = new Vector3(this).add(this.getOrientation());
-                        UtilBlock.breakAndAddToInventory(this, worldObj, affecting.intX(), affecting.intY(), affecting.intZ(), true);
+                    TileEntity destination = UtilDirection.translateDirectionToTile(this, worldObj, oppositeOrientation);
 
-                        TileEntity destination = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
+                    if (destination != null && destination instanceof IInventory) {
 
-                        if (destination != null && destination instanceof IInventory) {
+                        if (destination instanceof ISidedInventory) {
 
-                            if (destination instanceof ISidedInventory) {
+                            UtilInventory.moveEntireISidedInventory(this, oppositeOrientation, (ISidedInventory) destination);
+                        } else {
 
-                                UtilInventory.moveEntireISidedInventory(this, this.getOrientation().getOpposite(), (ISidedInventory) destination);
-                            } else {
-
-                                UtilInventory.moveEntireInventory(this, (IInventory) destination);
-                            }
+                            UtilInventory.moveEntireInventory(this, (IInventory) destination);
                         }
                     }
                     break;
@@ -276,137 +238,119 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerH
 
                 case SMELTER: {
 
-                    if (!worldObj.isRemote) {
+                    Vector3 affecting = new Vector3(this).add(orientation);
+                    TileEntity affectingTile = affecting.getTileEntity(worldObj);
 
-                        Vector3 affecting = new Vector3(this).add(this.getOrientation());
+                    if (affectingTile != null && affectingTile instanceof IInventory) {
 
-                        if (affecting.getTileEntity(worldObj) != null && affecting.getTileEntity(worldObj) instanceof IInventory) {
+                        if (affectingTile instanceof ISidedInventory) {
 
-                            if (affecting.getTileEntity(worldObj) instanceof ISidedInventory) {
+                            ISidedInventory inventory = ((ISidedInventory) affectingTile);
+                            int[] avaliableSlots = inventory.getAccessibleSlotsFromSide(oppositeOrientation.ordinal());
 
-                                ISidedInventory inventory = ((ISidedInventory) affecting.getTileEntity(worldObj));
-                                int[] avaliableSlots = inventory.getAccessibleSlotsFromSide(this.getOrientation().getOpposite().ordinal());
+                            for (int i = 0; i < avaliableSlots.length; i++) {
 
-                                for (int i = 0; i < avaliableSlots.length; i++) {
+                                ItemStack stack = inventory.getStackInSlot(avaliableSlots[i]);
 
-                                    ItemStack stack = inventory.getStackInSlot(avaliableSlots[i]);
+                                if (stack != null) {
 
-                                    if (stack != null) {
+                                    stack = stack.copy();
 
-                                        stack = stack.copy();
+                                    ItemStack results = FurnaceRecipes.smelting().getSmeltingResult(stack);
 
-                                        ItemStack results = FurnaceRecipes.smelting().getSmeltingResult(stack);
+                                    if (results != null) {
 
-                                        if (results != null) {
+                                        if (UtilInventory.removeItemStackFromISidedSlot(inventory, oppositeOrientation, stack, avaliableSlots[i], 1, false) && UtilInventory.addItemStackToInventory(this, results, false)) {
 
-                                            if (UtilInventory.removeItemStackFromISidedSlot(inventory, this.getOrientation().getOpposite(), stack, avaliableSlots[i], 1, false) && UtilInventory.addItemStackToInventory(this, results, false)) {
-
-                                                UtilInventory.removeItemStackFromISidedSlot(inventory, this.getOrientation().getOpposite(), stack, avaliableSlots[i], 1, true);
-                                                UtilInventory.addItemStackToInventory(this, results, true);
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-
-                                IInventory inventory = ((IInventory) affecting.getTileEntity(worldObj));
-
-                                for (int i = 0; i < inventory.getSizeInventory(); i++) {
-
-                                    ItemStack stack = inventory.getStackInSlot(i);
-
-                                    if (stack != null) {
-
-                                        stack = stack.copy();
-
-                                        ItemStack results = FurnaceRecipes.smelting().getSmeltingResult(stack);
-
-                                        if (results != null) {
-
-                                            if (UtilInventory.removeItemStackFromSlot(inventory, stack, i, 1, false) && UtilInventory.addItemStackToInventory(this, results, false)) {
-
-                                                UtilInventory.removeItemStackFromSlot(inventory, stack, i, 1, true);
-                                                UtilInventory.addItemStackToInventory(this, results, true);
-                                            }
+                                            UtilInventory.removeItemStackFromISidedSlot(inventory, oppositeOrientation, stack, avaliableSlots[i], 1, true);
+                                            UtilInventory.addItemStackToInventory(this, results, true);
                                         }
                                     }
                                 }
                             }
                         } else {
 
-                            ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(affecting.getBlockID(worldObj), 1, affecting.getBlockMetadata(worldObj)));
+                            IInventory inventory = ((IInventory) affectingTile);
 
-                            if (stack != null && UtilInventory.addItemStackToInventory(this, stack, false)) {
+                            for (int i = 0; i < inventory.getSizeInventory(); i++) {
 
-                                worldObj.destroyBlock(affecting.intX(), affecting.intY(), affecting.intZ(), false);
-                                UtilInventory.addItemStackToInventory(this, stack, true);
+                                ItemStack stack = inventory.getStackInSlot(i);
+
+                                if (stack != null) {
+
+                                    stack = stack.copy();
+
+                                    ItemStack results = FurnaceRecipes.smelting().getSmeltingResult(stack);
+
+                                    if (results != null) {
+
+                                        if (UtilInventory.removeItemStackFromSlot(inventory, stack, i, 1, false) && UtilInventory.addItemStackToInventory(this, results, false)) {
+
+                                            UtilInventory.removeItemStackFromSlot(inventory, stack, i, 1, true);
+                                            UtilInventory.addItemStackToInventory(this, results, true);
+                                        }
+                                    }
+                                }
                             }
                         }
+                    } else {
 
-                        TileEntity destination = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
-                        if (destination != null && destination instanceof IInventory) {
+                        ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(new ItemStack(affecting.getBlockID(worldObj), 1, affecting.getBlockMetadata(worldObj)));
 
-                            if (destination instanceof ISidedInventory) {
+                        if (stack != null && UtilInventory.addItemStackToInventory(this, stack, false)) {
 
-                                UtilInventory.moveEntireISidedInventory(this, this.getOrientation().getOpposite(), (ISidedInventory) destination);
-                            } else {
-
-                                UtilInventory.moveEntireInventory(this, (IInventory) destination);
-                            }
+                            worldObj.destroyBlock(affecting.intX(), affecting.intY(), affecting.intZ(), false);
+                            UtilInventory.addItemStackToInventory(this, stack, true);
                         }
                     }
-                    break;
+
+                    TileEntity destination = UtilDirection.translateDirectionToTile(this, worldObj, this.getOrientation().getOpposite());
+                    if (destination != null && destination instanceof IInventory) {
+
+                        if (destination instanceof ISidedInventory) {
+
+                            UtilInventory.moveEntireISidedInventory(this, this.getOrientation().getOpposite(), (ISidedInventory) destination);
+                        } else {
+
+                            UtilInventory.moveEntireInventory(this, (IInventory) destination);
+                        }
+                    }
                 }
+                    break;
             }
         }
     }
 
     public TileEntity getNearestInventory(ForgeDirection direction) {
 
-        Vector3 location = new Vector3(this).add(direction);
+        Vector3 myLocation = new Vector3(this).add(direction);
 
-        location.add(direction);
+        for (int distance = 1; distance <= MAX_DISTANCE; distance++) {
 
-        int distance = 2;
+            TileEntity tile = myLocation.clone().add(direction, distance).getTileEntity(worldObj);
 
-        while (true) {
+            if (tile != null && tile instanceof IInventory) {
 
-            if (distance < MAX_DISTANCE) {
-
-                if (location.getTileEntity(worldObj) != null && location.getTileEntity(worldObj) instanceof IInventory) {
-
-                    return location.getTileEntity(worldObj);
-                } else {
-
-                    location.add(direction);
-                    distance++;
-                }
+                return tile;
             }
         }
+        return null;
     }
 
     public TileEntity getNearestFluidHandler(ForgeDirection direction) {
 
-        Vector3 location = new Vector3(this).add(direction);
+        Vector3 myLocation = new Vector3(this).add(direction);
 
-        location.add(direction);
+        for (int distance = 1; distance <= MAX_DISTANCE; distance++) {
 
-        int distance = 2;
+            TileEntity tile = myLocation.clone().add(direction, distance).getTileEntity(worldObj);
 
-        while (true) {
+            if (tile != null && tile instanceof IFluidHandler) {
 
-            if (distance < MAX_DISTANCE) {
-
-                if (location.getTileEntity(worldObj) != null && location.getTileEntity(worldObj) instanceof IFluidHandler) {
-
-                    return location.getTileEntity(worldObj);
-                } else {
-
-                    location.add(direction);
-                    distance++;
-                }
+                return tile;
             }
         }
+        return null;
     }
 
     @Override
@@ -429,6 +373,7 @@ public class TileMultiPanel extends TileFluidBase implements IInventory, IPowerH
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
 
+        // AxisAlignedBB.getBoundingBox(0, 0, 0, 1, 1, 1);
         return this.INFINITE_EXTENT_AABB;
     }
 

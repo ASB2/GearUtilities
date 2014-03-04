@@ -14,6 +14,13 @@ public class BlockGlassPipe extends ContainerBase {
         this.useStandardRendering = false;
     }
 
+
+    @Override
+    public boolean isOpaqueCube() {
+
+        return false;
+    }
+    
     @Override
     public TileEntity createNewTileEntity(World world) {
 

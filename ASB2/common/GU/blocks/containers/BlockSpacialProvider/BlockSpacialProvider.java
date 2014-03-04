@@ -56,24 +56,21 @@ public class BlockSpacialProvider extends ContainerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 
-        if (player.getHeldItem() == null) {
+        TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
 
-            TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
+        Set<IMultiBlock> multiBlocks = tile.getComprisedMultiBlocks();
 
-            Set<IMultiBlock> multiBlocks = tile.getComprisedMultiBlocks();
+        if (multiBlocks.isEmpty() && player.getHeldItem() == null) {
 
-            if (multiBlocks.isEmpty()) {
+            tile.createMultiBlock();
+            return true;
+        } else if(!multiBlocks.isEmpty()){
 
-                tile.createMultiBlock();
-                return true;
-            } else {
+            for (IMultiBlock multi : multiBlocks) {
 
-                for (IMultiBlock multi : multiBlocks) {
-
-                    multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ, multiBlocks.size() == 1);
-                }
-                return true;
+                multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ, multiBlocks.size() == 1);
             }
+            return true;
         }
         return false;
     }

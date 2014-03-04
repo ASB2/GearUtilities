@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
 
-public final class SenderRecipe {
+public final class MultiPanelGrinderRecipe {
 
-    private static SenderRecipe instance = new SenderRecipe();
+    private static MultiPanelGrinderRecipe instance = new MultiPanelGrinderRecipe();
     private ArrayList<SenderInfoHolder> recipeList = new ArrayList<SenderInfoHolder>();
 
-    public static SenderRecipe getInstance() {
+    public static MultiPanelGrinderRecipe getInstance() {
 
         return instance;
     }
@@ -21,9 +21,9 @@ public final class SenderRecipe {
 
     public ItemStack[] getResultsForBlock(int blockID, int blockMeta) {
 
-        for(SenderInfoHolder recipe : recipeList) {
+        for (SenderInfoHolder recipe : recipeList) {
 
-            if(recipe.getBlockInfo()[0] == blockID && (recipe.getBlockInfo()[1] == blockMeta || recipe.getBlockInfo()[1] == -1)) {
+            if (recipe.getBlockInfo()[0] == blockID && (recipe.getBlockInfo()[1] == blockMeta || recipe.getBlockInfo()[1] == -1)) {
 
                 return recipe.getResults();
             }
@@ -46,7 +46,7 @@ public final class SenderRecipe {
 
         public int[] getBlockInfo() {
 
-            return new int[]{blockId, blockMeta};
+            return new int[] { blockId, blockMeta };
         }
 
         public ItemStack[] getResults() {

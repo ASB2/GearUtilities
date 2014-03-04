@@ -31,6 +31,7 @@ import GU.blocks.containers.BlockStructureCube.ReplacementStructureCubeRenderer;
 import GU.info.Gui;
 import GU.info.Models;
 import GU.items.ItemFlameFocus.FlameFocusRenderer;
+import GU.items.ItemFlameShard.FlameShardRenderer;
 import GU.items.ItemStorageCrystal.StorageCrystalRenderer;
 import GU.render.BlockSimpleRenderer;
 import GU.render.NoiseRenderer;
@@ -51,6 +52,7 @@ public class ClientProxy extends CommonProxy {
 
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemStorageCrystal.itemID, new StorageCrystalRenderer());
         MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemFlameFocus.itemID, FlameFocusRenderer.instance);
+        MinecraftForgeClient.registerItemRenderer(ItemRegistry.ItemFlameShard.itemID, FlameShardRenderer.instance);
         RenderingRegistry.registerBlockHandler(new BlockSimpleRenderer());
         RenderingRegistry.registerBlockHandler(new ReplacementStructureCubeRenderer());
 

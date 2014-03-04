@@ -17,95 +17,95 @@ import GU.blocks.containers.ContainerBase;
 import GU.info.Gui;
 
 public class BlockMultiPanel extends ContainerBase {
-    
+
     public BlockMultiPanel(int id, Material material) {
         super(id, material);
-        
+
         this.useStandardRendering = false;
         this.registerTile(TileMultiPanel.class);
         setLightOpacity(0);
         maxHeight = .65F;
     }
-    
+
     @Override
     public boolean isOpaqueCube() {
-        
+
         return false;
     }
-    
+
     @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
-        
+
         ArrayList<ItemStack> array = new ArrayList<ItemStack>();
-        
+
         return array;
     }
-    
+
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-        
+
         TileEntity tile = world.getBlockTileEntity(x, y, z);
-        
-        if (tile != null) {
-            
+
+        if (tile != null && tile instanceof TileMultiPanel) {
+
             ItemStack stack = new ItemStack(this);
             UtilItemStack.setNBTTagInt(stack, "mode", ((TileMultiPanel) tile).getMode());
             return stack;
         }
         return new ItemStack(this);
     }
-    
+
     @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void getSubBlocks(int unknown, CreativeTabs tab, List subItems) {
-        
+
         ItemStack stack = new ItemStack(this);
-        
+
         UtilItemStack.setNBTTagInt(stack, "mode", 0);
         subItems.add(stack.copy());
-        
+
         UtilItemStack.setNBTTagInt(stack, "mode", 1);
         subItems.add(stack.copy());
-        
+
         UtilItemStack.setNBTTagInt(stack, "mode", 2);
         subItems.add(stack.copy());
-        
+
         UtilItemStack.setNBTTagInt(stack, "mode", 3);
         subItems.add(stack.copy());
-        
+
         UtilItemStack.setNBTTagInt(stack, "mode", 4);
         subItems.add(stack.copy());
-        
+
         UtilItemStack.setNBTTagInt(stack, "mode", 5);
         subItems.add(stack.copy());
-        
+
         UtilItemStack.setNBTTagInt(stack, "mode", 6);
         subItems.add(stack.copy());
-        
+
         UtilItemStack.setNBTTagInt(stack, "mode", 7);
         subItems.add(stack.copy());
     }
-    
+
     @Override
     public ForgeDirection[] getValidRotations(World worldObj, int x, int y, int z) {
-        
+
         return ForgeDirection.VALID_DIRECTIONS;
     }
-    
+
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int hitX, float hitY, float hitZ, float par9) {
-        
+
         if (!player.isSneaking()) {
-            
+
             player.openGui(GearUtilities.instance, Gui.MULTI_PANEL, world, x, y, z);
             return true;
         }
         return false;
     }
-    
+
     @Override
     public TileEntity createNewTileEntity(World world) {
-        
+
         return new TileMultiPanel();
     }
 }

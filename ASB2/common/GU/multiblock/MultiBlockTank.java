@@ -32,9 +32,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
     @Override
     protected void init() {
-
-        isValid = true;
-        centerBlocks = this.getSize().squareShrink(2, 2, 2);
+        super.init();
 
         if (Variables.COUNT_JUST_MULTI_TANK_AIR_BLOCKS) {
 

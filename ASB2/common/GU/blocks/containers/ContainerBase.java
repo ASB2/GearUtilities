@@ -233,7 +233,9 @@ public abstract class ContainerBase extends BlockContainer implements IExtraItem
 
     private void dropItems(World world, int x, int y, int z) {
 
-        if (world.getBlockTileEntity(x, y, z) instanceof IInventory) {
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
+
+        if (tile != null && tile instanceof IInventory) {
 
             IInventory tileEntity = (IInventory) world.getBlockTileEntity(x, y, z);
 
