@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public enum EnumFlameType {
 
-    STORM, SUN, SKY, LIGHTNING, RAIN, CLOUD, MIST, DARK, LIGHT, UNTYPED;
+    STORM, SUN, SKY, LIGHTNING, RAIN, CLOUD, MIST, DARK, LIGHT, CLEAR;
 
     public String getIGN() {
 
@@ -46,7 +46,7 @@ public enum EnumFlameType {
                 return "Light";
             }
 
-            case UNTYPED: {
+            case CLEAR: {
                 return "Clear";
             }
         }
@@ -93,7 +93,7 @@ public enum EnumFlameType {
                 return Color.LIGHT_GRAY.darker();
             }
 
-            case UNTYPED: {
+            case CLEAR: {
                 return Color.WHITE;
             }
         }
