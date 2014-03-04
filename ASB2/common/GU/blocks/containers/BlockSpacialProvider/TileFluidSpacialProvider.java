@@ -9,7 +9,7 @@ public class TileFluidSpacialProvider extends TileSpacialProvider {
     public void createLoadedStructure() {
 
         MultiBlockTank chest = new MultiBlockTank(worldObj);
-        chest.load(bufferedTankData);
+        chest.load(bufferedMultiData);
 
         if (chest.isStructureValid()) {
             chest.create();

@@ -12,7 +12,7 @@ import ASB2.utils.UtilItemStack;
 import GU.api.flame.EnumFlameType;
 import GU.info.Models;
 import GU.info.Reference;
-import GU.render.BufferedImageTest;
+import GU.render.NoiseManager;
 
 public class FlameFocusRenderer implements IItemRenderer {
 
@@ -79,7 +79,7 @@ public class FlameFocusRenderer implements IItemRenderer {
         // UtilRender.renderTexture(Textures.FLAME_FOCUS_CUBE);
 
         GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
-        BufferedImageTest.bindImage();
+        NoiseManager.bindImage();
         Models.ModelFlameFocus.renderPart("Cube");
         GL11.glPopMatrix();
 
@@ -90,7 +90,7 @@ public class FlameFocusRenderer implements IItemRenderer {
         GL11.glRotatef(-Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 1F, 1F, 1F);
         // UtilRender.renderTexture(Textures.FLAME_FOCUS_HEXAGON);
         GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
-        BufferedImageTest.bindImage();
+        NoiseManager.bindImage();
         Models.ModelFlameFocus.renderPart("Hexagon");
         GL11.glPopMatrix();
 

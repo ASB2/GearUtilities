@@ -14,7 +14,7 @@ import ASB2.utils.UtilRender;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
-import GU.render.BufferedImageTest;
+import GU.render.NoiseManager;
 
 public class FlameAltarRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
@@ -38,7 +38,7 @@ public class FlameAltarRenderer extends TileEntitySpecialRenderer implements IIt
 
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
-        BufferedImageTest.bindImage();
+        NoiseManager.bindImage();
         Models.ModelFlameFocus.renderPart("Hexagon");
 
         GL11.glPopMatrix();
@@ -109,7 +109,7 @@ public class FlameAltarRenderer extends TileEntitySpecialRenderer implements IIt
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
 
         // UtilRender.renderTexture(Textures.FLAME_ALTAR_HEXAGON);
-        BufferedImageTest.bindImage();
+        NoiseManager.bindImage();
         Models.ModelFlameFocus.renderPart("Hexagon");
 
         GL11.glEnable(GL11.GL_LIGHTING);

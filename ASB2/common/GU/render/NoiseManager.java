@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import GU.info.Reference;
 import cpw.mods.fml.common.FMLCommonHandler;
 
-public class BufferedImageTest {
+public class NoiseManager {
 
     public static BufferedImage image = null;
 
@@ -24,7 +24,7 @@ public class BufferedImageTest {
 
     public static ResourceLocation textureLocation = new ResourceLocation(Reference.MODDID + ":textures/LargeBlankTexture.png");
 
-    public BufferedImageTest() {
+    public NoiseManager() {
 
     }
 
@@ -33,7 +33,7 @@ public class BufferedImageTest {
         try {
 
             image = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(textureLocation).getInputStream());
-            textureImage = new DynamicTexture(BufferedImageTest.getImage());
+            textureImage = new DynamicTexture(NoiseManager.getImage());
             TextureUtil.allocateTexture(textureImage.getGlTextureId(), image.getWidth(), image.getHeight());
         } catch (IOException e) {
 

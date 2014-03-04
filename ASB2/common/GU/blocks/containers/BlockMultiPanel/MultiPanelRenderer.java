@@ -14,7 +14,7 @@ import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
-import GU.render.BufferedImageTest;
+import GU.render.NoiseManager;
 
 public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
@@ -107,7 +107,7 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
                 }
             }
 
-            BufferedImageTest.bindImage();
+            NoiseManager.bindImage();
             switch (tile.getMode()) {
 
                 case 1: {
@@ -253,7 +253,7 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
                     break;
                 }
             }
-            BufferedImageTest.bindImage();
+            NoiseManager.bindImage();
             switch (UtilItemStack.getNBTTagInt(item, "mode")) {
 
                 case 1: {

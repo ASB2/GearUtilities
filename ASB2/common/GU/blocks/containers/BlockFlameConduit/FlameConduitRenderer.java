@@ -15,7 +15,7 @@ import GU.api.flame.EnumFlameType;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
-import GU.render.BufferedImageTest;
+import GU.render.NoiseManager;
 
 public class FlameConduitRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
 
@@ -39,7 +39,7 @@ public class FlameConduitRenderer extends TileEntitySpecialRenderer implements I
 
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
-        BufferedImageTest.bindImage();
+        NoiseManager.bindImage();
         Models.ModelFlameFocus.renderPart("Hexagon");
 
         GL11.glPopMatrix();
@@ -110,7 +110,7 @@ public class FlameConduitRenderer extends TileEntitySpecialRenderer implements I
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
 
         // UtilRender.renderTexture(Textures.FLAME_ALTAR_HEXAGON);
-        BufferedImageTest.bindImage();
+        NoiseManager.bindImage();
         Models.ModelFlameFocus.renderPart("Hexagon");
 
         GL11.glEnable(GL11.GL_LIGHTING);

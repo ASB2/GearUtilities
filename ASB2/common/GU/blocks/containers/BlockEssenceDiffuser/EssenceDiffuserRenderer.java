@@ -13,7 +13,7 @@ import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
-import GU.render.BufferedImageTest;
+import GU.render.NoiseManager;
 
 public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
     
@@ -77,7 +77,7 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         
         GL11.glColor3d(((TileBase) tileentity).renderDoubles[0], ((TileBase) tileentity).renderDoubles[1], ((TileBase) tileentity).renderDoubles[2]);
         // UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
-        BufferedImageTest.bindImage();
+        NoiseManager.bindImage();
         
         for (int i = 0; i < 4; i++) {
             
@@ -204,7 +204,7 @@ public class EssenceDiffuserRenderer extends TileEntitySpecialRenderer implement
         
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         
-        BufferedImageTest.bindImage();
+        NoiseManager.bindImage();
         // UtilRender.renderTexture(Textures.ESSENCE_DIFFUSER_ROTATING);
         
         for (int i = 0; i < 4; i++) {

@@ -13,7 +13,7 @@ public class TileFlameSpacialProvider extends TileSpacialProvider {
     public void createLoadedStructure() {
 
         MultBlockFlameSource chest = new MultBlockFlameSource(worldObj);
-        chest.load(bufferedTankData);
+        chest.load(bufferedMultiData);
 
         if (chest.isStructureValid()) {
             chest.create();

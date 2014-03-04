@@ -9,7 +9,7 @@ public class TileFurnaceSpacialProvider extends TileSpacialProvider {
     public void createLoadedStructure() {
 
         MultiBlockFurnace chest = new MultiBlockFurnace(worldObj);
-        chest.load(bufferedTankData);
+        chest.load(bufferedMultiData);
 
         if (chest.isStructureValid()) {
             chest.create();

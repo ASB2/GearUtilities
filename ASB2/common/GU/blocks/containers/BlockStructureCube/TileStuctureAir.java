@@ -7,7 +7,7 @@ import GU.blocks.containers.TileMultiBase;
 public class TileStuctureAir extends TileMultiBase {
 
     public TileStuctureAir() {
-        waitTimer = new Wait(this, 10, 0);
+        waitTimer = new Wait(this, 5, 0);
         this.maxMultiBlocks = 1;
     }
 
@@ -19,12 +19,17 @@ public class TileStuctureAir extends TileMultiBase {
     @Override
     public void removeMultiBlock(IMultiBlock multiBlock) {
         super.removeMultiBlock(multiBlock);
+
+        if (this.multiBlocks.isEmpty()) {
+
+            worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+        }
     }
 
     @Override
     public void trigger(int id) {
 
-        if (this.getComprisedMultiBlocks().isEmpty() && !worldObj.isRemote) {
+        if (multiBlocks.isEmpty() && !worldObj.isRemote) {
 
             worldObj.setBlockToAir(xCoord, yCoord, zCoord);
         }

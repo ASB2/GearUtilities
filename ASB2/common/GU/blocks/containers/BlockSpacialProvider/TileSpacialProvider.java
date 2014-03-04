@@ -22,7 +22,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
 
     public static final int MAX_DISTANCE = 16;
     protected boolean hasBufferedCreateMultiBlock = false;
-    protected NBTTagCompound bufferedTankData;
+    protected NBTTagCompound bufferedMultiData;
     public Set<IMultiBlock> iAmCoreOfMultiBlocks = new HashSet<IMultiBlock>();
 
     public TileSpacialProvider() {
@@ -38,7 +38,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
 
             this.createMultiBlock();
             hasBufferedCreateMultiBlock = false;
-            bufferedTankData = null;
+            bufferedMultiData = null;
         }
 
         for (IMultiBlock multi : iAmCoreOfMultiBlocks) {
@@ -225,7 +225,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
             }
             return false;
 
-        } else if (this.bufferedTankData != null) {
+        } else if (this.bufferedMultiData != null) {
 
             createLoadedStructure();
             return true;
@@ -246,18 +246,17 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
 
-        if (!this.getComprisedMultiBlocks().isEmpty()) {
+        if (!iAmCoreOfMultiBlocks.isEmpty()) {
 
-            Vector3 pos = new Vector3(this);
+            int position = 0;
 
-            for (IMultiBlock multi : this.getComprisedMultiBlocks()) {
+            for (IMultiBlock multi : iAmCoreOfMultiBlocks) {
 
-                if (pos.intEquals(multi.getSize().getCore())) {
-
-                    tag.setCompoundTag("multiBlockSave", multi.save(new NBTTagCompound()));
-                }
+                tag.setCompoundTag("multiBlockSave" + position, multi.save(new NBTTagCompound()));
+                position++;
             }
             tag.setBoolean("isInMultiBlock", isInMultiBlock);
+            tag.setInteger("numberCoreMultiBlocks", position);
         }
     }
 
@@ -269,7 +268,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
 
         if (hasBufferedCreateMultiBlock) {
 
-            bufferedTankData = tag.getCompoundTag("multiBlockSave");
+            bufferedMultiData = tag.getCompoundTag("multiBlockSave");
         }
     }
 }

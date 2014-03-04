@@ -12,7 +12,7 @@ import ASB2.utils.UtilItemStack;
 import GU.api.flame.EnumFlameType;
 import GU.info.Models;
 import GU.info.Reference;
-import GU.render.BufferedImageTest;
+import GU.render.NoiseManager;
 
 public class FlameShardRenderer implements IItemRenderer {
 
@@ -80,7 +80,7 @@ public class FlameShardRenderer implements IItemRenderer {
         GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
 
         GL11.glScalef(.97f, .97f, .97f);
-        BufferedImageTest.bindImage();
+        NoiseManager.bindImage();
         Models.ModelFlameShard.renderPart("Center");
         GL11.glPopMatrix();
 
@@ -90,7 +90,7 @@ public class FlameShardRenderer implements IItemRenderer {
         GL11.glPushMatrix();
         // GL11.glRotatef(-Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 0, 1F);
         GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
-        BufferedImageTest.bindImage();
+        NoiseManager.bindImage();
         Models.ModelFlameShard.renderPart("Outside");
         GL11.glPopMatrix();
 
