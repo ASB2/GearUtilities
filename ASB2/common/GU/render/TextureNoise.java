@@ -33,11 +33,11 @@ public class TextureNoise extends TextureAtlasSprite {
 
     protected TextureNoise(String par1Str) {
         super(par1Str);
-        initBufferedImage();
+       
     }
 
     public boolean load(ResourceManager manager, ResourceLocation location) throws IOException {
-
+        initBufferedImage();
         loadSprite(manager.getResource(location));
         return true;
     }

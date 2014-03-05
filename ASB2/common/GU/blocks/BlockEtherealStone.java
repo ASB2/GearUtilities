@@ -3,6 +3,7 @@ package GU.blocks;
 import GU.render.BlockSimpleRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.AxisAlignedBB;
@@ -26,6 +27,11 @@ public class BlockEtherealStone extends BlockBase {
     public Icon getIcon(int side, int metadata) {
 
         return Block.stone.getIcon(side, metadata);
+    }
+
+    @Override
+    public void registerIcons(IconRegister iconRegister) {
+
     }
 
     @Override
