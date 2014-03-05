@@ -95,7 +95,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
 
         if (block == BlockRegistry.BlockEtherealStone) {
 
-            UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.iconTexture, 255, 255, 255, 255, block.getMixedBrightnessForBlock(world, x, y, z));
+            UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.iconTexture, 255, 255, 255, 255, block.getMixedBrightnessForBlock(world, x, y, z));
 
             return true;
         }

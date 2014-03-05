@@ -46,11 +46,11 @@ public class TextureNoise extends TextureAtlasSprite {
 
         float currentDensity = minDensity;
 
-        while (currentDensity < maxDensity) {
+        while (currentDensity <= maxDensity) {
 
             GearUtilities.log("currentDesity: " + currentDensity);
 
-            BufferedImage bufferedImage = new BufferedImage(NoiseManager.size, NoiseManager.size, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage bufferedImage = new BufferedImage(NoiseManager.instance.size, NoiseManager.instance.size, BufferedImage.TYPE_INT_ARGB);
             bufferedImages.add(bufferedImage);
 
             Graphics2D graphics = (Graphics2D) bufferedImage.createGraphics();
@@ -78,14 +78,14 @@ public class TextureNoise extends TextureAtlasSprite {
             currentDensity += changePerTick;
         }
 
-        BufferedImage finalImage = new BufferedImage(NoiseManager.size, bufferedImages.size() * NoiseManager.size, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage finalImage = new BufferedImage(NoiseManager.instance.size, bufferedImages.size() * NoiseManager.instance.size, BufferedImage.TYPE_INT_ARGB);
 
         int position = 1;
 
         for (BufferedImage image : bufferedImages) {
 
             Graphics2D graphics = (Graphics2D) finalImage.createGraphics();
-            graphics.drawImage(image, 0, position * NoiseManager.size, null);
+            graphics.drawImage(image, 0, position * NoiseManager.instance.size, null);
             graphics.dispose();
             position++;
         }

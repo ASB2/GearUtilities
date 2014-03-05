@@ -49,7 +49,7 @@ public class ForgeEvents {
             EnumState.SIDES[2] = event.map.registerIcon(Reference.MODDID + ":sides/BlockBoth");
             EnumState.SIDES[3] = event.map.registerIcon(Reference.MODDID + ":sides/BlockNone");
         }
-        event.map.setTextureEntry(NoiseManager.iconTexture.getIconName(), NoiseManager.iconTexture);
+        event.map.setTextureEntry(NoiseManager.instance.iconTexture.getIconName(), NoiseManager.instance.iconTexture);
         Particles.register(event);
     }
 

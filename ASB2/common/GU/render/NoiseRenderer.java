@@ -25,7 +25,7 @@ public class NoiseRenderer implements ITickHandler {
     public void tickStart(EnumSet<TickType> type, Object... tickData) {
 
         float maxDensity = .4f, minDensity = .1f, changePerTick = .0002f;
-        BufferedImage newImage = NoiseManager.getImage();
+        BufferedImage newImage = NoiseManager.instance.getImage();
 
         if (newImage != null) {
 
@@ -74,8 +74,8 @@ public class NoiseRenderer implements ITickHandler {
 
                     }
                 }
-                newImage.getRGB(0, 0, newImage.getWidth(), newImage.getHeight(), NoiseManager.textureImage.getTextureData(), 0, newImage.getWidth());
-                TextureUtil.uploadTexture(NoiseManager.textureImage.getGlTextureId(), NoiseManager.textureImage.getTextureData(), NoiseManager.originalImage.getWidth(), NoiseManager.originalImage.getHeight());
+                newImage.getRGB(0, 0, newImage.getWidth(), newImage.getHeight(), NoiseManager.instance.textureImage.getTextureData(), 0, newImage.getWidth());
+                TextureUtil.uploadTexture(NoiseManager.instance.textureImage.getGlTextureId(), NoiseManager.instance.textureImage.getTextureData(), NoiseManager.instance.originalImage.getWidth(), NoiseManager.instance.originalImage.getHeight());
             }
         }
     }

@@ -1,11 +1,7 @@
 package GU.blocks.containers.BlockMultiPanel;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,7 +15,6 @@ import ASB2.utils.UtilItemStack;
 import GU.GearUtilities;
 import GU.blocks.containers.ContainerBase;
 import GU.info.Gui;
-import GU.render.*;
 public class BlockMultiPanel extends ContainerBase {
 
     public BlockMultiPanel(int id, Material material) {
@@ -106,14 +101,14 @@ public class BlockMultiPanel extends ContainerBase {
         }
         else {
             
-            try {
-                
-                File outputfile = new File("Noise.png");
-                outputfile.createNewFile();
-                
-                ImageIO.write( NoiseManager.iconTexture.finalImage, "png", outputfile);
-            } catch (IOException e) {
-            }
+//            try {
+//                
+//                File outputfile = new File("Noise.png");
+//                outputfile.createNewFile();
+//                
+//                ImageIO.write( NoiseManager.iconTexture.finalImage, "png", outputfile);
+//            } catch (IOException e) {
+//            }
            
         }
         return false;
