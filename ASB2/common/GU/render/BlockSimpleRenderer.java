@@ -93,10 +93,12 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             return true;
         }
 
-        // if (block == BlockRegistry.BlockEtherealStone) {
-        //
-        // return true;
-        // }
+        if (block == BlockRegistry.BlockEtherealStone) {
+
+            UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.iconTexture, 255, 255, 255, 255, block.getMixedBrightnessForBlock(world, x, y, z));
+
+            return true;
+        }
 
         // if (block.blockID == BlockRegistry.BlockItemStand.blockID) {
         //

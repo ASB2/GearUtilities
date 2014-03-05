@@ -75,7 +75,7 @@ public class NoiseRenderer implements ITickHandler {
                     }
                 }
                 newImage.getRGB(0, 0, newImage.getWidth(), newImage.getHeight(), NoiseManager.textureImage.getTextureData(), 0, newImage.getWidth());
-                TextureUtil.uploadTexture(NoiseManager.textureImage.getGlTextureId(), NoiseManager.textureImage.getTextureData(), NoiseManager.image.getWidth(), NoiseManager.image.getHeight());
+                TextureUtil.uploadTexture(NoiseManager.textureImage.getGlTextureId(), NoiseManager.textureImage.getTextureData(), NoiseManager.originalImage.getWidth(), NoiseManager.originalImage.getHeight());
             }
         }
     }

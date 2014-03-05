@@ -5,46 +5,55 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
+
+import org.lwjgl.opengl.GL11;
+
 import GU.info.Reference;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class NoiseManager {
 
-    public static BufferedImage image = null;
+    public static BufferedImage originalImage = null;
 
-    int[][] imageArray;
+    public static int size = 16;
 
     public static DynamicTexture textureImage;
 
-    public static ResourceLocation textureLocation = new ResourceLocation(Reference.MODDID + ":textures/LargeBlankTexture.png");
+    public static ResourceLocation textureLocation = new ResourceLocation(Reference.MODDID + ":textures/Noise.png");
+
+    public static TextureNoise iconTexture = new TextureNoise(Reference.MODDID + ":Noise");
 
     public NoiseManager() {
 
     }
 
-    public static BufferedImage init() {
+    public static BufferedImage loadImage() {
 
         try {
 
-            image = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(textureLocation).getInputStream());
+            originalImage = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(textureLocation).getInputStream());
             textureImage = new DynamicTexture(NoiseManager.getImage());
-            TextureUtil.allocateTexture(textureImage.getGlTextureId(), image.getWidth(), image.getHeight());
+            TextureUtil.allocateTexture(textureImage.getGlTextureId(), originalImage.getWidth(), originalImage.getHeight());
         } catch (IOException e) {
 
             FMLCommonHandler.instance().raiseException(e, "Can't read image at: " + textureLocation.getResourcePath(), true);
         }
-        return image;
+
+        if (originalImage != null) {
+
+            NoiseManager.size = originalImage.getWidth();
+        }
+        return originalImage;
     }
 
     public static BufferedImage getImage() {
 
-        return image == null ? init() : image;
+        return originalImage == null ? loadImage() : originalImage;
     }
 
     public static void bindImage() {
@@ -56,5 +65,10 @@ public class NoiseManager {
         // textureImage.getTextureData(), image.getWidth(), image.getHeight());
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureImage.getGlTextureId());
+    }
+
+    public Icon getTexture() {
+
+        return null;
     }
 }
