@@ -33,6 +33,7 @@ public class TextureNoise extends TextureAtlasSprite {
 
     protected TextureNoise(String par1Str) {
         super(par1Str);
+        initBufferedImage();
     }
 
     public boolean load(ResourceManager manager, ResourceLocation location) throws IOException {
@@ -41,8 +42,7 @@ public class TextureNoise extends TextureAtlasSprite {
         return true;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void loadSprite(Resource par1Resource) throws IOException {
+    public void initBufferedImage() {
 
         float currentDensity = minDensity;
 
@@ -73,7 +73,7 @@ public class TextureNoise extends TextureAtlasSprite {
 
                 }
             }
-            bufferedImage.getRGB(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), NoiseManager.textureImage.getTextureData(), 0, bufferedImage.getWidth());
+            bufferedImage.getRGB(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), new int[bufferedImage.getWidth() * bufferedImage.getHeight()], 0, bufferedImage.getWidth());
 
             currentDensity += changePerTick;
         }
@@ -92,6 +92,11 @@ public class TextureNoise extends TextureAtlasSprite {
 
         this.finalImage = finalImage;
         bufferedImages.clear();
+
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void loadSprite(Resource par1Resource) throws IOException {
 
         // From SuperClass
         AnimationMetadataSection animationmetadatasection = (AnimationMetadataSection) par1Resource.getMetadata("animation");

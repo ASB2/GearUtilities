@@ -18,40 +18,39 @@ import cpw.mods.fml.common.FMLCommonHandler;
 
 public class NoiseManager {
 
-    public static BufferedImage originalImage = null;
+    public static NoiseManager instance = new NoiseManager();
 
-    public static int size = 16;
+    public BufferedImage originalImage = null;
 
-    public static DynamicTexture textureImage;
+    public int size = 16;
 
-    public static ResourceLocation textureLocation = new ResourceLocation(Reference.MODDID + ":textures/Noise.png");
+    public DynamicTexture textureImage;
 
-    public static TextureNoise iconTexture = new TextureNoise(Reference.MODDID + ":Noise");
+    public ResourceLocation textureLocation = new ResourceLocation(Reference.MODDID + ":textures/Noise.png");
+
+    public TextureNoise iconTexture = new TextureNoise(Reference.MODDID + ":Noise");
 
     public NoiseManager() {
 
     }
 
-    public static BufferedImage loadImage() {
+    public BufferedImage loadImage() {
 
         try {
 
             originalImage = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(textureLocation).getInputStream());
-            textureImage = new DynamicTexture(NoiseManager.getImage());
+            textureImage = new DynamicTexture(NoiseManager.instance.getImage());
             TextureUtil.allocateTexture(textureImage.getGlTextureId(), originalImage.getWidth(), originalImage.getHeight());
         } catch (IOException e) {
 
             FMLCommonHandler.instance().raiseException(e, "Can't read image at: " + textureLocation.getResourcePath(), true);
         }
 
-        if (originalImage != null) {
-
-            NoiseManager.size = originalImage.getWidth();
-        }
+        NoiseManager.instance.size = originalImage.getWidth();
         return originalImage;
     }
 
-    public static BufferedImage getImage() {
+    public BufferedImage getImage() {
 
         return originalImage == null ? loadImage() : originalImage;
     }
@@ -64,7 +63,7 @@ public class NoiseManager {
         // TextureUtil.uploadTexture(textureImage.getGlTextureId(),
         // textureImage.getTextureData(), image.getWidth(), image.getHeight());
 
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureImage.getGlTextureId());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, NoiseManager.instance.textureImage.getGlTextureId());
     }
 
     public Icon getTexture() {
