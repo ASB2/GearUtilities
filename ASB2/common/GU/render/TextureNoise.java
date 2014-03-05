@@ -28,9 +28,6 @@ public class TextureNoise extends TextureAtlasSprite {
     public final static float maxDensity = .4f, minDensity = .1f, changePerTick = .0002f;
     public final static int BOX_SIZE = 1;
 
-    // From SuperClass
-    private AnimationMetadataSection animationMetadata;
-
     protected TextureNoise(String par1Str) {
         super(par1Str);
        
@@ -99,81 +96,69 @@ public class TextureNoise extends TextureAtlasSprite {
     public void loadSprite(Resource par1Resource) throws IOException {
 
         // From SuperClass
-        AnimationMetadataSection animationmetadatasection = (AnimationMetadataSection) par1Resource.getMetadata("animation");
         this.height = finalImage.getHeight();
         this.width = finalImage.getWidth();
         int[] aint = new int[this.height * this.width];
         finalImage.getRGB(0, 0, this.width, this.height, aint, 0, this.width);
 
-        if (animationmetadatasection == null) {
-            if (this.height != this.width) {
-                throw new RuntimeException("broken aspect ratio and not an animation");
-            }
-
-            this.framesTextureData.add(aint);
-        } else {
+   
             int i = this.height / this.width;
             int j = this.width;
             int k = this.width;
             this.height = this.width;
             int l;
 
-            if (animationmetadatasection.getFrameCount() > 0) {
-                Iterator iterator = animationmetadatasection.getFrameIndexSet().iterator();
+            ArrayList arraylist = Lists.newArrayList();
 
-                while (iterator.hasNext()) {
-                    l = ((Integer) iterator.next()).intValue();
-
-                    if (l >= i) {
-                        throw new RuntimeException("invalid frameindex " + l);
-                    }
-
-                    this.allocateFrameTextureData(l);
-                    this.framesTextureData.set(l, getFrameTextureData(aint, j, k, l));
-                }
-
-                this.animationMetadata = animationmetadatasection;
-            } else {
-                ArrayList arraylist = Lists.newArrayList();
-
-                for (l = 0; l < i; ++l) {
-                    this.framesTextureData.add(getFrameTextureData(aint, j, k, l));
-                    arraylist.add(new AnimationFrame(l, -1));
-                }
-
-                this.animationMetadata = new AnimationMetadataSection(arraylist, this.width, this.height, animationmetadatasection.getFrameTime());
+            for (l = 0; l < i; ++l) {
+                this.framesTextureData.add(getFrameTextureData(aint, j, k, l));
+                arraylist.add(new AnimationFrame(l, -1));
             }
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private void allocateFrameTextureData(int par1) {
-        if (this.framesTextureData.size() <= par1) {
-            for (int j = this.framesTextureData.size(); j <= par1; ++j) {
-                this.framesTextureData.add((Object) null);
-            }
-        }
-    }
-
-    private static int[] getFrameTextureData(int[] par0ArrayOfInteger, int par1, int par2, int par3) {
-        int[] aint1 = new int[par1 * par2];
-        System.arraycopy(par0ArrayOfInteger, par3 * aint1.length, aint1, 0, aint1.length);
-        return aint1;
     }
 
     public void updateAnimation() {
+        //Covered in Errors
         ++this.tickCounter;
 
         if (this.tickCounter >= this.animationMetadata.getFrameTimeSingle(this.frameCounter)) {
+            
             int i = this.animationMetadata.getFrameIndex(this.frameCounter);
             int j = this.animationMetadata.getFrameCount() == 0 ? this.framesTextureData.size() : this.animationMetadata.getFrameCount();
+         
             this.frameCounter = (this.frameCounter + 1) % j;
             this.tickCounter = 0;
+         
             int k = this.animationMetadata.getFrameIndex(this.frameCounter);
 
             if (i != k && k >= 0 && k < this.framesTextureData.size()) {
                 TextureUtil.uploadTextureSub((int[]) this.framesTextureData.get(k), this.width, this.height, this.originX, this.originY, false, false);
             }
         }
+    }
+    
+    private static int[] getFrameTextureData(int[] par0ArrayOfInteger, int par1, int par2, int par3)
+    {
+        int[] aint1 = new int[par1 * par2];
+        System.arraycopy(par0ArrayOfInteger, par3 * aint1.length, aint1, 0, aint1.length);
+        return aint1;
+    }
+    
+    private void allocateFrameTextureData(int par1)
+    {
+        if (this.framesTextureData.size() <= par1)
+        {
+            for (int j = this.framesTextureData.size(); j <= par1; ++j)
+            {
+                this.framesTextureData.add((Object)null);
+            }
+        }
+    }
+    
+    public int[] getFrameTextureData(int par1) {
+        return (int[]) this.framesTextureData.get(par1);
+    }
+
+    public int getFrameCount() {
+        return this.framesTextureData.size();
     }
 }
