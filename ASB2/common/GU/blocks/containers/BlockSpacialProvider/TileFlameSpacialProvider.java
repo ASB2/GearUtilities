@@ -2,7 +2,7 @@ package GU.blocks.containers.BlockSpacialProvider;
 
 import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
-import GU.multiblock.MultBlockFlameSource;
+import GU.multiblock.MultiBlockFlameSource;
 
 public class TileFlameSpacialProvider extends TileSpacialProvider {
 
@@ -12,7 +12,7 @@ public class TileFlameSpacialProvider extends TileSpacialProvider {
 
     public void createLoadedStructure() {
 
-        MultBlockFlameSource chest = new MultBlockFlameSource(worldObj);
+        MultiBlockFlameSource chest = new MultiBlockFlameSource(worldObj);
         chest.load(bufferedMultiData);
 
         if (chest.isStructureValid()) {
@@ -22,7 +22,7 @@ public class TileFlameSpacialProvider extends TileSpacialProvider {
 
     public boolean createNewStructure(Cuboid size) {
 
-        MultBlockFlameSource chest = new MultBlockFlameSource(worldObj, size);
+        MultiBlockFlameSource chest = new MultiBlockFlameSource(worldObj, size);
 
         boolean spaceValid = chest.isStructureValid();
         UtilEntity.sendClientChat("Area Valid: " + spaceValid);

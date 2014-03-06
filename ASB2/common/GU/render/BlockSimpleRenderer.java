@@ -36,6 +36,10 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             renderer.setRenderBounds(-.001, -.001, -.001, 1.001, 1.001, 1.001);
             UtilRender.renderStandardInvBlock(renderer, block, EnumState.NONE.getStateIcon());
         }
+        if (block == BlockRegistry.BlockEtherealStone) {
+            UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.iconTexture);
+            return;
+        }
 
         // if (block.blockID == BlockRegistry.BlockItemStand.blockID) {
         //

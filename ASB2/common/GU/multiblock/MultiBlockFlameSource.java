@@ -12,16 +12,16 @@ import GU.blocks.containers.BlockSpacialProvider.TileFlameSpacialProvider;
 import GU.info.Variables;
 import GU.inventory.Inventory;
 
-public class MultBlockFlameSource extends MultiBlockBase implements IInventory {
+public class MultiBlockFlameSource extends MultiBlockBase implements IInventory {
 
     Inventory multiInventory = new Inventory(1, "Multi Flame Source");
 
-    public MultBlockFlameSource(World world, Cuboid size) {
+    public MultiBlockFlameSource(World world, Cuboid size) {
         super(world, size);
         init();
     }
 
-    public MultBlockFlameSource(World world) {
+    public MultiBlockFlameSource(World world) {
         super(world);
     }
 
