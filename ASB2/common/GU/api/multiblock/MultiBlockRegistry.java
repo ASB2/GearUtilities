@@ -28,13 +28,18 @@ public class MultiBlockRegistry {
      */
     private BiMap<Class<? extends IMultiBlock>, String> multiBlockModNames = HashBiMap.create();
 
-    public boolean registerMultiBlock(String modName, String multiBlockName, Class<? extends IMultiBlock> multiBlock) {
+    /**
+     * Maps Provided Mod To A MultiBlockHandler Name
+     */
+    private BiMap<String, IModMultiBlockHandler> multiBlockHandlers = HashBiMap.create();
 
-        try {
-            multiBlock.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-            GearUtilities.logger.log(Level.SEVERE, modName + " registered a multiblock that didnt pass test initilization");
+    public boolean registerMultiBlock(String modName, String multiBlockName, IModMultiBlockHandler multiBlockHandler, Class<? extends IMultiBlock> multiBlock) {
+
+        if (!multiBlockHandlers.containsKey(modName)) {
+
+            multiBlockHandlers.put(modName, multiBlockHandler);
+        } else {
+            GearUtilities.logger.log(Level.SEVERE, modName + " registered a multiblock handler that is already in the HashMap");
             return false;
         }
 
@@ -75,19 +80,39 @@ public class MultiBlockRegistry {
         return false;
     }
 
-    public Class<? extends IMultiBlock> getMultiBlockFromName(String name) {
+    public Class<? extends IMultiBlock> getMultiBlockClassFromMultiBlockName(String name) {
 
         return registeredMultiBlocks.get(name);
     }
 
-    public String getNameFromMultiBlock(Class<? extends IMultiBlock> multiBlock) {
+    public String getMultiBlockNameFromMultiBlockClass(Class<? extends IMultiBlock> multiBlock) {
 
         return registeredMultiBlocks.inverse().get(multiBlock);
     }
 
-    public String getModNameFromMultiBlock(Class<? extends IMultiBlock> multiBlock) {
+    public String getModNameFromMultiBlockClass(Class<? extends IMultiBlock> multiBlock) {
 
         return multiBlockModNames.get(multiBlock);
+    }
+
+    public IModMultiBlockHandler getMultiBlockHandlerNameFromMultiBlockName(String name) {
+
+        return multiBlockHandlers.get(multiBlockModNames.get(this.getMultiBlockClassFromMultiBlockName(name)));
+    }
+
+    public IModMultiBlockHandler getMultiBlockHandlerNameFromModName(String name) {
+
+        return multiBlockHandlers.get(name);
+    }
+
+    public String getModNameFromMultiBlock(String multiBlock) {
+
+        return multiBlockModNames.get(multiBlock);
+    }
+
+    public IMultiBlock getMultiBlockInstanceFromMutliBlockName(String multiBlockName) {
+
+        return getMultiBlockHandlerNameFromMultiBlockName(multiBlockName).getMultiBlockInstance(multiBlockName);
     }
 
     // public String getModNameFromMultiBlockName(String multiBlock) {

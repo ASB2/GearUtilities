@@ -20,7 +20,7 @@ public class TileMultiCore extends TileStuctureAir {
         if (isInMultiBlock && multiBlockSave == null) {
 
             IMultiBlock multi = this.multiBlocks.get(0);
-            multiBlockName = MultiBlockRegistry.getInstance().getNameFromMultiBlock(multi.getClass());
+            multiBlockName = MultiBlockRegistry.getInstance().getMultiBlockNameFromMultiBlockClass(multi.getClass());
             multiBlockSave = multi.save(new NBTTagCompound());
         }
         super.invalidate();
@@ -31,7 +31,7 @@ public class TileMultiCore extends TileStuctureAir {
 
         if (multiBlockSave != null && !multiBlockName.equalsIgnoreCase("")) {
 
-            Class<? extends IMultiBlock> multi = MultiBlockRegistry.getInstance().getMultiBlockFromName(multiBlockName);
+            Class<? extends IMultiBlock> multi = MultiBlockRegistry.getInstance().getMultiBlockClassFromMultiBlockName(multiBlockName);
 
             if (multi != null) {
 

@@ -201,22 +201,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
 
             if (found >= 3) {
 
-                IMultiBlock multiInstance = null;
-                Class<? extends IMultiBlock> multiBlockClass = MultiBlockRegistry.getInstance().getMultiBlockFromName(multiBlockName);
-
-                try {
-                    if (multiBlockClass != null) {
-                        multiInstance = multiBlockClass.newInstance();
-                    } else {
-                        UtilEntity.sendClientChat("Class isn't Avaliable");
-                    }
-                } catch (InstantiationException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                IMultiBlock multiInstance = MultiBlockRegistry.getInstance().getMultiBlockInstanceFromMutliBlockName(multiBlockName);
 
                 if (multiInstance != null) {
 
