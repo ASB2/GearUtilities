@@ -7,7 +7,7 @@ import GU.api.multiblock.MultiBlockRegistry;
 
 public class TileMultiCore extends TileStuctureAir {
 
-    String multiBlockName = " ";
+    String multiBlockName = "";
     NBTTagCompound multiBlockSave = null;
 
     public TileMultiCore() {
@@ -18,9 +18,9 @@ public class TileMultiCore extends TileStuctureAir {
     @Override
     public void invalidate() {
 
-        if (isInMultiBlock && multiBlockSave == null) {
+        IMultiBlock multi = this.multiBlocks.get(0);
+        if (multi != null && multi.isValid()) {
 
-            IMultiBlock multi = this.multiBlocks.get(0);
             multiBlockName = MultiBlockRegistry.getInstance().getMultiBlockNameFromMultiBlockClass(multi.getClass());
             multiBlockSave = multi.save(new NBTTagCompound());
         }
@@ -30,7 +30,7 @@ public class TileMultiCore extends TileStuctureAir {
     @Override
     public void validate() {
 
-        if (multiBlockSave != null && !multiBlockName.equalsIgnoreCase(" ")) {
+        if (multiBlockSave != null && !multiBlockName.equalsIgnoreCase("")) {
 
             IMultiBlock multiInstance = MultiBlockRegistry.getInstance().getMultiBlockInstanceFromMutliBlockName(multiBlockName);
 

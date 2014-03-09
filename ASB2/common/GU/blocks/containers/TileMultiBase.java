@@ -11,7 +11,7 @@ import GU.api.multiblock.IMultiBlockPart;
 
 public class TileMultiBase extends TileBase implements IMultiBlockPart {
 
-    protected boolean isInMultiBlock = false, destoryTileWithNotMultiBlock = false;
+    protected boolean isInMultiBlock = false, destoryTileWithNotMultiBlock = false, destroyBlockWithNoMultiBlock = false;
     protected List<IMultiBlock> multiBlocks = new ArrayList<IMultiBlock>(), unchangable = new ArrayList<IMultiBlock>();
     protected int fluidMultiBlocks, itemMultiBlock;
     protected int maxMultiBlocks = -1;
@@ -26,6 +26,10 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
         if (!this.isInMultiBlock && destoryTileWithNotMultiBlock) {
 
             worldObj.removeBlockTileEntity(xCoord, yCoord, zCoord);
+
+            if (destroyBlockWithNoMultiBlock) {
+                worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+            }
         }
     }
 

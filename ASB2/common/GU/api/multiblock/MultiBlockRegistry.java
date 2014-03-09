@@ -95,9 +95,9 @@ public class MultiBlockRegistry {
         return multiBlockModNames.get(multiBlock);
     }
 
-    public IModMultiBlockHandler getMultiBlockHandlerNameFromMultiBlockName(String name) {
+    public IModMultiBlockHandler getMultiBlockHandlerNameFromMultiBlockName(String multiName) {
 
-        return multiBlockHandlers.get(multiBlockModNames.get(this.getMultiBlockClassFromMultiBlockName(name)));
+        return multiBlockHandlers.get(multiBlockModNames.get(this.getMultiBlockClassFromMultiBlockName(multiName)));
     }
 
     public IModMultiBlockHandler getMultiBlockHandlerNameFromModName(String name) {
@@ -111,8 +111,12 @@ public class MultiBlockRegistry {
     }
 
     public IMultiBlock getMultiBlockInstanceFromMutliBlockName(String multiBlockName) {
-
-        return getMultiBlockHandlerNameFromMultiBlockName(multiBlockName).getMultiBlockInstance(multiBlockName);
+        IModMultiBlockHandler instance = getMultiBlockHandlerNameFromMultiBlockName(multiBlockName);
+        if (instance == null) {
+            GearUtilities.logger.log(Level.SEVERE, this.getModNameFromMultiBlock(multiBlockName) + " registered a multiblock handler that is null");
+            return null;
+        }
+        return instance.getMultiBlockInstance(multiBlockName);
     }
 
     public static MultiBlockRegistry getInstance() {

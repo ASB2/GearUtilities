@@ -87,6 +87,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
 
     public void createWorked() {
         isValid = true;
+        init();
     }
 
     @Override
