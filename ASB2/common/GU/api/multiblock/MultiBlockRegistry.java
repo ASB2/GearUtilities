@@ -115,10 +115,6 @@ public class MultiBlockRegistry {
         return getMultiBlockHandlerNameFromMultiBlockName(multiBlockName).getMultiBlockInstance(multiBlockName);
     }
 
-    // public String getModNameFromMultiBlockName(String multiBlock) {
-    //
-    // return registeredMultiBlocks.inverse().get(key)
-    // }
     public static MultiBlockRegistry getInstance() {
 
         return instance;

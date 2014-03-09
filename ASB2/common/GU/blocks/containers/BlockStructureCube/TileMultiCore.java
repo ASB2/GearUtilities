@@ -1,12 +1,13 @@
 package GU.blocks.containers.BlockStructureCube;
 
 import net.minecraft.nbt.NBTTagCompound;
+import ASB2.utils.UtilEntity;
 import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.MultiBlockRegistry;
 
 public class TileMultiCore extends TileStuctureAir {
 
-    String multiBlockName = "";
+    String multiBlockName = " ";
     NBTTagCompound multiBlockSave = null;
 
     public TileMultiCore() {
@@ -29,31 +30,17 @@ public class TileMultiCore extends TileStuctureAir {
     @Override
     public void validate() {
 
-        if (multiBlockSave != null && !multiBlockName.equalsIgnoreCase("")) {
+        if (multiBlockSave != null && !multiBlockName.equalsIgnoreCase(" ")) {
 
-            Class<? extends IMultiBlock> multi = MultiBlockRegistry.getInstance().getMultiBlockClassFromMultiBlockName(multiBlockName);
+            IMultiBlock multiInstance = MultiBlockRegistry.getInstance().getMultiBlockInstanceFromMutliBlockName(multiBlockName);
 
-            if (multi != null) {
+            if (multiInstance != null) {
 
-                IMultiBlock multiInstance = null;
-
-                try {
-
-                    multiInstance = multi.newInstance();
-                } catch (InstantiationException | IllegalAccessException e) {
-
-                    e.printStackTrace();
-                }
-
-                if (multiInstance != null) {
-
-                    multiInstance.setWorld(worldObj);
-                    multiInstance.load(multiBlockSave);
-                    multiInstance.create();
-                }
+                multiInstance.setWorld(worldObj);
+                multiInstance.load(multiBlockSave);
+                UtilEntity.sendClientChat("Structure Created:  " + multiInstance.create());
             }
         }
-
         multiBlockName = "";
         multiBlockSave = null;
         super.validate();
