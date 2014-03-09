@@ -12,22 +12,15 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilEntity;
-import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
-import GU.blocks.containers.BlockSpacialProvider.TileFluidSpacialProvider;
 import GU.info.Variables;
 
 public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
     public FluidTank fluidTank = new FluidTank(1000);
 
-    public MultiBlockTank(World world) {
-        super(world);
-    }
-
-    public MultiBlockTank(World world, Cuboid size) {
-        super(world, size);
-        init();
+    public MultiBlockTank() {
+        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -50,7 +43,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
     public boolean isValidCore(Vector3 vector, TileEntity tile) {
 
-        return tile.getClass() == TileFluidSpacialProvider.class;
+        return true;
     }
 
     @Override
@@ -121,7 +114,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ, boolean isAlone) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 
         if (this.isValid) {
             // UtilEntity.sendChatToPlayer(player, "Fluid: " +

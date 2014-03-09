@@ -3,6 +3,8 @@ package GU.blocks.containers.BlockStructureCube;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -18,7 +20,9 @@ public class BlockStructureAir extends ContainerBase {
     public BlockStructureAir(int id, Material material) {
         super(id, material);
         this.useStandardRendering = false;
-        this.registerTile(TileStuctureAir.class);
+
+        if (this.getClass() ==  BlockStructureAir.class)
+            this.registerTile(TileStuctureAir.class);
     }
 
     @SuppressWarnings("rawtypes")
@@ -65,6 +69,6 @@ public class BlockStructureAir extends ContainerBase {
     @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 
-        return new ArrayList<ItemStack>();
+        return Lists.newArrayList();
     }
 }

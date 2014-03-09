@@ -1,7 +1,6 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
 import java.util.List;
-import java.util.Set;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -32,10 +31,6 @@ public class BlockSpacialProvider extends ContainerBase {
         dropMetadata = true;
 
         this.registerTile(TileSpacialProvider.class);
-        this.registerTile(TileFluidSpacialProvider.class);
-        this.registerTile(TileFurnaceSpacialProvider.class);
-        this.registerTile(TileChestSpacialProvider.class);
-        this.registerTile(TileFlameSpacialProvider.class);
 
         MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 1);
         GameRegistry.registerBlock(this, GUItemBlock.class, "BlockSpacialProvider");
@@ -58,17 +53,17 @@ public class BlockSpacialProvider extends ContainerBase {
 
         TileSpacialProvider tile = (TileSpacialProvider) world.getBlockTileEntity(x, y, z);
 
-        Set<IMultiBlock> multiBlocks = tile.getComprisedMultiBlocks();
+        List<IMultiBlock> multiBlocks = tile.getComprisedMultiBlocks();
 
         if (multiBlocks.isEmpty() && player.getHeldItem() == null) {
 
             tile.createMultiBlock();
             return true;
-        } else if(!multiBlocks.isEmpty()){
+        } else if (!multiBlocks.isEmpty()) {
 
             for (IMultiBlock multi : multiBlocks) {
 
-                multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ, multiBlocks.size() == 1);
+                multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
             }
             return true;
         }
@@ -157,20 +152,20 @@ public class BlockSpacialProvider extends ContainerBase {
     @Override
     public TileEntity createTileEntity(World world, int metadata) {
 
-        switch (metadata) {
-
-            case STANDARD:
-                return new TileSpacialProvider();
-            case FLUID:
-                return new TileFluidSpacialProvider();
-            case FURNACE:
-                return new TileFurnaceSpacialProvider();
-            case CHEST:
-                return new TileChestSpacialProvider();
-            case FLAME:
-                return new TileFlameSpacialProvider();
-        }
-        return null;
+        // switch (metadata) {
+        //
+        // case STANDARD:
+        // return new TileSpacialProvider();
+        // case FLUID:
+        // return new TileFluidSpacialProvider();
+        // case FURNACE:
+        // return new TileFurnaceSpacialProvider();
+        // case CHEST:
+        // return new TileChestSpacialProvider();
+        // case FLAME:
+        // return new TileFlameSpacialProvider();
+        // }
+        return new TileSpacialProvider();
     }
 
     @Override

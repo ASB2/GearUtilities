@@ -25,8 +25,7 @@ import GU.blocks.containers.BlockMultiPanel.MultiPanelRenderer;
 import GU.blocks.containers.BlockMultiPanel.TileMultiPanel;
 import GU.blocks.containers.BlockQuantaSender.QuantSenderRenderer;
 import GU.blocks.containers.BlockQuantaSender.TileQuantaSender;
-import GU.blocks.containers.BlockSpacialProvider.SpacialProviderRenderer;
-import GU.blocks.containers.BlockSpacialProvider.TileSpacialProvider;
+import GU.blocks.containers.BlockStructureCube.MultiCoreRenderer;
 import GU.blocks.containers.BlockStructureCube.ReplacementStructureCubeRenderer;
 import GU.info.Gui;
 import GU.info.Models;
@@ -40,6 +39,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
+import GU.blocks.containers.BlockStructureCube.*;
 
 public class ClientProxy extends CommonProxy {
 
@@ -71,8 +71,8 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileElementalRefinery.class, ElementalRefineryRenderer.instance);
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockElementalRefinery.blockID, ElementalRefineryRenderer.instance);
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileSpacialProvider.class, SpacialProviderRenderer.instance);
-        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockSpacialProvider.blockID, SpacialProviderRenderer.instance);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileMultiCore.class, MultiCoreRenderer.instance);
+        MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockMultiCore.blockID, MultiCoreRenderer.instance);
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileFlameAltar.class, FlameAltarRenderer.instance);
         MinecraftForgeClient.registerItemRenderer(BlockRegistry.BlockFlameAltar.blockID, FlameAltarRenderer.instance);

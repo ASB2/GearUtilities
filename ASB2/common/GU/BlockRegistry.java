@@ -26,6 +26,7 @@ import GU.blocks.containers.BlockPowerTest.BlockPowerTest;
 import GU.blocks.containers.BlockQuantaSender.BlockQuantaSender;
 import GU.blocks.containers.BlockSmeltingCube.BlockSmeltingCube;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
+import GU.blocks.containers.BlockStructureCube.BlockMultiCore;
 import GU.blocks.containers.BlockStructureCube.BlockReplacementStructureCube;
 import GU.blocks.containers.BlockStructureCube.BlockStructureAir;
 import GU.blocks.containers.BlockStructureCube.BlockStructureCube;
@@ -57,6 +58,7 @@ public class BlockRegistry {
     public static ContainerBase BlockFlameAltar;
     public static ContainerBase BlockFlameConduit;
     public static ContainerBase BlockGlassPipe;
+    public static ContainerBase BlockMultiCore;
     
     private static int id = 500;
 
@@ -131,6 +133,9 @@ public class BlockRegistry {
     
         BlockGlassPipe = new BlockGlassPipe(BlockRegistry.getConfigID(config, "BlockGlassPipe"), Material.rock);
         addBlock(BlockGlassPipe, "Glass Pipe", "BlockGlassPipe");
+        
+        BlockMultiCore = new BlockMultiCore(BlockRegistry.getConfigID(config, "BlockMultiCore"), Material.rock);
+        addBlock(BlockMultiCore, "Multi Core", "BlockMultiCore");
     }
 
     public static Block addBlock(Block block, String ign, String unlocalizedName) {

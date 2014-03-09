@@ -5,10 +5,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
-import GU.blocks.containers.BlockSpacialProvider.TileChestSpacialProvider;
 import GU.info.Variables;
 import GU.inventory.Inventory;
 
@@ -16,13 +13,8 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
 
     Inventory multiInventory = new Inventory(1, "Multi Chest");
 
-    public MultiBlockChest(World world, Cuboid size) {
-        super(world, size);
-        init();
-    }
-
-    public MultiBlockChest(World world) {
-        super(world);
+    public MultiBlockChest() {
+        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -30,7 +22,7 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
         super.init();
         if (!multiInventory.hasLoaded()) {
 
-            if (Variables.COUNT_JUST_MULTI_CHEST_AIR_BLOCKS) {
+            if (Variables.CAN_USE_NON_STRUCURE_MULTI_BLOCKS) {
 
                 multiInventory.setSizeInventory((centerBlocks.getXSize() + 1) * (centerBlocks.getYSize() + 1) * (centerBlocks.getZSize() + 1) * 27);
             } else {
@@ -42,7 +34,7 @@ public class MultiBlockChest extends MultiBlockBase implements IInventory {
 
     public boolean isValidCore(Vector3 vector, TileEntity tile) {
 
-        return tile.getClass() == TileChestSpacialProvider.class;
+        return true;
     }
 
     @Override

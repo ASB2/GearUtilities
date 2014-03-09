@@ -33,18 +33,13 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     protected Cuboid size;
     protected Cuboid centerBlocks;
 
-    public MultiBlockBase(World world) {
-        this.worldObj = world;
+    public MultiBlockBase() {
     }
 
-    public MultiBlockBase(World world, Cuboid size) {
-        this(world);
-        this.size = size;
-    }
+    @Override
+    public boolean create() {
 
-    public boolean isStructureValid() {
-
-        if (this.getSize().getXSize() < 2 || this.getSize().getYSize() < 2 || this.getSize().getZSize() < 2) {
+        if (size.getXSize() < 2 || size.getYSize() < 2 || size.getZSize() < 2) {
 
             return false;
         }
@@ -76,11 +71,6 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
                 return false;
             }
         }
-        return size.iterate(this, 0);
-    }
-
-    @Override
-    public boolean create() {
 
         if (size.iterate(this, 1)) {
 
@@ -96,20 +86,14 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     }
 
     public void createWorked() {
-
+        isValid = true;
     }
 
     @Override
     public boolean iterate(Vector3 vector, Object... providedInfo) {
 
-        // Is Area Valid
-        if ((Integer) providedInfo[0] == 0) {
-
-            return checkArea(vector);
-        }
-
         // Create Multiblock
-        if ((Integer) providedInfo[0] == 1) {
+        if ((int) providedInfo[0] == 1) {
 
             if (!createMultiblock(vector)) {
 
@@ -120,56 +104,10 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
         }
 
         // Destroy Multiblock
-        if ((Integer) providedInfo[0] == 2) {
+        if ((int) providedInfo[0] == 2) {
 
             destoryMultiblock(vector);
             return true;
-        }
-        return false;
-    }
-
-    public boolean checkArea(Vector3 vector) {
-
-        TileEntity tile = vector.getTileEntity(this.getWorldObj());
-
-        if (tile != null) {
-
-            if (tile instanceof IMultiBlockPart) {
-
-                return true;
-            }
-        } else {
-
-            Block block = vector.getBlock(this.getWorldObj());
-
-            if (block != null && block instanceof ISpecialTileMultiBlock) {
-
-                return true;
-            } else if (block == null || block.isAirBlock(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
-
-                if (centerBlocks.contains(vector)) {
-
-                    return true;
-                }
-            } else {
-
-                if ((this instanceof MultiBlockChest && Variables.CAN_USE_NON_STRUCURE_MULTI_CHEST_BLOCKS) || (this instanceof MultiBlockTank && Variables.CAN_USE_NON_STRUCURE_MULTI_TANK_BLOCKS)) {
-
-                    if (block != null && !block.hasTileEntity(vector.getBlockMetadata(getWorldObj()))) {
-
-                        if (size.getEdges().contains(vector)) {
-
-                            if (block.isOpaqueCube() || (block instanceof ISpecialMultiBlockOpaque && ((ISpecialMultiBlockOpaque) block).isTrueOpaqueCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ()))) {
-
-                                return true;
-                            }
-                        } else {
-
-                            return true;
-                        }
-                    }
-                }
-            }
         }
         return false;
     }
@@ -190,12 +128,17 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
 
                 if (centerBlocks.contains(vector)) {
 
-                    vector.setBlock(this.getWorldObj(), BlockRegistry.BlockStructureAir.blockID);
-                    return true;
+                    if (this.centerBlocks.getCore().add(0, centerBlocks.getRelativeYSize(), 0).intEquals(vector)) {
+
+                        vector.setBlock(this.getWorldObj(), BlockRegistry.BlockMultiCore.blockID);
+                    } else {
+                        vector.setBlock(this.getWorldObj(), BlockRegistry.BlockStructureAir.blockID);
+                    }
+                    tile = vector.getTileEntity(this.getWorldObj());
                 }
             } else if (tile == null) {
 
-                if (Variables.CAN_USE_NON_STRUCURE_MULTI_CHEST_BLOCKS) {
+                if (Variables.CAN_USE_NON_STRUCURE_MULTI_BLOCKS) {
 
                     int metadata = vector.getBlockMetadata(getWorldObj());
 
@@ -281,6 +224,12 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     }
 
     @Override
+    public void update() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
     public void setWorld(World world) {
 
         worldObj = world;
@@ -293,21 +242,22 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     }
 
     @Override
-    public Set<Vector3> getContainingBlocks() {
-
-        return composingBlock;
-    }
-
-    @Override
-    public Set<Vector3> getMultiBlockInterfaces() {
-
-        return fluidMultiBlockInterfaces;
+    public boolean setSize(Cuboid size) {
+        this.size = size;
+        this.centerBlocks = size.clone().squareShrink(2, 2, 2);
+        return true;
     }
 
     @Override
     public Cuboid getSize() {
 
         return size.clone();
+    }
+
+    @Override
+    public boolean isValid() {
+
+        return isValid;
     }
 
     @Override
@@ -330,14 +280,14 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ, boolean hi) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 
         UtilEntity.sendChatToPlayer(player, "Cuboid Size: " + this.size);
         return false;
     }
 
     @Override
-    public void update() {
+    public void render(double x, double y, double z) {
         // TODO Auto-generated method stub
 
     }

@@ -10,20 +10,22 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import ASB2.utils.UtilEntity;
 import ASB2.vector.Cuboid;
 import ASB2.vector.Vector3;
 import GU.EnumState;
+import GU.MultiRegistry;
 import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockCore;
 import GU.api.multiblock.ISpecialTileMultiBlock;
+import GU.api.multiblock.MultiBlockRegistry;
 import GU.blocks.containers.TileMultiBase;
 
 public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCore {
 
     public static final int MAX_DISTANCE = 16;
-    protected boolean hasBufferedCreateMultiBlock = false;
-    protected NBTTagCompound bufferedMultiData;
     public Set<IMultiBlock> iAmCoreOfMultiBlocks = new HashSet<IMultiBlock>();
+    public static final String[] multiBlockNames = new String[] { "", MultiRegistry.MultiBlockTankName, MultiRegistry.MultiBlockFurnaceName, MultiRegistry.MultiBlockChestName, MultiRegistry.MultiBlockFlameSourceName };
 
     public TileSpacialProvider() {
 
@@ -33,13 +35,6 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
 
     @Override
     public void updateEntity() {
-
-        if (hasBufferedCreateMultiBlock) {
-
-            this.createMultiBlock();
-            hasBufferedCreateMultiBlock = false;
-            bufferedMultiData = null;
-        }
 
         for (IMultiBlock multi : iAmCoreOfMultiBlocks) {
 
@@ -183,25 +178,11 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
         return height * -1;
     }
 
-    @Override
-    public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
-
-        ForgeDirection direction = ForgeDirection.getOrientation(side);
-
-        if (isSneaking) {
-            direction = direction.getOpposite();
-        }
-        if (sideState[direction.ordinal()] == EnumState.OUTPUT) {
-            sideState[direction.ordinal()] = EnumState.NONE;
-        } else {
-            sideState[direction.ordinal()] = EnumState.OUTPUT;
-        }
-        world.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
-    }
-
     public boolean createMultiBlock() {
 
-        if (getComprisedMultiBlocks().isEmpty()) {
+        String multiBlockName = multiBlockNames[this.getBlockMetadata()];
+
+        if (multiBlocks.isEmpty() && !multiBlockName.equalsIgnoreCase("")) {
 
             int found = 0;
 
@@ -218,23 +199,36 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
                 }
             }
 
-            if (found > 0) {
+            if (found >= 3) {
 
-                return createNewStructure(new Cuboid(new Vector3(xCoord, yCoord, zCoord), getMultiBlockXChange(), getMultiBlockYChange(), getMultiBlockZChange()));
+                IMultiBlock multiInstance = null;
+                Class<? extends IMultiBlock> multiBlockClass = MultiBlockRegistry.getInstance().getMultiBlockFromName(multiBlockName);
 
+                try {
+                    if (multiBlockClass != null) {
+                        multiInstance = multiBlockClass.newInstance();
+                    } else {
+                        UtilEntity.sendClientChat("Class isn't Avaliable");
+                    }
+                } catch (InstantiationException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                if (multiInstance != null) {
+
+                    multiInstance.setWorld(worldObj);
+                    multiInstance.setSize(new Cuboid(new Vector3(xCoord, yCoord, zCoord), getMultiBlockXChange(), getMultiBlockYChange(), getMultiBlockZChange()));
+                    UtilEntity.sendClientChat("Structure Created:  " + multiInstance.create());
+                    return true;
+                }
+                return false;
             }
-            return false;
-
-        } else if (this.bufferedMultiData != null) {
-
-            createLoadedStructure();
-            return true;
         }
         return false;
-    }
-
-    public void createLoadedStructure() {
-
     }
 
     public boolean createNewStructure(Cuboid size) {
@@ -243,32 +237,28 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     }
 
     @Override
+    public void triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
+
+        ForgeDirection direction = ForgeDirection.getOrientation(side);
+
+        if (isSneaking) {
+            direction = direction.getOpposite();
+        }
+        if (sideState[direction.ordinal()] == EnumState.OUTPUT) {
+            sideState[direction.ordinal()] = EnumState.NONE;
+        } else {
+            sideState[direction.ordinal()] = EnumState.OUTPUT;
+        }
+        world.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+    }
+
+    @Override
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
-
-        if (!iAmCoreOfMultiBlocks.isEmpty()) {
-
-            int position = 0;
-
-            for (IMultiBlock multi : iAmCoreOfMultiBlocks) {
-
-                tag.setCompoundTag("multiBlockSave" + position, multi.save(new NBTTagCompound()));
-                position++;
-            }
-            tag.setBoolean("isInMultiBlock", isInMultiBlock);
-            tag.setInteger("numberCoreMultiBlocks", position);
-        }
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-
-        hasBufferedCreateMultiBlock = tag.getBoolean("isInMultiBlock");
-
-        if (hasBufferedCreateMultiBlock) {
-
-            bufferedMultiData = tag.getCompoundTag("multiBlockSave");
-        }
     }
 }

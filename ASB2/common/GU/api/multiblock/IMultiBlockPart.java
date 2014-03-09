@@ -1,12 +1,12 @@
 package GU.api.multiblock;
 
-import java.util.Set;
+import java.util.List;
 
 public interface IMultiBlockPart {
-    
+
     boolean addMultiBlock(IMultiBlock multiBlock);
-    
+
     void removeMultiBlock(IMultiBlock multiBlock);
-    
-    Set<IMultiBlock> getComprisedMultiBlocks();
+
+    List<IMultiBlock> getComprisedMultiBlocks();
 }

@@ -1,21 +1,15 @@
 package GU.multiblock;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import ASB2.vector.Cuboid;
-import ASB2.vector.Vector3;
-import GU.blocks.containers.BlockSpacialProvider.TileFurnaceSpacialProvider;
 import GU.inventory.Inventory;
 
 public class MultiBlockFurnace extends MultiBlockBase implements ISidedInventory, IFluidHandler {
@@ -26,52 +20,8 @@ public class MultiBlockFurnace extends MultiBlockBase implements ISidedInventory
     Inventory multiInventory = new Inventory(6, "Multi Furnace", true);
     FluidTank fluidTank = new FluidTank(0);
 
-    public MultiBlockFurnace(World world, Cuboid size) {
-        super(world, size);
-        fluidTank.setCapacity((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1) * 1000);
-    }
-
-    public MultiBlockFurnace(World world) {
-        super(world);
-    }
-
-    public boolean isStructureValid() {
-
-        // if ((this.size.getXSize() + 1) % 2 == 0 || (this.size.getYSize() + 1) % 2 == 0 || (this.size.getZSize() + 1) % 2 == 0) {
-        //
-        // return false;
-        // }
-
-        if (size.getXSize() + 1 < 3 || size.getYSize() + 1 < 5 || size.getZSize() + 1 < 3) {
-
-            return false;
-        }
-
-        for (Vector3 vector : size.getCornerBlocks()) {
-
-            TileEntity tile = vector.getTileEntity(worldObj);
-
-            if (tile == null || !(tile instanceof TileFurnaceSpacialProvider)) {
-
-                return false;
-            }
-        }
-
-        for (Vector3 vector : size.getEdges()) {
-
-            Block block = vector.getBlock(getWorldObj());
-
-            if (block == null || !block.isBlockNormalCube(getWorldObj(), vector.intX(), vector.intY(), vector.intZ())) {
-
-                return false;
-            }
-        }
-        return size.iterate(this, 0);
-    }
-
-    public boolean isValidCore(Vector3 vector, TileEntity tile) {
-
-        return tile.getClass() == TileFurnaceSpacialProvider.class;
+    public MultiBlockFurnace() {
+        // TODO Auto-generated constructor stub
     }
 
     @Override

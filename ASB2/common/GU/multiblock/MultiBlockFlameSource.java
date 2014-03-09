@@ -4,11 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import ASB2.vector.Cuboid;
-import ASB2.vector.Vector3;
-import GU.blocks.containers.BlockSpacialProvider.TileFlameSpacialProvider;
 import GU.info.Variables;
 import GU.inventory.Inventory;
 
@@ -16,13 +11,8 @@ public class MultiBlockFlameSource extends MultiBlockBase implements IInventory 
 
     Inventory multiInventory = new Inventory(1, "Multi Flame Source");
 
-    public MultiBlockFlameSource(World world, Cuboid size) {
-        super(world, size);
-        init();
-    }
-
-    public MultiBlockFlameSource(World world) {
-        super(world);
+    public MultiBlockFlameSource() {
+        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -33,7 +23,7 @@ public class MultiBlockFlameSource extends MultiBlockBase implements IInventory 
 
         if (!multiInventory.hasLoaded()) {
 
-            if (Variables.COUNT_JUST_MULTI_CHEST_AIR_BLOCKS) {
+            if (Variables.CAN_USE_NON_STRUCURE_MULTI_BLOCKS) {
 
                 multiInventory.setSizeInventory((centerBlocks.getXSize() + 1) * (centerBlocks.getYSize() + 1) * (centerBlocks.getZSize() + 1) * 27);
             } else {
@@ -41,11 +31,6 @@ public class MultiBlockFlameSource extends MultiBlockBase implements IInventory 
                 multiInventory.setSizeInventory(((size.getXSize() + 1) * (size.getYSize() + 1) * (size.getZSize() + 1)) * 27);
             }
         }
-    }
-
-    public boolean isValidCore(Vector3 vector, TileEntity tile) {
-
-        return tile.getClass() == TileFlameSpacialProvider.class;
     }
 
     @Override

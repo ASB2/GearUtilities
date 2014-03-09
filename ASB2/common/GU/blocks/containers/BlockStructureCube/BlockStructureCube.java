@@ -1,7 +1,6 @@
 package GU.blocks.containers.BlockStructureCube;
 
 import java.util.List;
-import java.util.Set;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -108,13 +107,13 @@ public class BlockStructureCube extends ContainerBase implements ISpecialTileMul
 
         if (tile != null) {
 
-            Set<IMultiBlock> multiBlocks = tile.getComprisedMultiBlocks();
+            List<IMultiBlock> multiBlocks = tile.getComprisedMultiBlocks();
 
             if (!multiBlocks.isEmpty()) {
 
                 for (IMultiBlock multi : multiBlocks) {
 
-                    multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ, multiBlocks.size() == 1);
+                    multi.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
                 }
                 return true;
             }

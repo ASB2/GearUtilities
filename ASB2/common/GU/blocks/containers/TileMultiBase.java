@@ -1,8 +1,8 @@
 package GU.blocks.containers;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.fluids.IFluidHandler;
@@ -12,7 +12,7 @@ import GU.api.multiblock.IMultiBlockPart;
 public class TileMultiBase extends TileBase implements IMultiBlockPart {
 
     protected boolean isInMultiBlock = false, destoryTileWithNotMultiBlock = false;
-    protected Set<IMultiBlock> multiBlocks = new HashSet<IMultiBlock>(), unchangable = new HashSet<IMultiBlock>();
+    protected List<IMultiBlock> multiBlocks = new ArrayList<IMultiBlock>(), unchangable = new ArrayList<IMultiBlock>();
     protected int fluidMultiBlocks, itemMultiBlock;
     protected int maxMultiBlocks = -1;
 
@@ -54,7 +54,7 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
         }
         if (multiBlocks.add(multiBlock)) {
             isInMultiBlock = true;
-            unchangable = Collections.unmodifiableSet(multiBlocks);
+            unchangable = Collections.unmodifiableList(multiBlocks);
             return true;
         }
         return false;
@@ -72,12 +72,12 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
         }
 
         multiBlocks.remove(multiBlock);
-        unchangable = Collections.unmodifiableSet(multiBlocks);
+        unchangable = Collections.unmodifiableList(multiBlocks);
         isInMultiBlock = multiBlocks.isEmpty() ? false : true;
     }
 
     @Override
-    public Set<IMultiBlock> getComprisedMultiBlocks() {
+    public List<IMultiBlock> getComprisedMultiBlocks() {
 
         return unchangable;
     }
