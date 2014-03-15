@@ -35,49 +35,29 @@ public class MultiBlockRegistry {
 
     public boolean registerMultiBlock(String modName, String multiBlockName, IModMultiBlockHandler multiBlockHandler, Class<? extends IMultiBlock> multiBlock) {
 
-        if (!multiBlockHandlers.containsKey(modName)) {
-
-            multiBlockHandlers.put(modName, multiBlockHandler);
-        } else {
-            GearUtilities.logger.log(Level.SEVERE, modName + " registered a multiblock handler that is already in the HashMap");
-            return false;
-        }
-
         Set<String> multiList = multiBlockRegisterer.get(modName);
 
-        if (!registeredMultiBlocks.containsKey(multiBlockName)) {
+        if (!multiBlockHandlers.containsKey(modName) && !registeredMultiBlocks.containsKey(multiBlockName) && !multiBlockModNames.containsKey(multiBlock) && !multiBlockModNames.containsValue(modName)) {
+
+            multiBlockHandlers.put(modName, multiBlockHandler);
 
             registeredMultiBlocks.put(multiBlockName, multiBlock);
 
-            if (!multiBlockModNames.containsKey(multiBlock) && !multiBlockModNames.containsValue(modName)) {
-                multiBlockModNames.put(multiBlock, modName);
-            }
+            multiBlockModNames.put(multiBlock, modName);
+
             if (multiList == null) {
 
                 multiList = new HashSet<String>();
                 multiBlockRegisterer.put(modName, multiList);
-            }
-
-            if (!multiList.contains(multiBlockName)) {
 
                 multiList.add(multiBlockName);
-                return true;
             }
+            return true;
+
         } else {
-
-            GearUtilities.logger.log(Level.SEVERE, modName + " registered a multiblock that is already in the HashMap");
+            GearUtilities.logger.log(Level.SEVERE, modName + " registered a multiblock handler that is already in the HashMap");
+            return false;
         }
-
-        // If it gets to this point it didnt work.
-        registeredMultiBlocks.remove(multiBlockName);
-
-        if (multiList != null) {
-
-            multiList.remove(multiBlockName);
-        }
-        multiBlockRegisterer.remove(modName);
-        multiBlockModNames.remove(multiBlock);
-        return false;
     }
 
     public Class<? extends IMultiBlock> getMultiBlockClassFromMultiBlockName(String name) {

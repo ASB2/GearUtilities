@@ -27,6 +27,7 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
 
     protected World worldObj;
     protected boolean isValid = false;
+    //TODO Remove composing blocks array
     protected Set<Vector3> composingBlock = new HashSet<Vector3>();
     protected Set<Vector3> fluidMultiBlockInterfaces = new HashSet<Vector3>(), itemMultiBlockInterfaces = new HashSet<Vector3>(), powerMultiBlockInterfaces = new HashSet<Vector3>();
     protected Set<Vector3> multiBlockCores = new HashSet<Vector3>();
@@ -264,14 +265,14 @@ public class MultiBlockBase implements IMultiBlock, ICuboidIterator {
     @Override
     public NBTTagCompound save(NBTTagCompound tag) {
 
-        size.save(tag);
+        tag.setCompoundTag("CuboidData", size.save(new NBTTagCompound()));
         return tag;
     }
 
     @Override
     public void load(NBTTagCompound tag) {
 
-        this.size = Cuboid.load(tag);
+        this.size = Cuboid.load(tag.getCompoundTag("CuboidData"));
         init();
     }
 

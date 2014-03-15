@@ -36,10 +36,10 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     @Override
     public void updateEntity() {
 
-        for (IMultiBlock multi : iAmCoreOfMultiBlocks) {
-
-            multi.update();
-        }
+//        for (IMultiBlock multi : iAmCoreOfMultiBlocks) {
+//
+//            multi.update();
+//        }
         super.updateEntity();
     }
 

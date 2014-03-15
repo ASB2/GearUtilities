@@ -29,7 +29,7 @@ public class TileStuctureAir extends TileMultiBase {
     @Override
     public void trigger(int id) {
 
-        if (multiBlocks.isEmpty() && !worldObj.isRemote) {
+        if (multiBlocks.isEmpty()) {
 
             worldObj.setBlockToAir(xCoord, yCoord, zCoord);
         }

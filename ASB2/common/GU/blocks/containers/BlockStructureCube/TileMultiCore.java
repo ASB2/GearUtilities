@@ -17,33 +17,45 @@ public class TileMultiCore extends TileStuctureAir {
 
     @Override
     public void invalidate() {
+//        super.invalidate();
+        this.tileEntityInvalid = true;
+        if (multiBlocks.size() > 0) {
 
-        IMultiBlock multi = this.multiBlocks.get(0);
-        if (multi != null && multi.isValid()) {
+            IMultiBlock multi = this.multiBlocks.get(0);
+            if (multi != null && multi.isValid()) {
 
-            multiBlockName = MultiBlockRegistry.getInstance().getMultiBlockNameFromMultiBlockClass(multi.getClass());
-            multiBlockSave = multi.save(new NBTTagCompound());
+                multiBlockName = MultiBlockRegistry.getInstance().getMultiBlockNameFromMultiBlockClass(multi.getClass());
+                multiBlockSave = multi.save(new NBTTagCompound());
+            }
         }
-        super.invalidate();
     }
 
     @Override
     public void validate() {
+        super.validate();
 
-        if (multiBlockSave != null && !multiBlockName.equalsIgnoreCase("")) {
+        if (!multiBlockName.equalsIgnoreCase("")) {
+            
+            if (multiBlockSave != null) {
 
-            IMultiBlock multiInstance = MultiBlockRegistry.getInstance().getMultiBlockInstanceFromMutliBlockName(multiBlockName);
+                IMultiBlock multiInstance = MultiBlockRegistry.getInstance().getMultiBlockInstanceFromMutliBlockName(multiBlockName);
 
-            if (multiInstance != null) {
+                if (multiInstance != null) {
 
-                multiInstance.setWorld(worldObj);
-                multiInstance.load(multiBlockSave);
-                UtilEntity.sendClientChat("Structure Created:  " + multiInstance.create());
+                    multiInstance.setWorld(worldObj);
+                    multiInstance.load(multiBlockSave);
+                    UtilEntity.sendClientChat("Structure Created:  " + multiInstance.create());
+                }
+                multiBlockName = "";
+                multiBlockSave = null;
             }
         }
-        multiBlockName = "";
-        multiBlockSave = null;
-        super.validate();
+    }
+
+    @Override
+    public void updateEntity() {
+
+        super.updateEntity();
     }
 
     @Override

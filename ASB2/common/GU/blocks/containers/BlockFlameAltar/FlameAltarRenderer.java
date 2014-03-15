@@ -10,10 +10,8 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
-import ASB2.utils.UtilRender;
 import GU.info.Models;
 import GU.info.Reference;
-import GU.info.Textures;
 import GU.render.NoiseManager;
 
 public class FlameAltarRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
@@ -27,19 +25,15 @@ public class FlameAltarRenderer extends TileEntitySpecialRenderer implements IIt
 
         GL11.glPushMatrix();
 
-        GL11.glTranslated(x + 0.5F, y + .25f, z + .5F);
+        GL11.glTranslated(x + 0.5F, y + .5f, z + .5F);
 
-        GL11.glScalef(.5f, .5f, .5f);
-
-        UtilRender.renderTexture(Textures.FLAME_ALTAR_CUBE);
-        Models.ModelFlameAltar.renderPart("Cube");
-
-        GL11.glTranslated(0, 1, 0);
+        GL11.glScalef(.2f, .2f, .2f);
 
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
+
         NoiseManager.bindImage();
-        Models.ModelFlameFocus.renderPart("Hexagon");
+        Models.ModelFlameAltar.renderAll();
 
         GL11.glPopMatrix();
 
@@ -76,13 +70,13 @@ public class FlameAltarRenderer extends TileEntitySpecialRenderer implements IIt
 
             case INVENTORY: {
 
-                renderItemSwitched(type, item, 0f, 0f, 0f, .5F);
+                renderItemSwitched(type, item, 0f, 0f, 0f, .2F);
                 return;
             }
 
             case EQUIPPED_FIRST_PERSON: {
 
-                renderItemSwitched(type, item, -.5F, 1f, .5F, .5F);
+                renderItemSwitched(type, item, -.5F, 1f, .5F, .2F);
                 return;
             }
 
@@ -99,18 +93,11 @@ public class FlameAltarRenderer extends TileEntitySpecialRenderer implements IIt
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
-        UtilRender.renderTexture(Textures.FLAME_ALTAR_CUBE);
-        Models.ModelFlameAltar.renderPart("Cube");
-
-        GL11.glScaled(1.1, 1.1, 1.1);
-
-        GL11.glTranslated(0, .7, 0);
-
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
 
         // UtilRender.renderTexture(Textures.FLAME_ALTAR_HEXAGON);
         NoiseManager.bindImage();
-        Models.ModelFlameFocus.renderPart("Hexagon");
+        Models.ModelFlameAltar.renderAll();
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();

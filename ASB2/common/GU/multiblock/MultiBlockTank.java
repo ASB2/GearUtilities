@@ -124,7 +124,7 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
 
             UtilEntity.sendChatToPlayer(player, "Fluid Amount: " + this.fluidTank.getFluidAmount() + " / " + fluidTank.getCapacity());
         } else {
-            UtilEntity.sendChatToPlayer(player, "Fix me idiot");
+            UtilEntity.sendChatToPlayer(player, "Im not Valids");
         }
         return false;
     }
@@ -132,14 +132,14 @@ public class MultiBlockTank extends MultiBlockBase implements IFluidHandler {
     @Override
     public NBTTagCompound save(NBTTagCompound tag) {
 
-        fluidTank.writeToNBT(tag);
+        tag.setCompoundTag("TankData", fluidTank.writeToNBT(new NBTTagCompound()));
         return super.save(tag);
     }
 
     @Override
     public void load(NBTTagCompound tag) {
 
-        fluidTank.readFromNBT(tag);
+        fluidTank.readFromNBT(tag.getCompoundTag("TankData"));
         super.load(tag);
     }
 }
