@@ -15,7 +15,8 @@ public final class Models {
     public static WavefrontObject ModelGlassPipe;
     public static WavefrontObject ModelGyro;
     public static WavefrontObject ModelFlameShard;
-
+    public static WavefrontObject ModelFlameConduit;
+    
     private static final String MULTI_PANEL = Reference.RESOURCE_LOCATION + "models/ModelMultiPanel.obj";
     private static final String CRYSTAL_1 = Reference.RESOURCE_LOCATION + "models/ModelCrystal1.obj";
     private static final String ESSENCE_DIFFUSER = Reference.RESOURCE_LOCATION + "models/ModelEssenceDiffuser.obj";
@@ -26,7 +27,8 @@ public final class Models {
     public static final String GLASS_PIPE = Reference.RESOURCE_LOCATION + "models/ModelGlassPipe.obj";
     public static final String GYRO = Reference.RESOURCE_LOCATION + "models/ModelGyro.obj";
     public static final String FLAME_SHARD = Reference.RESOURCE_LOCATION + "models/ModelFlameShard.obj";
-
+    public static final String FLAME_CONDUIT = Reference.RESOURCE_LOCATION + "models/ModelFlameConduit.obj";
+    
     public static void initModels() {
 
         ModelMultiPanel = (WavefrontObject) AdvancedModelLoader.loadModel(Models.MULTI_PANEL);
@@ -39,5 +41,6 @@ public final class Models {
         ModelGlassPipe = (WavefrontObject) AdvancedModelLoader.loadModel(Models.GLASS_PIPE);
         ModelGyro = (WavefrontObject) AdvancedModelLoader.loadModel(Models.GYRO);
         ModelFlameShard = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_SHARD);
+        ModelFlameConduit = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_CONDUIT);
     }
 }

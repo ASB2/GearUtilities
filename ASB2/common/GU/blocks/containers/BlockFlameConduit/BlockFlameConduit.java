@@ -11,7 +11,7 @@ public class BlockFlameConduit extends ContainerBase {
 
     public BlockFlameConduit(int id, Material material) {
         super(id, material);
-        this.specialMetadata = true;
+//        this.specialMetadata = true;
         this.dropMetadata = true;
         this.useStandardRendering = false;
         this.setLightOpacity(0);

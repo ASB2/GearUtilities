@@ -17,6 +17,7 @@ public class TileMultiCore extends TileStuctureAir {
 
     @Override
     public void invalidate() {
+        super.invalidate();
 
         if (super.multiBlocks.size() == 1) {
 
@@ -28,7 +29,6 @@ public class TileMultiCore extends TileStuctureAir {
                 multiBlockSave = multi.save(new NBTTagCompound());
             }
         }
-        super.invalidate();
     }
 
     @Override

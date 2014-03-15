@@ -28,6 +28,8 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
 
+        GL11.glScalef(.5f, .5f, .5f);
+        
         switch (((TileBase) tileentity).getOrientation()) {
 
             case UP: {
@@ -71,7 +73,6 @@ public class MultiPanelRenderer extends TileEntitySpecialRenderer implements IIt
             }
         }
 
-        GL11.glScalef(.5f, .5f, .5f);
 
         UtilRender.renderTexture(Textures.MULTI_PANEL);
         Models.ModelMultiPanel.renderPart("Panel");

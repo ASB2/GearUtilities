@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilRender;
 import GU.api.flame.EnumFlameType;
+import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
@@ -28,19 +29,60 @@ public class FlameConduitRenderer extends TileEntitySpecialRenderer implements I
 
         GL11.glPushMatrix();
 
-        GL11.glTranslated(x + 0.5F, y + .25f, z + .5F);
+        
+        switch (((TileBase) tileentity).getOrientation()) {
+
+            case UP: {
+
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .07f, (float) z + .5F);
+                break;
+            }
+            case DOWN: {
+
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .94F, (float) z + .5F);
+                GL11.glRotatef(180F, 1F, 0F, 0F);
+                break;
+            }
+
+            case SOUTH: {
+
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + 0.07F);
+                GL11.glRotatef(90F, 1F, 0F, 0F);
+                break;
+            }
+            case NORTH: {
+
+                GL11.glTranslatef((float) x + 0.5F, (float) y + .5F, (float) z + .93F);
+                GL11.glRotatef(-90F, 1F, 0F, 0F);
+                break;
+            }
+            case WEST: {
+
+                GL11.glTranslatef((float) x + .94F, (float) y + .5F, (float) z + .5F);
+                GL11.glRotatef(90F, 0F, 0F, 1F);
+                break;
+            }
+            case EAST: {
+
+                GL11.glTranslatef((float) x + .07F, (float) y + .5F, (float) z + .5F);
+                GL11.glRotatef(-90F, 0F, 0F, 1F);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
 
         GL11.glScalef(.5f, .5f, .5f);
 
-        UtilRender.renderTexture(Textures.FLAME_ALTAR_CUBE);
-        Models.ModelFlameAltar.renderPart("Cube");
-
-        GL11.glTranslated(0, 1, 0);
-
+        NoiseManager.bindImage();
+        Models.ModelFlameConduit.renderPart("Cube");
+        
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
+
         NoiseManager.bindImage();
-        Models.ModelFlameFocus.renderPart("Hexagon");
+        Models.ModelFlameConduit.renderPart("Hexagon_Cylinder");
 
         GL11.glPopMatrix();
 
@@ -100,18 +142,14 @@ public class FlameConduitRenderer extends TileEntitySpecialRenderer implements I
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
 
-        UtilRender.renderTexture(Textures.FLAME_ALTAR_CUBE);
-        Models.ModelFlameAltar.renderPart("Cube");
-
-        GL11.glScaled(1.1, 1.1, 1.1);
-
-        GL11.glTranslated(0, .7, 0);
+        NoiseManager.bindImage();
+        Models.ModelFlameConduit.renderPart("Cube");
 
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
+        GL11.glColor3f(EnumFlameType.CLEAR.getFlameColor().getRed() / 255.0f, EnumFlameType.CLEAR.getFlameColor().getGreen() / 255.0f, EnumFlameType.CLEAR.getFlameColor().getBlue() / 255.0f);
 
-        // UtilRender.renderTexture(Textures.FLAME_ALTAR_HEXAGON);
         NoiseManager.bindImage();
-        Models.ModelFlameFocus.renderPart("Hexagon");
+        Models.ModelFlameConduit.renderPart("Hexagon_Cylinder");
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
