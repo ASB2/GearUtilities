@@ -3,8 +3,6 @@ package GU.blocks.containers.BlockStructureCube;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -13,9 +11,11 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import GU.api.multiblock.IMultiBlockPart;
-import GU.blocks.containers.ContainerBase;
+import GU.blocks.containers.BlockMultiBase;
 
-public class BlockStructureAir extends ContainerBase {
+import com.google.common.collect.Lists;
+
+public class BlockStructureAir extends BlockMultiBase {
 
     public BlockStructureAir(int id, Material material) {
         super(id, material);

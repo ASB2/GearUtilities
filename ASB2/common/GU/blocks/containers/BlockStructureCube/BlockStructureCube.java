@@ -17,13 +17,13 @@ import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.ISpecialMultiBlockOpaque;
 import GU.api.multiblock.ISpecialTileMultiBlock;
-import GU.blocks.containers.ContainerBase;
+import GU.blocks.containers.BlockMultiBase;
 import GU.info.Reference;
 import GU.items.GUItemBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-public class BlockStructureCube extends ContainerBase implements ISpecialTileMultiBlock, ISpecialMultiBlockOpaque {
+public class BlockStructureCube extends BlockMultiBase implements ISpecialTileMultiBlock, ISpecialMultiBlockOpaque {
 
     public static final int CUBE0 = 0, CUBE1 = 1, CUBE2 = 2, CUBE3 = 3, GLASS4 = 4, BRICK5 = 5, BRICK6 = 6, CUBE7 = 7;
     public static final int MAX_META = 8;

@@ -36,27 +36,32 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
     @Override
     public void invalidate() {
 
-        for (IMultiBlock multi : multiBlocks)
-            multi.invalidate();
+        // for (IMultiBlock multi : multiBlocks)
+        // multi.invalidate();
         super.invalidate();
     }
 
     @Override
     public boolean addMultiBlock(IMultiBlock multiBlock) {
 
-        if (this.getComprisedMultiBlocks().size() + 1 > maxMultiBlocks && maxMultiBlocks != -1) {
+        if (maxMultiBlocks != -1) {
 
-            return false;
+            if (multiBlocks.size() + 1 > maxMultiBlocks) {
+
+                return false;
+            }
         }
 
-        if (multiBlock instanceof IFluidHandler) {
-            fluidMultiBlocks += 1;
-        }
-
-        if (multiBlock instanceof IInventory) {
-            itemMultiBlock += 1;
-        }
         if (multiBlocks.add(multiBlock)) {
+            
+            if (multiBlock instanceof IFluidHandler) {
+                fluidMultiBlocks += 1;
+            }
+
+            if (multiBlock instanceof IInventory) {
+                itemMultiBlock += 1;
+            }
+
             isInMultiBlock = true;
             unchangable = Collections.unmodifiableList(multiBlocks);
             return true;

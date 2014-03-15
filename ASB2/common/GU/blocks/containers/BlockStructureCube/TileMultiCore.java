@@ -17,17 +17,18 @@ public class TileMultiCore extends TileStuctureAir {
 
     @Override
     public void invalidate() {
-//        super.invalidate();
-        this.tileEntityInvalid = true;
-        if (multiBlocks.size() > 0) {
+
+        if (super.multiBlocks.size() == 1) {
 
             IMultiBlock multi = this.multiBlocks.get(0);
-            if (multi != null && multi.isValid()) {
+
+            if (multi.isValid()) {
 
                 multiBlockName = MultiBlockRegistry.getInstance().getMultiBlockNameFromMultiBlockClass(multi.getClass());
                 multiBlockSave = multi.save(new NBTTagCompound());
             }
         }
+        super.invalidate();
     }
 
     @Override
@@ -35,7 +36,7 @@ public class TileMultiCore extends TileStuctureAir {
         super.validate();
 
         if (!multiBlockName.equalsIgnoreCase("")) {
-            
+
             if (multiBlockSave != null) {
 
                 IMultiBlock multiInstance = MultiBlockRegistry.getInstance().getMultiBlockInstanceFromMutliBlockName(multiBlockName);

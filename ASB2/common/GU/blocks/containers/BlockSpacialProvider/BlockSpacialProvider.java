@@ -12,13 +12,13 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import GU.api.multiblock.IMultiBlock;
-import GU.blocks.containers.ContainerBase;
+import GU.blocks.containers.BlockMultiBase;
 import GU.info.Reference;
 import GU.items.GUItemBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-public class BlockSpacialProvider extends ContainerBase {
+public class BlockSpacialProvider extends BlockMultiBase {
 
     public final ItemStack STANDARD_SPACIAL_PROVIDER = new ItemStack(this, 1, STANDARD), FLUID_SPACIAL_PROVIDER = new ItemStack(this, 1, FLUID), FURNACE_SPACIAL_PROVIDER = new ItemStack(this, 1, FURNACE), CHEST_SPACIAL_PROVIDER = new ItemStack(this, 1, CHEST), FLAME_SPACIAL_PROVIDER = new ItemStack(this, 1, FLAME);;
     public static final int STANDARD = 0, FLUID = 1, FURNACE = 2, CHEST = 3, FLAME = 4;

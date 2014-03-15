@@ -25,11 +25,11 @@ import GU.EnumState;
 import GU.api.multiblock.IMultiBlock;
 import GU.api.multiblock.IMultiBlockPart;
 import GU.api.multiblock.ISpecialMultiBlockOpaque;
-import GU.blocks.containers.ContainerBase;
+import GU.blocks.containers.BlockMultiBase;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockReplacementStructureCube extends ContainerBase implements ISpecialMultiBlockOpaque {
+public class BlockReplacementStructureCube extends BlockMultiBase implements ISpecialMultiBlockOpaque {
 
     public BlockReplacementStructureCube(int id, Material material) {
         super(id, material);
@@ -639,13 +639,14 @@ public class BlockReplacementStructureCube extends ContainerBase implements ISpe
     @Override
     public void onBlockHarvested(World world, int x, int y, int z, int metadata, EntityPlayer par6EntityPlayer) {
         // destryLogic(world, x, y, z);
-
         ArrayList<ItemStack> items = this.getBlockDropped(world, x, y, z, metadata, 1);
 
         for (ItemStack item : items) {
 
             UtilBlock.spawnItemStackEntity(world, x, y, z, item, 1);
         }
+
+        super.onBlockHarvested(world, x, y, z, metadata, par6EntityPlayer);
     }
 
     public Block getFalseBlock(IBlockAccess world, int x, int y, int z) {
