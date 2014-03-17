@@ -10,12 +10,10 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
-import ASB2.utils.UtilRender;
 import GU.api.flame.EnumFlameType;
 import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Reference;
-import GU.info.Textures;
 import GU.render.NoiseManager;
 
 public class FlameConduitRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
@@ -29,7 +27,6 @@ public class FlameConduitRenderer extends TileEntitySpecialRenderer implements I
 
         GL11.glPushMatrix();
 
-        
         switch (((TileBase) tileentity).getOrientation()) {
 
             case UP: {
@@ -77,7 +74,7 @@ public class FlameConduitRenderer extends TileEntitySpecialRenderer implements I
 
         NoiseManager.bindImage();
         Models.ModelFlameConduit.renderPart("Cube");
-        
+
         GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
         GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
 
