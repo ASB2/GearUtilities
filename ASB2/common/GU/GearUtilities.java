@@ -1,22 +1,21 @@
 package GU;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import GU.info.Reference;
 import GU.info.Variables;
 import GU.proxy.CommonProxy;
-import GU.worldGen.WorldGenBlockAirCrystalOre;
-import GU.worldGen.WorldGenBlockEarthCrystalOre;
-import GU.worldGen.WorldGenBlockEnergyCrystalOre;
-import GU.worldGen.WorldGenBlockFireCrystalOre;
-import GU.worldGen.WorldGenBlockGarnetOre;
-import GU.worldGen.WorldGenBlockWaterCrystalOre;
+import GU.worldGen.*;
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -54,6 +53,7 @@ public final class GearUtilities {
         
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
+        
         Variables.updateVariables(config);
         ItemRegistry.init(config);
         BlockRegistry.init(config);
@@ -85,15 +85,23 @@ public final class GearUtilities {
     public void mainInit(FMLInitializationEvent event) {
         
         proxy.register();
+        GameRegistry.registerWorldGenerator(new WorldGenBase() {
+            
+            @Override
+            public void generate(World world, Random random, int x, int y, int z) {
+                
+                new WorldGenMinable(BlockRegistry.METADATA_ORE, 0, 21, Blocks.stone).generate(world, random, x, y, z);
+            }
+        }, 0);
         
-        GameRegistry.registerWorldGenerator(new WorldGenBlockAirCrystalOre(), 0);
-        GameRegistry.registerWorldGenerator(new WorldGenBlockEarthCrystalOre(), 0);
-        GameRegistry.registerWorldGenerator(new WorldGenBlockFireCrystalOre(), 0);
-        GameRegistry.registerWorldGenerator(new WorldGenBlockWaterCrystalOre(), 0);
-        GameRegistry.registerWorldGenerator(new WorldGenBlockEnergyCrystalOre(), 0);
-        GameRegistry.registerWorldGenerator(new WorldGenBlockGarnetOre(), 0);
-        // GameRegistry.registerWorldGenerator(new WorldGenBlockFalseBlock(),
-        // 0);
+        GameRegistry.registerWorldGenerator(new WorldGenBase() {
+            
+            @Override
+            public void generate(World world, Random random, int x, int y, int z) {
+                
+                new WorldGenMinable(BlockRegistry.METADATA_ORE, 1, 21, Blocks.stone).generate(world, random, x, y, z);
+            }
+        }, 0);
     }
     
     @EventHandler

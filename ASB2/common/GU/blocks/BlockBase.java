@@ -1,9 +1,10 @@
 package GU.blocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import GU.GearUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
+import GU.GearUtilities;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockBase extends Block {
     
@@ -15,5 +16,10 @@ public class BlockBase extends Block {
     public void registerBlock(String entry) {
         
         GameRegistry.registerBlock(this, entry);
+    }
+    
+    public String getBlockDisplayName(ItemStack stack) {
+        
+        return null;
     }
 }

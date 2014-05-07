@@ -45,7 +45,7 @@ public final class GearUtilities {
     public static CreativeTabs tabGUItems = new GUCreativeTab(Reference.NAME + ": Items");
     public static CreativeTabs tabGUFluids = new GUCreativeTab(Reference.NAME + ": Fluids");
     
-    @EventHandler
+//    @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         
         instance = this;
@@ -73,7 +73,7 @@ public final class GearUtilities {
         config.save();
     }
     
-    @EventHandler
+//    @EventHandler
     public void mainInit(FMLInitializationEvent event) {
         
         proxy.register();
@@ -102,7 +102,7 @@ public final class GearUtilities {
         // MinecraftForge.EVENT_BUS.register(new TechCraftForgeEvents());
     }
     
-    @EventHandler
+//    @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         FluidRegistry.registerFluidContainers();
         CraftRegistry.init();

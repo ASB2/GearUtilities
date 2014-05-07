@@ -4,8 +4,28 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import GU.*;
 
 public class ItemBase extends Item {
+    
+    String ign = "";
+    
+    public ItemBase() {
+        
+        this.setCreativeTab(GearUtilities.tabGUItems);
+    }
+    
+    public ItemBase setDisplayName(String name) {
+        
+        ign = name;
+        return this;
+    }
+    
+    @Override
+    public String getItemStackDisplayName(ItemStack itemStack) {
+        
+        return ign;
+    }
     
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
