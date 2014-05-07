@@ -2,7 +2,7 @@ package GU.worldGen;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
@@ -26,6 +26,6 @@ public class WorldGenBlockGarnetOre implements IWorldGenerator {
         int Ycoord = random.nextInt(60);
         int Zcoord = blockZ + random.nextInt(16);
 
-        (new WorldGenMinable(BlockRegistry.BlockMetadataOre.blockID, 5, 20, Block.stone.blockID)).generate(world, random, Xcoord, Ycoord, Zcoord);
+        (new WorldGenMinable(BlockRegistry.METADATA_ORE, 5, 20, Blocks.stone)).generate(world, random, Xcoord, Ycoord, Zcoord);
     }
 }
