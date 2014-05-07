@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.FastNoise;
+import GU.GearUtilities;
 import GU.info.Reference;
 import GU.info.Variables;
 
@@ -30,8 +31,8 @@ public class NoiseManager {
     public BufferedImage longVinillaAnimationImage = null;
     public List<int[]> imageDataArray = new LinkedList<int[]>();
     public List<BufferedImage> bufferedImages = new LinkedList<BufferedImage>();
-    public float maxDensity = .4f, minDensity = .1f, changePerTick = .0002f;
-    public int BOX_SIZE = 1;
+    public static final float maxDensity = .4f, minDensity = .1f, changePerTick = .0002f;
+    public static final int BOX_SIZE = 1;
     
     public NoiseManager() {
         initImage();
@@ -46,12 +47,6 @@ public class NoiseManager {
     }
     
     public static void bindImage() {
-        
-        // UtilRender.renderTexture(textureLocation);
-        // image.getRGB(0, 0, image.getWidth(), image.getHeight(),
-        // textureImage.getTextureData(), 0, image.getWidth());
-        // TextureUtil.uploadTexture(textureImage.getGlTextureId(),
-        // textureImage.getTextureData(), image.getWidth(), image.getHeight());
         
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, NoiseManager.instance.textureImage.getGlTextureId());
     }
@@ -87,7 +82,7 @@ public class NoiseManager {
             int[] imageData = new int[bufferedImage.getWidth() * bufferedImage.getHeight()];
             bufferedImage.getRGB(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), imageData, 0, bufferedImage.getWidth());
             imageDataArray.add(imageData);
-            
+            GearUtilities.log(currentDensity);
             currentDensity += changePerTick;
         }
         

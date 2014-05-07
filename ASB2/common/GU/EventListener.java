@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.texture.TextureUtil;
 import GU.render.NoiseManager;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import GU.info.*;
 
 public class EventListener {
     
@@ -17,7 +18,7 @@ public class EventListener {
         
         List<int[]> data = NoiseManager.instance.imageDataArray;
         
-        TextureUtil.uploadTexture(NoiseManager.instance.textureImage.getGlTextureId(), data.get(position), NoiseManager.instance.originalImage.getWidth(), NoiseManager.instance.originalImage.getHeight());
+        TextureUtil.uploadTexture(NoiseManager.instance.textureImage.getGlTextureId(), data.get(position), Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
         
         if (down) {
             
