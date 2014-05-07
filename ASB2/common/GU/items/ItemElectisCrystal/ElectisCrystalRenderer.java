@@ -82,7 +82,7 @@ public class ElectisCrystalRenderer implements IItemRenderer {
         Models.ModelFlameShard.renderPart("Center");
         GL11.glPopMatrix();
         
-        color = color.darker().darker().darker();
+//        color = color.darker().darker().darker();
         
         GL11.glPushMatrix();
         // GL11.glRotatef(-Minecraft.getSystemTime() /

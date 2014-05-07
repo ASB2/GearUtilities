@@ -13,7 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.FastNoise;
-import GU.GearUtilities;
 import GU.info.Reference;
 import GU.info.Variables;
 
@@ -31,18 +30,16 @@ public class NoiseManager {
     public BufferedImage longVinillaAnimationImage = null;
     public List<int[]> imageDataArray = new LinkedList<int[]>();
     public List<BufferedImage> bufferedImages = new LinkedList<BufferedImage>();
-    public static final float maxDensity = .4f, minDensity = .1f, changePerTick = .0002f;
+    public static final float maxDensity = .4f, minDensity = .1f, changePerTick = .0005f;
     public static final int BOX_SIZE = 1;
     
     public NoiseManager() {
-        initImage();
     }
     
     public void initImage() {
         
         textureImage = new DynamicTexture(Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
         TextureUtil.allocateTexture(textureImage.getGlTextureId(), Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
-        
         initBufferedImage();
     }
     
@@ -73,16 +70,18 @@ public class NoiseManager {
                     int green = col;
                     int blue = col;
                     
-                    graphics.setColor(new Color(red, green, blue));
+                    int RGB = red;
+                    RGB = (RGB << 8) + green;
+                    RGB = (RGB << 8) + blue;
+                    graphics.setColor(new Color(RGB));
                     graphics.fillRect(x, y, BOX_SIZE, BOX_SIZE);
-                    graphics.dispose();
                 }
             }
             
+            graphics.dispose();
             int[] imageData = new int[bufferedImage.getWidth() * bufferedImage.getHeight()];
             bufferedImage.getRGB(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), imageData, 0, bufferedImage.getWidth());
             imageDataArray.add(imageData);
-            GearUtilities.log(currentDensity);
             currentDensity += changePerTick;
         }
         
@@ -100,4 +99,9 @@ public class NoiseManager {
         
         this.longVinillaAnimationImage = finalImage;
     }
+    
+    public static void modifyBufferedImage(int[] imageData, int x, int y, int xBoxSize, int yBoxSize) {
+        
+    }
+    
 }
