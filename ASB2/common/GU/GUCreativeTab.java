@@ -45,7 +45,7 @@ public class GUCreativeTab extends CreativeTabs {
         
             case (Reference.NAME + ": Blocks"): {
                 
-                return ItemRegistry.ELECTIS_CRYSTAL.getItem();
+                return ItemRegistry.ELECTIS_CRYSTAL_SHARD.getItem();
             }
         }
         return Items.diamond;
@@ -62,7 +62,7 @@ public class GUCreativeTab extends CreativeTabs {
             }
             case (Reference.NAME + ": Items"): {
                 
-                return ItemRegistry.ELECTIS_CRYSTAL;
+                return ItemRegistry.ELECTIS_CRYSTAL_SHARD;
             }
             case (Reference.NAME + ": Fluids"): {
                 

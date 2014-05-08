@@ -8,10 +8,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
+import GU.blocks.BlockBase;
 import GU.blocks.BlockMetadata;
+import GU.blocks.BlockMetadata.MetadataWrapper;
+import GU.blocks.containers.BlockStructureCube.BlockStructureCube;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
-import GU.blocks.*;
 
 public class BlockRegistry {
     
@@ -21,14 +23,28 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            wrappers.put(0, new MetadataWrapper(new String[] { "BlockElectisStone" }).addDrop(ItemRegistry.ELECTIS_CRYSTAL).setDisplayName("Electis Stone"));
+            wrappers.put(0, new MetadataWrapper(new String[] { "BlockElectisStone" }).addDrop(ItemRegistry.ELECTIS_CRYSTAL_SHARD).setDisplayName("Electis Stone"));
             wrappers.put(1, new MetadataWrapper(new String[] { "BlockGarnetOre" }).addDrop(new ItemStack(this, 4, 1)).setDisplayName("Garnet Infused Stone"));
         }
     };
     
+    public static final BlockStructureCube STRUCTURE_CUBE = new BlockStructureCube(Material.rock) {
+        
+        public void postInit() {
+            
+            wrappers.put(0, new MetadataWrapper(new String[] { "BlockStructureCube0" }).addDrop(new ItemStack(STRUCTURE_CUBE, 1, 0)).setDisplayName("Structure Cube"));
+            wrappers.put(1, new MetadataWrapper(new String[] { "BlockStructureCube1" }).addDrop(new ItemStack(STRUCTURE_CUBE, 1, 1)).setDisplayName("Structure Cube"));
+            wrappers.put(2, new MetadataWrapper(new String[] { "BlockStructureCube2" }).addDrop(new ItemStack(STRUCTURE_CUBE, 1, 2)).setDisplayName("Structure Cube"));
+            wrappers.put(3, new MetadataWrapper(new String[] { "BlockStructureCube3" }).addDrop(new ItemStack(STRUCTURE_CUBE, 1, 3)).setDisplayName("Structure Cube"));
+            wrappers.put(4, new MetadataWrapper(new String[] { "BlockStructureCube4" }).addDrop(new ItemStack(STRUCTURE_CUBE, 1, 4)).setDisplayName("Structure Cube"));
+            wrappers.put(5, new MetadataWrapper(new String[] { "BlockStructureCube5" }).addDrop(new ItemStack(STRUCTURE_CUBE, 1, 5)).setDisplayName("Structure Cube"));
+            wrappers.put(6, new MetadataWrapper(new String[] { "BlockStructureCube6" }).addDrop(new ItemStack(STRUCTURE_CUBE, 1, 6)).setDisplayName("Structure Cube"));
+        }
+    };
     static {
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMetadataOre"), METADATA_ORE.setBlockName("MetadataOre"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCube"), STRUCTURE_CUBE.setBlockName("StructureCube"));
     }
     
     public static void init(Configuration config) {

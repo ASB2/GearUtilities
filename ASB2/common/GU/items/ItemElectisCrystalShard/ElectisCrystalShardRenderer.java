@@ -1,4 +1,4 @@
-package GU.items.ItemElectisCrystal;
+package GU.items.ItemElectisCrystalShard;
 
 import java.awt.Color;
 
@@ -12,9 +12,9 @@ import GU.info.Models;
 import GU.info.Reference;
 import GU.render.NoiseManager;
 
-public class ElectisCrystalRenderer implements IItemRenderer {
+public class ElectisCrystalShardRenderer implements IItemRenderer {
     
-    public static final ElectisCrystalRenderer instance = new ElectisCrystalRenderer();
+    public static final ElectisCrystalShardRenderer instance = new ElectisCrystalShardRenderer();
     
     Color color = Color.WHITE;
     

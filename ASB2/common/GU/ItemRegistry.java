@@ -10,7 +10,7 @@ import net.minecraftforge.common.config.Configuration;
 import GU.info.Reference;
 import GU.items.ItemMetadata;
 import GU.items.ItemMetadata.MetadataWrapper;
-import GU.items.ItemElectisCrystal.ElectisCrystalRenderer;
+import GU.items.ItemElectisCrystalShard.ElectisCrystalShardRenderer;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public final class ItemRegistry {
@@ -18,12 +18,12 @@ public final class ItemRegistry {
     private static final Map<String, Item> customItemMap = new HashMap<String, Item>();
     
     public static final ItemMetadata METADATA_ITEM = new ItemMetadata();
-    public static final ItemStack ELECTIS_CRYSTAL = new ItemStack(METADATA_ITEM, 1, 0);
+    public static final ItemStack ELECTIS_CRYSTAL_SHARD = new ItemStack(METADATA_ITEM, 1, 0);
     
     static {
         
         customItemMap.put(Reference.MOD_ID.concat(":ItemMetadata"), METADATA_ITEM);
-        METADATA_ITEM.wrappers.put(0, new MetadataWrapper("Electis Crystal").setRenderer(ElectisCrystalRenderer.instance));
+        METADATA_ITEM.wrappers.put(0, new MetadataWrapper("Electis Crystal Shard").setRenderer(ElectisCrystalShardRenderer.instance));
     }
     
     private ItemRegistry() {
