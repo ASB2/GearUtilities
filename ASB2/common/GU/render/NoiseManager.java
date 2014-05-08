@@ -1,7 +1,5 @@
 package GU.render;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,10 +14,10 @@ import net.minecraft.client.renderer.texture.TextureUtil;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.FastNoise;
+import GU.GearUtilities;
 import GU.info.Reference;
 import GU.info.Variables;
 import UC.SimplexNoise;
-import GU.*;
 
 public class NoiseManager {
     
@@ -35,8 +33,7 @@ public class NoiseManager {
     // Creation Thigns
     public BufferedImage longVinillaAnimationImage = null;
     public List<int[]> imageDataArray = new ArrayList<int[]>();
-    public static final float maxDensity = .4f, minDensity = .1f, changePerTick = .0005f;
-    public static final int BOX_SIZE = 1;
+    public static final float maxDensity = .4f, minDensity = .1f, changePerTick = .0002f;
     
     public NoiseManager() {
         
@@ -64,9 +61,9 @@ public class NoiseManager {
             
             int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
             
-            for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x += BOX_SIZE) {
+            for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x++) {
                 
-                for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y += BOX_SIZE) {
+                for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
                     
                     int col = FastNoise.noise(x * currentDensity, y * currentDensity, 7);
                     
@@ -77,6 +74,7 @@ public class NoiseManager {
                     int RGB = red;
                     RGB = (RGB << 8) + green;
                     RGB = (RGB << 8) + blue;
+                    RGB |= 0xFF000000;
                     
                     imageData[x + y * Variables.NOISE_TEXTURE_SIZE] = RGB;
                 }
@@ -91,10 +89,8 @@ public class NoiseManager {
             
             int[] image = imageDataArray.get(index);
             finalImage.setRGB(0, index * Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, image, 0, Variables.NOISE_TEXTURE_SIZE);
-            
         }
         this.longVinillaAnimationImage = finalImage;
-        writeImage(longVinillaAnimationImage, new File("C:/Users/AOJ/Desktop/Documents/Java Projects/image.png"), "PNG");
     }
     
     public static void modifyBufferedImage(int[] imageData, int x, int y, int xBoxSize, int yBoxSize) {

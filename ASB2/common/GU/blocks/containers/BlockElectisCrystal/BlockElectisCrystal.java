@@ -11,19 +11,24 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilRender;
-import GU.blocks.containers.BlockMetadataContainerBase;
+import GU.blocks.containers.BlockContainerBase;
 import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.info.Textures;
 import GU.render.NoiseManager;
 
-public class BlockElectisCrystal extends BlockMetadataContainerBase {
+public class BlockElectisCrystal extends BlockContainerBase {
     
     public BlockElectisCrystal(Material material) {
         super(material);
         this.registerTile(TileElectisCrystal.class);
-        wrappers.put(0, new MetadataWrapper().setDisplayName("Electis Crystal").setMetadata(0).setHardness(50));
+    }
+    
+    @Override
+    public int onBlockPlaced(World world, int x, int y, int z, int side, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_) {
+        // TODO Auto-generated method stub
+        return side;
     }
     
     @Override
