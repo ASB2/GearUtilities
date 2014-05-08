@@ -15,6 +15,9 @@ public class ItemBase extends Item {
         this.setCreativeTab(GearUtilities.tabGUItems);
     }
     
+    public void postInit() {
+    }
+    
     public ItemBase setDisplayName(String name) {
         
         ign = name;

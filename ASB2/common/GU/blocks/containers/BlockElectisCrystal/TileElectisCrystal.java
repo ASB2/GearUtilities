@@ -18,6 +18,12 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock {
     }
     
     @Override
+    public void updateEntity() {
+        // TODO Auto-generated method stub
+        super.updateEntity();
+    }
+    
+    @Override
     public Color getColor(World world, int x, int y, int z, ForgeDirection direction) {
         
         return COLORS[crystalLevel];

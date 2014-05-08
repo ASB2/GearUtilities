@@ -14,6 +14,6 @@ public class TileBase extends TileEntity {
     
     public ForgeDirection getOrientation() {
         
-        return orientation;
+        return ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
     }
 }
