@@ -82,7 +82,7 @@ public class NoiseManager {
                 }
             }
             
-            imageDataArray.add(imageData);            
+            imageDataArray.add(imageData);
         }
         
         BufferedImage finalImage = new BufferedImage(Variables.NOISE_TEXTURE_SIZE, imageDataArray.size() * Variables.NOISE_TEXTURE_SIZE, BufferedImage.TYPE_INT_ARGB);
@@ -91,8 +91,7 @@ public class NoiseManager {
         for (int index = 0; index < imageDataArray.size(); index++) {
             
             int[] image = imageDataArray.get(index);
-            graphics.setColor(new Color(image[index * Variables.NOISE_TEXTURE_SIZE]));
-            graphics.fillRect(0, index * Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
+            finalImage.setRGB(0, index * Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, image, 0, Variables.NOISE_TEXTURE_SIZE);
         }
         graphics.dispose();
         this.longVinillaAnimationImage = finalImage;
