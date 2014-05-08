@@ -58,6 +58,8 @@ public class NoiseManager {
     
     public void initBufferedImage() {
         
+        imageDataArray.clear();
+        
         for (float currentDensity = minDensity; currentDensity <= maxDensity; currentDensity += changePerTick) {
             
             int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
@@ -87,12 +89,11 @@ public class NoiseManager {
         BufferedImage finalImage = new BufferedImage(Variables.NOISE_TEXTURE_SIZE, imageDataArray.size() * Variables.NOISE_TEXTURE_SIZE, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = (Graphics2D) finalImage.createGraphics();
         
-        int position = 0;
-        for (int[] image : imageDataArray) {
+        for (int index = 0; index < imageDataArray.size(); index++) {
             
-            graphics.setColor(new Color(image[position * Variables.NOISE_TEXTURE_SIZE]));
-            graphics.fillRect(0, position * Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
-            position++;
+            int[] image = imageDataArray.get(index);
+            graphics.setColor(new Color(image[index * Variables.NOISE_TEXTURE_SIZE]));
+            graphics.fillRect(0, index * Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
         }
         graphics.dispose();
         this.longVinillaAnimationImage = finalImage;
