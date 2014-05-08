@@ -170,7 +170,13 @@ public class BlockMetadata extends BlockBase {
         
         public ArrayList<ItemStack> getClonedDrops(IBlockAccess world, int x, int y, int z, int metadata, int fortune) {
             
-            return new ArrayList<ItemStack>(itemStacks);
+            ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
+            
+            for (ItemStack stack : itemStacks) {
+                
+                stacks.add(stack.copy());
+            }
+            return stacks;
         }
         
         public MetadataWrapper setDisplayName(String name) {
