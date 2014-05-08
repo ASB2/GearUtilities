@@ -14,6 +14,10 @@ public class BlockBase extends Block {
         this.setCreativeTab(GearUtilities.tabGUBlocks);
     }
     
+    public void postInit() {
+        
+    }
+    
     public void registerBlock(String entry) {
         
         GameRegistry.registerBlock(this, entry);

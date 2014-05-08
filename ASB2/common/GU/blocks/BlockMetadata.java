@@ -27,11 +27,6 @@ public class BlockMetadata extends BlockBase {
     public BlockMetadata(Material material) {
         super(material);
         wrappers = new HashMap<Integer, MetadataWrapper>();
-        postInit();
-    }
-    
-    public void postInit() {
-        
     }
     
     @Override
@@ -75,7 +70,7 @@ public class BlockMetadata extends BlockBase {
         
         if (wrapper != null) {
             
-            return (ArrayList<ItemStack>) wrapper.getDrops(world, x, y, z, metadata, fortune);
+            return wrapper.getClonedDrops(world, x, y, z, metadata, fortune);
         }
         return super.getDrops(world, x, y, z, metadata, fortune);
     }
@@ -118,7 +113,7 @@ public class BlockMetadata extends BlockBase {
         
         String[] iconNames;
         IIcon[] icons;
-        List<ItemStack> itemStacks;
+        ArrayList<ItemStack> itemStacks;
         String ign;
         int metadata;
         float hardness = 3;
@@ -168,9 +163,14 @@ public class BlockMetadata extends BlockBase {
             return this;
         }
         
-        public List<ItemStack> getDrops(IBlockAccess world, int x, int y, int z, int metadata, int fortune) {
+        public ArrayList<ItemStack> getDrops(IBlockAccess world, int x, int y, int z, int metadata, int fortune) {
             
             return itemStacks;
+        }
+        
+        public ArrayList<ItemStack> getClonedDrops(IBlockAccess world, int x, int y, int z, int metadata, int fortune) {
+            
+            return new ArrayList<ItemStack>(itemStacks);
         }
         
         public MetadataWrapper setDisplayName(String name) {
