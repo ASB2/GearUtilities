@@ -10,12 +10,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import GU.info.Reference;
 import GU.info.Variables;
 import GU.proxy.CommonProxy;
-import GU.worldGen.*;
+import GU.worldGen.WorldGenBase;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -62,7 +62,7 @@ public final class GearUtilities {
         EntityRegistry.init();
         MultiRegistry.init();
         
-        MinecraftForge.EVENT_BUS.register(new EventListener());
+        FMLCommonHandler.instance().bus().register(new EventListener());
         GameRegistry.registerFuelHandler(new IFuelHandler() {
             
             @Override

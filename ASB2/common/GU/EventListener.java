@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.texture.TextureUtil;
 import GU.info.Variables;
 import GU.render.NoiseManager;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
 
 public class EventListener {
     
@@ -14,7 +14,7 @@ public class EventListener {
     int position = 0;
     
     @SubscribeEvent
-    public void noiseUpdate(ClientTickEvent event) {
+    public void noiseUpdate(ServerTickEvent event) {
         
         List<int[]> data = NoiseManager.instance.imageDataArray;
         
@@ -45,5 +45,6 @@ public class EventListener {
                 position--;
             }
         }
+        NoiseManager.instance.CURRENT_POSITION = position;
     }
 }
