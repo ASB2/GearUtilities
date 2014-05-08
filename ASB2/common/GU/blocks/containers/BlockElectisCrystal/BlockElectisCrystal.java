@@ -22,14 +22,14 @@ public class BlockElectisCrystal extends BlockMetadataContainerBase {
     
     public BlockElectisCrystal(Material material) {
         super(material);
-        
-        super.wrappers.put(0, new MetadataWrapper().setDisplayName("Electis Crystal").setMetadata(0).setHardness(50));
+        this.registerTile(TileElectisCrystal.class);
+        wrappers.put(0, new MetadataWrapper().setDisplayName("Electis Crystal").setMetadata(0).setHardness(50));
     }
     
     @Override
-    public TileEntity createNewTileEntity(World var1, int var2) {
-        // TODO Auto-generated method stub
-        return null;
+    public TileEntity createNewTileEntity(World var1, int meta) {
+        
+        return new TileElectisCrystal();
     }
     
     public static class ElectisCrystalRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
@@ -87,51 +87,13 @@ public class BlockElectisCrystal extends BlockMetadataContainerBase {
             GL11.glScalef(.3f, .35f, .3f);
             
             UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE_TOP);
-            Models.ModelCentrifgue.renderPart("Top");
+            Models.ModelCrystal1.renderPart("Top");
             UtilRender.renderTexture(Textures.CENTRIFUGE_OUTSIDE_BOTTOM);
-            Models.ModelCentrifgue.renderPart("Bottom");
+            Models.ModelCrystal1.renderPart("Bottom");
             
             NoiseManager.bindImage();
-            // UtilRender.renderTexture(Textures.CENTRIFUGE_CENTER);
-            Models.ModelCentrifgue.renderPart("Center");
+            Models.ModelCrystal1.renderPart("Crystal");
             
-            GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
-            
-            UtilRender.renderTexture(Textures.CENTRIFUGE_ROTATING);
-            
-            for (int i = 0; i < 4; i++) {
-                
-                // GL11.glRotatef(45 * i, 0, 0, 0);
-                // Models.ModelCentrifgue.renderPart("Rotating");
-                
-                switch (i) {
-                
-                    case 0: {
-                        
-                        GL11.glRotatef(0F, 0F, 1F, 0F);
-                        break;
-                    }
-                    
-                    case 1: {
-                        
-                        GL11.glRotatef(90F, 0F, 1F, 0F);
-                        break;
-                    }
-                    
-                    case 2: {
-                        
-                        GL11.glRotatef(180F, 0F, 1F, 0F);
-                        break;
-                    }
-                    
-                    case 3: {
-                        
-                        GL11.glRotatef(90F, 0F, -1F, 0F);
-                        break;
-                    }
-                }
-                Models.ModelCentrifgue.renderPart("Rotating");
-            }
             GL11.glPopMatrix();
         }
         

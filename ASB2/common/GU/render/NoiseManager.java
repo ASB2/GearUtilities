@@ -5,11 +5,12 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureUtil;
 
 import org.lwjgl.opengl.GL11;
@@ -18,6 +19,7 @@ import ASB2.FastNoise;
 import GU.info.Reference;
 import GU.info.Variables;
 import UC.SimplexNoise;
+import GU.*;
 
 public class NoiseManager {
     
@@ -32,8 +34,8 @@ public class NoiseManager {
     
     // Creation Thigns
     public BufferedImage longVinillaAnimationImage = null;
-    public List<int[]> imageDataArray = new LinkedList<int[]>();
-    public static final float maxDensity = .4f, minDensity = .1f, changePerTick = .001f;
+    public List<int[]> imageDataArray = new ArrayList<int[]>();
+    public static final float maxDensity = .4f, minDensity = .1f, changePerTick = .0005f;
     public static final int BOX_SIZE = 1;
     
     public NoiseManager() {
@@ -41,10 +43,12 @@ public class NoiseManager {
     }
     
     public void initImage() {
-        
+        long startTime = Minecraft.getSystemTime();
         GL_TEXTURE_ID = GL11.glGenTextures();
         initBufferedImage();
         TextureUtil.allocateTexture(GL_TEXTURE_ID, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
+        long endTime = Minecraft.getSystemTime();
+        GearUtilities.log(endTime - startTime);
     }
     
     public static void bindImage() {
@@ -54,9 +58,7 @@ public class NoiseManager {
     
     public void initBufferedImage() {
         
-        float currentDensity = minDensity;
-        
-        while (currentDensity <= maxDensity) {
+        for (float currentDensity = minDensity; currentDensity <= maxDensity; currentDensity += changePerTick) {
             
             int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
             
@@ -79,7 +81,7 @@ public class NoiseManager {
             }
             
             imageDataArray.add(imageData);
-            currentDensity += changePerTick;
+            
         }
         
         BufferedImage finalImage = new BufferedImage(Variables.NOISE_TEXTURE_SIZE, imageDataArray.size() * Variables.NOISE_TEXTURE_SIZE, BufferedImage.TYPE_INT_ARGB);
@@ -103,23 +105,23 @@ public class NoiseManager {
     
     public static boolean writeImage(BufferedImage image, File outputFile, String format) {
         
-//        if (outputFile.isFile()) {
+        // if (outputFile.isFile()) {
+        
+        try {
             
-            try {
+            if (!outputFile.exists()) {
                 
-                if (!outputFile.exists()) {
-                    
-                    outputFile.createNewFile();
-                }
-                
-                ImageIO.write(image, format, outputFile);
-                return true;
+                outputFile.createNewFile();
             }
-            catch (IOException e) {
-                
-                e.printStackTrace();
-            }
-//        }
+            
+            ImageIO.write(image, format, outputFile);
+            return true;
+        }
+        catch (IOException e) {
+            
+            e.printStackTrace();
+        }
+        // }
         return false;
     }
 }

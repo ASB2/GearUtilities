@@ -13,6 +13,10 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock {
     
     int crystalLevel = 0;
     
+    public TileElectisCrystal() {
+        // TODO Auto-generated constructor stub
+    }
+    
     @Override
     public Color getColor(World world, int x, int y, int z, ForgeDirection direction) {
         
