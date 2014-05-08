@@ -123,10 +123,24 @@ public class BlockMetadata extends BlockBase {
         int metadata;
         float hardness = 3;
         
-        public MetadataWrapper(String[] icons) {
+        public MetadataWrapper(String[] iconNames) {
             
-            iconNames = icons;
-            this.icons = new IIcon[icons.length];
+            this.iconNames = iconNames;
+            this.icons = new IIcon[iconNames.length];
+        }
+        
+        public MetadataWrapper() {
+            
+        }
+        
+        public MetadataWrapper setIconNames(String[] iconNames) {
+            this.iconNames = iconNames;
+            this.icons = new IIcon[iconNames.length];
+            return this;
+        }
+        
+        public String[] getIconNames() {
+            return iconNames;
         }
         
         public MetadataWrapper setIcons(IIcon icon, int side) {

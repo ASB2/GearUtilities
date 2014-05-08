@@ -65,7 +65,9 @@ public class ElectisCrystalRenderer implements IItemRenderer {
     }
     
     private void renderItemSwitched(ItemStack item, ItemRenderType type, float x, float y, float z, float scale) {
+        
         color = Color.BLUE;
+        
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glTranslatef(x, y, z);
