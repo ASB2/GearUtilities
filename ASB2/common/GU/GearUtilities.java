@@ -38,9 +38,9 @@ public final class GearUtilities {
     
     private static Logger GU_LOGGER = Logger.getLogger(Reference.NAME);
     
-    public static CreativeTabs tabGUBlocks = new GUCreativeTab(Reference.NAME + ": Blocks");
-    public static CreativeTabs tabGUItems = new GUCreativeTab(Reference.NAME + ": Items");
-    public static CreativeTabs tabGUFluids = new GUCreativeTab(Reference.NAME + ": Fluids");
+    public static CreativeTabs tabGUBlocks = new GUCreativeTab(Reference.NAME.concat(": Blocks"));
+    public static CreativeTabs tabGUItems = new GUCreativeTab(Reference.NAME.concat(": Items"));
+    public static CreativeTabs tabGUFluids = new GUCreativeTab(Reference.NAME.concat(": Fluids"));
     
     public GearUtilities() {
         // TODO Auto-generated constructor stub

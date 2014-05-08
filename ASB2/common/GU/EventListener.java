@@ -3,18 +3,18 @@ package GU;
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.TextureUtil;
+import GU.info.Variables;
 import GU.render.NoiseManager;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import GU.info.*;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 
 public class EventListener {
     
     boolean down = true;
     int position = 0;
     
-    @EventHandler
-    public void noiseUpdate(TickEvent event) {
+    @SubscribeEvent
+    public void noiseUpdate(ClientTickEvent event) {
         
         List<int[]> data = NoiseManager.instance.imageDataArray;
         

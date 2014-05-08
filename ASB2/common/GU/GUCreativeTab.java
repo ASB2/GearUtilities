@@ -3,6 +3,10 @@ package GU;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import GU.info.Reference;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class GUCreativeTab extends CreativeTabs {
     
@@ -36,7 +40,36 @@ public class GUCreativeTab extends CreativeTabs {
     
     @Override
     public Item getTabIconItem() {
-        // TODO Auto-generated method stub
+        
+        switch (name) {
+        
+            case (Reference.NAME + ": Blocks"): {
+                
+                return ItemRegistry.ELECTIS_CRYSTAL.getItem();
+            }
+        }
         return Items.diamond;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public ItemStack getIconItemStack() {
+        
+        switch (name) {
+        
+            case (Reference.NAME + ": Blocks"): {
+                
+                return new ItemStack(BlockRegistry.METADATA_ORE, 1, 0);
+            }
+            case (Reference.NAME + ": Items"): {
+                
+                return ItemRegistry.ELECTIS_CRYSTAL;
+            }
+            case (Reference.NAME + ": Fluids"): {
+                
+                // return ItemRegistry.ELECTIS_CRYSTAL;
+                return new ItemStack(Items.diamond);
+            }
+        }
+        return new ItemStack(Items.diamond);
     }
 }
