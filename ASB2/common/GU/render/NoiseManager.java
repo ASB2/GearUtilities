@@ -86,14 +86,13 @@ public class NoiseManager {
         }
         
         BufferedImage finalImage = new BufferedImage(Variables.NOISE_TEXTURE_SIZE, imageDataArray.size() * Variables.NOISE_TEXTURE_SIZE, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D graphics = (Graphics2D) finalImage.createGraphics();
         
         for (int index = 0; index < imageDataArray.size(); index++) {
             
             int[] image = imageDataArray.get(index);
             finalImage.setRGB(0, index * Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, image, 0, Variables.NOISE_TEXTURE_SIZE);
+            
         }
-        graphics.dispose();
         this.longVinillaAnimationImage = finalImage;
         writeImage(longVinillaAnimationImage, new File("C:/Users/AOJ/Desktop/Documents/Java Projects/image.png"), "PNG");
     }
