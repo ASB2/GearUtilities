@@ -22,7 +22,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
     public BlockElectisCrystal(Material material) {
         super(material);
         this.registerTile(TileElectisCrystal.class);
-        
+        this.setLightOpacity(0);
     }
     
     @Override

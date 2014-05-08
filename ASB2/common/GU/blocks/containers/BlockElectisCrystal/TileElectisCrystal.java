@@ -2,24 +2,31 @@ package GU.blocks.containers.BlockElectisCrystal;
 
 import java.awt.Color;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import ASB2.utils.UtilVector;
+import GU.api.color.IColorableBlock;
 import GU.blocks.containers.TileBase;
-import GU.api.color.*;
+import GU.entities.EntityPhoton;
+import UC.Wait;
+import UC.Wait.IWaitTrigger;
 
 public class TileElectisCrystal extends TileBase implements IColorableBlock {
     
     public static Color[] COLORS = new Color[] { Color.WHITE, Color.BLUE, Color.BLACK };
     
     int crystalLevel = 0;
+    Wait waitTimer;
     
     public TileElectisCrystal() {
-        // TODO Auto-generated constructor stub
+        
+        waitTimer = new Wait(new ElectisWait(this), 20, 0);
     }
     
     @Override
     public void updateEntity() {
-        // TODO Auto-generated method stub
+        waitTimer.update();
         super.updateEntity();
     }
     
@@ -36,4 +43,24 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock {
         return true;
     }
     
+    private class ElectisWait implements IWaitTrigger {
+        
+        TileEntity tile;
+        
+        public ElectisWait(TileEntity tile) {
+            this.tile = tile;
+        }
+        
+        @Override
+        public void trigger(int id) {
+            
+            worldObj.spawnEntityInWorld(new EntityPhoton(worldObj, UtilVector.createTileEntityVector(tile).toVector3d(), UtilVector.createTileEntityVector(tile).add(0, 1000, 0)));
+        }
+        
+        @Override
+        public boolean shouldTick(int id) {
+            
+            return true;
+        }
+    }
 }

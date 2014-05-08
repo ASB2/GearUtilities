@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import GU.ItemRegistry;
@@ -63,6 +66,49 @@ public class ItemMetadata extends ItemBase {
             return wrapper.getDisplayName();
         }
         return super.getItemStackDisplayName(itemStack);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        
+        MetadataWrapper wrapper = wrappers.get(par1ItemStack.getItemDamage());
+        
+        if (wrapper != null) {
+            
+            wrapper.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
+        }
+        super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
+    }
+    
+    @Override
+    public boolean canHarvestBlock(Block par1Block, ItemStack itemStack) {
+        
+        MetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
+        
+        if (wrapper != null) {
+            
+            return wrapper.canHarvestBlock(par1Block, itemStack);
+        }
+        return super.canHarvestBlock(par1Block, itemStack);
+    }
+    
+    @Override
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+        
+        MetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
+        
+        if (wrapper != null) {
+            
+            return wrapper.onItemRightClick(itemStack, world, player);
+        }
+        return super.onItemRightClick(itemStack, world, player);
+    }
+    
+    @Override
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+        // TODO Auto-generated method stub
+        return super.onItemUse(itemStack, player, world, x, y, z, side, hitX, hitY, hitZ);
     }
     
     public static class MetadataWrapper {
@@ -126,6 +172,21 @@ public class ItemMetadata extends ItemBase {
         
         public String getIconName() {
             return iconName;
+        }
+        
+        @SuppressWarnings("rawtypes")
+        public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+            // TODO Auto-generated method stub
+        }
+        
+        public boolean canHarvestBlock(Block par1Block, ItemStack itemStack) {
+            
+            return true;
+        }
+        
+        public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+            
+            return itemStack;
         }
     }
 }
