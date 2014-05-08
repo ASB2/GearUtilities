@@ -82,8 +82,7 @@ public class NoiseManager {
                 }
             }
             
-            imageDataArray.add(imageData);
-            
+            imageDataArray.add(imageData);            
         }
         
         BufferedImage finalImage = new BufferedImage(Variables.NOISE_TEXTURE_SIZE, imageDataArray.size() * Variables.NOISE_TEXTURE_SIZE, BufferedImage.TYPE_INT_ARGB);
