@@ -10,8 +10,6 @@ import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilVector;
 import GU.GearUtilities;
-import GU.api.EnumSimulationType;
-import GU.api.power.PowerNetAbstract.ICrystalPowerHandler;
 import GU.info.Models;
 import GU.info.Textures;
 import GU.render.NoiseManager;
@@ -50,10 +48,16 @@ public class EntityPhoton extends EntityBase {
     }
     
     @Override
+    public void onUpdate() {
+        // TODO Auto-generated method stub
+        super.onUpdate();
+    }
+    
+    @Override
     public void onEntityUpdate() {
         super.onEntityUpdate();
         
-        position.move(momentum.multiply(.3));
+        position.move(momentum.multiply(.2));
         this.updateVinillaPosition();
         
         Vector3i positionFloor = position.toVector3iFloor();
@@ -65,9 +69,8 @@ public class EntityPhoton extends EntityBase {
             this.setDead();
         }
         
-        if (startPosition.distanceTo(position) > maxDistance) {
+        if (startPosition.distanceTo(position) >= maxDistance) {
             this.setDead();
-            GearUtilities.log("Dead");
         }
     }
     
@@ -117,7 +120,7 @@ public class EntityPhoton extends EntityBase {
             GL11.glScalef(.5f, .5f, .5f);
             
             NoiseManager.bindImage();
-            Models.ModelCrystal1.renderAll();
+            Models.ModelRhombicuboctahedron.renderAll();
             
             GL11.glPopMatrix();
         }

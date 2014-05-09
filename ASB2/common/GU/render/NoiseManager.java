@@ -15,20 +15,13 @@ import org.lwjgl.opengl.GL11;
 
 import ASB2.FastNoise;
 import GU.GearUtilities;
-import GU.info.Reference;
 import GU.info.Variables;
-import UC.SimplexNoise;
 
 public class NoiseManager {
     
     public static NoiseManager instance = new NoiseManager();
     
-    public TextureNoise iconTexture = new TextureNoise(Reference.MOD_ID + ":Noise");
-    public SimplexNoise noise = new SimplexNoise();
-    
     public int GL_TEXTURE_ID;
-    
-    public int CURRENT_POSITION;
     
     // Creation Thigns
     public BufferedImage longVinillaAnimationImage = null;

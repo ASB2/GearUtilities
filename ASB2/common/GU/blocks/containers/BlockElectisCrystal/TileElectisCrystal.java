@@ -1,6 +1,10 @@
 package GU.blocks.containers.BlockElectisCrystal;
 
 import java.awt.Color;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -24,19 +28,21 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     public static Color[] COLORS = new Color[] { Color.WHITE, Color.BLUE, Color.BLACK };
     
     int crystalLevel = 0;
-    Wait waitTimer;
+    Wait packetSending, powerIncrease;
     DefaultPowerManager powerManager;
+    List<Entry<Vector3i, WeakReference<ICrystalPowerHandler>>> powerHandlers = new ArrayList<Entry<Vector3i, WeakReference<ICrystalPowerHandler>>>();
     
     public TileElectisCrystal() {
         
-        waitTimer = new Wait(new ElectisWait(), 20, 0);
+        packetSending = new Wait(new PacketWait(), 20, 0);
+        powerIncrease = new Wait(new NetworkWait(), 100, 0);
         powerManager = new DefaultPowerManager().setPowerMax(20).setPowerStored(20);
     }
     
     @Override
     public void updateEntity() {
-        waitTimer.update();
-        powerManager.setPowerStored(0);
+        packetSending.update();
+        powerIncrease.update();
         super.updateEntity();
     }
     
@@ -70,21 +76,18 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
             
             IPowerManager tileManager = castedTile.getPowerManager();
             
-            if (tileManager.getStoredPower() < this.powerManager.getStoredPower()) {
+            if (tileManager.increasePower(powerCarried, EnumSimulationType.SIMULATE)) {
                 
-                if (tileManager.increasePower(powerCarried, EnumSimulationType.SIMULATE)) {
+                if (powerManager.decreasePower(powerCarried, EnumSimulationType.SIMULATE)) {
                     
-                    if (powerManager.decreasePower(powerCarried, EnumSimulationType.SIMULATE)) {
-                        
-                        powerManager.decreasePower(powerCarried, EnumSimulationType.LIGITIMATE);
-                        castedTile.getPowerManager().increasePower(powerCarried, EnumSimulationType.LIGITIMATE);
-                    }
+                    powerManager.decreasePower(powerCarried, EnumSimulationType.LIGITIMATE);
+                    tileManager.increasePower(powerCarried, EnumSimulationType.LIGITIMATE);
                 }
             }
         }
     }
     
-    private class ElectisWait implements IWaitTrigger {
+    private class PacketWait implements IWaitTrigger {
         
         @Override
         public void trigger(int id) {
@@ -93,23 +96,17 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
                 
                 if (powerManager.getStoredPower() >= 5) {
                     
-                    final int modifier = 10;
-                    
-                    for (int x = -modifier; x < modifier; x++) {
+                    for (Entry<Vector3i, WeakReference<ICrystalPowerHandler>> crystal : powerHandlers) {
                         
-                        for (int y = -modifier; y < modifier; y++) {
+                        ICrystalPowerHandler crystal_ = crystal.getValue().get();
+                        
+                        if (crystal_ != null) {
                             
-                            for (int z = -modifier; z < modifier; z++) {
+                            IPowerManager manager = crystal_.getPowerManager();
+                            
+                            if (manager != null && manager.getStoredPower() < powerManager.getStoredPower() && manager.increasePower(5, EnumSimulationType.SIMULATE)) {
                                 
-                                if (!(x == 0 && y == 0 && z == 0)) {
-                                    
-                                    TileEntity tile = worldObj.getTileEntity(xCoord + x, yCoord + y, zCoord + z);
-                                    
-                                    if (tile != null && tile instanceof ICrystalPowerHandler) {
-                                        
-                                        worldObj.spawnEntityInWorld(new EntityPhoton(worldObj, new Vector3d(xCoord, yCoord, zCoord), new Vector3i(xCoord + x, yCoord + y, zCoord + z)).setPowerCarried(5).setMaxDistance(modifier));
-                                    }
-                                }
+                                worldObj.spawnEntityInWorld(new EntityPhoton(worldObj, new Vector3d(xCoord, yCoord, zCoord), crystal.getKey()).setPowerCarried(5).setMaxDistance(5));
                             }
                         }
                     }
@@ -121,6 +118,84 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
         public boolean shouldTick(int id) {
             
             return true;
+        }
+    }
+    
+    private class NetworkWait implements IWaitTrigger {
+        
+        @Override
+        public void trigger(int id) {
+            
+            powerHandlers.clear();
+            
+            final int modifier = 5;
+            
+            for (int x = -modifier; x < modifier; x++) {
+                
+                for (int y = -modifier; y < modifier; y++) {
+                    
+                    for (int z = -modifier; z < modifier; z++) {
+                        
+                        if (!(x == 0 && y == 0 && z == 0)) {
+                            
+                            TileEntity tile = worldObj.getTileEntity(xCoord + x, yCoord + y, zCoord + z);
+                            
+                            if (tile != null && tile instanceof ICrystalPowerHandler) {
+                                
+                                powerHandlers.add(new CustomEntry<Vector3i, WeakReference<ICrystalPowerHandler>>(UtilVector.createTileEntityVector(tile), new WeakReference<ICrystalPowerHandler>((ICrystalPowerHandler) tile)));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        @Override
+        public boolean shouldTick(int id) {
+            
+            return true;
+        }
+    }
+    
+    public static class CustomEntry<K, V> implements Entry<K, V> {
+        
+        K key;
+        V value;
+        
+        public CustomEntry(K key, V value) {
+            
+            this.key = key;
+            this.value = value;
+        }
+        
+        public CustomEntry<K, V> setKey(K key) {
+            this.key = key;
+            return this;
+        }
+        
+        @Override
+        public K getKey() {
+            
+            return key;
+        }
+        
+        @Override
+        public V getValue() {
+            
+            return value;
+        }
+        
+        public CustomEntry<K, V> setValueCuston(V value) {
+            this.value = value;
+            return this;
+        }
+        
+        @Override
+        public V setValue(V arg0) {
+            
+            V old = value;
+            value = arg0;
+            return old;
         }
     }
 }

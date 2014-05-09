@@ -18,6 +18,7 @@ public final class Models {
     public static WavefrontObject ModelFlameShard;
     public static WavefrontObject ModelFlameConduit;
     public static WavefrontObject ModelCrystal2;
+    public static WavefrontObject ModelRhombicuboctahedron;
     
     private static final ResourceLocation MULTI_PANEL = new ResourceLocation(Reference.MOD_ID + ":models/ModelMultiPanel.obj");
     private static final ResourceLocation CRYSTAL_1 = new ResourceLocation(Reference.MOD_ID + ":models/ModelCrystal1.obj");
@@ -31,6 +32,7 @@ public final class Models {
     public static final ResourceLocation FLAME_SHARD = new ResourceLocation(Reference.MOD_ID + ":models/ModelFlameShard.obj");
     public static final ResourceLocation FLAME_CONDUIT = new ResourceLocation(Reference.MOD_ID + ":models/ModelFlameConduit.obj");
     public static final ResourceLocation CRYSTAL_2 = new ResourceLocation(Reference.MOD_ID + ":models/ModelCrystal2.obj");
+    public static final ResourceLocation RHOMBICUBOCTAHEDRON = new ResourceLocation(Reference.MOD_ID + ":models/ModelRhombicuboctahedron.obj");
     
     private Models() {
     };
@@ -49,5 +51,6 @@ public final class Models {
         ModelFlameShard = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_SHARD);
         ModelFlameConduit = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_CONDUIT);
         ModelCrystal2 = (WavefrontObject) AdvancedModelLoader.loadModel(Models.CRYSTAL_2);
+        ModelRhombicuboctahedron = (WavefrontObject) AdvancedModelLoader.loadModel(Models.RHOMBICUBOCTAHEDRON);
     }
 }

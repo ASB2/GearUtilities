@@ -45,7 +45,6 @@ public class EventListener {
                 position--;
             }
         }
-        NoiseManager.instance.CURRENT_POSITION = position;
     }
     
     // @SubscribeEvent

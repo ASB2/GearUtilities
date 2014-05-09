@@ -8,7 +8,7 @@ public class EntityRegistry {
     
     public static void init() {
         
-        cpw.mods.fml.common.registry.EntityRegistry.registerModEntity(EntityPhoton.class, "Entity Photon", 0, GearUtilities.instance, 80, 3, true);
+        cpw.mods.fml.common.registry.EntityRegistry.registerModEntity(EntityPhoton.class, "Entity Photon", 0, GearUtilities.instance, 800, 3, true);
         RenderingRegistry.registerEntityRenderingHandler(EntityPhoton.class, PhotonRenderer.instance);
     }
 }

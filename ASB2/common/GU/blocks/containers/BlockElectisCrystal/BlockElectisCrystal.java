@@ -3,7 +3,6 @@ package GU.blocks.containers.BlockElectisCrystal;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -14,7 +13,6 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilEntity;
-import GU.GearUtilities;
 import GU.api.EnumSimulationType;
 import GU.blocks.containers.BlockContainerBase;
 import GU.blocks.containers.TileBase;
@@ -40,19 +38,22 @@ public class BlockElectisCrystal extends BlockContainerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
         
-        TileEntity tile = world.getTileEntity(x, y, z);
-        
-        if (tile != null && tile instanceof TileElectisCrystal) {
+        if (!world.isRemote) {
             
-            ItemStack stack = player.getHeldItem();
-            if (player.isSneaking()) {
+            TileEntity tile = world.getTileEntity(x, y, z);
+            
+            if (tile != null && tile instanceof TileElectisCrystal) {
                 
-                ((TileElectisCrystal) tile).powerManager.decreasePower(5, EnumSimulationType.FORCED);
-                UtilEntity.sendChatToPlayer(player, ((TileElectisCrystal) tile).powerManager.getStoredPower() + "");
-            }
-            else {
-                ((TileElectisCrystal) tile).powerManager.increasePower(5, EnumSimulationType.FORCED);
-                UtilEntity.sendChatToPlayer(player, ((TileElectisCrystal) tile).powerManager.getStoredPower() + "");
+                if (player.isSneaking()) {
+                    
+                    ((TileElectisCrystal) tile).powerManager.decreasePower(5, EnumSimulationType.FORCED);
+                    UtilEntity.sendChatToPlayer(player, ((TileElectisCrystal) tile).powerManager.getStoredPower() + "");
+                }
+                else {
+                    // ((TileElectisCrystal) tile).powerManager.increasePower(5,
+                    // EnumSimulationType.FORCED);
+                    UtilEntity.sendChatToPlayer(player, "PowerStored: " + ((TileElectisCrystal) tile).powerManager.getStoredPower());
+                }
             }
         }
         return false;
@@ -82,6 +83,12 @@ public class BlockElectisCrystal extends BlockContainerBase {
     }
     
     @Override
+    public String getBlockDisplayName(ItemStack stack) {
+        
+        return "Electis Crystal";
+    }
+    
+    @Override
     public TileEntity createNewTileEntity(World var1, int meta) {
         
         return new TileElectisCrystal();
@@ -91,8 +98,18 @@ public class BlockElectisCrystal extends BlockContainerBase {
         
         public static ElectisCrystalRenderer instance = new ElectisCrystalRenderer();
         
+        int objectlist = -1;
+        
+        public ElectisCrystalRenderer() {
+            
+        }
+        
         @Override
         public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
+            
+            if (objectlist == -1) {
+                generateWorldRenderList();
+            }
             
             GL11.glPushMatrix();
             
@@ -140,6 +157,15 @@ public class BlockElectisCrystal extends BlockContainerBase {
                     break;
                 }
             }
+            GL11.glCallList(objectlist);
+            GL11.glPopMatrix();
+        }
+        
+        public void generateWorldRenderList() {
+            
+            objectlist = GL11.glGenLists(1);
+            
+            GL11.glNewList(objectlist, GL11.GL_COMPILE);
             
             {
                 GL11.glPushMatrix();
@@ -214,8 +240,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
                 Models.ModelFlameShard.renderAll();
                 GL11.glPopMatrix();
             }
-            
-            GL11.glPopMatrix();
+            GL11.glEndList();
         }
         
         @Override

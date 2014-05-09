@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import GU.GUItemBlock;
@@ -107,6 +108,12 @@ public class BlockMetadata extends BlockBase {
     public String getHarvestTool(int metadata) {
         // TODO Auto-generated method stub
         return super.getHarvestTool(metadata);
+    }
+    
+    @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        // TODO Auto-generated method stub
+        return super.getPickBlock(target, world, x, y, z);
     }
     
     public static class MetadataWrapper {

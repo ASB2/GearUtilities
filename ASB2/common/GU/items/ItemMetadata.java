@@ -107,8 +107,38 @@ public class ItemMetadata extends ItemBase {
     
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-        // TODO Auto-generated method stub
+        
+        MetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
+        
+        if (wrapper != null) {
+            
+            return wrapper.onItemUse(itemStack, player, world, x, y, z, side, hitX, hitY, hitZ);
+        }
         return super.onItemUse(itemStack, player, world, x, y, z, side, hitX, hitY, hitZ);
+    }
+    
+    @Override
+    public boolean doesContainerItemLeaveCraftingGrid(ItemStack itemStack) {
+        
+        MetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
+        
+        if (wrapper != null) {
+            
+            return wrapper.doesContainerItemLeaveCraftingGrid(itemStack);
+        }
+        return super.doesContainerItemLeaveCraftingGrid(itemStack);
+    }
+    
+    @Override
+    public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player) {
+        
+        MetadataWrapper wrapper = wrappers.get(player.getHeldItem().getItemDamage());
+        
+        if (wrapper != null) {
+            
+            return wrapper.doesSneakBypassUse(world, x, y, z, player);
+        }
+        return super.doesSneakBypassUse(world, x, y, z, player);
     }
     
     public static class MetadataWrapper {
@@ -187,6 +217,21 @@ public class ItemMetadata extends ItemBase {
         public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
             
             return itemStack;
+        }
+        
+        public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+            
+            return false;
+        }
+        
+        public boolean doesContainerItemLeaveCraftingGrid(ItemStack itemStack) {
+            
+            return true;
+        }
+        
+        public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player) {
+            
+            return false;
         }
     }
 }
