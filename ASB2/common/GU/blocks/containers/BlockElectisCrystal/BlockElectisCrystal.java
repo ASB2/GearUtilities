@@ -2,6 +2,8 @@ package GU.blocks.containers.BlockElectisCrystal;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -11,6 +13,9 @@ import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.opengl.GL11;
 
+import ASB2.utils.UtilEntity;
+import GU.GearUtilities;
+import GU.api.EnumSimulationType;
 import GU.blocks.containers.BlockContainerBase;
 import GU.blocks.containers.TileBase;
 import GU.info.Models;
@@ -30,6 +35,32 @@ public class BlockElectisCrystal extends BlockContainerBase {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileElectisCrystal.class, ElectisCrystalRenderer.instance);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(this), ElectisCrystalRenderer.instance);
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
+        
+        TileEntity tile = world.getTileEntity(x, y, z);
+        
+        if (tile != null && tile instanceof TileElectisCrystal) {
+            
+            ItemStack stack = player.getHeldItem();
+            if (player.isSneaking()) {
+                
+                ((TileElectisCrystal) tile).powerManager.decreasePower(5, EnumSimulationType.FORCED);
+                UtilEntity.sendChatToPlayer(player, ((TileElectisCrystal) tile).powerManager.getStoredPower() + "");
+            }
+            else {
+                ((TileElectisCrystal) tile).powerManager.increasePower(5, EnumSimulationType.FORCED);
+                UtilEntity.sendChatToPlayer(player, ((TileElectisCrystal) tile).powerManager.getStoredPower() + "");
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
+        
     }
     
     @Override

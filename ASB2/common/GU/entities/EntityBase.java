@@ -23,10 +23,7 @@ public abstract class EntityBase extends Entity {
     public void updateVinillaPosition() {
         
         if (position != null) {
-            
-            posX = position.getX();
-            posY = position.getY();
-            posZ = position.getZ();
+            this.setPosition(position.getX(), position.getY(), position.getZ());
         }
     }
     
