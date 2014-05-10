@@ -9,7 +9,6 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilVector;
-import GU.GearUtilities;
 import GU.info.Models;
 import GU.info.Textures;
 import GU.render.NoiseManager;
@@ -23,13 +22,16 @@ public class EntityPhoton extends EntityBase {
     int maxDistance;
     int powerCarried;
     
-    public EntityPhoton(World par1World) {
+    private EntityPhoton(World par1World) {
         super(par1World);
         startPosition = Vector3d.ZERO.clone();
         endPosition = Vector3d.ZERO.clone();
+        position = Vector3d.ZERO.clone();
+        momentum = Vector3d.ZERO.clone();
+        destination = Vector3i.ZERO.clone();
     }
     
-    public EntityPhoton(World world, double x, double y, double z, int xD, int yD, int zD) {
+    private EntityPhoton(World world, double x, double y, double z, int xD, int yD, int zD) {
         super(world);
         position = new Vector3d(x, y, z);
         destination = new Vector3i(xD, yD, zD);
@@ -38,7 +40,7 @@ public class EntityPhoton extends EntityBase {
         endPosition = destination.toVector3d();
     }
     
-    public EntityPhoton(World world, Vector3d position, Vector3i destination) {
+    private EntityPhoton(World world, Vector3d position, Vector3i destination) {
         super(world);
         this.position = position;
         this.destination = destination;
@@ -49,29 +51,34 @@ public class EntityPhoton extends EntityBase {
     
     @Override
     public void onUpdate() {
-        // TODO Auto-generated method stub
-        super.onUpdate();
+        
+        if (!worldObj.isRemote) {
+            
+            position.move(momentum.multiply(.1));
+            this.updateVinillaPosition();
+            
+            Vector3i positionFloor = position.toVector3iFloor();
+            
+            if (!positionFloor.equals(startPosition)) {
+                
+                TileEntity tile = UtilVector.getTileAtPostion(worldObj, positionFloor);
+                
+                if (tile != null) {
+                    
+                    onImpact(positionFloor);
+                    this.setDead();
+                }
+            }
+            if (startPosition.distanceTo(position) >= maxDistance) {
+                this.setDead();
+            }
+        }
     }
     
     @Override
     public void onEntityUpdate() {
-        super.onEntityUpdate();
+        // super.onEntityUpdate();
         
-        position.move(momentum.multiply(.2));
-        this.updateVinillaPosition();
-        
-        Vector3i positionFloor = position.toVector3iFloor();
-        TileEntity tile = UtilVector.getTileAtPostion(worldObj, positionFloor);
-        
-        if (tile != null) {
-            
-            onImpact(positionFloor);
-            this.setDead();
-        }
-        
-        if (startPosition.distanceTo(position) >= maxDistance) {
-            this.setDead();
-        }
     }
     
     public void onImpact(Vector3i position) {
@@ -117,8 +124,10 @@ public class EntityPhoton extends EntityBase {
             GL11.glPushMatrix();
             
             GL11.glTranslated(x + .5f, y + .5f, z + .5f);
-            GL11.glScalef(.5f, .5f, .5f);
             
+            float scale = .1f;
+            GL11.glScalef(scale, scale, scale);
+            GL11.glColor3d(1, 0, 0);
             NoiseManager.bindImage();
             Models.ModelRhombicuboctahedron.renderAll();
             

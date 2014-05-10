@@ -16,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import ASB2.FastNoise;
+import UC.FastNoise;
 import GU.info.Reference;
 import cpw.mods.fml.common.FMLCommonHandler;
 

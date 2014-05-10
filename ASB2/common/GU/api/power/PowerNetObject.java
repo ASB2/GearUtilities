@@ -14,6 +14,16 @@ public class PowerNetObject {
         
         int minOutputPacketSize = 0, maxOutputPacketSize = 100;
         
+        public DefaultPowerManager() {
+            this(0, 0);
+        }
+        
+        public DefaultPowerManager(int powerStored, int powerMax) {
+            
+            this.powerStored = powerStored;
+            this.powerMax = powerMax;
+        }
+        
         @Override
         public int getStoredPower() {
             
@@ -128,6 +138,35 @@ public class PowerNetObject {
             minOutputPacketSize = tag.getInteger("minOutputPacketSize");
             maxOutputPacketSize = tag.getInteger("maxOutputPacketSize");
             powerStored = tag.getInteger("powerStored");
+        }
+    }
+    
+    public static final class UtilPower {
+        
+        private UtilPower() {
+        }
+        
+        public static boolean movePower(IPowerManager source, IPowerManager sink, int powerAmount, EnumSimulationType type) {
+            
+            if (!(type == EnumSimulationType.FORCED)) {
+                
+                if (!(source.getMinOutputPacketSize() <= powerAmount && source.getMaxOutputPacketSize() >= powerAmount)) {
+                    
+                    return false;
+                }
+                if (!(sink.getMinInputPacketSize() <= powerAmount && sink.getMaxInputPacketSize() >= powerAmount)) {
+                    
+                    return false;
+                }
+            }
+            if (source.decreasePower(powerAmount, EnumSimulationType.SIMULATE)) {
+                
+                if (sink.increasePower(powerAmount, EnumSimulationType.SIMULATE)) {
+                    
+                    return source.decreasePower(powerAmount, type) && sink.increasePower(powerAmount, type);
+                }
+            }
+            return false;
         }
     }
 }

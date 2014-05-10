@@ -12,7 +12,8 @@ import GU.items.ItemBase;
 import GU.items.ItemMetadata;
 import GU.items.ItemMetadata.MetadataWrapper;
 import GU.items.ItemRenderers.GarnetRenderer;
-import GU.items.ItemElectisCrystalShard.ElectisCrystalShardRenderer;
+import GU.items.ItemElectisCrystalShard.ElectisShard.ElectisCrystalShardRenderer;
+import GU.items.ItemElectisCrystalShard.ElectisShard.ElectisShardWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public final class ItemRegistry {
@@ -26,15 +27,9 @@ public final class ItemRegistry {
     static {
         
         customItemMap.put(Reference.MOD_ID.concat(":ItemMetadata"), METADATA_ITEM);
-        METADATA_ITEM.wrappers.put(0, new MetadataWrapper("Electis Crystal Shard").setRenderer(ElectisCrystalShardRenderer.instance));
+        METADATA_ITEM.wrappers.put(0, new ElectisShardWrapper("Electis Crystal Shard").setRenderer(ElectisCrystalShardRenderer.instance));
         METADATA_ITEM.wrappers.put(1, new MetadataWrapper("Garnet").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.wrappers.put(2, new MetadataWrapper("Electis Contoler") {
-            
-            public boolean onItemUse(ItemStack itemStack, net.minecraft.entity.player.EntityPlayer player, net.minecraft.world.World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-                
-                return false;
-            }
-        }.setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.wrappers.put(2, new MetadataWrapper("Electis Controler").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.wrappers.put(3, new MetadataWrapper("Gear Reader").setRenderer(GarnetRenderer.instance));
     }
     

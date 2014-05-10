@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.texture.TextureUtil;
 
 import org.lwjgl.opengl.GL11;
 
-import ASB2.FastNoise;
+import UC.FastNoise;
 import GU.GearUtilities;
 import GU.info.Variables;
 

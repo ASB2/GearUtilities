@@ -1,11 +1,17 @@
 package GU.blocks.containers.BlockElectisCrystal;
 
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.Map.Entry;
+
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -13,11 +19,14 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilEntity;
-import GU.api.EnumSimulationType;
+import GU.api.power.PowerNetAbstract.ICrystalPowerHandler;
 import GU.blocks.containers.BlockContainerBase;
 import GU.blocks.containers.TileBase;
 import GU.info.Models;
+import GU.info.Reference;
 import GU.render.NoiseManager;
+import GU.render.Shader;
+import UC.math.vector.Vector3i;
 import cpw.mods.fml.client.registry.ClientRegistry;
 
 public class BlockElectisCrystal extends BlockContainerBase {
@@ -26,6 +35,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
         super(material);
         this.registerTile(TileElectisCrystal.class);
         this.setLightOpacity(0);
+        this.setLightLevel(.1f);
     }
     
     @Override
@@ -38,23 +48,12 @@ public class BlockElectisCrystal extends BlockContainerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
         
-        if (!world.isRemote) {
+        TileEntity tile = world.getTileEntity(x, y, z);
+        
+        if (tile != null && tile instanceof TileElectisCrystal && player.getHeldItem() == null) {
             
-            TileEntity tile = world.getTileEntity(x, y, z);
-            
-            if (tile != null && tile instanceof TileElectisCrystal) {
-                
-                if (player.isSneaking()) {
-                    
-                    ((TileElectisCrystal) tile).powerManager.decreasePower(5, EnumSimulationType.FORCED);
-                    UtilEntity.sendChatToPlayer(player, ((TileElectisCrystal) tile).powerManager.getStoredPower() + "");
-                }
-                else {
-                    // ((TileElectisCrystal) tile).powerManager.increasePower(5,
-                    // EnumSimulationType.FORCED);
-                    UtilEntity.sendChatToPlayer(player, "PowerStored: " + ((TileElectisCrystal) tile).powerManager.getStoredPower());
-                }
-            }
+            UtilEntity.sendChatToPlayer(player, "PowerStored: " + ((TileElectisCrystal) tile).powerManager.getStoredPower());
+            return true;
         }
         return false;
     }
@@ -91,7 +90,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
     @Override
     public TileEntity createNewTileEntity(World var1, int meta) {
         
-        return new TileElectisCrystal();
+        return null;
     }
     
     public static class ElectisCrystalRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
@@ -99,9 +98,22 @@ public class BlockElectisCrystal extends BlockContainerBase {
         public static ElectisCrystalRenderer instance = new ElectisCrystalRenderer();
         
         int objectlist = -1;
+        Shader testShader;
+        final ResourceLocation shaderResource = new ResourceLocation(Reference.MOD_ID + ":shaders/basicFragment.fs");
         
         public ElectisCrystalRenderer() {
             
+            testShader = new Shader().setShaderName("Test Shader");
+            try {
+                String shaderFile = Shader.loadShaderText(Minecraft.getMinecraft().getResourceManager().getResource(shaderResource).getInputStream());
+                testShader.addFragmentShader(shaderFile);
+                testShader.compileShader();
+                testShader.setShaderName(testShader.getShaderName());
+            }
+            catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         
         @Override
@@ -112,7 +124,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
             }
             
             GL11.glPushMatrix();
-            
+            // testShader.bind();
             float translationAmount = .2f;
             
             switch (((TileBase) tileentity).getOrientation()) {
@@ -158,6 +170,21 @@ public class BlockElectisCrystal extends BlockContainerBase {
                 }
             }
             GL11.glCallList(objectlist);
+            // testShader.unBind();
+            GL11.glPopMatrix();
+            
+            GL11.glPushMatrix();
+            for (Entry<Vector3i, WeakReference<ICrystalPowerHandler>> crystal : ((TileElectisCrystal) tileentity).powerHandlers) {
+                
+                GL11.glBegin(GL11.GL_LINES);
+                GL11.glColor3f(1, 1, 0);
+                GL11.glVertex3d(x + .5, y + .5, z + .5);
+                GL11.glColor3f(1, 0, 0);
+                GL11.glVertex3d((crystal.getKey().getX() - Minecraft.getMinecraft().thePlayer.posX) + .5, (crystal.getKey().getY() - Minecraft.getMinecraft().thePlayer.posY) + .5, (crystal.getKey().getZ() - Minecraft.getMinecraft().thePlayer.posZ) + .5);
+                
+                GL11.glEnd();
+                
+            }
             GL11.glPopMatrix();
         }
         

@@ -2,7 +2,10 @@ package GU.api;
 
 public enum EnumSimulationType {
     
-    SIMULATE, LIGITIMATE, FORCED;
+    SIMULATE, /** This is a test */
+    LIGITIMATE, /** This is ligitimate */
+    FORCED/** This ignores packet size */
+    ;
     
     public boolean getBooleanValue() {
         
