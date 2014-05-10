@@ -35,13 +35,14 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
         powerManager = new DefaultPowerManager().setPowerMax(20).setPowerStored(20);
         crystalType = CrystalType.LEVEL1;
         poolValidNodes = new Wait(new PoolValidNodeWait(), 100, 0);
-        sendEnergyPackets = new Wait(new SendEnergyPacketWait(), 20, 0);
+        sendEnergyPackets = new Wait(new SendEnergyPacketWait(), 5, 0);
     }
     
     @Override
     public void updateEntity() {
         
         poolValidNodes.update();
+        sendEnergyPackets.update();
     }
     
     @Override
@@ -65,14 +66,14 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         
-//        tag.setTag("powerManager", powerManager.save(tag));
+         tag.setTag("powerManager", powerManager.save(new NBTTagCompound()));
         // super.writeToNBT(tag);
     }
     
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         
-//        powerManager.load(tag.getCompoundTag("powerManager"));
+        powerManager.load(tag.getCompoundTag("powerManager"));
         // super.readFromNBT(tag);
     }
     
@@ -145,7 +146,11 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
                         
                         if (powerManager.getStoredPower() >= 5) {
                             
-                            UtilPower.movePower(powerManager, manager, 5, EnumSimulationType.FORCED);
+                            boolean returned = UtilPower.movePower(powerManager, manager, 5, EnumSimulationType.FORCED);
+                            
+                            if (returned) {
+                                
+                            }
                         }
                     }
                 }
