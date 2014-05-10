@@ -35,7 +35,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
         super(material);
         this.registerTile(TileElectisCrystal.class);
         this.setLightOpacity(0);
-        this.setLightLevel(.1f);
+        this.setLightLevel(.3f);
     }
     
     @Override
@@ -90,7 +90,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
     @Override
     public TileEntity createNewTileEntity(World var1, int meta) {
         
-        return null;
+        return new TileElectisCrystal();
     }
     
     public static class ElectisCrystalRenderer extends TileEntitySpecialRenderer implements IItemRenderer {

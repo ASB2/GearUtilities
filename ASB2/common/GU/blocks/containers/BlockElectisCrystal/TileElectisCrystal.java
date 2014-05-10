@@ -65,14 +65,14 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         
-        tag.setTag("powerManager", powerManager.save(tag));
+//        tag.setTag("powerManager", powerManager.save(tag));
         // super.writeToNBT(tag);
     }
     
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         
-        powerManager.load(tag.getCompoundTag("powerManager"));
+//        powerManager.load(tag.getCompoundTag("powerManager"));
         // super.readFromNBT(tag);
     }
     
