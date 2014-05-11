@@ -3,19 +3,23 @@ package GU.items.ItemElectisCrystalShard;
 import java.awt.Color;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilEntity;
+import ASB2.utils.UtilItemStack;
 import GU.api.EnumSimulationType;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.blocks.containers.BlockElectisCrystal.TileElectisCrystal;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.render.NoiseManager;
+import GU.api.power.PowerNetObject.*;
 
 public class ElectisShard {
     
@@ -39,22 +43,43 @@ public class ElectisShard {
                     
                     if (power != null) {
                         
+                        int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
+                        
                         if (player.isSneaking()) {
                             
-                            power.decreasePower(1, EnumSimulationType.FORCED);
+                            UtilPower.removePower(power, powerSaved, EnumSimulationType.FORCED);
                         }
                         else {
                             
-                            power.increasePower(1, EnumSimulationType.FORCED);
+                            UtilPower.addPower(power, powerSaved, EnumSimulationType.FORCED);
                         }
                         
-                        UtilEntity.sendChatToPlayer(player, "Stored Power: " + power.getStoredPower());
+                        UtilEntity.sendChatToPlayer(player, "Power Stored: " + power.getStoredPower());
                         return true;
                     }
                     
                 }
             }
             return false;
+        }
+        
+        @Override
+        public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+            
+            int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
+            
+            if (player.isSneaking()) {
+                
+                powerSaved--;
+                
+            }
+            else {
+                
+                powerSaved++;
+            }
+            UtilItemStack.setNBTTagInt(itemStack, "inputPower", Math.max(powerSaved, 0));
+            UtilEntity.sendChatToPlayer(player, "Power To Move: " + Math.max(powerSaved, 0));
+            return super.onItemRightClick(itemStack, world, player);
         }
     }
     

@@ -118,6 +118,39 @@ public class PowerNetObject {
             return this;
         }
         
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + maxInputPacketSize;
+            result = prime * result + maxOutputPacketSize;
+            result = prime * result + minInputPacketSize;
+            result = prime * result + minOutputPacketSize;
+            result = prime * result + powerMax;
+            result = prime * result + powerStored;
+            return result;
+        }
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null) return false;
+            if (!(obj instanceof DefaultPowerManager)) return false;
+            DefaultPowerManager other = (DefaultPowerManager) obj;
+            if (maxInputPacketSize != other.maxInputPacketSize) return false;
+            if (maxOutputPacketSize != other.maxOutputPacketSize) return false;
+            if (minInputPacketSize != other.minInputPacketSize) return false;
+            if (minOutputPacketSize != other.minOutputPacketSize) return false;
+            if (powerMax != other.powerMax) return false;
+            if (powerStored != other.powerStored) return false;
+            return true;
+        }
+        
+        public DefaultPowerManager clone() {
+            
+            return new DefaultPowerManager().setMaxInputPacketSize(this.getMaxInputPacketSize()).setMinInputPacketSize(this.getMinInputPacketSize()).setMaxOutputPacketSize(this.getMaxOutputPacketSize()).setMinOutputPacketSize(this.getMinOutputPacketSize()).setPowerMax(this.getMaxPower()).setPowerStored(this.getStoredPower());
+        }
+        
         public NBTTagCompound save(NBTTagCompound tag) {
             
             tag.setInteger("powerStored", powerStored);
@@ -148,7 +181,7 @@ public class PowerNetObject {
         
         public static boolean movePower(IPowerManager source, IPowerManager sink, int powerAmount, EnumSimulationType type) {
             
-            if (!(type == EnumSimulationType.FORCED)) {
+            if (!(type == EnumSimulationType.FORCED || type == EnumSimulationType.FORCED_SIMULATE)) {
                 
                 if (!(source.getMinOutputPacketSize() <= powerAmount && source.getMaxOutputPacketSize() >= powerAmount)) {
                     
@@ -165,6 +198,39 @@ public class PowerNetObject {
                     
                     return source.decreasePower(powerAmount, type) && sink.increasePower(powerAmount, type);
                 }
+            }
+            return false;
+        }
+        
+        public static boolean addPower(IPowerManager sink, int powerAmount, EnumSimulationType type) {
+            
+            if (!(type == EnumSimulationType.FORCED)) {
+                
+                if (!(sink.getMinInputPacketSize() <= powerAmount && sink.getMaxInputPacketSize() >= powerAmount)) {
+                    
+                    return false;
+                }
+            }
+            
+            if (sink.increasePower(powerAmount, EnumSimulationType.SIMULATE)) {
+                
+                return sink.increasePower(powerAmount, type);
+            }
+            return false;
+        }
+        
+        public static boolean removePower(IPowerManager source, int powerAmount, EnumSimulationType type) {
+            
+            if (!(type == EnumSimulationType.FORCED)) {
+                
+                if (!(source.getMinOutputPacketSize() <= powerAmount && source.getMaxOutputPacketSize() >= powerAmount)) {
+                    
+                    return false;
+                }
+            }
+            if (source.decreasePower(powerAmount, EnumSimulationType.SIMULATE)) {
+                
+                return source.decreasePower(powerAmount, type);
             }
             return false;
         }

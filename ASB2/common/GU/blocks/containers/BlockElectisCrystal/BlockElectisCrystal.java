@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -48,12 +49,15 @@ public class BlockElectisCrystal extends BlockContainerBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
         
-        TileEntity tile = world.getTileEntity(x, y, z);
-        
-        if (tile != null && tile instanceof TileElectisCrystal && player.getHeldItem() == null) {
+        if (!world.isRemote) {
             
-            UtilEntity.sendChatToPlayer(player, "PowerStored: " + ((TileElectisCrystal) tile).powerManager.getStoredPower());
-            return true;
+            TileEntity tile = world.getTileEntity(x, y, z);
+            
+            if (tile != null && tile instanceof TileElectisCrystal && player.getHeldItem() == null) {
+                
+                UtilEntity.sendChatToPlayer(player, "PowerStored: " + ((TileElectisCrystal) tile).powerManager.getStoredPower());
+                return true;
+            }
         }
         return false;
     }
@@ -85,6 +89,12 @@ public class BlockElectisCrystal extends BlockContainerBase {
     public String getBlockDisplayName(ItemStack stack) {
         
         return "Electis Crystal";
+    }
+    
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
+        // TODO Auto-generated method stub
+        super.setBlockBoundsBasedOnState(world, x, y, z);
     }
     
     @Override
@@ -183,7 +193,6 @@ public class BlockElectisCrystal extends BlockContainerBase {
                 GL11.glVertex3d((crystal.getKey().getX() - Minecraft.getMinecraft().thePlayer.posX) + .5, (crystal.getKey().getY() - Minecraft.getMinecraft().thePlayer.posY) + .5, (crystal.getKey().getZ() - Minecraft.getMinecraft().thePlayer.posZ) + .5);
                 
                 GL11.glEnd();
-                
             }
             GL11.glPopMatrix();
         }

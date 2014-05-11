@@ -9,6 +9,10 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilVector;
+import GU.api.EnumSimulationType;
+import GU.api.power.PowerNetAbstract.ICrystalPowerHandler;
+import GU.api.power.PowerNetAbstract.IPowerManager;
+import GU.api.power.PowerNetObject.UtilPower;
 import GU.info.Models;
 import GU.info.Textures;
 import GU.render.NoiseManager;
@@ -22,7 +26,7 @@ public class EntityPhoton extends EntityBase {
     int maxDistance;
     int powerCarried;
     
-    private EntityPhoton(World par1World) {
+    public EntityPhoton(World par1World) {
         super(par1World);
         startPosition = Vector3d.ZERO.clone();
         endPosition = Vector3d.ZERO.clone();
@@ -31,7 +35,7 @@ public class EntityPhoton extends EntityBase {
         destination = Vector3i.ZERO.clone();
     }
     
-    private EntityPhoton(World world, double x, double y, double z, int xD, int yD, int zD) {
+    public EntityPhoton(World world, double x, double y, double z, int xD, int yD, int zD) {
         super(world);
         position = new Vector3d(x, y, z);
         destination = new Vector3i(xD, yD, zD);
@@ -40,9 +44,18 @@ public class EntityPhoton extends EntityBase {
         endPosition = destination.toVector3d();
     }
     
-    private EntityPhoton(World world, Vector3d position, Vector3i destination) {
+    public EntityPhoton(World world, Vector3d position, Vector3i destination) {
         super(world);
         this.position = position;
+        this.destination = destination;
+        this.momentum = determineHeading(position, destination);
+        startPosition = position.clone();
+        endPosition = destination.toVector3d();
+    }
+    
+    public EntityPhoton(World world, int x, int y, int z, Vector3i destination) {
+        super(world);
+        this.position = new Vector3d(x, y, z);
         this.destination = destination;
         this.momentum = determineHeading(position, destination);
         startPosition = position.clone();
@@ -52,42 +65,34 @@ public class EntityPhoton extends EntityBase {
     @Override
     public void onUpdate() {
         
-        if (!worldObj.isRemote) {
+        position.move(momentum.multiply(.3));
+        this.updateVinillaPosition();
+        
+        Vector3i positionFloor = position.toVector3iFloor();
+        
+        if (!positionFloor.equals(startPosition)) {
             
-            position.move(momentum.multiply(.1));
-            this.updateVinillaPosition();
+            TileEntity tileSink = UtilVector.getTileAtPostion(worldObj, positionFloor);
+            TileEntity tileSource = UtilVector.getTileAtPostion(worldObj, startPosition.toVector3iFloor());
             
-            Vector3i positionFloor = position.toVector3iFloor();
-            
-            if (!positionFloor.equals(startPosition)) {
+            if (tileSink != null && tileSource != null) {
                 
-                TileEntity tile = UtilVector.getTileAtPostion(worldObj, positionFloor);
-                
-                if (tile != null) {
+                if (tileSink instanceof ICrystalPowerHandler && tileSource instanceof ICrystalPowerHandler) {
                     
-                    onImpact(positionFloor);
-                    this.setDead();
+                    IPowerManager sinkManager = ((ICrystalPowerHandler) tileSink).getPowerManager();
+                    IPowerManager sourceManager = ((ICrystalPowerHandler) tileSource).getPowerManager();
+                    
+                    if (sinkManager != null && sourceManager != null) {
+                        
+                        if (UtilPower.movePower(sourceManager, sinkManager, powerCarried, EnumSimulationType.FORCED)) {
+                            this.setDead();
+                        }
+                    }
                 }
             }
-            if (startPosition.distanceTo(position) >= maxDistance) {
-                this.setDead();
-            }
         }
-    }
-    
-    @Override
-    public void onEntityUpdate() {
-        // super.onEntityUpdate();
-        
-    }
-    
-    public void onImpact(Vector3i position) {
-        
-        TileEntity tile = UtilVector.getTileAtPostion(worldObj, startPosition.toVector3iFloor());
-        
-        if (tile != null && tile instanceof IPhotonImpact) {
-            
-            ((IPhotonImpact) tile).onImpact(powerCarried, position);
+        if (startPosition.distanceTo(position) >= maxDistance) {
+            this.setDead();
         }
     }
     

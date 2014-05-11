@@ -13,6 +13,7 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.config.Configuration;
 import GU.info.Reference;
 import GU.info.Variables;
+import GU.packets.PacketPipeline;
 import GU.proxy.CommonProxy;
 import GU.worldGen.WorldGenBase;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -37,6 +38,7 @@ public final class GearUtilities {
     public static CommonProxy proxy;
     
     private static Logger GU_LOGGER = Logger.getLogger(Reference.NAME);
+    public static final PacketPipeline packetPipeline = new PacketPipeline();
     
     public static CreativeTabs tabGUBlocks = new GUCreativeTab(Reference.NAME.concat(": Blocks"));
     public static CreativeTabs tabGUItems = new GUCreativeTab(Reference.NAME.concat(": Items"));
@@ -51,6 +53,8 @@ public final class GearUtilities {
         
         instance = this;
         
+        packetPipeline.initialise();
+        
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
         
@@ -61,6 +65,7 @@ public final class GearUtilities {
         RetroGenManager.init();
         EntityRegistry.init();
         MultiRegistry.init();
+        PacketRegistry.init();
         
         FMLCommonHandler.instance().bus().register(new EventListener());
         GameRegistry.registerFuelHandler(new IFuelHandler() {
@@ -85,6 +90,7 @@ public final class GearUtilities {
     public void mainInit(FMLInitializationEvent event) {
         
         proxy.register();
+        
         GameRegistry.registerWorldGenerator(new WorldGenBase() {
             
             @Override
@@ -106,6 +112,7 @@ public final class GearUtilities {
     
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        packetPipeline.postInitialise();
         
         FluidRegistry.registerFluidContainers();
         CraftRegistry.init();

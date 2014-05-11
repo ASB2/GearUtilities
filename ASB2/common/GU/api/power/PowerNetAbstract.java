@@ -40,8 +40,7 @@ public class PowerNetAbstract {
         boolean decreasePower(int powerAmount, EnumSimulationType type);
     }
     
-    public interface ICrystalPowerHandler {
+    public interface ICrystalPowerHandler extends ITilePowerHandler {
         
-        IPowerManager getPowerManager();
     }
 }

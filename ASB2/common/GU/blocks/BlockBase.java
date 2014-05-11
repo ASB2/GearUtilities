@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import GU.GUItemBlock;
 import GU.GearUtilities;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -20,7 +21,7 @@ public class BlockBase extends Block {
     
     public void registerBlock(String entry) {
         
-        GameRegistry.registerBlock(this, entry);
+        GameRegistry.registerBlock(this, GUItemBlock.class, entry);
     }
     
     public String getBlockDisplayName(ItemStack stack) {
