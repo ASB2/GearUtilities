@@ -13,6 +13,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
@@ -216,6 +217,11 @@ public class BlockMetadata extends BlockBase {
         public float getHardness(IBlockAccess world, int x, int y, int z) {
             
             return hardness;
+        }
+        
+        public TileEntity createNewTileEntity(World var1, int metadata) {
+            
+            return null;
         }
     }
     

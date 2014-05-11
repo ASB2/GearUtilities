@@ -6,11 +6,14 @@ import java.util.Map.Entry;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -139,6 +142,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
     public static class ElectisCrystalRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
         
         public static ElectisCrystalRenderer instance = new ElectisCrystalRenderer();
+        private static final ResourceLocation field_147523_b = new ResourceLocation("textures/entity/beacon_beam.png");
         
         int objectlist = -1;
         Shader testShader;
@@ -217,17 +221,58 @@ public class BlockElectisCrystal extends BlockContainerBase {
             GL11.glPopMatrix();
             
             GL11.glPushMatrix();
-            for (Entry<Vector3i, WeakReference<ICrystalPowerHandler>> crystal : ((TileElectisCrystal) tileentity).powerHandlers) {
-                
-                GL11.glBegin(GL11.GL_LINES);
-                GL11.glColor3f(1, 1, 0);
-                GL11.glVertex3d(x + .5, y + .5, z + .5);
-                GL11.glColor3f(1, 0, 0);
-                GL11.glVertex3d((crystal.getKey().getX() - Minecraft.getMinecraft().thePlayer.posX) + .5, (crystal.getKey().getY() - Minecraft.getMinecraft().thePlayer.posY) + .5, (crystal.getKey().getZ() - Minecraft.getMinecraft().thePlayer.posZ) + .5);
-                
-                GL11.glEnd();
-            }
-            GL11.glPopMatrix();
+            
+            // for (Entry<Vector3i, WeakReference<ICrystalPowerHandler>> crystal
+            // : ((TileElectisCrystal) tileentity).powerHandlers) {
+            //
+            // GL11.glBegin(GL11.GL_LINES);
+            // GL11.glColor3f(1, 1, 0);
+            // GL11.glVertex3d(x + .5, y + .5, z + .5);
+            // GL11.glColor3f(1, 0, 0);
+            // GL11.glVertex3d((crystal.getKey().getX() -
+            // Minecraft.getMinecraft().thePlayer.posX) + .5,
+            // (crystal.getKey().getY() -
+            // Minecraft.getMinecraft().thePlayer.posY) + .5,
+            // (crystal.getKey().getZ() -
+            // Minecraft.getMinecraft().thePlayer.posZ) + .5);
+            //
+            // GL11.glEnd();
+            // }
+            
+            // GL11.glTranslated(x, y, z);
+            // GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S,
+            // 10497.0F);
+            // GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T,
+            // 10497.0F);
+            // Tessellator tessellator = Tessellator.instance;
+            // this.bindTexture(field_147523_b);
+            // GL11.glDisable(GL11.GL_LIGHTING);
+            // GL11.glDisable(GL11.GL_CULL_FACE);
+            //
+            // for (Entry<Vector3i, WeakReference<ICrystalPowerHandler>> crystal
+            // : ((TileElectisCrystal) tileentity).powerHandlers) {
+            //
+            // if
+            // (!tileentity.getWorldObj().isBlockIndirectlyGettingPowered(crystal.getKey().getX(),
+            // crystal.getKey().getY(), crystal.getKey().getZ())) {
+            // float x_ = (float) ((crystal.getKey().getX() -
+            // Minecraft.getMinecraft().thePlayer.posX)), y_ = (float)
+            // ((crystal.getKey().getY() -
+            // Minecraft.getMinecraft().thePlayer.posY)), z_ = (float)
+            // ((crystal.getKey().getZ() -
+            // Minecraft.getMinecraft().thePlayer.posZ));
+            //
+            // tessellator.startDrawingQuads();
+            // tessellator.addVertexWithUV(x+ .5, y + .5, z+ .5, 0, 0);
+            // tessellator.addVertexWithUV(x_+ .5, y_ + .5, z_+ .5, -1, 0);
+            // tessellator.addVertexWithUV(x_ + .54, y_ + .5, z_+ .5, -1, -1);
+            // tessellator.addVertexWithUV(x + .54, y + .5, z+ .5, 0, -1);
+            // tessellator.draw();
+            // }
+            // }
+            // GL11.glEnable(GL11.GL_CULL_FACE);
+            // GL11.glEnable(GL11.GL_LIGHTING);
+             GL11.glPopMatrix();
         }
         
         public void generateWorldRenderList() {

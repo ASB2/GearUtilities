@@ -146,21 +146,27 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
             
             // if (!worldObj.isRemote) {
             
-            for (Entry<Vector3i, WeakReference<ICrystalPowerHandler>> entry : powerHandlers) {
+            if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
                 
-                TileEntity tile = UtilVector.getTileAtPostion(worldObj, entry.getKey());
-                
-                if (tile != null && tile instanceof ICrystalPowerHandler) {
+                for (Entry<Vector3i, WeakReference<ICrystalPowerHandler>> entry : powerHandlers) {
                     
-                    IPowerManager manager = ((ICrystalPowerHandler) tile).getPowerManager();
+                    TileEntity tile = UtilVector.getTileAtPostion(worldObj, entry.getKey());
                     
-                    if (manager != null) {
+                    if (tile != null && tile instanceof ICrystalPowerHandler) {
                         
-                        if (powerManager.getStoredPower() >= 5) {
+                        IPowerManager manager = ((ICrystalPowerHandler) tile).getPowerManager();
+                        
+                        if (manager != null) {
                             
-                            if (UtilPower.movePower(powerManager, manager, 5, EnumSimulationType.FORCED_SIMULATE)) {
+                            final int powerToMove = 2;
+                            
+                            if (powerManager.getStoredPower() >= powerToMove) {
                                 
-                                worldObj.spawnEntityInWorld(new EntityPhoton(worldObj, xCoord, yCoord, zCoord, entry.getKey()).setMaxDistance(10).setPowerCarried(5));
+                                if (UtilPower.movePower(powerManager, manager, powerToMove, EnumSimulationType.FORCED_SIMULATE)) {
+                                    
+                                    EntityPhoton entity = new EntityPhoton(worldObj, xCoord, yCoord, zCoord, entry.getKey()).setMaxDistance(10).setPowerCarried(5);
+                                    worldObj.spawnEntityInWorld(entity);
+                                }
                             }
                         }
                     }
@@ -185,26 +191,23 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
             
             if (!worldObj.isRemote) {
                 
-                if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+                if (lastManager != null) {
                     
-                    if (lastManager != null) {
-                        
-                        if (!lastManager.equals(powerManager)) {
-                            
-                            lastManager = powerManager.clone();
-                            GearUtilities.packetPipeline.sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, powerManager), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
-                            GearUtilities.log("Packet Sent");
-                        }
-                        else {
-                            
-                            GearUtilities.log("Power Packet Not Made: THINGY IS THE SAME!");
-                        }
-                    }
-                    else {
+                    if (!lastManager.equals(powerManager)) {
                         
                         lastManager = powerManager.clone();
                         GearUtilities.packetPipeline.sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, powerManager), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
+                        // GearUtilities.log("Packet Sent");
                     }
+                    else {
+                        
+                        // GearUtilities.log("Power Packet Not Made: THINGY IS THE SAME!");
+                    }
+                }
+                else {
+                    
+                    lastManager = powerManager.clone();
+                    GearUtilities.packetPipeline.sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, powerManager), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
                 }
             }
         }

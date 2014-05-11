@@ -14,6 +14,7 @@ import GU.blocks.containers.BlockElectisCrystal.BlockElectisCrystal;
 import GU.blocks.containers.BlockStructureCube.BlockStructureCube;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
+import GU.blocks.containers.BlockCreativeMetadata.*;
 
 public class BlockRegistry {
     
@@ -43,12 +44,14 @@ public class BlockRegistry {
     };
     
     public static final BlockElectisCrystal ELECTIS_CRYSTAL = new BlockElectisCrystal(Material.rock);
+    public static final BlockCreativeMetadata CREATIVE_METADATA = new BlockCreativeMetadata(Material.rock);
     
     static {
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMetadataOre"), METADATA_ORE.setBlockName("MetadataOre"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCube"), STRUCTURE_CUBE.setBlockName("StructureCube"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockElectisCrystal"), ELECTIS_CRYSTAL.setBlockName("Electis Crystal"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockCreativeMetadata"), CREATIVE_METADATA.setBlockName("Creative Metadata"));
     }
     
     public static void init(Configuration config) {

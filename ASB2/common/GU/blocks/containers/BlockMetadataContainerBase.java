@@ -5,7 +5,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import GU.blocks.*;
+import GU.blocks.BlockMetadata;
 
 public abstract class BlockMetadataContainerBase extends BlockMetadata implements ITileEntityProvider {
     
@@ -23,5 +23,17 @@ public abstract class BlockMetadataContainerBase extends BlockMetadata implement
         super.onBlockEventReceived(p_149696_1_, p_149696_2_, p_149696_3_, p_149696_4_, p_149696_5_, p_149696_6_);
         TileEntity tileentity = p_149696_1_.getTileEntity(p_149696_2_, p_149696_3_, p_149696_4_);
         return tileentity != null ? tileentity.receiveClientEvent(p_149696_5_, p_149696_6_) : false;
+    }
+    
+    @Override
+    public TileEntity createNewTileEntity(World var1, int var2) {
+        
+        MetadataWrapper wrapper = wrappers.get(var2);
+        
+        if (wrapper != null) {
+            
+            return wrapper.createNewTileEntity(var1, var2);
+        }
+        return null;
     }
 }
