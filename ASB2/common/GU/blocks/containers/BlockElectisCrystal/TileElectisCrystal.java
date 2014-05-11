@@ -29,15 +29,15 @@ import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class TileElectisCrystal extends TileBase implements IColorableBlock, ICrystalPowerHandler {
     
+    Color color;
     DefaultPowerManager powerManager;
-    CrystalType crystalType;
     List<Entry<Vector3i, WeakReference<ICrystalPowerHandler>>> powerHandlers = new ArrayList<Entry<Vector3i, WeakReference<ICrystalPowerHandler>>>();
     Wait poolValidNodes, sendEnergyPackets, serverPacketWait;
     
     public TileElectisCrystal() {
         
+        color = Color.WHITE;
         powerManager = new DefaultPowerManager().setPowerMax(20);
-        crystalType = CrystalType.LEVEL1;
         poolValidNodes = new Wait(new PoolValidNodeWait(), 50, 0);
         sendEnergyPackets = new Wait(new SendEnergyPacketWait(), 5, 0);
         serverPacketWait = new Wait(new ServerPacketWait(), 40, 0);
@@ -58,7 +58,7 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     @Override
     public Color getColor(World world, int x, int y, int z, ForgeDirection direction) {
         
-        return crystalType.getDefaultColor();
+        return color;
     }
     
     @Override
@@ -85,22 +85,6 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
         
         powerManager.load(tag.getCompoundTag("powerManager"));
         super.readFromNBT(tag);
-    }
-    
-    public static enum CrystalType {
-        
-        LEVEL1(Color.WHITE), LEVEL2(Color.CYAN), LEVEL3(Color.MAGENTA);
-        
-        Color defaultColor;
-        
-        CrystalType(Color defaultColor) {
-            
-            this.defaultColor = defaultColor;
-        }
-        
-        public Color getDefaultColor() {
-            return defaultColor;
-        }
     }
     
     private class PoolValidNodeWait implements IWaitTrigger {
