@@ -66,24 +66,27 @@ public class PowerPacket implements AbstractPacket {
     @Override
     public void handleClientSide(EntityPlayer player) {
         
-        TileEntity tile = player.worldObj.getTileEntity(x, y, z);
-        
-        if (tile != null && tile instanceof ITilePowerHandler) {
+        if (player.worldObj.isRemote) {
             
-            IPowerManager manager = ((ITilePowerHandler) tile).getPowerManager();
+            TileEntity tile = player.worldObj.getTileEntity(x, y, z);
             
-            if (manager != null && manager instanceof DefaultPowerManager) {
+            if (tile != null && tile instanceof ITilePowerHandler) {
                 
-                DefaultPowerManager dManager = ((DefaultPowerManager) manager);
+                IPowerManager manager = ((ITilePowerHandler) tile).getPowerManager();
                 
-                dManager.setMaxInputPacketSize(powerToUpdate.getMaxInputPacketSize());
-                dManager.setMaxOutputPacketSize(powerToUpdate.getMaxOutputPacketSize());
-                
-                dManager.setMinInputPacketSize(powerToUpdate.getMinInputPacketSize());
-                dManager.setMinOutputPacketSize(powerToUpdate.getMinOutputPacketSize());
-                
-                dManager.setPowerMax(powerToUpdate.getMaxPower());
-                dManager.setPowerStored(powerToUpdate.getStoredPower());
+                if (manager != null && manager instanceof DefaultPowerManager) {
+                    
+                    DefaultPowerManager dManager = ((DefaultPowerManager) manager);
+                    
+                    dManager.setMaxInputPacketSize(powerToUpdate.getMaxInputPacketSize());
+                    dManager.setMaxOutputPacketSize(powerToUpdate.getMaxOutputPacketSize());
+                    
+                    dManager.setMinInputPacketSize(powerToUpdate.getMinInputPacketSize());
+                    dManager.setMinOutputPacketSize(powerToUpdate.getMinOutputPacketSize());
+                    
+                    dManager.setPowerMax(powerToUpdate.getMaxPower());
+                    dManager.setPowerStored(powerToUpdate.getStoredPower());
+                }
             }
         }
     }

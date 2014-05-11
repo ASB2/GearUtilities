@@ -16,6 +16,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
@@ -95,6 +96,20 @@ public class BlockElectisCrystal extends BlockContainerBase {
     public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
         // TODO Auto-generated method stub
         super.setBlockBoundsBasedOnState(world, x, y, z);
+    }
+    
+    @Override
+    public boolean canBlockStay(World world, int x, int y, int z) {
+        
+        ForgeDirection direction = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z));
+        return world.isSideSolid(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, direction);
+    }
+    
+    @Override
+    public boolean canPlaceBlockOnSide(World world, int x, int y, int z, int side) {
+
+        ForgeDirection direction = ForgeDirection.getOrientation(side).getOpposite();
+        return world.isSideSolid(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, direction.getOpposite());
     }
     
     @Override

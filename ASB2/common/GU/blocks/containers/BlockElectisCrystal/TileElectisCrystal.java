@@ -40,17 +40,17 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
         crystalType = CrystalType.LEVEL1;
         poolValidNodes = new Wait(new PoolValidNodeWait(), 50, 0);
         sendEnergyPackets = new Wait(new SendEnergyPacketWait(), 5, 0);
-        serverPacketWait = new Wait(new ServerPacketWait(), 20, 0);
+        serverPacketWait = new Wait(new ServerPacketWait(), 40, 0);
     }
     
     @Override
     public void updateEntity() {
         
         poolValidNodes.update();
-        sendEnergyPackets.update();
         
         if (!worldObj.isRemote) {
             
+            sendEnergyPackets.update();
             serverPacketWait.update();
         }
     }
@@ -77,14 +77,14 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     public void writeToNBT(NBTTagCompound tag) {
         
         tag.setTag("powerManager", powerManager.save(new NBTTagCompound()));
-        // super.writeToNBT(tag);
+        super.writeToNBT(tag);
     }
     
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         
         powerManager.load(tag.getCompoundTag("powerManager"));
-        // super.readFromNBT(tag);
+        super.readFromNBT(tag);
     }
     
     public static enum CrystalType {
@@ -185,22 +185,26 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
             
             if (!worldObj.isRemote) {
                 
-                if (lastManager != null) {
+                if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
                     
-                    if (!lastManager.equals(powerManager)) {
+                    if (lastManager != null) {
                         
-                        GearUtilities.packetPipeline.sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, powerManager), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
-                        GearUtilities.log("Packet Sent");
+                        if (!lastManager.equals(powerManager)) {
+                            
+                            lastManager = powerManager.clone();
+                            GearUtilities.packetPipeline.sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, powerManager), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
+                            GearUtilities.log("Packet Sent");
+                        }
+                        else {
+                            
+                            GearUtilities.log("Power Packet Not Made: THINGY IS THE SAME!");
+                        }
                     }
                     else {
                         
-                        GearUtilities.log("Power Packet Not Made: THINGY IS THE SAME!");
+                        lastManager = powerManager.clone();
+                        GearUtilities.packetPipeline.sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, powerManager), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
                     }
-                }
-                else {
-                    
-                    lastManager = powerManager.clone();
-                    GearUtilities.packetPipeline.sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, powerManager), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
                 }
             }
         }

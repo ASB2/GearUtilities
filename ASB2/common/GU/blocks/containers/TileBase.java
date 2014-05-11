@@ -21,12 +21,12 @@ public class TileBase extends TileEntity {
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         
-        // super.writeToNBT(tag);
+         super.writeToNBT(tag);
     }
     
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         // TODO Auto-generated method stub
-        // super.readFromNBT(tag);
+         super.readFromNBT(tag);
     }
 }
