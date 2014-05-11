@@ -107,9 +107,27 @@ public class BlockElectisCrystal extends BlockContainerBase {
     
     @Override
     public boolean canPlaceBlockOnSide(World world, int x, int y, int z, int side) {
-
+        
         ForgeDirection direction = ForgeDirection.getOrientation(side).getOpposite();
         return world.isSideSolid(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, direction.getOpposite());
+    }
+    
+    @Override
+    public boolean isBlockSolid(IBlockAccess p_149747_1_, int p_149747_2_, int p_149747_3_, int p_149747_4_, int p_149747_5_) {
+        
+        return false;
+    }
+    
+    @Override
+    public boolean isNormalCube(IBlockAccess world, int x, int y, int z) {
+        
+        return false;
+    }
+    
+    @Override
+    public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
+        
+        return false;
     }
     
     @Override

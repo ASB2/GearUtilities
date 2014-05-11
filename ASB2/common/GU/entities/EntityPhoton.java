@@ -1,5 +1,6 @@
 package GU.entities;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
@@ -8,6 +9,7 @@ import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import ASB2.utils.UtilVector;
 import GU.api.EnumSimulationType;
 import GU.api.power.PowerNetAbstract.ICrystalPowerHandler;
@@ -19,7 +21,7 @@ import GU.render.NoiseManager;
 import UC.math.vector.Vector3d;
 import UC.math.vector.Vector3i;
 
-public class EntityPhoton extends EntityBase {
+public class EntityPhoton extends EntityBase implements IEntityAdditionalSpawnData {
     
     final Vector3d startPosition, endPosition;
     Vector3i destination;
@@ -38,6 +40,8 @@ public class EntityPhoton extends EntityBase {
     public EntityPhoton(World world, double x, double y, double z, int xD, int yD, int zD) {
         super(world);
         position = new Vector3d(x, y, z);
+        this.updateVinillaPosition();
+        
         destination = new Vector3i(xD, yD, zD);
         this.momentum = determineHeading(position, destination);
         startPosition = position.clone();
@@ -47,6 +51,8 @@ public class EntityPhoton extends EntityBase {
     public EntityPhoton(World world, Vector3d position, Vector3i destination) {
         super(world);
         this.position = position;
+        this.updateVinillaPosition();
+        
         this.destination = destination;
         this.momentum = determineHeading(position, destination);
         startPosition = position.clone();
@@ -56,6 +62,8 @@ public class EntityPhoton extends EntityBase {
     public EntityPhoton(World world, int x, int y, int z, Vector3i destination) {
         super(world);
         this.position = new Vector3d(x, y, z);
+        this.updateVinillaPosition();
+        
         this.destination = destination;
         this.momentum = determineHeading(position, destination);
         startPosition = position.clone();
@@ -146,8 +154,17 @@ public class EntityPhoton extends EntityBase {
         }
     }
     
-    public static interface IPhotonImpact {
+    @Override
+    public void writeSpawnData(ByteBuf buffer) {
         
-        void onImpact(int powerCarried, Vector3i impactPosition);
+//        buffer.writeDouble(posX);
+//        buffer.writeDouble(posY);
+//        buffer.writeDouble(posZ);
+    }
+    
+    @Override
+    public void readSpawnData(ByteBuf additionalData) {
+        
+//        this.setPosition(additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble());
     }
 }
