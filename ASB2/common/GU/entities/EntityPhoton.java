@@ -38,14 +38,7 @@ public class EntityPhoton extends EntityBase implements IEntityAdditionalSpawnDa
     }
     
     public EntityPhoton(World world, double x, double y, double z, int xD, int yD, int zD) {
-        super(world);
-        position = new Vector3d(x, y, z);
-        this.updateVinillaPosition();
-        
-        destination = new Vector3i(xD, yD, zD);
-        this.momentum = determineHeading(position, destination);
-        startPosition = position.clone();
-        endPosition = destination.toVector3d();
+        this(world, new Vector3d(x, y, z), new Vector3i(xD, yD, zD));
     }
     
     public EntityPhoton(World world, Vector3d position, Vector3i destination) {
@@ -157,14 +150,15 @@ public class EntityPhoton extends EntityBase implements IEntityAdditionalSpawnDa
     @Override
     public void writeSpawnData(ByteBuf buffer) {
         
-//        buffer.writeDouble(posX);
-//        buffer.writeDouble(posY);
-//        buffer.writeDouble(posZ);
+        // buffer.writeDouble(posX);
+        // buffer.writeDouble(posY);
+        // buffer.writeDouble(posZ);
     }
     
     @Override
     public void readSpawnData(ByteBuf additionalData) {
         
-//        this.setPosition(additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble());
+        // this.setPosition(additionalData.readDouble(),
+        // additionalData.readDouble(), additionalData.readDouble());
     }
 }
