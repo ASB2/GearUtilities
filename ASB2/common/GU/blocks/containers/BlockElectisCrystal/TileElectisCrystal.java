@@ -14,7 +14,7 @@ import ASB2.utils.UtilVector;
 import GU.GearUtilities;
 import GU.api.EnumSimulationType;
 import GU.api.color.IColorableBlock;
-import GU.api.power.PowerNetAbstract.ICrystalPowerHandler;
+import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.api.power.PowerNetObject.UtilPower;
@@ -29,14 +29,14 @@ import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class TileElectisCrystal extends TileBase implements IColorableBlock, ICrystalPowerHandler {
     
-    Color color;
+    EnumElectisCrystalType crystalType;
     DefaultPowerManager powerManager;
     List<Entry<Vector3i, WeakReference<ICrystalPowerHandler>>> powerHandlers = new ArrayList<Entry<Vector3i, WeakReference<ICrystalPowerHandler>>>();
     Wait poolValidNodes, sendEnergyPackets, serverPacketWait;
     
     public TileElectisCrystal() {
         
-        color = Color.WHITE;
+        crystalType = EnumElectisCrystalType.TYPE2;
         powerManager = new DefaultPowerManager().setPowerMax(20);
         poolValidNodes = new Wait(new PoolValidNodeWait(), 50, 0);
         sendEnergyPackets = new Wait(new SendEnergyPacketWait(), 5, 0);
@@ -56,9 +56,27 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     }
     
     @Override
+    public void validate() {
+        
+        if (crystalType != EnumElectisCrystalType.BROKEN) {
+            
+            GearUtilities.log("Called!");
+        }
+    }
+    
+    public EnumElectisCrystalType getCrystalType() {
+        return crystalType;
+    }
+    
+    public TileElectisCrystal setCrystalType(EnumElectisCrystalType crystalType) {
+        this.crystalType = crystalType;
+        return this;
+    }
+    
+    @Override
     public Color getColor(World world, int x, int y, int z, ForgeDirection direction) {
         
-        return color;
+        return crystalType.getDefaultColor();
     }
     
     @Override
@@ -76,6 +94,7 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         
+        crystalType.save(tag);
         tag.setTag("powerManager", powerManager.save(new NBTTagCompound()));
         super.writeToNBT(tag);
     }
@@ -83,6 +102,7 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         
+        crystalType = EnumElectisCrystalType.load(tag);
         powerManager.load(tag.getCompoundTag("powerManager"));
         super.readFromNBT(tag);
     }
@@ -180,7 +200,7 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
                     if (!lastManager.equals(powerManager)) {
                         
                         lastManager = powerManager.clone();
-                        GearUtilities.packetPipeline.sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, powerManager), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
+                        GearUtilities.getPipeline().sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, powerManager), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
                         // GearUtilities.log("Packet Sent");
                     }
                     else {
@@ -191,7 +211,7 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
                 else {
                     
                     lastManager = powerManager.clone();
-                    GearUtilities.packetPipeline.sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, powerManager), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
+                    GearUtilities.getPipeline().sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, powerManager), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
                 }
             }
         }

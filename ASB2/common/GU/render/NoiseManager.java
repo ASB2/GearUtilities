@@ -1,21 +1,17 @@
 package GU.render;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureUtil;
 
 import org.lwjgl.opengl.GL11;
 
-import UC.FastNoise;
 import GU.GearUtilities;
 import GU.info.Variables;
+import UC.FastNoise;
 
 public class NoiseManager {
     
@@ -35,7 +31,7 @@ public class NoiseManager {
     public void initImage() {
         long startTime = Minecraft.getSystemTime();
         GL_TEXTURE_ID = GL11.glGenTextures();
-        initBufferedImage();
+        generateNoiseImage();
         TextureUtil.allocateTexture(GL_TEXTURE_ID, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
         long endTime = Minecraft.getSystemTime();
         GearUtilities.log(endTime - startTime);
@@ -46,9 +42,10 @@ public class NoiseManager {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, instance.GL_TEXTURE_ID);
     }
     
-    public void initBufferedImage() {
+    public void generateNoiseImage() {
         
         imageDataArray.clear();
+        this.longVinillaAnimationImage = null;
         
         for (float currentDensity = minDensity; currentDensity <= maxDensity; currentDensity += changePerTick) {
             
@@ -72,7 +69,6 @@ public class NoiseManager {
                     imageData[x + y * Variables.NOISE_TEXTURE_SIZE] = RGB;
                 }
             }
-            
             imageDataArray.add(imageData);
         }
         
@@ -84,31 +80,5 @@ public class NoiseManager {
             finalImage.setRGB(0, index * Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, image, 0, Variables.NOISE_TEXTURE_SIZE);
         }
         this.longVinillaAnimationImage = finalImage;
-    }
-    
-    public static void modifyBufferedImage(int[] imageData, int x, int y, int xBoxSize, int yBoxSize) {
-        
-    }
-    
-    public static boolean writeImage(BufferedImage image, File outputFile, String format) {
-        
-        // if (outputFile.isFile()) {
-        
-        try {
-            
-            if (!outputFile.exists()) {
-                
-                outputFile.createNewFile();
-            }
-            
-            ImageIO.write(image, format, outputFile);
-            return true;
-        }
-        catch (IOException e) {
-            
-            e.printStackTrace();
-        }
-        // }
-        return false;
     }
 }

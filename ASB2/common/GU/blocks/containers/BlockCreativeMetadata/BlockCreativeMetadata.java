@@ -1,26 +1,19 @@
 package GU.blocks.containers.BlockCreativeMetadata;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import GU.api.EnumSimulationType;
+import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
-import GU.api.power.PowerNetAbstract.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
-import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.api.power.PowerNetObject.UtilPower;
 import GU.blocks.containers.BlockMetadataContainerBase;
 import GU.blocks.containers.TileBase;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
-import UC.math.vector.Vector3i;
 
 public class BlockCreativeMetadata extends BlockMetadataContainerBase {
     

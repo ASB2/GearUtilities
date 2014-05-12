@@ -9,10 +9,9 @@ import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import ASB2.utils.UtilVector;
 import GU.api.EnumSimulationType;
-import GU.api.power.PowerNetAbstract.ICrystalPowerHandler;
+import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetObject.UtilPower;
 import GU.info.Models;
@@ -20,6 +19,7 @@ import GU.info.Textures;
 import GU.render.NoiseManager;
 import UC.math.vector.Vector3d;
 import UC.math.vector.Vector3i;
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 
 public class EntityPhoton extends EntityBase implements IEntityAdditionalSpawnData {
     

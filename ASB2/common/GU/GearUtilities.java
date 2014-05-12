@@ -13,7 +13,7 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.config.Configuration;
 import GU.info.Reference;
 import GU.info.Variables;
-import GU.packets.PacketPipeline;
+import GU.packets.abstractPacket.PacketPipeline;
 import GU.proxy.CommonProxy;
 import GU.worldGen.WorldGenBase;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -38,7 +38,7 @@ public final class GearUtilities {
     public static CommonProxy proxy;
     
     private static Logger GU_LOGGER = Logger.getLogger(Reference.NAME);
-    public static final PacketPipeline packetPipeline = new PacketPipeline();
+    private static final PacketPipeline packetPipeline = new PacketPipeline();
     
     public static CreativeTabs tabGUBlocks = new GUCreativeTab(Reference.NAME.concat(": Blocks"));
     public static CreativeTabs tabGUItems = new GUCreativeTab(Reference.NAME.concat(": Items"));
@@ -57,6 +57,8 @@ public final class GearUtilities {
         
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
+        
+        proxy.register();
         
         Variables.updateVariables(config);
         ItemRegistry.init(config);
@@ -89,8 +91,6 @@ public final class GearUtilities {
     @EventHandler
     public void mainInit(FMLInitializationEvent event) {
         
-        proxy.register();
-        
         GameRegistry.registerWorldGenerator(new WorldGenBase() {
             
             @Override
@@ -118,6 +118,11 @@ public final class GearUtilities {
         CraftRegistry.init();
         // WhiteLists.getInstance().addWrench(new
         // ItemStack(ItemRegistry.ItemAdvancedStick));
+    }
+    
+    public static PacketPipeline getPipeline() {
+        
+        return packetPipeline;
     }
     
     public static void log(Object message) {

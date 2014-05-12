@@ -1,5 +1,6 @@
 package GU;
 
+import GU.packets.CrystalTypePacket;
 import GU.packets.PowerPacket;
 
 public final class PacketRegistry {
@@ -9,6 +10,7 @@ public final class PacketRegistry {
     
     public static void init() {
         
-        GearUtilities.packetPipeline.registerPacket(PowerPacket.class);
+        GearUtilities.getPipeline().registerPacket(PowerPacket.class);
+        GearUtilities.getPipeline().registerPacket(CrystalTypePacket.class);
     }
 }

@@ -1,4 +1,4 @@
-package GU.packets;
+package GU.packets.abstractPacket;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

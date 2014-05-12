@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.api.power.PowerNetAbstract.*;
+import GU.packets.abstractPacket.AbstractPacket;
 
 public class PowerPacket implements AbstractPacket {
     
@@ -66,27 +67,24 @@ public class PowerPacket implements AbstractPacket {
     @Override
     public void handleClientSide(EntityPlayer player) {
         
-        if (player.worldObj.isRemote) {
+        TileEntity tile = player.worldObj.getTileEntity(x, y, z);
+        
+        if (tile != null && tile instanceof ITilePowerHandler) {
             
-            TileEntity tile = player.worldObj.getTileEntity(x, y, z);
+            IPowerManager manager = ((ITilePowerHandler) tile).getPowerManager();
             
-            if (tile != null && tile instanceof ITilePowerHandler) {
+            if (manager != null && manager instanceof DefaultPowerManager) {
                 
-                IPowerManager manager = ((ITilePowerHandler) tile).getPowerManager();
+                DefaultPowerManager dManager = ((DefaultPowerManager) manager);
                 
-                if (manager != null && manager instanceof DefaultPowerManager) {
-                    
-                    DefaultPowerManager dManager = ((DefaultPowerManager) manager);
-                    
-                    dManager.setMaxInputPacketSize(powerToUpdate.getMaxInputPacketSize());
-                    dManager.setMaxOutputPacketSize(powerToUpdate.getMaxOutputPacketSize());
-                    
-                    dManager.setMinInputPacketSize(powerToUpdate.getMinInputPacketSize());
-                    dManager.setMinOutputPacketSize(powerToUpdate.getMinOutputPacketSize());
-                    
-                    dManager.setPowerMax(powerToUpdate.getMaxPower());
-                    dManager.setPowerStored(powerToUpdate.getStoredPower());
-                }
+                dManager.setMaxInputPacketSize(powerToUpdate.getMaxInputPacketSize());
+                dManager.setMaxOutputPacketSize(powerToUpdate.getMaxOutputPacketSize());
+                
+                dManager.setMinInputPacketSize(powerToUpdate.getMinInputPacketSize());
+                dManager.setMinOutputPacketSize(powerToUpdate.getMinOutputPacketSize());
+                
+                dManager.setPowerMax(powerToUpdate.getMaxPower());
+                dManager.setPowerStored(powerToUpdate.getStoredPower());
             }
         }
     }

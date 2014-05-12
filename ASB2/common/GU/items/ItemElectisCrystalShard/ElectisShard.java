@@ -66,19 +66,25 @@ public class ElectisShard {
         @Override
         public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
             
-            int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
-            
-            if (player.isSneaking()) {
+            if (false) {
+                int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
                 
-                powerSaved--;
-                
+                if (player.isSneaking()) {
+                    
+                    powerSaved--;
+                    
+                }
+                else {
+                    
+                    powerSaved++;
+                }
+                UtilItemStack.setNBTTagInt(itemStack, "inputPower", Math.max(powerSaved, 0));
+                UtilEntity.sendChatToPlayer(player, "Power To Move: " + Math.max(powerSaved, 0));
             }
             else {
                 
-                powerSaved++;
+                NoiseManager.instance.generateNoiseImage();
             }
-            UtilItemStack.setNBTTagInt(itemStack, "inputPower", Math.max(powerSaved, 0));
-            UtilEntity.sendChatToPlayer(player, "Power To Move: " + Math.max(powerSaved, 0));
             return super.onItemRightClick(itemStack, world, player);
         }
     }

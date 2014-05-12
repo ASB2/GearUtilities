@@ -42,6 +42,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
             if (tile != null && tile instanceof TileElectisCrystal && player.getHeldItem() == null) {
                 
                 UtilEntity.sendChatToPlayer(player, "PowerStored: " + ((TileElectisCrystal) tile).powerManager.getStoredPower());
+                UtilEntity.sendChatToPlayer(player, "CrystalType: " + ((TileElectisCrystal) tile).getCrystalType());
                 return true;
             }
         }
