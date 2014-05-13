@@ -2,6 +2,7 @@ package GU.blocks.containers.BlockElectisCrystal;
 
 import java.awt.Color;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
@@ -9,13 +10,14 @@ import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilItemStack;
+import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.render.NoiseManager;
 
 public enum EnumElectisCrystalType {
     
-    BROKEN, TYPE1, TYPE2;
+    BROKEN, TYPE1, TYPE2, TYPE3, TYPE4;
     
     int blockListID = -1, itemListID = -1;
     
@@ -116,9 +118,27 @@ public enum EnumElectisCrystalType {
                 
                 case TYPE2: {
                     
+                    GL11.glPushMatrix();
+                    GL11.glNewList(type.getBlockDisplayListID(), GL11.GL_COMPILE);
+                    
+                    GL11.glScaled(.4, .4, .4);
+                    NoiseManager.bindImage();
+                    Models.ModelRhombicuboctahedron.renderPart("Rhombicuboctahedron");
+                    
+                    GL11.glEndList();
+                    GL11.glPopMatrix();
                     break;
                 }
                 
+                case TYPE3: {
+                    
+                    break;
+                }
+                
+                case TYPE4: {
+                    
+                    break;
+                }
                 default: {
                     break;
                 }
@@ -188,59 +208,22 @@ public enum EnumElectisCrystalType {
                 
                 GL11.glPushMatrix();
                 
-                float translationAmount = .4f;
-                
-                switch (((TileBase) tileentity).getOrientation()) {
-                
-                    case UP: {
-                        
-                        GL11.glTranslated(x + 0.5F, y + translationAmount, z + .5F);
-                        break;
-                    }
-                    case DOWN: {
-                        
-                        GL11.glTranslated(x + 0.5F, y + (1 - translationAmount), z + .5F);
-                        GL11.glRotatef(180F, 1F, 0F, 0F);
-                        break;
-                    }
-                    
-                    case SOUTH: {
-                        
-                        GL11.glTranslated(x + 0.5F, y + .5F, z + translationAmount);
-                        GL11.glRotatef(90F, 1F, 0F, 0F);
-                        break;
-                    }
-                    case NORTH: {
-                        
-                        GL11.glTranslated(x + 0.5F, y + .5F, z + (1 - translationAmount));
-                        GL11.glRotatef(-90F, 1F, 0F, 0F);
-                        break;
-                    }
-                    case WEST: {
-                        
-                        GL11.glTranslated(x + (1 - translationAmount), y + .5F, z + .5F);
-                        GL11.glRotatef(90F, 0F, 0F, 1F);
-                        break;
-                    }
-                    case EAST: {
-                        
-                        GL11.glTranslated(x + translationAmount, y + .5F, z + .5F);
-                        GL11.glRotatef(-90F, 0F, 0F, 1F);
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
-                }
-                
-                GL11.glScaled(.4, .4, .4);
-                NoiseManager.bindImage();
-                Models.ModelRhombicuboctahedron.renderAll();
+                GL11.glTranslated(x + .5, y + .5, z + .5);
+                GL11.glCallList(this.getBlockDisplayListID());
                 
                 GL11.glPopMatrix();
                 break;
             }
             
+            case TYPE3: {
+                
+                break;
+            }
+            
+            case TYPE4: {
+                
+                break;
+            }
             default: {
                 break;
             }
@@ -251,124 +234,257 @@ public enum EnumElectisCrystalType {
         
         float x, y, z, scale;
         
-        switch (type) {
+        switch (this) {
         
-            case ENTITY: {
+            case TYPE1: {
                 
-                x = 0;
-                y = 0;
-                z = 0;
-                scale = .2f;
+                switch (type) {
+                
+                    case ENTITY: {
+                        
+                        x = 0;
+                        y = 0;
+                        z = 0;
+                        scale = .2f;
+                        break;
+                    }
+                    
+                    case EQUIPPED: {
+                        
+                        x = 0;
+                        y = 1;
+                        z = .5f;
+                        scale = .2f;
+                        break;
+                    }
+                    
+                    case INVENTORY: {
+                        
+                        x = 0;
+                        y = -.2f;
+                        z = 0f;
+                        scale = .2f;
+                        break;
+                    }
+                    
+                    case EQUIPPED_FIRST_PERSON: {
+                        
+                        x = -.5f;
+                        y = 1;
+                        z = .5f;
+                        scale = .12f;
+                        break;
+                    }
+                    
+                    default: {
+                        return;
+                    }
+                }
+                
+                GL11.glPushMatrix();
+                
+                GL11.glTranslatef(x, y, z);
+                
+                {
+                    GL11.glPushMatrix();
+                    GL11.glScalef(scale, scale, scale);
+                    NoiseManager.bindImage();
+                    Models.ModelCrystal2.renderPart("Crystal");
+                    GL11.glPopMatrix();
+                }
+                
+                final float secondCrystalScale = .3f;
+                
+                {
+                    GL11.glPushMatrix();
+                    
+                    GL11.glTranslated(0, -0.1, .35F);
+                    
+                    GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                    
+                    GL11.glRotatef(90F, 1F, 0F, 0F);
+                    GL11.glRotatef(25F, 1F, 0F, 0F);
+                    
+                    Models.ModelFlameShard.renderAll();
+                    GL11.glPopMatrix();
+                }
+                
+                {
+                    GL11.glPushMatrix();
+                    
+                    GL11.glTranslated(.25, -0.1, -.035F);
+                    
+                    GL11.glRotatef(90F, 0F, 1F, 0F);
+                    
+                    GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                    
+                    GL11.glRotatef(90F, 1F, 0F, 0F);
+                    GL11.glRotatef(25F, 1F, 0F, 0F);
+                    
+                    Models.ModelFlameShard.renderAll();
+                    GL11.glPopMatrix();
+                }
+                
+                {
+                    GL11.glPushMatrix();
+                    
+                    GL11.glTranslated(0, -0.1, -.35F);
+                    
+                    GL11.glRotatef(180F, 0F, 1F, 0F);
+                    
+                    GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                    
+                    GL11.glRotatef(90F, 1F, 0F, 0F);
+                    GL11.glRotatef(25F, 1F, 0F, 0F);
+                    
+                    Models.ModelFlameShard.renderAll();
+                    GL11.glPopMatrix();
+                }
+                
+                {
+                    GL11.glPushMatrix();
+                    
+                    GL11.glTranslated(-.25, -0.1, .035F);
+                    
+                    GL11.glRotatef(270F, 0F, 1F, 0F);
+                    
+                    GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                    
+                    GL11.glRotatef(90F, 1F, 0F, 0F);
+                    GL11.glRotatef(25F, 1F, 0F, 0F);
+                    
+                    Models.ModelFlameShard.renderAll();
+                    GL11.glPopMatrix();
+                }
+                GL11.glPopMatrix();
+                
                 break;
             }
             
-            case EQUIPPED: {
+            case TYPE2: {
                 
-                x = 0;
-                y = 1;
-                z = .5f;
-                scale = .2f;
+                switch (type) {
+                
+                    case ENTITY: {
+                        
+                        x = 0;
+                        y = 0;
+                        z = 0;
+                        scale = .2f;
+                        break;
+                    }
+                    
+                    case EQUIPPED: {
+                        
+                        x = 0;
+                        y = 1;
+                        z = .5f;
+                        scale = .2f;
+                        break;
+                    }
+                    
+                    case INVENTORY: {
+                        
+                        x = 0;
+                        y = -.2f;
+                        z = 0f;
+                        scale = .2f;
+                        break;
+                    }
+                    
+                    case EQUIPPED_FIRST_PERSON: {
+                        
+                        x = -.5f;
+                        y = 1;
+                        z = .5f;
+                        scale = .3f;
+                        break;
+                    }
+                    
+                    default: {
+                        return;
+                    }
+                }
+                
+                GL11.glTranslatef(x, y, z);
+                
+                GL11.glPushMatrix();
+                GL11.glScalef(scale, scale, scale);
+                NoiseManager.bindImage();
+                Models.ModelRhombicuboctahedron.renderPart("Rhombicuboctahedron");
+                GL11.glPopMatrix();
+                
                 break;
             }
             
-            case INVENTORY: {
+            case TYPE3: {
                 
-                x = 0;
-                y = -.2f;
-                z = 0f;
-                scale = .2f;
+                switch (type) {
+                
+                    case ENTITY: {
+                        
+                        x = 0;
+                        y = 0;
+                        z = 0;
+                        scale = .9f;
+                        break;
+                    }
+                    
+                    case EQUIPPED: {
+                        
+                        x = 0;
+                        y = 1;
+                        z = .5f;
+                        scale = .5f;
+                        break;
+                    }
+                    
+                    case INVENTORY: {
+                        
+                        x = 0;
+                        y = -.2f;
+                        z = 0f;
+                        scale = .5f;
+                        break;
+                    }
+                    
+                    case EQUIPPED_FIRST_PERSON: {
+                        
+                        x = -.5f;
+                        y = 1;
+                        z = .5f;
+                        scale = .3f;
+                        break;
+                    }
+                    
+                    default: {
+                        return;
+                    }
+                }
+                
+                GL11.glTranslatef(x, y, z);
+                
+                GL11.glPushMatrix();
+                
+                GL11.glScalef(scale, scale, scale);
+                
+                GL11.glPushMatrix();
+                GL11.glDisable(GL11.GL_CULL_FACE);
+                GL11.glRotated(Minecraft.getSystemTime() / 10, 1, 1, 1);
+                NoiseManager.bindImage();
+                Models.ModelRhombicuboctahedron.renderPart("Main_Faces");
+                GL11.glEnable(GL11.GL_CULL_FACE);
+                GL11.glPopMatrix();
+                
+                GL11.glScaled(.8, .8, .8);
+                GL11.glRotated(-Minecraft.getSystemTime() / 10, 1, 1, 1);
+                Models.ModelRhombicuboctahedron.renderPart("Rhombicuboctahedron");
+                
+                GL11.glPopMatrix();
+                
                 break;
             }
-            
-            case EQUIPPED_FIRST_PERSON: {
-                
-                x = -.5f;
-                y = 1;
-                z = .5f;
-                scale = .12f;
-                break;
-            }
-            
-            default: {
-                return;
-            }
         }
-        GL11.glPushMatrix();
-        
-        GL11.glTranslatef(x, y, z);
-        
-        {
-            GL11.glPushMatrix();
-            GL11.glScalef(scale, scale, scale);
-            NoiseManager.bindImage();
-            Models.ModelCrystal2.renderPart("Crystal");
-            GL11.glPopMatrix();
-        }
-        
-        final float secondCrystalScale = .3f;
-        
-        {
-            GL11.glPushMatrix();
-            
-            GL11.glTranslated(0, -0.1, .35F);
-            
-            GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-            
-            GL11.glRotatef(90F, 1F, 0F, 0F);
-            GL11.glRotatef(25F, 1F, 0F, 0F);
-            
-            Models.ModelFlameShard.renderAll();
-            GL11.glPopMatrix();
-        }
-        
-        {
-            GL11.glPushMatrix();
-            
-            GL11.glTranslated(.25, -0.1, -.035F);
-            
-            GL11.glRotatef(90F, 0F, 1F, 0F);
-            
-            GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-            
-            GL11.glRotatef(90F, 1F, 0F, 0F);
-            GL11.glRotatef(25F, 1F, 0F, 0F);
-            
-            Models.ModelFlameShard.renderAll();
-            GL11.glPopMatrix();
-        }
-        
-        {
-            GL11.glPushMatrix();
-            
-            GL11.glTranslated(0, -0.1, -.35F);
-            
-            GL11.glRotatef(180F, 0F, 1F, 0F);
-            
-            GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-            
-            GL11.glRotatef(90F, 1F, 0F, 0F);
-            GL11.glRotatef(25F, 1F, 0F, 0F);
-            
-            Models.ModelFlameShard.renderAll();
-            GL11.glPopMatrix();
-        }
-        
-        {
-            GL11.glPushMatrix();
-            
-            GL11.glTranslated(-.25, -0.1, .035F);
-            
-            GL11.glRotatef(270F, 0F, 1F, 0F);
-            
-            GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-            
-            GL11.glRotatef(90F, 1F, 0F, 0F);
-            GL11.glRotatef(25F, 1F, 0F, 0F);
-            
-            Models.ModelFlameShard.renderAll();
-            GL11.glPopMatrix();
-        }
-        GL11.glPopMatrix();
     }
     
     public int getBlockDisplayListID() {
@@ -390,6 +506,11 @@ public enum EnumElectisCrystalType {
     public Color getDefaultColor() {
         
         return Color.WHITE;
+    }
+    
+    public DefaultPowerManager getDefaultPowerManager() {
+        
+        return new DefaultPowerManager().setPowerMax(100);
     }
     
     public void save(NBTTagCompound tag) {

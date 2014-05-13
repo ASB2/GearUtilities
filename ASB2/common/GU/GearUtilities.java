@@ -15,6 +15,7 @@ import GU.info.Reference;
 import GU.info.Variables;
 import GU.packets.abstractPacket.PacketPipeline;
 import GU.proxy.CommonProxy;
+import GU.render.NoiseManager;
 import GU.worldGen.WorldGenBase;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.IFuelHandler;
@@ -70,6 +71,7 @@ public final class GearUtilities {
         PacketRegistry.init();
         
         FMLCommonHandler.instance().bus().register(new EventListener());
+        FMLCommonHandler.instance().bus().register(NoiseManager.instance);
         GameRegistry.registerFuelHandler(new IFuelHandler() {
             
             @Override

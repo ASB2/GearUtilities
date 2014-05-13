@@ -1,6 +1,9 @@
 package GU.blocks.containers.BlockElectisCrystal;
 
+import java.util.List;
+
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilEntity;
+import ASB2.utils.UtilItemStack;
 import GU.blocks.containers.BlockContainerBase;
 import cpw.mods.fml.client.registry.ClientRegistry;
 
@@ -123,6 +127,22 @@ public class BlockElectisCrystal extends BlockContainerBase {
             
             ((EntityLivingBase) entity).attackEntityFrom(DamageSource.magic, 1.0F);
         }
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+        
+        for (EnumElectisCrystalType type : EnumElectisCrystalType.values()) {
+            
+            if (type.ordinal() != 0) {
+                
+                ItemStack stack = new ItemStack(this, 1, 0);
+                UtilItemStack.setNBTTagInt(stack, "crystalType", type.ordinal());
+                list.add(stack);
+            }
+        }
+        super.getSubBlocks(item, tab, list);
     }
     
     @Override

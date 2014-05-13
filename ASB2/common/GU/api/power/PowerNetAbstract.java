@@ -39,4 +39,14 @@ public class PowerNetAbstract {
         
         boolean decreasePower(int powerAmount, EnumSimulationType type);
     }
+    
+    public interface IPowerAttribute {
+        
+        EnumPowerStatus getPowerStatus();
+    }
+    
+    public enum EnumPowerStatus {
+        
+        NONE, SINK, SOURCE;
+    }
 }

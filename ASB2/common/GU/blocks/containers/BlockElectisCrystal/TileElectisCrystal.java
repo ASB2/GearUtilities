@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -14,12 +15,17 @@ import ASB2.utils.UtilVector;
 import GU.GearUtilities;
 import GU.api.EnumSimulationType;
 import GU.api.color.IColorableBlock;
+import GU.api.crystals.CrystalNetwork;
+import GU.api.crystals.ICrystalNetworkPart;
 import GU.api.crystals.ICrystalPowerHandler;
+import GU.api.power.PowerNetAbstract.EnumPowerStatus;
+import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.api.power.PowerNetObject.UtilPower;
 import GU.blocks.containers.TileBase;
 import GU.entities.EntityPhoton;
+import GU.packets.CrystalTypePacket;
 import GU.packets.PowerPacket;
 import UC.ImplementedEntry;
 import UC.Wait;
@@ -27,16 +33,17 @@ import UC.Wait.IWaitTrigger;
 import UC.math.vector.Vector3i;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
-public class TileElectisCrystal extends TileBase implements IColorableBlock, ICrystalPowerHandler {
+public class TileElectisCrystal extends TileBase implements IColorableBlock, ICrystalPowerHandler, ICrystalNetworkPart {
     
     EnumElectisCrystalType crystalType;
     DefaultPowerManager powerManager;
     List<Entry<Vector3i, WeakReference<ICrystalPowerHandler>>> powerHandlers = new ArrayList<Entry<Vector3i, WeakReference<ICrystalPowerHandler>>>();
     Wait poolValidNodes, sendEnergyPackets, serverPacketWait;
+    CrystalNetwork network;
     
     public TileElectisCrystal() {
         
-        crystalType = EnumElectisCrystalType.TYPE2;
+        crystalType = EnumElectisCrystalType.BROKEN;
         powerManager = new DefaultPowerManager().setPowerMax(20);
         poolValidNodes = new Wait(new PoolValidNodeWait(), 50, 0);
         sendEnergyPackets = new Wait(new SendEnergyPacketWait(), 5, 0);
@@ -58,10 +65,17 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     @Override
     public void validate() {
         
+    }
+    
+    @Override
+    public Packet getDescriptionPacket() {
+        
         if (crystalType != EnumElectisCrystalType.BROKEN) {
-            
+            GearUtilities.getPipeline().sendToAllAround(new CrystalTypePacket(xCoord, yCoord, zCoord, this.crystalType.ordinal()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
+            //
             GearUtilities.log("Called!");
         }
+        return super.getDescriptionPacket();
     }
     
     public EnumElectisCrystalType getCrystalType() {
@@ -71,6 +85,31 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     public TileElectisCrystal setCrystalType(EnumElectisCrystalType crystalType) {
         this.crystalType = crystalType;
         return this;
+    }
+    
+    @Override
+    public IPowerAttribute getAttributes() {
+        
+        return new IPowerAttribute() {
+            
+            @Override
+            public EnumPowerStatus getPowerStatus() {
+                
+                return EnumPowerStatus.NONE;
+            }
+        };
+    }
+    
+    @Override
+    public void setCrystalNetwork(CrystalNetwork newNetwork) {
+        
+        this.network = newNetwork;
+    }
+    
+    @Override
+    public CrystalNetwork getNetwork() {
+        
+        return network;
     }
     
     @Override
