@@ -112,6 +112,73 @@ public enum EnumElectisCrystalType {
                         }
                         GL11.glEndList();
                         GL11.glPopMatrix();
+                        
+                        GL11.glPushMatrix();
+                        GL11.glNewList(type.getItemListID(), GL11.GL_COMPILE);
+                        
+                        {
+                            GL11.glPushMatrix();
+                            
+                            GL11.glTranslated(0, -0.1, .35F);
+                            
+                            GL11.glScalef(.3f, .3f, .3f);
+                            
+                            GL11.glRotatef(90F, 1F, 0F, 0F);
+                            GL11.glRotatef(25F, 1F, 0F, 0F);
+                            
+                            Models.ModelFlameShard.renderAll();
+                            GL11.glPopMatrix();
+                        }
+                        
+                        {
+                            GL11.glPushMatrix();
+                            
+                            GL11.glTranslated(.25, -0.1, -.035F);
+                            
+                            GL11.glRotatef(90F, 0F, 1F, 0F);
+                            
+                            GL11.glScalef(.3f, .3f, .3f);
+                            
+                            GL11.glRotatef(90F, 1F, 0F, 0F);
+                            GL11.glRotatef(25F, 1F, 0F, 0F);
+                            
+                            Models.ModelFlameShard.renderAll();
+                            GL11.glPopMatrix();
+                        }
+                        
+                        {
+                            GL11.glPushMatrix();
+                            
+                            GL11.glTranslated(0, -0.1, -.35F);
+                            
+                            GL11.glRotatef(180F, 0F, 1F, 0F);
+                            
+                            GL11.glScalef(.3f, .3f, .3f);
+                            
+                            GL11.glRotatef(90F, 1F, 0F, 0F);
+                            GL11.glRotatef(25F, 1F, 0F, 0F);
+                            
+                            Models.ModelFlameShard.renderAll();
+                            GL11.glPopMatrix();
+                        }
+                        
+                        {
+                            GL11.glPushMatrix();
+                            
+                            GL11.glTranslated(-.25, -0.1, .035F);
+                            
+                            GL11.glRotatef(270F, 0F, 1F, 0F);
+                            
+                            GL11.glScalef(.3f, .3f, .3f);
+                            
+                            GL11.glRotatef(90F, 1F, 0F, 0F);
+                            GL11.glRotatef(25F, 1F, 0F, 0F);
+                            
+                            Models.ModelFlameShard.renderAll();
+                            GL11.glPopMatrix();
+                        }
+                        GL11.glEndList();
+                        GL11.glPopMatrix();
                     }
                     break;
                 }
@@ -217,11 +284,47 @@ public enum EnumElectisCrystalType {
             
             case TYPE3: {
                 
+                GL11.glPushMatrix();
+                
+                GL11.glTranslated(x + .5, y + .5, z + .5);
+                
+                GL11.glScaled(.4, .4, .4);
+                NoiseManager.bindImage();
+                
+                GL11.glPushMatrix();
+                GL11.glColor3d(1, 0, 0);
+                GL11.glRotated(Minecraft.getSystemTime() / 17, 1, 0, 0);
+                GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
+                GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 0, 1);
+                GL11.glDisable(GL11.GL_CULL_FACE);
+                Models.ModelRhombicuboctahedron.renderPart("Main_Faces");
+                GL11.glEnable(GL11.GL_CULL_FACE);
+                GL11.glPopMatrix();
+                
+                GL11.glScaled(.8, .8, .8);
+                
+                GL11.glPushMatrix();
+                GL11.glColor3d(1, 1, 0);
+                GL11.glRotated(-Minecraft.getSystemTime() / 17, 1, 0, 0);
+                GL11.glRotated(-Minecraft.getSystemTime() / 17, 0, 1, 0);
+                GL11.glRotated(-Minecraft.getSystemTime() / 17, 0, 0, 1);
+                Models.ModelRhombicuboctahedron.renderPart("Rhombicuboctahedron");
+                GL11.glPopMatrix();
+                
+                GL11.glPopMatrix();
                 break;
             }
             
             case TYPE4: {
                 
+                GL11.glPushMatrix();
+                
+                GL11.glTranslated(x + .5, y + .5, z + .5);
+                GL11.glScaled(.4, .4, .4);
+                NoiseManager.bindImage();
+                Models.ModelRhombicuboctahedron.renderPart("Rhombicuboctahedron");
+                
+                GL11.glPopMatrix();
                 break;
             }
             default: {
@@ -293,69 +396,8 @@ public enum EnumElectisCrystalType {
                     GL11.glPopMatrix();
                 }
                 
-                final float secondCrystalScale = .3f;
+                GL11.glCallList(this.getItemListID());
                 
-                {
-                    GL11.glPushMatrix();
-                    
-                    GL11.glTranslated(0, -0.1, .35F);
-                    
-                    GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-                    
-                    GL11.glRotatef(90F, 1F, 0F, 0F);
-                    GL11.glRotatef(25F, 1F, 0F, 0F);
-                    
-                    Models.ModelFlameShard.renderAll();
-                    GL11.glPopMatrix();
-                }
-                
-                {
-                    GL11.glPushMatrix();
-                    
-                    GL11.glTranslated(.25, -0.1, -.035F);
-                    
-                    GL11.glRotatef(90F, 0F, 1F, 0F);
-                    
-                    GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-                    
-                    GL11.glRotatef(90F, 1F, 0F, 0F);
-                    GL11.glRotatef(25F, 1F, 0F, 0F);
-                    
-                    Models.ModelFlameShard.renderAll();
-                    GL11.glPopMatrix();
-                }
-                
-                {
-                    GL11.glPushMatrix();
-                    
-                    GL11.glTranslated(0, -0.1, -.35F);
-                    
-                    GL11.glRotatef(180F, 0F, 1F, 0F);
-                    
-                    GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-                    
-                    GL11.glRotatef(90F, 1F, 0F, 0F);
-                    GL11.glRotatef(25F, 1F, 0F, 0F);
-                    
-                    Models.ModelFlameShard.renderAll();
-                    GL11.glPopMatrix();
-                }
-                
-                {
-                    GL11.glPushMatrix();
-                    
-                    GL11.glTranslated(-.25, -0.1, .035F);
-                    
-                    GL11.glRotatef(270F, 0F, 1F, 0F);
-                    
-                    GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-                    
-                    GL11.glRotatef(90F, 1F, 0F, 0F);
-                    GL11.glRotatef(25F, 1F, 0F, 0F);
-                    
-                    Models.ModelFlameShard.renderAll();
-                    GL11.glPopMatrix();
-                }
                 GL11.glPopMatrix();
                 
                 break;

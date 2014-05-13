@@ -10,6 +10,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockBase extends Block {
     
+    boolean placeItemStackMetadata = false;
+    
     public BlockBase(Material material) {
         super(material);
         this.setCreativeTab(GearUtilities.tabGUBlocks);
@@ -27,6 +29,11 @@ public class BlockBase extends Block {
     public String getBlockDisplayName(ItemStack stack) {
         
         return null;
+    }
+    
+    public boolean getPlaceItemStackMetadata() {
+        
+        return placeItemStackMetadata;
     }
     
     public void registerTile(Class<? extends TileEntity> tile) {

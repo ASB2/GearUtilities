@@ -68,7 +68,6 @@ public final class GearUtilities {
         RetroGenManager.init();
         EntityRegistry.init();
         MultiRegistry.init();
-        PacketRegistry.init();
         
         FMLCommonHandler.instance().bus().register(new EventListener());
         FMLCommonHandler.instance().bus().register(NoiseManager.instance);
@@ -114,10 +113,12 @@ public final class GearUtilities {
     
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        packetPipeline.postInitialise();
         
         FluidRegistry.registerFluidContainers();
         CraftRegistry.init();
+        PacketRegistry.init();
+        packetPipeline.postInitialise();
+        
         // WhiteLists.getInstance().addWrench(new
         // ItemStack(ItemRegistry.ItemAdvancedStick));
     }

@@ -1,15 +1,32 @@
 package GU;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import GU.blocks.BlockBase;
 
 public class GUItemBlock extends ItemBlock {
     
+    protected BlockBase block;
+    
     public GUItemBlock(Block block) {
         super(block);
-        // TODO Auto-generated constructor stub
+        
+        this.block = (BlockBase) block;
+    }
+    
+    @Override
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+        
+        boolean worked = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+        
+        if (worked && block.getPlaceItemStackMetadata()) {
+            
+            world.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 3);
+        }
+        return worked;
     }
     
     @Override

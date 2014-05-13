@@ -13,6 +13,10 @@ public class CrystalTypePacket implements AbstractPacket {
     int x, y, z;
     int crystalType;
     
+    public CrystalTypePacket() {
+        // TODO Auto-generated constructor stub
+    }
+    
     public CrystalTypePacket(int x, int y, int z, int crystalType) {
         
         this.x = x;

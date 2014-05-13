@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -41,6 +40,8 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     Wait poolValidNodes, sendEnergyPackets, serverPacketWait;
     CrystalNetwork network;
     
+    boolean hasUpdated = false;
+    
     public TileElectisCrystal() {
         
         crystalType = EnumElectisCrystalType.BROKEN;
@@ -59,23 +60,13 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
             
             sendEnergyPackets.update();
             serverPacketWait.update();
+            
+            if (!hasUpdated) {
+                
+                GearUtilities.getPipeline().sendToAllAround(new CrystalTypePacket(xCoord, yCoord, zCoord, this.crystalType.ordinal()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
+                hasUpdated = true;
+            }
         }
-    }
-    
-    @Override
-    public void validate() {
-        
-    }
-    
-    @Override
-    public Packet getDescriptionPacket() {
-        
-        if (crystalType != EnumElectisCrystalType.BROKEN) {
-            GearUtilities.getPipeline().sendToAllAround(new CrystalTypePacket(xCoord, yCoord, zCoord, this.crystalType.ordinal()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
-            //
-            GearUtilities.log("Called!");
-        }
-        return super.getDescriptionPacket();
     }
     
     public EnumElectisCrystalType getCrystalType() {
@@ -103,6 +94,7 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     @Override
     public void setCrystalNetwork(CrystalNetwork newNetwork) {
         
+        hasUpdated = false;
         this.network = newNetwork;
     }
     
@@ -233,6 +225,8 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
         public void trigger(int id) {
             
             if (!worldObj.isRemote) {
+                
+                GearUtilities.getPipeline().sendToAllAround(new CrystalTypePacket(xCoord, yCoord, zCoord, crystalType.ordinal()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
                 
                 if (lastManager != null) {
                     

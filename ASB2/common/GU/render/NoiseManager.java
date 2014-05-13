@@ -1,6 +1,5 @@
 package GU.render;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class NoiseManager {
     public int GL_TEXTURE_ID;
     
     public List<int[]> imageDataArray = new ArrayList<int[]>(20000);
-    public static final float maxDensity = .4f, minDensity = .1f, changePerTick = .0005f;
+    public static final float maxDensity = .3f, minDensity = .1f, changePerTick = .0005f;
     
     boolean generateTextures = true;
     float currentDensity = 0;

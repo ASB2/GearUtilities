@@ -19,6 +19,7 @@ import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilItemStack;
 import GU.blocks.containers.BlockContainerBase;
 import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockElectisCrystal extends BlockContainerBase {
     
@@ -27,6 +28,12 @@ public class BlockElectisCrystal extends BlockContainerBase {
         this.registerTile(TileElectisCrystal.class);
         this.setLightOpacity(0);
         this.setLightLevel(.3f);
+    }
+    
+    @Override
+    public void registerBlock(String entry) {
+        
+        GameRegistry.registerBlock(this, ItemBlockElectisCrystal.class, entry);
     }
     
     @Override
