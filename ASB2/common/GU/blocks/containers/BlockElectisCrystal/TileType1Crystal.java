@@ -3,22 +3,32 @@ package GU.blocks.containers.BlockElectisCrystal;
 import java.lang.ref.WeakReference;
 
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilVector;
+import GU.api.color.IColorableBlock;
+import GU.api.crystals.ICrystalPowerHandler;
+import GU.api.power.PowerNetAbstract.IPowerManager;
+import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.blocks.containers.TileBase;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
+import UC.color.Color4f;
 import UC.math.vector.Vector3i;
 
-public class TileType1Crystal extends TileBase {
+public class TileType1Crystal extends TileBase implements IColorableBlock, ICrystalPowerHandler {
     
     Vector3i oppositeCrystalVector = Vector3i.ZERO.clone();
     WeakReference<TileType1Crystal> oppositeCrystal;
     Wait poolValidNode;
+    Color4f color;
+    DefaultPowerManager powerManager;
     
     public TileType1Crystal() {
         
-        poolValidNode = new Wait(new PoolValidNodeWait(), 5, 0);
+        color = Color4f.WHITE;
+        powerManager = EnumElectisCrystalType.TYPE1.getDefaultPowerManager();
+        poolValidNode = new Wait(new PoolValidNodeWait(), 20, 0);
     }
     
     @Override
@@ -54,6 +64,25 @@ public class TileType1Crystal extends TileBase {
         return this;
     }
     
+    @Override
+    public IPowerManager getPowerManager() {
+        
+        return powerManager;
+    }
+    
+    @Override
+    public Color4f getColor(World world, int x, int y, int z, ForgeDirection direction) {
+        
+        return color;
+    }
+    
+    @Override
+    public boolean setColor(World world, int x, int y, int z, Color4f color, ForgeDirection direction) {
+        
+        this.color = color;
+        return true;
+    }
+    
     private class PoolValidNodeWait implements IWaitTrigger {
         
         @Override
@@ -63,6 +92,7 @@ public class TileType1Crystal extends TileBase {
             
             if (oppositeCrystal != null && oppositeCrystal.get() != null && UtilVector.getTileAtPostion(worldObj, oppositeCrystalVector) == oppositeCrystal.get()) {
                 
+                // Should Transfer Power Here
                 return;
             }
             else {

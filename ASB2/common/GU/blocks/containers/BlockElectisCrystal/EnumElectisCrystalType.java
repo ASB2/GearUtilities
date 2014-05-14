@@ -1,7 +1,5 @@
 package GU.blocks.containers.BlockElectisCrystal;
 
-import java.awt.Color;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,6 +12,7 @@ import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.render.NoiseManager;
+import UC.color.Color4f;
 
 public enum EnumElectisCrystalType {
     
@@ -661,9 +660,9 @@ public enum EnumElectisCrystalType {
         return itemListID;
     }
     
-    public Color getDefaultColor() {
+    public Color4f getDefaultColor() {
         
-        return Color.WHITE;
+        return Color4f.WHITE;
     }
     
     public DefaultPowerManager getDefaultPowerManager() {

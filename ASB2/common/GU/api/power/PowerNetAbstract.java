@@ -47,6 +47,6 @@ public class PowerNetAbstract {
     
     public enum EnumPowerStatus {
         
-        NONE, SINK, SOURCE;
+        NONE, SINK, SOURCE, BOTH;
     }
 }

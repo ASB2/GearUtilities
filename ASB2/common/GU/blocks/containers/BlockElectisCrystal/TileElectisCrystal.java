@@ -1,6 +1,5 @@
 package GU.blocks.containers.BlockElectisCrystal;
 
-import java.awt.Color;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +28,7 @@ import GU.packets.PowerPacket;
 import UC.ImplementedEntry;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
+import UC.color.Color4f;
 import UC.math.vector.Vector3i;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
@@ -132,13 +132,13 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     }
     
     @Override
-    public Color getColor(World world, int x, int y, int z, ForgeDirection direction) {
+    public Color4f getColor(World world, int x, int y, int z, ForgeDirection direction) {
         
         return crystalType.getDefaultColor();
     }
     
     @Override
-    public boolean setColor(World world, int x, int y, int z, Color color, ForgeDirection direction) {
+    public boolean setColor(World world, int x, int y, int z, Color4f color, ForgeDirection direction) {
         
         return false;
     }
