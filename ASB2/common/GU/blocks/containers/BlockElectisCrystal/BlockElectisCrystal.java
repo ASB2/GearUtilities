@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -142,14 +143,35 @@ public class BlockElectisCrystal extends BlockContainerBase {
         
         for (EnumElectisCrystalType type : EnumElectisCrystalType.values()) {
             
-            if (type.ordinal() != 0) {
+            if (type != EnumElectisCrystalType.BROKEN) {
                 
                 ItemStack stack = new ItemStack(this, 1, 0);
                 UtilItemStack.setNBTTagInt(stack, "crystalType", type.ordinal());
                 list.add(stack);
             }
         }
-        super.getSubBlocks(item, tab, list);
+    }
+    
+    @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        
+        ItemStack stack = new ItemStack(this);
+        
+        TileEntity tile = world.getTileEntity(x, y, z);
+        
+        if (tile != null && tile instanceof TileElectisCrystal) {
+            
+            EnumElectisCrystalType type = ((TileElectisCrystal) tile).getCrystalType();
+            UtilItemStack.setNBTTagInt(stack, "crystalType", type.ordinal());
+        }
+        return stack;
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4) {
+        
+        par3List.add("Crystal Type: " + EnumElectisCrystalType.values()[UtilItemStack.getNBTTagInt(stack, "crystalType")].toString());
     }
     
     @Override

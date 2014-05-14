@@ -1,5 +1,7 @@
 package GU;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -15,6 +17,13 @@ public class GUItemBlock extends ItemBlock {
         super(block);
         
         this.block = (BlockBase) block;
+    }
+    
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4) {
+        
+        block.addInformation(stack, player, par3List, par4);
     }
     
     @Override

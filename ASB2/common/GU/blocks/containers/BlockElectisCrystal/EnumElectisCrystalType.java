@@ -14,7 +14,6 @@ import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.render.NoiseManager;
-import UC.color.Color4f;
 
 public enum EnumElectisCrystalType {
     
@@ -319,6 +318,7 @@ public enum EnumElectisCrystalType {
             case TYPE4: {
                 
                 GL11.glPushMatrix();
+                
                 float translationAmount = .07f;
                 
                 switch (((TileBase) tileentity).getOrientation()) {
@@ -474,7 +474,7 @@ public enum EnumElectisCrystalType {
                         x = 0;
                         y = -.2f;
                         z = 0f;
-                        scale = .2f;
+                        scale = .5f;
                         break;
                     }
                     
@@ -556,18 +556,90 @@ public enum EnumElectisCrystalType {
                 
                 GL11.glPushMatrix();
                 GL11.glDisable(GL11.GL_CULL_FACE);
-                GL11.glRotated(Minecraft.getSystemTime() / 10, 1, 1, 1);
+                GL11.glRotated(Minecraft.getSystemTime() / 17, 1, 0, 0);
+                GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
+                GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 0, 1);
                 NoiseManager.bindImage();
+                GL11.glColor3d(NoiseManager.instance.ITERATED_COLOR.getRed() / 255f, NoiseManager.instance.ITERATED_COLOR.getGreen() / 255f, NoiseManager.instance.ITERATED_COLOR.getBlue() / 255f);
                 Models.ModelRhombicuboctahedron.renderPart("Main_Faces");
                 GL11.glEnable(GL11.GL_CULL_FACE);
                 GL11.glPopMatrix();
                 
                 GL11.glScaled(.8, .8, .8);
-                GL11.glRotated(-Minecraft.getSystemTime() / 10, 1, 1, 1);
+                GL11.glRotated(-Minecraft.getSystemTime() / 17, 1, 0, 0);
+                GL11.glRotated(-Minecraft.getSystemTime() / 17, 0, 1, 0);
+                GL11.glRotated(-Minecraft.getSystemTime() / 17, 0, 0, 1);
+                GL11.glColor3d(NoiseManager.instance.ITERATED_COLOR_INVERTED.getRed() / 255f, NoiseManager.instance.ITERATED_COLOR_INVERTED.getGreen() / 255f, NoiseManager.instance.ITERATED_COLOR_INVERTED.getBlue() / 255f);
                 Models.ModelRhombicuboctahedron.renderPart("Rhombicuboctahedron");
                 
                 GL11.glPopMatrix();
                 
+                break;
+            }
+            
+            case TYPE4: {
+                
+                switch (type) {
+                
+                    case ENTITY: {
+                        
+                        x = 0;
+                        y = 0;
+                        z = 0;
+                        scale = .1f;
+                        break;
+                    }
+                    
+                    case EQUIPPED: {
+                        
+                        x = 0;
+                        y = 1;
+                        z = .5f;
+                        scale = .1f;
+                        break;
+                    }
+                    
+                    case INVENTORY: {
+                        
+                        x = 0;
+                        y = -.2f;
+                        z = 0f;
+                        scale = .3f;
+                        break;
+                    }
+                    
+                    case EQUIPPED_FIRST_PERSON: {
+                        
+                        x = -.5f;
+                        y = 1;
+                        z = .5f;
+                        scale = .1f;
+                        break;
+                    }
+                    
+                    default: {
+                        return;
+                    }
+                }
+                GL11.glPushMatrix();
+                
+                GL11.glTranslatef(x, y, z);
+                
+                {
+                    GL11.glPushMatrix();
+                    GL11.glScalef(scale, scale, scale);
+                    NoiseManager.bindImage();
+                    Models.ModelCrystal2.renderPart("Crystal");
+                    GL11.glPopMatrix();
+                }
+                
+                GL11.glCallList(this.getItemListID());
+                
+                GL11.glPopMatrix();
+                break;
+            }
+            
+            default: {
                 break;
             }
         }

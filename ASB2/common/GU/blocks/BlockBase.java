@@ -1,7 +1,10 @@
 package GU.blocks;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import GU.GUItemBlock;
@@ -24,6 +27,11 @@ public class BlockBase extends Block {
     public void registerBlock(String entry) {
         
         GameRegistry.registerBlock(this, GUItemBlock.class, entry);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4) {
+        
     }
     
     public String getBlockDisplayName(ItemStack stack) {

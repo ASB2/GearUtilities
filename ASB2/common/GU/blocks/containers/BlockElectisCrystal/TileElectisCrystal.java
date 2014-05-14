@@ -67,14 +67,42 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
                 hasUpdated = true;
             }
         }
+        
+        switch (crystalType) {
+        
+            case TYPE1: {
+                
+                // Should connect to other type ones and transfer energy
+                break;
+            }
+            case TYPE2: {
+                
+                // Should search for nodes if it has a network, then move energy
+                break;
+            }
+            case TYPE3: {
+                
+                // Should search for nearby nodes
+                break;
+            }
+            case TYPE4: {
+                break;
+                
+            }
+            default:
+                break;
+        
+        }
     }
     
     public EnumElectisCrystalType getCrystalType() {
+        
         return crystalType;
     }
     
     public TileElectisCrystal setCrystalType(EnumElectisCrystalType crystalType) {
         this.crystalType = crystalType;
+        hasUpdated = false;
         return this;
     }
     
@@ -94,7 +122,6 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     @Override
     public void setCrystalNetwork(CrystalNetwork newNetwork) {
         
-        hasUpdated = false;
         this.network = newNetwork;
     }
     
@@ -119,6 +146,10 @@ public class TileElectisCrystal extends TileBase implements IColorableBlock, ICr
     @Override
     public IPowerManager getPowerManager() {
         
+        if (network != null) {
+            
+            return network.getPowerManager();
+        }
         return powerManager;
     }
     

@@ -1,6 +1,5 @@
 package GU.render;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,7 +156,7 @@ public class NoiseManager {
                 }
                 else if (green == 0) {
                     
-                    moveRedColorValueDown = false;
+                    moveGreenColorValueDown = false;
                 }
             }
             else {
