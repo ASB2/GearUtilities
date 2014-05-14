@@ -292,7 +292,7 @@ public enum EnumElectisCrystalType {
                 NoiseManager.bindImage();
                 
                 GL11.glPushMatrix();
-                GL11.glColor3d(1, 0, 0);
+                GL11.glColor3d(NoiseManager.instance.ITERATING_COLOR.getRed() / 255f, NoiseManager.instance.ITERATING_COLOR.getGreen() / 255f, NoiseManager.instance.ITERATING_COLOR.getBlue() / 255f);
                 GL11.glRotated(Minecraft.getSystemTime() / 17, 1, 0, 0);
                 GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
                 GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 0, 1);
@@ -304,7 +304,7 @@ public enum EnumElectisCrystalType {
                 GL11.glScaled(.8, .8, .8);
                 
                 GL11.glPushMatrix();
-                GL11.glColor3d(1, 1, 0);
+                GL11.glColor3d(1, 1, 1);
                 GL11.glRotated(-Minecraft.getSystemTime() / 17, 1, 0, 0);
                 GL11.glRotated(-Minecraft.getSystemTime() / 17, 0, 1, 0);
                 GL11.glRotated(-Minecraft.getSystemTime() / 17, 0, 0, 1);
@@ -318,11 +318,54 @@ public enum EnumElectisCrystalType {
             case TYPE4: {
                 
                 GL11.glPushMatrix();
+                float translationAmount = .07f;
                 
-                GL11.glTranslated(x + .5, y + .5, z + .5);
-                GL11.glScaled(.4, .4, .4);
+                switch (((TileBase) tileentity).getOrientation()) {
+                
+                    case UP: {
+                        
+                        GL11.glTranslated(x + 0.5F, y + translationAmount, z + .5F);
+                        break;
+                    }
+                    case DOWN: {
+                        
+                        GL11.glTranslated(x + 0.5F, y + (1 - translationAmount), z + .5F);
+                        GL11.glRotatef(180F, 1F, 0F, 0F);
+                        break;
+                    }
+                    
+                    case SOUTH: {
+                        
+                        GL11.glTranslated(x + 0.5F, y + .5F, z + translationAmount);
+                        GL11.glRotatef(90F, 1F, 0F, 0F);
+                        break;
+                    }
+                    case NORTH: {
+                        
+                        GL11.glTranslated(x + 0.5F, y + .5F, z + (1 - translationAmount));
+                        GL11.glRotatef(-90F, 1F, 0F, 0F);
+                        break;
+                    }
+                    case WEST: {
+                        
+                        GL11.glTranslated(x + (1 - translationAmount), y + .5F, z + .5F);
+                        GL11.glRotatef(90F, 0F, 0F, 1F);
+                        break;
+                    }
+                    case EAST: {
+                        
+                        GL11.glTranslated(x + translationAmount, y + .5F, z + .5F);
+                        GL11.glRotatef(-90F, 0F, 0F, 1F);
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+                
+                GL11.glScaled(.05, .05, .05);
                 NoiseManager.bindImage();
-                Models.ModelRhombicuboctahedron.renderPart("Rhombicuboctahedron");
+                Models.ModelCrystal2.renderAll();
                 
                 GL11.glPopMatrix();
                 break;

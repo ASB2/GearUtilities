@@ -1,5 +1,6 @@
 package GU.render;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +12,16 @@ import org.lwjgl.opengl.GL11;
 import GU.GearUtilities;
 import GU.info.Variables;
 import UC.FastNoise;
+import UC.color.Color4f;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class NoiseManager {
     
     public static NoiseManager instance = new NoiseManager();
+    
+    public Color4f ITERATING_COLOR = Color4f.WHITE;
+    boolean moveRedColorValueDown = true, moveGreenColorValueDown = true, moveBlueColorValueDown = true;
     
     public int GL_TEXTURE_ID;
     
@@ -85,61 +90,19 @@ public class NoiseManager {
     
     @SubscribeEvent
     public void updateNoise(RenderTickEvent event) {
-        //
-        // if (generateTextures) {
-        //
-        // if (currentDensity == 0) {
-        //
-        // imageDataArray.clear();
-        // }
-        //
-        // currentDensity += changePerTick;
-        //
-        // if (currentDensity > maxDensity) {
-        // currentDensity = 0;
-        // generateTextures = false;
-        // return;
-        // }
-        //
-        // int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE *
-        // Variables.NOISE_TEXTURE_SIZE];
-        //
-        // for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x++) {
-        //
-        // for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
-        //
-        // // int col = (int) (SimplexNoise.noise(x *
-        // // currentDensity, y
-        // // * currentDensity, 7) * 255);
-        // int col = FastNoise.noise(x * currentDensity, y * currentDensity, 7);
-        //
-        // int red = col;
-        // int green = col;
-        // int blue = col;
-        //
-        // int RGB = red;
-        // RGB = (RGB << 8) + green;
-        // RGB = (RGB << 8) + blue;
-        // RGB |= 0xFF000000;
-        // imageData[x + y * Variables.NOISE_TEXTURE_SIZE] = RGB;
-        // }
-        // }
-        // imageDataArray.add(imageData);
-        // }
-        // else
+        
         {
-            
             TextureUtil.uploadTexture(NoiseManager.instance.GL_TEXTURE_ID, imageDataArray.get(animationPosition), Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
             
             if (moveAnimationDown) {
                 
                 if (animationPosition >= imageDataArray.size() - 1) {
+                    
                     moveAnimationDown = false;
                     animationPosition = imageDataArray.size() - 1;
                 }
                 else {
-                    // position = Math.round((position + (1 * (float)
-                    // tickData[0])));
+                    
                     animationPosition++;
                 }
                 
@@ -151,11 +114,108 @@ public class NoiseManager {
                     animationPosition = 0;
                 }
                 else {
-                    // position = Math.round((position - (1 * (float)
-                    // tickData[0])));
+                    
                     animationPosition--;
                 }
             }
+        }
+        {
+            
+            final float redModificationAmount = 1f, greenModificationAmount = 2f, blueModificationAmount = 3f;
+            
+            float red = ITERATING_COLOR.getRed(), green = ITERATING_COLOR.getGreen(), blue = ITERATING_COLOR.getBlue();
+            
+            if (moveRedColorValueDown) {
+                
+                if (red > 0) {
+                    
+                    red -= redModificationAmount;
+                }
+                else if (red == 0) {
+                    
+                    moveRedColorValueDown = false;
+                }
+            }
+            else {
+                
+                if (red < 255) {
+                    
+                    red += redModificationAmount;
+                }
+                else if (red == 255) {
+                    
+                    moveRedColorValueDown = true;
+                }
+            }
+            if (moveGreenColorValueDown) {
+                
+                if (green > 0) {
+                    
+                    green -= greenModificationAmount;
+                }
+                else if (green == 0) {
+                    
+                    moveRedColorValueDown = false;
+                }
+            }
+            else {
+                
+                if (green < 255) {
+                    
+                    green += greenModificationAmount;
+                }
+                else if (green == 255) {
+                    
+                    moveGreenColorValueDown = true;
+                }
+            }
+            if (moveBlueColorValueDown) {
+                
+                if (blue > 0) {
+                    
+                    blue -= blueModificationAmount;
+                }
+                else if (blue == 0) {
+                    
+                    moveBlueColorValueDown = false;
+                }
+            }
+            else {
+                
+                if (blue < 255) {
+                    
+                    blue += blueModificationAmount;
+                }
+                else if (blue == 255) {
+                    
+                    moveBlueColorValueDown = true;
+                }
+            }
+            if (red > 255) {
+                
+                red = 255;
+            }
+            else if (red < 0) {
+                
+                red = 0;
+            }
+            if (green > 255) {
+                
+                green = 255;
+            }
+            else if (green < 0) {
+                
+                green = 0;
+            }
+            if (blue > 255) {
+                
+                blue = 255;
+            }
+            else if (blue < 0) {
+                
+                blue = 0;
+            }
+            ITERATING_COLOR.setRed(red).setGreen(green).setBlue(blue);
         }
     }
 }
