@@ -20,7 +20,9 @@ public class NoiseManager {
     
     public static NoiseManager instance = new NoiseManager();
     
-    public Color4f ITERATING_COLOR = Color4f.WHITE;
+    public Color4f ITERATED_COLOR = Color4f.WHITE;
+    public Color4f ITERATED_COLOR_INVERTED = Color4f.WHITE.invert();
+    
     boolean moveRedColorValueDown = true, moveGreenColorValueDown = true, moveBlueColorValueDown = true;
     
     public int GL_TEXTURE_ID;
@@ -123,7 +125,7 @@ public class NoiseManager {
             
             final float redModificationAmount = 1f, greenModificationAmount = 2f, blueModificationAmount = 3f;
             
-            float red = ITERATING_COLOR.getRed(), green = ITERATING_COLOR.getGreen(), blue = ITERATING_COLOR.getBlue();
+            float red = ITERATED_COLOR.getRed(), green = ITERATED_COLOR.getGreen(), blue = ITERATED_COLOR.getBlue();
             
             if (moveRedColorValueDown) {
                 
@@ -215,7 +217,9 @@ public class NoiseManager {
                 
                 blue = 0;
             }
-            ITERATING_COLOR.setRed(red).setGreen(green).setBlue(blue);
+            ITERATED_COLOR.setRed(red).setGreen(green).setBlue(blue);
+            ITERATED_COLOR_INVERTED.setRed(255 - red).setGreen(255 - green).setBlue(255 - blue);
+            return;
         }
     }
 }

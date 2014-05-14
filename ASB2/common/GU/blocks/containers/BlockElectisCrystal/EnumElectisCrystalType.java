@@ -14,6 +14,7 @@ import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.blocks.containers.TileBase;
 import GU.info.Models;
 import GU.render.NoiseManager;
+import UC.color.Color4f;
 
 public enum EnumElectisCrystalType {
     
@@ -292,7 +293,7 @@ public enum EnumElectisCrystalType {
                 NoiseManager.bindImage();
                 
                 GL11.glPushMatrix();
-                GL11.glColor3d(NoiseManager.instance.ITERATING_COLOR.getRed() / 255f, NoiseManager.instance.ITERATING_COLOR.getGreen() / 255f, NoiseManager.instance.ITERATING_COLOR.getBlue() / 255f);
+                GL11.glColor3d(NoiseManager.instance.ITERATED_COLOR.getRed() / 255f, NoiseManager.instance.ITERATED_COLOR.getGreen() / 255f, NoiseManager.instance.ITERATED_COLOR.getBlue() / 255f);
                 GL11.glRotated(Minecraft.getSystemTime() / 17, 1, 0, 0);
                 GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
                 GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 0, 1);
@@ -304,7 +305,7 @@ public enum EnumElectisCrystalType {
                 GL11.glScaled(.8, .8, .8);
                 
                 GL11.glPushMatrix();
-                GL11.glColor3d(1, 1, 1);
+                GL11.glColor3d(NoiseManager.instance.ITERATED_COLOR_INVERTED.getRed() / 255f, NoiseManager.instance.ITERATED_COLOR_INVERTED.getGreen() / 255f, NoiseManager.instance.ITERATED_COLOR_INVERTED.getBlue() / 255f);
                 GL11.glRotated(-Minecraft.getSystemTime() / 17, 1, 0, 0);
                 GL11.glRotated(-Minecraft.getSystemTime() / 17, 0, 1, 0);
                 GL11.glRotated(-Minecraft.getSystemTime() / 17, 0, 0, 1);
