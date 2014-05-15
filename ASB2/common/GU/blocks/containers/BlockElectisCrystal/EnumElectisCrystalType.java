@@ -665,6 +665,23 @@ public enum EnumElectisCrystalType {
         return Color4f.WHITE;
     }
     
+    public CrystalLogic getNewCrystalLogicInstance(TileElectisCrystal crystal) {
+        
+        switch (this) {
+        
+            case TYPE1:
+                return new Type1CrystalLogic(crystal);
+            case TYPE2:
+                return new Type2CrystalLogic(crystal);
+            case TYPE3:
+                return new Type3CrystalLogic(crystal);
+            case TYPE4:
+                return new Type4CrystalLogic(crystal);
+            default:
+                return null;
+        }
+    }
+    
     public DefaultPowerManager getDefaultPowerManager() {
         
         return new DefaultPowerManager().setPowerMax(100);

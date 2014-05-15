@@ -8,5 +8,5 @@ public interface ICrystalNetworkPart {
     
     CrystalNetwork getNetwork();
     
-    void setCrystalNetwork(CrystalNetwork newNetwork);
+    boolean setCrystalNetwork(CrystalNetwork newNetwork);
 }

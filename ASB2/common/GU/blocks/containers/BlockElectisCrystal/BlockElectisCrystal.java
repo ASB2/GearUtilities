@@ -27,9 +27,6 @@ public class BlockElectisCrystal extends BlockContainerBase {
     public BlockElectisCrystal(Material material) {
         super(material);
         this.registerTile(TileElectisCrystal.class);
-        this.registerTile(TileType1Crystal.class);
-        this.registerTile(TileType2Crystal.class);
-        this.registerTile(TileType3Crystal.class);
         this.setLightOpacity(0);
         this.setLightLevel(.3f);
     }
@@ -54,12 +51,15 @@ public class BlockElectisCrystal extends BlockContainerBase {
             
             TileEntity tile = world.getTileEntity(x, y, z);
             
-            if (tile != null && tile instanceof TileElectisCrystal && player.getHeldItem() == null) {
-                
-                UtilEntity.sendChatToPlayer(player, "PowerStored: " + ((TileElectisCrystal) tile).powerManager.getStoredPower());
-                UtilEntity.sendChatToPlayer(player, "CrystalType: " + ((TileElectisCrystal) tile).getCrystalType());
-                return true;
-            }
+            // if (tile != null && tile instanceof TileElectisCrystal &&
+            // player.getHeldItem() == null) {
+            //
+            // UtilEntity.sendChatToPlayer(player, "PowerStored: " +
+            // ((TileElectisCrystal) tile).powerManager.getStoredPower());
+            // UtilEntity.sendChatToPlayer(player, "CrystalType: " +
+            // ((TileElectisCrystal) tile).getCrystalType());
+            // return true;
+            // }
         }
         return false;
     }

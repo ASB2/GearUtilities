@@ -14,12 +14,13 @@ import org.lwjgl.opengl.GL11;
 import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilItemStack;
 import GU.api.EnumSimulationType;
+import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerManager;
-import GU.blocks.containers.BlockElectisCrystal.TileElectisCrystal;
+import GU.api.power.PowerNetAbstract.ITilePowerHandler;
+import GU.api.power.PowerNetObject.UtilPower;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.render.NoiseManager;
-import GU.api.power.PowerNetObject.*;
 
 public class ElectisShard {
     
@@ -37,27 +38,35 @@ public class ElectisShard {
                 
                 TileEntity tile = world.getTileEntity(x, y, z);
                 
-                if (tile != null && tile instanceof TileElectisCrystal) {
+                IPowerManager powerHandler = null;
+                
+                if (tile != null) {
                     
-                    IPowerManager power = ((TileElectisCrystal) tile).getPowerManager();
+                    if (tile instanceof ITilePowerHandler) {
+                        
+                        powerHandler = ((ITilePowerHandler) tile).getPowerManager();
+                    }
+                    if (tile instanceof ICrystalPowerHandler) {
+                        
+                        powerHandler = ((ITilePowerHandler) tile).getPowerManager();
+                    }
+                }
+                
+                if (powerHandler != null) {
                     
-                    if (power != null) {
+                    int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
+                    
+                    if (player.isSneaking()) {
                         
-                        int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
+                        UtilPower.removePower(powerHandler, powerSaved, EnumSimulationType.FORCED);
+                    }
+                    else {
                         
-                        if (player.isSneaking()) {
-                            
-                            UtilPower.removePower(power, powerSaved, EnumSimulationType.FORCED);
-                        }
-                        else {
-                            
-                            UtilPower.addPower(power, powerSaved, EnumSimulationType.FORCED);
-                        }
-                        
-                        UtilEntity.sendChatToPlayer(player, "Power Stored: " + power.getStoredPower());
-                        return true;
+                        UtilPower.addPower(powerHandler, powerSaved, EnumSimulationType.FORCED);
                     }
                     
+                    UtilEntity.sendChatToPlayer(player, "Power Stored: " + powerHandler.getStoredPower());
+                    return true;
                 }
             }
             return false;

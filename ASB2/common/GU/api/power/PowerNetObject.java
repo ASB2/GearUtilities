@@ -118,32 +118,14 @@ public class PowerNetObject {
             return this;
         }
         
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + maxInputPacketSize;
-            result = prime * result + maxOutputPacketSize;
-            result = prime * result + minInputPacketSize;
-            result = prime * result + minOutputPacketSize;
-            result = prime * result + powerMax;
-            result = prime * result + powerStored;
-            return result;
+        public DefaultPowerManager changeMaxPower(int powerChange) {
+            powerMax += powerChange;
+            return this;
         }
         
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) return true;
-            if (obj == null) return false;
-            if (!(obj instanceof DefaultPowerManager)) return false;
-            DefaultPowerManager other = (DefaultPowerManager) obj;
-            if (maxInputPacketSize != other.maxInputPacketSize) return false;
-            if (maxOutputPacketSize != other.maxOutputPacketSize) return false;
-            if (minInputPacketSize != other.minInputPacketSize) return false;
-            if (minOutputPacketSize != other.minOutputPacketSize) return false;
-            if (powerMax != other.powerMax) return false;
-            if (powerStored != other.powerStored) return false;
-            return true;
+        public DefaultPowerManager changeStoredPower(int powerChange) {
+            powerStored += powerChange;
+            return this;
         }
         
         public DefaultPowerManager clone() {

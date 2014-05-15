@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import ASB2.utils.UtilVector;
+import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
 import UC.math.vector.Vector3i;
 
@@ -31,6 +32,23 @@ public final class CrystalNetwork {
         
         crystals.add(crystal);
         crystal.setCrystalNetwork(this);
+        
+        if (crystal instanceof ICrystalPowerHandler) {
+            
+            IPowerManager manager = ((ICrystalPowerHandler) crystal).getPowerManager();
+            
+            if (manager != null) {
+                
+                if (manager.getStoredPower() > 0) {
+                    
+                    storedPower.changeStoredPower(manager.getStoredPower());
+                }
+                if (manager.getMaxPower() > 0) {
+                    
+                    storedPower.changeMaxPower(manager.getMaxPower());
+                }
+            }
+        }
     }
     
     public void removeCrystal(ICrystalNetworkPart crystal) {
