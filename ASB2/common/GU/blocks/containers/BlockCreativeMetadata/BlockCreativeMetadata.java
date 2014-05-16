@@ -7,6 +7,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import GU.api.EnumSimulationType;
 import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
+import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.api.power.PowerNetObject.UtilPower;
@@ -14,11 +15,15 @@ import GU.blocks.containers.BlockMetadataContainerBase;
 import GU.blocks.containers.TileBase;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
+import GU.api.power.PowerNetObject.*;
+import GU.api.power.PowerNetAbstract.*;
 
 public class BlockCreativeMetadata extends BlockMetadataContainerBase {
     
     public BlockCreativeMetadata(Material material) {
         super(material);
+        
+        this.registerTile(TileCreativePower.class);
         
         wrappers.put(0, new MetadataWrapper() {
             
@@ -36,19 +41,34 @@ public class BlockCreativeMetadata extends BlockMetadataContainerBase {
         }.setIconNames(new String[] { "BlockCreativeMetadata0" }));
     }
     
-    public static class TileCreativePower extends TileBase {
+    public static class TileCreativePower extends TileBase implements ITilePowerHandler, ICrystalPowerHandler {
         
         Wait sendEnergyValidNodes;
+        DefaultPowerManager manager;
+        DefaultPowerAttribute attribute;
         
         public TileCreativePower() {
             
             sendEnergyValidNodes = new Wait(new SendEnergyPacketWait(), 10, 0);
+            manager = new DefaultPowerManager().setPowerMax(1000000);
+            attribute = new DefaultPowerAttribute();
         }
         
         @Override
         public void updateEntity() {
             
             sendEnergyValidNodes.update();
+            
+            if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+                
+                manager.setPowerStored(manager.getMaxPower());
+                attribute.setPowerStatus(EnumPowerStatus.SOURCE);
+            }
+            else {
+                
+                manager.setPowerStored(0);
+                attribute.setPowerStatus(EnumPowerStatus.SINK);
+            }
         }
         
         private class SendEnergyPacketWait implements IWaitTrigger {
@@ -79,7 +99,7 @@ public class BlockCreativeMetadata extends BlockMetadataContainerBase {
                         
                         if (manager != null) {
                             
-                            final int powerToMove = 1;
+                            final int powerToMove = 5;
                             
                             if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
                                 
@@ -88,7 +108,6 @@ public class BlockCreativeMetadata extends BlockMetadataContainerBase {
                             else {
                                 
                                 UtilPower.removePower(manager, powerToMove, EnumSimulationType.LIGITIMATE);
-                                
                             }
                         }
                     }
@@ -100,6 +119,18 @@ public class BlockCreativeMetadata extends BlockMetadataContainerBase {
                 // TODO Auto-generated method stub
                 return true;
             }
+        }
+        
+        @Override
+        public IPowerManager getPowerManager() {
+            
+            return manager;
+        }
+        
+        @Override
+        public IPowerAttribute getPowerAttribute() {
+            
+            return attribute;
         }
     }
 }

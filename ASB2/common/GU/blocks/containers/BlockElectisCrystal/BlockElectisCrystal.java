@@ -18,6 +18,11 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilItemStack;
+import GU.api.crystals.CrystalNetwork;
+import GU.api.crystals.ICrystalNetworkPart;
+import GU.api.crystals.ICrystalPowerHandler;
+import GU.api.power.PowerNetAbstract.IPowerAttribute;
+import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.blocks.containers.BlockContainerBase;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -49,17 +54,58 @@ public class BlockElectisCrystal extends BlockContainerBase {
         
         if (!world.isRemote) {
             
+            UtilEntity.sendChatToPlayer(player, "---------");
+            
             TileEntity tile = world.getTileEntity(x, y, z);
             
-            // if (tile != null && tile instanceof TileElectisCrystal &&
-            // player.getHeldItem() == null) {
-            //
-            // UtilEntity.sendChatToPlayer(player, "PowerStored: " +
-            // ((TileElectisCrystal) tile).powerManager.getStoredPower());
-            // UtilEntity.sendChatToPlayer(player, "CrystalType: " +
-            // ((TileElectisCrystal) tile).getCrystalType());
-            // return true;
-            // }
+            UtilEntity.sendChatToPlayer(player, "CrystalType: " + ((TileElectisCrystal) tile).getCrystalType());
+            
+            if (tile != null && tile instanceof TileElectisCrystal && player.getHeldItem() == null) {
+                
+                if (tile instanceof ICrystalPowerHandler) {
+                    
+                    ICrystalPowerHandler mTile = (ICrystalPowerHandler) tile;
+                    
+                    IPowerManager manager = mTile.getPowerManager();
+                    IPowerAttribute attribute = mTile.getPowerAttribute();
+                    
+                    if (manager != null) {
+                        
+                        UtilEntity.sendChatToPlayer(player, "Power Stored: " + manager.getStoredPower());
+                        UtilEntity.sendChatToPlayer(player, "Max Power: " + manager.getMaxPower());
+                        UtilEntity.sendChatToPlayer(player, "Power Difference: " + (manager.getMaxPower() - manager.getStoredPower()));
+                    }
+                    else {
+                        
+                        UtilEntity.sendChatToPlayer(player, "Power Manager: null");
+                    }
+                    
+                    if (attribute != null) {
+                        
+                        UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute.getPowerStatus());
+                    }
+                    else {
+                        
+                        UtilEntity.sendChatToPlayer(player, "Power Attribute: null");
+                    }
+                }
+                
+                if (tile instanceof ICrystalNetworkPart) {
+                    
+                    ICrystalNetworkPart mTile = (ICrystalNetworkPart) tile;
+                    
+                    CrystalNetwork network = mTile.getNetwork();
+                    
+                    if (network != null) {
+                        
+                        UtilEntity.sendChatToPlayer(player, "Network Size: " + network.getNetworkSize());
+                        UtilEntity.sendChatToPlayer(player, "Network Core: " + network.getCorePosition().toString());
+                    }
+                }
+                return true;
+            }
+            
+            UtilEntity.sendChatToPlayer(player, "---------");
         }
         return false;
     }

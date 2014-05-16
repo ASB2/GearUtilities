@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import GU.info.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import GU.blocks.containers.BlockElectisCrystal.*;
 
 public class GUCreativeTab extends CreativeTabs {
     
@@ -58,7 +59,9 @@ public class GUCreativeTab extends CreativeTabs {
         
             case (Reference.NAME + ": Blocks"): {
                 
-                return new ItemStack(BlockRegistry.METADATA_ORE, 1, 0);
+                ItemStack stack = new ItemStack(BlockRegistry.ELECTIS_CRYSTAL, 1, 0);
+                EnumElectisCrystalType.setCrystalType(stack, EnumElectisCrystalType.TYPE3);
+                return stack;
             }
             case (Reference.NAME + ": Items"): {
                 

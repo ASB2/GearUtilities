@@ -1,37 +1,37 @@
 package GU.blocks.containers.BlockElectisCrystal;
 
 import java.lang.ref.WeakReference;
-import java.util.Map.Entry;
 
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import ASB2.utils.UtilVector;
-import GU.GearUtilities;
-import GU.api.EnumSimulationType;
-import GU.api.color.IColorableBlock;
+import GU.api.color.Colorable.IColorableTile;
 import GU.api.crystals.ICrystalPowerHandler;
+import GU.api.power.PowerNetAbstract.EnumPowerStatus;
+import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
-import GU.api.power.PowerNetObject.UtilPower;
-import GU.entities.EntityPhoton;
-import GU.packets.CrystalTypePacket;
-import GU.packets.PowerPacket;
 import UC.AbstractLogic;
-import UC.Wait.IWaitTrigger;
 import UC.color.Color4f;
-import UC.math.vector.Vector3i;
 
-public class CrystalLogic implements AbstractLogic, IColorableBlock, ICrystalPowerHandler {
+public class CrystalLogic implements AbstractLogic, IColorableTile, ICrystalPowerHandler {
     
-    TileElectisCrystal originCrystal;
+    WeakReference<TileElectisCrystal> originCrystal;
     Color4f color;
+    EnumPowerStatus powerStatus;
+    IPowerAttribute attribute;
     
     public CrystalLogic(TileElectisCrystal tile) {
         
-        originCrystal = tile;
+        originCrystal = new WeakReference<TileElectisCrystal>(tile);
         color = Color4f.WHITE;
+        powerStatus = EnumPowerStatus.NONE;
+        attribute = new IPowerAttribute() {
+            
+            @Override
+            public EnumPowerStatus getPowerStatus() {
+                
+                return powerStatus;
+            }
+        };
     }
     
     @Override
@@ -40,7 +40,8 @@ public class CrystalLogic implements AbstractLogic, IColorableBlock, ICrystalPow
     }
     
     public TileElectisCrystal getOriginCrystal() {
-        return originCrystal;
+        
+        return originCrystal.get();
     }
     
     @Override
@@ -50,13 +51,14 @@ public class CrystalLogic implements AbstractLogic, IColorableBlock, ICrystalPow
     }
     
     @Override
-    public Color4f getColor(World world, int x, int y, int z, ForgeDirection direction) {
+    public Color4f getColor(ForgeDirection direction) {
         
         return color;
     }
     
     @Override
-    public boolean setColor(World world, int x, int y, int z, Color4f color, ForgeDirection direction) {
+    public boolean setColor(Color4f color, ForgeDirection direction) {
+        
         this.color = color;
         return true;
     }
@@ -67,6 +69,16 @@ public class CrystalLogic implements AbstractLogic, IColorableBlock, ICrystalPow
     }
     
     public void load(NBTTagCompound tag) {
+        
+    }
+    
+    @Override
+    public IPowerAttribute getPowerAttribute() {
+        
+        return attribute;
+    }
+    
+    public void handlePowerPacket(IPowerManager handler) {
         
     }
     

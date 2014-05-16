@@ -4,19 +4,17 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilVector;
 import GU.api.crystals.CrystalNetwork;
 import GU.api.crystals.ICrystalNetworkPart;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
+import UC.Wait;
 import UC.Wait.IWaitTrigger;
-import UC.color.Color4f;
 import UC.math.vector.Vector3i;
-import UC.*;
 
 public class Type3CrystalLogic extends CrystalLogic implements ICrystalNetworkPart {
     
@@ -30,8 +28,15 @@ public class Type3CrystalLogic extends CrystalLogic implements ICrystalNetworkPa
     public Type3CrystalLogic(TileElectisCrystal tile) {
         super(tile);
         
-        network = new CrystalNetwork(originCrystal.getWorldObj(), UtilVector.createTileEntityVector(originCrystal));
+        network = new CrystalNetwork(tile.getWorldObj(), UtilVector.createTileEntityVector(tile));
+        network.addCrystal(this);
         poolValidNodes = new Wait(new PoolValidNodeWait(), 20, 0);
+    }
+    
+    @Override
+    public void update(Object... objects) {
+        
+        poolValidNodes.update();
     }
     
     public Type3CrystalLogic getThis() {
@@ -47,19 +52,6 @@ public class Type3CrystalLogic extends CrystalLogic implements ICrystalNetworkPa
             return network.getPowerManager();
         }
         return null;
-    }
-    
-    @Override
-    public Color4f getColor(World world, int x, int y, int z, ForgeDirection direction) {
-        
-        return color;
-    }
-    
-    @Override
-    public boolean setColor(World world, int x, int y, int z, Color4f color, ForgeDirection direction) {
-        
-        this.color = color;
-        return true;
     }
     
     @Override
@@ -84,8 +76,22 @@ public class Type3CrystalLogic extends CrystalLogic implements ICrystalNetworkPa
     @Override
     public boolean setCrystalNetwork(CrystalNetwork newNetwork) {
         
-        this.network = newNetwork;
+        network = newNetwork;
         return true;
+    }
+    
+    @Override
+    public NBTTagCompound save(NBTTagCompound tag) {
+        
+        tag.setTag("network", network.save(new NBTTagCompound()));
+        return super.save(tag);
+    }
+    
+    @Override
+    public void load(NBTTagCompound tag) {
+        
+        network.load(tag.getCompoundTag("network"));
+        super.load(tag);
     }
     
     private class PoolValidNodeWait implements IWaitTrigger {
@@ -105,7 +111,7 @@ public class Type3CrystalLogic extends CrystalLogic implements ICrystalNetworkPa
                         
                         if (!(x == 0 && y == 0 && z == 0)) {
                             
-                            TileEntity tile = originCrystal.getWorldObj().getTileEntity(originCrystal.xCoord + x, originCrystal.yCoord + y, originCrystal.zCoord + z);
+                            TileEntity tile = getOriginCrystal().getWorldObj().getTileEntity(getOriginCrystal().xCoord + x, getOriginCrystal().yCoord + y, getOriginCrystal().zCoord + z);
                             
                             if (tile != null && tile instanceof ICrystalNetworkPart) {
                                 
@@ -131,6 +137,7 @@ public class Type3CrystalLogic extends CrystalLogic implements ICrystalNetworkPa
         }
     }
     
+    @SuppressWarnings("unused")
     private class CrystalWrapper {
         
         Vector3i pos;

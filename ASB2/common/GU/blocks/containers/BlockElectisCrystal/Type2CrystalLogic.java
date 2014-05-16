@@ -5,37 +5,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilVector;
-import GU.api.color.IColorableBlock;
+import GU.api.EnumSimulationType;
 import GU.api.crystals.CrystalNetwork;
 import GU.api.crystals.ICrystalNetworkPart;
 import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
-import UC.AbstractLogic;
+import GU.api.power.PowerNetObject.UtilPower;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
 import UC.color.Color4f;
 import UC.math.vector.Vector3i;
 
-public class Type2CrystalLogic extends CrystalLogic implements AbstractLogic, IColorableBlock, ICrystalPowerHandler, ICrystalNetworkPart {
-    
-    TileElectisCrystal originCrystal;
+public class Type2CrystalLogic extends CrystalLogic implements ICrystalNetworkPart {
     
     List<CrystalWrapper> powerHandlers = new ArrayList<CrystalWrapper>();
     Wait poolValidNode;
     Color4f color;
-    CrystalNetwork network;
+    WeakReference<CrystalNetwork> network;
     
     boolean directional;
     
     public Type2CrystalLogic(TileElectisCrystal tile) {
         super(tile);
         
-        originCrystal = tile;
         color = Color4f.WHITE;
         poolValidNode = new Wait(new PoolValidNodeWait(), 20, 0);
     }
@@ -54,25 +49,11 @@ public class Type2CrystalLogic extends CrystalLogic implements AbstractLogic, IC
     @Override
     public IPowerManager getPowerManager() {
         
-        if (network != null) {
+        if (network != null && network.get() != null) {
             
-            return network.getPowerManager();
+            return network.get().getPowerManager();
         }
-        
         return null;
-    }
-    
-    @Override
-    public Color4f getColor(World world, int x, int y, int z, ForgeDirection direction) {
-        
-        return color;
-    }
-    
-    @Override
-    public boolean setColor(World world, int x, int y, int z, Color4f color, ForgeDirection direction) {
-        
-        this.color = color;
-        return true;
     }
     
     @Override
@@ -83,7 +64,7 @@ public class Type2CrystalLogic extends CrystalLogic implements AbstractLogic, IC
             @Override
             public EnumPowerStatus getPowerStatus() {
                 
-                return EnumPowerStatus.NONE;
+                return EnumPowerStatus.BOTH;
             }
         };
     }
@@ -91,13 +72,13 @@ public class Type2CrystalLogic extends CrystalLogic implements AbstractLogic, IC
     @Override
     public CrystalNetwork getNetwork() {
         
-        return network;
+        return network != null ? network.get() : null;
     }
     
     @Override
     public boolean setCrystalNetwork(CrystalNetwork newNetwork) {
         
-        this.network = newNetwork;
+        this.network = new WeakReference<CrystalNetwork>(newNetwork);
         return true;
     }
     
@@ -110,15 +91,15 @@ public class Type2CrystalLogic extends CrystalLogic implements AbstractLogic, IC
                 
                 final int modifier = 5;
                 
-                for (int x = -modifier; x < modifier; x++) {
+                for (int x = -modifier; x <= modifier; x++) {
                     
-                    for (int y = -modifier; y < modifier; y++) {
+                    for (int y = -modifier; y <= modifier; y++) {
                         
-                        for (int z = -modifier; z < modifier; z++) {
+                        for (int z = -modifier; z <= modifier; z++) {
                             
                             if (!(x == 0 && y == 0 && z == 0)) {
                                 
-                                TileEntity tile = originCrystal.getWorldObj().getTileEntity(originCrystal.xCoord + x, originCrystal.yCoord + y, originCrystal.zCoord + z);
+                                TileEntity tile = getOriginCrystal().getWorldObj().getTileEntity(getOriginCrystal().xCoord + x, getOriginCrystal().yCoord + y, getOriginCrystal().zCoord + z);
                                 
                                 if (tile != null) {
                                     
@@ -127,9 +108,9 @@ public class Type2CrystalLogic extends CrystalLogic implements AbstractLogic, IC
                                         ICrystalNetworkPart crystal = ((ICrystalNetworkPart) tile);
                                         CrystalNetwork crystalNetwork = crystal.getNetwork();
                                         
-                                        if (crystalNetwork == null) {
+                                        if (crystalNetwork == null && network != null && network.get() != null) {
                                             
-                                            network.addCrystal(crystal);
+                                            network.get().addCrystal(crystal);
                                         }
                                     }
                                     
@@ -138,6 +119,38 @@ public class Type2CrystalLogic extends CrystalLogic implements AbstractLogic, IC
                                         ICrystalPowerHandler crystal = ((ICrystalPowerHandler) tile);
                                         
                                         powerHandlers.add(new CrystalWrapper().setHandler(crystal).setPos(UtilVector.createTileEntityVector(tile)));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                if (getPowerManager() != null) {
+                    
+                    for (CrystalWrapper wrapper : powerHandlers) {
+                        
+                        ICrystalPowerHandler handler = wrapper.getHandler().get();
+                        
+                        if (handler != null) {
+                            
+                            IPowerManager manager = handler.getPowerManager();
+                            
+                            if (manager != null) {
+                                
+                                IPowerAttribute attrubute = handler.getPowerAttribute();
+                                
+                                if (attrubute != null) {
+                                    
+                                    EnumPowerStatus powerStatus = attrubute.getPowerStatus();
+                                    
+                                    if (powerStatus == EnumPowerStatus.SINK) {
+                                        
+                                        UtilPower.movePower(getPowerManager(), manager, 5, EnumSimulationType.LIGITIMATE);
+                                    }
+                                    if (powerStatus == EnumPowerStatus.SOURCE) {
+                                        
+                                        UtilPower.movePower(manager, getPowerManager(), 5, EnumSimulationType.LIGITIMATE);
                                     }
                                 }
                             }
@@ -154,6 +167,7 @@ public class Type2CrystalLogic extends CrystalLogic implements AbstractLogic, IC
         }
     }
     
+    @SuppressWarnings("unused")
     private class CrystalWrapper {
         
         Vector3i pos;

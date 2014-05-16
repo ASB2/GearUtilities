@@ -2,7 +2,9 @@ package GU.api.power;
 
 import net.minecraft.nbt.NBTTagCompound;
 import GU.api.EnumSimulationType;
+import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IPowerManager;
+import GU.api.power.PowerNetAbstract.*;
 
 public class PowerNetObject {
     
@@ -156,6 +158,42 @@ public class PowerNetObject {
         }
     }
     
+    public static class DefaultPowerAttribute implements IPowerAttribute {
+        
+        EnumPowerStatus powerStatus;
+        
+        public DefaultPowerAttribute() {
+            this(EnumPowerStatus.NONE);
+        }
+        
+        public DefaultPowerAttribute(EnumPowerStatus status) {
+            
+            powerStatus = status;
+        }
+        
+        public DefaultPowerAttribute setPowerStatus(EnumPowerStatus powerStatus) {
+            this.powerStatus = powerStatus;
+            return this;
+        }
+        
+        @Override
+        public EnumPowerStatus getPowerStatus() {
+            
+            return powerStatus;
+        }
+        
+        public NBTTagCompound save(NBTTagCompound tag) {
+            
+            tag.setInteger("powerStatus", powerStatus.ordinal());
+            return tag;
+        }
+        
+        public void load(NBTTagCompound tag) {
+            
+            powerStatus = EnumPowerStatus.values()[tag.getInteger("powerStatus")];
+        }
+    }
+    
     public static final class UtilPower {
         
         private UtilPower() {
@@ -186,7 +224,7 @@ public class PowerNetObject {
         
         public static boolean addPower(IPowerManager sink, int powerAmount, EnumSimulationType type) {
             
-            if (!(type == EnumSimulationType.FORCED)) {
+            if (!(type == EnumSimulationType.FORCED || type == EnumSimulationType.FORCED_SIMULATE)) {
                 
                 if (!(sink.getMinInputPacketSize() <= powerAmount && sink.getMaxInputPacketSize() >= powerAmount)) {
                     
@@ -203,7 +241,7 @@ public class PowerNetObject {
         
         public static boolean removePower(IPowerManager source, int powerAmount, EnumSimulationType type) {
             
-            if (!(type == EnumSimulationType.FORCED)) {
+            if (!(type == EnumSimulationType.FORCED || type == EnumSimulationType.FORCED_SIMULATE)) {
                 
                 if (!(source.getMinOutputPacketSize() <= powerAmount && source.getMaxOutputPacketSize() >= powerAmount)) {
                     

@@ -15,6 +15,7 @@ import GU.items.ItemRenderers.GarnetRenderer;
 import GU.items.ItemElectisCrystalShard.ElectisShard.ElectisCrystalShardRenderer;
 import GU.items.ItemElectisCrystalShard.ElectisShard.ElectisShardWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
+import GU.items.*;
 
 public final class ItemRegistry {
     
@@ -30,7 +31,8 @@ public final class ItemRegistry {
         METADATA_ITEM.wrappers.put(0, new ElectisShardWrapper("Electis Crystal Shard").setRenderer(ElectisCrystalShardRenderer.instance));
         METADATA_ITEM.wrappers.put(1, new MetadataWrapper("Garnet").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.wrappers.put(2, new MetadataWrapper("Electis Controler").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.wrappers.put(3, new MetadataWrapper("Gear Reader").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.wrappers.put(3, new GearReaderWrapper("Gear Reader").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.wrappers.put(4, new TeleporterWrapper("Teleporter").setRenderer(GarnetRenderer.instance));
     }
     
     private ItemRegistry() {
