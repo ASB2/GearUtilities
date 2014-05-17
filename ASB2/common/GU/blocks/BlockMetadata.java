@@ -119,12 +119,12 @@ public class BlockMetadata extends BlockBase {
     
     public static class MetadataWrapper {
         
-        String[] iconNames;
-        IIcon[] icons;
-        ArrayList<ItemStack> itemStacks;
-        String ign;
-        int metadata;
-        float hardness = 3;
+        protected String[] iconNames;
+        protected IIcon[] icons;
+        protected ArrayList<ItemStack> itemStacks;
+        protected String ign;
+        protected int metadata;
+        protected float hardness = 3;
         
         public MetadataWrapper(String[] iconNames) {
             

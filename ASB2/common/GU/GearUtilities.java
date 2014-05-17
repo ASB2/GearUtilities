@@ -71,6 +71,7 @@ public final class GearUtilities {
         
         FMLCommonHandler.instance().bus().register(new EventListener());
         FMLCommonHandler.instance().bus().register(NoiseManager.instance);
+        
         GameRegistry.registerFuelHandler(new IFuelHandler() {
             
             @Override

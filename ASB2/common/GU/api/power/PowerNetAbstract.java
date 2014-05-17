@@ -33,14 +33,6 @@ public class PowerNetAbstract {
         
         int getMaxPower();
         
-        int getMinInputPacketSize();
-        
-        int getMaxInputPacketSize();
-        
-        int getMinOutputPacketSize();
-        
-        int getMaxOutputPacketSize();
-        
         boolean increasePower(int powerAmount, EnumSimulationType type);
         
         boolean decreasePower(int powerAmount, EnumSimulationType type);

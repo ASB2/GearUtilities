@@ -10,11 +10,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import GU.blocks.BlockBase;
 import GU.blocks.BlockMetadata;
+import GU.blocks.containers.BlockCreativeMetadata.BlockCreativeMetadata;
 import GU.blocks.containers.BlockElectisCrystal.BlockElectisCrystal;
+import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
+import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
 import GU.blocks.containers.BlockStructureCube.BlockStructureCube;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
-import GU.blocks.containers.BlockCreativeMetadata.*;
+import GU.blocks.containers.BlockSpacialProvider.*;
 
 public class BlockRegistry {
     
@@ -46,12 +49,32 @@ public class BlockRegistry {
     public static final BlockElectisCrystal ELECTIS_CRYSTAL = new BlockElectisCrystal(Material.rock);
     public static final BlockCreativeMetadata CREATIVE_METADATA = new BlockCreativeMetadata(Material.rock);
     
+    public static final BlockSpacialProvider SPACIAL_PROVIDER = new BlockSpacialProvider(Material.rock) {
+        
+        public void postInit() {
+            
+            wrappers.put(0, new ChestSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
+//            wrappers.put(1, new ChestSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
+//            wrappers.put(2, new ChestSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
+        }
+    };
+    public static final BlockMultiInterface MULTI_INTERFACE = new BlockMultiInterface(Material.rock) {
+        
+        public void postInit() {
+            
+//            wrappers.put(0, new MetadataWrapper(new String[] { "BlockStructureCube0" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Structure Cube 0"));
+//            wrappers.put(1, new MetadataWrapper(new String[] { "BlockStructureCube1" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Structure Cube 1"));
+//            wrappers.put(2, new MetadataWrapper(new String[] { "BlockStructureCube2" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Structure Cube 2"));
+        }
+    };
     static {
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMetadataOre"), METADATA_ORE.setBlockName("MetadataOre"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCube"), STRUCTURE_CUBE.setBlockName("StructureCube"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockElectisCrystal"), ELECTIS_CRYSTAL.setBlockName("Electis Crystal"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockCreativeMetadata"), CREATIVE_METADATA.setBlockName("Creative Metadata"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockCreativeMetadata"), CREATIVE_METADATA);
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockSpacialProvider"), SPACIAL_PROVIDER);
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiInterface"), MULTI_INTERFACE);
     }
     
     public static void init(Configuration config) {

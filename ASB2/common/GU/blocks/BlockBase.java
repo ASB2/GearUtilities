@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import GU.GUItemBlock;
 import GU.GearUtilities;
+import GU.render.BlockSimpleRenderer;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockBase extends Block {
@@ -47,5 +48,11 @@ public class BlockBase extends Block {
     public void registerTile(Class<? extends TileEntity> tile) {
         
         GameRegistry.registerTileEntity(tile, tile.toString());
+    }
+    
+    @Override
+    public int getRenderType() {
+        
+        return BlockSimpleRenderer.renderID;
     }
 }

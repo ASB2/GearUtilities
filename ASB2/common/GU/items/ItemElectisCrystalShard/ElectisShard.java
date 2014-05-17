@@ -2,6 +2,7 @@ package GU.items.ItemElectisCrystalShard;
 
 import java.awt.Color;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,6 +16,7 @@ import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilItemStack;
 import GU.api.EnumSimulationType;
 import GU.api.crystals.ICrystalPowerHandler;
+import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.api.power.PowerNetObject.UtilPower;
@@ -48,7 +50,16 @@ public class ElectisShard {
                     }
                     if (tile instanceof ICrystalPowerHandler) {
                         
-                        powerHandler = ((ITilePowerHandler) tile).getPowerManager();
+                        powerHandler = ((ICrystalPowerHandler) tile).getPowerManager();
+                    }
+                }
+                else {
+                    
+                    Block block = world.getBlock(x, y, z);
+                    
+                    if (block != null && block instanceof IBlockPowerHandler) {
+                        
+                        powerHandler = ((IBlockPowerHandler) block).getPowerManager(world, x, y, z);
                     }
                 }
                 
@@ -66,10 +77,9 @@ public class ElectisShard {
                     }
                     
                     UtilEntity.sendChatToPlayer(player, "Power Stored: " + powerHandler.getStoredPower());
-                    return true;
                 }
             }
-            return false;
+            return true;
         }
         
         @Override

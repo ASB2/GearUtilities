@@ -1,7 +1,9 @@
 package GU.proxy;
 
 import GU.info.Models;
+import GU.render.BlockSimpleRenderer;
 import GU.render.NoiseManager;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
     
@@ -10,5 +12,7 @@ public class ClientProxy extends CommonProxy {
         
         Models.initModels();
         NoiseManager.instance.initImage();
+        
+        RenderingRegistry.registerBlockHandler(BlockSimpleRenderer.instance);
     }
 }

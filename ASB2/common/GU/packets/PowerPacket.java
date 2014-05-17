@@ -34,12 +34,6 @@ public class PowerPacket implements AbstractPacket {
         
         buffer.writeInt(powerToUpdate.getStoredPower());
         buffer.writeInt(powerToUpdate.getMaxPower());
-        
-        buffer.writeInt(powerToUpdate.getMinInputPacketSize());
-        buffer.writeInt(powerToUpdate.getMaxInputPacketSize());
-        
-        buffer.writeInt(powerToUpdate.getMinOutputPacketSize());
-        buffer.writeInt(powerToUpdate.getMaxOutputPacketSize());
     }
     
     @Override
@@ -56,12 +50,6 @@ public class PowerPacket implements AbstractPacket {
         
         powerToUpdate.setPowerStored(buffer.readInt());
         powerToUpdate.setPowerMax(buffer.readInt());
-        
-        powerToUpdate.setMinInputPacketSize(buffer.readInt());
-        powerToUpdate.setMaxInputPacketSize(buffer.readInt());
-        
-        powerToUpdate.setMinOutputPacketSize(buffer.readInt());
-        powerToUpdate.setMaxOutputPacketSize(buffer.readInt());
     }
     
     @Override
@@ -76,12 +64,6 @@ public class PowerPacket implements AbstractPacket {
             if (manager != null && manager instanceof DefaultPowerManager) {
                 
                 DefaultPowerManager dManager = ((DefaultPowerManager) manager);
-                
-                dManager.setMaxInputPacketSize(powerToUpdate.getMaxInputPacketSize());
-                dManager.setMaxOutputPacketSize(powerToUpdate.getMaxOutputPacketSize());
-                
-                dManager.setMinInputPacketSize(powerToUpdate.getMinInputPacketSize());
-                dManager.setMinOutputPacketSize(powerToUpdate.getMinOutputPacketSize());
                 
                 dManager.setPowerMax(powerToUpdate.getMaxPower());
                 dManager.setPowerStored(powerToUpdate.getStoredPower());

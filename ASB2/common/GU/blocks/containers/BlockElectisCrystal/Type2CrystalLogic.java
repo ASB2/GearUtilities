@@ -4,11 +4,14 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilVector;
 import GU.api.EnumSimulationType;
-import GU.api.crystals.CrystalNetwork;
-import GU.api.crystals.ICrystalNetworkPart;
 import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IPowerAttribute;
@@ -18,68 +21,65 @@ import UC.Wait;
 import UC.Wait.IWaitTrigger;
 import UC.color.Color4f;
 import UC.math.vector.Vector3i;
+import UC.utils.*;
 
-public class Type2CrystalLogic extends CrystalLogic implements ICrystalNetworkPart {
+public class Type2CrystalLogic extends CrystalLogic {
     
     List<CrystalWrapper> powerHandlers = new ArrayList<CrystalWrapper>();
-    Wait poolValidNode;
+    Wait poolValidNode, transferPower;
     Color4f color;
-    WeakReference<CrystalNetwork> network;
     
-    boolean directional;
+    boolean directional = true;
     
     public Type2CrystalLogic(TileElectisCrystal tile) {
         super(tile);
         
         color = Color4f.WHITE;
         poolValidNode = new Wait(new PoolValidNodeWait(), 20, 0);
+        transferPower = new Wait(new TransferPowerWait(), 5, 0);
+        manager.setPowerMax(60);
+        powerStatus = EnumPowerStatus.BOTH;
     }
     
     @Override
     public void update(Object... objects) {
         
         poolValidNode.update();
-    }
-    
-    public Type2CrystalLogic getThis() {
-        
-        return this;
+        transferPower.update();
     }
     
     @Override
-    public IPowerManager getPowerManager() {
+    public NBTTagCompound save(NBTTagCompound tag) {
         
-        if (network != null && network.get() != null) {
-            
-            return network.get().getPowerManager();
-        }
-        return null;
+        tag.setBoolean("directional", directional);
+        return super.save(tag);
     }
     
     @Override
-    public IPowerAttribute getAttributes() {
+    public void load(NBTTagCompound tag) {
         
-        return new IPowerAttribute() {
+        directional = tag.getBoolean("directional");
+        super.load(tag);
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
+        
+        if (player.getHeldItem() == null && player.isSneaking()) {
             
-            @Override
-            public EnumPowerStatus getPowerStatus() {
+            directional = UCUtil.toggle(directional);
+            poolValidNode.getTrigger().trigger(0);
+            
+            if (directional) {
                 
-                return EnumPowerStatus.BOTH;
+                UtilEntity.sendChatToPlayer(player, "Now Checking in simple directions");
             }
-        };
-    }
-    
-    @Override
-    public CrystalNetwork getNetwork() {
-        
-        return network != null ? network.get() : null;
-    }
-    
-    @Override
-    public boolean setCrystalNetwork(CrystalNetwork newNetwork) {
-        
-        this.network = new WeakReference<CrystalNetwork>(newNetwork);
-        return true;
+            else {
+                
+                UtilEntity.sendChatToPlayer(player, "Now Checking in a square");
+            }
+        }
+        return false;
     }
     
     private class PoolValidNodeWait implements IWaitTrigger {
@@ -87,46 +87,80 @@ public class Type2CrystalLogic extends CrystalLogic implements ICrystalNetworkPa
         @Override
         public void trigger(int id) {
             
-            if (network != null) {
+            if (worldObj != null && position != null) {
                 
-                final int modifier = 5;
+                powerHandlers.clear();
                 
-                for (int x = -modifier; x <= modifier; x++) {
+                if (!directional) {
                     
-                    for (int y = -modifier; y <= modifier; y++) {
+                    final int modifier = 5;
+                    
+                    for (int x = -modifier; x <= modifier; x++) {
                         
-                        for (int z = -modifier; z <= modifier; z++) {
+                        for (int y = -modifier; y <= modifier; y++) {
                             
-                            if (!(x == 0 && y == 0 && z == 0)) {
+                            for (int z = -modifier; z <= modifier; z++) {
                                 
-                                TileEntity tile = getOriginCrystal().getWorldObj().getTileEntity(getOriginCrystal().xCoord + x, getOriginCrystal().yCoord + y, getOriginCrystal().zCoord + z);
-                                
-                                if (tile != null) {
+                                if (!(x == 0 && y == 0 && z == 0)) {
                                     
-                                    if (tile instanceof ICrystalNetworkPart) {
+                                    TileEntity tile = worldObj.getTileEntity(position.getX() + x, position.getY() + y, position.getZ() + z);
+                                    
+                                    if (tile != null) {
                                         
-                                        ICrystalNetworkPart crystal = ((ICrystalNetworkPart) tile);
-                                        CrystalNetwork crystalNetwork = crystal.getNetwork();
-                                        
-                                        if (crystalNetwork == null && network != null && network.get() != null) {
+                                        if (tile instanceof ICrystalPowerHandler) {
                                             
-                                            network.get().addCrystal(crystal);
+                                            ICrystalPowerHandler crystal = ((ICrystalPowerHandler) tile);
+                                            
+                                            powerHandlers.add(new CrystalWrapper().setHandler(crystal).setPos(UtilVector.createTileEntityVector(tile)));
                                         }
-                                    }
-                                    
-                                    if (tile instanceof ICrystalPowerHandler) {
-                                        
-                                        ICrystalPowerHandler crystal = ((ICrystalPowerHandler) tile);
-                                        
-                                        powerHandlers.add(new CrystalWrapper().setHandler(crystal).setPos(UtilVector.createTileEntityVector(tile)));
                                     }
                                 }
                             }
                         }
                     }
                 }
+                else {
+                    
+                    final int modifier = 9;
+                    
+                    for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                        
+                        for (int value = 0; value <= modifier; value++) {
+                            
+                            TileEntity tile = worldObj.getTileEntity(position.getX() + (direction.offsetX * value), position.getY() + (direction.offsetY * value), position.getZ() + (direction.offsetZ * value));
+                            
+                            if (tile != null) {
+                                
+                                if (tile instanceof ICrystalPowerHandler) {
+                                    
+                                    ICrystalPowerHandler crystal = ((ICrystalPowerHandler) tile);
+                                    
+                                    powerHandlers.add(new CrystalWrapper().setHandler(crystal).setPos(UtilVector.createTileEntityVector(tile)));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        @Override
+        public boolean shouldTick(int id) {
+            
+            return true;
+        }
+    }
+    
+    private class TransferPowerWait implements IWaitTrigger {
+        
+        @Override
+        public void trigger(int id) {
+            
+            if (!powerHandlers.isEmpty()) {
                 
-                if (getPowerManager() != null) {
+                if (!worldObj.isBlockIndirectlyGettingPowered(position.getX(), position.getY(), position.getZ())) {
+                    
+                    final int powerAmount = 1;
                     
                     for (CrystalWrapper wrapper : powerHandlers) {
                         
@@ -134,9 +168,9 @@ public class Type2CrystalLogic extends CrystalLogic implements ICrystalNetworkPa
                         
                         if (handler != null) {
                             
-                            IPowerManager manager = handler.getPowerManager();
+                            IPowerManager otherManager = handler.getPowerManager();
                             
-                            if (manager != null) {
+                            if (otherManager != null) {
                                 
                                 IPowerAttribute attrubute = handler.getPowerAttribute();
                                 
@@ -144,13 +178,45 @@ public class Type2CrystalLogic extends CrystalLogic implements ICrystalNetworkPa
                                     
                                     EnumPowerStatus powerStatus = attrubute.getPowerStatus();
                                     
-                                    if (powerStatus == EnumPowerStatus.SINK) {
+                                    switch (powerStatus) {
+                                    
+                                        case SINK: {
+                                            
+                                            if (otherManager.getStoredPower() < manager.getStoredPower()) {
+                                                
+                                                UtilPower.movePower(manager, otherManager, powerAmount, EnumSimulationType.LIGITIMATE);
+                                            }
+                                            break;
+                                        }
                                         
-                                        UtilPower.movePower(getPowerManager(), manager, 5, EnumSimulationType.LIGITIMATE);
-                                    }
-                                    if (powerStatus == EnumPowerStatus.SOURCE) {
+                                        // case SOURCE: {
+                                        //
+                                        // if (otherManager.getStoredPower() >
+                                        // manager.getStoredPower()) {
+                                        //
+                                        // UtilPower.movePower(otherManager,
+                                        // getPowerManager(), powerAmount,
+                                        // EnumSimulationType.LIGITIMATE);
+                                        // }
+                                        // break;
+                                        // }
                                         
-                                        UtilPower.movePower(manager, getPowerManager(), 5, EnumSimulationType.LIGITIMATE);
+                                        case BOTH: {
+                                            
+//                                            if (otherManager.getStoredPower() > manager.getStoredPower()) {
+//                                                
+//                                                UtilPower.movePower(otherManager, getPowerManager(), powerAmount, EnumSimulationType.LIGITIMATE);
+//                                            }
+//                                            else 
+                                                if (otherManager.getStoredPower() < manager.getStoredPower()) {
+                                                
+                                                UtilPower.movePower(manager, otherManager, powerAmount, EnumSimulationType.LIGITIMATE);
+                                            }
+                                            break;
+                                        }
+                                        
+                                        default:
+                                            break;
                                     }
                                 }
                             }

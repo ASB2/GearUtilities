@@ -1,10 +1,5 @@
 package GU.blocks.containers.BlockElectisCrystal;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import GU.GearUtilities;
@@ -15,31 +10,43 @@ import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
+import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.blocks.containers.TileBase;
 import GU.packets.CrystalTypePacket;
+import GU.packets.PowerPacket;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
 import UC.color.Color4f;
-import UC.math.vector.Vector3i;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
-import GU.api.power.PowerNetObject.*;
-import GU.packets.*;
 
 public class TileElectisCrystal extends TileBase implements IColorableTile, ICrystalPowerHandler, ICrystalNetworkPart {
     
     EnumElectisCrystalType crystalType;
-    List<Entry<Vector3i, WeakReference<ICrystalPowerHandler>>> powerHandlers = new ArrayList<Entry<Vector3i, WeakReference<ICrystalPowerHandler>>>();
     CrystalLogic crystalLogic;
     Wait sendPacket;
+    boolean called;
     
     public TileElectisCrystal() {
         
         crystalType = EnumElectisCrystalType.BROKEN;
-        sendPacket = new Wait(new SendPacket(), 20, 0);
+        sendPacket = new Wait(new SendPacket(), 40, 0);
     }
     
     @Override
     public void updateEntity() {
+        
+        if (!called && sendPacket.getRemainingTime() == 5 && crystalType != EnumElectisCrystalType.BROKEN) {
+            
+            if (!worldObj.isRemote) {
+                
+                GearUtilities.getPipeline().sendToAllAround(new CrystalTypePacket(xCoord, yCoord, zCoord, crystalType.ordinal()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
+            }
+            if (crystalLogic != null) {
+                
+                crystalLogic.validate();
+            }
+            called = true;
+        }
         
         if (!worldObj.isRemote) {
             
@@ -50,6 +57,11 @@ public class TileElectisCrystal extends TileBase implements IColorableTile, ICry
             
             crystalLogic.update((Object[]) null);
         }
+    }
+    
+    @Override
+    public void validate() {
+        super.validate();
     }
     
     @Override
@@ -191,7 +203,6 @@ public class TileElectisCrystal extends TileBase implements IColorableTile, ICry
     
     private class SendPacket implements IWaitTrigger {
         
-        boolean hasFired = false;
         IPowerManager lastManager;
         
         @Override
@@ -199,24 +210,16 @@ public class TileElectisCrystal extends TileBase implements IColorableTile, ICry
             
             if (!worldObj.isRemote) {
                 
-                GearUtilities.getPipeline().sendToAllAround(new CrystalTypePacket(xCoord, yCoord, zCoord, crystalType.ordinal()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
-                hasFired = true;
-                
                 IPowerManager manager = getPowerManager();
                 
                 if (manager != null && manager instanceof DefaultPowerManager) {
                     
                     if (lastManager != null) {
                         
-                        if (!lastManager.equals(getPowerManager())) {
+                        if (!(lastManager.getStoredPower() == manager.getStoredPower() && lastManager.getMaxPower() == manager.getMaxPower())) {
                             
                             lastManager = ((DefaultPowerManager) manager).clone();
                             GearUtilities.getPipeline().sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, ((DefaultPowerManager) manager).clone()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
-                            // GearUtilities.log("Packet Sent");
-                        }
-                        else {
-                            
-                            // GearUtilities.log("Power Packet Not Made: THINGY IS THE SAME!");
                         }
                     }
                     else {
@@ -224,12 +227,6 @@ public class TileElectisCrystal extends TileBase implements IColorableTile, ICry
                         lastManager = ((DefaultPowerManager) manager).clone();
                         GearUtilities.getPipeline().sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, ((DefaultPowerManager) manager).clone()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
                     }
-                }
-                
-                if (crystalLogic instanceof Type3CrystalLogic) {
-                    
-                    GearUtilities.getPipeline().sendToAllAround(new PowerPacket(xCoord, yCoord, zCoord, ((DefaultPowerManager) manager).clone()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
-                    
                 }
             }
         }

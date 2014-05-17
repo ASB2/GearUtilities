@@ -60,52 +60,61 @@ public class BlockElectisCrystal extends BlockContainerBase {
             
             UtilEntity.sendChatToPlayer(player, "CrystalType: " + ((TileElectisCrystal) tile).getCrystalType());
             
-            if (tile != null && tile instanceof TileElectisCrystal && player.getHeldItem() == null) {
+            if (tile != null && tile instanceof TileElectisCrystal) {
                 
-                if (tile instanceof ICrystalPowerHandler) {
+                CrystalLogic logic = ((TileElectisCrystal) tile).crystalLogic;
+                
+                if (player.getHeldItem() == null) {
                     
-                    ICrystalPowerHandler mTile = (ICrystalPowerHandler) tile;
+                    if (tile instanceof ICrystalPowerHandler) {
+                        
+                        ICrystalPowerHandler mTile = (ICrystalPowerHandler) tile;
+                        
+                        IPowerManager manager = mTile.getPowerManager();
+                        IPowerAttribute attribute = mTile.getPowerAttribute();
+                        
+                        if (manager != null) {
+                            
+                            UtilEntity.sendChatToPlayer(player, "Power Stored: " + manager.getStoredPower());
+                            UtilEntity.sendChatToPlayer(player, "Max Power: " + manager.getMaxPower());
+                            UtilEntity.sendChatToPlayer(player, "Power Difference: " + (manager.getMaxPower() - manager.getStoredPower()));
+                        }
+                        else {
+                            
+                            UtilEntity.sendChatToPlayer(player, "Power Manager: null");
+                        }
+                        
+                        if (attribute != null) {
+                            
+                            UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute.getPowerStatus());
+                        }
+                        else {
+                            
+                            UtilEntity.sendChatToPlayer(player, "Power Attribute: null");
+                        }
+                    }
                     
-                    IPowerManager manager = mTile.getPowerManager();
-                    IPowerAttribute attribute = mTile.getPowerAttribute();
-                    
-                    if (manager != null) {
+                    if (tile instanceof ICrystalNetworkPart) {
                         
-                        UtilEntity.sendChatToPlayer(player, "Power Stored: " + manager.getStoredPower());
-                        UtilEntity.sendChatToPlayer(player, "Max Power: " + manager.getMaxPower());
-                        UtilEntity.sendChatToPlayer(player, "Power Difference: " + (manager.getMaxPower() - manager.getStoredPower()));
-                    }
-                    else {
+                        ICrystalNetworkPart mTile = (ICrystalNetworkPart) tile;
                         
-                        UtilEntity.sendChatToPlayer(player, "Power Manager: null");
-                    }
-                    
-                    if (attribute != null) {
+                        CrystalNetwork network = mTile.getNetwork();
                         
-                        UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute.getPowerStatus());
+                        if (network != null) {
+                            
+                            UtilEntity.sendChatToPlayer(player, "Network Size: " + network.getNetworkSize());
+                            UtilEntity.sendChatToPlayer(player, "Network Core: " + network.getCorePosition().toString());
+                        }
                     }
-                    else {
-                        
-                        UtilEntity.sendChatToPlayer(player, "Power Attribute: null");
-                    }
+                    UtilEntity.sendChatToPlayer(player, "---------");
                 }
                 
-                if (tile instanceof ICrystalNetworkPart) {
+                if (logic != null) {
                     
-                    ICrystalNetworkPart mTile = (ICrystalNetworkPart) tile;
-                    
-                    CrystalNetwork network = mTile.getNetwork();
-                    
-                    if (network != null) {
-                        
-                        UtilEntity.sendChatToPlayer(player, "Network Size: " + network.getNetworkSize());
-                        UtilEntity.sendChatToPlayer(player, "Network Core: " + network.getCorePosition().toString());
-                    }
+                    return logic.onBlockActivated(world, x, y, z, player, p_149727_6_, p_149727_7_, p_149727_8_, p_149727_9_);
                 }
-                return true;
+                return false;
             }
-            
-            UtilEntity.sendChatToPlayer(player, "---------");
         }
         return false;
     }

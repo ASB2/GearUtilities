@@ -2,8 +2,11 @@ package GU.blocks.containers.BlockElectisCrystal;
 
 import java.lang.ref.WeakReference;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import ASB2.utils.UtilVector;
 import GU.api.color.Colorable.IColorableTile;
 import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
@@ -11,19 +14,26 @@ import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import UC.AbstractLogic;
 import UC.color.Color4f;
+import GU.api.power.PowerNetObject.*;
+import UC.math.vector.*;
 
-public class CrystalLogic implements AbstractLogic, IColorableTile, ICrystalPowerHandler {
+public abstract class CrystalLogic implements AbstractLogic, IColorableTile, ICrystalPowerHandler {
     
     WeakReference<TileElectisCrystal> originCrystal;
+    World worldObj;
+    Vector3i position;
     Color4f color;
     EnumPowerStatus powerStatus;
     IPowerAttribute attribute;
+    DefaultPowerManager manager;
     
     public CrystalLogic(TileElectisCrystal tile) {
         
         originCrystal = new WeakReference<TileElectisCrystal>(tile);
+        
         color = Color4f.WHITE;
         powerStatus = EnumPowerStatus.NONE;
+        manager = new DefaultPowerManager();
         attribute = new IPowerAttribute() {
             
             @Override
@@ -39,6 +49,17 @@ public class CrystalLogic implements AbstractLogic, IColorableTile, ICrystalPowe
         
     }
     
+    public void validate() {
+        
+        TileElectisCrystal crystal = originCrystal.get();
+        
+        if (crystal != null) {
+            
+            worldObj = crystal.getWorldObj();
+            position = UtilVector.createTileEntityVector(crystal);
+        }
+    }
+    
     public TileElectisCrystal getOriginCrystal() {
         
         return originCrystal.get();
@@ -46,8 +67,8 @@ public class CrystalLogic implements AbstractLogic, IColorableTile, ICrystalPowe
     
     @Override
     public IPowerManager getPowerManager() {
-        // TODO Auto-generated method stub
-        return null;
+        
+        return manager;
     }
     
     @Override
@@ -65,11 +86,13 @@ public class CrystalLogic implements AbstractLogic, IColorableTile, ICrystalPowe
     
     public NBTTagCompound save(NBTTagCompound tag) {
         
+        tag.setTag("manager", manager.save(new NBTTagCompound()));
         return tag;
     }
     
     public void load(NBTTagCompound tag) {
         
+        manager.load(tag.getCompoundTag("manager"));
     }
     
     @Override
@@ -80,6 +103,11 @@ public class CrystalLogic implements AbstractLogic, IColorableTile, ICrystalPowe
     
     public void handlePowerPacket(IPowerManager handler) {
         
+    }
+    
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
+        
+        return false;
     }
     
     // protected static class SendEnergyPacketWait implements IWaitTrigger {
