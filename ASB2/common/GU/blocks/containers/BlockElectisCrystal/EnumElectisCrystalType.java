@@ -223,7 +223,7 @@ public enum EnumElectisCrystalType {
                 float translationAmount = .2f;
                 
                 switch (((TileBase) tileentity).getOrientation()) {
-                
+                    
                     case UP: {
                         
                         GL11.glTranslated(x + 0.5F, y + translationAmount, z + .5F);
@@ -232,27 +232,32 @@ public enum EnumElectisCrystalType {
                     case DOWN: {
                         
                         GL11.glTranslated(x + 0.5F, y + (1 - translationAmount), z + .5F);
+                        GL11.glRotatef(180F, 1F, 0F, 0F);
                         break;
                     }
                     
                     case SOUTH: {
                         
                         GL11.glTranslated(x + 0.5F, y + .5F, z + translationAmount);
+                        GL11.glRotatef(90F, 1F, 0F, 0F);
                         break;
                     }
                     case NORTH: {
                         
                         GL11.glTranslated(x + 0.5F, y + .5F, z + (1 - translationAmount));
+                        GL11.glRotatef(-90F, 1F, 0F, 0F);
                         break;
                     }
                     case WEST: {
                         
                         GL11.glTranslated(x + (1 - translationAmount), y + .5F, z + .5F);
+                        GL11.glRotatef(90F, 0F, 0F, 1F);
                         break;
                     }
                     case EAST: {
                         
                         GL11.glTranslated(x + translationAmount, y + .5F, z + .5F);
+                        GL11.glRotatef(-90F, 0F, 0F, 1F);
                         break;
                     }
                     default: {
@@ -269,45 +274,8 @@ public enum EnumElectisCrystalType {
                 
                 GL11.glPushMatrix();
                 
-                float translationAmount = .25f;
+                GL11.glTranslated(x + 0.5, y + .5, z + .5);
                 
-                switch (((TileBase) tileentity).getOrientation()) {
-                
-                    case UP: {
-                        
-                        GL11.glTranslated(x + 0.5F, y + translationAmount, z + .5F);
-                        break;
-                    }
-                    case DOWN: {
-                        
-                        GL11.glTranslated(x + 0.5F, y + (1 - translationAmount), z + .5F);
-                        break;
-                    }
-                    
-                    case SOUTH: {
-                        
-                        GL11.glTranslated(x + 0.5F, y + .5F, z + translationAmount);
-                        break;
-                    }
-                    case NORTH: {
-                        
-                        GL11.glTranslated(x + 0.5F, y + .5F, z + (1 - translationAmount));
-                        break;
-                    }
-                    case WEST: {
-                        
-                        GL11.glTranslated(x + (1 - translationAmount), y + .5F, z + .5F);
-                        break;
-                    }
-                    case EAST: {
-                        
-                        GL11.glTranslated(x + translationAmount, y + .5F, z + .5F);
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
-                }
                 GL11.glCallList(this.getBlockDisplayListID());
                 GL11.glPopMatrix();
                 break;

@@ -274,11 +274,14 @@ public class BlockElectisCrystal extends BlockContainerBase {
     @Override
     public void breakBlock(World world, int x, int y, int z, Block p_149block749_5_, int p_149749_6_) {
         
-        TileEntity tile = world.getTileEntity(x, y, z);
-        
-        if (tile != null && tile instanceof TileElectisCrystal) {
+        if (!world.isRemote) {
             
-            world.spawnEntityInWorld(new EntityItem(world, x + .5, y + .5, z + .5, EnumElectisCrystalType.setCrystalType(new ItemStack(this), ((TileElectisCrystal) tile).getCrystalType())));
+            TileEntity tile = world.getTileEntity(x, y, z);
+            
+            if (tile != null && tile instanceof TileElectisCrystal && ((TileElectisCrystal) tile).getCrystalType() != EnumElectisCrystalType.BROKEN) {
+                
+                world.spawnEntityInWorld(new EntityItem(world, x + .5, y + .5, z + .5, EnumElectisCrystalType.setCrystalType(new ItemStack(this), ((TileElectisCrystal) tile).getCrystalType())));
+            }
         }
         super.breakBlock(world, x, y, z, p_149block749_5_, p_149749_6_);
     }
@@ -286,14 +289,6 @@ public class BlockElectisCrystal extends BlockContainerBase {
     @Override
     public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
         
-        ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-        
-        TileEntity tile = world.getTileEntity(x, y, z);
-        
-        if (tile != null && tile instanceof TileElectisCrystal) {
-            
-            list.add(EnumElectisCrystalType.setCrystalType(new ItemStack(this), ((TileElectisCrystal) tile).getCrystalType()));
-        }
-        return list;
+        return new ArrayList<ItemStack>();
     }
 }

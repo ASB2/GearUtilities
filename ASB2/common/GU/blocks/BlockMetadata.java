@@ -35,6 +35,7 @@ public class BlockMetadata extends BlockBase {
     public BlockMetadata addWrapper(int metadata, MetadataWrapper wrapper) {
         wrappers.put(metadata, wrapper);
         wrapper.setMetadata(metadata);
+        wrapper.setBlock(this);
         return this;
     }
     
@@ -190,6 +191,7 @@ public class BlockMetadata extends BlockBase {
         protected int harvestLevel;
         protected String harvestTool;
         protected ItemStack pickBlock;
+        BlockMetadata block;
         
         public MetadataWrapper(String[] iconNames) {
             this();
@@ -199,6 +201,15 @@ public class BlockMetadata extends BlockBase {
         
         public MetadataWrapper() {
             
+        }
+        
+        public MetadataWrapper setBlock(BlockMetadata block) {
+            this.block = block;
+            return this;
+        }
+        
+        public BlockMetadata getBlock() {
+            return block;
         }
         
         public MetadataWrapper setIconNames(String[] iconNames) {

@@ -54,11 +54,13 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            this.addWrapper(new ChestSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
-            this.addWrapper(new FurnaceSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
-            this.addWrapper(new TankSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
+            this.addWrapper(new StandardSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
+            this.addWrapper(new ChestSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 1)));
+            this.addWrapper(new FurnaceSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 2)));
+            this.addWrapper(new TankSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 3)));
         }
     };
+    
     public static final BlockMultiInterface MULTI_INTERFACE = new BlockMultiInterface(Material.rock) {
         
         public void postInit() {
