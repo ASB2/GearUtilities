@@ -7,6 +7,7 @@ public class BlockSpacialProvider extends BlockMetadataContainerBase {
     
     public BlockSpacialProvider(Material material) {
         super(material);
-        // TODO Auto-generated constructor stub
+        
+        this.registerTile(TileSpacialProvider.class);
     }
 }

@@ -28,8 +28,12 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
         
         if (block == BlockRegistry.SPACIAL_PROVIDER) {
             
-            renderer.setRenderBounds(-.001, -.001, -.001, 1.001, 1.001, 1.001);
+            renderer.setRenderBounds(.0001, .0001, .0001, 1 - .0001, 1 - .0001, 1 - .0001);
+            UtilRender.renderStandardInvBlock(renderer, block, metadata);
+            
+            renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
             UtilRender.renderStandardInvBlock(renderer, block, EnumInputIcon.NONE.getStateIcon());
+            return;
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderStandardInvBlock(renderer, block, metadata);
@@ -40,7 +44,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
         
         if (block == BlockRegistry.SPACIAL_PROVIDER) {
             
-            // TileEntity tile = world.getTileEntity(x, y, z);
+            // TileEntity tile = world.getTileEntity(x, y, z);w
             
             renderer.setRenderBounds(-.0015, -.0015, -.0015, 1.0015, 1.0015, 1.0015);
             

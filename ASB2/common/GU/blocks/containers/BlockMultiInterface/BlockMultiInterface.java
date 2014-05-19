@@ -7,6 +7,6 @@ public class BlockMultiInterface extends BlockMetadataContainerBase {
     
     public BlockMultiInterface(Material material) {
         super(material);
-        // TODO Auto-generated constructor stub
+        this.registerTile(TileMultiInterface.class);
     }
 }

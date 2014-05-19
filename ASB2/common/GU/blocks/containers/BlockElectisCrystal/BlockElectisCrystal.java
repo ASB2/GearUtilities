@@ -1,11 +1,14 @@
 package GU.blocks.containers.BlockElectisCrystal;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,6 +19,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.util.ForgeDirection;
+import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilItemStack;
 import GU.api.crystals.CrystalNetwork;
@@ -29,11 +33,17 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockElectisCrystal extends BlockContainerBase {
     
+    public final ItemStack TYPE1 = EnumElectisCrystalType.TYPE1.setCrystalType(new ItemStack(this));
+    public final ItemStack TYPE2 = EnumElectisCrystalType.TYPE2.setCrystalType(new ItemStack(this));
+    public final ItemStack TYPE3 = EnumElectisCrystalType.TYPE3.setCrystalType(new ItemStack(this));
+    public final ItemStack TYPE4 = EnumElectisCrystalType.TYPE4.setCrystalType(new ItemStack(this));
+    
     public BlockElectisCrystal(Material material) {
         super(material);
         this.registerTile(TileElectisCrystal.class);
         this.setLightOpacity(0);
         this.setLightLevel(.3f);
+        this.setHardness(2);
     }
     
     @Override
@@ -155,10 +165,16 @@ public class BlockElectisCrystal extends BlockContainerBase {
     }
     
     @Override
-    public boolean canBlockStay(World world, int x, int y, int z) {
+    public boolean canPlaceBlockAt(World world, int x, int y, int z) {
         
-        ForgeDirection direction = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z));
-        return world.isSideSolid(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, direction);
+        TileEntity tile = world.getTileEntity(x, y, z);
+        
+        if (tile != null) {
+            
+            ForgeDirection direction = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z));
+            return world.isSideSolid(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, direction);
+        }
+        return false;
     }
     
     @Override
@@ -166,6 +182,23 @@ public class BlockElectisCrystal extends BlockContainerBase {
         
         ForgeDirection direction = ForgeDirection.getOrientation(side).getOpposite();
         return world.isSideSolid(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, direction.getOpposite());
+    }
+    
+    @Override
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
+        
+        ForgeDirection direction = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)).getOpposite();
+        
+        if (!world.isRemote && !world.isSideSolid(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, direction.getOpposite())) {
+            
+            UtilBlock.breakBlock(world, x, y, z);
+        }
+    }
+    
+    @Override
+    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_) {
+        // TODO Auto-generated method stub
+        super.onBlockPlacedBy(p_149689_1_, p_149689_2_, p_149689_3_, p_149689_4_, p_149689_5_, p_149689_6_);
     }
     
     @Override
@@ -236,5 +269,31 @@ public class BlockElectisCrystal extends BlockContainerBase {
     public TileEntity createNewTileEntity(World var1, int meta) {
         
         return new TileElectisCrystal();
+    }
+    
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block p_149block749_5_, int p_149749_6_) {
+        
+        TileEntity tile = world.getTileEntity(x, y, z);
+        
+        if (tile != null && tile instanceof TileElectisCrystal) {
+            
+            world.spawnEntityInWorld(new EntityItem(world, x + .5, y + .5, z + .5, EnumElectisCrystalType.setCrystalType(new ItemStack(this), ((TileElectisCrystal) tile).getCrystalType())));
+        }
+        super.breakBlock(world, x, y, z, p_149block749_5_, p_149749_6_);
+    }
+    
+    @Override
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+        
+        ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+        
+        TileEntity tile = world.getTileEntity(x, y, z);
+        
+        if (tile != null && tile instanceof TileElectisCrystal) {
+            
+            list.add(EnumElectisCrystalType.setCrystalType(new ItemStack(this), ((TileElectisCrystal) tile).getCrystalType()));
+        }
+        return list;
     }
 }

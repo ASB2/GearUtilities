@@ -10,11 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import GU.blocks.BlockBase;
 import GU.blocks.BlockMetadata;
+import GU.blocks.BlockStructureCube;
 import GU.blocks.containers.BlockCreativeMetadata.BlockCreativeMetadata;
 import GU.blocks.containers.BlockElectisCrystal.BlockElectisCrystal;
 import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
-import GU.blocks.containers.BlockStructureCube.BlockStructureCube;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
 import GU.blocks.containers.BlockSpacialProvider.*;
@@ -27,8 +27,9 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            wrappers.put(0, new MetadataWrapper(new String[] { "BlockElectisStone" }).addDrop(ItemRegistry.ELECTIS_CRYSTAL_SHARD).setDisplayName("Electis Stone"));
-            wrappers.put(1, new MetadataWrapper(new String[] { "BlockGarnetOre" }).addDrop(ItemRegistry.GARNET).setDisplayName("Garnet Infused Stone"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockElectisCatchingStone" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Electis Catching Stone"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockElectisInfusedStone" }).addDrop(ItemRegistry.ELECTIS_CRYSTAL_SHARD).setDisplayName("Electis Infused Stone"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockGarnetOre" }).addDrop(ItemRegistry.GARNET).setDisplayName("Garnet Infused Stone"));
         }
     };
     
@@ -36,13 +37,13 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            wrappers.put(0, new MetadataWrapper(new String[] { "BlockStructureCube0" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Structure Cube 0"));
-            wrappers.put(1, new MetadataWrapper(new String[] { "BlockStructureCube1" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Structure Cube 1"));
-            wrappers.put(2, new MetadataWrapper(new String[] { "BlockStructureCube2" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Structure Cube 2"));
-            wrappers.put(3, new MetadataWrapper(new String[] { "BlockStructureCube3" }).addDrop(new ItemStack(this, 1, 3)).setDisplayName("Structure Cube 3"));
-            wrappers.put(4, new MetadataWrapper(new String[] { "BlockStructureCube4" }).addDrop(new ItemStack(this, 1, 4)).setDisplayName("Structure Cube 4"));
-            wrappers.put(5, new MetadataWrapper(new String[] { "BlockStructureCube5" }).addDrop(new ItemStack(this, 1, 5)).setDisplayName("Structure Cube 5"));
-            wrappers.put(6, new MetadataWrapper(new String[] { "BlockStructureCube6" }).addDrop(new ItemStack(this, 1, 6)).setDisplayName("Structure Cube 6"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube0" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Structure Cube 0"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube1" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Structure Cube 1"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube2" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Structure Cube 2"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube3" }).addDrop(new ItemStack(this, 1, 3)).setDisplayName("Structure Cube 3"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube4" }).addDrop(new ItemStack(this, 1, 4)).setDisplayName("Structure Cube 4"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube5" }).addDrop(new ItemStack(this, 1, 5)).setDisplayName("Structure Cube 5"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube6" }).addDrop(new ItemStack(this, 1, 6)).setDisplayName("Structure Cube 6"));
         }
     };
     
@@ -53,18 +54,24 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            wrappers.put(0, new ChestSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
-//            wrappers.put(1, new ChestSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
-//            wrappers.put(2, new ChestSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
+            this.addWrapper(new ChestSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
+            this.addWrapper(new FurnaceSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
+            this.addWrapper(new TankSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
         }
     };
     public static final BlockMultiInterface MULTI_INTERFACE = new BlockMultiInterface(Material.rock) {
         
         public void postInit() {
             
-//            wrappers.put(0, new MetadataWrapper(new String[] { "BlockStructureCube0" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Structure Cube 0"));
-//            wrappers.put(1, new MetadataWrapper(new String[] { "BlockStructureCube1" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Structure Cube 1"));
-//            wrappers.put(2, new MetadataWrapper(new String[] { "BlockStructureCube2" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Structure Cube 2"));
+            // wrappers.put(0, new MetadataWrapper(new String[] {
+            // "BlockStructureCube0" }).addDrop(new ItemStack(this, 1,
+            // 0)).setDisplayName("Structure Cube 0"));
+            // wrappers.put(1, new MetadataWrapper(new String[] {
+            // "BlockStructureCube1" }).addDrop(new ItemStack(this, 1,
+            // 1)).setDisplayName("Structure Cube 1"));
+            // wrappers.put(2, new MetadataWrapper(new String[] {
+            // "BlockStructureCube2" }).addDrop(new ItemStack(this, 1,
+            // 2)).setDisplayName("Structure Cube 2"));
         }
     };
     static {

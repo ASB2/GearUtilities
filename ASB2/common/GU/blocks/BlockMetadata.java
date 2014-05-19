@@ -24,11 +24,25 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockMetadata extends BlockBase {
     
-    public Map<Integer, MetadataWrapper> wrappers;
+    protected Map<Integer, MetadataWrapper> wrappers;
+    private int lastMetadata;
     
     public BlockMetadata(Material material) {
         super(material);
         wrappers = new HashMap<Integer, MetadataWrapper>();
+    }
+    
+    public BlockMetadata addWrapper(int metadata, MetadataWrapper wrapper) {
+        wrappers.put(metadata, wrapper);
+        wrapper.setMetadata(metadata);
+        return this;
+    }
+    
+    public BlockMetadata addWrapper(MetadataWrapper wrapper) {
+        
+        addWrapper(lastMetadata, wrapper);
+        lastMetadata++;
+        return this;
     }
     
     @Override
@@ -101,20 +115,68 @@ public class BlockMetadata extends BlockBase {
     
     @Override
     public int getHarvestLevel(int metadata) {
-        // TODO Auto-generated method stub
+        
+        MetadataWrapper wrapper = wrappers.get(metadata);
+        
+        if (wrapper != null) {
+            
+            return wrapper.getHarvestLevel();
+        }
         return super.getHarvestLevel(metadata);
     }
     
     @Override
-    public String getHarvestTool(int metadata) {
-        // TODO Auto-generated method stub
-        return super.getHarvestTool(metadata);
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.getPickBlock(target, world, x, y, z);
+        }
+        return super.getPickBlock(target, world, x, y, z);
     }
     
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-        // TODO Auto-generated method stub
-        return super.getPickBlock(target, world, x, y, z);
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xHit, float yHit, float zHit) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.onBlockActivated(world, x, y, z, player, side, xHit, yHit, zHit);
+        }
+        return super.onBlockActivated(world, x, y, z, player, side, xHit, yHit, zHit);
+    }
+    
+    @Override
+    public void onBlockAdded(World world, int x, int y, int z) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            wrapper.onBlockAdded(world, x, y, z);
+        }
+        else {
+            
+            super.onBlockAdded(world, x, y, z);
+        }
+    }
+    
+    @Override
+    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            wrapper.onBlockClicked(world, x, y, z, player);
+        }
+        else {
+            
+            super.onBlockClicked(world, x, y, z, player);
+        }
     }
     
     public static class MetadataWrapper {
@@ -125,9 +187,12 @@ public class BlockMetadata extends BlockBase {
         protected String ign;
         protected int metadata;
         protected float hardness = 3;
+        protected int harvestLevel;
+        protected String harvestTool;
+        protected ItemStack pickBlock;
         
         public MetadataWrapper(String[] iconNames) {
-            
+            this();
             this.iconNames = iconNames;
             this.icons = new IIcon[iconNames.length];
         }
@@ -166,7 +231,6 @@ public class BlockMetadata extends BlockBase {
                 
                 itemStacks = new ArrayList<ItemStack>();
             }
-            
             itemStacks.add(stack);
             return this;
         }
@@ -222,6 +286,38 @@ public class BlockMetadata extends BlockBase {
         public TileEntity createNewTileEntity(World var1, int metadata) {
             
             return null;
+        }
+        
+        public int getHarvestLevel() {
+            
+            return harvestLevel;
+        }
+        
+        public MetadataWrapper setPickBlock(ItemStack pickBlock) {
+            this.pickBlock = pickBlock;
+            return this;
+        }
+        
+        public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+            
+            if (pickBlock == null) {
+                
+                pickBlock = new ItemStack(world.getBlock(x, y, z), 1, world.getBlockMetadata(x, y, z));
+            }
+            return pickBlock;
+        }
+        
+        public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xHit, float yHit, float zHit) {
+            
+            return false;
+        }
+        
+        public void onBlockAdded(World world, int x, int y, int z) {
+            
+        }
+        
+        public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
+            
         }
     }
     

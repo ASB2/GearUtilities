@@ -184,15 +184,15 @@ public enum EnumElectisCrystalType {
                 
                 case TYPE2: {
                     
-                    GL11.glPushMatrix();
                     GL11.glNewList(type.getBlockDisplayListID(), GL11.GL_COMPILE);
                     
-                    GL11.glScaled(.4, .4, .4);
+                    GL11.glPushMatrix();
+                    GL11.glScaled(.25, .25, .25);
                     NoiseManager.bindImage();
                     Models.ModelRhombicuboctahedron.renderPart("Rhombicuboctahedron");
+                    GL11.glPopMatrix();
                     
                     GL11.glEndList();
-                    GL11.glPopMatrix();
                     break;
                 }
                 
@@ -232,32 +232,27 @@ public enum EnumElectisCrystalType {
                     case DOWN: {
                         
                         GL11.glTranslated(x + 0.5F, y + (1 - translationAmount), z + .5F);
-                        GL11.glRotatef(180F, 1F, 0F, 0F);
                         break;
                     }
                     
                     case SOUTH: {
                         
                         GL11.glTranslated(x + 0.5F, y + .5F, z + translationAmount);
-                        GL11.glRotatef(90F, 1F, 0F, 0F);
                         break;
                     }
                     case NORTH: {
                         
                         GL11.glTranslated(x + 0.5F, y + .5F, z + (1 - translationAmount));
-                        GL11.glRotatef(-90F, 1F, 0F, 0F);
                         break;
                     }
                     case WEST: {
                         
                         GL11.glTranslated(x + (1 - translationAmount), y + .5F, z + .5F);
-                        GL11.glRotatef(90F, 0F, 0F, 1F);
                         break;
                     }
                     case EAST: {
                         
                         GL11.glTranslated(x + translationAmount, y + .5F, z + .5F);
-                        GL11.glRotatef(-90F, 0F, 0F, 1F);
                         break;
                     }
                     default: {
@@ -274,9 +269,46 @@ public enum EnumElectisCrystalType {
                 
                 GL11.glPushMatrix();
                 
-                GL11.glTranslated(x + .5, y + .5, z + .5);
-                GL11.glCallList(this.getBlockDisplayListID());
+                float translationAmount = .25f;
                 
+                switch (((TileBase) tileentity).getOrientation()) {
+                
+                    case UP: {
+                        
+                        GL11.glTranslated(x + 0.5F, y + translationAmount, z + .5F);
+                        break;
+                    }
+                    case DOWN: {
+                        
+                        GL11.glTranslated(x + 0.5F, y + (1 - translationAmount), z + .5F);
+                        break;
+                    }
+                    
+                    case SOUTH: {
+                        
+                        GL11.glTranslated(x + 0.5F, y + .5F, z + translationAmount);
+                        break;
+                    }
+                    case NORTH: {
+                        
+                        GL11.glTranslated(x + 0.5F, y + .5F, z + (1 - translationAmount));
+                        break;
+                    }
+                    case WEST: {
+                        
+                        GL11.glTranslated(x + (1 - translationAmount), y + .5F, z + .5F);
+                        break;
+                    }
+                    case EAST: {
+                        
+                        GL11.glTranslated(x + translationAmount, y + .5F, z + .5F);
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+                GL11.glCallList(this.getBlockDisplayListID());
                 GL11.glPopMatrix();
                 break;
             }
@@ -687,9 +719,15 @@ public enum EnumElectisCrystalType {
         return new DefaultPowerManager().setPowerMax(100);
     }
     
-    public void save(NBTTagCompound tag) {
+    public NBTTagCompound save(NBTTagCompound tag) {
         
         tag.setInteger("crystalType", this.ordinal());
+        return tag;
+    }
+    
+    public ItemStack setCrystalType(ItemStack stack) {
+        
+        return UtilItemStack.setNBTTagInt(stack, "crystalType", this.ordinal());
     }
     
     public static EnumElectisCrystalType load(NBTTagCompound tag) {
@@ -697,9 +735,9 @@ public enum EnumElectisCrystalType {
         return EnumElectisCrystalType.values()[tag.getInteger("crystalType")];
     }
     
-    public static void setCrystalType(ItemStack stack, EnumElectisCrystalType type) {
+    public static ItemStack setCrystalType(ItemStack stack, EnumElectisCrystalType type) {
         
-        UtilItemStack.setNBTTagInt(stack, "crystalType", type.ordinal());
+        return UtilItemStack.setNBTTagInt(stack, "crystalType", type.ordinal());
     }
     
     public static EnumElectisCrystalType getCrystalType(ItemStack stack) {

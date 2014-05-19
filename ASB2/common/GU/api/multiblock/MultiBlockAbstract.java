@@ -13,4 +13,8 @@ public class MultiBlockAbstract {
     public static interface IMultiBlockCore extends IMultiBlockPart {
         
     }
+    
+    public static interface IMultiBlockMarker {
+        
+    }
 }
