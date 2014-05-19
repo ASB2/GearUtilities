@@ -7,6 +7,7 @@ import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import GU.info.*;
 
 public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     
@@ -45,7 +46,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             
             // renderer.setRenderBounds(-.001, -.001, -.001, 1.001, 1.001,
             // 1.001);
-            UtilRender.renderStandardInvBlock(renderer, block, EnumInputIcon.NONE.getStateIcon());
+            UtilRender.renderFakeBlock(renderer, block, x, y, z, EnumInputIcon.NONE.getStateIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         renderer.renderStandardBlock(block, x, y, z);

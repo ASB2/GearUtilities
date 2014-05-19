@@ -10,6 +10,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import GU.info.Reference;
 import GU.info.Variables;
@@ -69,7 +70,7 @@ public final class GearUtilities {
         EntityRegistry.init();
         MultiRegistry.init();
         
-        FMLCommonHandler.instance().bus().register(new EventListener());
+        MinecraftForge.EVENT_BUS.register(new EventListener());
         FMLCommonHandler.instance().bus().register(NoiseManager.instance);
         
         GameRegistry.registerFuelHandler(new IFuelHandler() {
