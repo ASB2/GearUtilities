@@ -272,7 +272,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
     }
     
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block p_149block749_5_, int p_149749_6_) {
+    public void breakBlock(World world, int x, int y, int z, Block block, int metadata) {
         
         if (!world.isRemote) {
             
@@ -283,7 +283,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
                 world.spawnEntityInWorld(new EntityItem(world, x + .5, y + .5, z + .5, EnumElectisCrystalType.setCrystalType(new ItemStack(this), ((TileElectisCrystal) tile).getCrystalType())));
             }
         }
-        super.breakBlock(world, x, y, z, p_149block749_5_, p_149749_6_);
+        super.breakBlock(world, x, y, z, block, metadata);
     }
     
     @Override

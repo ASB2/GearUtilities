@@ -54,10 +54,10 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            this.addWrapper(new StandardSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 0)));
-            this.addWrapper(new ChestSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 1)));
-            this.addWrapper(new FurnaceSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 2)));
-            this.addWrapper(new TankSpacialProviderWrapper().addDrop(new ItemStack(this, 1, 3)));
+            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockStandardSpacialProvider" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Standard Spacial Provider"));
+            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockChestSpacialProvider" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Chest Spacial Provider"));
+            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockFurnaceSpacialProvider" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Furnace Spacial Provider"));
+            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockTankSpacialProvider" }).addDrop(new ItemStack(this, 1, 3)).setDisplayName("Tank Spacial Provider"));
         }
     };
     
@@ -76,6 +76,7 @@ public class BlockRegistry {
             // 2)).setDisplayName("Structure Cube 2"));
         }
     };
+    
     static {
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMetadataOre"), METADATA_ORE.setBlockName("MetadataOre"));

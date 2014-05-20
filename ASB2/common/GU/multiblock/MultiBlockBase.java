@@ -6,7 +6,7 @@ import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import UC.AbstractUpdateable;
 import UC.math.vector.Vector3i;
 
-public class MultiBlockBase implements IMultiBlock, AbstractUpdateable {
+public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable {
     
     World world;
     Vector3i positionRelativeTo;

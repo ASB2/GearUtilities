@@ -21,6 +21,7 @@ import GU.info.Reference;
 public class ItemMetadata extends ItemBase {
     
     public Map<Integer, MetadataWrapper> wrappers;
+    private int lastMetadata;
     
     public ItemMetadata() {
         
@@ -28,6 +29,20 @@ public class ItemMetadata extends ItemBase {
         
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
+    }
+    
+    public ItemMetadata addWrapper(int metadata, MetadataWrapper wrapper) {
+        wrappers.put(metadata, wrapper);
+        wrapper.setMetadata(metadata);
+        wrapper.setItem(this);
+        return this;
+    }
+    
+    public ItemMetadata addWrapper(MetadataWrapper wrapper) {
+        
+        addWrapper(lastMetadata, wrapper);
+        lastMetadata++;
+        return this;
     }
     
     @Override
@@ -148,10 +163,24 @@ public class ItemMetadata extends ItemBase {
         String ign;
         int metadata;
         IItemRenderer renderer;
+        ItemMetadata item;
         
         public MetadataWrapper(String ign) {
             this.ign = ign;
             iconName = "";
+        }
+        
+        public MetadataWrapper() {
+            // TODO Auto-generated constructor stub
+        }
+        
+        public MetadataWrapper setItem(ItemMetadata item) {
+            this.item = item;
+            return this;
+        }
+        
+        public ItemMetadata getItem() {
+            return item;
         }
         
         public MetadataWrapper setIcon(IIcon icon) {

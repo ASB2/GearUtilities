@@ -8,14 +8,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import GU.info.Reference;
+import GU.items.AdvancedStickWrapper;
+import GU.items.DestructorWrapper;
+import GU.items.GearReaderWrapper;
 import GU.items.ItemBase;
 import GU.items.ItemMetadata;
 import GU.items.ItemMetadata.MetadataWrapper;
 import GU.items.ItemRenderers.GarnetRenderer;
+import GU.items.TeleporterWrapper;
 import GU.items.ItemElectisCrystalShard.ElectisShard.ElectisCrystalShardRenderer;
 import GU.items.ItemElectisCrystalShard.ElectisShard.ElectisShardWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
-import GU.items.*;
 
 public final class ItemRegistry {
     
@@ -28,11 +31,14 @@ public final class ItemRegistry {
     static {
         
         customItemMap.put(Reference.MOD_ID.concat(":ItemMetadata"), METADATA_ITEM);
-        METADATA_ITEM.wrappers.put(0, new ElectisShardWrapper("Electis Crystal Shard").setRenderer(ElectisCrystalShardRenderer.instance));
-        METADATA_ITEM.wrappers.put(1, new MetadataWrapper("Garnet").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.wrappers.put(2, new MetadataWrapper("Electis Controler").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.wrappers.put(3, new GearReaderWrapper("Gear Reader").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.wrappers.put(4, new TeleporterWrapper("Teleporter").setRenderer(GarnetRenderer.instance));
+        
+        METADATA_ITEM.addWrapper(new ElectisShardWrapper("Electis Crystal Shard").setRenderer(ElectisCrystalShardRenderer.instance));
+        METADATA_ITEM.addWrapper(new MetadataWrapper("Garnet").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.addWrapper(new MetadataWrapper("Electis Controler").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.addWrapper(new GearReaderWrapper("Gear Reader").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.addWrapper(new TeleporterWrapper("Teleporter").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.addWrapper(new AdvancedStickWrapper("Advanced Stick").setRenderer(GarnetRenderer.instance));
+        ItemRegistry.METADATA_ITEM.addWrapper(new DestructorWrapper("Destructor").setRenderer(GarnetRenderer.instance));
     }
     
     private ItemRegistry() {

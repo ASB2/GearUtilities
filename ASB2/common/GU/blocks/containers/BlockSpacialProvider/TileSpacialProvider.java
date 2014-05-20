@@ -1,6 +1,8 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
-import GU.blocks.containers.TileBase;
+import GU.api.multiblock.MultiBlockAbstract.IMultiBlockCore;
+import GU.blocks.containers.TileMultiBase;
 
-public class TileSpacialProvider extends TileBase {
+public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCore {
+    
 }

@@ -11,13 +11,12 @@ import UC.math.vector.Vector3i;
 
 public enum EnumMultiBlockType {
     
-    CHEST, FURNACE, TANK;
+    STANDARD, CHEST, FURNACE, TANK;
     
     public static final int MAX_DISTANCE = 9;
     
     public boolean createMultiBlock(World world, Vector3i spacialPosition) {
         
-        Vector3i[] markers = new Vector3i[ForgeDirection.VALID_DIRECTIONS.length];
         Vector3i size = new Vector3i();
         Vector3i corner = spacialPosition.clone();
         
@@ -127,7 +126,7 @@ public enum EnumMultiBlockType {
                     
                     for (int z = 0; z <= size.getZ(); z++) {
                         
-                        Vector3i vec = corner.add(x * -1, y * -1, z * -1);
+                        Vector3i vec = corner.subtract(x, y, z);
                         world.setBlock(vec.getX(), vec.getY(), vec.getZ(), Blocks.stone);
                     }
                 }
