@@ -11,8 +11,8 @@ import ASB2.utils.UtilItemStack;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.blocks.containers.TileBase;
 import GU.info.Models;
-import GU.render.NoiseManager;
 import UC.color.Color4f;
+import GU.render.noise.NoiseManager;
 
 public enum EnumElectisCrystalType {
     
@@ -223,7 +223,7 @@ public enum EnumElectisCrystalType {
                 float translationAmount = .2f;
                 
                 switch (((TileBase) tileentity).getOrientation()) {
-                    
+                
                     case UP: {
                         
                         GL11.glTranslated(x + 0.5F, y + translationAmount, z + .5F);

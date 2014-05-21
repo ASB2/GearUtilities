@@ -22,7 +22,7 @@ import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.api.power.PowerNetObject.UtilPower;
 import GU.info.Models;
 import GU.info.Reference;
-import GU.render.NoiseManager;
+import GU.render.noise.NoiseManager;
 
 public class ElectisShard {
     

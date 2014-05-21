@@ -1,4 +1,4 @@
-package GU.render;
+package GU.render.noise;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import UC.FastNoise;
 import UC.color.Color4f;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
+import GU.info.*;
 
 public class NoiseManager {
     
@@ -24,6 +25,7 @@ public class NoiseManager {
     
     boolean moveRedColorValueDown = true, moveGreenColorValueDown = true, moveBlueColorValueDown = true;
     
+    public TextureNoise noiseIcon = new TextureNoise(Reference.MOD_ID.concat(":NoiseTexture"));
     public int GL_TEXTURE_ID;
     
     public List<int[]> imageDataArray = new ArrayList<int[]>(20000);

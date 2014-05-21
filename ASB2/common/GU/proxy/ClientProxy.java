@@ -2,7 +2,7 @@ package GU.proxy;
 
 import GU.info.Models;
 import GU.render.BlockSimpleRenderer;
-import GU.render.NoiseManager;
+import GU.render.noise.NoiseManager;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {

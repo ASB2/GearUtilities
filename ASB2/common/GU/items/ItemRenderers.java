@@ -8,7 +8,7 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import GU.info.Models;
-import GU.render.NoiseManager;
+import GU.render.noise.NoiseManager;
 
 public class ItemRenderers {
     

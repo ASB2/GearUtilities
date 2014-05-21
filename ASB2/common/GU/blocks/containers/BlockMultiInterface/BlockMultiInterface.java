@@ -7,6 +7,8 @@ public class BlockMultiInterface extends BlockMetadataContainerBase {
     
     public BlockMultiInterface(Material material) {
         super(material);
-        this.registerTile(TileMultiInterface.class);
+        this.registerTile(TileItemMultiInterface.class);
+        this.registerTile(TileFluidMultiInterface.class);
+        this.registerTile(TilePowerMultiInterface.class);
     }
 }

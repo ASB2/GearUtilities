@@ -39,6 +39,11 @@ public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable 
         return false;
     }
     
+    public boolean createAfterLoad() {
+        
+        return false;
+    }
+    
     public NBTTagCompound save(NBTTagCompound tag) {
         
         return tag;

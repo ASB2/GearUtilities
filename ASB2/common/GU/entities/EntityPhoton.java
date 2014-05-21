@@ -16,10 +16,10 @@ import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetObject.UtilPower;
 import GU.info.Models;
 import GU.info.Textures;
-import GU.render.NoiseManager;
 import UC.math.vector.Vector3d;
 import UC.math.vector.Vector3i;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
+import GU.render.noise.NoiseManager;
 
 public class EntityPhoton extends EntityBase implements IEntityAdditionalSpawnData {
     

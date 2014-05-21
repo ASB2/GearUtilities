@@ -16,7 +16,7 @@ import GU.info.Reference;
 import GU.info.Variables;
 import GU.packets.abstractPacket.PacketPipeline;
 import GU.proxy.CommonProxy;
-import GU.render.NoiseManager;
+import GU.render.noise.NoiseManager;
 import GU.worldGen.WorldGenBase;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.IFuelHandler;
