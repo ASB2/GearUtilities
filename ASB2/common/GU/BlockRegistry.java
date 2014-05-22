@@ -65,9 +65,9 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockItemInterface" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Item Interface"));
-            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockFluidInterface" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Fluid Interface"));
-            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockPowerInterface" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Power Interface"));
+            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Item Interface"));
+            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Fluid Interface"));
+            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Power Interface"));
         }
     };
     

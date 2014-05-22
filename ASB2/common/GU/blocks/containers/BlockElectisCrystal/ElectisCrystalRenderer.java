@@ -11,12 +11,15 @@ public class ElectisCrystalRenderer extends TileEntitySpecialRenderer implements
     
     public ElectisCrystalRenderer() {
         
-        EnumElectisCrystalType.generateDisplayList();
     }
     
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
         
+        if (!EnumElectisCrystalType.getHasLoaded()) {
+            
+            EnumElectisCrystalType.generateDisplayList();
+        }
         EnumElectisCrystalType crystalType = ((TileElectisCrystal) tileentity).getCrystalType();
         
         crystalType.renderBlockDisplayList(((TileElectisCrystal) tileentity), x, y, z);

@@ -5,9 +5,11 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
+import GU.info.Reference;
+import GU.render.noise.NoiseManager;
+import UC.color.Color4f;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import GU.info.*;
 
 public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     
@@ -35,6 +37,17 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             UtilRender.renderStandardInvBlock(renderer, block, EnumInputIcon.NONE.getStateIcon());
             return;
         }
+        
+        if (block == BlockRegistry.MULTI_INTERFACE) {
+            
+            renderer.setRenderBounds(.0001, .0001, .0001, 1 - .0001, 1 - .0001, 1 - .0001);
+            
+            switch (metadata) {
+            
+            }
+            UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.noiseIcon, 0, 255, 0, 255);
+            // return;
+        }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderStandardInvBlock(renderer, block, metadata);
     }
@@ -52,6 +65,22 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             // 1.001);
             UtilRender.renderFakeBlock(renderer, block, x, y, z, EnumInputIcon.NONE.getStateIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
         }
+        
+        if (block == BlockRegistry.MULTI_INTERFACE) {
+            
+            renderer.setRenderBounds(.0001, .0001, .0001, 1 - .0001, 1 - .0001, 1 - .0001);
+            
+            if (block instanceof INoiseBlockRender) {
+                
+                Color4f color = ((INoiseBlockRender) block).getColor(world, x, y, z);
+                
+                UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.noiseIcon, (int) color.getRed(), (int) color.getGreen(), (int) color.getBlue(), (int) color.getAlpha(), Reference.BRIGHT_BLOCK);
+            }
+            else
+                UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.noiseIcon, 0, 255, 0, 255, Reference.BRIGHT_BLOCK);
+            
+            // return true;
+        }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         renderer.renderStandardBlock(block, x, y, z);
         return true;
@@ -67,5 +96,12 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     public int getRenderId() {
         
         return renderID;
+    }
+    
+    public static interface INoiseBlockRender {
+        
+        Color4f getColor(int metadata);
+        
+        Color4f getColor(IBlockAccess world, int x, int y, int z);
     }
 }

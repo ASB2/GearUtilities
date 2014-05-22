@@ -4,7 +4,7 @@ import net.minecraft.util.IIcon;
 
 public enum MiscIcons {
     
-    RUNE_SQUARE("miscIcon/RunicSquare");
+    RUNE_SQUARE("miscIcons/RunicSquare");
     
     String path;
     IIcon icon;

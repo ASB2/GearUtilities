@@ -18,6 +18,8 @@ public enum EnumElectisCrystalType {
     
     BROKEN, TYPE1, TYPE2, TYPE3, TYPE4;
     
+    private static boolean hasLoaded;
+    
     int blockListID = -1, itemListID = -1;
     
     private EnumElectisCrystalType() {
@@ -26,187 +28,190 @@ public enum EnumElectisCrystalType {
     
     public static void generateDisplayList() {
         
-        for (EnumElectisCrystalType type : EnumElectisCrystalType.values()) {
-            
-            switch (type) {
-            
-                case TYPE1: {
+        if (!hasLoaded) {
+            hasLoaded = true;
+            for (EnumElectisCrystalType type : EnumElectisCrystalType.values()) {
+                
+                switch (type) {
+                
+                    case TYPE1: {
+                        
+                        {
+                            GL11.glPushMatrix();
+                            GL11.glNewList(type.getBlockDisplayListID(), GL11.GL_COMPILE);
+                            
+                            {
+                                GL11.glPushMatrix();
+                                float scale = .15f;
+                                GL11.glScalef(scale, scale, scale);
+                                
+                                NoiseManager.bindImage();
+                                Models.ModelCrystal2.renderPart("Crystal");
+                                GL11.glPopMatrix();
+                            }
+                            
+                            final float secondCrystalScale = .35f;
+                            
+                            {
+                                GL11.glPushMatrix();
+                                
+                                GL11.glTranslated(0, -0.1, .25F);
+                                
+                                GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                                
+                                GL11.glRotatef(90F, 1F, 0F, 0F);
+                                GL11.glRotatef(25F, 1F, 0F, 0F);
+                                
+                                Models.ModelFlameShard.renderAll();
+                                GL11.glPopMatrix();
+                            }
+                            
+                            {
+                                GL11.glPushMatrix();
+                                
+                                GL11.glTranslated(.25, -0.1, -.025F);
+                                
+                                GL11.glRotatef(90F, 0F, 1F, 0F);
+                                
+                                GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                                
+                                GL11.glRotatef(90F, 1F, 0F, 0F);
+                                GL11.glRotatef(25F, 1F, 0F, 0F);
+                                
+                                Models.ModelFlameShard.renderAll();
+                                GL11.glPopMatrix();
+                            }
+                            
+                            {
+                                GL11.glPushMatrix();
+                                
+                                GL11.glTranslated(0, -0.1, -.25F);
+                                
+                                GL11.glRotatef(180F, 0F, 1F, 0F);
+                                
+                                GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                                
+                                GL11.glRotatef(90F, 1F, 0F, 0F);
+                                GL11.glRotatef(25F, 1F, 0F, 0F);
+                                
+                                Models.ModelFlameShard.renderAll();
+                                GL11.glPopMatrix();
+                            }
+                            
+                            {
+                                GL11.glPushMatrix();
+                                
+                                GL11.glTranslated(-.25, -0.1, .025F);
+                                
+                                GL11.glRotatef(270F, 0F, 1F, 0F);
+                                
+                                GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                                
+                                GL11.glRotatef(90F, 1F, 0F, 0F);
+                                GL11.glRotatef(25F, 1F, 0F, 0F);
+                                
+                                Models.ModelFlameShard.renderAll();
+                                GL11.glPopMatrix();
+                            }
+                            GL11.glEndList();
+                            GL11.glPopMatrix();
+                            
+                            GL11.glPushMatrix();
+                            GL11.glNewList(type.getItemListID(), GL11.GL_COMPILE);
+                            
+                            {
+                                GL11.glPushMatrix();
+                                
+                                GL11.glTranslated(0, -0.1, .35F);
+                                
+                                GL11.glScalef(.3f, .3f, .3f);
+                                
+                                GL11.glRotatef(90F, 1F, 0F, 0F);
+                                GL11.glRotatef(25F, 1F, 0F, 0F);
+                                
+                                Models.ModelFlameShard.renderAll();
+                                GL11.glPopMatrix();
+                            }
+                            
+                            {
+                                GL11.glPushMatrix();
+                                
+                                GL11.glTranslated(.25, -0.1, -.035F);
+                                
+                                GL11.glRotatef(90F, 0F, 1F, 0F);
+                                
+                                GL11.glScalef(.3f, .3f, .3f);
+                                
+                                GL11.glRotatef(90F, 1F, 0F, 0F);
+                                GL11.glRotatef(25F, 1F, 0F, 0F);
+                                
+                                Models.ModelFlameShard.renderAll();
+                                GL11.glPopMatrix();
+                            }
+                            
+                            {
+                                GL11.glPushMatrix();
+                                
+                                GL11.glTranslated(0, -0.1, -.35F);
+                                
+                                GL11.glRotatef(180F, 0F, 1F, 0F);
+                                
+                                GL11.glScalef(.3f, .3f, .3f);
+                                
+                                GL11.glRotatef(90F, 1F, 0F, 0F);
+                                GL11.glRotatef(25F, 1F, 0F, 0F);
+                                
+                                Models.ModelFlameShard.renderAll();
+                                GL11.glPopMatrix();
+                            }
+                            
+                            {
+                                GL11.glPushMatrix();
+                                
+                                GL11.glTranslated(-.25, -0.1, .035F);
+                                
+                                GL11.glRotatef(270F, 0F, 1F, 0F);
+                                
+                                GL11.glScalef(.3f, .3f, .3f);
+                                
+                                GL11.glRotatef(90F, 1F, 0F, 0F);
+                                GL11.glRotatef(25F, 1F, 0F, 0F);
+                                
+                                Models.ModelFlameShard.renderAll();
+                                GL11.glPopMatrix();
+                            }
+                            GL11.glEndList();
+                            GL11.glPopMatrix();
+                        }
+                        break;
+                    }
                     
-                    {
-                        GL11.glPushMatrix();
+                    case TYPE2: {
+                        
                         GL11.glNewList(type.getBlockDisplayListID(), GL11.GL_COMPILE);
                         
-                        {
-                            GL11.glPushMatrix();
-                            float scale = .15f;
-                            GL11.glScalef(scale, scale, scale);
-                            
-                            NoiseManager.bindImage();
-                            Models.ModelCrystal2.renderPart("Crystal");
-                            GL11.glPopMatrix();
-                        }
-                        
-                        final float secondCrystalScale = .35f;
-                        
-                        {
-                            GL11.glPushMatrix();
-                            
-                            GL11.glTranslated(0, -0.1, .25F);
-                            
-                            GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-                            
-                            GL11.glRotatef(90F, 1F, 0F, 0F);
-                            GL11.glRotatef(25F, 1F, 0F, 0F);
-                            
-                            Models.ModelFlameShard.renderAll();
-                            GL11.glPopMatrix();
-                        }
-                        
-                        {
-                            GL11.glPushMatrix();
-                            
-                            GL11.glTranslated(.25, -0.1, -.025F);
-                            
-                            GL11.glRotatef(90F, 0F, 1F, 0F);
-                            
-                            GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-                            
-                            GL11.glRotatef(90F, 1F, 0F, 0F);
-                            GL11.glRotatef(25F, 1F, 0F, 0F);
-                            
-                            Models.ModelFlameShard.renderAll();
-                            GL11.glPopMatrix();
-                        }
-                        
-                        {
-                            GL11.glPushMatrix();
-                            
-                            GL11.glTranslated(0, -0.1, -.25F);
-                            
-                            GL11.glRotatef(180F, 0F, 1F, 0F);
-                            
-                            GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-                            
-                            GL11.glRotatef(90F, 1F, 0F, 0F);
-                            GL11.glRotatef(25F, 1F, 0F, 0F);
-                            
-                            Models.ModelFlameShard.renderAll();
-                            GL11.glPopMatrix();
-                        }
-                        
-                        {
-                            GL11.glPushMatrix();
-                            
-                            GL11.glTranslated(-.25, -0.1, .025F);
-                            
-                            GL11.glRotatef(270F, 0F, 1F, 0F);
-                            
-                            GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
-                            
-                            GL11.glRotatef(90F, 1F, 0F, 0F);
-                            GL11.glRotatef(25F, 1F, 0F, 0F);
-                            
-                            Models.ModelFlameShard.renderAll();
-                            GL11.glPopMatrix();
-                        }
-                        GL11.glEndList();
-                        GL11.glPopMatrix();
-                        
                         GL11.glPushMatrix();
-                        GL11.glNewList(type.getItemListID(), GL11.GL_COMPILE);
-                        
-                        {
-                            GL11.glPushMatrix();
-                            
-                            GL11.glTranslated(0, -0.1, .35F);
-                            
-                            GL11.glScalef(.3f, .3f, .3f);
-                            
-                            GL11.glRotatef(90F, 1F, 0F, 0F);
-                            GL11.glRotatef(25F, 1F, 0F, 0F);
-                            
-                            Models.ModelFlameShard.renderAll();
-                            GL11.glPopMatrix();
-                        }
-                        
-                        {
-                            GL11.glPushMatrix();
-                            
-                            GL11.glTranslated(.25, -0.1, -.035F);
-                            
-                            GL11.glRotatef(90F, 0F, 1F, 0F);
-                            
-                            GL11.glScalef(.3f, .3f, .3f);
-                            
-                            GL11.glRotatef(90F, 1F, 0F, 0F);
-                            GL11.glRotatef(25F, 1F, 0F, 0F);
-                            
-                            Models.ModelFlameShard.renderAll();
-                            GL11.glPopMatrix();
-                        }
-                        
-                        {
-                            GL11.glPushMatrix();
-                            
-                            GL11.glTranslated(0, -0.1, -.35F);
-                            
-                            GL11.glRotatef(180F, 0F, 1F, 0F);
-                            
-                            GL11.glScalef(.3f, .3f, .3f);
-                            
-                            GL11.glRotatef(90F, 1F, 0F, 0F);
-                            GL11.glRotatef(25F, 1F, 0F, 0F);
-                            
-                            Models.ModelFlameShard.renderAll();
-                            GL11.glPopMatrix();
-                        }
-                        
-                        {
-                            GL11.glPushMatrix();
-                            
-                            GL11.glTranslated(-.25, -0.1, .035F);
-                            
-                            GL11.glRotatef(270F, 0F, 1F, 0F);
-                            
-                            GL11.glScalef(.3f, .3f, .3f);
-                            
-                            GL11.glRotatef(90F, 1F, 0F, 0F);
-                            GL11.glRotatef(25F, 1F, 0F, 0F);
-                            
-                            Models.ModelFlameShard.renderAll();
-                            GL11.glPopMatrix();
-                        }
-                        GL11.glEndList();
+                        GL11.glScaled(.25, .25, .25);
+                        NoiseManager.bindImage();
+                        Models.ModelRhombicuboctahedron.renderPart("Rhombicuboctahedron");
                         GL11.glPopMatrix();
+                        
+                        GL11.glEndList();
+                        break;
                     }
-                    break;
-                }
-                
-                case TYPE2: {
                     
-                    GL11.glNewList(type.getBlockDisplayListID(), GL11.GL_COMPILE);
+                    case TYPE3: {
+                        
+                        break;
+                    }
                     
-                    GL11.glPushMatrix();
-                    GL11.glScaled(.25, .25, .25);
-                    NoiseManager.bindImage();
-                    Models.ModelRhombicuboctahedron.renderPart("Rhombicuboctahedron");
-                    GL11.glPopMatrix();
-                    
-                    GL11.glEndList();
-                    break;
-                }
-                
-                case TYPE3: {
-                    
-                    break;
-                }
-                
-                case TYPE4: {
-                    
-                    break;
-                }
-                default: {
-                    break;
+                    case TYPE4: {
+                        
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
                 }
             }
         }
@@ -711,5 +716,10 @@ public enum EnumElectisCrystalType {
     public static EnumElectisCrystalType getCrystalType(ItemStack stack) {
         
         return EnumElectisCrystalType.values()[UtilItemStack.getNBTTagInt(stack, "crystalType")];
+    }
+    
+    public static boolean getHasLoaded() {
+        
+        return hasLoaded;
     }
 }

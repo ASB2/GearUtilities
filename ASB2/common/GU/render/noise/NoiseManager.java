@@ -29,10 +29,7 @@ public class NoiseManager {
     public int GL_TEXTURE_ID;
     
     public List<int[]> imageDataArray = new ArrayList<int[]>(20000);
-    public static final float maxDensity = .4f, minDensity = .1f, changePerTick = .0002f;
-    
-    boolean generateTextures = true;
-    float currentDensity = 0;
+    public static final float maxDensity = .35f, minDensity = .1f, changePerTick = .0002f;
     
     boolean moveAnimationDown = true;
     int animationPosition = 0;
@@ -60,34 +57,72 @@ public class NoiseManager {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, instance.GL_TEXTURE_ID);
     }
     
+    @SuppressWarnings("unused")
     public void generateNoiseImage() {
         
         imageDataArray.clear();
         
-        for (float currentDensity = minDensity; currentDensity <= maxDensity; currentDensity += changePerTick) {
+        if (false) {
             
-            int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
+            final double imHungry = Math.PI / 4;
             
-            for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x++) {
+            for (float currentDensity = minDensity; currentDensity <= maxDensity; currentDensity += changePerTick) {
                 
-                for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
+                int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
+                
+                for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x++) {
                     
-                    // int col = (int) (SimplexNoise.noise(x * currentDensity, y
-                    // * currentDensity, 7) * 255);
-                    int col = FastNoise.noise(x * currentDensity, y * currentDensity, 7);
-                    
-                    int red = col;
-                    int green = col;
-                    int blue = col;
-                    
-                    int RGB = red;
-                    RGB = (RGB << 8) + green;
-                    RGB = (RGB << 8) + blue;
-                    RGB |= 0xFF000000;
-                    imageData[x + y * Variables.NOISE_TEXTURE_SIZE] = RGB;
+                    for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
+                        
+                        int col = FastNoise.noise(x * currentDensity * imHungry, y * currentDensity * imHungry, 7);
+                        
+                        // int col = FastNoise.noise((x + shift) * .1, (y +
+                        // shift) *
+                        // .1, 7);
+                        
+                        int red = col;
+                        int green = col;
+                        int blue = col;
+                        
+                        int RGB = red;
+                        RGB = (RGB << 8) + green;
+                        RGB = (RGB << 8) + blue;
+                        RGB |= 0xFF000000;
+                        imageData[x + y * Variables.NOISE_TEXTURE_SIZE] = RGB;
+                    }
                 }
+                imageDataArray.add(imageData);
             }
-            imageDataArray.add(imageData);
+        }
+        else if (true) {
+            
+            for (float currentDensity = .1f; currentDensity <= .2; currentDensity += .0002) {
+                
+                int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
+                
+                for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x++) {
+                    
+                    for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
+                        
+                        int col = FastNoise.noise(x * currentDensity, y * currentDensity, 7);
+                        
+                        // int col = FastNoise.noise((x + shift) * .1, (y +
+                        // shift) *
+                        // .1, 7);
+                        
+                        int red = col;
+                        int green = col;
+                        int blue = col;
+                        
+                        int RGB = red;
+                        RGB = (RGB << 8) + green;
+                        RGB = (RGB << 8) + blue;
+                        RGB |= 0xFF000000;
+                        imageData[x + y * Variables.NOISE_TEXTURE_SIZE] = RGB;
+                    }
+                }
+                imageDataArray.add(imageData);
+            }
         }
     }
     
@@ -104,7 +139,7 @@ public class NoiseManager {
                     moveAnimationDown = false;
                     animationPosition = imageDataArray.size() - 1;
                 }
-                else {
+                else /* if (Minecraft.getSystemTime() % 20 == 0) */{
                     
                     animationPosition++;
                 }
@@ -116,7 +151,7 @@ public class NoiseManager {
                     moveAnimationDown = true;
                     animationPosition = 0;
                 }
-                else {
+                else /* if (Minecraft.getSystemTime() % 20 == 0) */{
                     
                     animationPosition--;
                 }
