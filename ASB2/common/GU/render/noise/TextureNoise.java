@@ -40,26 +40,30 @@ public class TextureNoise extends TextureAtlasSprite {
         BufferedImage[] imageArray = new BufferedImage[(1 + Minecraft.getMinecraft().gameSettings.mipmapLevels)];
         
         List<AnimationFrame> frames = new ArrayList<AnimationFrame>();
-        
-        final int imageDataArraySize = NoiseManager.instance.imageDataArray.size();
-        final int TEXTURE_LENGTH = (imageDataArraySize * 2) - 1;
+        final int TEXTURE_LENGTH = (NoiseManager.instance.imageDataArray.size() * 2) - 1;
+        final int FRAME_SIZE = NoiseManager.instance.imageDataArray.size();
+        int frameCounter = 0;
         
         BufferedImage finalImage = new BufferedImage(Variables.NOISE_TEXTURE_SIZE, TEXTURE_LENGTH * Variables.NOISE_TEXTURE_SIZE, BufferedImage.TYPE_INT_ARGB);
         
-        for (int index = 0; index < TEXTURE_LENGTH; index++) {
+        for (int index = 0; index < FRAME_SIZE; index++) {
             
-            int adjustedIndex = index;
-            int[] data = null;
+            int adjustedIndex = (FRAME_SIZE - 1) - index;
+            int[] data = NoiseManager.instance.imageDataArray.get(adjustedIndex);
             
-            if (index < (TEXTURE_LENGTH / 2)) {
-                
-                adjustedIndex = imageDataArraySize - adjustedIndex;
-            }
-            if (adjustedIndex < imageDataArraySize) {
-                data = NoiseManager.instance.imageDataArray.get(adjustedIndex);
-                finalImage.setRGB(0, adjustedIndex * Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, data, 0, Variables.NOISE_TEXTURE_SIZE);
-                frames.add(new AnimationFrame(adjustedIndex, 1));
-            }
+            finalImage.setRGB(0, index * Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, data, 0, Variables.NOISE_TEXTURE_SIZE);
+            frames.add(new AnimationFrame(frameCounter, 1));
+            frameCounter++;
+        }
+        
+        for (int index = 0; index < FRAME_SIZE; index++) {
+            
+            int modifiedIndex = index + (FRAME_SIZE - 1);
+            int[] data = NoiseManager.instance.imageDataArray.get(index);
+            
+            finalImage.setRGB(0, modifiedIndex * Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, data, 0, Variables.NOISE_TEXTURE_SIZE);
+            frames.add(new AnimationFrame(frameCounter, 1));
+            frameCounter++;
         }
         imageArray[0] = finalImage;
         super.loadSprite(imageArray, new AnimationMetadataSection(frames, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, 1), false);
