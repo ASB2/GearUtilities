@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 import GU.GearUtilities;
 import GU.info.Variables;
 import UC.FastNoise;
-import UC.color.Color4f;
+import UC.color.Color4i;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
 import GU.info.*;
@@ -20,8 +20,8 @@ public class NoiseManager {
     
     public static NoiseManager instance = new NoiseManager();
     
-    public Color4f ITERATED_COLOR = Color4f.WHITE;
-    public Color4f ITERATED_COLOR_INVERTED = Color4f.WHITE.invert();
+    public Color4i ITERATED_COLOR = Color4i.WHITE;
+    public Color4i ITERATED_COLOR_INVERTED = Color4i.WHITE.invert();
     
     boolean moveRedColorValueDown = true, moveGreenColorValueDown = true, moveBlueColorValueDown = true;
     
@@ -98,7 +98,7 @@ public class NoiseManager {
         }
         else if (true) {
             
-            for (float currentDensity = .1f; currentDensity <= .2; currentDensity += .0002) {
+            for (float currentDensity = .1f; currentDensity <= .19; currentDensity += .0002) {
                 
                 int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
                 
@@ -163,7 +163,7 @@ public class NoiseManager {
             
             final float redModificationAmount = 1f, greenModificationAmount = 2f, blueModificationAmount = 3f;
             
-            float red = ITERATED_COLOR.getRed(), green = ITERATED_COLOR.getGreen(), blue = ITERATED_COLOR.getBlue();
+            int red = ITERATED_COLOR.getRed(), green = ITERATED_COLOR.getGreen(), blue = ITERATED_COLOR.getBlue();
             
             if (moveRedColorValueDown) {
                 

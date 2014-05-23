@@ -11,8 +11,8 @@ import ASB2.utils.UtilItemStack;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.blocks.containers.TileBase;
 import GU.info.Models;
-import UC.color.Color4f;
 import GU.render.noise.NoiseManager;
+import UC.color.Color4i;
 
 public enum EnumElectisCrystalType {
     
@@ -665,9 +665,9 @@ public enum EnumElectisCrystalType {
         return itemListID;
     }
     
-    public Color4f getDefaultColor() {
+    public Color4i getDefaultColor() {
         
-        return Color4f.WHITE;
+        return Color4i.WHITE;
     }
     
     public CrystalLogic getNewCrystalLogicInstance(TileElectisCrystal crystal) {

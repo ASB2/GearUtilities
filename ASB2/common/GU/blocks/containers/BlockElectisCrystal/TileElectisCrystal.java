@@ -16,7 +16,7 @@ import GU.packets.CrystalTypePacket;
 import GU.packets.PowerPacket;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
-import UC.color.Color4f;
+import UC.color.Color4i;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class TileElectisCrystal extends TileBase implements IColorableTile, ICrystalPowerHandler, ICrystalNetworkPart {
@@ -138,7 +138,7 @@ public class TileElectisCrystal extends TileBase implements IColorableTile, ICry
     }
     
     @Override
-    public Color4f getColor(ForgeDirection direction) {
+    public Color4i getColor(ForgeDirection direction) {
         
         if (crystalLogic != null) {
             
@@ -148,7 +148,7 @@ public class TileElectisCrystal extends TileBase implements IColorableTile, ICry
     }
     
     @Override
-    public boolean setColor(Color4f color, ForgeDirection direction) {
+    public boolean setColor(Color4i color, ForgeDirection direction) {
         
         if (crystalLogic != null) {
             

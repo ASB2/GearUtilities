@@ -3,29 +3,29 @@ package GU.api.color;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import UC.color.Color4f;
+import UC.color.Color4i;
 
 public final class Colorable {
     
     public static interface IColorableTile {
         
-        public Color4f getColor(ForgeDirection direction);
+        public Color4i getColor(ForgeDirection direction);
         
-        public boolean setColor(Color4f color, ForgeDirection direction);
+        public boolean setColor(Color4i color, ForgeDirection direction);
     }
     
     public static interface IColorableBlock {
         
-        public Color4f getColor(World world, int x, int y, int z, ForgeDirection direction);
+        public Color4i getColor(World world, int x, int y, int z, ForgeDirection direction);
         
-        public boolean setColor(World world, int x, int y, int z, Color4f color, ForgeDirection direction);
+        public boolean setColor(World world, int x, int y, int z, Color4i color, ForgeDirection direction);
     }
     
     public static interface IColorableItem {
         
-        public Color4f getColor(ItemStack stack);
+        public Color4i getColor(ItemStack stack);
         
-        public boolean setColor(ItemStack stack, Color4f color);
+        public boolean setColor(ItemStack stack, Color4i color);
     }
     
     public static interface IVanillaColorable {

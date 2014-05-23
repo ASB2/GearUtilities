@@ -19,7 +19,7 @@ import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetObject.UtilPower;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
-import UC.color.Color4f;
+import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 import UC.utils.*;
 
@@ -27,14 +27,14 @@ public class Type2CrystalLogic extends CrystalLogic {
     
     List<CrystalWrapper> powerHandlers = new ArrayList<CrystalWrapper>();
     Wait poolValidNode, transferPower;
-    Color4f color;
+    Color4i color;
     
     boolean directional = true;
     
     public Type2CrystalLogic(TileElectisCrystal tile) {
         super(tile);
         
-        color = Color4f.WHITE;
+        color = Color4i.WHITE;
         poolValidNode = new Wait(new PoolValidNodeWait(), 20, 0);
         transferPower = new Wait(new TransferPowerWait(), 5, 0);
         manager.setPowerMax(60);

@@ -13,7 +13,7 @@ import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import UC.AbstractUpdateable;
-import UC.color.Color4f;
+import UC.color.Color4i;
 import GU.api.power.PowerNetObject.*;
 import UC.math.vector.*;
 
@@ -22,7 +22,7 @@ public abstract class CrystalLogic implements AbstractUpdateable, IColorableTile
     WeakReference<TileElectisCrystal> originCrystal;
     World worldObj;
     Vector3i position;
-    Color4f color;
+    Color4i color;
     EnumPowerStatus powerStatus;
     IPowerAttribute attribute;
     DefaultPowerManager manager;
@@ -31,7 +31,7 @@ public abstract class CrystalLogic implements AbstractUpdateable, IColorableTile
         
         originCrystal = new WeakReference<TileElectisCrystal>(tile);
         
-        color = Color4f.WHITE;
+        color = Color4i.WHITE;
         powerStatus = EnumPowerStatus.NONE;
         manager = new DefaultPowerManager();
         attribute = new IPowerAttribute() {
@@ -72,13 +72,13 @@ public abstract class CrystalLogic implements AbstractUpdateable, IColorableTile
     }
     
     @Override
-    public Color4f getColor(ForgeDirection direction) {
+    public Color4i getColor(ForgeDirection direction) {
         
         return color;
     }
     
     @Override
-    public boolean setColor(Color4f color, ForgeDirection direction) {
+    public boolean setColor(Color4i color, ForgeDirection direction) {
         
         this.color = color;
         return true;

@@ -7,7 +7,7 @@ public class Variables {
     public static boolean TESTING_MODE = true;
     public static boolean DO_RETROGEN = false;
     
-    public static final int NOISE_TEXTURE_SIZE = 128;
+    public static final int NOISE_TEXTURE_SIZE = 256;
     
     public static void updateVariables(Configuration config) {
         

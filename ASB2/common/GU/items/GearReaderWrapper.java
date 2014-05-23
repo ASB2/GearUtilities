@@ -19,7 +19,7 @@ import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.items.ItemMetadata.MetadataWrapper;
-import UC.color.Color4f;
+import UC.color.Color4i;
 import GU.api.crystals.*;
 
 public class GearReaderWrapper extends MetadataWrapper {
@@ -146,7 +146,7 @@ public class GearReaderWrapper extends MetadataWrapper {
                     
                     IColorableTile mTile = (IColorableTile) tile;
                     
-                    Color4f color = mTile.getColor(ForgeDirection.getOrientation(side));
+                    Color4i color = mTile.getColor(ForgeDirection.getOrientation(side));
                     
                     if (color != null) {
                         
@@ -175,7 +175,7 @@ public class GearReaderWrapper extends MetadataWrapper {
                 
                 IColorableBlock mTile = (IColorableBlock) block;
                 
-                Color4f color = mTile.getColor(world, x, y, z, ForgeDirection.getOrientation(side));
+                Color4i color = mTile.getColor(world, x, y, z, ForgeDirection.getOrientation(side));
                 
                 if (color != null) {
                     
