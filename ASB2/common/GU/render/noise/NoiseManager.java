@@ -25,7 +25,9 @@ public class NoiseManager {
     
     boolean moveRedColorValueDown = true, moveGreenColorValueDown = true, moveBlueColorValueDown = true;
     
-    public TextureNoise noiseIcon = new TextureNoise(Reference.MOD_ID.concat(":NoiseTexture"));
+    public TextureNoise blockNoiseIcon = new TextureNoise(Reference.MOD_ID.concat(":NoiseTexture"));
+    public TextureNoise itemNoiseIcon = new TextureNoise(Reference.MOD_ID.concat(":NoiseTexture"));
+    
     public int GL_TEXTURE_ID;
     
     public List<int[]> imageDataArray = new ArrayList<int[]>(20000);

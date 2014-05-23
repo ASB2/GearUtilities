@@ -24,39 +24,45 @@ public class TextureNoise extends TextureAtlasSprite {
     @Override
     public boolean load(IResourceManager manager, ResourceLocation location) {
         
-        BufferedImage[] imageArray = new BufferedImage[1 + Minecraft.getMinecraft().gameSettings.mipmapLevels];
-        
-        int[] data = NoiseManager.instance.imageDataArray.get(0);
-        
-        BufferedImage bufferedImage = new BufferedImage(Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, BufferedImage.TYPE_INT_ARGB);
-        bufferedImage.setRGB(0, 0, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, data, 0, Variables.NOISE_TEXTURE_SIZE);
-        imageArray[0] = bufferedImage;
-        super.loadSprite(imageArray, null, true);
-        
         // BufferedImage[] imageArray = new BufferedImage[1 +
-        // Minecraft.getMinecraft().gameSettings.mipmapLevels +
-        // NoiseManager.instance.imageDataArray.size()];
-        
-        // List<AnimationFrame> frames = new ArrayList<AnimationFrame>();
+        // Minecraft.getMinecraft().gameSettings.mipmapLevels];
         //
-        // for (int index = 0; index <
-        // NoiseManager.instance.imageDataArray.size(); index++) {
-        //
-        // int[] data = NoiseManager.instance.imageDataArray.get(index);
+        // int[] data = NoiseManager.instance.imageDataArray.get(0);
         //
         // BufferedImage bufferedImage = new
         // BufferedImage(Variables.NOISE_TEXTURE_SIZE,
         // Variables.NOISE_TEXTURE_SIZE, BufferedImage.TYPE_INT_ARGB);
         // bufferedImage.setRGB(0, 0, Variables.NOISE_TEXTURE_SIZE,
         // Variables.NOISE_TEXTURE_SIZE, data, 0, Variables.NOISE_TEXTURE_SIZE);
-        // imageArray[index] = bufferedImage;
-        //
-        // frames.add(new AnimationFrame(index, 1));
-        // }
-        // super.loadSprite(imageArray, new AnimationMetadataSection(frames,
-        // Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, 1),
-        // true);
+        // imageArray[0] = bufferedImage;
+        // super.loadSprite(imageArray, null, true);
         
+        BufferedImage[] imageArray = new BufferedImage[(1 + Minecraft.getMinecraft().gameSettings.mipmapLevels)];
+        
+        List<AnimationFrame> frames = new ArrayList<AnimationFrame>();
+        
+        final int imageDataArraySize = NoiseManager.instance.imageDataArray.size();
+        final int TEXTURE_LENGTH = (imageDataArraySize * 2) - 1;
+        
+        BufferedImage finalImage = new BufferedImage(Variables.NOISE_TEXTURE_SIZE, TEXTURE_LENGTH * Variables.NOISE_TEXTURE_SIZE, BufferedImage.TYPE_INT_ARGB);
+        
+        for (int index = 0; index < TEXTURE_LENGTH; index++) {
+            
+            int adjustedIndex = index;
+            int[] data = null;
+            
+            if (index < (TEXTURE_LENGTH / 2)) {
+                
+                adjustedIndex = imageDataArraySize - adjustedIndex;
+            }
+            if (adjustedIndex < imageDataArraySize) {
+                data = NoiseManager.instance.imageDataArray.get(adjustedIndex);
+                finalImage.setRGB(0, adjustedIndex * Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, data, 0, Variables.NOISE_TEXTURE_SIZE);
+                frames.add(new AnimationFrame(adjustedIndex, 1));
+            }
+        }
+        imageArray[0] = finalImage;
+        super.loadSprite(imageArray, new AnimationMetadataSection(frames, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE, 1), false);
         return false;
     }
     

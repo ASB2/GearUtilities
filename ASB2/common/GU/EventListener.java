@@ -24,7 +24,12 @@ public class EventListener {
                 icon.setIcon(event.map.registerIcon(Reference.MOD_ID.concat(":").concat(icon.getPath())));
             }
             
-            event.map.setTextureEntry(NoiseManager.instance.noiseIcon.getIconName(), NoiseManager.instance.noiseIcon);
+            event.map.setTextureEntry(NoiseManager.instance.blockNoiseIcon.getIconName(), NoiseManager.instance.blockNoiseIcon);
+        }
+        
+        if (event.map.getTextureType() == 1) {
+            
+            event.map.setTextureEntry(NoiseManager.instance.blockNoiseIcon.getIconName(), NoiseManager.instance.itemNoiseIcon);
         }
     }
 }

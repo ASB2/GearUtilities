@@ -45,7 +45,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             switch (metadata) {
             
             }
-            UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.noiseIcon, 0, 255, 0, 255);
+            UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon, 0, 255, 0, 255);
             // return;
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
@@ -68,18 +68,18 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
         
         if (block == BlockRegistry.MULTI_INTERFACE) {
             
-            renderer.setRenderBounds(.0001, .0001, .0001, 1 - .0001, 1 - .0001, 1 - .0001);
+            renderer.setRenderBounds(.01, .01, .01, 1 - .01, 1 - .01, 1 - .01);
             
             if (block instanceof INoiseBlockRender) {
                 
                 Color4f color = ((INoiseBlockRender) block).getColor(world, x, y, z);
                 
-                UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.noiseIcon, (int) color.getRed(), (int) color.getGreen(), (int) color.getBlue(), (int) color.getAlpha(), Reference.BRIGHT_BLOCK);
+                UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.blockNoiseIcon, (int) color.getRed(), (int) color.getGreen(), (int) color.getBlue(), (int) color.getAlpha(), Reference.BRIGHT_BLOCK);
             }
             else
-                UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.noiseIcon, 0, 255, 0, 255, Reference.BRIGHT_BLOCK);
+                UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.blockNoiseIcon, 0, 255, 0, 255, Reference.BRIGHT_BLOCK);
             
-            // return true;
+             return true;
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         renderer.renderStandardBlock(block, x, y, z);
