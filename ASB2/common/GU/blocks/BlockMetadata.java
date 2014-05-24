@@ -255,9 +255,12 @@ public class BlockMetadata extends BlockBase {
             
             ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
             
-            for (ItemStack stack : itemStacks) {
+            if (!stacks.isEmpty()) {
                 
-                stacks.add(stack.copy());
+                for (ItemStack stack : itemStacks) {
+                    
+                    stacks.add(stack.copy());
+                }
             }
             return stacks;
         }

@@ -50,6 +50,6 @@ public class SpacialProviderWrapper extends MetadataWrapper {
     @Override
     public TileEntity createNewTileEntity(World var1, int metadata) {
         // TODO Auto-generated method stub
-        return super.createNewTileEntity(var1, metadata);
+        return new TileSpacialProvider();
     }
 }

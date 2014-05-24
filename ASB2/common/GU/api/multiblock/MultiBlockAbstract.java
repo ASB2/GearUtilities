@@ -3,6 +3,7 @@ package GU.api.multiblock;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.world.World;
 
 public class MultiBlockAbstract {
     
@@ -13,6 +14,8 @@ public class MultiBlockAbstract {
     public static interface IMultiBlock {
         
         IMultiBlockStructure getStructure();
+        
+        void onBlockBreak(int x, int y, int z);
     }
     
     public static interface IMultiBlockPart {
@@ -30,6 +33,7 @@ public class MultiBlockAbstract {
     
     public static interface IMultiBlockMarker {
         
+        boolean isValid(World world, int x, int y, int z);
     }
     
     public static interface IMultiBlockStructure {

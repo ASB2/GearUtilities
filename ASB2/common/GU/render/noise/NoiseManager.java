@@ -20,7 +20,7 @@ public class NoiseManager {
     
     public static NoiseManager instance = new NoiseManager();
     
-    public Color4i ITERATED_COLOR = Color4i.WHITE;
+    public Color4i ITERATED_COLOR = Color4i.WHITE.clone();
     public Color4i ITERATED_COLOR_INVERTED = Color4i.WHITE.invert();
     
     boolean moveRedColorValueDown = true, moveGreenColorValueDown = true, moveBlueColorValueDown = true;
@@ -98,7 +98,7 @@ public class NoiseManager {
         }
         else if (true) {
             
-            for (float currentDensity = .1f; currentDensity <= .19; currentDensity += .0002) {
+            for (float currentDensity = .1f; currentDensity <= .2; currentDensity += .0002) {
                 
                 int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
                 

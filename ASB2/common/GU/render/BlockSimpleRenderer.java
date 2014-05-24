@@ -28,6 +28,20 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
         
+        if (block instanceof INoiseBlockRender) {
+            
+            renderer.setRenderBounds(.01, .01, .01, 1 - .01, 1 - .01, 1 - .01);
+            
+            Color4i color = ((INoiseBlockRender) block).getColor(metadata);
+            
+            if (color != null) {
+                
+                UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon, color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+            }
+            else
+                UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon, 255, 255, 255, 255);
+        }
+        
         if (block == BlockRegistry.SPACIAL_PROVIDER) {
             
             renderer.setRenderBounds(.0001, .0001, .0001, 1 - .0001, 1 - .0001, 1 - .0001);
@@ -37,24 +51,6 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             UtilRender.renderStandardInvBlock(renderer, block, EnumInputIcon.NONE.getStateIcon());
             return;
         }
-        
-        if (block instanceof INoiseBlockRender) {
-            
-            renderer.setRenderBounds(.01, .01, .01, 1 - .01, 1 - .01, 1 - .01);
-            
-            Color4i color = ((INoiseBlockRender) block).getColor(metadata);
-            
-            if (color != null) {
-                
-                UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon,  color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-            }
-            else
-                UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon, 255, 255, 255, 255);
-            
-        }
-        else
-            UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon, 255, 255, 255, 255);
-        
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderStandardInvBlock(renderer, block, metadata);
     }
@@ -62,15 +58,9 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
         
-        if (block == BlockRegistry.SPACIAL_PROVIDER) {
-            
-            renderer.setRenderBounds(-.0015, -.0015, -.0015, 1.0015, 1.0015, 1.0015);
-            UtilRender.renderFakeBlock(renderer, block, x, y, z, EnumInputIcon.NONE.getStateIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
-        }
-        
         if (block instanceof INoiseBlockRender) {
             
-            renderer.setRenderBounds(.01, .01, .01, 1 - .01, 1 - .01, 1 - .01);
+            renderer.setRenderBounds(.005, .005, .005, 1 - .005, 1 - .005, 1 - .005);
             
             Color4i color = ((INoiseBlockRender) block).getColor(world, x, y, z);
             
@@ -82,9 +72,12 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
                 UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.blockNoiseIcon, 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
             
         }
-        else
-            UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.blockNoiseIcon, 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
         
+        if (block == BlockRegistry.SPACIAL_PROVIDER) {
+            
+            renderer.setRenderBounds(-.0015, -.0015, -.0015, 1.0015, 1.0015, 1.0015);
+            UtilRender.renderFakeBlock(renderer, block, x, y, z, EnumInputIcon.NONE.getStateIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
+        }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         renderer.renderStandardBlock(block, x, y, z);
         return true;
