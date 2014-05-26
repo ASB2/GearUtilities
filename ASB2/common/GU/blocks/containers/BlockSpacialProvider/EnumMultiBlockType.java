@@ -32,11 +32,12 @@ public enum EnumMultiBlockType {
                 TileEntity tile = world.getTileEntity(x, y, z);
                 Block block = world.getBlock(x, y, z);
                 
-                if (tile != null) {
+                if (tile != null && tile instanceof IMultiBlockPart) {
                     
-                    if (!(tile instanceof IMultiBlockMarker || tile instanceof IMultiBlockPart)) {
-                        break;
-                    }
+                    continue;
+                }
+                else if (tile != null && tile instanceof IMultiBlockMarker) {
+                    
                     if (direction.offsetX > 0) {
                         
                         xPos += distance;

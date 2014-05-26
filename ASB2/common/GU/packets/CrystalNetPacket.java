@@ -3,10 +3,10 @@ package GU.packets;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
-import GU.packets.abstractPacket.AbstractPacket;
+import GU.packets.abstractPacket.IAbstractPacket;
 import GU.api.crystals.*;
 
-public class CrystalNetPacket implements AbstractPacket {
+public class CrystalNetPacket implements IAbstractPacket {
     
     int x,y,z;
     CrystalNetwork network;

@@ -1,11 +1,13 @@
 package GU.blocks.containers;
 
-import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
-import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
+import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 
 public abstract class BlockMultiMetadataContainerBase extends BlockMetadataContainerBase {
     
@@ -23,7 +25,11 @@ public abstract class BlockMultiMetadataContainerBase extends BlockMetadataConta
             
             IMultiBlockPart multiBlockPart = ((IMultiBlockPart) tile);
             
-            for (IMultiBlock multiBlock : multiBlockPart.getMultiBlocks()) {
+            List<IMultiBlock> multiBlocks = multiBlockPart.getMultiBlocks();
+            
+            for (int index = 0; index < multiBlocks.size(); index++) {
+                
+                IMultiBlock multiBlock = multiBlocks.get(index);
                 
                 multiBlock.onBlockBreak(x, y, z);
             }

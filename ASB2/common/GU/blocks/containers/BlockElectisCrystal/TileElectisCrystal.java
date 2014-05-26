@@ -3,7 +3,7 @@ package GU.blocks.containers.BlockElectisCrystal;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import GU.GearUtilities;
-import GU.api.color.Colorable.IColorableTile;
+import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.crystals.CrystalNetwork;
 import GU.api.crystals.ICrystalNetworkPart;
 import GU.api.crystals.ICrystalPowerHandler;

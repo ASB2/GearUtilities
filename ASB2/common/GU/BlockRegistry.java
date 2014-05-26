@@ -14,6 +14,7 @@ import GU.blocks.BlockStructureCube;
 import GU.blocks.containers.BlockCreativeMetadata.BlockCreativeMetadata;
 import GU.blocks.containers.BlockElectisCrystal.BlockElectisCrystal;
 import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
+import GU.blocks.containers.BlockMultiInterface.MultiInterfaceWrapper;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPart;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
 import GU.blocks.containers.BlockSpacialProvider.SpacialProviderWrapper;
@@ -66,9 +67,9 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Item Interface"));
-            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Fluid Interface"));
-            this.addWrapper(new SpacialProviderWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Power Interface"));
+            this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Item Interface"));
+            this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Fluid Interface"));
+            this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Power Interface"));
         }
     };
     

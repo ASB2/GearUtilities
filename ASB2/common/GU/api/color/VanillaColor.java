@@ -1,20 +1,19 @@
 package GU.api.color;
 
-import java.awt.Color;
-
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import UC.color.Color4i;
 
 public enum VanillaColor {
     
     BLACK, RED, GREEN, BROWN, BLUE, PURPLE, CYAN, LIGHT_GREY, GREY, PINK, LIME, YELLOW, LIGHT_BLUE, MAGENTA, ORANGE, WHITE, NONE;
     public static final String[] dyesOreDictionary = { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray", "dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite" };
     
-    public static ItemStack getVinillaDye(VanillaColor color) {
+    public static ItemStack getVinillaDye(VanillaColor Color4i) {
         
-        switch (color) {
+        switch (Color4i) {
         
             case BLACK:
                 return new ItemStack(Items.dye, 1, 0);
@@ -54,7 +53,7 @@ public enum VanillaColor {
         }
     }
     
-    public static VanillaColor getItemColorValue(ItemStack item) {
+    public static VanillaColor getItemColor4iValue(ItemStack item) {
         
         if (item != null) {
             
@@ -134,46 +133,46 @@ public enum VanillaColor {
         return false;
     }
     
-    public static Color getRGBValue(VanillaColor color) {
+    public static Color4i getRGBValue(VanillaColor color) {
         
         switch (color) {
         
             case WHITE:
-                return new Color(255, 255, 255);
+                return new Color4i(255, 255, 255);
             case ORANGE:
-                return new Color(255, 165, 0);
+                return new Color4i(255, 165, 0);
             case MAGENTA:
-                return new Color(139, 0, 139);
+                return new Color4i(139, 0, 139);
             case LIGHT_BLUE:
-                return new Color(173, 216, 230);
+                return new Color4i(173, 216, 230);
             case YELLOW:
-                return new Color(255, 255, 0);
+                return new Color4i(255, 255, 0);
             case LIME:
-                return new Color(0, 255, 0);
+                return new Color4i(0, 255, 0);
             case PINK:
-                return new Color(255, 192, 203);
+                return new Color4i(255, 192, 203);
             case GREY:
-                return new Color(128, 128, 128);
+                return new Color4i(128, 128, 128);
             case LIGHT_GREY:
-                return new Color(211, 211, 211);
+                return new Color4i(211, 211, 211);
             case CYAN:
-                return new Color(0, 255, 255);
+                return new Color4i(0, 255, 255);
             case PURPLE:
-                return new Color(128, 0, 128);
+                return new Color4i(128, 0, 128);
             case BLUE:
-                return new Color(0, 0, 255);
+                return new Color4i(0, 0, 255);
             case BROWN:
-                return new Color(75, 42, 42);
+                return new Color4i(75, 42, 42);
             case GREEN:
-                return new Color(0, 255, 0);
+                return new Color4i(0, 255, 0);
             case RED:
-                return new Color(255, 0, 0);
+                return new Color4i(255, 0, 0);
             case BLACK:
-                return new Color(0, 0, 0);
+                return new Color4i(0, 0, 0);
             case NONE:
-                return new Color(255, 255, 255);
+                return new Color4i(255, 255, 255);
             default:
-                return new Color(255, 255, 255);
+                return new Color4i(255, 255, 255);
         }
     }
 }

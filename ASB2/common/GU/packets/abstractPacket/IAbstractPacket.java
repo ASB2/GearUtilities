@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
  * 
  * @author sirgingalot
  */
-public abstract interface AbstractPacket {
+public abstract interface IAbstractPacket {
     
     /**
      * Encode the packet data into the ByteBuf stream. Complex data sets may

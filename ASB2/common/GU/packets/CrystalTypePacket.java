@@ -6,9 +6,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import GU.blocks.containers.BlockElectisCrystal.EnumElectisCrystalType;
 import GU.blocks.containers.BlockElectisCrystal.TileElectisCrystal;
-import GU.packets.abstractPacket.AbstractPacket;
+import GU.packets.abstractPacket.IAbstractPacket;
 
-public class CrystalTypePacket implements AbstractPacket {
+public class CrystalTypePacket implements IAbstractPacket {
     
     int x, y, z;
     int crystalType;

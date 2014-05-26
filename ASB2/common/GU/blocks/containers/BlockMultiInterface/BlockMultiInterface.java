@@ -40,7 +40,7 @@ public class BlockMultiInterface extends BlockMetadataContainerBase implements I
     
     @Override
     public TileEntity createNewTileEntity(World var1, int var2) {
-        
-        return null;
+        // TODO Auto-generated method stub
+        return super.createNewTileEntity(var1, var2);
     }
 }

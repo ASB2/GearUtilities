@@ -12,8 +12,8 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilMisc;
-import GU.api.color.Colorable.IColorableBlock;
-import GU.api.color.Colorable.IColorableTile;
+import GU.api.color.AbstractColorable.IColorableBlock;
+import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
@@ -99,7 +99,7 @@ public class GearReaderWrapper extends MetadataWrapper {
                     
                     UtilEntity.sendChatToPlayer(player, "Inventory name is: " + mTile.getInventoryName());
                     UtilEntity.sendChatToPlayer(player, "Size of inventory is: " + mTile.getSizeInventory());
-                    UtilEntity.sendChatToPlayer(player, "Accessible Slots From Side: " + mTile.getAccessibleSlotsFromSide(side).length);
+                    UtilEntity.sendChatToPlayer(player, "Accessible Slots From Side: " + (mTile.getAccessibleSlotsFromSide(side) != null ? mTile.getAccessibleSlotsFromSide(side).length : 0));
                     UtilEntity.sendChatToPlayer(player, "Inventory stack limit is: " + mTile.getInventoryStackLimit());
                 }
                 

@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilVector;
-import GU.api.color.Colorable.IColorableTile;
+import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IPowerAttribute;

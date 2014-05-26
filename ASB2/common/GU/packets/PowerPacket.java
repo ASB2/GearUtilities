@@ -6,9 +6,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.api.power.PowerNetAbstract.*;
-import GU.packets.abstractPacket.AbstractPacket;
+import GU.packets.abstractPacket.IAbstractPacket;
 
-public class PowerPacket implements AbstractPacket {
+public class PowerPacket implements IAbstractPacket {
     
     int x, y, z;
     DefaultPowerManager powerToUpdate;

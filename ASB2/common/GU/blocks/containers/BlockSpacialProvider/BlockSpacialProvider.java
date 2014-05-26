@@ -5,7 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import GU.api.color.Colorable.IColorableBlock;
+import GU.api.color.AbstractColorable.IColorableBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockMarker;
 import GU.blocks.containers.BlockMultiMetadataContainerBase;
 import GU.render.BlockSimpleRenderer.INoiseBlockRender;
