@@ -22,7 +22,7 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
         @Override
         public void trigger(int id) {
             
-            if (!worldObj.isRemote) GearUtilities.getPipeline().sendToAllAround(new ColorPacket(color, xCoord, yCoord, zCoord, ForgeDirection.UNKNOWN), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
+            if (!worldObj.isRemote) GearUtilities.getPipeline().sendToAllAround(new ColorPacket(color, xCoord, yCoord, zCoord, ForgeDirection.UNKNOWN), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 200));
         }
         
         @Override
@@ -45,8 +45,6 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
     @Override
     public void updateEntity() {
         colorTimer.update();
-        
-        super.updateEntity();
     }
     
     @Override
@@ -70,14 +68,22 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
     public boolean setColor(Color4i color, ForgeDirection direction) {
         
         // colors[direction.ordinal()].setAll(color);
-        this.color.setAll(color);
+        if (this.multiBlocks.size() > 1) {
+            
+            this.color.setRed((this.color.getRed() + color.getRed()) / 2);
+            this.color.setGreen((this.color.getGreen() + color.getGreen()) / 2);
+            this.color.setBlue((this.color.getBlue() + color.getBlue()) / 2);
+        }
+        else if (direction == ForgeDirection.UNKNOWN || this.color == Color4i.WHITE) {
+            
+            this.color.setAll(color);
+        }
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         return true;
     }
     
     @Override
     public void writeToNBT(NBTTagCompound tag) {
-        
         super.writeToNBT(tag);
         tag.setInteger("red", color.getRed());
         tag.setInteger("green", color.getGreen());
@@ -89,6 +95,5 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
         color = new Color4i(tag.getInteger("red"), tag.getInteger("green"), tag.getInteger("blue"), tag.getInteger("alpha"));
-        
     }
 }

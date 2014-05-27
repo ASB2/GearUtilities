@@ -8,6 +8,8 @@ import ASB2.utils.UtilBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockMarker;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.multiblock.MultiBlockChest;
+import GU.multiblock.MultiBlockFurnace;
+import GU.multiblock.MultiBlockTank;
 import UC.math.vector.Vector3i;
 
 public enum EnumMultiBlockType {
@@ -32,45 +34,46 @@ public enum EnumMultiBlockType {
                 TileEntity tile = world.getTileEntity(x, y, z);
                 Block block = world.getBlock(x, y, z);
                 
-                if (tile != null && tile instanceof IMultiBlockPart) {
+                if (tile != null) {
                     
-                    continue;
+                    if (tile instanceof IMultiBlockPart) {
+                        
+                    }
+                    else if (tile instanceof IMultiBlockMarker) {
+                        
+                        if (direction.offsetX > 0) {
+                            
+                            xPos += distance;
+                        }
+                        if (direction.offsetX < 0) {
+                            
+                            xNeg += distance;
+                        }
+                        if (direction.offsetY > 0) {
+                            
+                            yPos += distance;
+                        }
+                        if (direction.offsetY < 0) {
+                            
+                            yNeg += distance;
+                        }
+                        if (direction.offsetZ > 0) {
+                            
+                            zPos += distance;
+                        }
+                        if (direction.offsetZ < 0) {
+                            
+                            zNeg += distance;
+                        }
+                        // size.move(Math.abs(direction.offsetX * distance),
+                        // Math.abs(direction.offsetY * distance),
+                        // Math.abs(direction.offsetZ * distance));
+                        // markers[direction.ordinal()] = spacialPosition.add(x,
+                        // y, z);
+                        break;
+                    }
                 }
-                else if (tile != null && tile instanceof IMultiBlockMarker) {
-                    
-                    if (direction.offsetX > 0) {
-                        
-                        xPos += distance;
-                    }
-                    if (direction.offsetX < 0) {
-                        
-                        xNeg += distance;
-                    }
-                    if (direction.offsetY > 0) {
-                        
-                        yPos += distance;
-                    }
-                    if (direction.offsetY < 0) {
-                        
-                        yNeg += distance;
-                    }
-                    if (direction.offsetZ > 0) {
-                        
-                        zPos += distance;
-                    }
-                    if (direction.offsetZ < 0) {
-                        
-                        zNeg += distance;
-                    }
-                    // size.move(Math.abs(direction.offsetX * distance),
-                    // Math.abs(direction.offsetY * distance),
-                    // Math.abs(direction.offsetZ * distance));
-                    // markers[direction.ordinal()] = spacialPosition.add(x,
-                    // y, z);
-                    break;
-                    
-                }
-                else if (block != null) {
+                if (block != null) {
                     
                     if (block instanceof IMultiBlockMarker) {
                         
@@ -118,9 +121,18 @@ public enum EnumMultiBlockType {
         if (size.getX() != 0 || size.getY() != 0 || size.getZ() != 0) {
             
             corner.move(xPos, yPos, zPos);
-            MultiBlockChest chest = new MultiBlockChest(world, corner, size, spacialPosition);
             
-            return chest.startCreation();
+            switch (this) {
+            
+                case CHEST:
+                    return new MultiBlockChest(world, corner, size, spacialPosition).startCreation();
+                case FURNACE:
+                    return new MultiBlockFurnace(world, corner, size, spacialPosition).startCreation();
+                case TANK:
+                    return new MultiBlockTank(world, corner, size, spacialPosition).startCreation();
+                default:
+                    return false;
+            }
             
             // for (int x = 0; x <= size.getX(); x++) {
             //

@@ -48,7 +48,7 @@ public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable 
                         
                         Vector3i vec = positionRelativeTo.subtract(x, y, z);
                         
-                        if ((x == size.getX() && y == size.getX() && z == size.getZ()) || (x == 0 && y == 0 && z == 0) || (x == size.getX() && y == 0 && z == 0) || (x == 0 && y == size.getY() && z == 0) || (x == 0 && y == 0 && z == size.getZ()) || (x == size.getX() && y == size.getY() && z == 0) || (x == size.getX() && y == 0 && z == size.getZ()) || (x == 0 && y == size.getY() && z == size.getZ())) {
+                        if (((x == 0 || x == size.getX()) && (y == 0 || y == size.getY())) && (z == 0 || z == size.getZ())) {
                             
                             if (!placeCornerBlock(vec)) {
                                 
@@ -56,9 +56,9 @@ public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable 
                                 return;
                             }
                         }
-                        if (vec.getX() == 0 && positionRelativeTo.getY() == vec.getY() && positionRelativeTo.getZ() == vec.getZ()) {
+                        else if (((x == 0 || x == size.getX()) && (y == 0 || y == size.getY())) || ((y == 0 || y == size.getY()) && (z == 0 || z == size.getZ())) || ((x == 0 || x == size.getX()) && (z == 0 || z == size.getZ()))) {
                             
-                            if (!placeCornerBlock(vec)) {
+                            if (!placeEdgeBlock(vec)) {
                                 
                                 deconstruct();
                                 return;
@@ -83,29 +83,7 @@ public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable 
                     
                     for (int z = 0; z <= size.getZ(); z++) {
                         
-                        Vector3i vec = positionRelativeTo.subtract(x, y, z);
-                        
-                        if ((x == size.getX() && y == size.getX() && z == size.getZ()) || (x == 0 && y == 0 && z == 0) || (x == size.getX() && y == 0 && z == 0) || (x == 0 && y == size.getY() && z == 0) || (x == 0 && y == 0 && z == size.getZ()) || (x == size.getX() && y == size.getY() && z == 0) || (x == size.getX() && y == 0 && z == size.getZ()) || (x == 0 && y == size.getY() && z == size.getZ())) {
-                            
-                            if (!placeCornerBlock(vec)) {
-                                
-                                deconstruct();
-                                return;
-                            }
-                        }
-                        if (vec.getX() == 0 && positionRelativeTo.getY() == vec.getY() && positionRelativeTo.getZ() == vec.getZ()) {
-                            
-                            if (!placeCornerBlock(vec)) {
-                                
-                                deconstruct();
-                                return;
-                            }
-                        }
-                        else if (!placeInnerBlock(vec)) {
-                            
-                            deconstruct();
-                            return;
-                        }
+                        checkBlock(positionRelativeTo.subtract(x, y, z));
                     }
                 }
             }
@@ -126,8 +104,7 @@ public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable 
                 
                 for (int z = 0; z <= size.getZ(); z++) {
                     
-                    Vector3i vec = positionRelativeTo.subtract(x, y, z);
-                    deconstructBlock(vec);
+                    deconstructBlock(positionRelativeTo.subtract(x, y, z));
                 }
             }
         }
@@ -135,53 +112,71 @@ public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable 
     
     public boolean placeInnerBlock(Vector3i position) {
         
-        if (UtilBlock.isBlockAir(world, position.getX(), position.getY(), position.getZ())) {
+        TileEntity tile = UtilVector.getTileAtPostion(world, position);
+        if (tile == null || !(tile instanceof IMultiBlockPart)) {
             
+            UtilBlock.breakBlock(world, position.getX(), position.getY(), position.getZ());
             world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART);
         }
         
-        TileEntity tile = UtilVector.getTileAtPostion(world, position);
-        
-        if (tile != null && tile instanceof IMultiBlockPart) {
+        if (checkBlock(position)) {
             
-            boolean worked = ((IMultiBlockPart) tile).addMultiBlock(this);
-            
-            if (worked) {
+            if (tile instanceof IColorableTile) {
                 
-                if (tile instanceof IColorableTile) {
-                    
-                    for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-                        
-                        ((IColorableTile) tile).setColor(this.getDefaultBlockColor(), direction);
-                    }
-                }
+                ((IColorableTile) tile).setColor(this.getDefaultBlockColor(), ForgeDirection.UNKNOWN);
             }
-            return worked;
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean placeEdgeBlock(Vector3i position) {
+        
+        TileEntity tile = UtilVector.getTileAtPostion(world, position);
+        if (tile == null || !(tile instanceof IMultiBlockPart)) {
+            
+            UtilBlock.breakBlock(world, position.getX(), position.getY(), position.getZ());
+            world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART, 1, 3);
+        }
+        
+        if (checkBlock(position)) {
+            
+            if (tile instanceof IColorableTile) {
+                
+                ((IColorableTile) tile).setColor(this.getDefaultBlockColor(), ForgeDirection.UNKNOWN);
+            }
+            return true;
         }
         return false;
     }
     
     public boolean placeCornerBlock(Vector3i position) {
         
-        if (UtilBlock.isBlockAir(world, position.getX(), position.getY(), position.getZ())) {
+        TileEntity tile = UtilVector.getTileAtPostion(world, position);
+        if (tile == null || !(tile instanceof IMultiBlockPart)) {
             
-            world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.SPACIAL_PROVIDER, 1, 3);
+            UtilBlock.breakBlock(world, position.getX(), position.getY(), position.getZ());
+            world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART, 2, 3);
         }
+        
+        if (checkBlock(position)) {
+            
+            if (tile instanceof IColorableTile) {
+                
+                ((IColorableTile) tile).setColor(this.getDefaultBlockColor(), ForgeDirection.UNKNOWN);
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean checkBlock(Vector3i position) {
         
         TileEntity tile = UtilVector.getTileAtPostion(world, position);
         
         if (tile != null && tile instanceof IMultiBlockPart) {
             
-            boolean worked = ((IMultiBlockPart) tile).addMultiBlock(this);
-            
-            if (worked) {
-                
-                if (tile instanceof IColorableTile) {
-                    
-                    ((IColorableTile) tile).setColor(this.getDefaultBlockColor(), ForgeDirection.UNKNOWN);
-                }
-            }
-            return worked;
+            return ((IMultiBlockPart) tile).addMultiBlock(this);
         }
         return false;
     }
@@ -200,13 +195,16 @@ public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable 
         
         if (!isValid && !isConstructing) {
             
-            isConstructing = true;
-            
-            TileEntity tile = UtilVector.getTileAtPostion(world, updater);
-            
-            if (tile != null && tile instanceof IMultiBlockPart) {
+            if (size.getX() >= 2 && size.getY() >= 2 && size.getZ() >= 2) {
                 
-                return ((IMultiBlockPart) tile).addMultiBlock(this);
+                isConstructing = true;
+                
+                TileEntity tile = UtilVector.getTileAtPostion(world, updater);
+                
+                if (tile != null && tile instanceof IMultiBlockPart) {
+                    
+                    return ((IMultiBlockPart) tile).addMultiBlock(this);
+                }
             }
         }
         return false;

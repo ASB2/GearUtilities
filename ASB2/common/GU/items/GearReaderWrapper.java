@@ -1,5 +1,7 @@
 package GU.items;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -14,13 +16,17 @@ import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilMisc;
 import GU.api.color.AbstractColorable.IColorableBlock;
 import GU.api.color.AbstractColorable.IColorableTile;
+import GU.api.crystals.CrystalNetwork;
+import GU.api.crystals.ICrystalNetworkPart;
+import GU.api.crystals.ICrystalPowerHandler;
+import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
+import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.items.ItemMetadata.MetadataWrapper;
 import UC.color.Color4i;
-import GU.api.crystals.*;
 
 public class GearReaderWrapper extends MetadataWrapper {
     
@@ -167,6 +173,17 @@ public class GearReaderWrapper extends MetadataWrapper {
                         
                         UtilEntity.sendChatToPlayer(player, "Network Size: " + network.getNetworkSize());
                         UtilEntity.sendChatToPlayer(player, "Network Core: " + network.getCorePosition().toString());
+                    }
+                }
+                if (tile instanceof IMultiBlockPart) {
+                    
+                    IMultiBlockPart mTile = (IMultiBlockPart) tile;
+                    
+                    List<IMultiBlock> multiBlocks = mTile.getMultiBlocks();
+                    
+                    if (multiBlocks != null) {
+                        
+                        UtilEntity.sendChatToPlayer(player, "Part of : " + multiBlocks.size() + " Multiblocks");
                     }
                 }
             }

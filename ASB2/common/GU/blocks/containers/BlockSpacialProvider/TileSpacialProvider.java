@@ -1,12 +1,14 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
 import net.minecraft.nbt.NBTTagCompound;
-import UC.math.vector.Vector3i;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockCore;
 import GU.blocks.containers.TileMultiBase;
-import GU.multiblock.MultiBlockChest;
 import GU.multiblock.MultiBlockBase;
+import GU.multiblock.MultiBlockChest;
+import GU.multiblock.MultiBlockFurnace;
+import GU.multiblock.MultiBlockTank;
+import UC.math.vector.Vector3i;
 
 public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCore {
     
@@ -26,6 +28,12 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
                 
                     case 1:
                         updating = new MultiBlockChest(worldObj);
+                        break;
+                    case 2:
+                        updating = new MultiBlockFurnace(worldObj);
+                        break;
+                    case 3:
+                        updating = new MultiBlockTank(worldObj);
                         break;
                 // case 2:
                 // updating = new ChestMultiBlock(worldObj);

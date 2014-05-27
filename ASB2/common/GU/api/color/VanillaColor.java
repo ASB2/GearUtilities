@@ -148,7 +148,7 @@ public enum VanillaColor {
             case YELLOW:
                 return new Color4i(255, 255, 0);
             case LIME:
-                return new Color4i(0, 255, 0);
+                return new Color4i(191, 255, 0);
             case PINK:
                 return new Color4i(255, 192, 203);
             case GREY:
