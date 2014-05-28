@@ -68,15 +68,16 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
     public boolean setColor(Color4i color, ForgeDirection direction) {
         
         // colors[direction.ordinal()].setAll(color);
-        if (this.multiBlocks.size() > 1) {
+        
+        if (direction == ForgeDirection.UNKNOWN) {
+            
+            this.color.setAll(color);
+        }
+        else if (this.multiBlocks.size() > 1) {
             
             this.color.setRed((this.color.getRed() + color.getRed()) / 2);
             this.color.setGreen((this.color.getGreen() + color.getGreen()) / 2);
             this.color.setBlue((this.color.getBlue() + color.getBlue()) / 2);
-        }
-        else if (direction == ForgeDirection.UNKNOWN || this.color == Color4i.WHITE) {
-            
-            this.color.setAll(color);
         }
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         return true;
