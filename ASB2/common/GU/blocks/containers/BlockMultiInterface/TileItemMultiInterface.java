@@ -1,114 +1,216 @@
 package GU.blocks.containers.BlockMultiInterface;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import ASB2.inventory.Inventory;
+import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.blocks.containers.TileMultiBase;
 
-public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, ISidedInventory {
+public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IInventory {
     
-    Inventory inventory;
+    Map<SlotHolder, IMultiBlock> inventorise = new HashMap<SlotHolder, IMultiBlock>();
+    int maxSizeInventory = 0;
     
     public TileItemMultiInterface() {
         
-        inventory = new Inventory(0, "Inventory Base", true);
+    }
+    
+    private class SlotHolder {
+        
+        public int minSlot, maxSlot;
+        
+        public SlotHolder(int minSlot, int maxSlot) {
+            this.minSlot = minSlot;
+            this.maxSlot = maxSlot;
+        }
+        
+        public int getMinSlot() {
+            
+            return minSlot;
+        }
+        
+        public int getMaxSlot() {
+            
+            return maxSlot;
+        }
     }
     
     @Override
-    public void updateEntity() {
-        // TODO Auto-generated method stub
-        super.updateEntity();
+    public boolean addMultiBlock(IMultiBlock multiBlock) {
+        
+        if (super.addMultiBlock(multiBlock)) {
+            
+            recalculate();
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public void removeMultiBlock(IMultiBlock multiBlock) {
+        super.removeMultiBlock(multiBlock);
+        recalculate();
+    }
+    
+    @SuppressWarnings("unused")
+    public void recalculate() {
+        
+        if (false) {
+            
+            int lastSlotMin = 0;
+            
+            for (IMultiBlock multi : this.getMultiBlocks()) {
+                
+                if (multi instanceof IInventory) {
+                    
+                    int size = ((IInventory) multi).getSizeInventory();
+                    
+                    if (size > 0) {
+                        
+                        this.inventorise.put(new SlotHolder(lastSlotMin, ((IInventory) multi).getSizeInventory() + lastSlotMin), multi);
+                        lastSlotMin += ((IInventory) multi).getSizeInventory() + 1;
+                    }
+                }
+            }
+            maxSizeInventory = lastSlotMin;
+        }
+        else {
+            
+            int minSlot = 0;
+            maxSizeInventory = 0;
+            
+            for (IMultiBlock multi : this.getMultiBlocks()) {
+                
+                if (multi instanceof IInventory) {
+                    
+                    int size = ((IInventory) multi).getSizeInventory();
+                    
+                    if (size > 0) {
+                        
+                        SlotHolder holder = new SlotHolder(minSlot, minSlot + size);
+                        this.inventorise.put(holder, multi);
+                        minSlot += size + 1;
+                        maxSizeInventory += size;
+                    }
+                }
+            }
+        }
+    }
+    
+    public IInventory redirectSlot(int slot) {
+        
+        for (SlotHolder slots : inventorise.keySet()) {
+            
+            if (slots.getMinSlot() <= slot && slots.getMaxSlot() >= slot) {
+                
+                return (IInventory) inventorise.get(slots);
+            }
+        }
+        return null;
     }
     
     @Override
     public int getSizeInventory() {
         
-        return inventory.getSizeInventory();
+        return maxSizeInventory;
     }
     
     @Override
     public ItemStack getStackInSlot(int i) {
         
-        return inventory.getStackInSlot(i);
+        IInventory inventory = redirectSlot(i);
+        
+        if (inventory != null) {
+            
+            return inventory.getStackInSlot(i);
+        }
+        return null;
     }
     
     @Override
-    public ItemStack decrStackSize(int slot, int amount) {
+    public ItemStack decrStackSize(int i, int j) {
         
-        return inventory.decrStackSize(slot, amount);
+        IInventory inventory = redirectSlot(i);
+        
+        if (inventory != null) {
+            
+            return inventory.decrStackSize(i, j);
+        }
+        return null;
     }
     
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
         
-        return inventory.getStackInSlotOnClosing(i);
+        IInventory inventory = redirectSlot(i);
+        
+        if (inventory != null) {
+            
+            return inventory.getStackInSlotOnClosing(i);
+        }
+        return null;
     }
     
     @Override
-    public void setInventorySlotContents(int i, ItemStack itemStack) {
+    public void setInventorySlotContents(int i, ItemStack itemstack) {
         
-        inventory.setInventorySlotContents(i, itemStack);
-    }
-    
-    @Override
-    public boolean hasCustomInventoryName() {
+        IInventory inventory = redirectSlot(i);
         
-        return inventory.hasCustomInventoryName();
-    }
-    
-    @Override
-    public int getInventoryStackLimit() {
-        
-        return inventory.getInventoryStackLimit();
-    }
-    
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-        
-        return inventory.isUseableByPlayer(entityplayer);
-    }
-    
-    @Override
-    public void openInventory() {
-        
-        inventory.openInventory();
-    }
-    
-    @Override
-    public void closeInventory() {
-        
-        inventory.closeInventory();
-    }
-    
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-        
-        return inventory.isItemValidForSlot(i, itemstack);
+        if (inventory != null) {
+            
+            inventory.setInventorySlotContents(i, itemstack);
+        }
     }
     
     @Override
     public String getInventoryName() {
         
-        return inventory.getInventoryName();
+        return "Item Multi Interface";
     }
     
     @Override
-    public int[] getAccessibleSlotsFromSide(int var1) {
+    public boolean hasCustomInventoryName() {
         
-        return inventory.getAccessibleSlotsFromSide(var1);
+        return true;
     }
     
     @Override
-    public boolean canInsertItem(int i, ItemStack itemstack, int j) {
+    public int getInventoryStackLimit() {
         
-        return inventory.canInsertItem(i, itemstack, j);
+        return 64;
     }
     
     @Override
-    public boolean canExtractItem(int i, ItemStack itemstack, int j) {
+    public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+        // TODO Auto-generated method stub
+        return true;
+    }
+    
+    @Override
+    public void openInventory() {
+        // TODO Auto-generated method stub
         
-        return inventory.canExtractItem(i, itemstack, j);
+    }
+    
+    @Override
+    public void closeInventory() {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+        
+        IInventory inventory = redirectSlot(i);
+        
+        if (inventory != null) {
+            
+            return inventory.isItemValidForSlot(i, itemstack);
+        }
+        return false;
     }
 }

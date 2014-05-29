@@ -9,12 +9,13 @@ import net.minecraft.client.renderer.texture.TextureUtil;
 import org.lwjgl.opengl.GL11;
 
 import GU.GearUtilities;
+import GU.info.Reference;
 import GU.info.Variables;
 import UC.FastNoise;
 import UC.color.Color4i;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
-import GU.info.*;
+import UC.noise.libnoiseforjava.module.*;
 
 public class NoiseManager {
     
@@ -96,7 +97,7 @@ public class NoiseManager {
                 imageDataArray.add(imageData);
             }
         }
-        else if (true) {
+        else if (false) {
             
             for (float currentDensity = .1f; currentDensity <= .2; currentDensity += .0002) {
                 
@@ -107,6 +108,38 @@ public class NoiseManager {
                     for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
                         
                         int col = FastNoise.noise(x * currentDensity, y * currentDensity, 7);
+                        
+                        // int col = FastNoise.noise((x + shift) * .1, (y +
+                        // shift) *
+                        // .1, 7);
+                        
+                        int red = col;
+                        int green = col;
+                        int blue = col;
+                        
+                        int RGB = red;
+                        RGB = (RGB << 8) + green;
+                        RGB = (RGB << 8) + blue;
+                        RGB |= 0xFF000000;
+                        imageData[x + y * Variables.NOISE_TEXTURE_SIZE] = RGB;
+                    }
+                }
+                imageDataArray.add(imageData);
+            }
+        }
+        else if (true) {
+            
+            Voronoi noiseGen = new Voronoi();
+            
+            for (float currentDensity = .1f; currentDensity <= .2; currentDensity += .0002) {
+                
+                int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
+                
+                for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x++) {
+                    
+                    for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
+                        
+                        int col = (int) (noiseGen.getValue(x * currentDensity, y * currentDensity, currentDensity) * 255);
                         
                         // int col = FastNoise.noise((x + shift) * .1, (y +
                         // shift) *
