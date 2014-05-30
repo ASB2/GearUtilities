@@ -139,7 +139,17 @@ public class NoiseManager {
                     
                     for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
                         
-                        int col = (int) (noiseGen.getValue(x * currentDensity, y * currentDensity, currentDensity) * 255);
+                        int col = (int) (((noiseGen.getValue(x * currentDensity, y * currentDensity, currentDensity) * 255) + (noiseGen.getValue(currentDensity, currentDensity, currentDensity) * 255) + FastNoise.noise(x * currentDensity, y * currentDensity, 7) + FastNoise.noise(x * currentDensity, y * currentDensity, 7)) / 4);
+                        
+                        // int col = (int) (((noiseGen.getValue(x *
+                        // currentDensity, y * currentDensity, currentDensity) *
+                        // 255) + FastNoise.noise(x * currentDensity, y *
+                        // currentDensity, 5) + FastNoise.noise(x *
+                        // currentDensity, y * currentDensity, 9)) / 3);
+                        
+                        // int col = (int) (noiseGen.getValue(x *
+                        // currentDensity, y * currentDensity, currentDensity) *
+                        // 255);
                         
                         // int col = FastNoise.noise((x + shift) * .1, (y +
                         // shift) *
