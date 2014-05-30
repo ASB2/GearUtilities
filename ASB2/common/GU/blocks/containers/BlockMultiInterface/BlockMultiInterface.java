@@ -21,7 +21,7 @@ public class BlockMultiInterface extends BlockMultiMetadataContainerBase impleme
         switch (metadata) {
         
             case 0:
-                return Color4i.GREEN;
+                return Color4i.GREEN.clone().setAlpha(128);
             case 1:
                 return Color4i.BLUE.brighter();
             case 2:

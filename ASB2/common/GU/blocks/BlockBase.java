@@ -62,7 +62,7 @@ public class BlockBase extends Block {
     @SideOnly(Side.CLIENT)
     public int getRenderBlockPass() {
         
-        return 1;
+        return 0;
     }
     
     @Override
