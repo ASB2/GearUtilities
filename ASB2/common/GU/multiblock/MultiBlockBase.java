@@ -1,5 +1,6 @@
 package GU.multiblock;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -10,11 +11,11 @@ import GU.BlockRegistry;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
-import UC.AbstractUpdateable;
+import UC.IAbstractUpdateable;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable {
+public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable {
     
     World world;
     Vector3i positionRelativeTo;
@@ -250,6 +251,10 @@ public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable 
             
             deconstruct();
         }
+    }
+    
+    public void onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+        
     }
     
     public NBTTagCompound save(NBTTagCompound tag) {

@@ -154,7 +154,7 @@ public enum VanillaColor {
             case GREY:
                 return new Color4i(128, 128, 128);
             case LIGHT_GREY:
-                return new Color4i(211, 211, 211);
+                return new Color4i(100 + 90, 100 + 90, 100 + 90);
             case CYAN:
                 return new Color4i(0, 255, 255);
             case PURPLE:
@@ -168,7 +168,7 @@ public enum VanillaColor {
             case RED:
                 return new Color4i(255, 0, 0);
             case BLACK:
-                return new Color4i(0, 0, 0);
+                return new Color4i(30, 30, 30);
             case NONE:
                 return new Color4i(255, 255, 255);
             default:

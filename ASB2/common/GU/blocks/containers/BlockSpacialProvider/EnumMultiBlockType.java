@@ -75,6 +75,15 @@ public enum EnumMultiBlockType {
                 }
                 if (block != null) {
                     
+                    // int meta = world.getBlockMetadata(spacialPosition.getX(),
+                    // spacialPosition.getY(), spacialPosition.getZ());
+                    //
+                    // if (block == BlockRegistry.SPACIAL_PROVIDER && meta != 0
+                    // && meta != this.ordinal()) {
+                    //
+                    // break;
+                    // }
+                    
                     if (block instanceof IMultiBlockMarker) {
                         
                         if (direction.offsetX > 0) {

@@ -177,130 +177,136 @@ public class NoiseManager {
         {
             TextureUtil.uploadTexture(NoiseManager.instance.GL_TEXTURE_ID, imageDataArray.get(animationPosition), Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
             
-            if (moveAnimationDown) {
+            if (Minecraft.getSystemTime() % 50 == 0) {
                 
-                if (animationPosition >= imageDataArray.size() - 1) {
+                if (moveAnimationDown) {
                     
-                    moveAnimationDown = false;
-                    animationPosition = imageDataArray.size() - 1;
-                }
-                else /* if (Minecraft.getSystemTime() % 20 == 0) */{
+                    if (animationPosition >= imageDataArray.size() - 1) {
+                        
+                        moveAnimationDown = false;
+                        animationPosition = imageDataArray.size() - 1;
+                    }
+                    else /* if (Minecraft.getSystemTime() % 20 == 0) */{
+                        
+                        animationPosition++;
+                    }
                     
-                    animationPosition++;
                 }
-                
-            }
-            else {
-                
-                if (animationPosition <= 0) {
-                    moveAnimationDown = true;
-                    animationPosition = 0;
-                }
-                else /* if (Minecraft.getSystemTime() % 20 == 0) */{
+                else {
                     
-                    animationPosition--;
+                    if (animationPosition <= 0) {
+                        moveAnimationDown = true;
+                        animationPosition = 0;
+                    }
+                    else /* if (Minecraft.getSystemTime() % 20 == 0) */{
+                        
+                        animationPosition--;
+                    }
                 }
             }
         }
+        
         {
-            
-            final float redModificationAmount = 1f, greenModificationAmount = 2f, blueModificationAmount = 3f;
-            
-            int red = ITERATED_COLOR.getRed(), green = ITERATED_COLOR.getGreen(), blue = ITERATED_COLOR.getBlue();
-            
-            if (moveRedColorValueDown) {
+            if (Minecraft.getSystemTime() % 20 == 0) {
                 
-                if (red > 0) {
-                    
-                    red -= redModificationAmount;
-                }
-                else if (red == 0) {
-                    
-                    moveRedColorValueDown = false;
-                }
-            }
-            else {
+                final float redModificationAmount = 1f, greenModificationAmount = 2f, blueModificationAmount = 3f;
                 
-                if (red < 255) {
-                    
-                    red += redModificationAmount;
-                }
-                else if (red == 255) {
-                    
-                    moveRedColorValueDown = true;
-                }
-            }
-            if (moveGreenColorValueDown) {
+                int red = ITERATED_COLOR.getRed(), green = ITERATED_COLOR.getGreen(), blue = ITERATED_COLOR.getBlue();
                 
-                if (green > 0) {
+                if (moveRedColorValueDown) {
                     
-                    green -= greenModificationAmount;
+                    if (red > 0) {
+                        
+                        red -= redModificationAmount;
+                    }
+                    else if (red == 0) {
+                        
+                        moveRedColorValueDown = false;
+                    }
                 }
-                else if (green == 0) {
+                else {
                     
-                    moveGreenColorValueDown = false;
+                    if (red < 255) {
+                        
+                        red += redModificationAmount;
+                    }
+                    else if (red == 255) {
+                        
+                        moveRedColorValueDown = true;
+                    }
                 }
-            }
-            else {
-                
-                if (green < 255) {
+                if (moveGreenColorValueDown) {
                     
-                    green += greenModificationAmount;
+                    if (green > 0) {
+                        
+                        green -= greenModificationAmount;
+                    }
+                    else if (green == 0) {
+                        
+                        moveGreenColorValueDown = false;
+                    }
                 }
-                else if (green == 255) {
+                else {
                     
-                    moveGreenColorValueDown = true;
+                    if (green < 255) {
+                        
+                        green += greenModificationAmount;
+                    }
+                    else if (green == 255) {
+                        
+                        moveGreenColorValueDown = true;
+                    }
                 }
-            }
-            if (moveBlueColorValueDown) {
-                
-                if (blue > 0) {
+                if (moveBlueColorValueDown) {
                     
-                    blue -= blueModificationAmount;
+                    if (blue > 0) {
+                        
+                        blue -= blueModificationAmount;
+                    }
+                    else if (blue == 0) {
+                        
+                        moveBlueColorValueDown = false;
+                    }
                 }
-                else if (blue == 0) {
+                else {
                     
-                    moveBlueColorValueDown = false;
+                    if (blue < 255) {
+                        
+                        blue += blueModificationAmount;
+                    }
+                    else if (blue == 255) {
+                        
+                        moveBlueColorValueDown = true;
+                    }
                 }
-            }
-            else {
-                
-                if (blue < 255) {
+                if (red > 255) {
                     
-                    blue += blueModificationAmount;
+                    red = 255;
                 }
-                else if (blue == 255) {
+                else if (red < 0) {
                     
-                    moveBlueColorValueDown = true;
+                    red = 0;
                 }
+                if (green > 255) {
+                    
+                    green = 255;
+                }
+                else if (green < 0) {
+                    
+                    green = 0;
+                }
+                if (blue > 255) {
+                    
+                    blue = 255;
+                }
+                else if (blue < 0) {
+                    
+                    blue = 0;
+                }
+                ITERATED_COLOR.setRed(red).setGreen(green).setBlue(blue);
+                ITERATED_COLOR_INVERTED.setRed(255 - red).setGreen(255 - green).setBlue(255 - blue);
+                return;
             }
-            if (red > 255) {
-                
-                red = 255;
-            }
-            else if (red < 0) {
-                
-                red = 0;
-            }
-            if (green > 255) {
-                
-                green = 255;
-            }
-            else if (green < 0) {
-                
-                green = 0;
-            }
-            if (blue > 255) {
-                
-                blue = 255;
-            }
-            else if (blue < 0) {
-                
-                blue = 0;
-            }
-            ITERATED_COLOR.setRed(red).setGreen(green).setBlue(blue);
-            ITERATED_COLOR_INVERTED.setRed(255 - red).setGreen(255 - green).setBlue(255 - blue);
-            return;
         }
     }
 }

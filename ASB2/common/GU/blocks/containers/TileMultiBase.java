@@ -35,6 +35,7 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
     }
     
     public int getMaxMultiBlocks() {
+        
         return maxMultiBlocks;
     }
     
@@ -85,6 +86,6 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
     @Override
     public List<IMultiBlock> getMultiBlocks() {
         
-        return unchangable;
+        return multiBlocks;
     }
 }

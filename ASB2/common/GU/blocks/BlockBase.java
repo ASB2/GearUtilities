@@ -11,6 +11,8 @@ import GU.GUItemBlock;
 import GU.GearUtilities;
 import GU.render.BlockSimpleRenderer;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockBase extends Block {
     
@@ -30,9 +32,10 @@ public class BlockBase extends Block {
         GameRegistry.registerBlock(this, GUItemBlock.class, entry);
     }
     
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4) {
         
+        par3List.add("Made just for you: ".concat(player.getDisplayName()));
     }
     
     public String getBlockDisplayName(ItemStack stack) {
@@ -54,5 +57,17 @@ public class BlockBase extends Block {
     public int getRenderType() {
         
         return BlockSimpleRenderer.renderID;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public int getRenderBlockPass() {
+        
+        return 1;
+    }
+    
+    @Override
+    public boolean isOpaqueCube() {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

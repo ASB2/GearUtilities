@@ -180,6 +180,30 @@ public class BlockMetadata extends BlockBase {
         }
     }
     
+    @Override
+    public int getLightOpacity(IBlockAccess world, int x, int y, int z) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.getLightOpacity(world, x, y, z);
+        }
+        return super.getLightOpacity(world, x, y, z);
+    }
+    
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.getLightValue(world, x, y, z);
+        }
+        return super.getLightValue(world, x, y, z);
+    }
+    
     public static class MetadataWrapper {
         
         protected String[] iconNames;
@@ -255,7 +279,7 @@ public class BlockMetadata extends BlockBase {
             
             ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
             
-            if (!stacks.isEmpty()) {
+            if (itemStacks != null && !itemStacks.isEmpty()) {
                 
                 for (ItemStack stack : itemStacks) {
                     
@@ -332,6 +356,16 @@ public class BlockMetadata extends BlockBase {
         
         public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
             
+        }
+        
+        public int getLightOpacity(IBlockAccess world, int x, int y, int z) {
+            
+            return 0;
+        }
+        
+        public int getLightValue(IBlockAccess world, int x, int y, int z) {
+            
+            return 0;
         }
     }
     

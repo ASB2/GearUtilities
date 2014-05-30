@@ -11,36 +11,22 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilEntity;
-import GU.api.multiblock.MultiBlockAbstract.IMultiBlockStructure;
-import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHandler {
+public abstract class MultiBlockFluidHandler extends MultiBlockBase implements IFluidHandler {
     
     public FluidTank fluidTank = new FluidTank(1000);
     
-    public MultiBlockFurnace(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
+    public MultiBlockFluidHandler(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         super(world, positionRelativeTo, size, updater);
         
         fluidTank.setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
     }
     
-    public MultiBlockFurnace(World world) {
+    public MultiBlockFluidHandler(World world) {
         super(world);
         
-        fluidTank.setCapacity(16 * FluidContainerRegistry.BUCKET_VOLUME);
-    }
-    
-    @Override
-    public IMultiBlockStructure getStructure() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
-    @Override
-    public Color4i getDefaultBlockColor() {
-        
-        return Color4i.RED;
+        fluidTank.setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
     }
     
     @Override

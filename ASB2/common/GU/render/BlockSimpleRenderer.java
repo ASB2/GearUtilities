@@ -71,7 +71,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             else
                 UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.blockNoiseIcon, 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
             
-            // return true;
+//             return true;
         }
         
         if (block == BlockRegistry.SPACIAL_PROVIDER) {

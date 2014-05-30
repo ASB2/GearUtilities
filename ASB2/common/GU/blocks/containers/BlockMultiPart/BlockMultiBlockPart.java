@@ -64,7 +64,7 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4) {
-        
+        super.addInformation(stack, player, par3List, par4);
         par3List.add("Colorable");
     }
     

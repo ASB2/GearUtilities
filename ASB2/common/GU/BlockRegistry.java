@@ -43,7 +43,12 @@ public class BlockRegistry {
             this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube1" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Structure Cube 1"));
             this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube2" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Structure Cube 2"));
             this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube3" }).addDrop(new ItemStack(this, 1, 3)).setDisplayName("Structure Cube 3"));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube4" }).addDrop(new ItemStack(this, 1, 4)).setDisplayName("Structure Cube 4"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube4" }) {
+                
+                public int getLightOpacity(net.minecraft.world.IBlockAccess world, int x, int y, int z) {
+                    return 2000;
+                };
+            }.addDrop(new ItemStack(this, 1, 4)).setDisplayName("Structure Cube 4"));
             this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube5" }).addDrop(new ItemStack(this, 1, 5)).setDisplayName("Structure Cube 5"));
             this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube6" }).addDrop(new ItemStack(this, 1, 6)).setDisplayName("Structure Cube 6"));
         }
@@ -71,6 +76,8 @@ public class BlockRegistry {
             this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Fluid Interface"));
             this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Power Interface"));
             this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 3)).setDisplayName("Data Interface"));
+            this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 4)).setDisplayName("Redstone Interface"));
+            this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 5)).setDisplayName("Gui Interface"));
         }
     };
     
@@ -78,9 +85,9 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockInner" }).setDisplayName("Multi Block Inner"));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockEdge" }).setDisplayName("Multi Block Edge"));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockCorner" }).setDisplayName("Multi Block Corner"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockInner" }).setDisplayName("Multi Block Inner").addDrop(new ItemStack(this, 1, 0)));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockEdge" }).setDisplayName("Multi Block Edge").addDrop(new ItemStack(this, 1, 1)));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockCorner" }).setDisplayName("Multi Block Corner").addDrop(new ItemStack(this, 1, 2)));
         }
     };
     

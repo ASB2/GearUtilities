@@ -1,12 +1,16 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import ASB2.utils.UtilEntity;
+import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.blocks.BlockMetadata.MetadataWrapper;
+import GU.blocks.containers.TileMultiBase;
+import GU.multiblock.MultiBlockBase;
 import UC.math.vector.Vector3i;
-import GU.api.multiblock.MultiBlockAbstract.*;
 
 public class SpacialProviderWrapper extends MetadataWrapper {
     
@@ -17,39 +21,56 @@ public class SpacialProviderWrapper extends MetadataWrapper {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xHit, float yHit, float zHit) {
         
-        // TileEntity tile = world.getTileEntity(x, y, z);
-        
-        // if (tile != null && tile instanceof IMultiBlockPart &&
-        // ((IMultiBlockPart) tile).getMultiBlocks().isEmpty()) {
-        
-        if (player.getHeldItem() == null) {
+        if (!world.isRemote) {
             
-            switch (world.getBlockMetadata(x, y, z)) {
+            TileEntity tile = world.getTileEntity(x, y, z);
             
-                case 0: {
-                    
-                    UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.STANDARD.createMultiBlock(world, new Vector3i(x, y, z)));
-                    break;
-                }
+            if (tile != null && tile instanceof TileMultiBase) {
                 
-                case 1: {
+                List<IMultiBlock> multiList = ((TileMultiBase) tile).getMultiBlocks();
+                
+                if (multiList.isEmpty()) {
                     
-                    UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.CHEST.createMultiBlock(world, new Vector3i(x, y, z)));
-                    break;
+                    if (player.getHeldItem() == null) {
+                        
+                        switch (world.getBlockMetadata(x, y, z)) {
+                        
+                            case 0: {
+                                
+                                UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.STANDARD.createMultiBlock(world, new Vector3i(x, y, z)));
+                                break;
+                            }
+                            
+                            case 1: {
+                                
+                                UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.CHEST.createMultiBlock(world, new Vector3i(x, y, z)));
+                                break;
+                            }
+                            case 2: {
+                                
+                                UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.FURNACE.createMultiBlock(world, new Vector3i(x, y, z)));
+                                break;
+                            }
+                            case 3: {
+                                
+                                UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.TANK.createMultiBlock(world, new Vector3i(x, y, z)));
+                                break;
+                            }
+                        }
+                        return true;
+                    }
                 }
-                case 2: {
+                else {
                     
-                    UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.FURNACE.createMultiBlock(world, new Vector3i(x, y, z)));
-                    break;
-                }
-                case 3: {
-                    
-                    UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.TANK.createMultiBlock(world, new Vector3i(x, y, z)));
-                    break;
+                    for (IMultiBlock multi : multiList) {
+                        
+                        if (multi instanceof MultiBlockBase) {
+                            
+                            ((MultiBlockBase) multi).onBlockActivated(world, x, y, z, player, side, xHit, yHit, zHit);
+                        }
+                    }
                 }
             }
-            return true;
-            // }
         }
         return false;
     }

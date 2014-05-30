@@ -3,6 +3,7 @@ package GU.entities;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -160,5 +161,17 @@ public class EntityPhoton extends EntityBase implements IEntityAdditionalSpawnDa
         
         // this.setPosition(additionalData.readDouble(),
         // additionalData.readDouble(), additionalData.readDouble());
+    }
+
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound var1) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound var1) {
+        // TODO Auto-generated method stub
+        
     }
 }

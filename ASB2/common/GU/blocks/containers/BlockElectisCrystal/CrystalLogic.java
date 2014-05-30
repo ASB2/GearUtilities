@@ -12,12 +12,12 @@ import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
-import UC.AbstractUpdateable;
+import UC.IAbstractUpdateable;
 import UC.color.Color4i;
 import GU.api.power.PowerNetObject.*;
 import UC.math.vector.*;
 
-public abstract class CrystalLogic implements AbstractUpdateable, IColorableTile, ICrystalPowerHandler {
+public abstract class CrystalLogic implements IAbstractUpdateable, IColorableTile, ICrystalPowerHandler {
     
     WeakReference<TileElectisCrystal> originCrystal;
     World worldObj;
