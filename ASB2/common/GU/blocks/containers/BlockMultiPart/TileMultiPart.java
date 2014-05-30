@@ -79,6 +79,10 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
             this.color.setGreen((this.color.getGreen() + color.getGreen()) / 2);
             this.color.setBlue((this.color.getBlue() + color.getBlue()) / 2);
         }
+        else {
+            
+            this.color.setAll(color);
+        }
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         return true;
     }

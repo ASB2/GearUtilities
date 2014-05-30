@@ -119,6 +119,8 @@ public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable 
             world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART);
         }
         
+        tile = UtilVector.getTileAtPostion(world, position);
+        
         if (checkBlock(position)) {
             
             if (tile instanceof IColorableTile) {
@@ -139,6 +141,8 @@ public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable 
             world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART, 1, 3);
         }
         
+        tile = UtilVector.getTileAtPostion(world, position);
+        
         if (checkBlock(position)) {
             
             if (tile instanceof IColorableTile) {
@@ -158,6 +162,8 @@ public abstract class MultiBlockBase implements IMultiBlock, AbstractUpdateable 
             UtilBlock.breakBlock(world, position.getX(), position.getY(), position.getZ());
             world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART, 2, 3);
         }
+        
+        tile = UtilVector.getTileAtPostion(world, position);
         
         if (checkBlock(position)) {
             

@@ -1,7 +1,10 @@
 package GU.blocks.containers.BlockMultiPart;
 
+import java.util.List;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -10,6 +13,7 @@ import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.color.VanillaColor;
 import GU.blocks.containers.BlockMultiMetadataContainerBase;
 import GU.render.BlockSimpleRenderer.INoiseBlockRender;
+import GU.render.noise.NoiseManager;
 import UC.color.Color4i;
 
 public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase implements INoiseBlockRender {
@@ -57,6 +61,13 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
         return false;
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4) {
+        
+        par3List.add("Colorable");
+    }
+    
     @Override
     public TileEntity createNewTileEntity(World var1, int var2) {
         
@@ -66,7 +77,11 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
     @Override
     public Color4i getColor(int metadata) {
         
-        return Color4i.WHITE;
+        // return Minecraft.getSystemTime() % 2 == 0 ?
+        // NoiseManager.instance.ITERATED_COLOR :
+        // NoiseManager.instance.ITERATED_COLOR_INVERTED;
+        
+        return NoiseManager.instance.ITERATED_COLOR;
     }
     
     @Override

@@ -19,7 +19,7 @@ public class SpacialProviderWrapper extends MetadataWrapper {
         
         TileEntity tile = world.getTileEntity(x, y, z);
         
-        if (tile != null && tile instanceof IMultiBlockPart && ((IMultiBlockPart) tile).getMultiBlocks().isEmpty()) {
+//        if (tile != null && tile instanceof IMultiBlockPart && ((IMultiBlockPart) tile).getMultiBlocks().isEmpty()) {
             
             if (player.getHeldItem() == null) {
                 
@@ -48,7 +48,7 @@ public class SpacialProviderWrapper extends MetadataWrapper {
                     }
                 }
                 return true;
-            }
+//            }
         }
         return false;
     }

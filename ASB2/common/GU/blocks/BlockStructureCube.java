@@ -15,4 +15,10 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
         
         return true;
     }
+    
+    @Override
+    public boolean isOpaqueCube() {
+        
+        return false;
+    }
 }
