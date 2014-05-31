@@ -142,9 +142,9 @@ public enum VanillaColor {
             case ORANGE:
                 return new Color4i(255, 165, 0);
             case MAGENTA:
-                return new Color4i(139, 0, 139);
+                return new Color4i(220, 0, 190);
             case LIGHT_BLUE:
-                return new Color4i(173, 216, 230);
+                return new Color4i(173, 216, 250);
             case YELLOW:
                 return new Color4i(255, 255, 0);
             case LIME:
@@ -154,11 +154,11 @@ public enum VanillaColor {
             case GREY:
                 return new Color4i(128, 128, 128);
             case LIGHT_GREY:
-                return new Color4i(100 + 90, 100 + 90, 100 + 90);
+                return new Color4i(190, 190, 190);
             case CYAN:
                 return new Color4i(0, 255, 255);
             case PURPLE:
-                return new Color4i(128, 0, 128);
+                return new Color4i(110, 0, 110);
             case BLUE:
                 return new Color4i(0, 0, 255);
             case BROWN:

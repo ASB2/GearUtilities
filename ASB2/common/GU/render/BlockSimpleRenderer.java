@@ -1,7 +1,5 @@
 package GU.render;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
@@ -60,9 +58,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
         
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        // GL11.glEnable(GL11.GL_BLEND);
         
         if (block instanceof INoiseBlockRender) {
             
@@ -72,6 +68,8 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             
             if (color != null) {
                 
+                // GL11.glBlendFunc(GL11.GL_SRC_ALPHA,
+                // GL11.GL_ONE_MINUS_SRC_ALPHA);
                 UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.blockNoiseIcon, color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha(), Reference.BRIGHT_BLOCK);
             }
             else
@@ -87,8 +85,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
         }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         renderer.renderStandardBlock(block, x, y, z);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glPopMatrix();
+        // GL11.glDisable(GL11.GL_BLEND);
         return true;
     }
     

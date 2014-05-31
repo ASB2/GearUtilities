@@ -1,5 +1,6 @@
 package GU.entities;
 
+import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -13,6 +14,8 @@ public class EntityBlockDestoryer extends EntityBase {
     ForgeDirection direction;
     int distance;
     String playerName;
+    Block block;
+    int meta;
     
     public EntityBlockDestoryer(World par1World) {
         super(par1World);
@@ -21,29 +24,39 @@ public class EntityBlockDestoryer extends EntityBase {
         direction = ForgeDirection.UNKNOWN;
     }
     
-    public EntityBlockDestoryer(World world, Vector3i start, ForgeDirection direction, int distance) {
+    public EntityBlockDestoryer(World world, Vector3i start, ForgeDirection direction, int distance, Block block, int meta) {
         super(world);
         this.position = start.toVector3d().clone();
         this.startPosition = start;
         this.direction = direction;
         this.distance = distance;
+        this.block = block;
+        this.meta = meta;
     }
     
     @Override
     public void onUpdate() {
         
-        position.move(direction.offsetX, direction.offsetY, direction.offsetZ);
-        this.updateVinillaPosition();
-        
-        Vector3i positionFloor = position.toVector3iFloor();
-        
-        if (!positionFloor.equals(startPosition)) {
+//        if (!worldObj.isRemote) {
             
-            UtilBlock.breakBlock(worldObj, positionFloor.getX(), positionFloor.getY(), positionFloor.getZ());
-        }
-        if (startPosition.distanceTo(position) >= distance) {
+            if (worldObj.rand.nextInt(5) == 0) {
+                
+                Vector3i positionFloor = position.toVector3iFloor();
+                
+                UtilBlock.breakBlock(worldObj, positionFloor.getX(), positionFloor.getY(), positionFloor.getZ());
+                this.setDead();
+//            }
             
-            this.setDead();
+            // position.move(direction.offsetX, direction.offsetY,
+            // direction.offsetZ);
+            // this.updateVinillaPosition();
+            //
+            // if (startPosition.distanceTo(position) >= distance || block ==
+            // null) {
+            //
+            // this.setDead();
+            // return;
+            // }
         }
     }
     

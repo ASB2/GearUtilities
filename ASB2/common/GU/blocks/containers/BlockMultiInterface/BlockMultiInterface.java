@@ -28,6 +28,10 @@ public class BlockMultiInterface extends BlockMultiMetadataContainerBase impleme
                 return Color4i.YELLOW.brighter();
             case 3:
                 return new Color4i(50, 90, 0).darker();
+            case 4:
+                return Color4i.RED.brighter();
+            case 5:
+                return new Color4i(190, 100, 0);
         }
         return null;
     }
