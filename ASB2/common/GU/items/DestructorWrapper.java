@@ -1,5 +1,7 @@
 package GU.items;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -101,5 +103,11 @@ public class DestructorWrapper extends MetadataWrapper {
         UtilItemStack.setNBTTagInt(itemStack, "direction", Math.max(direction, 0));
         UtilEntity.sendChatToPlayer(player, "Distance: " + Math.max(direction, 0));
         return super.onItemRightClick(itemStack, world, player);
+    }
+    
+    @Override
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        
+        par3List.add("Distance: " + UtilItemStack.getNBTTagInt(par1ItemStack, "direction"));
     }
 }

@@ -86,6 +86,7 @@ public class ItemMetadata extends ItemBase {
     @SuppressWarnings("rawtypes")
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        par3List.add("Made just for you: ".concat(par2EntityPlayer.getDisplayName()));
         
         MetadataWrapper wrapper = wrappers.get(par1ItemStack.getItemDamage());
         
