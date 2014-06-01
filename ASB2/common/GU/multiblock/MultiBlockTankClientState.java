@@ -25,84 +25,23 @@ public class MultiBlockTankClientState extends MultiBlockClientState {
         this.tank = tank;
     }
     
-    @SuppressWarnings("unused")
     @Override
     public void render(double x, double y, double z, double f) {
         
-        if (false) {
+        if (tank != null && tank.getFluid() != null) {
             
             GL11.glPushMatrix();
             
             GL11.glDisable(GL11.GL_LIGHTING);
             
             GL11.glTranslated(x, y, z);
-            
-            GL11.glBegin(GL11.GL_QUADS); // Draw The Cube Using quads
-            
-            GL11.glColor3f(0.0f, 1.0f, 0.0f); // Color Blue
-            GL11.glVertex3f(1.0f, 1.0f, -1.0f); // Top Right Of The Quad (Top)
-            GL11.glVertex3f(-1.0f, 1.0f, -1.0f); // Top Left Of The Quad (Top)
-            GL11.glVertex3f(-1.0f, 1.0f, 1.0f); // Bottom Left Of The Quad (Top)
-            GL11.glVertex3f(1.0f, 1.0f, 1.0f); // Bottom Right Of The Quad (Top)
-            
-            GL11.glColor3f(1.0f, 0.5f, 0.0f); // Color Orange
-            GL11.glVertex3f(1.0f, -1.0f, 1.0f); // Top Right Of The Quad
-                                                // (Bottom)
-            GL11.glVertex3f(-1.0f, -1.0f, 1.0f); // Top Left Of The Quad
-                                                 // (Bottom)
-            GL11.glVertex3f(-1.0f, -1.0f, -1.0f); // Bottom Left Of The Quad
-                                                  // (Bottom)
-            GL11.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Right Of The Quad
-                                                 // (Bottom)
-            GL11.glColor3f(1.0f, 0.0f, 0.0f); // Color Red
-            GL11.glVertex3f(1.0f, 1.0f, 1.0f); // Top Right Of The Quad (Front)
-            GL11.glVertex3f(-1.0f, 1.0f, 1.0f); // Top Left Of The Quad (Front)
-            GL11.glVertex3f(-1.0f, -1.0f, 1.0f); // Bottom Left Of The Quad
-                                                 // (Front)
-            GL11.glVertex3f(1.0f, -1.0f, 1.0f); // Bottom Right Of The Quad
-                                                // (Front)
-            
-            GL11.glColor3f(1.0f, 1.0f, 0.0f); // Color Yellow
-            GL11.glVertex3f(1.0f, -1.0f, -1.0f); // Top Right Of The Quad (Back)
-            GL11.glVertex3f(-1.0f, -1.0f, -1.0f); // Top Left Of The Quad (Back)
-            GL11.glVertex3f(-1.0f, 1.0f, -1.0f); // Bottom Left Of The Quad
-                                                 // (Back)
-            GL11.glVertex3f(1.0f, 1.0f, -1.0f); // Bottom Right Of The Quad
-                                                // (Back)
-            
-            GL11.glColor3f(0.0f, 0.0f, 1.0f); // Color Blue
-            GL11.glVertex3f(-1.0f, 1.0f, 1.0f); // Top Right Of The Quad (Left)
-            GL11.glVertex3f(-1.0f, 1.0f, -1.0f); // Top Left Of The Quad (Left)
-            GL11.glVertex3f(-1.0f, -1.0f, -1.0f); // Bottom Left Of The Quad
-                                                  // (Left)
-            GL11.glVertex3f(-1.0f, -1.0f, 1.0f); // Bottom Right Of The Quad
-                                                 // (Left)
-            
-            GL11.glColor3f(1.0f, 0.0f, 1.0f); // Color Violet
-            GL11.glVertex3f(1.0f, 1.0f, -1.0f); // Top Right Of The Quad (Right)
-            GL11.glVertex3f(1.0f, 1.0f, 1.0f); // Top Left Of The Quad (Right)
-            GL11.glVertex3f(1.0f, -1.0f, 1.0f); // Bottom Left Of The Quad
-                                                // (Right)
-            GL11.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Right Of The Quad
-                                                 // (Right)
-            GL11.glEnd();
-            
-            GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glPopMatrix();
-        }
-        else {
-            
-            GL11.glPushMatrix();
-            
-            GL11.glDisable(GL11.GL_LIGHTING);
-            
-            GL11.glTranslated(x, y, z);
-            // GL11.glTranslated(.5, .5, .5);
             
             Tessellator tess = Tessellator.instance;
             
             UtilRender.bindBlockTextures();
-            IIcon icon = NoiseManager.instance.blockNoiseIcon;
+            
+            // IIcon icon = NoiseManager.instance.blockNoiseIcon;
+            IIcon icon = tank.getFluid().getFluid().getFlowingIcon();
             
             // Up
             tess.startDrawingQuads();

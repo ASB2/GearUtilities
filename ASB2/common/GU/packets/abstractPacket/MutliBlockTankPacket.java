@@ -3,6 +3,7 @@ package GU.packets.abstractPacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -41,10 +42,10 @@ public class MutliBlockTankPacket implements IAbstractPacket {
         buffer.writeInt(size.getY());
         buffer.writeInt(size.getZ());
         
-//        buffer.writeInt(tank.getFluid().getFluid().getID());
-//        buffer.writeInt(tank.getFluidAmount());
-//        ByteBufUtils.writeTag(buffer, tank.getFluid().tag);
-//        buffer.writeInt(tank.getCapacity());
+        buffer.writeInt(tank.getFluid().getFluid().getID());
+        buffer.writeInt(tank.getFluidAmount());
+        buffer.writeInt(tank.getCapacity());
+        // ByteBufUtils.writeTag(buffer, tank.getFluid().tag);
     }
     
     @Override
@@ -54,7 +55,11 @@ public class MutliBlockTankPacket implements IAbstractPacket {
         
         size = new Vector3i(buffer.readInt(), buffer.readInt(), buffer.readInt());
         
-//        tank = new FluidTank(new FluidStack(buffer.readInt(), buffer.readInt(), ByteBufUtils.readTag(buffer)), buffer.readInt());
+        int fluidID = buffer.readInt();
+        int fluidAmount = buffer.readInt();
+        int capasity = buffer.readInt();
+        // NBTTagCompound tag = ByteBufUtils.readTag(buffer);
+        tank = new FluidTank(new FluidStack(fluidID, fluidAmount), capasity);
     }
     
     @Override
