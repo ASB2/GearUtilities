@@ -11,8 +11,6 @@ import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilItemStack;
 import GU.items.ItemMetadata.MetadataWrapper;
-import UC.math.vector.Vector3i;
-import GU.entities.*;
 
 public class DestructorWrapper extends MetadataWrapper {
     
@@ -105,6 +103,7 @@ public class DestructorWrapper extends MetadataWrapper {
         return super.onItemRightClick(itemStack, world, player);
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         

@@ -28,6 +28,10 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
         
+        if (block == BlockRegistry.MULTI_BLOCK_PART_AIR) {
+            return;
+        }
+        
         if (block instanceof INoiseBlockRender) {
             
             renderer.setRenderBounds(.01, .01, .01, 1 - .01, 1 - .01, 1 - .01);
@@ -51,6 +55,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             UtilRender.renderStandardInvBlock(renderer, block, EnumInputIcon.NONE.getStateIcon());
             return;
         }
+        
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         UtilRender.renderStandardInvBlock(renderer, block, metadata);
     }

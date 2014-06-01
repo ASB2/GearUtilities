@@ -7,9 +7,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
 import GU.GUItemBlock;
 import GU.GearUtilities;
 import GU.render.BlockSimpleRenderer;
+import GU.render.noise.NoiseManager;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -69,5 +71,11 @@ public class BlockBase extends Block {
     public boolean isOpaqueCube() {
         // TODO Auto-generated method stub
         return false;
+    }
+    
+    @Override
+    public IIcon getIcon(int p_149691_1_, int p_149691_2_) {
+        // TODO Auto-generated method stub
+        return NoiseManager.instance.blockNoiseIcon;
     }
 }

@@ -133,13 +133,27 @@ public class NoiseManager {
             
             for (float currentDensity = .1f; currentDensity <= .2; currentDensity += .0002) {
                 
+                double voroni2 = (noiseGen.getValue(currentDensity, currentDensity, currentDensity) * 255);
+                
                 int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
                 
                 for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x++) {
                     
                     for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
                         
-                        int col = (int) (((noiseGen.getValue(x * currentDensity, y * currentDensity, currentDensity) * 255) + (noiseGen.getValue(currentDensity, currentDensity, currentDensity) * 255) + FastNoise.noise(x * currentDensity, y * currentDensity, 7) + FastNoise.noise(x * currentDensity, y * currentDensity, 7)) / 4);
+                        double voroni = (noiseGen.getValue(x * currentDensity, y * currentDensity, currentDensity) * 255);
+                        
+                        int perlin = FastNoise.noise(x * currentDensity, y * currentDensity, 7);
+                        
+                        int col = (int) ((voroni + voroni2 + perlin + perlin) / 3);
+                        
+                        // int col = (int) (((noiseGen.getValue(x *
+                        // currentDensity, y * currentDensity, currentDensity) *
+                        // 255) + (noiseGen.getValue(currentDensity,
+                        // currentDensity, currentDensity) * 255) +
+                        // FastNoise.noise(x * currentDensity, y *
+                        // currentDensity, 7) + FastNoise.noise(x *
+                        // currentDensity, y * currentDensity, 7)) / 4);
                         
                         // int col = (int) (((noiseGen.getValue(x *
                         // currentDensity, y * currentDensity, currentDensity) *

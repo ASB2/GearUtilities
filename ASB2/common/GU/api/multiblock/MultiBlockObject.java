@@ -1,8 +1,12 @@
 package GU.api.multiblock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockRow;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockStructure;
+import UC.math.vector.Vector3i;
 
 public class MultiBlockObject {
     
@@ -20,42 +24,49 @@ public class MultiBlockObject {
             
             return multiBlockRows;
         }
-    }
-    
-    public static class MultiBlockRow implements IMultiBlockRow {
         
-        Block[][] blocks;
-        int xSize, zSize;
-        
-        public MultiBlockRow(int xSize, int zSize) {
+        public List<Vector3i> getForcedBlocks(Vector3i positiveMostPosition) {
             
-            blocks = new Block[xSize][zSize];
-            this.xSize = xSize;
-            this.zSize = zSize;
+            List<Vector3i> vectors = new ArrayList<Vector3i>();
+            
+            return vectors;
         }
         
-        public MultiBlockRow setBlock(Block block, int x, int z) {
+        public static class MultiBlockRow implements IMultiBlockRow {
             
-            blocks[x][z] = block;
-            return this;
-        }
-        
-        @Override
-        public int getXSize() {
+            Block[][] blocks;
+            int xSize, zSize;
             
-            return xSize;
-        }
-        
-        @Override
-        public int getZSize() {
+            public MultiBlockRow(int xSize, int zSize) {
+                
+                blocks = new Block[xSize][zSize];
+                this.xSize = xSize;
+                this.zSize = zSize;
+            }
             
-            return zSize;
-        }
-        
-        @Override
-        public Block getBlockAtPosition(int x, int z) {
+            public MultiBlockRow setBlock(Block block, int x, int z) {
+                
+                blocks[x][z] = block;
+                return this;
+            }
             
-            return blocks[x][z];
+            @Override
+            public int getXSize() {
+                
+                return xSize;
+            }
+            
+            @Override
+            public int getZSize() {
+                
+                return zSize;
+            }
+            
+            @Override
+            public Block getBlockAtPosition(int x, int z) {
+                
+                return blocks[x][z];
+            }
         }
     }
 }

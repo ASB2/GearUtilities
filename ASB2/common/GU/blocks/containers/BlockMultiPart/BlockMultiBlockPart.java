@@ -67,7 +67,7 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
         super.addInformation(stack, player, par3List, par4);
         par3List.add("Colorable");
     }
-    
+
     @Override
     public TileEntity createNewTileEntity(World var1, int var2) {
         

@@ -13,8 +13,6 @@ public class MultiBlockAbstract {
     
     public static interface IMultiBlock {
         
-        IMultiBlockStructure getStructure();
-        
         void onBlockBreak(int x, int y, int z);
     }
     
