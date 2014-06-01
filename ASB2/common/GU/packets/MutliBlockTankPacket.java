@@ -1,4 +1,4 @@
-package GU.packets.abstractPacket;
+package GU.packets;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -10,6 +10,7 @@ import net.minecraftforge.fluids.FluidTank;
 import ASB2.utils.UtilVector;
 import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender.TileMultiPartRender;
 import GU.multiblock.MultiBlockTankClientState;
+import GU.packets.abstractPacket.IAbstractPacket;
 import UC.math.vector.Vector3i;
 import cpw.mods.fml.common.network.ByteBufUtils;
 

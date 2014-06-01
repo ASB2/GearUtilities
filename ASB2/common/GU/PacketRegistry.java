@@ -3,8 +3,8 @@ package GU;
 import GU.packets.ColorPacket;
 import GU.packets.CrystalNetPacket;
 import GU.packets.CrystalTypePacket;
+import GU.packets.MutliBlockTankPacket;
 import GU.packets.PowerPacket;
-import GU.packets.abstractPacket.MutliBlockTankPacket;
 
 public final class PacketRegistry {
     

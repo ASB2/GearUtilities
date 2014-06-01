@@ -6,7 +6,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import ASB2.utils.UtilVector;
 import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
-import GU.packets.abstractPacket.MutliBlockTankPacket;
+import GU.packets.MutliBlockTankPacket;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
