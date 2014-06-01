@@ -83,7 +83,7 @@ public class ItemMetadata extends ItemBase {
         return super.getItemStackDisplayName(itemStack);
     }
     
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add("Made just for you: ".concat(par2EntityPlayer.getDisplayName()));

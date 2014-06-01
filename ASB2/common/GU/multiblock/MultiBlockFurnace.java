@@ -1,6 +1,5 @@
 package GU.multiblock;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -11,13 +10,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import ASB2.utils.UtilBlock;
-import ASB2.utils.UtilEntity;
+
+import org.lwjgl.opengl.GL11;
+
 import ASB2.utils.UtilVector;
-import GU.BlockRegistry;
-import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
-import GU.api.multiblock.MultiBlockAbstract.IMultiBlockStructure;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
@@ -111,22 +108,6 @@ public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHand
         return new FluidTankInfo[] { fluidTank.getInfo() };
     }
     
-    public void onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        
-        if (this.isValid) {
-            // UtilEntity.sendChatToPlayer(player, "Fluid: " +
-            // this.fluidTank.getFluid() != null ?
-            // this.fluidTank.getFluid().getFluid() != null ?
-            // this.fluidTank.getFluid().getFluid().getName() : "null" :
-            // "null");
-            
-            UtilEntity.sendChatToPlayer(player, "Fluid Amount: " + this.fluidTank.getFluidAmount() + " / " + fluidTank.getCapacity());
-        }
-        else {
-            UtilEntity.sendChatToPlayer(player, "Im not Valids");
-        }
-    }
-    
     @Override
     public NBTTagCompound save(NBTTagCompound tag) {
         
@@ -154,7 +135,15 @@ public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHand
                         
                         Vector3i vec = positionRelativeTo.subtract(x, y, z);
                         
-                        if (((x == 0 || x == size.getX()) && (y == 0 || y == size.getY())) && (z == 0 || z == size.getZ())) {
+                        if (x == 1 && y == 1 && z == 1) {
+                            
+                            if (!placeRenderBlock(vec)) {
+                                
+                                deconstruct();
+                                return;
+                            }
+                        }
+                        else if (((x == 0 || x == size.getX()) && (y == 0 || y == size.getY())) && (z == 0 || z == size.getZ())) {
                             
                             if (!placeCornerBlock(vec)) {
                                 
@@ -163,6 +152,14 @@ public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHand
                             }
                         }
                         else if (((x == 0 || x == size.getX()) && (y == 0 || y == size.getY())) || ((y == 0 || y == size.getY()) && (z == 0 || z == size.getZ())) || ((x == 0 || x == size.getX()) && (z == 0 || z == size.getZ()))) {
+                            
+                            if (!placeEdgeBlock(vec)) {
+                                
+                                deconstruct();
+                                return;
+                            }
+                        }
+                        else if (y == (int) (size.getY() / 2)) {
                             
                             if (!placeEdgeBlock(vec)) {
                                 
@@ -194,11 +191,11 @@ public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHand
                                 return;
                             }
                         }
-                        // else if (!placeAirBlock(vec)) {
-                        //
-                        // deconstruct();
-                        // return;
-                        // }
+                        else if (!placeAirBlock(vec)) {
+                            
+                            deconstruct();
+                            return;
+                        }
                     }
                 }
             }
@@ -222,140 +219,11 @@ public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHand
         }
     }
     
-    public void deconstruct() {
-        
-        isConstructing = false;
-        isValid = false;
-        isDeconstructing = true;
-        
-        for (int x = 0; x <= size.getX(); x++) {
-            
-            for (int y = 0; y <= size.getY(); y++) {
-                
-                for (int z = 0; z <= size.getZ(); z++) {
-                    
-                    deconstructBlock(positionRelativeTo.subtract(x, y, z));
-                }
-            }
-        }
-    }
-    
-    public boolean placeGlassBlock(Vector3i position) {
-        
-        TileEntity tile = UtilVector.getTileAtPostion(world, position);
-        if (tile == null || !(tile instanceof IMultiBlockPart)) {
-            
-            UtilBlock.breakBlock(world, position.getX(), position.getY(), position.getZ());
-            world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART_GLASS);
-        }
-        
-        tile = UtilVector.getTileAtPostion(world, position);
-        
-        if (checkBlock(position)) {
-            
-            if (tile instanceof IColorableTile) {
-                
-                ((IColorableTile) tile).setColor(this.getDefaultBlockColor(), ForgeDirection.UNKNOWN);
-            }
-            return true;
-        }
-        return false;
-    }
-    
-    public boolean placeAirBlock(Vector3i position) {
-        
-        TileEntity tile = UtilVector.getTileAtPostion(world, position);
-        
-        if (tile == null || !(tile instanceof IMultiBlockPart)) {
-            
-            UtilBlock.breakBlock(world, position.getX(), position.getY(), position.getZ());
-            world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART_AIR);
-        }
-        
-        tile = UtilVector.getTileAtPostion(world, position);
-        
-        if (checkBlock(position)) {
-            
-            checkColor(position);
-            return true;
-        }
-        return false;
-    }
-    
-    public boolean placeEdgeBlock(Vector3i position) {
-        
-        TileEntity tile = UtilVector.getTileAtPostion(world, position);
-        if (tile == null || !(tile instanceof IMultiBlockPart)) {
-            
-            UtilBlock.breakBlock(world, position.getX(), position.getY(), position.getZ());
-            world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART, 1, 3);
-        }
-        
-        tile = UtilVector.getTileAtPostion(world, position);
-        
-        if (checkBlock(position)) {
-            
-            checkColor(position);
-            return true;
-        }
-        return false;
-    }
-    
-    public boolean placeCornerBlock(Vector3i position) {
-        
-        TileEntity tile = UtilVector.getTileAtPostion(world, position);
-        if (tile == null || !(tile instanceof IMultiBlockPart)) {
-            
-            UtilBlock.breakBlock(world, position.getX(), position.getY(), position.getZ());
-            world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART, 2, 3);
-        }
-        
-        tile = UtilVector.getTileAtPostion(world, position);
-        
-        if (checkBlock(position)) {
-            
-            checkColor(position);
-            return true;
-        }
-        return false;
-    }
-    
-    public void checkColor(Vector3i vector) {
-        
-        TileEntity tile = UtilVector.getTileAtPostion(world, vector);
-        
-        if (tile instanceof IColorableTile) {
-            
-            ((IColorableTile) tile).setColor(this.getDefaultBlockColor(), ForgeDirection.UNKNOWN);
-        }
-    }
-    
-    public boolean checkBlock(Vector3i position) {
-        
-        TileEntity tile = UtilVector.getTileAtPostion(world, position);
-        
-        if (tile != null && tile instanceof IMultiBlockPart) {
-            
-            return ((IMultiBlockPart) tile).addMultiBlock(this);
-        }
-        return false;
-    }
-    
-    public void deconstructBlock(Vector3i position) {
-        
-        TileEntity tile = UtilVector.getTileAtPostion(world, position);
-        
-        if (tile != null && tile instanceof IMultiBlockPart) {
-            
-            ((IMultiBlockPart) tile).removeMultiBlock(this);
-        }
-    }
-    
     public boolean startCreation() {
         
         if (!isValid && !isConstructing) {
             
-            if (size.getX() >= 2 && size.getY() >= 2 && size.getZ() >= 2) {
+            if (size.getX() >= 2 && size.getY() >= 4 && size.getZ() >= 2) {
                 
                 isConstructing = true;
                 
@@ -368,5 +236,48 @@ public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHand
             }
         }
         return false;
+    }
+    
+    @Override
+    public void render(double x, double y, double z, float f) {
+        
+        GL11.glPushMatrix();
+        // GL11.glTranslated(x, y, z);
+        GL11.glBegin(GL11.GL_QUADS); // Draw The Cube Using quads
+        GL11.glColor3f(0.0f, 1.0f, 0.0f); // Color Blue
+        GL11.glVertex3f(1.0f, 1.0f, -1.0f); // Top Right Of The Quad (Top)
+        GL11.glVertex3f(-1.0f, 1.0f, -1.0f); // Top Left Of The Quad (Top)
+        GL11.glVertex3f(-1.0f, 1.0f, 1.0f); // Bottom Left Of The Quad (Top)
+        GL11.glVertex3f(1.0f, 1.0f, 1.0f); // Bottom Right Of The Quad (Top)
+        GL11.glColor3f(1.0f, 0.5f, 0.0f); // Color Orange
+        GL11.glVertex3f(1.0f, -1.0f, 1.0f); // Top Right Of The Quad (Bottom)
+        GL11.glVertex3f(-1.0f, -1.0f, 1.0f); // Top Left Of The Quad (Bottom)
+        GL11.glVertex3f(-1.0f, -1.0f, -1.0f); // Bottom Left Of The Quad
+                                              // (Bottom)
+        GL11.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Right Of The Quad
+                                             // (Bottom)
+        GL11.glColor3f(1.0f, 0.0f, 0.0f); // Color Red
+        GL11.glVertex3f(1.0f, 1.0f, 1.0f); // Top Right Of The Quad (Front)
+        GL11.glVertex3f(-1.0f, 1.0f, 1.0f); // Top Left Of The Quad (Front)
+        GL11.glVertex3f(-1.0f, -1.0f, 1.0f); // Bottom Left Of The Quad (Front)
+        GL11.glVertex3f(1.0f, -1.0f, 1.0f); // Bottom Right Of The Quad (Front)
+        GL11.glColor3f(1.0f, 1.0f, 0.0f); // Color Yellow
+        GL11.glVertex3f(1.0f, -1.0f, -1.0f); // Top Right Of The Quad (Back)
+        GL11.glVertex3f(-1.0f, -1.0f, -1.0f); // Top Left Of The Quad (Back)
+        GL11.glVertex3f(-1.0f, 1.0f, -1.0f); // Bottom Left Of The Quad (Back)
+        GL11.glVertex3f(1.0f, 1.0f, -1.0f); // Bottom Right Of The Quad (Back)
+        GL11.glColor3f(0.0f, 0.0f, 1.0f); // Color Blue
+        GL11.glVertex3f(-1.0f, 1.0f, 1.0f); // Top Right Of The Quad (Left)
+        GL11.glVertex3f(-1.0f, 1.0f, -1.0f); // Top Left Of The Quad (Left)
+        GL11.glVertex3f(-1.0f, -1.0f, -1.0f); // Bottom Left Of The Quad (Left)
+        GL11.glVertex3f(-1.0f, -1.0f, 1.0f); // Bottom Right Of The Quad (Left)
+        GL11.glColor3f(1.0f, 0.0f, 1.0f); // Color Violet
+        GL11.glVertex3f(1.0f, 1.0f, -1.0f); // Top Right Of The Quad (Right)
+        GL11.glVertex3f(1.0f, 1.0f, 1.0f); // Top Left Of The Quad (Right)
+        GL11.glVertex3f(1.0f, -1.0f, 1.0f); // Bottom Left Of The Quad (Right)
+        GL11.glVertex3f(1.0f, -1.0f, -1.0f); // Bottom Right Of The Quad (Right)
+        GL11.glEnd();
+        
+        GL11.glPopMatrix();
     }
 }

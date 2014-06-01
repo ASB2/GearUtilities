@@ -1,22 +1,20 @@
-package GU.blocks.containers.BlockSpacialProvider;
+package GU.multiblock;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilBlock;
+import GU.BlockRegistry;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockMarker;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
-import GU.multiblock.MultiBlockChest;
-import GU.multiblock.MultiBlockFurnace;
-import GU.multiblock.MultiBlockTank;
 import UC.math.vector.Vector3i;
 
 public enum EnumMultiBlockType {
     
     STANDARD, CHEST, FURNACE, TANK;
     
-    public static final int MAX_DISTANCE = 9;
+    public static final int MAX_DISTANCE = 8;
     
     public boolean createMultiBlock(World world, Vector3i spacialPosition) {
         
@@ -33,6 +31,16 @@ public enum EnumMultiBlockType {
                 
                 TileEntity tile = world.getTileEntity(x, y, z);
                 Block block = world.getBlock(x, y, z);
+                
+                if (block == BlockRegistry.SPACIAL_PROVIDER) {
+                    
+                    int meta = world.getBlockMetadata(x, y, z);
+                    
+                    if (meta != this.ordinal() && meta != STANDARD.ordinal()) {
+                        
+                        break;
+                    }
+                }
                 
                 if (tile != null) {
                     

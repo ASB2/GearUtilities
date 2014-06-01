@@ -14,6 +14,7 @@ import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockMarker;
 import GU.blocks.containers.BlockMultiMetadataContainerBase;
 import GU.blocks.containers.TileMultiBase;
+import GU.multiblock.EnumMultiBlockType;
 import GU.multiblock.MultiBlockBase;
 import GU.render.BlockSimpleRenderer.INoiseBlockRender;
 import UC.color.Color4i;
@@ -30,54 +31,51 @@ public class BlockSpacialProvider extends BlockMultiMetadataContainerBase implem
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xHit, float yHit, float zHit) {
         
-        if (!world.isRemote) {
+        TileEntity tile = world.getTileEntity(x, y, z);
+        
+        if (tile != null && tile instanceof TileMultiBase) {
             
-            TileEntity tile = world.getTileEntity(x, y, z);
+            List<IMultiBlock> multiList = ((TileMultiBase) tile).getMultiBlocks();
             
-            if (tile != null && tile instanceof TileMultiBase) {
+            if (multiList.isEmpty()) {
                 
-                List<IMultiBlock> multiList = ((TileMultiBase) tile).getMultiBlocks();
-                
-                if (multiList.isEmpty()) {
+                if (player.getHeldItem() == null) {
                     
-                    if (player.getHeldItem() == null) {
-                        
-                        switch (world.getBlockMetadata(x, y, z)) {
-                        
-                            case 0: {
-                                
-                                UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.STANDARD.createMultiBlock(world, new Vector3i(x, y, z)));
-                                break;
-                            }
+                    switch (world.getBlockMetadata(x, y, z)) {
+                    
+                        case 0: {
                             
-                            case 1: {
-                                
-                                UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.CHEST.createMultiBlock(world, new Vector3i(x, y, z)));
-                                break;
-                            }
-                            case 2: {
-                                
-                                UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.FURNACE.createMultiBlock(world, new Vector3i(x, y, z)));
-                                break;
-                            }
-                            case 3: {
-                                
-                                UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.TANK.createMultiBlock(world, new Vector3i(x, y, z)));
-                                break;
-                            }
+                            UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.STANDARD.createMultiBlock(world, new Vector3i(x, y, z)));
+                            break;
                         }
-                        return true;
+                        
+                        case 1: {
+                            
+                            UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.CHEST.createMultiBlock(world, new Vector3i(x, y, z)));
+                            break;
+                        }
+                        case 2: {
+                            
+                            UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.FURNACE.createMultiBlock(world, new Vector3i(x, y, z)));
+                            break;
+                        }
+                        case 3: {
+                            
+                            UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.TANK.createMultiBlock(world, new Vector3i(x, y, z)));
+                            break;
+                        }
                     }
+                    return true;
                 }
-                else {
-                    for (int index = 0; index < multiList.size(); index++) {
+            }
+            else {
+                for (int index = 0; index < multiList.size(); index++) {
+                    
+                    IMultiBlock multi = multiList.get(index);
+                    
+                    if (multi instanceof MultiBlockBase) {
                         
-                        IMultiBlock multi = multiList.get(index);
-                        
-                        if (multi instanceof MultiBlockBase) {
-                            
-                            ((MultiBlockBase) multi).onBlockActivated(world, x, y, z, player, side, xHit, yHit, zHit);
-                        }
+                        ((MultiBlockBase) multi).onBlockActivated(world, x, y, z, player, side, xHit, yHit, zHit);
                     }
                 }
             }

@@ -18,6 +18,7 @@ import GU.blocks.containers.BlockMultiInterface.MultiInterfaceWrapper;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPart;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartAir;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartGlass;
+import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -102,6 +103,8 @@ public class BlockRegistry {
     
     public static final BlockMultiBlockPartAir MULTI_BLOCK_PART_AIR = new BlockMultiBlockPartAir(Material.air);
     
+    public static final BlockMultiPartRender MULTI_BLOCK_PART_RENDER = new BlockMultiPartRender(Material.air);
+    
     static {
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMetadataOre"), METADATA_ORE.setBlockName("MetadataOre"));
@@ -113,6 +116,7 @@ public class BlockRegistry {
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiBlockPart"), MULTI_BLOCK_PART);
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiBlockPartGlass"), MULTI_BLOCK_PART_GLASS);
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiBlockPartAir"), MULTI_BLOCK_PART_AIR.setBlockName("Multi Block Air"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiPartRender"), MULTI_BLOCK_PART_RENDER.setBlockName("Multi Block Render"));
     }
     
     public static void init(Configuration config) {
