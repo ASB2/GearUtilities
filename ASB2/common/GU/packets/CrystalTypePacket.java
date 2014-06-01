@@ -1,14 +1,15 @@
 package GU.packets;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import GU.blocks.containers.BlockElectisCrystal.EnumElectisCrystalType;
 import GU.blocks.containers.BlockElectisCrystal.TileElectisCrystal;
-import GU.packets.abstractPacket.IAbstractPacket;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class CrystalTypePacket implements IAbstractPacket {
+public class CrystalTypePacket implements IMessageHandler<CrystalTypePacket, CrystalTypePacket>, IMessage {
     
     int x, y, z;
     int crystalType;
@@ -26,38 +27,33 @@ public class CrystalTypePacket implements IAbstractPacket {
     }
     
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+    public void fromBytes(ByteBuf buf) {
         
-        buffer.writeInt(x);
-        buffer.writeInt(y);
-        buffer.writeInt(z);
-        buffer.writeInt(crystalType);
+        x = buf.readInt();
+        y = buf.readInt();
+        z = buf.readInt();
+        crystalType = buf.readInt();
     }
     
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+    public void toBytes(ByteBuf buf) {
         
-        x = buffer.readInt();
-        y = buffer.readInt();
-        z = buffer.readInt();
-        crystalType = buffer.readInt();
+        buf.writeInt(x);
+        buf.writeInt(y);
+        buf.writeInt(z);
+        buf.writeInt(crystalType);
     }
     
     @Override
-    public void handleClientSide(EntityPlayer player) {
+    public CrystalTypePacket onMessage(CrystalTypePacket message, MessageContext ctx) {
         
-        TileEntity tile = player.worldObj.getTileEntity(x, y, z);
+        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(x, y, z);
         
         if (tile != null && tile instanceof TileElectisCrystal) {
             
             ((TileElectisCrystal) tile).setCrystalType(EnumElectisCrystalType.values()[crystalType]);
         }
-    }
-    
-    @Override
-    public void handleServerSide(EntityPlayer player) {
-        // TODO Auto-generated method stub
-        
+        return null;
     }
     
 }

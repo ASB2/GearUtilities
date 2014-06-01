@@ -1,10 +1,10 @@
 package GU;
 
 import GU.packets.ColorPacket;
-import GU.packets.CrystalNetPacket;
 import GU.packets.CrystalTypePacket;
 import GU.packets.MutliBlockTankPacket;
 import GU.packets.PowerPacket;
+import cpw.mods.fml.relauncher.Side;
 
 public final class PacketRegistry {
     
@@ -13,10 +13,16 @@ public final class PacketRegistry {
     
     public static void init() {
         
-        GearUtilities.getPipeline().registerPacket(PowerPacket.class);
-        GearUtilities.getPipeline().registerPacket(CrystalTypePacket.class);
-        GearUtilities.getPipeline().registerPacket(CrystalNetPacket.class);
-        GearUtilities.getPipeline().registerPacket(ColorPacket.class);
-        GearUtilities.getPipeline().registerPacket(MutliBlockTankPacket.class);
+        GearUtilities.getPipeline().registerMessage(PowerPacket.class, PowerPacket.class, getNextID(), Side.CLIENT);
+        GearUtilities.getPipeline().registerMessage(CrystalTypePacket.class, CrystalTypePacket.class, getNextID(), Side.CLIENT);
+        GearUtilities.getPipeline().registerMessage(ColorPacket.class, ColorPacket.class, getNextID(), Side.CLIENT);
+        GearUtilities.getPipeline().registerMessage(MutliBlockTankPacket.class, MutliBlockTankPacket.class, getNextID(), Side.CLIENT);
+    }
+    
+    static int ID = -1;
+    
+    public static int getNextID() {
+        
+        return ID++;
     }
 }

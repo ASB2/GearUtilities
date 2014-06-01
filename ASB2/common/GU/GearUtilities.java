@@ -14,7 +14,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import GU.info.Reference;
 import GU.info.Variables;
-import GU.packets.abstractPacket.PacketPipeline;
 import GU.proxy.CommonProxy;
 import GU.render.noise.NoiseManager;
 import GU.worldGen.WorldGenBase;
@@ -28,6 +27,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Reference.MOD_ID, version = Reference.VERSION)
@@ -40,7 +40,7 @@ public final class GearUtilities {
     public static CommonProxy proxy;
     
     private static Logger GU_LOGGER = Logger.getLogger(Reference.NAME);
-    private static final PacketPipeline packetPipeline = new PacketPipeline();
+    private static final SimpleNetworkWrapper packetPipeline = new SimpleNetworkWrapper(Reference.MOD_CHANNEL);
     
     public static CreativeTabs tabGUBlocks = new GUCreativeTab(Reference.NAME.concat(": Blocks"));
     public static CreativeTabs tabGUItems = new GUCreativeTab(Reference.NAME.concat(": Items"));
@@ -54,8 +54,6 @@ public final class GearUtilities {
     public void preInit(FMLPreInitializationEvent event) {
         
         instance = this;
-        
-        packetPipeline.initialise();
         
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
@@ -119,13 +117,12 @@ public final class GearUtilities {
         FluidRegistry.registerFluidContainers();
         CraftRegistry.init();
         PacketRegistry.init();
-        packetPipeline.postInitialise();
         
         // WhiteLists.getInstance().addWrench(new
         // ItemStack(ItemRegistry.ItemAdvancedStick));
     }
     
-    public static PacketPipeline getPipeline() {
+    public static SimpleNetworkWrapper getPipeline() {
         
         return packetPipeline;
     }

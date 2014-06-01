@@ -1,14 +1,16 @@
 package GU.packets;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
+import GU.api.power.PowerNetAbstract.IPowerManager;
+import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
-import GU.api.power.PowerNetAbstract.*;
-import GU.packets.abstractPacket.IAbstractPacket;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class PowerPacket implements IAbstractPacket {
+public class PowerPacket implements IMessageHandler<PowerPacket, PowerPacket>, IMessage {
     
     int x, y, z;
     DefaultPowerManager powerToUpdate;
@@ -26,36 +28,36 @@ public class PowerPacket implements IAbstractPacket {
     }
     
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+    public void fromBytes(ByteBuf buf) {
         
-        buffer.writeInt(x);
-        buffer.writeInt(y);
-        buffer.writeInt(z);
-        
-        buffer.writeInt(powerToUpdate.getStoredPower());
-        buffer.writeInt(powerToUpdate.getMaxPower());
-    }
-    
-    @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
-        
-        x = buffer.readInt();
-        y = buffer.readInt();
-        z = buffer.readInt();
+        x = buf.readInt();
+        y = buf.readInt();
+        z = buf.readInt();
         
         if (powerToUpdate == null) {
             
             powerToUpdate = new DefaultPowerManager();
         }
         
-        powerToUpdate.setPowerStored(buffer.readInt());
-        powerToUpdate.setPowerMax(buffer.readInt());
+        powerToUpdate.setPowerStored(buf.readInt());
+        powerToUpdate.setPowerMax(buf.readInt());
     }
     
     @Override
-    public void handleClientSide(EntityPlayer player) {
+    public void toBytes(ByteBuf buf) {
         
-        TileEntity tile = player.worldObj.getTileEntity(x, y, z);
+        buf.writeInt(x);
+        buf.writeInt(y);
+        buf.writeInt(z);
+        
+        buf.writeInt(powerToUpdate.getStoredPower());
+        buf.writeInt(powerToUpdate.getMaxPower());
+    }
+    
+    @Override
+    public PowerPacket onMessage(PowerPacket message, MessageContext ctx) {
+        
+        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(x, y, z);
         
         if (tile != null && tile instanceof ITilePowerHandler) {
             
@@ -69,10 +71,6 @@ public class PowerPacket implements IAbstractPacket {
                 dManager.setPowerStored(powerToUpdate.getStoredPower());
             }
         }
-    }
-    
-    @Override
-    public void handleServerSide(EntityPlayer player) {
-        
+        return null;
     }
 }

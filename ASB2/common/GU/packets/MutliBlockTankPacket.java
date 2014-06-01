@@ -1,20 +1,19 @@
 package GU.packets;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import ASB2.utils.UtilVector;
 import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender.TileMultiPartRender;
 import GU.multiblock.MultiBlockTankClientState;
-import GU.packets.abstractPacket.IAbstractPacket;
 import UC.math.vector.Vector3i;
-import cpw.mods.fml.common.network.ByteBufUtils;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class MutliBlockTankPacket implements IAbstractPacket {
+public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacket, MutliBlockTankPacket>, IMessage {
     
     Vector3i renderHandler;
     Vector3i size;
@@ -33,50 +32,45 @@ public class MutliBlockTankPacket implements IAbstractPacket {
     }
     
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+    public void toBytes(ByteBuf buf) {
         
-        buffer.writeInt(renderHandler.getX());
-        buffer.writeInt(renderHandler.getY());
-        buffer.writeInt(renderHandler.getZ());
+        buf.writeInt(renderHandler.getX());
+        buf.writeInt(renderHandler.getY());
+        buf.writeInt(renderHandler.getZ());
         
-        buffer.writeInt(size.getX());
-        buffer.writeInt(size.getY());
-        buffer.writeInt(size.getZ());
+        buf.writeInt(size.getX());
+        buf.writeInt(size.getY());
+        buf.writeInt(size.getZ());
         
-        buffer.writeInt(tank.getFluid().getFluid().getID());
-        buffer.writeInt(tank.getFluidAmount());
-        buffer.writeInt(tank.getCapacity());
+        buf.writeInt(tank.getFluid().getFluid().getID());
+        buf.writeInt(tank.getFluidAmount());
+        buf.writeInt(tank.getCapacity());
         // ByteBufUtils.writeTag(buffer, tank.getFluid().tag);
     }
     
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+    public void fromBytes(ByteBuf buf) {
         
-        renderHandler = new Vector3i(buffer.readInt(), buffer.readInt(), buffer.readInt());
+        renderHandler = new Vector3i(buf.readInt(), buf.readInt(), buf.readInt());
         
-        size = new Vector3i(buffer.readInt(), buffer.readInt(), buffer.readInt());
+        size = new Vector3i(buf.readInt(), buf.readInt(), buf.readInt());
         
-        int fluidID = buffer.readInt();
-        int fluidAmount = buffer.readInt();
-        int capasity = buffer.readInt();
+        int fluidID = buf.readInt();
+        int fluidAmount = buf.readInt();
+        int capasity = buf.readInt();
         // NBTTagCompound tag = ByteBufUtils.readTag(buffer);
         tank = new FluidTank(new FluidStack(fluidID, fluidAmount), capasity);
     }
     
     @Override
-    public void handleClientSide(EntityPlayer player) {
+    public MutliBlockTankPacket onMessage(MutliBlockTankPacket message, MessageContext ctx) {
         
-        TileEntity tile = UtilVector.getTileAtPostion(player.worldObj, renderHandler);
+        TileEntity tile = UtilVector.getTileAtPostion(Minecraft.getMinecraft().theWorld, renderHandler);
         
         if (tile != null && tile instanceof TileMultiPartRender) {
             
             ((TileMultiPartRender) tile).setClientState(new MultiBlockTankClientState(renderHandler, size, tank));
         }
-    }
-    
-    @Override
-    public void handleServerSide(EntityPlayer player) {
-        // TODO Auto-generated method stub
-        
+        return null;
     }
 }

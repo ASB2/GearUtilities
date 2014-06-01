@@ -7,8 +7,6 @@ import net.minecraftforge.fluids.FluidTank;
 import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilRender;
-import GU.render.EnumInputIcon;
-import GU.render.noise.NoiseManager;
 import UC.math.vector.Vector3i;
 
 public class MultiBlockTankClientState extends MultiBlockClientState {

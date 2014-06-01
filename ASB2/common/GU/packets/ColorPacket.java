@@ -1,15 +1,16 @@
 package GU.packets;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import GU.packets.abstractPacket.IAbstractPacket;
+import GU.api.color.AbstractColorable.IColorableTile;
 import UC.color.Color4i;
-import GU.api.color.AbstractColorable.*;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class ColorPacket implements IAbstractPacket {
+public class ColorPacket implements IMessageHandler<ColorPacket, ColorPacket>, IMessage {
     
     Color4i color;
     int x, y, z;
@@ -33,50 +34,43 @@ public class ColorPacket implements IAbstractPacket {
     }
     
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+    public void fromBytes(ByteBuf buf) {
         
-        buffer.writeInt(color.getRed());
-        buffer.writeInt(color.getGreen());
-        buffer.writeInt(color.getBlue());
-        buffer.writeInt(color.getAlpha());
+        color = new Color4i(buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
         
-        buffer.writeInt(x);
-        buffer.writeInt(y);
-        buffer.writeInt(z);
+        x = buf.readInt();
+        y = buf.readInt();
+        z = buf.readInt();
         
-        buffer.writeInt(side.ordinal());
+        side = ForgeDirection.getOrientation(buf.readInt());
+        
     }
     
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+    public void toBytes(ByteBuf buf) {
         
-        color = new Color4i(buffer.readInt(), buffer.readInt(), buffer.readInt(), buffer.readInt());
+        buf.writeInt(color.getRed());
+        buf.writeInt(color.getGreen());
+        buf.writeInt(color.getBlue());
+        buf.writeInt(color.getAlpha());
         
-        x = buffer.readInt();
-        y = buffer.readInt();
-        z = buffer.readInt();
+        buf.writeInt(x);
+        buf.writeInt(y);
+        buf.writeInt(z);
         
-        side = ForgeDirection.getOrientation(buffer.readInt());
+        buf.writeInt(side.ordinal());
     }
     
     @Override
-    public void handleClientSide(EntityPlayer player) {
+    public ColorPacket onMessage(ColorPacket message, MessageContext ctx) {
         
-        if (player.worldObj.isRemote) {
+        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(x, y, z);
+        
+        if (tile != null && tile instanceof IColorableTile) {
             
-            TileEntity tile = player.worldObj.getTileEntity(x, y, z);
-            
-            if (tile != null && tile instanceof IColorableTile) {
-                
-                ((IColorableTile) tile).setColor(color, side);
-            }
+            ((IColorableTile) tile).setColor(color, side);
         }
-    }
-    
-    @Override
-    public void handleServerSide(EntityPlayer player) {
-        // TODO Auto-generated method stub
-        
+        return null;
     }
     
 }
