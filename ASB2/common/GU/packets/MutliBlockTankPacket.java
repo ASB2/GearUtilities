@@ -42,9 +42,16 @@ public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacke
         buf.writeInt(size.getY());
         buf.writeInt(size.getZ());
         
-        buf.writeInt(tank.getFluid().getFluid().getID());
-        buf.writeInt(tank.getFluidAmount());
-        buf.writeInt(tank.getCapacity());
+        if (tank.getFluid() != null) {
+            
+            buf.writeInt(tank.getFluid().getFluid().getID());
+            buf.writeInt(tank.getFluidAmount());
+            buf.writeInt(tank.getCapacity());
+        }
+        else {
+            
+            buf.writeInt(-1);
+        }
         // ByteBufUtils.writeTag(buffer, tank.getFluid().tag);
     }
     
@@ -56,10 +63,15 @@ public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacke
         size = new Vector3i(buf.readInt(), buf.readInt(), buf.readInt());
         
         int fluidID = buf.readInt();
-        int fluidAmount = buf.readInt();
-        int capasity = buf.readInt();
-        // NBTTagCompound tag = ByteBufUtils.readTag(buffer);
-        tank = new FluidTank(new FluidStack(fluidID, fluidAmount), capasity);
+        
+        if (fluidID != -1) {
+            
+            int fluidAmount = buf.readInt();
+            int capasity = buf.readInt();
+            
+            // NBTTagCompound tag = ByteBufUtils.readTag(buffer);
+            tank = new FluidTank(new FluidStack(fluidID, fluidAmount), capasity);
+        }
     }
     
     @Override
