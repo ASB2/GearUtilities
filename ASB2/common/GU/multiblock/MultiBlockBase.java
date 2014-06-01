@@ -208,8 +208,6 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
     
     public abstract boolean startCreation();
     
-    public abstract void render(double x, double y, double z, float f);
-    
     public Color4i getDefaultBlockColor() {
         
         return Color4i.WHITE;
@@ -247,6 +245,10 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
             
             this.deconstructBlock(new Vector3i(x, y, z));
         }
+    }
+    
+    public void sendPacket() {
+        
     }
     
     public NBTTagCompound save(NBTTagCompound tag) {

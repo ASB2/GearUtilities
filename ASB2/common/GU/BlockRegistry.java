@@ -103,7 +103,7 @@ public class BlockRegistry {
     
     public static final BlockMultiBlockPartAir MULTI_BLOCK_PART_AIR = new BlockMultiBlockPartAir(Material.air);
     
-    public static final BlockMultiPartRender MULTI_BLOCK_PART_RENDER = new BlockMultiPartRender(Material.air);
+    public static final BlockMultiPartRender MULTI_BLOCK_PART_RENDER = new BlockMultiPartRender(Material.rock);
     
     static {
         

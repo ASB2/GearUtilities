@@ -8,6 +8,8 @@ import GU.multiblock.MultiBlockBase;
 import GU.multiblock.MultiBlockChest;
 import GU.multiblock.MultiBlockFurnace;
 import GU.multiblock.MultiBlockTank;
+import UC.Wait;
+import UC.Wait.IWaitTrigger;
 import UC.math.vector.Vector3i;
 
 public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCore {
@@ -16,6 +18,12 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     boolean shouldConstructMultiBlock = false;
     NBTTagCompound multiBlockTag;
     int waitTimer = 0;
+    Wait multiBlockPacket;
+    
+    public TileSpacialProvider() {
+        
+        multiBlockPacket = new Wait(new PacketWait(), 20, 0);
+    }
     
     @Override
     public void updateEntity() {
@@ -57,6 +65,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
             if (updating != null) {
                 
                 updating.update((Object) null);
+                multiBlockPacket.update();
             }
         }
     }
@@ -114,6 +123,21 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
         if (shouldConstructMultiBlock) {
             
             multiBlockTag = tag.getCompoundTag("MultiBlockData");
+        }
+    }
+    
+    private class PacketWait implements IWaitTrigger {
+        
+        @Override
+        public void trigger(int id) {
+            
+            updating.sendPacket();
+        }
+        
+        @Override
+        public boolean shouldTick(int id) {
+            
+            return true;
         }
     }
 }

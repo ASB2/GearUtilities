@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import ASB2.utils.UtilBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
-import GU.multiblock.MultiBlockBase;
+import GU.multiblock.MultiBlockClientState;
 import cpw.mods.fml.client.registry.ClientRegistry;
 
 public class BlockMultiPartRender extends BlockMultiBlockPartAir {
@@ -31,7 +31,7 @@ public class BlockMultiPartRender extends BlockMultiBlockPartAir {
     
     public static class TileMultiPartRender extends TileMultiBase {
         
-        public MultiBlockBase toRender;
+        MultiBlockClientState state;
         
         public TileMultiPartRender() {
             
@@ -41,39 +41,26 @@ public class BlockMultiPartRender extends BlockMultiBlockPartAir {
         @Override
         public void updateEntity() {
             
-            // UtilEntity.sendClientChat(worldObj.isRemote+"");
-        }
-        
-        @Override
-        public boolean addMultiBlock(IMultiBlock multiBlock) {
-            
-            if (multiBlock instanceof MultiBlockBase) {
-                
-                if (super.addMultiBlock(multiBlock)) {
-                    
-                    if (toRender == null) {
-                        
-                        toRender = (MultiBlockBase) multiBlock;
-                    }
-                    return true;
-                }
+            if (worldObj.isRemote) {
+                multiBlocks.size();
+                // UtilEntity.sendClientChat(worldObj.isRemote + "");
             }
-            return false;
         }
         
         @Override
         public void removeMultiBlock(IMultiBlock multiBlock) {
             super.removeMultiBlock(multiBlock);
             
-            if (toRender == multiBlock) {
-                
-                toRender = null;
-            }
-            
             if (multiBlocks.isEmpty()) {
                 
                 UtilBlock.breakBlockNoDrop(worldObj, xCoord, yCoord, zCoord);
             }
+        }
+        
+        public TileMultiPartRender setClientState(MultiBlockClientState state) {
+            
+            this.state = state;
+            return this;
         }
         
         @Override

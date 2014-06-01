@@ -42,6 +42,12 @@ public class GearReaderWrapper extends MetadataWrapper {
             
             UtilEntity.sendChatToPlayer(player, "---------");
             
+            // ForgeDirection direction = ForgeDirection.getOrientation(side);
+            // TileEntity tile = world.getTileEntity(x + direction.offsetX, y +
+            // direction.offsetY, z + direction.offsetZ);
+            // Block block = world.getBlock(x + direction.offsetX, y +
+            // direction.offsetY, z + direction.offsetZ);
+            
             TileEntity tile = world.getTileEntity(x, y, z);
             Block block = world.getBlock(x, y, z);
             
@@ -227,7 +233,7 @@ public class GearReaderWrapper extends MetadataWrapper {
             UtilEntity.sendChatToPlayer(player, "Block Direction: " + ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)));
             UtilEntity.sendChatToPlayer(player, "Block Mixed Brightness: " + block.getMixedBrightnessForBlock(world, x, y, z));
             UtilEntity.sendChatToPlayer(player, "Block Ambient Acclusion: " + block.getAmbientOcclusionLightValue());
-            UtilEntity.sendChatToPlayer(player, "Tile Entity: " + world.getTileEntity(x, y, z));
+            UtilEntity.sendChatToPlayer(player, "Tile Entity: " + tile);
             UtilEntity.sendChatToPlayer(player, "Block Opaque: " + block.isOpaqueCube());
             UtilEntity.sendChatToPlayer(player, "Normal Cube: " + block.isNormalCube(world, x, y, z));
             UtilEntity.sendChatToPlayer(player, "---------");

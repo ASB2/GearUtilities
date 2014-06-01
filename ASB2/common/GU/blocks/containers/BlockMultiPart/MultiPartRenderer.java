@@ -17,9 +17,9 @@ public class MultiPartRenderer extends TileEntitySpecialRenderer {
         
         TileMultiPartRender tile = (TileMultiPartRender) tileentity;
         
-        if (tile.toRender != null) {
+        if (tile.state != null) {
             
-            tile.toRender.render(x, y, z, f);
+            tile.state.render(x, y, z, f);
         }
     }
 }

@@ -2,21 +2,22 @@ package GU.multiblock;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import ASB2.utils.UtilVector;
+import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
+import GU.packets.abstractPacket.MutliBlockTankPacket;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class MultiBlockTank extends MultiBlockBase {
+public class MultiBlockTank extends MultiBlockFluidHandler {
     
     public MultiBlockTank(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         super(world, positionRelativeTo, size, updater);
-        // TODO Auto-generated constructor stub
     }
     
     public MultiBlockTank(World world) {
         super(world);
-        
     }
     
     @Override
@@ -38,7 +39,15 @@ public class MultiBlockTank extends MultiBlockBase {
                         
                         Vector3i vec = positionRelativeTo.subtract(x, y, z);
                         
-                        if (((x == 0 || x == size.getX()) && (y == 0 || y == size.getY())) && (z == 0 || z == size.getZ())) {
+                        if (x == 1 && y == 1 && z == 1) {
+                            
+                            if (!placeRenderBlock(vec)) {
+                                
+                                deconstruct();
+                                return;
+                            }
+                        }
+                        else if (((x == 0 || x == size.getX()) && (y == 0 || y == size.getY())) && (z == 0 || z == size.getZ())) {
                             
                             if (!placeCornerBlock(vec)) {
                                 
@@ -111,12 +120,6 @@ public class MultiBlockTank extends MultiBlockBase {
         }
     }
     
-    @Override
-    public void render(double x, double y, double z, float f) {
-        // TODO Auto-generated method stub
-        
-    }
-    
     public boolean startCreation() {
         
         if (!isValid && !isConstructing) {
@@ -129,10 +132,23 @@ public class MultiBlockTank extends MultiBlockBase {
                 
                 if (tile != null && tile instanceof IMultiBlockPart) {
                     
-                    return ((IMultiBlockPart) tile).addMultiBlock(this);
+                    if (((IMultiBlockPart) tile).addMultiBlock(this)) {
+                        
+                        fluidTank.setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
+                        return true;
+                    }
                 }
             }
         }
         return false;
+    }
+    
+    @Override
+    public void sendPacket() {
+        
+        if (!world.isRemote) {
+            
+            GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank), world.provider.dimensionId);
+        }
     }
 }

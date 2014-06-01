@@ -1,6 +1,5 @@
 package GU.multiblock;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -10,23 +9,20 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import ASB2.utils.UtilEntity;
 import UC.math.vector.Vector3i;
 
 public abstract class MultiBlockFluidHandler extends MultiBlockBase implements IFluidHandler {
     
-    public FluidTank fluidTank = new FluidTank(1000);
+    public FluidTank fluidTank = new FluidTank(0);
     
     public MultiBlockFluidHandler(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         super(world, positionRelativeTo, size, updater);
         
-        fluidTank.setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
     }
     
     public MultiBlockFluidHandler(World world) {
         super(world);
         
-        fluidTank.setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
     }
     
     @Override
@@ -95,22 +91,6 @@ public abstract class MultiBlockFluidHandler extends MultiBlockBase implements I
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         
         return new FluidTankInfo[] { fluidTank.getInfo() };
-    }
-    
-    public void onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        
-        if (this.isValid) {
-            // UtilEntity.sendChatToPlayer(player, "Fluid: " +
-            // this.fluidTank.getFluid() != null ?
-            // this.fluidTank.getFluid().getFluid() != null ?
-            // this.fluidTank.getFluid().getFluid().getName() : "null" :
-            // "null");
-            
-            UtilEntity.sendChatToPlayer(player, "Fluid Amount: " + this.fluidTank.getFluidAmount() + " / " + fluidTank.getCapacity());
-        }
-        else {
-            UtilEntity.sendChatToPlayer(player, "Im not Valids");
-        }
     }
     
     @Override

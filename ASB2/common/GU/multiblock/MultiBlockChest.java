@@ -102,10 +102,4 @@ public class MultiBlockChest extends MultiBlockInventory {
         }
         return false;
     }
-    
-    @Override
-    public void render(double x, double y, double z, float f) {
-        // TODO Auto-generated method stub
-        
-    }
 }
