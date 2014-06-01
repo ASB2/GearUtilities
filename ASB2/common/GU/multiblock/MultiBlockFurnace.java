@@ -242,7 +242,9 @@ public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHand
     public void render(double x, double y, double z, float f) {
         
         GL11.glPushMatrix();
-        // GL11.glTranslated(x, y, z);
+        
+        GL11.glTranslated(x, y, z);
+        
         GL11.glBegin(GL11.GL_QUADS); // Draw The Cube Using quads
         GL11.glColor3f(0.0f, 1.0f, 0.0f); // Color Blue
         GL11.glVertex3f(1.0f, 1.0f, -1.0f); // Top Right Of The Quad (Top)

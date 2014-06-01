@@ -34,7 +34,14 @@ public class BlockMultiPartRender extends BlockMultiBlockPartAir {
         public MultiBlockBase toRender;
         
         public TileMultiPartRender() {
+            
             this.setMaxMultiBlocks(1);
+        }
+        
+        @Override
+        public void updateEntity() {
+            
+            // UtilEntity.sendClientChat(worldObj.isRemote+"");
         }
         
         @Override
