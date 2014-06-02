@@ -3,6 +3,7 @@ package GU.multiblock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidTankInfo;
 import ASB2.utils.UtilVector;
 import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
@@ -143,12 +144,37 @@ public class MultiBlockTank extends MultiBlockFluidHandler {
         return false;
     }
     
+    FluidTankInfo lastSentTank;
+    
     @Override
     public void sendPacket() {
         
         if (!world.isRemote) {
             
-            GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank), world.provider.dimensionId);
+//            if (lastSentTank == null) {
+                
+                GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank), world.provider.dimensionId);
+                lastSentTank = this.fluidTank.getInfo();
+//            }
+//            else {
+//                
+//                if (lastSentTank.capacity == fluidTank.getCapacity()) {
+//                    
+//                    if (lastSentTank.fluid != null && fluidTank.getFluid() != null) {
+//                        
+//                        if (lastSentTank.fluid.isFluidEqual(fluidTank.getFluid())) {
+//                            
+//                            if (lastSentTank.fluid.amount == fluidTank.getFluidAmount()) {
+//                                
+//                                return;
+//                            }
+//                        }
+//                    }
+//                }
+//                
+//                GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank), world.provider.dimensionId);
+//                lastSentTank = this.fluidTank.getInfo();
+//            }
         }
     }
 }

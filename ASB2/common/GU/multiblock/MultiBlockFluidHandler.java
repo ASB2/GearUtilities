@@ -7,10 +7,11 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.IFluidTank;
+import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
 import UC.math.vector.Vector3i;
 
-public abstract class MultiBlockFluidHandler extends MultiBlockBase implements IFluidHandler {
+public abstract class MultiBlockFluidHandler extends MultiBlockBase implements IFluidMultiBlock {
     
     public FluidTank fluidTank = new FluidTank(0);
     
@@ -25,13 +26,13 @@ public abstract class MultiBlockFluidHandler extends MultiBlockBase implements I
     }
     
     @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+    public int fill(Vector3i tilePosition, ForgeDirection from, FluidStack resource, boolean doFill) {
         
         return fluidTank.fill(resource, doFill);
     }
     
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid) {
+    public boolean canFill(Vector3i tilePosition, ForgeDirection from, Fluid fluid) {
         
         if (fluidTank != null) {
             
@@ -54,7 +55,7 @@ public abstract class MultiBlockFluidHandler extends MultiBlockBase implements I
     }
     
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+    public FluidStack drain(Vector3i tilePosition, ForgeDirection from, FluidStack resource, boolean doDrain) {
         
         if (resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
             
@@ -65,13 +66,13 @@ public abstract class MultiBlockFluidHandler extends MultiBlockBase implements I
     }
     
     @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+    public FluidStack drain(Vector3i tilePosition, ForgeDirection from, int maxDrain, boolean doDrain) {
         
         return fluidTank.drain(maxDrain, doDrain);
     }
     
     @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid) {
+    public boolean canDrain(Vector3i tilePosition, ForgeDirection from, Fluid fluid) {
         
         if (this.fluidTank.getFluid() != null) {
             
@@ -87,9 +88,15 @@ public abstract class MultiBlockFluidHandler extends MultiBlockBase implements I
     }
     
     @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+    public FluidTankInfo[] getTankInfo(Vector3i tilePosition, ForgeDirection from) {
         
         return new FluidTankInfo[] { fluidTank.getInfo() };
+    }
+    
+    @Override
+    public IFluidTank getFluidTank(Vector3i tilePosition) {
+        
+        return fluidTank;
     }
     
     @Override
