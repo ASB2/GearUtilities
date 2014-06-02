@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.fluids.IFluidHandler;
+import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 
@@ -87,5 +88,11 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
     public List<IMultiBlock> getMultiBlocks() {
         
         return multiBlocks;
+    }
+    
+    @Override
+    public boolean isPositionValid(EnumMultiBlockPartPosition position) {
+        
+        return true;
     }
 }

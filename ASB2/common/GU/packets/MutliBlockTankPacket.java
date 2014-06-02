@@ -47,12 +47,12 @@ public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacke
             buf.writeInt(tank.getFluid().getFluid().getID());
             buf.writeInt(tank.getFluidAmount());
             buf.writeInt(tank.getCapacity());
+            // ByteBufUtils.writeTag(buffer, tank.getFluid().tag);
         }
         else {
             
             buf.writeInt(-1);
         }
-        // ByteBufUtils.writeTag(buffer, tank.getFluid().tag);
     }
     
     @Override
@@ -77,11 +77,11 @@ public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacke
     @Override
     public MutliBlockTankPacket onMessage(MutliBlockTankPacket message, MessageContext ctx) {
         
-        TileEntity tile = UtilVector.getTileAtPostion(Minecraft.getMinecraft().theWorld, renderHandler);
+        TileEntity tile = UtilVector.getTileAtPostion(Minecraft.getMinecraft().theWorld, message.renderHandler);
         
         if (tile != null && tile instanceof TileMultiPartRender) {
             
-            ((TileMultiPartRender) tile).setClientState(new MultiBlockTankClientState(renderHandler, size, tank));
+            ((TileMultiPartRender) tile).setClientState(new MultiBlockTankClientState(message.renderHandler, message.size, message.tank));
         }
         return null;
     }

@@ -2,7 +2,6 @@ package GU.api.multiblock;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 public class MultiBlockAbstract {
@@ -23,6 +22,8 @@ public class MultiBlockAbstract {
         void removeMultiBlock(IMultiBlock multiBlock);
         
         List<IMultiBlock> getMultiBlocks();
+        
+        boolean isPositionValid(EnumMultiBlockPartPosition position);
     }
     
     public static interface IMultiBlockCore extends IMultiBlockPart {
@@ -34,21 +35,8 @@ public class MultiBlockAbstract {
         boolean isValid(World world, int x, int y, int z);
     }
     
-    public static interface IMultiBlockStructure {
+    public static enum EnumMultiBlockPartPosition {
         
-        /**
-         * Gets structures orginized from top to bottom
-         * 
-         */
-        IMultiBlockRow[] getStructure();
-    }
-    
-    public static interface IMultiBlockRow {
-        
-        int getXSize();
-        
-        int getZSize();
-        
-        Block getBlockAtPosition(int x, int z);
+        EDGE, CORNER, FACE, INNER;
     }
 }

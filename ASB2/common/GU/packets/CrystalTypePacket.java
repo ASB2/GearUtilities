@@ -47,11 +47,11 @@ public class CrystalTypePacket implements IMessageHandler<CrystalTypePacket, Cry
     @Override
     public CrystalTypePacket onMessage(CrystalTypePacket message, MessageContext ctx) {
         
-        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(x, y, z);
+        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
         
         if (tile != null && tile instanceof TileElectisCrystal) {
             
-            ((TileElectisCrystal) tile).setCrystalType(EnumElectisCrystalType.values()[crystalType]);
+            ((TileElectisCrystal) tile).setCrystalType(EnumElectisCrystalType.values()[message.crystalType]);
         }
         return null;
     }

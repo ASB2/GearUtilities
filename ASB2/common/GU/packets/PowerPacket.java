@@ -57,7 +57,7 @@ public class PowerPacket implements IMessageHandler<PowerPacket, PowerPacket>, I
     @Override
     public PowerPacket onMessage(PowerPacket message, MessageContext ctx) {
         
-        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(x, y, z);
+        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
         
         if (tile != null && tile instanceof ITilePowerHandler) {
             
@@ -67,8 +67,8 @@ public class PowerPacket implements IMessageHandler<PowerPacket, PowerPacket>, I
                 
                 DefaultPowerManager dManager = ((DefaultPowerManager) manager);
                 
-                dManager.setPowerMax(powerToUpdate.getMaxPower());
-                dManager.setPowerStored(powerToUpdate.getStoredPower());
+                dManager.setPowerMax(message.powerToUpdate.getMaxPower());
+                dManager.setPowerStored(message.powerToUpdate.getStoredPower());
             }
         }
         return null;

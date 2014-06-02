@@ -111,7 +111,7 @@ public class MultiBlockTank extends MultiBlockFluidHandler {
                     
                     for (int z = 0; z <= size.getZ(); z++) {
                         
-                        checkBlock(positionRelativeTo.subtract(x, y, z));
+                        forceCheckBlock(positionRelativeTo.subtract(x, y, z));
                     }
                 }
             }

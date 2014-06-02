@@ -64,11 +64,11 @@ public class ColorPacket implements IMessageHandler<ColorPacket, ColorPacket>, I
     @Override
     public ColorPacket onMessage(ColorPacket message, MessageContext ctx) {
         
-        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(x, y, z);
+        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
         
         if (tile != null && tile instanceof IColorableTile) {
             
-            ((IColorableTile) tile).setColor(color, side);
+            ((IColorableTile) tile).setColor(message.color, message.side);
         }
         return null;
     }

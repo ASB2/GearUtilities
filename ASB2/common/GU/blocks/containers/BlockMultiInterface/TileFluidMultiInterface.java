@@ -3,48 +3,86 @@ package GU.blocks.containers.BlockMultiInterface;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
+import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.blocks.containers.TileMultiBase;
 
 public class TileFluidMultiInterface extends TileMultiBase implements IMultiBlockPart, IFluidHandler {
     
-    FluidTank fluidTank;
+    IFluidHandler handler1 = null, handler2 = null;
     
     public TileFluidMultiInterface() {
         
+        this.setMaxMultiBlocks(2);
     }
     
     @Override
     public void updateEntity() {
-        // TODO Auto-generated method stub
-        super.updateEntity();
+        
+        if (handler1 != null && handler2 != null) {
+            
+        }
+    }
+    
+    @Override
+    public boolean addMultiBlock(IMultiBlock multiBlock) {
+        
+        if (super.addMultiBlock(multiBlock)) {
+            
+            if (multiBlock instanceof IFluidHandler) {
+                
+                if (handler1 == null) {
+                    
+                    handler1 = (IFluidHandler) multiBlock;
+                }
+                else if (handler2 == null) {
+                    
+                    handler2 = (IFluidHandler) multiBlock;
+                }
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public void removeMultiBlock(IMultiBlock multiBlock) {
+        super.removeMultiBlock(multiBlock);
+        
+        if (handler1 == multiBlock) {
+            
+            handler1 = null;
+        }
+        else if (handler2 == multiBlock) {
+            
+            handler2 = null;
+        }
+    }
+    
+    @Override
+    public boolean isPositionValid(EnumMultiBlockPartPosition position) {
+        
+        return position == EnumMultiBlockPartPosition.FACE;
     }
     
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
         
-        return fluidTank.fill(resource, doFill);
+        if (handler1 != null) {
+            
+            return handler1.fill(from, resource, doFill);
+        }
+        return 0;
     }
     
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
         
-        if (fluid != null) {
+        if (handler1 != null) {
             
-            if (fluidTank.getFluid() != null) {
-                
-                if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
-                    
-                    return true;
-                }
-            }
-            else {
-                
-                return true;
-            }
+            return handler1.canFill(from, fluid);
         }
         return false;
     }
@@ -52,32 +90,29 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
         
-        if (resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
+        if (handler1 != null) {
             
-            return null;
+            return handler1.drain(from, resource, doDrain);
         }
-        
-        return fluidTank.drain(resource.amount, doDrain);
+        return null;
     }
     
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
         
-        return fluidTank.drain(maxDrain, doDrain);
+        if (handler1 != null) {
+            
+            return handler1.drain(from, maxDrain, doDrain);
+        }
+        return null;
     }
     
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
         
-        if (this.fluidTank.getFluid() != null) {
+        if (handler1 != null) {
             
-            if (fluidTank.getFluidAmount() > 0) {
-                
-                if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
-                    
-                    return true;
-                }
-            }
+            return handler1.canDrain(from, fluid);
         }
         return false;
     }
@@ -85,6 +120,10 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         
-        return new FluidTankInfo[] { fluidTank.getInfo() };
+        if (handler1 != null) {
+            
+            return handler1.getTankInfo(from);
+        }
+        return null;
     }
 }

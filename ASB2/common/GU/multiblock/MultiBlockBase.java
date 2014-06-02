@@ -9,6 +9,7 @@ import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilVector;
 import GU.BlockRegistry;
 import GU.api.color.AbstractColorable.IColorableTile;
+import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import UC.IAbstractUpdateable;
@@ -69,7 +70,21 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
         }
     }
     
-    public boolean checkBlock(Vector3i position) {
+    public boolean checkBlock(Vector3i position, EnumMultiBlockPartPosition part) {
+        
+        TileEntity tile = UtilVector.getTileAtPostion(world, position);
+        
+        if (tile != null && tile instanceof IMultiBlockPart) {
+            
+            if (((IMultiBlockPart) tile).isPositionValid(part)) {
+                
+                return ((IMultiBlockPart) tile).addMultiBlock(this);
+            }
+        }
+        return false;
+    }
+    
+    public boolean forceCheckBlock(Vector3i position) {
         
         TileEntity tile = UtilVector.getTileAtPostion(world, position);
         
@@ -89,7 +104,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
             UtilBlock.breakBlock(world, position.getX(), position.getY(), position.getZ());
             world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART_RENDER);
             
-            return checkBlock(position);
+            return checkBlock(position, EnumMultiBlockPartPosition.INNER);
         }
         return false;
     }
@@ -105,7 +120,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
         
         tile = UtilVector.getTileAtPostion(world, position);
         
-        if (checkBlock(position)) {
+        if (checkBlock(position, EnumMultiBlockPartPosition.FACE)) {
             
             if (tile instanceof IColorableTile) {
                 
@@ -128,7 +143,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
         
         tile = UtilVector.getTileAtPostion(world, position);
         
-        if (checkBlock(position)) {
+        if (checkBlock(position, EnumMultiBlockPartPosition.INNER)) {
             
             checkColor(position);
             return true;
@@ -147,7 +162,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
         
         tile = UtilVector.getTileAtPostion(world, position);
         
-        if (checkBlock(position)) {
+        if (checkBlock(position, EnumMultiBlockPartPosition.EDGE)) {
             
             checkColor(position);
             return true;
@@ -166,7 +181,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
         
         tile = UtilVector.getTileAtPostion(world, position);
         
-        if (checkBlock(position)) {
+        if (checkBlock(position, EnumMultiBlockPartPosition.CORNER)) {
             
             checkColor(position);
             return true;
@@ -185,7 +200,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
         
         tile = UtilVector.getTileAtPostion(world, position);
         
-        if (checkBlock(position)) {
+        if (checkBlock(position, EnumMultiBlockPartPosition.INNER)) {
             
             if (tile instanceof IColorableTile) {
                 
