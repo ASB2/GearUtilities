@@ -63,6 +63,11 @@ public class BlockMultiPartRender extends BlockMultiBlockPartAir {
             return this;
         }
         
+        public MultiBlockClientState getClientState() {
+            
+            return state;
+        }
+        
         @Override
         public AxisAlignedBB getRenderBoundingBox() {
             

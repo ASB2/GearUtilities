@@ -22,15 +22,41 @@ public class MultiBlockTankClientState extends MultiBlockClientState {
         this.multiBlockSize = multiBlockSize;
         this.tank = tank;
         
-//        if (this.tank == null) {
-//            
-//            this.tank = new FluidTank(1000000);
-//        }
-//        
-//        if (this.tank.getFluidAmount() <= 0) {
-//            
-//            this.tank.setFluid(new FluidStack(FluidRegistry.WATER, 1000000));
-//        }
+        // if (this.tank == null) {
+        //
+        // this.tank = new FluidTank(1000000);
+        // }
+        //
+        // if (this.tank.getFluidAmount() <= 0) {
+        //
+        // this.tank.setFluid(new FluidStack(FluidRegistry.WATER, 1000000));
+        // }
+    }
+    
+    public void setRenderHandler(Vector3i renderHandler) {
+        
+        this.renderHandler = renderHandler;
+    }
+    
+    public void setMultiBlockSize(Vector3i multiBlockSize) {
+        
+        this.multiBlockSize = multiBlockSize;
+    }
+    
+    public void setTank(FluidTank tank) {
+        this.tank = tank;
+    }
+    
+    public Vector3i getRenderHandler() {
+        return renderHandler;
+    }
+    
+    public Vector3i getMultiBlockSize() {
+        return multiBlockSize;
+    }
+    
+    public FluidTank getTank() {
+        return tank;
     }
     
     @Override

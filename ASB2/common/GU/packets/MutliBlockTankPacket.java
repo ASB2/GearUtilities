@@ -2,13 +2,16 @@ package GU.packets;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import ASB2.utils.UtilVector;
 import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender.TileMultiPartRender;
+import GU.multiblock.MultiBlockClientState;
 import GU.multiblock.MultiBlockTankClientState;
 import UC.math.vector.Vector3i;
+import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -19,6 +22,7 @@ public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacke
     Vector3i size;
     
     FluidTank tank;
+    int fluidID, fluidAmount, capacity;
     
     public MutliBlockTankPacket() {
         // TODO Auto-generated constructor stub
@@ -47,7 +51,7 @@ public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacke
             buf.writeInt(tank.getFluid().getFluid().getID());
             buf.writeInt(tank.getFluidAmount());
             buf.writeInt(tank.getCapacity());
-            // ByteBufUtils.writeTag(buffer, tank.getFluid().tag);
+            ByteBufUtils.writeTag(buf, tank.getFluid().tag);
         }
         else {
             
@@ -69,8 +73,8 @@ public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacke
             int fluidAmount = buf.readInt();
             int capasity = buf.readInt();
             
-            // NBTTagCompound tag = ByteBufUtils.readTag(buffer);
-            tank = new FluidTank(new FluidStack(fluidID, fluidAmount), capasity);
+            NBTTagCompound tag = ByteBufUtils.readTag(buf);
+            tank = new FluidTank(new FluidStack(fluidID, fluidAmount, tag), capasity);
         }
     }
     
@@ -81,7 +85,18 @@ public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacke
         
         if (tile != null && tile instanceof TileMultiPartRender) {
             
+            MultiBlockClientState state = ((TileMultiPartRender) tile).getClientState();
+            
+            if (state != null && state instanceof MultiBlockTankClientState) {
+                
+                if (((MultiBlockTankClientState) state).getRenderHandler() == renderHandler && ((MultiBlockTankClientState) state).getMultiBlockSize() == size) {
+                    
+                    ((MultiBlockTankClientState) state).setTank(tank);
+                    return null;
+                }
+            }
             ((TileMultiPartRender) tile).setClientState(new MultiBlockTankClientState(message.renderHandler, message.size, message.tank));
+            
         }
         return null;
     }

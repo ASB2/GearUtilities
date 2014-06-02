@@ -191,7 +191,7 @@ public class NoiseManager {
         {
             TextureUtil.uploadTexture(NoiseManager.instance.GL_TEXTURE_ID, imageDataArray.get(animationPosition), Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
             
-//            if (Minecraft.getSystemTime() % 1 == 0) {
+            if (Minecraft.getSystemTime() % 20 == 0) {
                 
                 if (moveAnimationDown) {
                     
@@ -217,7 +217,7 @@ public class NoiseManager {
                         animationPosition--;
                     }
                 }
-//            }
+            }
         }
         
         {

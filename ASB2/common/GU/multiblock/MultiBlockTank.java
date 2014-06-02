@@ -30,6 +30,11 @@ public class MultiBlockTank extends MultiBlockFluidHandler {
     @Override
     public void update(Object... objects) {
         
+        if (this.fluidTank.getCapacity() == 0) {
+            
+            fluidTank.setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
+        }
+        
         if (isConstructing) {
             
             for (int x = 0; x <= size.getX(); x++) {
@@ -151,30 +156,30 @@ public class MultiBlockTank extends MultiBlockFluidHandler {
         
         if (!world.isRemote) {
             
-//            if (lastSentTank == null) {
+            if (lastSentTank == null) {
                 
                 GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank), world.provider.dimensionId);
                 lastSentTank = this.fluidTank.getInfo();
-//            }
-//            else {
-//                
-//                if (lastSentTank.capacity == fluidTank.getCapacity()) {
-//                    
-//                    if (lastSentTank.fluid != null && fluidTank.getFluid() != null) {
-//                        
-//                        if (lastSentTank.fluid.isFluidEqual(fluidTank.getFluid())) {
-//                            
-//                            if (lastSentTank.fluid.amount == fluidTank.getFluidAmount()) {
-//                                
-//                                return;
-//                            }
-//                        }
-//                    }
-//                }
-//                
-//                GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank), world.provider.dimensionId);
-//                lastSentTank = this.fluidTank.getInfo();
-//            }
+            }
+            else {
+                
+                if (lastSentTank.capacity == fluidTank.getCapacity()) {
+                    
+                    if (lastSentTank.fluid != null && fluidTank.getFluid() != null) {
+                        
+                        if (lastSentTank.fluid.isFluidEqual(fluidTank.getFluid())) {
+                            
+                            if (lastSentTank.fluid.amount == fluidTank.getFluidAmount()) {
+                                
+                                return;
+                            }
+                        }
+                    }
+                }
+                
+                GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank), world.provider.dimensionId);
+                lastSentTank = this.fluidTank.getInfo();
+            }
         }
     }
 }

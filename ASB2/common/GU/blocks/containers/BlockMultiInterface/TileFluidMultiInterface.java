@@ -16,7 +16,7 @@ import UC.math.vector.Vector3i;
 
 public class TileFluidMultiInterface extends TileMultiBase implements IMultiBlockPart, IFluidHandler {
     
-    int fluidPerTick = 100;
+    int fluidPerTick = 10;
     
     IFluidMultiBlock handler1 = null, handler2 = null;
     Vector3i position;
@@ -33,7 +33,7 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
             
             position = UtilVector.createTileEntityVector(this);
         }
-        fluidPerTick = 10;
+        
         // if (Minecraft.getSystemTime() % 5 == 0) {
         
         if (handler1 != null && handler2 != null) {
