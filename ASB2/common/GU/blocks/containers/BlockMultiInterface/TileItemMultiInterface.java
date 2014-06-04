@@ -42,7 +42,7 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
     @Override
     public boolean isPositionValid(EnumMultiBlockPartPosition position) {
         
-        return position == EnumMultiBlockPartPosition.FACE;
+        return position == EnumMultiBlockPartPosition.INNER||position == EnumMultiBlockPartPosition.FACE;
     }
     
     private class SlotHolder {
