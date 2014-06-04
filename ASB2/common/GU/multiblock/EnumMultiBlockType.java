@@ -16,6 +16,35 @@ public enum EnumMultiBlockType {
     
     public static final int MAX_DISTANCE = 8;
     
+    public MultiBlockBase createWithData(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
+        
+        switch (this) {
+        
+            case CHEST:
+                return new MultiBlockChest(world, positionRelativeTo, size, updater);
+            case FURNACE:
+                return new MultiBlockFurnace(world, positionRelativeTo, size, updater);
+            case TANK:
+                return new MultiBlockTank(world, positionRelativeTo, size, updater);
+            default:
+        }
+        return null;
+    }
+    
+    public MultiBlockBase createFromLoad(World worldObj) {
+        
+        switch (this.ordinal()) {
+        
+            case 1:
+                return new MultiBlockChest(worldObj);
+            case 2:
+                return new MultiBlockFurnace(worldObj);
+            case 3:
+                return new MultiBlockTank(worldObj);
+        }
+        return null;
+    }
+    
     public boolean createMultiBlock(World world, Vector3i spacialPosition) {
         
         Vector3i size = new Vector3i();
@@ -139,30 +168,7 @@ public enum EnumMultiBlockType {
             
             corner.move(xPos, yPos, zPos);
             
-            switch (this) {
-            
-                case CHEST:
-                    return new MultiBlockChest(world, corner, size, spacialPosition).startCreation();
-                case FURNACE:
-                    return new MultiBlockFurnace(world, corner, size, spacialPosition).startCreation();
-                case TANK:
-                    return new MultiBlockTank(world, corner, size, spacialPosition).startCreation();
-                default:
-                    return false;
-            }
-            
-            // for (int x = 0; x <= size.getX(); x++) {
-            //
-            // for (int y = 0; y <= size.getY(); y++) {
-            //
-            // for (int z = 0; z <= size.getZ(); z++) {
-            //
-            // Vector3i vec = corner.subtract(x, y, z);
-            // world.setBlock(vec.getX(), vec.getY(), vec.getZ(), Blocks.stone);
-            // }
-            // }
-            // }
-            // return true;
+            return this.createWithData(world, corner, size, spacialPosition).startCreation();
         }
         return false;
     }

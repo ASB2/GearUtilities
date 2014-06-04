@@ -2,12 +2,9 @@ package GU.api.multiblock;
 
 import java.util.List;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.IFluidHandler;
 import UC.math.vector.Vector3i;
 
 public class MultiBlockAbstract {
@@ -48,18 +45,21 @@ public class MultiBlockAbstract {
     
     public static interface IFluidMultiBlock extends IMultiBlock {
         
-        int fill(Vector3i tilePosition, ForgeDirection from, FluidStack resource, boolean doFill);
+        IFluidHandler getTank(Vector3i tilePosition);
+    }
+    
+    public static interface IInventoryMultiBlock extends IMultiBlock {
         
-        FluidStack drain(Vector3i tilePosition, ForgeDirection from, FluidStack resource, boolean doDrain);
+        IInventory getInventory(Vector3i tilePosition);
+    }
+    
+    public static interface IItemInterface extends IMultiBlockPart {
         
-        FluidStack drain(Vector3i tilePosition, ForgeDirection from, int maxDrain, boolean doDrain);
+        List<IInventory> getAvaliableInventorys();
+    }
+    
+    public static interface IFluidInterface extends IMultiBlockPart {
         
-        boolean canFill(Vector3i tilePosition, ForgeDirection from, Fluid fluid);
-        
-        boolean canDrain(Vector3i tilePosition, ForgeDirection from, Fluid fluid);
-        
-        FluidTankInfo[] getTankInfo(Vector3i tilePosition, ForgeDirection from);
-        
-        IFluidTank getFluidTank(Vector3i tilePosition);
+        List<IFluidHandler> getAvaliableInventorys();
     }
 }

@@ -1,5 +1,8 @@
 package GU.multiblock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -10,6 +13,7 @@ import ASB2.utils.UtilVector;
 import GU.BlockRegistry;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
+import GU.api.multiblock.MultiBlockAbstract.*;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import UC.IAbstractUpdateable;
@@ -24,6 +28,9 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
     Vector3i updater;
     
     boolean isValid = false, isConstructing = false, isDeconstructing = false, forceLoad = false;
+    
+    List<IItemInterface> itemInterfaceList = new ArrayList<IItemInterface>();
+    List<IFluidInterface> fluidInterfaceList = new ArrayList<IFluidInterface>();
     
     public MultiBlockBase(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         this(world);
@@ -78,6 +85,14 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
             
             if (((IMultiBlockPart) tile).isPositionValid(part)) {
                 
+                if (tile instanceof IItemInterface) {
+                    
+                    itemInterfaceList.add((IItemInterface) tile);
+                }
+                if (tile instanceof IFluidInterface) {
+                    
+                    fluidInterfaceList.add((IFluidInterface) tile);
+                }
                 return ((IMultiBlockPart) tile).addMultiBlock(this);
             }
         }

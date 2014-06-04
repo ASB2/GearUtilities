@@ -3,7 +3,7 @@ package GU.multiblock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.FluidStack;
 import ASB2.utils.UtilVector;
 import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
@@ -30,9 +30,9 @@ public class MultiBlockTank extends MultiBlockFluidHandler {
     @Override
     public void update(Object... objects) {
         
-        if (this.fluidTank.getCapacity() == 0) {
+        if (this.fluidTank.getFluidTank().getCapacity() == 0) {
             
-            fluidTank.setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
+            fluidTank.getFluidTank().setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
         }
         
         if (isConstructing) {
@@ -140,7 +140,7 @@ public class MultiBlockTank extends MultiBlockFluidHandler {
                     
                     if (((IMultiBlockPart) tile).addMultiBlock(this)) {
                         
-                        fluidTank.setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
+                        fluidTank.getFluidTank().setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
                         return true;
                     }
                 }
@@ -149,37 +149,29 @@ public class MultiBlockTank extends MultiBlockFluidHandler {
         return false;
     }
     
-    FluidTankInfo lastSentTank;
+    FluidStack lastStack;
+    int lastCapacity;
     
     @Override
     public void sendPacket() {
         
         if (!world.isRemote) {
             
-            if (lastSentTank == null) {
+            boolean firstWorked = false;
+            
+            if (fluidTank.getFluidTank().getFluid() == null && lastStack == null || fluidTank.getFluidTank().getFluid() != null && lastStack != null && fluidTank.getFluidTank().getFluid().isFluidEqual(lastStack) && lastStack.amount == fluidTank.getFluidTank().getFluidAmount()) {
                 
-                GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank), world.provider.dimensionId);
-                lastSentTank = this.fluidTank.getInfo();
+                firstWorked = true;
             }
-            else {
+            
+            if (fluidTank.getFluidTank().getCapacity() == lastCapacity && firstWorked) {
                 
-                if (lastSentTank.capacity == fluidTank.getCapacity()) {
-                    
-                    if (lastSentTank.fluid != null && fluidTank.getFluid() != null) {
-                        
-                        if (lastSentTank.fluid.isFluidEqual(fluidTank.getFluid())) {
-                            
-                            if (lastSentTank.fluid.amount == fluidTank.getFluidAmount()) {
-                                
-                                return;
-                            }
-                        }
-                    }
-                }
-                
-                GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank), world.provider.dimensionId);
-                lastSentTank = this.fluidTank.getInfo();
+                return;
             }
+            
+            GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank.getFluidTank()), world.provider.dimensionId);
+            lastStack = fluidTank.getFluidTank().getFluid() != null ? fluidTank.getFluidTank().getFluid().copy() : null;
+            lastCapacity = fluidTank.getFluidTank().getCapacity();
         }
     }
 }

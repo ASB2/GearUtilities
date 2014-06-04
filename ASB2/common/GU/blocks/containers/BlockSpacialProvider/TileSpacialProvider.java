@@ -4,10 +4,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockCore;
 import GU.blocks.containers.TileMultiBase;
+import GU.multiblock.EnumMultiBlockType;
 import GU.multiblock.MultiBlockBase;
-import GU.multiblock.MultiBlockChest;
-import GU.multiblock.MultiBlockFurnace;
-import GU.multiblock.MultiBlockTank;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
 import UC.math.vector.Vector3i;
@@ -22,7 +20,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
     
     public TileSpacialProvider() {
         
-        multiBlockPacket = new Wait(new PacketWait(), 20, 0);
+        multiBlockPacket = new Wait(new PacketWait(), 5, 0);
     }
     
     @Override
@@ -32,24 +30,8 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
             
             if (waitTimer > 20) {
                 
-                switch (worldObj.getBlockMetadata(xCoord, yCoord, zCoord)) {
+                updating = EnumMultiBlockType.values()[worldObj.getBlockMetadata(xCoord, yCoord, zCoord)].createFromLoad(worldObj);
                 
-                    case 1:
-                        updating = new MultiBlockChest(worldObj);
-                        break;
-                    case 2:
-                        updating = new MultiBlockFurnace(worldObj);
-                        break;
-                    case 3:
-                        updating = new MultiBlockTank(worldObj);
-                        break;
-                // case 2:
-                // updating = new ChestMultiBlock(worldObj);
-                // break;
-                // case 3:
-                // updating = new ChestMultiBlock(worldObj);
-                // break;
-                }
                 if (updating != null) {
                     
                     updating.load(multiBlockTag);
@@ -131,7 +113,7 @@ public class TileSpacialProvider extends TileMultiBase implements IMultiBlockCor
         @Override
         public void trigger(int id) {
             
-            updating.sendPacket();
+            if (updating != null) updating.sendPacket();
         }
         
         @Override

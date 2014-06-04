@@ -5,7 +5,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import net.minecraftforge.fluids.IFluidTank;
 import ASB2.utils.UtilVector;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
@@ -16,7 +15,7 @@ import UC.math.vector.Vector3i;
 
 public class TileFluidMultiInterface extends TileMultiBase implements IMultiBlockPart, IFluidHandler {
     
-    int fluidPerTick = 10;
+    int fluidPerTick = 100;
     
     IFluidMultiBlock handler1 = null, handler2 = null;
     Vector3i position;
@@ -36,40 +35,114 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
         
         // if (Minecraft.getSystemTime() % 5 == 0) {
         
-        if (handler1 != null && handler2 != null) {
+        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
             
-            IFluidTank handler1Tank = handler1.getFluidTank(position);
-            
-            IFluidTank handler2Tank = handler2.getFluidTank(position);
-            
-            if (handler1Tank != null && handler2Tank != null) {
+            if (handler1 != null && handler2 != null) {
                 
-                if (handler1Tank.getFluidAmount() > handler2Tank.getFluidAmount()) {
+                IFluidHandler handler1Handler = handler1.getTank(position);
+                
+                IFluidHandler handler2Handler = handler2.getTank(position);
+                
+                if (handler1Handler != null && handler2Handler != null) {
                     
-                    FluidStack handler1Drain = handler1Tank.drain(fluidPerTick, false);
+                    FluidTankInfo[] handler1InfoArray = handler1Handler.getTankInfo(ForgeDirection.UNKNOWN);
+                    FluidTankInfo[] handler2InfoArray = handler2Handler.getTankInfo(ForgeDirection.UNKNOWN);
                     
-                    if (handler1Drain != null) {
+                    if (handler1InfoArray != null && handler2InfoArray != null) {
                         
-                        int handler2FillAmount = handler2Tank.fill(handler1Drain.copy(), false);
-                        
-                        if (handler2FillAmount > 0) {
+                        for (int handler1Index = 0; handler1Index < handler1InfoArray.length; handler1Index++) {
                             
-                            handler2Tank.fill(handler1Tank.drain(fluidPerTick, true), true);
-                        }
-                    }
-                }
-                else if (handler1Tank.getFluidAmount() < handler2Tank.getFluidAmount()) {
-                    
-                    FluidStack handler2Drain = handler2Tank.drain(fluidPerTick, false);
-                    
-                    if (handler2Drain != null) {
-                        
-                        int handler1FillAmount = handler1Tank.fill(handler2Drain.copy(), false);
-                        
-                        if (handler1FillAmount > 0) {
+                            FluidTankInfo handler1Info = handler1InfoArray[handler1Index];
                             
-                            handler1Tank.fill(handler2Tank.drain(fluidPerTick, true), true);
+                            if (handler1Info != null) {
+                                
+                                for (int handler2Index = 0; handler2Index < handler2InfoArray.length; handler2Index++) {
+                                    
+                                    FluidTankInfo handler2Info = handler2InfoArray[handler2Index];
+                                    
+                                    if (handler2Info != null) {
+                                        
+                                        if (handler1Info.capacity > 0 && handler2Info.capacity > 0) {
+                                            
+                                            double precentFilled1 = handler1Info.fluid != null ? handler1Info.fluid.amount / handler1Info.capacity : 1;
+                                            double precentFilled2 = handler2Info.fluid != null ? handler2Info.fluid.amount / handler2Info.capacity : 1;
+                                            
+                                            if (precentFilled1 > precentFilled2) {
+                                                
+                                                FluidStack handler1Drain = handler1Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, false);
+                                                
+                                                if (handler1Drain != null) {
+                                                    
+                                                    int handler2FillAmount = handler2Handler.fill(ForgeDirection.UNKNOWN, handler1Drain.copy(), false);
+                                                    
+                                                    if (handler2FillAmount > 0) {
+                                                        
+                                                        handler2Handler.fill(ForgeDirection.UNKNOWN, handler1Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, true), true);
+                                                    }
+                                                }
+                                            }
+                                            else if (precentFilled1 < precentFilled2) {
+                                                
+                                                FluidStack handler2Drain = handler2Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, false);
+                                                
+                                                if (handler2Drain != null) {
+                                                    
+                                                    int handler1FillAmount = handler1Handler.fill(ForgeDirection.UNKNOWN, handler2Drain.copy(), false);
+                                                    
+                                                    if (handler1FillAmount > 0) {
+                                                        
+                                                        handler1Handler.fill(ForgeDirection.UNKNOWN, handler2Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, true), true);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
+                        
+                        // if (handler1Tank != null && handler2Tank != null) {
+                        //
+                        // double precentFilled1 = handler1Tank.getFluidAmount()
+                        // / handler1Tank.getCapacity();
+                        // double precentFilled2 = handler2Tank.getFluidAmount()
+                        // / handler2Tank.getCapacity();
+                        //
+                        // if (precentFilled1 > precentFilled2) {
+                        //
+                        // FluidStack handler1Drain =
+                        // handler1Tank.drain(fluidPerTick, false);
+                        //
+                        // if (handler1Drain != null) {
+                        //
+                        // int handler2FillAmount =
+                        // handler2Tank.fill(handler1Drain.copy(), false);
+                        //
+                        // if (handler2FillAmount > 0) {
+                        //
+                        // handler2Tank.fill(handler1Tank.drain(fluidPerTick,
+                        // true), true);
+                        // }
+                        // }
+                        // }
+                        // else if (precentFilled1 < precentFilled2) {
+                        //
+                        // FluidStack handler2Drain =
+                        // handler2Tank.drain(fluidPerTick, false);
+                        //
+                        // if (handler2Drain != null) {
+                        //
+                        // int handler1FillAmount =
+                        // handler1Tank.fill(handler2Drain.copy(), false);
+                        //
+                        // if (handler1FillAmount > 0) {
+                        //
+                        // handler1Tank.fill(handler2Tank.drain(fluidPerTick,
+                        // true), true);
+                        // }
+                        // }
+                        // }
+                        // }
                     }
                 }
             }
@@ -127,9 +200,9 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
         
-        if (handler1 != null) {
+        if (handler1 != null && handler1.getTank(position) != null) {
             
-            return handler1.fill(position, from, resource, doFill);
+            return handler1.getTank(position).fill(from, resource, doFill);
         }
         return 0;
     }
@@ -137,9 +210,9 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
         
-        if (handler1 != null) {
+        if (handler1 != null && handler1.getTank(position) != null) {
             
-            return handler1.canFill(position, from, fluid);
+            return handler1.getTank(position).canFill(from, fluid);
         }
         return false;
     }
@@ -147,9 +220,9 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
         
-        if (handler1 != null) {
+        if (handler1 != null && handler1.getTank(position) != null) {
             
-            return handler1.drain(position, from, resource, doDrain);
+            return handler1.getTank(position).drain(from, resource, doDrain);
         }
         return null;
     }
@@ -157,9 +230,9 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
         
-        if (handler1 != null) {
+        if (handler1 != null && handler1.getTank(position) != null) {
             
-            return handler1.drain(position, from, maxDrain, doDrain);
+            return handler1.getTank(position).drain(from, maxDrain, doDrain);
         }
         return null;
     }
@@ -167,9 +240,9 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
         
-        if (handler1 != null) {
+        if (handler1 != null && handler1.getTank(position) != null) {
             
-            return handler1.canDrain(position, from, fluid);
+            return handler1.getTank(position).canDrain(from, fluid);
         }
         return false;
     }
@@ -177,9 +250,9 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         
-        if (handler1 != null) {
+        if (handler1 != null && handler1.getTank(position) != null) {
             
-            return handler1.getTankInfo(position, from);
+            return handler1.getTank(position).getTankInfo(from);
         }
         return null;
     }

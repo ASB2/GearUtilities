@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraftforge.fluids.IFluidHandler;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
@@ -14,7 +12,6 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
     
     protected boolean isInMultiBlock = false, destoryTileWithNotMultiBlock = false, destroyBlockWithNoMultiBlock = false;
     protected List<IMultiBlock> multiBlocks = new ArrayList<IMultiBlock>(), unchangable = new ArrayList<IMultiBlock>();
-    protected int fluidMultiBlocks, itemMultiBlock;
     protected int maxMultiBlocks = -1;
     
     @Override
@@ -53,14 +50,6 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
         
         if (multiBlocks.add(multiBlock)) {
             
-            if (multiBlock instanceof IFluidHandler) {
-                fluidMultiBlocks += 1;
-            }
-            
-            if (multiBlock instanceof IInventory) {
-                itemMultiBlock += 1;
-            }
-            
             isInMultiBlock = true;
             unchangable = Collections.unmodifiableList(multiBlocks);
             return true;
@@ -70,14 +59,6 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
     
     @Override
     public void removeMultiBlock(IMultiBlock multiBlock) {
-        
-        if (multiBlock instanceof IFluidHandler) {
-            fluidMultiBlocks -= 1;
-        }
-        
-        if (multiBlock instanceof IInventory) {
-            itemMultiBlock -= 1;
-        }
         
         multiBlocks.remove(multiBlock);
         unchangable = Collections.unmodifiableList(multiBlocks);

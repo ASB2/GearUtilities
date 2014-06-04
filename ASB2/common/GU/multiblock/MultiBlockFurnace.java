@@ -1,34 +1,43 @@
 package GU.multiblock;
 
+import java.util.List;
+
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import ASB2.inventory.Inventory;
+import ASB2.utils.UtilInventory;
 import ASB2.utils.UtilVector;
+import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
+import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
+import GU.api.multiblock.MultiBlockAbstract.IItemInterface;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
+import GU.api.multiblock.MultiBlockObject.FluidHandlerWrapper;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
+import cpw.mods.fml.common.registry.GameRegistry;
 
-public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHandler {
+public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBlock, IInventoryMultiBlock {
     
-    public FluidTank fluidTank = new FluidTank(1000);
+    public FluidHandlerWrapper fuelTank = new FluidHandlerWrapper(0), outputTank = new FluidHandlerWrapper(0);
+    Inventory fuelInventory = new Inventory("MultiBlockFurnace: Fuel"), outputInventory = new Inventory("MultiBlockFurnace: Output");
+    
+    int currentFuel;
+    int cookTimer = 0;
+    int maxFuel;
     
     public MultiBlockFurnace(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         super(world, positionRelativeTo, size, updater);
-        
-        fluidTank.setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
     }
     
     public MultiBlockFurnace(World world) {
         super(world);
-        
-        fluidTank.setCapacity(16 * FluidContainerRegistry.BUCKET_VOLUME);
     }
     
     @Override
@@ -38,89 +47,44 @@ public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHand
     }
     
     @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-        
-        return fluidTank.fill(resource, doFill);
-    }
-    
-    @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid) {
-        
-        if (fluidTank != null) {
-            
-            if (fluid != null) {
-                
-                if (fluidTank.getFluid() != null) {
-                    
-                    if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
-                        
-                        return true;
-                    }
-                }
-                else {
-                    
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    
-    @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-        
-        if (resource == null || !resource.isFluidEqual(fluidTank.getFluid())) {
-            
-            return null;
-        }
-        
-        return fluidTank.drain(resource.amount, doDrain);
-    }
-    
-    @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-        
-        return fluidTank.drain(maxDrain, doDrain);
-    }
-    
-    @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid) {
-        
-        if (this.fluidTank.getFluid() != null) {
-            
-            if (fluidTank.getFluidAmount() > 0) {
-                
-                if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 1))) {
-                    
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    
-    @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-        
-        return new FluidTankInfo[] { fluidTank.getInfo() };
-    }
-    
-    @Override
     public NBTTagCompound save(NBTTagCompound tag) {
         
-        tag.setTag("TankData", fluidTank.writeToNBT(new NBTTagCompound()));
+        if (fuelTank != null) tag.setTag("fuelTank", fuelTank.save(new NBTTagCompound()));
+        if (outputTank != null) tag.setTag("outputTank", outputTank.save(new NBTTagCompound()));
+        if (fuelInventory != null) tag.setTag("fuelInventory", fuelInventory.save(new NBTTagCompound()));
+        if (outputInventory != null) tag.setTag("outputInventory", outputInventory.save(new NBTTagCompound()));
         return super.save(tag);
     }
     
     @Override
     public void load(NBTTagCompound tag) {
         
-        fluidTank.readFromNBT(tag.getCompoundTag("TankData"));
+        if (fuelTank != null) fuelTank.load(tag.getCompoundTag("fuelTank"));
+        if (outputTank != null) outputTank.load(tag.getCompoundTag("outputTank"));
+        if (fuelInventory != null) fuelInventory.load(tag.getCompoundTag("fuelInventory"));
+        if (outputInventory != null) outputInventory.load(tag.getCompoundTag("outputInventory"));
         super.load(tag);
     }
     
     @Override
     public void update(Object... objects) {
+        
+        if (fuelTank.getFluidTank().getCapacity() == 0) {
+            
+            fuelTank.getFluidTank().setCapacity((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 8 * FluidContainerRegistry.BUCKET_VOLUME);
+        }
+        if (outputTank.getFluidTank().getCapacity() == 0) {
+            
+            outputTank.getFluidTank().setCapacity((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 8 * FluidContainerRegistry.BUCKET_VOLUME);
+        }
+        if (fuelInventory.getSizeInventory() == 0) {
+            
+            fuelInventory.setSizeInventory((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 4);
+        }
+        if (outputInventory.getSizeInventory() == 0) {
+            
+            outputInventory.setSizeInventory((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 4);
+        }
         
         if (isConstructing) {
             
@@ -164,6 +128,14 @@ public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHand
                                 return;
                             }
                         }
+                        // else if (y == size.getY()) {
+                        //
+                        // if (!placeEdgeBlock(vec)) {
+                        //
+                        // deconstruct();
+                        // return;
+                        // }
+                        // }
                         else if (((x == 0 || x == size.getX()) && (y != 0 && y != size.getY())) && (z != 0 && z != size.getZ())) {
                             
                             if (!placeGlassBlock(vec)) {
@@ -214,13 +186,84 @@ public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHand
             forceLoad = false;
             isValid = true;
         }
+        else {
+            if (!world.isRemote) furnaceLogic();
+        }
+    }
+    
+    public void furnaceLogic() {
+        
+        if (currentFuel == 0) {
+            
+            for (int index = 0; index < this.fuelInventory.getSizeInventory(); index++) {   
+                
+                ItemStack stack = fuelInventory.getStackInSlot(index);
+                
+                if (stack != null) {
+                    
+                    int itemFuelValue = TileEntityFurnace.getItemBurnTime(stack);
+                    
+                    if (itemFuelValue > 0) {
+                        
+                        if (UtilInventory.removeItemStackFromSlot(fuelInventory, stack, index, 1, true)) {
+                            
+                            currentFuel += itemFuelValue;
+                        }
+                    }
+                }
+            }
+        }
+        
+        if (currentFuel >= 20) {
+            
+            for (int index = 0; index < this.outputInventory.getSizeInventory(); index++) {
+                
+                ItemStack stack = outputInventory.getStackInSlot(index);
+                
+                if (stack != null) {
+                    
+                    ItemStack result = FurnaceRecipes.smelting().getSmeltingResult(stack);
+                    
+                    if (result != null) {
+                        
+                        if (UtilInventory.removeItemStackFromSlot(outputInventory, stack, index, 1, false)) {
+                            
+                            for (IItemInterface interfacee : this.itemInterfaceList) {
+                                
+                                if (interfacee != null) {
+                                    
+                                    List<IInventory> inventoryList = interfacee.getAvaliableInventorys();
+                                    
+                                    if (inventoryList != null) {
+                                        
+                                        for (IInventory inventory : inventoryList) {
+                                            
+                                            if (inventory != null) {
+                                                
+                                                if (UtilInventory.addItemStackToInventory(inventory, result, false)) {
+                                                    
+                                                    currentFuel -= 20;
+                                                    UtilInventory.addItemStackToInventory(inventory, result, true);
+                                                    UtilInventory.removeItemStackFromSlot(outputInventory, stack, index, 1, true);
+                                                    return;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     public boolean startCreation() {
         
         if (!isValid && !isConstructing) {
             
-            if (size.getX() >= 2 && size.getY() >= 4 && size.getZ() >= 2) {
+            if (size.getX() >= 2 && size.getY() >= 4 && size.getY() % 2 == 0 && size.getZ() >= 2) {
                 
                 isConstructing = true;
                 
@@ -233,5 +276,37 @@ public class MultiBlockFurnace extends MultiBlockInventory implements IFluidHand
             }
         }
         return false;
+    }
+    
+    @Override
+    public IInventory getInventory(Vector3i tilePosition) {
+        
+        Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
+        
+        if (size.getY() / 2 > relativeVector.getY()) {
+            
+            return outputInventory;
+        }
+        else if (size.getY() / 2 < relativeVector.getY()) {
+            
+            return fuelInventory;
+        }
+        return null;
+    }
+    
+    @Override
+    public IFluidHandler getTank(Vector3i tilePosition) {
+        
+        Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
+        
+        if (size.getY() / 2 < relativeVector.getY()) {
+            
+            return outputTank;
+        }
+        else if (size.getY() / 2 > relativeVector.getY()) {
+            
+            return fuelTank;
+        }
+        return null;
     }
 }

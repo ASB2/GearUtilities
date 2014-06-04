@@ -1,22 +1,48 @@
 package GU.blocks.containers.BlockMultiInterface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+import ASB2.utils.UtilVector;
+import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
+import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
+import GU.api.multiblock.MultiBlockAbstract.IItemInterface;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.blocks.containers.TileMultiBase;
+import UC.math.vector.Vector3i;
 
-public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IInventory {
+public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IItemInterface, IInventory {
     
     Map<SlotHolder, IMultiBlock> inventorise = new HashMap<SlotHolder, IMultiBlock>();
     int maxSizeInventory = 0;
+    Vector3i position;
     
     public TileItemMultiInterface() {
         
+        this.setMaxMultiBlocks(2);
+    }
+    
+    @Override
+    public void updateEntity() {
+        
+        if (position == null) {
+            
+            position = UtilVector.createTileEntityVector(this);
+        }
+    }
+    
+    @Override
+    public boolean isPositionValid(EnumMultiBlockPartPosition position) {
+        
+        return position == EnumMultiBlockPartPosition.FACE;
     }
     
     private class SlotHolder {
@@ -65,14 +91,14 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
             
             for (IMultiBlock multi : this.getMultiBlocks()) {
                 
-                if (multi instanceof IInventory) {
+                if (multi instanceof IInventoryMultiBlock) {
                     
-                    int size = ((IInventory) multi).getSizeInventory();
+                    int size = ((IInventoryMultiBlock) multi).getInventory(position).getSizeInventory();
                     
                     if (size > 0) {
                         
-                        this.inventorise.put(new SlotHolder(lastSlotMin, ((IInventory) multi).getSizeInventory() + lastSlotMin), multi);
-                        lastSlotMin += ((IInventory) multi).getSizeInventory() + 1;
+                        this.inventorise.put(new SlotHolder(lastSlotMin, ((IInventoryMultiBlock) multi).getInventory(position).getSizeInventory() + lastSlotMin), multi);
+                        lastSlotMin += ((IInventoryMultiBlock) multi).getInventory(position).getSizeInventory() + 1;
                     }
                 }
             }
@@ -85,9 +111,9 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
             
             for (IMultiBlock multi : this.getMultiBlocks()) {
                 
-                if (multi instanceof IInventory) {
+                if (multi instanceof IInventoryMultiBlock) {
                     
-                    int size = ((IInventory) multi).getSizeInventory();
+                    int size = ((IInventoryMultiBlock) multi).getInventory(position).getSizeInventory();
                     
                     if (size > 0) {
                         
@@ -107,7 +133,7 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
             
             if (slots.getMinSlot() <= slot && slots.getMaxSlot() >= slot) {
                 
-                return (IInventory) inventorise.get(slots);
+                return ((IInventoryMultiBlock) inventorise.get(slots)).getInventory(position);
             }
         }
         return null;
@@ -212,5 +238,22 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
             return inventory.isItemValidForSlot(i, itemstack);
         }
         return false;
+    }
+    
+    @Override
+    public List<IInventory> getAvaliableInventorys() {
+        
+        List<IInventory> inventoryList = new ArrayList<IInventory>();
+        
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            
+            TileEntity tile = worldObj.getTileEntity(xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ);
+            
+            if (tile != null && tile instanceof IInventory) {
+                
+                inventoryList.add((IInventory) tile);
+            }
+        }
+        return inventoryList;
     }
 }
