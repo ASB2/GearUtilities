@@ -193,9 +193,9 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     
     public void furnaceLogic() {
         
-        if (currentFuel == 0) {
+//        if (currentFuel < 100) {
             
-            for (int index = 0; index < this.fuelInventory.getSizeInventory(); index++) {   
+            for (int index = 0; index < this.fuelInventory.getSizeInventory(); index++) {
                 
                 ItemStack stack = fuelInventory.getStackInSlot(index);
                 
@@ -212,9 +212,9 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
                     }
                 }
             }
-        }
+//        }
         
-        if (currentFuel >= 20) {
+        if (currentFuel >= 100) {
             
             for (int index = 0; index < this.outputInventory.getSizeInventory(); index++) {
                 
@@ -242,7 +242,7 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
                                                 
                                                 if (UtilInventory.addItemStackToInventory(inventory, result, false)) {
                                                     
-                                                    currentFuel -= 20;
+                                                    currentFuel -= 100;
                                                     UtilInventory.addItemStackToInventory(inventory, result, true);
                                                     UtilInventory.removeItemStackFromSlot(outputInventory, stack, index, 1, true);
                                                     return;
@@ -299,11 +299,11 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
         
         Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
         
-        if (size.getY() / 2 < relativeVector.getY()) {
+        if (size.getY() / 2 > relativeVector.getY()) {
             
             return outputTank;
         }
-        else if (size.getY() / 2 > relativeVector.getY()) {
+        else if (size.getY() / 2 < relativeVector.getY()) {
             
             return fuelTank;
         }

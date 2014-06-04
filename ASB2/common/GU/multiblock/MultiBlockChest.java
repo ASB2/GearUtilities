@@ -56,6 +56,30 @@ public class MultiBlockChest extends MultiBlockInventory {
                                 return;
                             }
                         }
+                        else if (((x == 0 || x == size.getX()) && (y != 0 && y != size.getY())) && (z != 0 && z != size.getZ())) {
+                            
+                            if (!placeGlassBlock(vec)) {
+                                
+                                deconstruct();
+                                return;
+                            }
+                        }
+                        else if (((x != 0 && x != size.getX()) && (y == 0 || y == size.getY())) && (z != 0 && z != size.getZ())) {
+                            
+                            if (!placeGlassBlock(vec)) {
+                                
+                                deconstruct();
+                                return;
+                            }
+                        }
+                        else if (((x != 0 && x != size.getX()) && (y != 0 && y != size.getY())) && (z == 0 || z == size.getZ())) {
+                            
+                            if (!placeGlassBlock(vec)) {
+                                
+                                deconstruct();
+                                return;
+                            }
+                        }
                         else if (!placeInnerBlock(vec)) {
                             
                             deconstruct();
