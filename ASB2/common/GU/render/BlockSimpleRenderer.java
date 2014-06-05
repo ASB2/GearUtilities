@@ -3,6 +3,7 @@ package GU.render;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
 import GU.info.Reference;
@@ -34,16 +35,19 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
         
         if (block instanceof INoiseBlockRender) {
             
-            renderer.setRenderBounds(.01, .01, .01, 1 - .01, 1 - .01, 1 - .01);
-            
-            Color4i color = ((INoiseBlockRender) block).getColor(metadata);
-            
-            if (color != null) {
+            if (((INoiseBlockRender) block).canRender(metadata)) {
                 
-                UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon, color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+                renderer.setRenderBounds(.01, .01, .01, 1 - .01, 1 - .01, 1 - .01);
+                
+                Color4i color = ((INoiseBlockRender) block).getColor(metadata);
+                
+                if (color != null) {
+                    
+                    UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon, color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+                }
+                else
+                    UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon, 255, 255, 255, 255);
             }
-            else
-                UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon, 255, 255, 255, 255);
         }
         
         if (block == BlockRegistry.SPACIAL_PROVIDER) {
@@ -63,23 +67,25 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
         
-        // GL11.glEnable(GL11.GL_BLEND);
+        // int metadata = world.getBlockMetadata(x, y, z);
         
         if (block instanceof INoiseBlockRender) {
             
             renderer.setRenderBounds(.005, .005, .005, 1 - .005, 1 - .005, 1 - .005);
             
-            Color4i color = ((INoiseBlockRender) block).getColor(world, x, y, z);
-            
-            if (color != null) {
+            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 
-                // GL11.glBlendFunc(GL11.GL_SRC_ALPHA,
-                // GL11.GL_ONE_MINUS_SRC_ALPHA);
-                UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.blockNoiseIcon, color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha(), Reference.BRIGHT_BLOCK);
+                if (((INoiseBlockRender) block).canRender(world, x, y, z, direction)) {
+                    
+                    Color4i color = ((INoiseBlockRender) block).getColor(world, x, y, z, direction);
+                    
+                    if (color == null) {
+                        
+                        color = Color4i.WHITE;
+                    }
+                    UtilRender.renderFakeSide(renderer, block, direction, x, y, z, NoiseManager.instance.blockNoiseIcon, color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha(), Reference.BRIGHT_BLOCK);
+                }
             }
-            else
-                UtilRender.renderFakeBlock(renderer, block, x, y, z, NoiseManager.instance.blockNoiseIcon, 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
-            
             // return true;
         }
         
@@ -88,9 +94,30 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             renderer.setRenderBounds(-.0015, -.0015, -.0015, 1.0015, 1.0015, 1.0015);
             UtilRender.renderFakeBlock(renderer, block, x, y, z, EnumInputIcon.NONE.getStateIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
         }
+        
+        // if (block == BlockRegistry.MULTI_INTERFACE && metadata == 0) {
+        //
+        // renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
+        //
+        // for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+        //
+        // Color4i color = ((INoiseBlockRender) block).getColor(world, x, y, z,
+        // direction);
+        //
+        // if (color == null) {
+        //
+        // color = Color4i.WHITE;
+        // }
+        // UtilRender.renderFakeSide(renderer, block, direction, x, y, z,
+        // block.getIcon(direction.ordinal(), metadata), color.getRed(),
+        // color.getGreen(), color.getBlue(), color.getAlpha(),
+        // Reference.BRIGHT_BLOCK);
+        // }
+        // // return true;
+        // }
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         renderer.renderStandardBlock(block, x, y, z);
-        // GL11.glDisable(GL11.GL_BLEND);
+        
         return true;
     }
     
@@ -110,6 +137,10 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
         
         Color4i getColor(int metadata);
         
-        Color4i getColor(IBlockAccess world, int x, int y, int z);
+        Color4i getColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction);
+        
+        boolean canRender(int metadata);
+        
+        boolean canRender(IBlockAccess world, int x, int y, int z, ForgeDirection direction);
     }
 }

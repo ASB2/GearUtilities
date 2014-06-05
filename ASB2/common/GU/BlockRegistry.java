@@ -12,6 +12,7 @@ import GU.blocks.BlockBase;
 import GU.blocks.BlockMetadata;
 import GU.blocks.BlockStructureCube;
 import GU.blocks.containers.BlockCreativeMetadata.BlockCreativeMetadata;
+import GU.blocks.containers.BlockCreativeMetadata.CreativeMetadataWrapper;
 import GU.blocks.containers.BlockElectisCrystal.BlockElectisCrystal;
 import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
 import GU.blocks.containers.BlockMultiInterface.MultiInterfaceWrapper;
@@ -57,7 +58,14 @@ public class BlockRegistry {
     };
     
     public static final BlockElectisCrystal ELECTIS_CRYSTAL = new BlockElectisCrystal(Material.rock);
-    public static final BlockCreativeMetadata CREATIVE_METADATA = new BlockCreativeMetadata(Material.rock);
+    public static final BlockCreativeMetadata CREATIVE_METADATA = new BlockCreativeMetadata(Material.rock) {
+        
+        public void postInit() {
+            
+            this.addWrapper(new CreativeMetadataWrapper(new String[] { "BlockCreativeMetadata0" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Creative Energy"));
+            this.addWrapper(new CreativeMetadataWrapper(new String[] { "BlockCreativeMetadata1" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Creative Fluid"));
+        }
+    };
     
     public static final BlockSpacialProvider SPACIAL_PROVIDER = new BlockSpacialProvider(Material.rock) {
         

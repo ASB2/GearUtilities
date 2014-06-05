@@ -1,7 +1,7 @@
 package GU.multiblock;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,7 +13,8 @@ import ASB2.utils.UtilVector;
 import GU.BlockRegistry;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
-import GU.api.multiblock.MultiBlockAbstract.*;
+import GU.api.multiblock.MultiBlockAbstract.IFluidInterface;
+import GU.api.multiblock.MultiBlockAbstract.IItemInterface;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import UC.IAbstractUpdateable;
@@ -29,8 +30,8 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
     
     boolean isValid = false, isConstructing = false, isDeconstructing = false, forceLoad = false;
     
-    List<IItemInterface> itemInterfaceList = new ArrayList<IItemInterface>();
-    List<IFluidInterface> fluidInterfaceList = new ArrayList<IFluidInterface>();
+    Map<Vector3i, IItemInterface> itemInterfaceList = new HashMap<Vector3i, IItemInterface>();
+    Map<Vector3i, IFluidInterface> fluidInterfaceList = new HashMap<Vector3i, IFluidInterface>();
     
     public MultiBlockBase(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         this(world);
@@ -87,11 +88,11 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
                 
                 if (tile instanceof IItemInterface) {
                     
-                    itemInterfaceList.add((IItemInterface) tile);
+                    itemInterfaceList.put(position, (IItemInterface) tile);
                 }
                 if (tile instanceof IFluidInterface) {
                     
-                    fluidInterfaceList.add((IFluidInterface) tile);
+                    fluidInterfaceList.put(position, (IFluidInterface) tile);
                 }
                 return ((IMultiBlockPart) tile).addMultiBlock(this);
             }

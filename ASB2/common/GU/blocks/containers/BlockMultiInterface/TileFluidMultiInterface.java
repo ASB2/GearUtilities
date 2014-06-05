@@ -64,8 +64,8 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
                                         
                                         if (handler1Info.capacity > 0 && handler2Info.capacity > 0) {
                                             
-                                            double precentFilled1 = handler1Info.fluid != null ? handler1Info.fluid.amount / handler1Info.capacity : 1;
-                                            double precentFilled2 = handler2Info.fluid != null ? handler2Info.fluid.amount / handler2Info.capacity : 1;
+                                            double precentFilled1 = handler1Info.fluid != null ? handler1Info.fluid.amount / (double)handler1Info.capacity : 0;
+                                            double precentFilled2 = handler2Info.fluid != null ? handler2Info.fluid.amount / (double)handler2Info.capacity : 0;
                                             
                                             if (precentFilled1 > precentFilled2) {
                                                 

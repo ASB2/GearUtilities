@@ -67,7 +67,7 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
         super.addInformation(stack, player, par3List, par4);
         par3List.add("Colorable");
     }
-
+    
     @Override
     public TileEntity createNewTileEntity(World var1, int var2) {
         
@@ -85,8 +85,20 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
     }
     
     @Override
-    public Color4i getColor(IBlockAccess world, int x, int y, int z) {
+    public Color4i getColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         
-        return ((TileMultiPart) world.getTileEntity(x, y, z)).getColor(ForgeDirection.UNKNOWN);
+        return ((TileMultiPart) world.getTileEntity(x, y, z)).getColor(direction);
+    }
+    
+    @Override
+    public boolean canRender(int metadata) {
+        // TODO Auto-generated method stub
+        return true;
+    }
+    
+    @Override
+    public boolean canRender(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
+        // TODO Auto-generated method stub
+        return true;
     }
 }

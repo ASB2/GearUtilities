@@ -101,7 +101,7 @@ public class BlockSpacialProvider extends BlockMultiMetadataContainerBase implem
     }
     
     @Override
-    public Color4i getColor(IBlockAccess world, int x, int y, int z) {
+    public Color4i getColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         
         return getColor(world.getBlockMetadata(x, y, z));
     }
@@ -128,5 +128,17 @@ public class BlockSpacialProvider extends BlockMultiMetadataContainerBase implem
     public TileEntity createNewTileEntity(World var1, int var2) {
         
         return new TileSpacialProvider();
+    }
+
+    @Override
+    public boolean canRender(int metadata) {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    @Override
+    public boolean canRender(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
+        // TODO Auto-generated method stub
+        return true;
     }
 }

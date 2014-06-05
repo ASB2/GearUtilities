@@ -8,26 +8,43 @@ import java.util.Map;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilVector;
+import GU.GearUtilities;
+import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IItemInterface;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.blocks.containers.TileMultiBase;
+import GU.packets.ItemMultiInterfacePacket;
+import GU.render.EnumInputIcon;
+import UC.Wait;
+import UC.Wait.IWaitTrigger;
+import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IItemInterface, IInventory {
+public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IItemInterface, IInventory, IColorableTile {
     
     Map<SlotHolder, IMultiBlock> inventorise = new HashMap<SlotHolder, IMultiBlock>();
     int maxSizeInventory = 0;
     Vector3i position;
+    public EnumInputIcon[] sideState;
+    Wait packetTimer;
     
     public TileItemMultiInterface() {
         
         this.setMaxMultiBlocks(2);
+        sideState = new EnumInputIcon[ForgeDirection.values().length];
+        
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            
+            sideState[direction.ordinal()] = EnumInputIcon.NONE;
+        }
+        packetTimer = new Wait(new PacketWait(), 100, 0);
     }
     
     @Override
@@ -37,12 +54,88 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
             
             position = UtilVector.createTileEntityVector(this);
         }
+        packetTimer.update();
+    }
+    
+    public void setSideState(EnumInputIcon[] sideState) {
+        this.sideState = sideState;
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+    }
+    
+    public EnumInputIcon[] getSideState() {
+        return sideState;
+    }
+    
+    @Override
+    public Color4i getColor(ForgeDirection direction) {
+        
+        Color4i color = sideState[direction.ordinal()].getColor();
+        color = color.getRed() == 255 && color.getGreen() == 255 && color.getRed() == 255 ? Color4i.GREEN : color;
+        
+        switch (sideState[direction.ordinal()]) {
+        
+            case BOTH:
+                return sideState[direction.ordinal()].getColor();
+            case INPUT:
+                return Color4i.BLUE;
+            case NONE:
+                return Color4i.GREEN;
+            case OUTPUT:
+                return Color4i.ORANGE;
+            default:
+                break;
+        }
+        return new Color4i(color.getRed(), (color.getGreen() + 255) / 2, color.getBlue());
+    }
+    
+    @Override
+    public boolean setColor(Color4i color, ForgeDirection direction) {
+        
+        return false;
     }
     
     @Override
     public boolean isPositionValid(EnumMultiBlockPartPosition position) {
         
         return position == EnumMultiBlockPartPosition.FACE;
+    }
+    
+    @Override
+    public void writeToNBT(NBTTagCompound tag) {
+        
+        int side = 0;
+        
+        for (EnumInputIcon state : sideState) {
+            
+            if (state != null) tag.setInteger("state" + side, state.ordinal());
+            side++;
+        }
+        super.writeToNBT(tag);
+    }
+    
+    @Override
+    public void readFromNBT(NBTTagCompound tag) {
+        
+        for (int index = 0; index < sideState.length; index++) {
+            
+            sideState[index] = EnumInputIcon.values()[tag.getInteger("state" + index)];
+        }
+        super.readFromNBT(tag);
+    }
+    
+    private class PacketWait implements IWaitTrigger {
+        
+        @Override
+        public void trigger(int id) {
+            
+            if (!worldObj.isRemote) GearUtilities.getPipeline().sendToDimension(new ItemMultiInterfacePacket(xCoord, yCoord, zCoord, sideState), worldObj.provider.dimensionId);
+        }
+        
+        @Override
+        public boolean shouldTick(int id) {
+            // TODO Auto-generated method stub
+            return true;
+        }
     }
     
     private class SlotHolder {
@@ -113,14 +206,19 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                 
                 if (multi instanceof IInventoryMultiBlock) {
                     
-                    int size = ((IInventoryMultiBlock) multi).getInventory(position).getSizeInventory();
+                    IInventory inventory = ((IInventoryMultiBlock) multi).getInventory(position);
                     
-                    if (size > 0) {
+                    if (inventory != null) {
                         
-                        SlotHolder holder = new SlotHolder(minSlot, minSlot + size);
-                        this.inventorise.put(holder, multi);
-                        minSlot += size + 1;
-                        maxSizeInventory += size;
+                        int size = inventory.getSizeInventory();
+                        
+                        if (size > 0) {
+                            
+                            SlotHolder holder = new SlotHolder(minSlot, minSlot + size);
+                            this.inventorise.put(holder, multi);
+                            minSlot += size + 1;
+                            maxSizeInventory += size;
+                        }
                     }
                 }
             }
@@ -247,11 +345,14 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
         
         for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
             
-            TileEntity tile = worldObj.getTileEntity(xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ);
-            
-            if (tile != null && tile instanceof IInventory) {
+            if (sideState[direction.ordinal()] == EnumInputIcon.OUTPUT) {
                 
-                inventoryList.add((IInventory) tile);
+                TileEntity tile = worldObj.getTileEntity(xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ);
+                
+                if (tile != null && tile instanceof IInventory) {
+                    
+                    inventoryList.add((IInventory) tile);
+                }
             }
         }
         return inventoryList;

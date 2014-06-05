@@ -22,7 +22,6 @@ public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacke
     Vector3i size;
     
     FluidTank tank;
-    int fluidID, fluidAmount, capacity;
     
     public MutliBlockTankPacket() {
         // TODO Auto-generated constructor stub

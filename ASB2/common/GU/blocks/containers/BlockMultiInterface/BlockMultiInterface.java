@@ -1,7 +1,10 @@
 package GU.blocks.containers.BlockMultiInterface;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.util.ForgeDirection;
+import GU.api.color.AbstractColorable.IColorableTile;
 import GU.blocks.containers.BlockMultiMetadataContainerBase;
 import GU.render.BlockSimpleRenderer.INoiseBlockRender;
 import UC.color.Color4i;
@@ -37,8 +40,23 @@ public class BlockMultiInterface extends BlockMultiMetadataContainerBase impleme
     }
     
     @Override
-    public Color4i getColor(IBlockAccess world, int x, int y, int z) {
+    public Color4i getColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         
-        return getColor(world.getBlockMetadata(x, y, z));
+        TileEntity tile = world.getTileEntity(x, y, z);
+        
+        return tile != null && tile instanceof IColorableTile ? ((IColorableTile) tile).getColor(direction) : getColor(world.getBlockMetadata(x, y, z));
+        // return getColor(world.getBlockMetadata(x, y, z));
+    }
+    
+    @Override
+    public boolean canRender(int metadata) {
+        // TODO Auto-generated method stub
+        return true;
+    }
+    
+    @Override
+    public boolean canRender(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
+        // TODO Auto-generated method stub
+        return true;
     }
 }

@@ -39,7 +39,7 @@ public class TileElectisCrystal extends TileBase implements IColorableTile, ICry
             
             if (!worldObj.isRemote) {
                 
-                GearUtilities.getPipeline().sendToAllAround(new CrystalTypePacket(xCoord, yCoord, zCoord, crystalType.ordinal()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
+                GearUtilities.getPipeline().sendToDimension(new CrystalTypePacket(xCoord, yCoord, zCoord, crystalType.ordinal()), worldObj.provider.dimensionId);
             }
             if (crystalLogic != null) {
                 

@@ -24,7 +24,7 @@ public class DestructorWrapper extends MetadataWrapper {
         if (!world.isRemote) {
             
             ForgeDirection direction = ForgeDirection.getOrientation(side).getOpposite();
-            int distance = UtilItemStack.getNBTTagInt(itemStack, "direction");
+            int distance = UtilItemStack.getNBTTagInt(itemStack, "distance");
             Block block = world.getBlock(x, y, z);
             int meta = world.getBlockMetadata(x, y, z);
             
@@ -72,7 +72,11 @@ public class DestructorWrapper extends MetadataWrapper {
                                 // Vector3i(changedX + x, changedY + y, changedZ
                                 // + z), direction, distance, block, meta));
                                 
-                                UtilBlock.breakAndAddToInventorySpawnExcess(player.inventory, world, changedX + x, changedY + y, changedZ + z, 1, false);
+                                UtilBlock.breakBlockNoDrop(world, changedX + x, changedY + y, changedZ + z);
+                                
+                                // UtilBlock.breakAndAddToInventorySpawnExcess(player.inventory,
+                                // world, changedX + x, changedY + y, changedZ +
+                                // z, 1, true);
                                 
                                 // UtilBlock.breakBlockNoDrop(world, changedX +
                                 // x, changedY + y, changedZ + z);
@@ -88,18 +92,18 @@ public class DestructorWrapper extends MetadataWrapper {
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
         
-        int direction = UtilItemStack.getNBTTagInt(itemStack, "direction");
+        int distance = UtilItemStack.getNBTTagInt(itemStack, "distance");
         
         if (player.isSneaking()) {
             
-            direction--;
+            distance--;
         }
         else {
             
-            direction++;
+            distance++;
         }
-        UtilItemStack.setNBTTagInt(itemStack, "direction", Math.max(direction, 0));
-        UtilEntity.sendChatToPlayer(player, "Distance: " + Math.max(direction, 0));
+        UtilItemStack.setNBTTagInt(itemStack, "distance", Math.max(distance, 0));
+        if (!world.isRemote) UtilEntity.sendChatToPlayer(player, "Radius: " + Math.max(distance, 0));
         return super.onItemRightClick(itemStack, world, player);
     }
     

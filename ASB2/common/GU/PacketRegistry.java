@@ -2,8 +2,10 @@ package GU;
 
 import GU.packets.ColorPacket;
 import GU.packets.CrystalTypePacket;
+import GU.packets.ItemMultiInterfacePacket;
 import GU.packets.MutliBlockTankPacket;
 import GU.packets.PowerPacket;
+import GU.packets.TankUpdatePacket;
 import cpw.mods.fml.relauncher.Side;
 
 public final class PacketRegistry {
@@ -17,6 +19,8 @@ public final class PacketRegistry {
         GearUtilities.getPipeline().registerMessage(CrystalTypePacket.class, CrystalTypePacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(ColorPacket.class, ColorPacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(MutliBlockTankPacket.class, MutliBlockTankPacket.class, getNextID(), Side.CLIENT);
+        GearUtilities.getPipeline().registerMessage(ItemMultiInterfacePacket.class, ItemMultiInterfacePacket.class, getNextID(), Side.CLIENT);
+        GearUtilities.getPipeline().registerMessage(TankUpdatePacket.class, TankUpdatePacket.class, getNextID(), Side.CLIENT);
     }
     
     static int ID = -1;
