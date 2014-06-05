@@ -1,11 +1,12 @@
 package GU.blocks.containers.BlockCreativeMetadata;
 
-import UC.color.Color4i;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 import GU.blocks.containers.BlockMetadataContainerBase;
+import GU.blocks.containers.TileBase;
 import GU.render.BlockSimpleRenderer.INoiseBlockRender;
+import UC.color.Color4i;
 
 public class BlockCreativeMetadata extends BlockMetadataContainerBase implements INoiseBlockRender {
     
@@ -13,6 +14,7 @@ public class BlockCreativeMetadata extends BlockMetadataContainerBase implements
         super(material);
         
         this.registerTile(TileCreativePower.class);
+        this.registerTile(TileCreativeFluid.class);
     }
     
     @Override
@@ -36,6 +38,8 @@ public class BlockCreativeMetadata extends BlockMetadataContainerBase implements
     @Override
     public boolean canRender(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         
-        return false;
+        TileBase tile = (TileBase) world.getTileEntity(x, y, z);
+        int metadata = world.getBlockMetadata(x, y, z);
+        return (tile != null && metadata == 1 && tile instanceof TileCreativeFluid && ((TileCreativeFluid) tile).fluidToSave.getFluidAmount() == 0) || metadata == 0;
     }
 }

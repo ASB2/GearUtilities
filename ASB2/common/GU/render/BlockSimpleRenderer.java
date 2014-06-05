@@ -6,6 +6,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
+import GU.blocks.containers.BlockCreativeMetadata.TileCreativeFluid;
 import GU.info.Reference;
 import GU.render.noise.NoiseManager;
 import UC.color.Color4i;
@@ -95,6 +96,20 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             UtilRender.renderFakeBlock(renderer, block, x, y, z, EnumInputIcon.NONE.getStateIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
         }
         
+        if (block == BlockRegistry.CREATIVE_METADATA && world.getBlockMetadata(x, y, z) == 1) {
+            
+            TileCreativeFluid tile = (TileCreativeFluid) world.getTileEntity(x, y, z);
+            
+            if (tile != null) {
+                
+                renderer.setRenderBounds(.005, .005, .005, 1 - .005, 1 - .005, 1 - .005);
+                
+                if (tile.fluidToSave.getFluid() != null && tile.fluidToSave.getFluid().getFluid().getStillIcon() != null) {
+                    
+                    UtilRender.renderFakeBlock(renderer, block, x, y, z, tile.fluidToSave.getFluid().getFluid().getStillIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
+                }
+            }
+        }
         // if (block == BlockRegistry.MULTI_INTERFACE && metadata == 0) {
         //
         // renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
