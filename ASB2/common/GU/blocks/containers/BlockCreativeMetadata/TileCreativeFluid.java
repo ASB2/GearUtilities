@@ -12,25 +12,19 @@ import ASB2.utils.UtilFluid;
 import GU.GearUtilities;
 import GU.blocks.containers.TileBase;
 import GU.packets.TankUpdatePacket;
-import UC.Wait;
-import UC.Wait.IWaitTrigger;
 
 public class TileCreativeFluid extends TileBase implements IFluidHandler {
     
     public FluidTank fluidToSave, fluidTank;
-    Wait packetWait;
     
     public TileCreativeFluid() {
         
         fluidToSave = new FluidTank(1000);
         fluidTank = new FluidTank(1000000);
-        packetWait = new Wait(new PacketWait(), 10, 0);
     }
     
     @Override
     public void updateEntity() {
-        
-        packetWait.update();
         
         boolean isPowered = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
         
@@ -81,7 +75,7 @@ public class TileCreativeFluid extends TileBase implements IFluidHandler {
             case 0:
                 fluidToSave = tank;
                 fluidTank.setFluid(tank.getFluid() != null ? tank.getFluid().copy() : null);
-                this.packetWait.getTrigger().trigger(0);
+                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
                 break;
             
             case 1:
@@ -89,6 +83,12 @@ public class TileCreativeFluid extends TileBase implements IFluidHandler {
                 break;
         }
         return super.setTank(tank, id);
+    }
+    
+    @Override
+    public void sendUpdatePacket() {
+        
+        if (!worldObj.isRemote && fluidToSave.getFluid() != null) GearUtilities.getPipeline().sendToDimension(new TankUpdatePacket(xCoord, yCoord, zCoord, fluidToSave, 0), worldObj.provider.dimensionId);
     }
     
     @Override
@@ -107,45 +107,16 @@ public class TileCreativeFluid extends TileBase implements IFluidHandler {
         super.writeToNBT(tag);
     }
     
-    private class PacketWait implements IWaitTrigger {
-        
-        @Override
-        public void trigger(int id) {
-            
-            if (!worldObj.isRemote && fluidToSave.getFluid() != null) GearUtilities.getPipeline().sendToDimension(new TankUpdatePacket(xCoord, yCoord, zCoord, fluidToSave, 0), worldObj.provider.dimensionId);
-        }
-        
-        @Override
-        public boolean shouldTick(int id) {
-            // TODO Auto-generated method stub
-            return true;
-        }
-    }
-    
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
         
-        return fluidTank.fill(resource, doFill);
+        return resource != null ? resource.amount : 0;
     }
     
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
         
-        if (fluid != null) {
-            
-            if (fluidTank.getFluid() != null) {
-                
-                if (this.fluidTank.getFluid().isFluidEqual(new FluidStack(fluid, 0))) {
-                    
-                    return true;
-                }
-            }
-            else {
-                
-                return true;
-            }
-        }
-        return false;
+        return true;
     }
     
     @Override

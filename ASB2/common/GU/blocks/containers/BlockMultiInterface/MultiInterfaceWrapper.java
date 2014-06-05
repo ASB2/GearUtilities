@@ -116,6 +116,12 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
                 return new TileFluidMultiInterface();
             case 2:
                 return new TilePowerMultiInterface();
+            case 3:
+                return new TileDataMultiInterface();
+            case 4:
+                return new TileRedstoneMultiInterface();
+            case 5:
+                return new TileGuiMultiInterface();
         }
         return null;
     }

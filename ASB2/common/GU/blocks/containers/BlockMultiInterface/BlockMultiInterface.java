@@ -16,6 +16,9 @@ public class BlockMultiInterface extends BlockMultiMetadataContainerBase impleme
         this.registerTile(TileItemMultiInterface.class);
         this.registerTile(TileFluidMultiInterface.class);
         this.registerTile(TilePowerMultiInterface.class);
+        this.registerTile(TileDataMultiInterface.class);
+        this.registerTile(TileRedstoneMultiInterface.class);
+        this.registerTile(TileGuiMultiInterface.class);
     }
     
     @Override

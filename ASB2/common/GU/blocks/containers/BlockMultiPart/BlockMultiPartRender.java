@@ -73,5 +73,11 @@ public class BlockMultiPartRender extends BlockMultiBlockPartAir {
             
             return INFINITE_EXTENT_AABB;
         }
+        
+        @Override
+        public double getMaxRenderDistanceSquared() {
+            
+            return super.getMaxRenderDistanceSquared() * 2;
+        }
     }
 }

@@ -33,9 +33,10 @@ public class CreativeMetadataWrapper extends MetadataWrapper {
                     if (fluid != null) {
                         
                         tank.setTank(new FluidTank(fluid, fluid.amount), 0);
-                        return true;
                     }
+                    world.markBlockForUpdate(x, y, z);
                 }
+                return true;
             }
         }
         return super.onBlockActivated(world, x, y, z, entityplayer, side, xHit, yHit, zHit);

@@ -10,10 +10,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
@@ -204,6 +206,66 @@ public class BlockMetadata extends BlockBase {
         return super.getLightValue(world, x, y, z);
     }
     
+    @Override
+    public float getEnchantPowerBonus(World world, int x, int y, int z) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.getEnchantPowerBonus(world, x, y, z);
+        }
+        return super.getEnchantPowerBonus(world, x, y, z);
+    }
+    
+    @Override
+    public boolean getBlocksMovement(IBlockAccess world, int x, int y, int z) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.getBlocksMovement(world, x, y, z);
+        }
+        return super.getBlocksMovement(world, x, y, z);
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.getCollisionBoundingBoxFromPool(world, x, y, z);
+        }
+        return super.getCollisionBoundingBoxFromPool(world, x, y, z);
+    }
+    
+    @Override
+    public int getExpDrop(IBlockAccess world, int metadata, int fortune) {
+        
+        MetadataWrapper wrapper = wrappers.get(metadata);
+        
+        if (wrapper != null) {
+            
+            return wrapper.getExpDrop(world, metadata, fortune);
+        }
+        return super.getExpDrop(world, metadata, fortune);
+    }
+    
+    @Override
+    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ);
+        }
+        return super.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ);
+    }
+    
     public static class MetadataWrapper {
         
         protected String[] iconNames;
@@ -366,6 +428,31 @@ public class BlockMetadata extends BlockBase {
         public int getLightValue(IBlockAccess world, int x, int y, int z) {
             
             return 0;
+        }
+        
+        public float getEnchantPowerBonus(World world, int x, int y, int z) {
+            
+            return 0;
+        }
+        
+        public boolean getBlocksMovement(IBlockAccess world, int x, int y, int z) {
+            
+            return world.getTileEntity(x, y, z) == null;
+        }
+        
+        public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
+            
+            return AxisAlignedBB.getAABBPool().getAABB((double) x + this.getBlock().minX, (double) y + this.getBlock().minY, (double) z + this.getBlock().minZ, (double) x + this.getBlock().maxX, (double) y + this.getBlock().maxY, (double) z + this.getBlock().maxZ);
+        }
+        
+        public int getExpDrop(IBlockAccess world, int metadata, int fortune) {
+            
+            return 0;
+        }
+        
+        public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+            
+            return this.getBlock().blockHardness / 5f;
         }
     }
     

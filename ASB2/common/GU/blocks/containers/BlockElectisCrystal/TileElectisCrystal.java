@@ -201,6 +201,12 @@ public class TileElectisCrystal extends TileBase implements IColorableTile, ICry
         super.readFromNBT(tag);
     }
     
+    @Override
+    public void sendUpdatePacket() {
+        
+        GearUtilities.getPipeline().sendToAllAround(new CrystalTypePacket(xCoord, yCoord, zCoord, crystalType.ordinal()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
+    }
+    
     private class SendPacket implements IWaitTrigger {
         
         IPowerManager lastManager;
@@ -209,8 +215,6 @@ public class TileElectisCrystal extends TileBase implements IColorableTile, ICry
         public void trigger(int id) {
             
             if (!worldObj.isRemote) {
-                
-                GearUtilities.getPipeline().sendToAllAround(new CrystalTypePacket(xCoord, yCoord, zCoord, crystalType.ordinal()), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 20));
                 
                 IPowerManager manager = getPowerManager();
                 

@@ -1,6 +1,7 @@
 package GU.blocks.containers;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
@@ -27,6 +28,17 @@ public class TileBase extends TileEntity {
     public FluidTank getTank() {
         
         return null;
+    }
+    
+    @Override
+    public Packet getDescriptionPacket() {
+        
+        sendUpdatePacket();
+        return null;
+    }
+    
+    public void sendUpdatePacket() {
+        
     }
     
     @Override

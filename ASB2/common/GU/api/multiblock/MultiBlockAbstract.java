@@ -2,7 +2,9 @@ package GU.api.multiblock;
 
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidHandler;
 import UC.math.vector.Vector3i;
@@ -53,6 +55,16 @@ public class MultiBlockAbstract {
         IInventory getInventory(Vector3i tilePosition);
     }
     
+    public static interface IRedstoneMultiBlock extends IMultiBlock {
+        
+        int getLevel(Vector3i tilePosition);
+    }
+    
+    public static interface IGuiMultiBlock extends IMultiBlock {
+        
+        boolean openGui(Vector3i position, EntityPlayer player, int side);
+    }
+    
     public static interface IItemInterface extends IMultiBlockPart {
         
         List<IInventory> getAvaliableInventorys();
@@ -61,5 +73,12 @@ public class MultiBlockAbstract {
     public static interface IFluidInterface extends IMultiBlockPart {
         
         List<IFluidHandler> getAvaliableInventorys();
+    }
+    
+    public static interface IDataInterface extends IMultiBlockPart {
+        
+        boolean setMultiBlockData(NBTTagCompound tag);
+        
+        NBTTagCompound getMultiBlockData();
     }
 }
