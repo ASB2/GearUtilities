@@ -15,7 +15,7 @@ public final class Models {
     public static WavefrontObject ModelFlameAltar;
     public static WavefrontObject ModelGlassPipe;
     public static WavefrontObject ModelGyro;
-    public static WavefrontObject ModelFlameShard;
+    public static WavefrontObject ModelElectisShard;
     public static WavefrontObject ModelFlameConduit;
     public static WavefrontObject ModelCrystal2;
     public static WavefrontObject ModelRhombicuboctahedron;
@@ -35,7 +35,7 @@ public final class Models {
     public static final ResourceLocation RHOMBICUBOCTAHEDRON = new ResourceLocation(Reference.MOD_ID + ":models/ModelRhombicuboctahedron.obj");
     
     private Models() {
-    };
+    }
     
     public static void initModels() {
         
@@ -48,7 +48,7 @@ public final class Models {
         ModelFlameAltar = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_ALTAR);
         ModelGlassPipe = (WavefrontObject) AdvancedModelLoader.loadModel(Models.GLASS_PIPE);
         ModelGyro = (WavefrontObject) AdvancedModelLoader.loadModel(Models.GYRO);
-        ModelFlameShard = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_SHARD);
+        ModelElectisShard = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_SHARD);
         ModelFlameConduit = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_CONDUIT);
         ModelCrystal2 = (WavefrontObject) AdvancedModelLoader.loadModel(Models.CRYSTAL_2);
         ModelRhombicuboctahedron = (WavefrontObject) AdvancedModelLoader.loadModel(Models.RHOMBICUBOCTAHEDRON);

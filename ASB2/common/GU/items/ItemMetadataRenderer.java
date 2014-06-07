@@ -2,7 +2,6 @@ package GU.items;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
-import GU.ItemRegistry;
 import GU.items.ItemMetadata.MetadataWrapper;
 
 public class ItemMetadataRenderer implements IItemRenderer {
@@ -12,7 +11,7 @@ public class ItemMetadataRenderer implements IItemRenderer {
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
         
-        MetadataWrapper wrapper = ItemRegistry.METADATA_ITEM.wrappers.get(item.getItemDamage());
+        MetadataWrapper wrapper = ((ItemMetadata) item.getItem()).wrappers.get(item.getItemDamage());
         
         if (wrapper != null) {
             
@@ -29,7 +28,7 @@ public class ItemMetadataRenderer implements IItemRenderer {
     @Override
     public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
         
-        MetadataWrapper wrapper = ItemRegistry.METADATA_ITEM.wrappers.get(item.getItemDamage());
+        MetadataWrapper wrapper = ((ItemMetadata) item.getItem()).wrappers.get(item.getItemDamage());
         
         if (wrapper != null) {
             
@@ -46,7 +45,7 @@ public class ItemMetadataRenderer implements IItemRenderer {
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         
-        MetadataWrapper wrapper = ItemRegistry.METADATA_ITEM.wrappers.get(item.getItemDamage());
+        MetadataWrapper wrapper = ((ItemMetadata) item.getItem()).wrappers.get(item.getItemDamage());
         
         if (wrapper != null) {
             

@@ -85,7 +85,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        MetadataWrapper wrapper = wrappers.get(metadata);
         
         if (wrapper != null) {
             
@@ -101,6 +101,7 @@ public class BlockMetadata extends BlockBase {
         for (Entry<Integer, MetadataWrapper> wrapperEntry : wrappers.entrySet()) {
             
             subItems.add(new ItemStack(this, 1, wrapperEntry.getKey()));
+            wrapperEntry.getValue().getSubBlocks(unknown, tab, subItems);
         }
     }
     
@@ -349,6 +350,10 @@ public class BlockMetadata extends BlockBase {
                 }
             }
             return stacks;
+        }
+        
+        @SuppressWarnings({ "rawtypes" })
+        public void getSubBlocks(Item unknown, CreativeTabs tab, List subItems) {
         }
         
         public MetadataWrapper setDisplayName(String name) {

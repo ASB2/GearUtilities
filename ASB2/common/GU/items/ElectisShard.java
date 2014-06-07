@@ -1,4 +1,4 @@
-package GU.items.ItemElectisCrystalShard;
+package GU.items;
 
 import java.awt.Color;
 
@@ -179,14 +179,14 @@ public class ElectisShard {
             
             GL11.glScalef(.97f, .97f, .97f);
             
-            Models.ModelFlameShard.renderPart("Center");
+            Models.ModelElectisShard.renderPart("Center");
             GL11.glPopMatrix();
             
             color = color.darker().darker().darker();
             
             GL11.glPushMatrix();
             GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
-            Models.ModelFlameShard.renderPart("Outside");
+            Models.ModelElectisShard.renderPart("Outside");
             GL11.glPopMatrix();
             
             GL11.glEnable(GL11.GL_LIGHTING);

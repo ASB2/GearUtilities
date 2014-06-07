@@ -139,7 +139,7 @@ public class TileCreativeFluid extends TileBase implements IFluidHandler {
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
         
-        if (this.fluidTank.getFluid() != null) {
+        if (this.fluidTank.getFluid() != null && fluid != null) {
             
             if (fluidTank.getFluidAmount() > 0) {
                 

@@ -1,36 +1,20 @@
 package GU.blocks.containers.BlockMultiPart;
 
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
-import UC.color.Color4i;
 import ASB2.utils.UtilBlock;
+import GU.GearUtilities;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
-import UC.Wait.*;
-import UC.Wait;
-import GU.*;
-import GU.packets.*;
+import GU.packets.ColorPacket;
+import UC.color.Color4i;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class TileMultiPart extends TileMultiBase implements IColorableTile {
     
     // Color4i[] colors = new Color4i[ForgeDirection.values().length];
     Color4i color;
-    Wait colorTimer = new Wait(new IWaitTrigger() {
-        
-        @Override
-        public void trigger(int id) {
-            
-            if (!worldObj.isRemote) GearUtilities.getPipeline().sendToAllAround(new ColorPacket(color, xCoord, yCoord, zCoord, ForgeDirection.UNKNOWN), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 200));
-        }
-        
-        @Override
-        public boolean shouldTick(int id) {
-            // TODO Auto-generated method stub
-            return true;
-        }
-    }, 40, 0);
     
     public TileMultiPart() {
         
@@ -44,7 +28,6 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
     
     @Override
     public void updateEntity() {
-        colorTimer.update();
     }
     
     @Override
@@ -85,6 +68,12 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
         }
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         return true;
+    }
+    
+    @Override
+    public void sendUpdatePacket() {
+        
+        if (!worldObj.isRemote) GearUtilities.getPipeline().sendToAllAround(new ColorPacket(color, xCoord, yCoord, zCoord, ForgeDirection.UNKNOWN), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 200));
     }
     
     @Override

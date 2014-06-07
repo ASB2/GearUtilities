@@ -62,7 +62,7 @@ public enum EnumElectisCrystalType {
                                 GL11.glRotatef(90F, 1F, 0F, 0F);
                                 GL11.glRotatef(25F, 1F, 0F, 0F);
                                 
-                                Models.ModelFlameShard.renderAll();
+                                Models.ModelElectisShard.renderAll();
                                 GL11.glPopMatrix();
                             }
                             
@@ -78,7 +78,7 @@ public enum EnumElectisCrystalType {
                                 GL11.glRotatef(90F, 1F, 0F, 0F);
                                 GL11.glRotatef(25F, 1F, 0F, 0F);
                                 
-                                Models.ModelFlameShard.renderAll();
+                                Models.ModelElectisShard.renderAll();
                                 GL11.glPopMatrix();
                             }
                             
@@ -94,7 +94,7 @@ public enum EnumElectisCrystalType {
                                 GL11.glRotatef(90F, 1F, 0F, 0F);
                                 GL11.glRotatef(25F, 1F, 0F, 0F);
                                 
-                                Models.ModelFlameShard.renderAll();
+                                Models.ModelElectisShard.renderAll();
                                 GL11.glPopMatrix();
                             }
                             
@@ -110,7 +110,7 @@ public enum EnumElectisCrystalType {
                                 GL11.glRotatef(90F, 1F, 0F, 0F);
                                 GL11.glRotatef(25F, 1F, 0F, 0F);
                                 
-                                Models.ModelFlameShard.renderAll();
+                                Models.ModelElectisShard.renderAll();
                                 GL11.glPopMatrix();
                             }
                             GL11.glEndList();
@@ -129,7 +129,7 @@ public enum EnumElectisCrystalType {
                                 GL11.glRotatef(90F, 1F, 0F, 0F);
                                 GL11.glRotatef(25F, 1F, 0F, 0F);
                                 
-                                Models.ModelFlameShard.renderAll();
+                                Models.ModelElectisShard.renderAll();
                                 GL11.glPopMatrix();
                             }
                             
@@ -145,7 +145,7 @@ public enum EnumElectisCrystalType {
                                 GL11.glRotatef(90F, 1F, 0F, 0F);
                                 GL11.glRotatef(25F, 1F, 0F, 0F);
                                 
-                                Models.ModelFlameShard.renderAll();
+                                Models.ModelElectisShard.renderAll();
                                 GL11.glPopMatrix();
                             }
                             
@@ -161,7 +161,7 @@ public enum EnumElectisCrystalType {
                                 GL11.glRotatef(90F, 1F, 0F, 0F);
                                 GL11.glRotatef(25F, 1F, 0F, 0F);
                                 
-                                Models.ModelFlameShard.renderAll();
+                                Models.ModelElectisShard.renderAll();
                                 GL11.glPopMatrix();
                             }
                             
@@ -177,11 +177,11 @@ public enum EnumElectisCrystalType {
                                 GL11.glRotatef(90F, 1F, 0F, 0F);
                                 GL11.glRotatef(25F, 1F, 0F, 0F);
                                 
-                                Models.ModelFlameShard.renderAll();
+                                Models.ModelElectisShard.renderAll();
                                 GL11.glPopMatrix();
                             }
-                            GL11.glEndList();
                             GL11.glPopMatrix();
+                            GL11.glEndList();
                         }
                         break;
                     }

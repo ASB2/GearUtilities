@@ -1,17 +1,20 @@
 package GU.multiblock;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilVector;
 import GU.GearUtilities;
+import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.packets.MutliBlockTankPacket;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class MultiBlockTank extends MultiBlockFluidHandler {
+public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiBlock {
     
     public MultiBlockTank(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         super(world, positionRelativeTo, size, updater);
@@ -173,5 +176,12 @@ public class MultiBlockTank extends MultiBlockFluidHandler {
             lastStack = fluidTank.getFluidTank().getFluid() != null ? fluidTank.getFluidTank().getFluid().copy() : null;
             lastCapacity = fluidTank.getFluidTank().getCapacity();
         }
+    }
+    
+    @Override
+    public boolean openGui(Vector3i position, EntityPlayer player, int side) {
+        
+        UtilEntity.sendChatToPlayer(player, "Tank: Gui Opened");
+        return true;
     }
 }

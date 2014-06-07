@@ -68,7 +68,7 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
     @Override
     public List<IMultiBlock> getMultiBlocks() {
         
-        return multiBlocks;
+        return unchangable;
     }
     
     @Override

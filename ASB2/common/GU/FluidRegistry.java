@@ -1,9 +1,18 @@
 package GU;
 
-import GU.render.noise.NoiseManager;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import ASB2.utils.UtilItemStack;
+import GU.render.noise.NoiseManager;
 
 public class FluidRegistry {
+    
+    public static List<ItemStack> FluidCrystalArrayList = new ArrayList<ItemStack>();
     
     public static Fluid STEAM = new Fluid("Steam") {
         
@@ -23,8 +32,13 @@ public class FluidRegistry {
     }
     
     public static void registerFluidContainers() {
-        // TODO Auto-generated method stub
         
+        for (Fluid fluid : net.minecraftforge.fluids.FluidRegistry.getRegisteredFluids().values()) {
+            
+            ItemStack filled = new ItemStack(ItemRegistry.ITEM_FLUID, 1, fluid.getID());
+            UtilItemStack.setNBTTagInt(filled, "fluidStored", fluid.getID());
+            FluidContainerRegistry.registerFluidContainer(new FluidStack(fluid, 1000), filled, new ItemStack(ItemRegistry.ITEM_FLUID));
+            FluidCrystalArrayList.add(filled);
+        }
     }
-    
 }

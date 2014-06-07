@@ -115,7 +115,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
         
         TileEntity tile = UtilVector.getTileAtPostion(world, position);
         
-        if (tile == null || !(tile instanceof IMultiBlockPart)) {
+        if ((tile == null || !(tile instanceof IMultiBlockPart))) {
             
             UtilBlock.breakBlock(world, position.getX(), position.getY(), position.getZ());
             world.setBlock(position.getX(), position.getY(), position.getZ(), BlockRegistry.MULTI_BLOCK_PART_RENDER);

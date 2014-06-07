@@ -14,7 +14,7 @@ public enum EnumMultiBlockType {
     
     STANDARD, CHEST, FURNACE, TANK;
     
-    public static final int MAX_DISTANCE = 8;
+    public static final int MAX_DISTANCE = 16;
     
     public MultiBlockBase createWithData(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         

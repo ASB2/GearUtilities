@@ -1,5 +1,7 @@
 package GU.blocks.containers.BlockMultiInterface;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -9,8 +11,11 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
+import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
+import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.blocks.BlockMetadata.MetadataWrapper;
 import GU.utils.UtilGU;
+import UC.math.vector.Vector3i;
 
 public class MultiInterfaceWrapper extends MetadataWrapper {
     
@@ -39,10 +44,11 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
                 
                 ItemStack current = entityplayer.inventory.getCurrentItem();
                 
+                TileFluidMultiInterface tank = (TileFluidMultiInterface) world.getTileEntity(x, y, z);
+                
                 if (current != null) {
                     
                     FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(current);
-                    TileFluidMultiInterface tank = (TileFluidMultiInterface) world.getTileEntity(x, y, z);
                     
                     if (fluid != null) {
                         
@@ -62,44 +68,72 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
                         }
                         return true;
                     }
-                    else {
-                        //
-                        // if (FluidContainerRegistry.isEmptyContainer(current))
-                        // {
-                        //
-                        // if (tank.fluidTank.getFluid() != null) {
-                        //
-                        // ItemStack filled =
-                        // FluidContainerRegistry.fillFluidContainer(tank.fluidTank.getFluid(),
-                        // current);
-                        //
-                        // if (!entityplayer.capabilities.isCreativeMode) {
-                        //
-                        // if (UtilFluid.removeFluidFromTank(tank,
-                        // ForgeDirection.getOrientation(side),
-                        // FluidContainerRegistry.getFluidForFilledItem(filled),
-                        // true)) {
-                        //
-                        // if
-                        // (UtilInventory.addItemStackToInventoryAndSpawnExcess(world,
-                        // entityplayer.inventory, filled, x, y, z)) {
-                        //
-                        // UtilInventory.consumeItemStack(entityplayer.inventory,
-                        // current, 1);
-                        // }
-                        // }
-                        // }
-                        // else {
-                        //
-                        // UtilFluid.removeFluidFromTank(tank,
-                        // ForgeDirection.getOrientation(side), fluid, true);
-                        // }
-                        // }
-                        // return true;
-                        // }
-                    }
+                    // else {
+                    //
+                    // if (FluidContainerRegistry.isEmptyContainer(current)) {
+                    //
+                    // if (tank.d != null) {
+                    //
+                    // ItemStack filled =
+                    // FluidContainerRegistry.fillFluidContainer(tank.fluidTank.getFluid(),
+                    // current);
+                    //
+                    // if (!entityplayer.capabilities.isCreativeMode) {
+                    //
+                    // if (UtilFluid.removeFluidFromTank(tank,
+                    // ForgeDirection.getOrientation(side),
+                    // FluidContainerRegistry.getFluidForFilledItem(filled),
+                    // true)) {
+                    //
+                    // if
+                    // (UtilInventory.addItemStackToInventoryAndSpawnExcess(world,
+                    // entityplayer.inventory, filled, x, y, z)) {
+                    //
+                    // UtilInventory.consumeItemStack(entityplayer.inventory,
+                    // current, 1);
+                    // }
+                    // }
+                    // }
+                    // else {
+                    //
+                    // UtilFluid.removeFluidFromTank(tank,
+                    // ForgeDirection.getOrientation(side), fluid, true);
+                    // }
+                    // }
+                    // return true;
+                    // }
+                    // }
                 }
                 return false;
+            }
+            case 2: {
+                break;
+            }
+            case 3: {
+                break;
+            }
+            case 4: {
+                break;
+            }
+            case 5: {
+                
+                if (!world.isRemote) {
+                    
+                    TileGuiMultiInterface tile = (TileGuiMultiInterface) world.getTileEntity(x, y, z);
+                    
+                    List<IMultiBlock> list = tile.getMultiBlocks();
+                    
+                    if (tile != null && list != null && list.size() >= 1) {
+                        
+                        IMultiBlock multi = list.get(0);
+                        
+                        if (multi instanceof IGuiMultiBlock) {
+                            
+                            return ((IGuiMultiBlock) multi).openGui(new Vector3i(x, y, z), entityplayer, side);
+                        }
+                    }
+                }
+                return true;
             }
         }
         return super.onBlockActivated(world, x, y, z, entityplayer, side, xHit, yHit, zHit);

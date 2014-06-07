@@ -15,7 +15,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
-import GU.ItemRegistry;
 import GU.info.Reference;
 
 public class ItemMetadata extends ItemBase {
@@ -48,7 +47,7 @@ public class ItemMetadata extends ItemBase {
     @Override
     public void postInit() {
         
-        MinecraftForgeClient.registerItemRenderer(ItemRegistry.METADATA_ITEM, ItemMetadataRenderer.instance);
+        MinecraftForgeClient.registerItemRenderer(this, ItemMetadataRenderer.instance);
     }
     
     @Override
@@ -68,6 +67,7 @@ public class ItemMetadata extends ItemBase {
         for (Entry<Integer, MetadataWrapper> wrapperEntry : wrappers.entrySet()) {
             
             subItems.add(new ItemStack(this, 1, wrapperEntry.getKey()));
+            wrapperEntry.getValue().getSubItems(item, tab, subItems);
         }
     }
     
@@ -232,6 +232,10 @@ public class ItemMetadata extends ItemBase {
         
         public String getIconName() {
             return iconName;
+        }
+        
+        @SuppressWarnings({ "rawtypes" })
+        public void getSubItems(Item item, CreativeTabs tab, List subItems) {
         }
         
         @SuppressWarnings("rawtypes")
