@@ -11,10 +11,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.FluidRegistry;
-import ASB2.utils.UtilItemStack;
+import net.minecraftforge.fluids.Fluid;
 import GU.info.Reference;
 import GU.items.AdvancedStickWrapper;
+import GU.items.ColorModifierWrapper;
+import GU.items.ColorModifierWrapper.ColorModifierRenderer;
 import GU.items.DestructorWrapper;
 import GU.items.ElectisShard.ElectisCrystalShardRenderer;
 import GU.items.ElectisShard.ElectisShardWrapper;
@@ -25,6 +26,7 @@ import GU.items.ItemMetadata;
 import GU.items.ItemMetadata.MetadataWrapper;
 import GU.items.ItemRenderers.GarnetRenderer;
 import GU.items.TeleporterWrapper;
+import GU.utils.UtilGU;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public final class ItemRegistry {
@@ -43,9 +45,16 @@ public final class ItemRegistry {
         @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-            String saved = FluidRegistry.getFluidName(UtilItemStack.getNBTTagInt(itemStack, "fluidStored"));
-            par3List.add("Fluid: ".concat(saved != null ? saved : "Empty"));
-            par3List.add("Fluid ID: ".concat(UtilItemStack.getNBTTagInt(itemStack, "fluidStored") + ""));
+            
+            Fluid saved = UtilGU.getFluid(itemStack);
+            
+            if (saved != null) {
+                
+                par3List.add("Fluid: ".concat(saved.getLocalizedName()));
+                par3List.add("Fluid ID: " + saved.getID());
+            }
+            // else
+            // par3List.add("Fluid: ".concat("Empty"));
         }
         
         @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -58,6 +67,17 @@ public final class ItemRegistry {
                 subItems.add(itemStack.copy());
             }
         }
+        
+        public String getItemStackDisplayName(ItemStack itemStack) {
+            
+            Fluid saved = UtilGU.getFluid(itemStack);
+            
+            if (saved != null) {
+                
+                return "Fluid Crystal Array: ".concat(saved.getLocalizedName());
+            }
+            return "Fluid Crystal Array: Empty";
+        };
     };
     public static final ItemStack ELECTIS_CRYSTAL_SHARD = new ItemStack(METADATA_ITEM, 1, 0);
     public static final ItemStack GARNET = new ItemStack(METADATA_ITEM, 1, 1);
@@ -74,6 +94,8 @@ public final class ItemRegistry {
         METADATA_ITEM.addWrapper(new TeleporterWrapper("Teleporter").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new AdvancedStickWrapper("Advanced Stick").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new DestructorWrapper("Destructor").setRenderer(GarnetRenderer.instance));
+        // METADATA_ITEM.addWrapper(new
+        // ColorModifierWrapper("Color Modifier").setRenderer(ColorModifierRenderer.instance));
     }
     
     private ItemRegistry() {

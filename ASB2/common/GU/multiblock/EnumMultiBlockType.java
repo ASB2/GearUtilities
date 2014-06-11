@@ -47,6 +47,11 @@ public enum EnumMultiBlockType {
     
     public boolean createMultiBlock(World world, Vector3i spacialPosition) {
         
+        if (this.ordinal() == 0) {
+            
+            return false;
+        }
+        
         Vector3i size = new Vector3i();
         Vector3i corner = spacialPosition.clone();
         

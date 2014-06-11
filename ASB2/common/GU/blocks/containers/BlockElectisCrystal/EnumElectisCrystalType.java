@@ -29,7 +29,9 @@ public enum EnumElectisCrystalType {
     public static void generateDisplayList() {
         
         if (!hasLoaded) {
+            
             hasLoaded = true;
+            
             for (EnumElectisCrystalType type : EnumElectisCrystalType.values()) {
                 
                 switch (type) {
@@ -37,9 +39,9 @@ public enum EnumElectisCrystalType {
                     case TYPE1: {
                         
                         {
-                            GL11.glPushMatrix();
-                            GL11.glNewList(type.getBlockDisplayListID(), GL11.GL_COMPILE);
                             
+                            GL11.glNewList(type.getBlockDisplayListID(), GL11.GL_COMPILE);
+                            GL11.glPushMatrix();
                             {
                                 GL11.glPushMatrix();
                                 float scale = .15f;
@@ -113,12 +115,11 @@ public enum EnumElectisCrystalType {
                                 Models.ModelElectisShard.renderAll();
                                 GL11.glPopMatrix();
                             }
-                            GL11.glEndList();
                             GL11.glPopMatrix();
+                            GL11.glEndList();
                             
-                            GL11.glPushMatrix();
                             GL11.glNewList(type.getItemListID(), GL11.GL_COMPILE);
-                            
+                            GL11.glPushMatrix();
                             {
                                 GL11.glPushMatrix();
                                 
@@ -435,6 +436,8 @@ public enum EnumElectisCrystalType {
                 GL11.glPushMatrix();
                 
                 GL11.glTranslatef(x, y, z);
+                
+                GL11.glScalef(1.5f+scale, 1.5f+scale, 1.5f+scale);
                 
                 {
                     GL11.glPushMatrix();

@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 
 import org.lwjgl.opengl.GL11;
 
@@ -15,6 +14,7 @@ import ASB2.utils.UtilRender;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.render.noise.NoiseManager;
+import GU.utils.UtilGU;
 
 public class FluidCrystalArrayRenderer implements IItemRenderer {
     
@@ -144,136 +144,140 @@ public class FluidCrystalArrayRenderer implements IItemRenderer {
         }
         
         {
-            double renderHeight = UtilItemStack.getNBTTagDouble(item, "renderHeight");
-            
-            {
-                boolean renderMovement = UtilItemStack.getNBTTagBoolean(item, "renderMovement");
-                
-                if (renderMovement) {
-                    
-                    renderHeight += .001;
-                    
-                    if (renderHeight > .25) {
-                        
-                        UtilItemStack.setNBTTagBoolean(item, "renderMovement", false);
-                    }
-                }
-                else {
-                    
-                    renderHeight -= .001;
-                    
-                    if (renderHeight < 0) {
-                        
-                        UtilItemStack.setNBTTagBoolean(item, "renderMovement", true);
-                    }
-                }
-                UtilItemStack.setNBTTagDouble(item, "renderHeight", renderHeight);
-            }
-            
-            Fluid renderFluid = FluidRegistry.getFluid(UtilItemStack.getNBTTagInt(item, "fluidStored"));
+            Fluid renderFluid = UtilGU.getFluid(item);
             
             if (renderFluid != null) {
                 
-                GL11.glPushMatrix();
+                IIcon topIcon = renderFluid.getStillIcon();
                 
-                GL11.glDisable(GL11.GL_LIGHTING);
-                
-                GL11.glEnable(GL11.GL_BLEND);
-                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                
-                GL11.glTranslated(0, -.5 + renderHeight, 0);
-                
-                Tessellator tess = Tessellator.instance;
-                
-                UtilRender.bindBlockTextures();
-                
-                // IIcon icon = NoiseManager.instance.blockNoiseIcon;
-                
-                IIcon topIcon = renderFluid.getStillIcon() != null ? renderFluid.getStillIcon() : NoiseManager.instance.blockNoiseIcon;
-                
-                int renderBrightness = Reference.BRIGHT_BLOCK;
-                
-                double scaledHeight = .7;
-                double xScaledPos = .125, xScaledNeg = -xScaledPos, zScaledPos = .125, zScaledNeg = -zScaledPos;
-                
-                if (renderFluid.isGaseous()) {
+                if (topIcon != null) {
+                    double renderHeight = UtilItemStack.getNBTTagDouble(item, "renderHeight");
                     
-                    GL11.glColor4d(1, 1, 1, .6);
-                    GL11.glRotated(Minecraft.getSystemTime() / 5, 0, -1, 0);
-                }
-                else {
+                    {
+                        boolean renderMovement = UtilItemStack.getNBTTagBoolean(item, "renderMovement");
+                        
+                        if (renderMovement) {
+                            
+                            renderHeight += .0003;
+                            
+                            if (renderHeight > .25) {
+                                
+                                UtilItemStack.setNBTTagBoolean(item, "renderMovement", false);
+                            }
+                        }
+                        else {
+                            
+                            renderHeight -= .0003;
+                            
+                            if (renderHeight < 0) {
+                                
+                                UtilItemStack.setNBTTagBoolean(item, "renderMovement", true);
+                            }
+                        }
+                        UtilItemStack.setNBTTagDouble(item, "renderHeight", renderHeight);
+                    }
                     
-                    GL11.glRotated(Minecraft.getSystemTime() / 17, 0, -1, 0);
+                    GL11.glPushMatrix();
+                    
+                    GL11.glDisable(GL11.GL_LIGHTING);
+                    
+                    GL11.glEnable(GL11.GL_BLEND);
+                    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+                    
+                    GL11.glTranslated(0, -.5 + renderHeight, 0);
+                    
+                    Tessellator tess = Tessellator.instance;
+                    
+                    UtilRender.bindBlockTextures();
+                    
+                    // IIcon icon = NoiseManager.instance.blockNoiseIcon;
+                    
+                    int renderBrightness = Reference.BRIGHT_BLOCK;
+                    
+                    double scaledHeight = .7;
+                    double xScaledPos = .125, xScaledNeg = -xScaledPos, zScaledPos = .125, zScaledNeg = -zScaledPos;
+                    int argb = renderFluid.getColor();
+                    
+                    if (renderFluid.isGaseous()) {
+                        
+                        GL11.glColor4d(argb & 0xFF, (argb >> 8) & 0xFF, (argb >> 16) & 0xFF, .6);
+                        GL11.glRotated(Minecraft.getSystemTime() / 5, 0, -1, 0);
+                    }
+                    else {
+                        
+                        GL11.glColor4d(argb & 0xFF, (argb >> 8) & 0xFF, (argb >> 16) & 0xFF, .9);
+                        GL11.glRotated(Minecraft.getSystemTime() / 17, 0, -1, 0);
+                    }
+                    
+                    // Up
+                    tess.startDrawingQuads();
+                    tess.setBrightness(renderBrightness);
+                    tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledPos, topIcon.getMaxU(), topIcon.getMinV());
+                    tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledPos, topIcon.getMaxU(), topIcon.getMaxV());
+                    tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledNeg, topIcon.getMinU(), topIcon.getMaxV());
+                    tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledNeg, topIcon.getMinU(), topIcon.getMinV());
+                    
+                    tess.draw();
+                    
+                    // Down
+                    tess.startDrawingQuads();
+                    
+                    tess.setBrightness(renderBrightness);
+                    tess.addVertexWithUV(xScaledPos, 0, zScaledNeg, topIcon.getMaxU(), topIcon.getMinV());
+                    tess.addVertexWithUV(xScaledPos, 0, zScaledPos, topIcon.getMaxU(), topIcon.getMaxV());
+                    tess.addVertexWithUV(xScaledNeg, 0, zScaledPos, topIcon.getMinU(), topIcon.getMaxV());
+                    tess.addVertexWithUV(xScaledNeg, 0, zScaledNeg, topIcon.getMinU(), topIcon.getMinV());
+                    
+                    tess.draw();
+                    
+                    // North
+                    tess.startDrawingQuads();
+                    
+                    tess.setBrightness(renderBrightness);
+                    tess.addVertexWithUV(xScaledPos, 0, zScaledPos, topIcon.getMaxU(), topIcon.getMaxV());
+                    tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledPos, topIcon.getMaxU(), topIcon.getMinV());
+                    tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledPos, topIcon.getMinU(), topIcon.getMinV());
+                    tess.addVertexWithUV(xScaledNeg, 0, zScaledPos, topIcon.getMinU(), topIcon.getMaxV());
+                    
+                    tess.draw();
+                    
+                    // South
+                    tess.startDrawingQuads();
+                    
+                    tess.setBrightness(renderBrightness);
+                    tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledNeg, topIcon.getMinU(), topIcon.getMinV()); // South
+                    tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledNeg, topIcon.getMaxU(), topIcon.getMinV());
+                    tess.addVertexWithUV(xScaledPos, 0, zScaledNeg, topIcon.getMaxU(), topIcon.getMaxV());
+                    tess.addVertexWithUV(xScaledNeg, 0, zScaledNeg, topIcon.getMinU(), topIcon.getMaxV());
+                    
+                    tess.draw();
+                    
+                    // West
+                    tess.startDrawingQuads();
+                    
+                    tess.setBrightness(renderBrightness);
+                    tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledPos, topIcon.getMinU(), topIcon.getMinV());
+                    tess.addVertexWithUV(xScaledPos, 0, zScaledPos, topIcon.getMinU(), topIcon.getMaxV());
+                    tess.addVertexWithUV(xScaledPos, 0, zScaledNeg, topIcon.getMaxU(), topIcon.getMaxV());
+                    tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledNeg, topIcon.getMaxU(), topIcon.getMinV());
+                    
+                    tess.draw();
+                    
+                    // East
+                    tess.startDrawingQuads();
+                    
+                    tess.setBrightness(renderBrightness);
+                    tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledNeg, topIcon.getMaxU(), topIcon.getMinV());
+                    tess.addVertexWithUV(xScaledNeg, 0, zScaledNeg, topIcon.getMaxU(), topIcon.getMaxV());
+                    tess.addVertexWithUV(xScaledNeg, 0, zScaledPos, topIcon.getMinU(), topIcon.getMaxV());
+                    tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledPos, topIcon.getMinU(), topIcon.getMinV());
+                    
+                    tess.draw();
+                    
+                    GL11.glDisable(GL11.GL_BLEND);
+                    GL11.glEnable(GL11.GL_LIGHTING);
+                    GL11.glPopMatrix();
                 }
-                
-                // Up
-                tess.startDrawingQuads();
-                tess.setBrightness(renderBrightness);
-                tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledPos, topIcon.getMaxU(), topIcon.getMinV());
-                tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledPos, topIcon.getMaxU(), topIcon.getMaxV());
-                tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledNeg, topIcon.getMinU(), topIcon.getMaxV());
-                tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledNeg, topIcon.getMinU(), topIcon.getMinV());
-                
-                tess.draw();
-                
-                // Down
-                tess.startDrawingQuads();
-                
-                tess.setBrightness(renderBrightness);
-                tess.addVertexWithUV(xScaledPos, 0, zScaledNeg, topIcon.getMaxU(), topIcon.getMinV());
-                tess.addVertexWithUV(xScaledPos, 0, zScaledPos, topIcon.getMaxU(), topIcon.getMaxV());
-                tess.addVertexWithUV(xScaledNeg, 0, zScaledPos, topIcon.getMinU(), topIcon.getMaxV());
-                tess.addVertexWithUV(xScaledNeg, 0, zScaledNeg, topIcon.getMinU(), topIcon.getMinV());
-                
-                tess.draw();
-                
-                // North
-                tess.startDrawingQuads();
-                
-                tess.setBrightness(renderBrightness);
-                tess.addVertexWithUV(xScaledPos, 0, zScaledPos, topIcon.getMaxU(), topIcon.getMaxV());
-                tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledPos, topIcon.getMaxU(), topIcon.getMinV());
-                tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledPos, topIcon.getMinU(), topIcon.getMinV());
-                tess.addVertexWithUV(xScaledNeg, 0, zScaledPos, topIcon.getMinU(), topIcon.getMaxV());
-                
-                tess.draw();
-                
-                // South
-                tess.startDrawingQuads();
-                
-                tess.setBrightness(renderBrightness);
-                tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledNeg, topIcon.getMinU(), topIcon.getMinV()); // South
-                tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledNeg, topIcon.getMaxU(), topIcon.getMinV());
-                tess.addVertexWithUV(xScaledPos, 0, zScaledNeg, topIcon.getMaxU(), topIcon.getMaxV());
-                tess.addVertexWithUV(xScaledNeg, 0, zScaledNeg, topIcon.getMinU(), topIcon.getMaxV());
-                
-                tess.draw();
-                
-                // West
-                tess.startDrawingQuads();
-                
-                tess.setBrightness(renderBrightness);
-                tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledPos, topIcon.getMinU(), topIcon.getMinV());
-                tess.addVertexWithUV(xScaledPos, 0, zScaledPos, topIcon.getMinU(), topIcon.getMaxV());
-                tess.addVertexWithUV(xScaledPos, 0, zScaledNeg, topIcon.getMaxU(), topIcon.getMaxV());
-                tess.addVertexWithUV(xScaledPos, scaledHeight, zScaledNeg, topIcon.getMaxU(), topIcon.getMinV());
-                
-                tess.draw();
-                
-                // East
-                tess.startDrawingQuads();
-                
-                tess.setBrightness(renderBrightness);
-                tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledNeg, topIcon.getMaxU(), topIcon.getMinV());
-                tess.addVertexWithUV(xScaledNeg, 0, zScaledNeg, topIcon.getMaxU(), topIcon.getMaxV());
-                tess.addVertexWithUV(xScaledNeg, 0, zScaledPos, topIcon.getMinU(), topIcon.getMaxV());
-                tess.addVertexWithUV(xScaledNeg, scaledHeight, zScaledPos, topIcon.getMinU(), topIcon.getMinV());
-                
-                tess.draw();
-                
-                GL11.glDisable(GL11.GL_BLEND);
-                GL11.glEnable(GL11.GL_LIGHTING);
-                GL11.glPopMatrix();
             }
         }
         GL11.glPopMatrix();

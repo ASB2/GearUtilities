@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import ASB2.utils.UtilItemStack;
 import GU.render.noise.NoiseManager;
+import GU.utils.UtilGU;
 
 public class FluidRegistry {
     
@@ -36,7 +36,7 @@ public class FluidRegistry {
         for (Fluid fluid : net.minecraftforge.fluids.FluidRegistry.getRegisteredFluids().values()) {
             
             ItemStack filled = new ItemStack(ItemRegistry.ITEM_FLUID, 1, fluid.getID());
-            UtilItemStack.setNBTTagInt(filled, "fluidStored", fluid.getID());
+            UtilGU.setFluid(filled, fluid);
             FluidContainerRegistry.registerFluidContainer(new FluidStack(fluid, 1000), filled, new ItemStack(ItemRegistry.ITEM_FLUID));
             FluidCrystalArrayList.add(filled);
         }

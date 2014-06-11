@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
 import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
 import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
@@ -46,7 +47,7 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
                 
                 TileFluidMultiInterface tank = (TileFluidMultiInterface) world.getTileEntity(x, y, z);
                 
-                if (current != null) {
+                if (tank != null && current != null) {
                     
                     FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(current);
                     
@@ -68,41 +69,44 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
                         }
                         return true;
                     }
-                    // else {
-                    //
-                    // if (FluidContainerRegistry.isEmptyContainer(current)) {
-                    //
-                    // if (tank.d != null) {
-                    //
-                    // ItemStack filled =
-                    // FluidContainerRegistry.fillFluidContainer(tank.fluidTank.getFluid(),
-                    // current);
-                    //
-                    // if (!entityplayer.capabilities.isCreativeMode) {
-                    //
-                    // if (UtilFluid.removeFluidFromTank(tank,
-                    // ForgeDirection.getOrientation(side),
-                    // FluidContainerRegistry.getFluidForFilledItem(filled),
-                    // true)) {
-                    //
-                    // if
-                    // (UtilInventory.addItemStackToInventoryAndSpawnExcess(world,
-                    // entityplayer.inventory, filled, x, y, z)) {
-                    //
-                    // UtilInventory.consumeItemStack(entityplayer.inventory,
-                    // current, 1);
-                    // }
-                    // }
-                    // }
-                    // else {
-                    //
-                    // UtilFluid.removeFluidFromTank(tank,
-                    // ForgeDirection.getOrientation(side), fluid, true);
-                    // }
-                    // }
-                    // return true;
-                    // }
-                    // }
+                    else {
+                        
+                        if (FluidContainerRegistry.isEmptyContainer(current)) {
+                            
+                            FluidTankInfo[] infoArray = tank.getTankInfo(ForgeDirection.getOrientation(side));
+                            
+                            if (infoArray != null) {
+                                
+                                for (FluidTankInfo info : infoArray) {
+                                    
+                                    if (info.fluid != null) {
+                                        
+                                        ItemStack filled = FluidContainerRegistry.fillFluidContainer(info.fluid, current);
+                                        
+                                        if (filled != null) {
+                                            
+                                            if (!entityplayer.capabilities.isCreativeMode) {
+                                                
+                                                if (UtilFluid.removeFluidFromHandler(tank, ForgeDirection.getOrientation(side), FluidContainerRegistry.getFluidForFilledItem(filled), true)) {
+                                                    
+                                                    UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, entityplayer.posX, entityplayer.posY, entityplayer.posZ);
+                                                    
+                                                    UtilInventory.consumeItemStack(entityplayer.inventory, current, 1);
+                                                    return true;
+                                                }
+                                            }
+                                            else {
+                                                
+                                                UtilFluid.removeFluidFromHandler(tank, ForgeDirection.getOrientation(side), fluid, true);
+                                                UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, entityplayer.posX, entityplayer.posY, entityplayer.posZ);
+                                                return true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 return false;
             }

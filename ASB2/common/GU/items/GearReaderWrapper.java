@@ -141,7 +141,8 @@ public class GearReaderWrapper extends MetadataWrapper {
                                 if (info.fluid != null && info.fluid.getFluid() != null) {
                                     
                                     UtilEntity.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount + "/" + info.capacity);
-                                    UtilEntity.sendChatToPlayer(player, "Fluid Conained: " + UtilMisc.capitilizeFirst(info.fluid.getFluid().getName()));
+                                    UtilEntity.sendChatToPlayer(player, "Fluid Conained: " + info.fluid.getFluid().getLocalizedName());
+                                    UtilEntity.sendChatToPlayer(player, "Precent Filled: " + (((int) ((info.fluid.amount / (float) info.capacity) * 100000)) / 1000.0));
                                 }
                                 else {
                                     

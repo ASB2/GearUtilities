@@ -69,8 +69,8 @@ public class GUCreativeTab extends CreativeTabs {
             }
             case (Reference.NAME + ": Fluids"): {
                 
-                // return ItemRegistry.ELECTIS_CRYSTAL;
-                return new ItemStack(Items.diamond);
+                return new ItemStack(ItemRegistry.ITEM_FLUID);
+                // return new ItemStack(Items.diamond);
             }
         }
         return new ItemStack(Items.diamond);
