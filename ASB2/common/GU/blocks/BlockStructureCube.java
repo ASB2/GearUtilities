@@ -8,11 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import GU.GearUtilities;
 import GU.api.color.VanillaColor;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockMarker;
 import GU.render.BlockSimpleRenderer.INoiseBlockRender;
 import UC.color.Color4i;
-import GU.*;
 
 public class BlockStructureCube extends BlockMetadata implements IMultiBlockMarker, INoiseBlockRender {
     
@@ -40,11 +40,12 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
         this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube6" }).addDrop(new ItemStack(this, 1, 6)).setDisplayName("Structure Cube 6"));
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4) {
-           super.addInformation(stack, player, par3List, par4);
-           par3List.add("Color: " + color.name());
-           
+        super.addInformation(stack, player, par3List, par4);
+        par3List.add("Color: " + color.name());
+        
     }
     
     @Override
