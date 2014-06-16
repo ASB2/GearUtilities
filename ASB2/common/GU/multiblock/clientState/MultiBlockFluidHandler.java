@@ -1,10 +1,11 @@
-package GU.multiblock;
+package GU.multiblock.clientState;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidHandler;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
 import GU.api.multiblock.MultiBlockObject.FluidHandlerWrapper;
+import GU.multiblock.MultiBlockBase;
 import UC.math.vector.Vector3i;
 
 public abstract class MultiBlockFluidHandler extends MultiBlockBase implements IFluidMultiBlock {

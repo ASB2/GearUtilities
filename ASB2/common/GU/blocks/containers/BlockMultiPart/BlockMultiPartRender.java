@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import ASB2.utils.UtilBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
-import GU.multiblock.MultiBlockClientState;
+import GU.multiblock.clientState.MultiBlockClientState;
 import cpw.mods.fml.client.registry.ClientRegistry;
 
 public class BlockMultiPartRender extends BlockMultiBlockPartAir {

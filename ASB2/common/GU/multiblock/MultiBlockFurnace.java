@@ -7,19 +7,18 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.inventory.Inventory;
 import ASB2.utils.UtilInventory;
-import ASB2.utils.UtilVector;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IItemInterface;
-import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.api.multiblock.MultiBlockObject.FluidHandlerWrapper;
+import GU.multiblock.construction.ConstructionManager;
+import GU.multiblock.construction.FurnaceConstructionManager;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
@@ -44,6 +43,12 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     public Color4i getDefaultBlockColor() {
         
         return Color4i.RED;
+    }
+    
+    @Override
+    public ConstructionManager getConstructionManager() {
+        
+        return new FurnaceConstructionManager(world, this, positionRelativeTo, size);
     }
     
     @Override
@@ -76,7 +81,7 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     }
     
     @Override
-    public void update(Object... objects) {
+    public void logicUpdate() {
         
         if (fuelTank.getFluidTank().getCapacity() == 0) {
             
@@ -95,115 +100,6 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
             outputInventory.setSizeInventory((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 4);
         }
         
-        if (isConstructing) {
-            
-            for (int x = 0; x <= size.getX(); x++) {
-                
-                for (int y = 0; y <= size.getY(); y++) {
-                    
-                    for (int z = 0; z <= size.getZ(); z++) {
-                        
-                        Vector3i vec = positionRelativeTo.subtract(x, y, z);
-                        
-                        if (x == 1 && y == 1 && z == 1) {
-                            
-                            if (!placeRenderBlock(vec)) {
-                                
-                                deconstruct();
-                                return;
-                            }
-                        }
-                        else if (((x == 0 || x == size.getX()) && (y == 0 || y == size.getY())) && (z == 0 || z == size.getZ())) {
-                            
-                            if (!placeCornerBlock(vec)) {
-                                
-                                deconstruct();
-                                return;
-                            }
-                        }
-                        else if (((x == 0 || x == size.getX()) && (y == 0 || y == size.getY())) || ((y == 0 || y == size.getY()) && (z == 0 || z == size.getZ())) || ((x == 0 || x == size.getX()) && (z == 0 || z == size.getZ()))) {
-                            
-                            if (!placeEdgeBlock(vec)) {
-                                
-                                deconstruct();
-                                return;
-                            }
-                        }
-                        else if (y == (int) (size.getY() / 2)) {
-                            
-                            if (!placeEdgeBlock(vec)) {
-                                
-                                deconstruct();
-                                return;
-                            }
-                        }
-                        // else if (y == size.getY()) {
-                        //
-                        // if (!placeEdgeBlock(vec)) {
-                        //
-                        // deconstruct();
-                        // return;
-                        // }
-                        // }
-                        else if (((x == 0 || x == size.getX()) && (y != 0 && y != size.getY())) && (z != 0 && z != size.getZ())) {
-                            
-                            if (!placeGlassBlock(vec)) {
-                                
-                                deconstruct();
-                                return;
-                            }
-                        }
-                        else if (((x != 0 && x != size.getX()) && (y == 0 || y == size.getY())) && (z != 0 && z != size.getZ())) {
-                            
-                            if (!placeGlassBlock(vec)) {
-                                
-                                deconstruct();
-                                return;
-                            }
-                        }
-                        else if (((x != 0 && x != size.getX()) && (y != 0 && y != size.getY())) && (z == 0 || z == size.getZ())) {
-                            
-                            if (!placeGlassBlock(vec)) {
-                                
-                                deconstruct();
-                                return;
-                            }
-                        }
-                        else if (!placeAirBlock(vec)) {
-                            
-                            deconstruct();
-                            return;
-                        }
-                    }
-                }
-            }
-            isConstructing = false;
-            isValid = true;
-        }
-        else if (forceLoad) {
-            
-            for (int x = 0; x <= size.getX(); x++) {
-                
-                for (int y = 0; y <= size.getY(); y++) {
-                    
-                    for (int z = 0; z <= size.getZ(); z++) {
-                        
-                        forceCheckBlock(positionRelativeTo.subtract(x, y, z));
-                    }
-                }
-            }
-            forceLoad = false;
-            isValid = true;
-        }
-        else {
-            if (!world.isRemote) furnaceLogic();
-        }
-    }
-    
-    public void furnaceLogic() {
-        
-        // if (currentFuel < 100) {
-        
         for (int index = 0; index < this.fuelInventory.getSizeInventory(); index++) {
             
             ItemStack stack = fuelInventory.getStackInSlot(index);
@@ -221,7 +117,6 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
                 }
             }
         }
-        // }
         
         if (currentFuel >= 100) {
             
@@ -237,7 +132,7 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
                         
                         if (UtilInventory.removeItemStackFromSlot(outputInventory, stack, index, 1, false)) {
                             
-                            for (Entry<Vector3i, IItemInterface> entry : this.itemInterfaceList.entrySet()) {
+                            for (Entry<Vector3i, IItemInterface> entry : constructionManager.getItemInterfaceList().entrySet()) {
                                 
                                 if (entry.getValue() != null) {
                                     
@@ -273,21 +168,7 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     
     public boolean startCreation() {
         
-        if (!isValid && !isConstructing) {
-            
-            if (size.getX() >= 2 && size.getY() >= 4 && size.getY() % 2 == 0 && size.getZ() >= 2) {
-                
-                isConstructing = true;
-                
-                TileEntity tile = UtilVector.getTileAtPostion(world, updater);
-                
-                if (tile != null && tile instanceof IMultiBlockPart) {
-                    
-                    return ((IMultiBlockPart) tile).addMultiBlock(this);
-                }
-            }
-        }
-        return false;
+        return size.getX() >= 2 && size.getY() >= 4 && size.getY() % 2 == 0 && size.getZ() >= 2 && super.startCreation();
     }
     
     @Override

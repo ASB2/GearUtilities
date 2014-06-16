@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilRender;
 import GU.info.Reference;
+import GU.multiblock.clientState.MultiBlockClientState;
 import UC.math.vector.Vector3i;
 
 public class MultiBlockTankClientState extends MultiBlockClientState {

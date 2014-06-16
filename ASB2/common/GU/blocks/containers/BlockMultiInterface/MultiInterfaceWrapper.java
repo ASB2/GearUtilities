@@ -45,9 +45,9 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
                 
                 ItemStack current = entityplayer.inventory.getCurrentItem();
                 
-                TileFluidMultiInterface tank = (TileFluidMultiInterface) world.getTileEntity(x, y, z);
+                TileFluidMultiInterface tile = (TileFluidMultiInterface) world.getTileEntity(x, y, z);
                 
-                if (tank != null && current != null) {
+                if (tile != null && current != null) {
                     
                     FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(current);
                     
@@ -55,9 +55,9 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
                         
                         if (!entityplayer.capabilities.isCreativeMode) {
                             
-                            if (UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid, false)) {
+                            if (UtilFluid.addFluidToTank(tile, ForgeDirection.getOrientation(side), fluid, false)) {
                                 
-                                if (UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid, true)) {
+                                if (UtilFluid.addFluidToTank(tile, ForgeDirection.getOrientation(side), fluid, true)) {
                                     
                                     UtilInventory.consumeItemStack(entityplayer.inventory, current, 1);
                                 }
@@ -65,42 +65,39 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
                         }
                         else {
                             
-                            UtilFluid.addFluidToTank(tank, ForgeDirection.getOrientation(side), fluid, true);
+                            UtilFluid.addFluidToTank(tile, ForgeDirection.getOrientation(side), fluid, true);
                         }
                         return true;
                     }
-                    else {
+                    else if (FluidContainerRegistry.isEmptyContainer(current)) {
                         
-                        if (FluidContainerRegistry.isEmptyContainer(current)) {
+                        FluidTankInfo[] infoArray = tile.getTankInfo(ForgeDirection.getOrientation(side));
+                        
+                        if (infoArray != null) {
                             
-                            FluidTankInfo[] infoArray = tank.getTankInfo(ForgeDirection.getOrientation(side));
-                            
-                            if (infoArray != null) {
+                            for (FluidTankInfo info : infoArray) {
                                 
-                                for (FluidTankInfo info : infoArray) {
+                                if (info != null && info.fluid != null) {
                                     
-                                    if (info.fluid != null) {
+                                    ItemStack filled = FluidContainerRegistry.fillFluidContainer(info.fluid, current);
+                                    
+                                    if (filled != null) {
                                         
-                                        ItemStack filled = FluidContainerRegistry.fillFluidContainer(info.fluid, current);
-                                        
-                                        if (filled != null) {
+                                        if (!entityplayer.capabilities.isCreativeMode) {
                                             
-                                            if (!entityplayer.capabilities.isCreativeMode) {
+                                            if (UtilFluid.removeFluidFromHandler(tile, ForgeDirection.getOrientation(side), FluidContainerRegistry.getFluidForFilledItem(filled), true)) {
                                                 
-                                                if (UtilFluid.removeFluidFromHandler(tank, ForgeDirection.getOrientation(side), FluidContainerRegistry.getFluidForFilledItem(filled), true)) {
-                                                    
-                                                    UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, entityplayer.posX, entityplayer.posY, entityplayer.posZ);
-                                                    
-                                                    UtilInventory.consumeItemStack(entityplayer.inventory, current, 1);
-                                                    return true;
-                                                }
-                                            }
-                                            else {
-                                                
-                                                UtilFluid.removeFluidFromHandler(tank, ForgeDirection.getOrientation(side), fluid, true);
                                                 UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, entityplayer.posX, entityplayer.posY, entityplayer.posZ);
+                                                
+                                                UtilInventory.consumeItemStack(entityplayer.inventory, current, 1);
                                                 return true;
                                             }
+                                        }
+                                        else {
+                                            
+                                            UtilFluid.removeFluidFromHandler(tile, ForgeDirection.getOrientation(side), info.fluid, true);
+                                            UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, entityplayer.posX, entityplayer.posY, entityplayer.posZ);
+                                            return true;
                                         }
                                     }
                                 }

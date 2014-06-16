@@ -1,4 +1,4 @@
-package GU.multiblock;
+package GU.multiblock.clientState;
 
 public abstract class MultiBlockClientState {
     
