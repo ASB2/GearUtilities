@@ -81,7 +81,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
             
             if (constructionManager != null) {
                 
-                if (constructionManager.checkStructure()) {
+                if (constructionManager.checkAfterLoad()) {
                     
                     forceLoad = false;
                     isValid = true;
@@ -160,7 +160,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
             
             if (constructionManager != null) {
                 
-                constructionManager.startDestruction();
+                constructionManager.deconstructBlock(new Vector3i(x, y, z));
             }
         }
     }

@@ -1,4 +1,4 @@
-package GU.multiblock;
+package GU.multiblock.clientState;
 
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
@@ -8,7 +8,6 @@ import org.lwjgl.opengl.GL11;
 
 import ASB2.utils.UtilRender;
 import GU.info.Reference;
-import GU.multiblock.clientState.MultiBlockClientState;
 import UC.math.vector.Vector3i;
 
 public class MultiBlockTankClientState extends MultiBlockClientState {
@@ -94,6 +93,10 @@ public class MultiBlockTankClientState extends MultiBlockClientState {
                 double density = ((tank.getFluidAmount() / (double) tank.getCapacity()) * 1) + .1;
                 scaledHeight = (ySize - 1) + .01;
                 GL11.glColor4d(1, 1, 1, density);
+            }
+            else {
+                
+                GL11.glColor4d(1, 1, 1, .93);
             }
             
             // Gl11.gl

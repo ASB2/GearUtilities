@@ -37,6 +37,28 @@ public abstract class CubeConstructionManager extends ConstructionManager {
     }
     
     @Override
+    public boolean checkAfterLoad() {
+        
+        for (int x = 0; x <= size.getX(); x++) {
+            
+            for (int y = 0; y <= size.getY(); y++) {
+                
+                for (int z = 0; z <= size.getZ(); z++) {
+                    
+                    Vector3i vector = positiveMostPoint.subtract(x, y, z);
+                    
+                    if (!checkBlock(vector)) {
+                        
+                        return false;
+                    }
+                    this.addForceMultiBlockToBlock(vector);
+                }
+            }
+        }
+        return true;
+    }
+    
+    @Override
     public void updateDuringDestruction() {
         
         for (int x = 0; x <= size.getX(); x++) {
@@ -54,31 +76,37 @@ public abstract class CubeConstructionManager extends ConstructionManager {
     
     public boolean placeRenderBlock(Vector3i position) {
         
-        return this.placeBlock(position, BlockRegistry.MULTI_BLOCK_PART_RENDER) && this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.INNER);
+        this.placeBlock(position, BlockRegistry.MULTI_BLOCK_PART_RENDER);
+        return this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.INNER);
     }
     
     public boolean placeGlassBlock(Vector3i position) {
         
-        return this.placeBlock(position, BlockRegistry.MULTI_BLOCK_PART_GLASS) && this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.FACE);
+        this.placeBlock(position, BlockRegistry.MULTI_BLOCK_PART_GLASS);
+        return this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.FACE);
     }
     
     public boolean placeAirBlock(Vector3i position) {
         
-        return this.placeBlock(position, BlockRegistry.MULTI_BLOCK_PART_AIR) && this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.INNER);
+        this.placeBlock(position, BlockRegistry.MULTI_BLOCK_PART_AIR);
+        return this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.INNER);
     }
     
     public boolean placeInnerBlock(Vector3i position) {
         
-        return this.placeBlockAndColor(position, BlockRegistry.MULTI_BLOCK_PART, 0, multiBlockStructure.getDefaultBlockColor()) && this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.INNER);
+        this.placeBlockAndColor(position, BlockRegistry.MULTI_BLOCK_PART, 0, multiBlockStructure.getDefaultBlockColor());
+        return this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.INNER);
     }
     
     public boolean placeEdgeBlock(Vector3i position) {
         
-        return this.placeBlockAndColor(position, BlockRegistry.MULTI_BLOCK_PART, 1, multiBlockStructure.getDefaultBlockColor()) && this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.EDGE);
+        this.placeBlockAndColor(position, BlockRegistry.MULTI_BLOCK_PART, 1, multiBlockStructure.getDefaultBlockColor());
+        return this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.EDGE);
     }
     
     public boolean placeCornerBlock(Vector3i position) {
         
-        return this.placeBlockAndColor(position, BlockRegistry.MULTI_BLOCK_PART, 2, multiBlockStructure.getDefaultBlockColor()) && this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.CORNER);
+        this.placeBlockAndColor(position, BlockRegistry.MULTI_BLOCK_PART, 2, multiBlockStructure.getDefaultBlockColor());
+        return this.addMultiBlockToBlock(position, EnumMultiBlockPartPosition.CORNER);
     }
 }

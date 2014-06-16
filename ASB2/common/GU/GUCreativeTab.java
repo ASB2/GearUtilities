@@ -4,10 +4,10 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import GU.blocks.containers.BlockElectisCrystal.EnumElectisCrystalType;
 import GU.info.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import GU.blocks.containers.BlockElectisCrystal.*;
 
 public class GUCreativeTab extends CreativeTabs {
     
@@ -71,6 +71,10 @@ public class GUCreativeTab extends CreativeTabs {
                 
                 return new ItemStack(ItemRegistry.ITEM_FLUID);
                 // return new ItemStack(Items.diamond);
+            }
+            case (Reference.NAME + ": Structure Cubes"): {
+                
+                return new ItemStack(BlockRegistry.STRUCTURE_CUBE_15);
             }
         }
         return new ItemStack(Items.diamond);

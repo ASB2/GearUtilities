@@ -45,6 +45,7 @@ public final class GearUtilities {
     public static CreativeTabs tabGUBlocks = new GUCreativeTab(Reference.NAME.concat(": Blocks"));
     public static CreativeTabs tabGUItems = new GUCreativeTab(Reference.NAME.concat(": Items"));
     public static CreativeTabs tabGUFluids = new GUCreativeTab(Reference.NAME.concat(": Fluids"));
+    public static CreativeTabs tabGUStructureCubes = new GUCreativeTab(Reference.NAME.concat(": Structure Cubes"));
     
     public GearUtilities() {
         // TODO Auto-generated constructor stub

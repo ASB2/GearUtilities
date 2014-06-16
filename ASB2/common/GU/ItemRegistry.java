@@ -14,8 +14,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
 import GU.info.Reference;
 import GU.items.AdvancedStickWrapper;
-import GU.items.ColorModifierWrapper;
-import GU.items.ColorModifierWrapper.ColorModifierRenderer;
 import GU.items.DestructorWrapper;
 import GU.items.ElectisShard.ElectisCrystalShardRenderer;
 import GU.items.ElectisShard.ElectisShardWrapper;

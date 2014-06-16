@@ -77,6 +77,7 @@ public abstract class ConstructionManager {
         
         isConstructing = false;
         isConstructionFinished = true;
+        isDeconstructing = false;
     }
     
     public void finishDeconstruction() {
@@ -98,6 +99,8 @@ public abstract class ConstructionManager {
     protected abstract void updateDuringConstruction();
     
     protected abstract void updateDuringDestruction();
+    
+    public abstract boolean checkAfterLoad();
     
     /**
      * 
@@ -128,13 +131,32 @@ public abstract class ConstructionManager {
         return false;
     }
     
+    public boolean addForceMultiBlockToBlock(Vector3i position) {
+        
+        TileEntity tile = UtilVector.getTileAtPostion(world, position);
+        
+        if (tile != null && tile instanceof IMultiBlockPart) {
+            
+            if (tile instanceof IItemInterface) {
+                
+                itemInterfaceList.put(position, (IItemInterface) tile);
+            }
+            if (tile instanceof IFluidInterface) {
+                
+                fluidInterfaceList.put(position, (IFluidInterface) tile);
+            }
+            return ((IMultiBlockPart) tile).addMultiBlock(multiBlockStructure);
+        }
+        return false;
+    }
+    
     /**
      * 
      * Places a block regardless of what was there before.
      */
-    public void forcePlaceBlock(Vector3i position, Block block) {
+    public void forcePlaceBlock(Vector3i position, Block block, int meta) {
         
-        world.setBlock(position.getX(), position.getY(), position.getZ(), block);
+        world.setBlock(position.getX(), position.getY(), position.getZ(), block, meta, 3);
     }
     
     /**

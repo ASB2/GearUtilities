@@ -175,4 +175,47 @@ public enum VanillaColor {
                 return new Color4i(255, 255, 255);
         }
     }
+    
+    public Color4i getRGBValue() {
+        
+        switch (this) {
+        
+            case WHITE:
+                return new Color4i(255, 255, 255);
+            case ORANGE:
+                return new Color4i(255, 165, 0);
+            case MAGENTA:
+                return new Color4i(220, 0, 190);
+            case LIGHT_BLUE:
+                return new Color4i(173, 216, 250);
+            case YELLOW:
+                return new Color4i(255, 255, 0);
+            case LIME:
+                return new Color4i(191, 255, 0);
+            case PINK:
+                return new Color4i(255, 192, 203);
+            case GREY:
+                return new Color4i(128, 128, 128);
+            case LIGHT_GREY:
+                return new Color4i(190, 190, 190);
+            case CYAN:
+                return new Color4i(0, 255, 255);
+            case PURPLE:
+                return new Color4i(110, 0, 110);
+            case BLUE:
+                return new Color4i(0, 0, 255);
+            case BROWN:
+                return new Color4i(75, 42, 42);
+            case GREEN:
+                return new Color4i(0, 255, 0);
+            case RED:
+                return new Color4i(255, 0, 0);
+            case BLACK:
+                return new Color4i(30, 30, 30);
+            case NONE:
+                return new Color4i(255, 255, 255);
+            default:
+                return new Color4i(255, 255, 255);
+        }
+    }
 }

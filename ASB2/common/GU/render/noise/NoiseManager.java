@@ -143,9 +143,13 @@ public class NoiseManager {
                         
                         double voroni = (noiseGen.getValue(x * currentDensity, y * currentDensity, currentDensity) * 255);
                         
-                        int perlin = FastNoise.noise(x * currentDensity, y * currentDensity, 7);
+                        // int perlin = FastNoise.noise(x * currentDensity, y *
+                        // currentDensity, 7);
+                        //
+                        // int col = (int) ((voroni + voroni2 + perlin + perlin)
+                        // / 3);
                         
-                        int col = (int) ((voroni + voroni2 + perlin + perlin) / 3);
+                        int col = (int) (((voroni + voroni2 + (currentDensity * currentDensity)) / 4));
                         
                         // int col = (int) (((noiseGen.getValue(x *
                         // currentDensity, y * currentDensity, currentDensity) *
