@@ -39,10 +39,12 @@ public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiB
     @Override
     public void logicUpdate() {
         
-        if (this.fluidTank.getFluidTank().getCapacity() == 0) {
-            
-            fluidTank.getFluidTank().setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
-        }
+    }
+    
+    @Override
+    public void onSetSize() {
+        
+        if (fluidTank != null && fluidTank.getFluidTank() != null && fluidTank.getFluidTank().getCapacity() > 0) fluidTank.getFluidTank().setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
     }
     
     public boolean startCreation() {

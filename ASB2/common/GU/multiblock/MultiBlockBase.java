@@ -26,7 +26,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
     public MultiBlockBase(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         this(world);
         this.positionRelativeTo = positionRelativeTo;
-        this.size = size;
+        setSize(size);
         this.updater = updater;
         
     }
@@ -88,10 +88,25 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
                 }
             }
         }
+        
+        if (isValid) {
+            
+            logicUpdate();
+        }
     }
     
     public void logicUpdate() {
         
+    }
+    
+    public void onSetSize() {
+        
+    }
+    
+    private void setSize(Vector3i newSize) {
+        
+        this.size = newSize;
+        onSetSize();
     }
     
     public boolean startCreation() {
@@ -181,8 +196,8 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
     public void load(NBTTagCompound tag) {
         
         positionRelativeTo = UtilVector.loadVector3i(tag.getCompoundTag("core"));
-        size = UtilVector.loadVector3i(tag.getCompoundTag("size"));
         updater = UtilVector.loadVector3i(tag.getCompoundTag("updater"));
+        this.setSize(UtilVector.loadVector3i(tag.getCompoundTag("size")));
         this.forceLoad = tag.getBoolean("isValid");
     }
     

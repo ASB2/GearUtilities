@@ -52,53 +52,66 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     }
     
     @Override
-    public NBTTagCompound save(NBTTagCompound tag) {
+    public IInventory getInventory(Vector3i tilePosition) {
         
-        if (fuelTank != null) tag.setTag("fuelTank", fuelTank.save(new NBTTagCompound()));
-        if (outputTank != null) tag.setTag("outputTank", outputTank.save(new NBTTagCompound()));
-        if (fuelInventory != null) tag.setTag("fuelInventory", fuelInventory.save(new NBTTagCompound()));
-        if (outputInventory != null) tag.setTag("outputInventory", outputInventory.save(new NBTTagCompound()));
-        
-        tag.setInteger("currentFuel", currentFuel);
-        tag.setInteger("cookTimer", cookTimer);
-        tag.setInteger("maxFuel", maxFuel);
-        return super.save(tag);
+        if (tilePosition != null) {
+            
+            Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
+            
+            if (size.getY() / 2 > relativeVector.getY()) {
+                
+                return outputInventory;
+            }
+            else if (size.getY() / 2 < relativeVector.getY()) {
+                
+                return fuelInventory;
+            }
+        }
+        return null;
     }
     
     @Override
-    public void load(NBTTagCompound tag) {
+    public IFluidHandler getTank(Vector3i tilePosition) {
         
-        if (fuelTank != null) fuelTank.load(tag.getCompoundTag("fuelTank"));
-        if (outputTank != null) outputTank.load(tag.getCompoundTag("outputTank"));
-        if (fuelInventory != null) fuelInventory.load(tag.getCompoundTag("fuelInventory"));
-        if (outputInventory != null) outputInventory.load(tag.getCompoundTag("outputInventory"));
+        if (tilePosition != null) {
+            
+            Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
+            
+            if (size.getY() / 2 > relativeVector.getY()) {
+                
+                return outputTank;
+            }
+            else if (size.getY() / 2 < relativeVector.getY()) {
+                
+                return fuelTank;
+            }
+        }
+        return null;
+    }
+    
+    @Override
+    public void onSetSize() {
         
-        currentFuel = tag.getInteger("currentFuel");
-        cookTimer = tag.getInteger("cookTimer");
-        maxFuel = tag.getInteger("maxFuel");
-        
-        super.load(tag);
+        if (fuelTank != null && fuelTank.getFluidTank() != null && fuelTank.getFluidTank().getCapacity() == 0) {
+            
+            fuelTank.getFluidTank().setCapacity((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 8 * FluidContainerRegistry.BUCKET_VOLUME);
+        }
+        if (outputTank != null && outputTank.getFluidTank() != null && outputTank.getFluidTank().getCapacity() == 0) {
+            
+            outputTank.getFluidTank().setCapacity((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 8 * FluidContainerRegistry.BUCKET_VOLUME);
+        }
+        if (fuelInventory != null && fuelInventory.getSizeInventory() == 0) {
+            
+            fuelInventory.setSizeInventory(((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1)) * 4);
+        }
+        if (outputInventory != null && outputInventory.getSizeInventory() == 0) {
+            
+            outputInventory.setSizeInventory((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 4);
+        }
     }
     
     @Override
     public void logicUpdate() {
-        
-        if (fuelTank.getFluidTank().getCapacity() == 0) {
-            
-            fuelTank.getFluidTank().setCapacity((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 8 * FluidContainerRegistry.BUCKET_VOLUME);
-        }
-        if (outputTank.getFluidTank().getCapacity() == 0) {
-            
-            outputTank.getFluidTank().setCapacity((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 8 * FluidContainerRegistry.BUCKET_VOLUME);
-        }
-        if (fuelInventory.getSizeInventory() == 0) {
-            
-            fuelInventory.setSizeInventory((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 4);
-        }
-        if (outputInventory.getSizeInventory() == 0) {
-            
-            outputInventory.setSizeInventory((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 4);
-        }
         
         for (int index = 0; index < this.fuelInventory.getSizeInventory(); index++) {
             
@@ -172,40 +185,31 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     }
     
     @Override
-    public IInventory getInventory(Vector3i tilePosition) {
+    public NBTTagCompound save(NBTTagCompound tag) {
         
-        if (tilePosition != null) {
-            
-            Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
-            
-            if (size.getY() / 2 > relativeVector.getY()) {
-                
-                return outputInventory;
-            }
-            else if (size.getY() / 2 < relativeVector.getY()) {
-                
-                return fuelInventory;
-            }
-        }
-        return null;
+        if (fuelTank != null) tag.setTag("fuelTank", fuelTank.save(new NBTTagCompound()));
+        if (outputTank != null) tag.setTag("outputTank", outputTank.save(new NBTTagCompound()));
+        if (fuelInventory != null) tag.setTag("fuelInventory", fuelInventory.save(new NBTTagCompound()));
+        if (outputInventory != null) tag.setTag("outputInventory", outputInventory.save(new NBTTagCompound()));
+        
+        tag.setInteger("currentFuel", currentFuel);
+        tag.setInteger("cookTimer", cookTimer);
+        tag.setInteger("maxFuel", maxFuel);
+        return super.save(tag);
     }
     
     @Override
-    public IFluidHandler getTank(Vector3i tilePosition) {
+    public void load(NBTTagCompound tag) {
         
-        if (tilePosition != null) {
-            
-            Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
-            
-            if (size.getY() / 2 > relativeVector.getY()) {
-                
-                return outputTank;
-            }
-            else if (size.getY() / 2 < relativeVector.getY()) {
-                
-                return fuelTank;
-            }
-        }
-        return null;
+        if (fuelTank != null) fuelTank.load(tag.getCompoundTag("fuelTank"));
+        if (outputTank != null) outputTank.load(tag.getCompoundTag("outputTank"));
+        if (fuelInventory != null) fuelInventory.load(tag.getCompoundTag("fuelInventory"));
+        if (outputInventory != null) outputInventory.load(tag.getCompoundTag("outputInventory"));
+        
+        currentFuel = tag.getInteger("currentFuel");
+        cookTimer = tag.getInteger("cookTimer");
+        maxFuel = tag.getInteger("maxFuel");
+        
+        super.load(tag);
     }
 }

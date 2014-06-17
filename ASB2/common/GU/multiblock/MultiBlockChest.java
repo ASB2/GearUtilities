@@ -33,6 +33,12 @@ public class MultiBlockChest extends MultiBlockInventory {
     }
     
     @Override
+    public void onSetSize() {
+        
+        if (inventory != null && inventory.getSizeInventory() == 0) inventory.setSizeInventory(8 * ((this.size.getX() + 1) * (this.size.getY() + 1) * (this.size.getZ() + 1)));
+    }
+    
+    @Override
     public boolean startCreation() {
         
         return size.getX() >= 2 && size.getY() >= 2 && size.getZ() >= 2 && super.startCreation();

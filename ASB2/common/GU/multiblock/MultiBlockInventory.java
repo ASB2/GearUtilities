@@ -13,12 +13,11 @@ public abstract class MultiBlockInventory extends MultiBlockBase implements IInv
     
     public MultiBlockInventory(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         super(world, positionRelativeTo, size, updater);
-        inventory = new Inventory();
+        
     }
     
     public MultiBlockInventory(World world) {
         super(world);
-        inventory = new Inventory();
     }
     
     @Override

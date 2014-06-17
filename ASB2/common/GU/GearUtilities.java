@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidStack;
 import GU.info.Reference;
 import GU.info.Variables;
 import GU.proxy.CommonProxy;
@@ -76,8 +77,8 @@ public final class GearUtilities {
             
             @Override
             public int getBurnTime(ItemStack fuel) {
-                // TODO Auto-generated method stub
-                return 0;
+                
+                return fuel == net.minecraftforge.fluids.FluidContainerRegistry.fillFluidContainer(new FluidStack(net.minecraftforge.fluids.FluidRegistry.LAVA, 1000), new ItemStack(ItemRegistry.ITEM_FLUID)) ? 10000000 : 0;
             }
         });
         
