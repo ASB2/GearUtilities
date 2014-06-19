@@ -267,6 +267,54 @@ public class BlockMetadata extends BlockBase {
         return super.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
     
+    @Override
+    public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.canConnectRedstone(world, x, y, z, side);
+        }
+        return true;
+    }
+    
+    @Override
+    public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.getComparatorInputOverride(world, x, y, z, side);
+        }
+        return 16;
+    }
+    
+    @Override
+    public int isProvidingStrongPower(IBlockAccess world, int x, int y, int z, int side) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.isProvidingStrongPower(world, x, y, z, side);
+        }
+        return 16;
+    }
+    
+    @Override
+    public int isProvidingWeakPower(IBlockAccess world, int x, int y, int z, int side) {
+        
+        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        
+        if (wrapper != null) {
+            
+            return wrapper.isProvidingWeakPower(world, x, y, z, side);
+        }
+        return 16;
+    }
+    
     public static class MetadataWrapper {
         
         protected String[] iconNames;
@@ -458,6 +506,26 @@ public class BlockMetadata extends BlockBase {
         public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
             
             return this.getBlock().blockHardness / 5f;
+        }
+        
+        public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
+            
+            return false;
+        }
+        
+        public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
+            
+            return 0;
+        }
+        
+        public int isProvidingStrongPower(IBlockAccess world, int x, int y, int z, int side) {
+            
+            return 0;
+        }
+        
+        public int isProvidingWeakPower(IBlockAccess world, int x, int y, int z, int side) {
+            
+            return 0;
         }
     }
     

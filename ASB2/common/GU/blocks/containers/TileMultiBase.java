@@ -11,7 +11,7 @@ import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 public class TileMultiBase extends TileBase implements IMultiBlockPart {
     
     protected boolean isInMultiBlock = false, destoryTileWithNotMultiBlock = false, destroyBlockWithNoMultiBlock = false;
-    protected List<IMultiBlock> multiBlocks = new ArrayList<IMultiBlock>(), unchangable = new ArrayList<IMultiBlock>();
+    public List<IMultiBlock> multiBlocks = new ArrayList<IMultiBlock>(), unchangable = new ArrayList<IMultiBlock>();
     protected int maxMultiBlocks = -1;
     
     @Override

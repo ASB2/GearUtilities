@@ -16,6 +16,7 @@ import GU.blocks.containers.BlockCreativeMetadata.CreativeMetadataWrapper;
 import GU.blocks.containers.BlockElectisCrystal.BlockElectisCrystal;
 import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
 import GU.blocks.containers.BlockMultiInterface.MultiInterfaceWrapper;
+import GU.blocks.containers.BlockMultiInterface.RedstoneMultiInterfaceWrapper;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPart;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartAir;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartGlass;
@@ -70,7 +71,7 @@ public class BlockRegistry {
             this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Fluid Interface"));
             this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Power Interface"));
             this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 3)).setDisplayName("Data Interface"));
-            this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 4)).setDisplayName("Redstone Interface"));
+            this.addWrapper(new RedstoneMultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 4)).setDisplayName("Redstone Interface"));
             this.addWrapper(new MultiInterfaceWrapper(new String[] { "BlockMultiInterface" }).addDrop(new ItemStack(this, 1, 5)).setDisplayName("Gui Interface"));
         }
     };

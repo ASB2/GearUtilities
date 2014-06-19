@@ -16,13 +16,14 @@ import ASB2.utils.UtilInventory;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IItemInterface;
+import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
 import GU.api.multiblock.MultiBlockObject.FluidHandlerWrapper;
 import GU.multiblock.construction.ConstructionManager;
 import GU.multiblock.construction.FurnaceConstructionManager;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBlock, IInventoryMultiBlock {
+public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBlock, IInventoryMultiBlock, IRedstoneMultiBlock {
     
     public FluidHandlerWrapper fuelTank = new FluidHandlerWrapper(0), outputTank = new FluidHandlerWrapper(0);
     Inventory fuelInventory = new Inventory("MultiBlockFurnace: Fuel"), outputInventory = new Inventory("MultiBlockFurnace: Output");
@@ -211,5 +212,11 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
         maxFuel = tag.getInteger("maxFuel");
         
         super.load(tag);
+    }
+    
+    @Override
+    public int getLevel(Vector3i tilePosition) {
+        // TODO Auto-generated method stub
+        return 0;
     }
 }

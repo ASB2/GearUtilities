@@ -7,6 +7,7 @@ import net.minecraftforge.fluids.FluidStack;
 import ASB2.utils.UtilEntity;
 import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
+import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
 import GU.multiblock.clientState.MultiBlockFluidHandler;
 import GU.multiblock.construction.ConstructionManager;
 import GU.multiblock.construction.TankConstructionManager;
@@ -14,7 +15,7 @@ import GU.packets.MutliBlockTankPacket;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiBlock {
+public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiBlock, IRedstoneMultiBlock {
     
     public MultiBlockTank(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         super(world, positionRelativeTo, size, updater);
@@ -91,5 +92,11 @@ public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiB
         
         UtilEntity.sendChatToPlayer(player, "Tank: Gui Opened");
         return true;
+    }
+    
+    @Override
+    public int getLevel(Vector3i tilePosition) {
+        
+        return 16;
     }
 }

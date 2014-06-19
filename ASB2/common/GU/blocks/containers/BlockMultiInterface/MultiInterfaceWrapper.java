@@ -113,9 +113,9 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
             case 3: {
                 break;
             }
-            case 4: {
-                break;
-            }
+            // case 4: {
+            // break;
+            // }
             case 5: {
                 
                 if (!world.isRemote) {
@@ -153,8 +153,8 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
                 return new TilePowerMultiInterface();
             case 3:
                 return new TileDataMultiInterface();
-            case 4:
-                return new TileRedstoneMultiInterface();
+                // case 4:
+                // return new TileRedstoneMultiInterface();
             case 5:
                 return new TileGuiMultiInterface();
         }

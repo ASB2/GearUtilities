@@ -1,13 +1,16 @@
 package GU.multiblock;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import ASB2.inventory.Inventory;
+import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
+import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
 import GU.multiblock.construction.ChestConstructionManager;
 import GU.multiblock.construction.ConstructionManager;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class MultiBlockChest extends MultiBlockInventory {
+public class MultiBlockChest extends MultiBlockInventory implements IRedstoneMultiBlock, IGuiMultiBlock {
     
     public MultiBlockChest(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         super(world, positionRelativeTo, size, updater);
@@ -42,5 +45,17 @@ public class MultiBlockChest extends MultiBlockInventory {
     public boolean startCreation() {
         
         return size.getX() >= 2 && size.getY() >= 2 && size.getZ() >= 2 && super.startCreation();
+    }
+    
+    @Override
+    public boolean openGui(Vector3i position, EntityPlayer player, int side) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    
+    @Override
+    public int getLevel(Vector3i tilePosition) {
+        // TODO Auto-generated method stub
+        return 0;
     }
 }
