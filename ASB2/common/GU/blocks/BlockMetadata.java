@@ -272,7 +272,7 @@ public class BlockMetadata extends BlockBase {
         
         MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
-        if (wrapper != null) {
+        if (wrapper != null || false) {
             
             return wrapper.canConnectRedstone(world, x, y, z, side);
         }
@@ -284,7 +284,7 @@ public class BlockMetadata extends BlockBase {
         
         MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
-        if (wrapper != null) {
+        if (wrapper != null|| false) {
             
             return wrapper.getComparatorInputOverride(world, x, y, z, side);
         }
@@ -296,7 +296,7 @@ public class BlockMetadata extends BlockBase {
         
         MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
-        if (wrapper != null) {
+        if (wrapper != null|| false) {
             
             return wrapper.isProvidingStrongPower(world, x, y, z, side);
         }
@@ -308,7 +308,7 @@ public class BlockMetadata extends BlockBase {
         
         MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
-        if (wrapper != null) {
+        if (wrapper != null|| false) {
             
             return wrapper.isProvidingWeakPower(world, x, y, z, side);
         }
