@@ -186,6 +186,12 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     }
     
     @Override
+    public int getLevel(Vector3i tilePosition) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    
+    @Override
     public NBTTagCompound save(NBTTagCompound tag) {
         
         if (fuelTank != null) tag.setTag("fuelTank", fuelTank.save(new NBTTagCompound()));
@@ -212,11 +218,5 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
         maxFuel = tag.getInteger("maxFuel");
         
         super.load(tag);
-    }
-    
-    @Override
-    public int getLevel(Vector3i tilePosition) {
-        // TODO Auto-generated method stub
-        return 0;
     }
 }

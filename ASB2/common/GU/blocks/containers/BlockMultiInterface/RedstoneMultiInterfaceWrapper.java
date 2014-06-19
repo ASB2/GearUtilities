@@ -29,32 +29,32 @@ public class RedstoneMultiInterfaceWrapper extends MetadataWrapper {
         
         TileMultiBase tile = (TileMultiBase) world.getTileEntity(x, y, z);
         
-        if (tile != null && ((TileMultiBase) tile).multiBlocks.size() == 1) {
+        if (tile != null && !tile.getWorldObj().isRemote && !((TileMultiBase) tile).multiBlocks.isEmpty()) {
             
             IMultiBlock multi = ((TileMultiBase) tile).multiBlocks.get(0);
             
-            if (multi instanceof IRedstoneMultiBlock) {
+            if (multi != null && multi instanceof IRedstoneMultiBlock) {
                 
                 return ((IRedstoneMultiBlock) multi).getLevel(new Vector3i(x, y, z));
             }
         }
-        return 16;
+        return 0;
     }
     
     public int isProvidingWeakPower(IBlockAccess world, int x, int y, int z, int side) {
         
         TileMultiBase tile = (TileMultiBase) world.getTileEntity(x, y, z);
         
-        if (tile != null && ((TileMultiBase) tile).multiBlocks.size() == 1) {
+        if (tile != null && !tile.getWorldObj().isRemote && !((TileMultiBase) tile).multiBlocks.isEmpty()) {
             
             IMultiBlock multi = ((TileMultiBase) tile).multiBlocks.get(0);
             
-            if (multi instanceof IRedstoneMultiBlock) {
+            if (multi != null && multi instanceof IRedstoneMultiBlock) {
                 
                 return ((IRedstoneMultiBlock) multi).getLevel(new Vector3i(x, y, z));
             }
         }
-        return 16;
+        return 0;
     }
     
     @Override

@@ -272,11 +272,11 @@ public class BlockMetadata extends BlockBase {
         
         MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
-        if (wrapper != null || false) {
+        if (wrapper != null) {
             
             return wrapper.canConnectRedstone(world, x, y, z, side);
         }
-        return true;
+        return super.canConnectRedstone(world, x, y, z, side);
     }
     
     @Override
@@ -284,11 +284,11 @@ public class BlockMetadata extends BlockBase {
         
         MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
-        if (wrapper != null|| false) {
+        if (wrapper != null) {
             
             return wrapper.getComparatorInputOverride(world, x, y, z, side);
         }
-        return 16;
+        return super.getComparatorInputOverride(world, x, y, z, side);
     }
     
     @Override
@@ -296,11 +296,11 @@ public class BlockMetadata extends BlockBase {
         
         MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
-        if (wrapper != null|| false) {
+        if (wrapper != null) {
             
             return wrapper.isProvidingStrongPower(world, x, y, z, side);
         }
-        return 16;
+        return super.isProvidingStrongPower(world, x, y, z, side);
     }
     
     @Override
@@ -308,12 +308,18 @@ public class BlockMetadata extends BlockBase {
         
         MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
-        if (wrapper != null|| false) {
+        if (wrapper != null) {
             
             return wrapper.isProvidingWeakPower(world, x, y, z, side);
         }
-        return 16;
+        return super.isProvidingWeakPower(world, x, y, z, side);
     }
+    
+//    @Override
+//    public boolean shouldCheckWeakPower(IBlockAccess world, int x, int y, int z, int side) {
+//        // TODO Auto-generated method stub
+//        return super.shouldCheckWeakPower(world, x, y, z, side);
+//    }
     
     public static class MetadataWrapper {
         
@@ -527,6 +533,11 @@ public class BlockMetadata extends BlockBase {
             
             return 0;
         }
+        
+//        public boolean shouldCheckWeakPower(IBlockAccess world, int x, int y, int z, int side) {
+//            
+//            return 
+//        }
     }
     
     public static class ItemBlockMetadataBlock extends GUItemBlock {
