@@ -8,7 +8,6 @@ import ASB2.utils.UtilEntity;
 import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
-import GU.multiblock.clientState.MultiBlockFluidHandler;
 import GU.multiblock.construction.ConstructionManager;
 import GU.multiblock.construction.TankConstructionManager;
 import GU.packets.MutliBlockTankPacket;

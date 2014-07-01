@@ -13,9 +13,9 @@ import GU.info.Reference;
 import GU.info.Variables;
 import UC.FastNoise;
 import UC.color.Color4i;
+import UC.noise.libnoiseforjava.module.Voronoi;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
-import UC.noise.libnoiseforjava.module.*;
 
 public class NoiseManager {
     

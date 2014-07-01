@@ -3,6 +3,7 @@ package GU;
 import GU.packets.ColorPacket;
 import GU.packets.CrystalTypePacket;
 import GU.packets.ItemMultiInterfacePacket;
+import GU.packets.MultiBlockFlamePacket;
 import GU.packets.MutliBlockTankPacket;
 import GU.packets.PowerPacket;
 import GU.packets.TankUpdatePacket;
@@ -21,6 +22,7 @@ public final class PacketRegistry {
         GearUtilities.getPipeline().registerMessage(MutliBlockTankPacket.class, MutliBlockTankPacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(ItemMultiInterfacePacket.class, ItemMultiInterfacePacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(TankUpdatePacket.class, TankUpdatePacket.class, getNextID(), Side.CLIENT);
+        GearUtilities.getPipeline().registerMessage(MultiBlockFlamePacket.class, MultiBlockFlamePacket.class, getNextID(), Side.CLIENT);
     }
     
     static int ID = -1;

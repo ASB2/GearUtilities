@@ -30,6 +30,14 @@ public class FlameConstructionManager extends CubeConstructionManager {
                             return;
                         }
                     }
+                    else if (y == 2 || y == size.getY() - 2) {
+                        
+                        if (!placeEdgeBlock(vec)) {
+                            
+                            startDestruction();
+                            return;
+                        }
+                    }
                     else if (((x == 0 || x == size.getX()) && (y == 0 || y == size.getY())) && (z == 0 || z == size.getZ())) {
                         
                         if (!placeCornerBlock(vec)) {

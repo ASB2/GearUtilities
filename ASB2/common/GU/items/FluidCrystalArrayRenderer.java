@@ -9,16 +9,23 @@ import net.minecraftforge.fluids.Fluid;
 
 import org.lwjgl.opengl.GL11;
 
-import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilRender;
+import GU.EventListener;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.render.noise.NoiseManager;
 import GU.utils.UtilGU;
+import UC.VariableIterator;
 
 public class FluidCrystalArrayRenderer implements IItemRenderer {
     
     public static final FluidCrystalArrayRenderer instance = new FluidCrystalArrayRenderer();
+    VariableIterator var = new VariableIterator(.0003, 0, .25);
+    
+    public FluidCrystalArrayRenderer() {
+        
+        EventListener.instance.VARIABLES.add(var);
+    }
     
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
@@ -151,31 +158,8 @@ public class FluidCrystalArrayRenderer implements IItemRenderer {
                 IIcon topIcon = renderFluid.getStillIcon();
                 
                 if (topIcon != null) {
-                    double renderHeight = UtilItemStack.getNBTTagDouble(item, "renderHeight");
                     
-                    {
-                        boolean renderMovement = UtilItemStack.getNBTTagBoolean(item, "renderMovement");
-                        
-                        if (renderMovement) {
-                            
-                            renderHeight += .0003;
-                            
-                            if (renderHeight > .25) {
-                                
-                                UtilItemStack.setNBTTagBoolean(item, "renderMovement", false);
-                            }
-                        }
-                        else {
-                            
-                            renderHeight -= .0003;
-                            
-                            if (renderHeight < 0) {
-                                
-                                UtilItemStack.setNBTTagBoolean(item, "renderMovement", true);
-                            }
-                        }
-                        UtilItemStack.setNBTTagDouble(item, "renderHeight", renderHeight);
-                    }
+                    double renderHeight = var.getCurrentAmount();
                     
                     GL11.glPushMatrix();
                     

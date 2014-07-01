@@ -70,7 +70,8 @@ public final class GearUtilities {
         EntityRegistry.init();
         MultiRegistry.init();
         
-        MinecraftForge.EVENT_BUS.register(new EventListener());
+        MinecraftForge.EVENT_BUS.register(EventListener.instance);
+        FMLCommonHandler.instance().bus().register(EventListener.instance);
         FMLCommonHandler.instance().bus().register(NoiseManager.instance);
         
         GameRegistry.registerFuelHandler(new IFuelHandler() {

@@ -1,13 +1,31 @@
 package GU;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import UC.VariableIterator;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import GU.info.MiscIcons;
 import GU.info.Reference;
 import GU.render.EnumInputIcon;
+import GU.render.noise.NoiseManager;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import GU.info.*;
-import GU.render.noise.*;
+import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 public class EventListener {
+    
+    public static EventListener instance = new EventListener();
+    
+    public List<VariableIterator> VARIABLES = new ArrayList<VariableIterator>();
+    
+    @SubscribeEvent
+    public void logicUpdate(WorldTickEvent event) {
+        
+        for (VariableIterator var : VARIABLES) {
+            
+            var.update();
+        }
+    }
     
     @SubscribeEvent
     public void textureHook(TextureStitchEvent.Pre event) {

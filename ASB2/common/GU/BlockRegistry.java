@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
+import GU.api.color.VanillaColor;
 import GU.blocks.BlockBase;
 import GU.blocks.BlockMetadata;
 import GU.blocks.BlockStructureCube;
@@ -23,10 +24,10 @@ import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPart;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartAir;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartGlass;
 import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender;
+import GU.blocks.containers.BlockPhotonSender.BlockPhotonSender;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
-import GU.api.color.*;
 
 public class BlockRegistry {
     
@@ -103,6 +104,14 @@ public class BlockRegistry {
     
     public static final BlockMultiPartRender MULTI_BLOCK_PART_RENDER = new BlockMultiPartRender(Material.rock);
     
+    public static final BlockPhotonSender PHOTON_SENDER = new BlockPhotonSender(Material.rock) {
+        
+        public String getBlockDisplayName(ItemStack stack) {
+            
+            return "Photon Sender";
+        };
+    };
+    
     static {
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMetadataOre"), METADATA_ORE.setBlockName("MetadataOre"));
@@ -122,6 +131,7 @@ public class BlockRegistry {
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiBlockPartGlass"), MULTI_BLOCK_PART_GLASS);
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiBlockPartAir"), MULTI_BLOCK_PART_AIR.setBlockName("Multi Block Air"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiPartRender"), MULTI_BLOCK_PART_RENDER.setBlockName("Multi Block Render"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockPhotonSender"), PHOTON_SENDER.setBlockName("Photon Sender"));
     }
     
     public static void init(Configuration config) {
