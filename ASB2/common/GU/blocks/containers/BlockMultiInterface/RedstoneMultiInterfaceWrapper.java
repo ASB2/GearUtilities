@@ -22,6 +22,17 @@ public class RedstoneMultiInterfaceWrapper extends MetadataWrapper {
     
     public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
         
+       TileMultiBase tile = (TileMultiBase) world.getTileEntity(x, y, z);
+        
+        if (tile != null && !tile.getWorldObj().isRemote && !((TileMultiBase) tile).multiBlocks.isEmpty()) {
+            
+            IMultiBlock multi = ((TileMultiBase) tile).multiBlocks.get(0);
+            
+            if (multi != null && multi instanceof IRedstoneMultiBlock) {
+                
+                return ((IRedstoneMultiBlock) multi).getLevel(new Vector3i(x, y, z));
+            }
+        }
         return 0;
     }
     

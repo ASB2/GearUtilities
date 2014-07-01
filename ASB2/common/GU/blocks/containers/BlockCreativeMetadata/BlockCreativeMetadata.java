@@ -3,6 +3,7 @@ package GU.blocks.containers.BlockCreativeMetadata;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
+import GU.api.color.VanillaColor;
 import GU.blocks.containers.BlockMetadataContainerBase;
 import GU.blocks.containers.TileBase;
 import GU.render.BlockSimpleRenderer.INoiseBlockRender;
@@ -15,18 +16,28 @@ public class BlockCreativeMetadata extends BlockMetadataContainerBase implements
         
         this.registerTile(TileCreativePower.class);
         this.registerTile(TileCreativeFluid.class);
+        this.registerTile(TileCreativeItem.class);
     }
     
     @Override
     public Color4i getColor(int metadata) {
         
+        switch (metadata) {
+        
+            case 0:
+                return Color4i.WHITE;
+            case 1:
+                return VanillaColor.LIGHT_GREY.getRGBValue();
+            case 2:
+                return VanillaColor.GREY.getRGBValue();
+        }
         return Color4i.WHITE;
     }
     
     @Override
     public Color4i getColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         
-        return Color4i.WHITE;
+        return getColor(world.getBlockMetadata(x, y, z));
     }
     
     @Override
@@ -40,6 +51,6 @@ public class BlockCreativeMetadata extends BlockMetadataContainerBase implements
         
         TileBase tile = (TileBase) world.getTileEntity(x, y, z);
         int metadata = world.getBlockMetadata(x, y, z);
-        return (tile != null && metadata == 1 && tile instanceof TileCreativeFluid && ((TileCreativeFluid) tile).fluidToSave.getFluidAmount() == 0) || metadata == 0;
+        return metadata != 1 || (tile != null && tile instanceof TileCreativeFluid && ((TileCreativeFluid) tile).fluidToSave.getFluidAmount() == 0);
     }
 }

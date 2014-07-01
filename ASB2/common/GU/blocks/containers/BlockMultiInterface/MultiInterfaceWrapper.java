@@ -95,8 +95,7 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
                                         }
                                         else {
                                             
-                                            UtilFluid.removeFluidFromHandler(tile, ForgeDirection.getOrientation(side), info.fluid, true);
-                                            UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, entityplayer.posX, entityplayer.posY, entityplayer.posZ);
+                                            UtilFluid.removeFluidFromHandler(tile, ForgeDirection.getOrientation(side), FluidContainerRegistry.getFluidForFilledItem(filled), true);
                                             return true;
                                         }
                                     }

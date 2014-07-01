@@ -48,7 +48,7 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
             }
         }
         
-        if (multiBlocks.add(multiBlock)) {
+        if (multiBlocks.contains(multiBlock) || multiBlocks.add(multiBlock)) {
             
             isInMultiBlock = true;
             unchangable = Collections.unmodifiableList(multiBlocks);

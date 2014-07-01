@@ -35,6 +35,12 @@ public class GearReaderWrapper extends MetadataWrapper {
     }
     
     @Override
+    public int getItemStackLimit(ItemStack stack) {
+        
+        return 1;
+    }
+    
+    @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
         
         if (!world.isRemote) {

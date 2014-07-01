@@ -4,9 +4,9 @@ import net.minecraft.world.World;
 import GU.multiblock.MultiBlockBase;
 import UC.math.vector.Vector3i;
 
-public class FurnaceConstructionManager extends CubeConstructionManager {
+public class FlameConstructionManager extends CubeConstructionManager {
     
-    public FurnaceConstructionManager(World world, MultiBlockBase multiBlock, Vector3i positiveMostPoint, Vector3i size) {
+    public FlameConstructionManager(World world, MultiBlockBase multiBlock, Vector3i positiveMostPoint, Vector3i size) {
         super(world, multiBlock, positiveMostPoint, size);
         // TODO Auto-generated constructor stub
     }
@@ -46,14 +46,6 @@ public class FurnaceConstructionManager extends CubeConstructionManager {
                             return;
                         }
                     }
-                    else if (y == (int) (size.getY() / 3) || y == ((int) (size.getY() / 3) * 2)) {
-                        
-                        if (!placeEdgeBlock(vec)) {
-                            
-                            startDestruction();
-                            return;
-                        }
-                    }
                     else if (((x == 0 || x == size.getX()) && (y != 0 && y != size.getY())) && (z != 0 && z != size.getZ())) {
                         
                         if (!placeGlassBlock(vec)) {
@@ -83,6 +75,11 @@ public class FurnaceConstructionManager extends CubeConstructionManager {
                         startDestruction();
                         return;
                     }
+                    // else if (!placeAirBlock(vec)) {
+                    //
+                    // deconstruct();
+                    // return;
+                    // }
                 }
             }
         }

@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilEntity;
 import GU.api.color.AbstractColorable.IColorableBlock;
+import GU.api.color.VanillaColor;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockMarker;
 import GU.blocks.containers.BlockMultiMetadataContainerBase;
@@ -41,29 +42,12 @@ public class BlockSpacialProvider extends BlockMultiMetadataContainerBase implem
                 
                 if (player.getHeldItem() == null) {
                     
-                    switch (world.getBlockMetadata(x, y, z)) {
+                    int metadata = world.getBlockMetadata(x, y, z);
                     
-                        case 0: {
-                            
-                            UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.STANDARD.createMultiBlock(world, new Vector3i(x, y, z)));
-                            break;
-                        }
+                    if (metadata < EnumMultiBlockType.values().length) {
                         
-                        case 1: {
-                            
-                            UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.CHEST.createMultiBlock(world, new Vector3i(x, y, z)));
-                            break;
-                        }
-                        case 2: {
-                            
-                            UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.FURNACE.createMultiBlock(world, new Vector3i(x, y, z)));
-                            break;
-                        }
-                        case 3: {
-                            
-                            UtilEntity.sendChatToPlayer(player, EnumMultiBlockType.TANK.createMultiBlock(world, new Vector3i(x, y, z)));
-                            break;
-                        }
+                        EnumMultiBlockType type = EnumMultiBlockType.values()[metadata];
+                        UtilEntity.sendChatToPlayer(player, type.createMultiBlock(world, new Vector3i(x, y, z)));
                     }
                     return true;
                 }
@@ -96,6 +80,8 @@ public class BlockSpacialProvider extends BlockMultiMetadataContainerBase implem
                 return Color4i.RED.brighter();
             case 3:
                 return Color4i.BLUE.brighter();
+            case 4:
+                return VanillaColor.MAGENTA.getRGBValue().darker(150);
         }
         return null;
     }
@@ -129,13 +115,13 @@ public class BlockSpacialProvider extends BlockMultiMetadataContainerBase implem
         
         return new TileSpacialProvider();
     }
-
+    
     @Override
     public boolean canRender(int metadata) {
         // TODO Auto-generated method stub
         return true;
     }
-
+    
     @Override
     public boolean canRender(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         // TODO Auto-generated method stub

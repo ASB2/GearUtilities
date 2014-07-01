@@ -19,7 +19,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
     protected Vector3i size;
     protected Vector3i updater;
     
-    protected boolean isValid = false, isConstructing = false, isDeconstructing = false, forceLoad = false, hasTriedConstructionManagerCreation = false;
+    protected boolean isValid = false, isConstructing = false, isDeconstructing = false, forceLoad = false, hasTriedConstructionManagerCreation = false, calledSize = false;
     
     protected ConstructionManager constructionManager;
     
@@ -28,7 +28,6 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
         this.positionRelativeTo = positionRelativeTo;
         setSize(size);
         this.updater = updater;
-        
     }
     
     public MultiBlockBase(World world) {
@@ -38,6 +37,12 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
     
     @Override
     public void update(Object... objects) {
+        
+        if (!calledSize) {
+            
+            onSetSize();
+            calledSize = true;
+        }
         
         if (!hasTriedConstructionManagerCreation) {
             
@@ -106,7 +111,6 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
     private void setSize(Vector3i newSize) {
         
         this.size = newSize;
-        onSetSize();
     }
     
     public boolean startCreation() {

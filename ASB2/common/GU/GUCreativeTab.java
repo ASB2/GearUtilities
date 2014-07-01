@@ -4,6 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import GU.api.color.VanillaColor;
 import GU.blocks.containers.BlockElectisCrystal.EnumElectisCrystalType;
 import GU.info.Reference;
 import cpw.mods.fml.relauncher.Side;
@@ -74,7 +75,7 @@ public class GUCreativeTab extends CreativeTabs {
             }
             case (Reference.NAME + ": Structure Cubes"): {
                 
-                return new ItemStack(BlockRegistry.STRUCTURE_CUBE_15);
+                return new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()));
             }
         }
         return new ItemStack(Items.diamond);

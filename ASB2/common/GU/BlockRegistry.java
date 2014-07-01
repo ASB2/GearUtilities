@@ -1,6 +1,8 @@
 package GU;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -24,6 +26,7 @@ import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
+import GU.api.color.*;
 
 public class BlockRegistry {
     
@@ -39,16 +42,17 @@ public class BlockRegistry {
         }
     };
     
-    public static final BlockStructureCube STRUCTURE_CUBE_0 = new BlockStructureCube(Material.rock, 0), STRUCTURE_CUBE_1 = new BlockStructureCube(Material.rock, 1), STRUCTURE_CUBE_2 = new BlockStructureCube(Material.rock, 2), STRUCTURE_CUBE_3 = new BlockStructureCube(Material.rock, 3), STRUCTURE_CUBE_4 = new BlockStructureCube(Material.rock, 4), STRUCTURE_CUBE_5 = new BlockStructureCube(Material.rock, 5), STRUCTURE_CUBE_6 = new BlockStructureCube(Material.rock, 6), STRUCTURE_CUBE_7 = new BlockStructureCube(Material.rock, 7), STRUCTURE_CUBE_8 = new BlockStructureCube(Material.rock, 8), STRUCTURE_CUBE_9 = new BlockStructureCube(Material.rock, 9), STRUCTURE_CUBE_10 = new BlockStructureCube(Material.rock, 10), STRUCTURE_CUBE_11 = new BlockStructureCube(Material.rock, 11),
-            STRUCTURE_CUBE_12 = new BlockStructureCube(Material.rock, 12), STRUCTURE_CUBE_13 = new BlockStructureCube(Material.rock, 13), STRUCTURE_CUBE_14 = new BlockStructureCube(Material.rock, 14), STRUCTURE_CUBE_15 = new BlockStructureCube(Material.rock, 15);
+    public static final List<BlockStructureCube> STRUCTURE_CUBES = new ArrayList<BlockStructureCube>();
     
     public static final BlockElectisCrystal ELECTIS_CRYSTAL = new BlockElectisCrystal(Material.rock);
+    
     public static final BlockCreativeMetadata CREATIVE_METADATA = new BlockCreativeMetadata(Material.rock) {
         
         public void postInit() {
             
             this.addWrapper(new CreativeMetadataWrapper(new String[] { "BlockCreativeMetadata0" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Creative Energy"));
             this.addWrapper(new CreativeMetadataWrapper(new String[] { "BlockCreativeMetadata1" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Creative Fluid"));
+            this.addWrapper(new CreativeMetadataWrapper(new String[] { "BlockCreativeMetadata2" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Creative Item"));
         }
     };
     
@@ -60,6 +64,7 @@ public class BlockRegistry {
             this.addWrapper(new MetadataWrapper(new String[] { "BlockSpacialProvider" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Chest Spacial Provider"));
             this.addWrapper(new MetadataWrapper(new String[] { "BlockSpacialProvider" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Furnace Spacial Provider"));
             this.addWrapper(new MetadataWrapper(new String[] { "BlockSpacialProvider" }).addDrop(new ItemStack(this, 1, 3)).setDisplayName("Tank Spacial Provider"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockSpacialProvider" }).addDrop(new ItemStack(this, 1, 4)).setDisplayName("Flame Spacial Provider"));
         }
     };
     
@@ -80,9 +85,9 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockInner" }).setDisplayName("Multi Block Inner").addDrop(new ItemStack(this, 1, 0)));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockEdge" }).setDisplayName("Multi Block Edge").addDrop(new ItemStack(this, 1, 1)));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockCorner" }).setDisplayName("Multi Block Corner").addDrop(new ItemStack(this, 1, 2)));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockInner" }).setDisplayName("Multi Block Inner"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockEdge" }).setDisplayName("Multi Block Edge"));
+            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockCorner" }).setDisplayName("Multi Block Corner"));
         }
     };
     
@@ -102,22 +107,12 @@ public class BlockRegistry {
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMetadataOre"), METADATA_ORE.setBlockName("MetadataOre"));
         
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor0"), STRUCTURE_CUBE_0.setBlockName("StructureCubeColor0"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor1"), STRUCTURE_CUBE_1.setBlockName("StructureCubeColor1"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor2"), STRUCTURE_CUBE_2.setBlockName("StructureCubeColor2"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor3"), STRUCTURE_CUBE_3.setBlockName("StructureCubeColor3"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor4"), STRUCTURE_CUBE_4.setBlockName("StructureCubeColor4"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor5"), STRUCTURE_CUBE_5.setBlockName("StructureCubeColor5"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor6"), STRUCTURE_CUBE_6.setBlockName("StructureCubeColor6"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor7"), STRUCTURE_CUBE_7.setBlockName("StructureCubeColor7"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor8"), STRUCTURE_CUBE_8.setBlockName("StructureCubeColor8"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor9"), STRUCTURE_CUBE_9.setBlockName("StructureCubeColor9"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor10"), STRUCTURE_CUBE_10.setBlockName("StructureCubeColor10"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor11"), STRUCTURE_CUBE_11.setBlockName("StructureCubeColor11"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor12"), STRUCTURE_CUBE_12.setBlockName("StructureCubeColor12"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor13"), STRUCTURE_CUBE_13.setBlockName("StructureCubeColor13"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor14"), STRUCTURE_CUBE_14.setBlockName("StructureCubeColor14"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor15"), STRUCTURE_CUBE_15.setBlockName("StructureCubeColor15"));
+        for (VanillaColor color : VanillaColor.values()) {
+            
+            BlockStructureCube cube = new BlockStructureCube(Material.rock, color);
+            STRUCTURE_CUBES.add(cube);
+            customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor" + color.ordinal()), cube.setBlockName("StructureCubeColor" + color.ordinal()));
+        }
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockElectisCrystal"), ELECTIS_CRYSTAL.setBlockName("Electis Crystal"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockCreativeMetadata"), CREATIVE_METADATA);

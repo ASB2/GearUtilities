@@ -90,15 +90,20 @@ public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiB
     @Override
     public boolean openGui(Vector3i position, EntityPlayer player, int side) {
         
-        UtilEntity.sendChatToPlayer(player, "Tank: Gui Opened");
+        UtilEntity.sendChatToPlayer(player, "Tank: Gui Would Have Opened If It Exzited");
         return true;
     }
     
     @Override
     public int getLevel(Vector3i tilePosition) {
         
-        // return ((int) (16 * (fluidTank.getFluidTank().getFluidAmount() /
-        // (double) fluidTank.getFluidTank().getCapacity())));
-        return Math.ceil((size.getY() - 1) * (fluidTank.getFluidTank().getFluidAmount() / (double) fluidTank.getFluidTank().getCapacity())) < positionRelativeTo.getY() - tilePosition.getY() ? 15 : 0;
+        // return (int) (Math.floor(15 *
+        // (fluidTank.getFluidTank().getFluidAmount() / (float)
+        // fluidTank.getFluidTank().getCapacity())));
+        
+        float fluidPrecent = (fluidTank.getFluidTank().getFluidAmount() / (float) fluidTank.getFluidTank().getCapacity());
+        float blockFluidIsIn = (size.getY() - 1) * fluidPrecent;
+        int blockPosition = (size.getY() - (positionRelativeTo.getY() - tilePosition.getY()));
+        return Math.ceil(blockFluidIsIn) >= blockPosition ? 15 : 0;
     }
 }

@@ -38,6 +38,12 @@ public class CreativeMetadataWrapper extends MetadataWrapper {
                 }
                 return true;
             }
+            case 2: {
+                
+                TileCreativeItem tile = (TileCreativeItem) world.getTileEntity(x, y, z);
+                tile.toDuplicate = entityplayer.inventory.getCurrentItem();
+                return true;
+            }
         }
         return super.onBlockActivated(world, x, y, z, entityplayer, side, xHit, yHit, zHit);
     }
@@ -51,6 +57,8 @@ public class CreativeMetadataWrapper extends MetadataWrapper {
                 return new TileCreativePower();
             case 1:
                 return new TileCreativeFluid();
+            case 2:
+                return new TileCreativeItem();
         }
         return null;
     }

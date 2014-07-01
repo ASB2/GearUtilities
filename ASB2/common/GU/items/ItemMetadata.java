@@ -157,6 +157,18 @@ public class ItemMetadata extends ItemBase {
         return super.doesSneakBypassUse(world, x, y, z, player);
     }
     
+    @Override
+    public int getItemStackLimit(ItemStack stack) {
+        
+        MetadataWrapper wrapper = wrappers.get(stack.getItemDamage());
+        
+        if (wrapper != null) {
+            
+            return wrapper.getItemStackLimit(stack);
+        }
+        return super.getItemStackLimit(stack);
+    }
+    
     public static class MetadataWrapper {
         
         String iconName;
@@ -266,6 +278,11 @@ public class ItemMetadata extends ItemBase {
         public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player) {
             
             return false;
+        }
+        
+        public int getItemStackLimit(ItemStack stack) {
+            
+            return 64;
         }
     }
 }

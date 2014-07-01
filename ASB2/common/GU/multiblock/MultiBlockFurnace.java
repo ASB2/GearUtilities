@@ -1,8 +1,5 @@
 package GU.multiblock;
 
-import java.util.List;
-import java.util.Map.Entry;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -15,7 +12,6 @@ import ASB2.inventory.Inventory;
 import ASB2.utils.UtilInventory;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
-import GU.api.multiblock.MultiBlockAbstract.IItemInterface;
 import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
 import GU.api.multiblock.MultiBlockObject.FluidHandlerWrapper;
 import GU.multiblock.construction.ConstructionManager;
@@ -25,8 +21,8 @@ import UC.math.vector.Vector3i;
 
 public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBlock, IInventoryMultiBlock, IRedstoneMultiBlock {
     
-    public FluidHandlerWrapper fuelTank = new FluidHandlerWrapper(0), outputTank = new FluidHandlerWrapper(0);
-    Inventory fuelInventory = new Inventory("MultiBlockFurnace: Fuel"), outputInventory = new Inventory("MultiBlockFurnace: Output");
+    FluidHandlerWrapper fuelTank = new FluidHandlerWrapper(0);
+    Inventory fuelInventory = new Inventory("MultiBlockFurnace: Fuel"), toBeSmelted = new Inventory("MultiBlockFurnace: Smelting"), outputInventory = new Inventory("MultiBlockFurnace: Output");
     
     int currentFuel;
     int cookTimer = 0;
@@ -59,13 +55,17 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
             
             Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
             
-            if (size.getY() / 2 > relativeVector.getY()) {
+            if (((int) size.getY() / 3) > relativeVector.getY()) {
                 
                 return outputInventory;
             }
-            else if (size.getY() / 2 < relativeVector.getY()) {
+            else if (((int) size.getY() / 3) < relativeVector.getY() && relativeVector.getY() > ((int) size.getY() / 3) * 2) {
                 
                 return fuelInventory;
+            }
+            else {
+                
+                return toBeSmelted;
             }
         }
         return null;
@@ -78,11 +78,7 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
             
             Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
             
-            if (size.getY() / 2 > relativeVector.getY()) {
-                
-                return outputTank;
-            }
-            else if (size.getY() / 2 < relativeVector.getY()) {
+            if (size.getY() / 3 < relativeVector.getY()) {
                 
                 return fuelTank;
             }
@@ -95,19 +91,19 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
         
         if (fuelTank != null && fuelTank.getFluidTank() != null && fuelTank.getFluidTank().getCapacity() == 0) {
             
-            fuelTank.getFluidTank().setCapacity((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 8 * FluidContainerRegistry.BUCKET_VOLUME);
-        }
-        if (outputTank != null && outputTank.getFluidTank() != null && outputTank.getFluidTank().getCapacity() == 0) {
-            
-            outputTank.getFluidTank().setCapacity((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 8 * FluidContainerRegistry.BUCKET_VOLUME);
+            fuelTank.getFluidTank().setCapacity((size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1) * 8 * FluidContainerRegistry.BUCKET_VOLUME);
         }
         if (fuelInventory != null && fuelInventory.getSizeInventory() == 0) {
             
-            fuelInventory.setSizeInventory(((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1)) * 4);
+            fuelInventory.setSizeInventory(((size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1)) * 4);
+        }
+        if (toBeSmelted != null && toBeSmelted.getSizeInventory() == 0) {
+            
+            toBeSmelted.setSizeInventory(((size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1)) * 4);
         }
         if (outputInventory != null && outputInventory.getSizeInventory() == 0) {
             
-            outputInventory.setSizeInventory((size.getX() - 1) * (((int) (size.getY() / 2)) - 1) * (size.getZ() - 1) * 4);
+            outputInventory.setSizeInventory((size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1) * 4);
         }
     }
     
@@ -134,9 +130,9 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
         
         if (currentFuel >= 100) {
             
-            for (int index = 0; index < this.outputInventory.getSizeInventory(); index++) {
+            for (int index = 0; index < this.toBeSmelted.getSizeInventory(); index++) {
                 
-                ItemStack stack = outputInventory.getStackInSlot(index);
+                ItemStack stack = toBeSmelted.getStackInSlot(index);
                 
                 if (stack != null) {
                     
@@ -144,35 +140,11 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
                     
                     if (result != null) {
                         
-                        if (UtilInventory.removeItemStackFromSlot(outputInventory, stack, index, 1, false)) {
+                        if (UtilInventory.removeItemStackFromSlot(toBeSmelted, stack, index, 1, false) && UtilInventory.addItemStackToInventory(outputInventory, result, false)) {
                             
-                            for (Entry<Vector3i, IItemInterface> entry : constructionManager.getItemInterfaceList().entrySet()) {
-                                
-                                if (entry.getValue() != null) {
-                                    
-                                    if (positionRelativeTo.getY() - entry.getKey().getY() < size.getY() / 2) {
-                                        
-                                        List<IInventory> inventoryList = entry.getValue().getAvaliableInventorys();
-                                        
-                                        if (inventoryList != null) {
-                                            
-                                            for (IInventory inventory : inventoryList) {
-                                                
-                                                if (inventory != null) {
-                                                    
-                                                    if (UtilInventory.addItemStackToInventory(inventory, result, false)) {
-                                                        
-                                                        currentFuel -= 100;
-                                                        UtilInventory.addItemStackToInventory(inventory, result, true);
-                                                        UtilInventory.removeItemStackFromSlot(outputInventory, stack, index, 1, true);
-                                                        return;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                            currentFuel -= 100;
+                            UtilInventory.addItemStackToInventory(outputInventory, result, true);
+                            UtilInventory.removeItemStackFromSlot(toBeSmelted, stack, index, 1, true);
                         }
                     }
                 }
@@ -182,7 +154,7 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     
     public boolean startCreation() {
         
-        return size.getX() >= 2 && size.getY() >= 4 && size.getY() % 2 == 0 && size.getZ() >= 2 && super.startCreation();
+        return size.getX() >= 2 && size.getY() >= 6 && size.getY() % 3 == 0 && size.getZ() >= 2 && super.startCreation();
     }
     
     @Override
@@ -195,8 +167,8 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     public NBTTagCompound save(NBTTagCompound tag) {
         
         if (fuelTank != null) tag.setTag("fuelTank", fuelTank.save(new NBTTagCompound()));
-        if (outputTank != null) tag.setTag("outputTank", outputTank.save(new NBTTagCompound()));
         if (fuelInventory != null) tag.setTag("fuelInventory", fuelInventory.save(new NBTTagCompound()));
+        if (toBeSmelted != null) tag.setTag("toBeSmelted", toBeSmelted.save(new NBTTagCompound()));
         if (outputInventory != null) tag.setTag("outputInventory", outputInventory.save(new NBTTagCompound()));
         
         tag.setInteger("currentFuel", currentFuel);
@@ -209,8 +181,8 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     public void load(NBTTagCompound tag) {
         
         if (fuelTank != null) fuelTank.load(tag.getCompoundTag("fuelTank"));
-        if (outputTank != null) outputTank.load(tag.getCompoundTag("outputTank"));
         if (fuelInventory != null) fuelInventory.load(tag.getCompoundTag("fuelInventory"));
+        if (toBeSmelted != null) toBeSmelted.load(tag.getCompoundTag("toBeSmelted"));
         if (outputInventory != null) outputInventory.load(tag.getCompoundTag("outputInventory"));
         
         currentFuel = tag.getInteger("currentFuel");

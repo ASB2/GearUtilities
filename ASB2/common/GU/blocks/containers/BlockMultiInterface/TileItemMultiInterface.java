@@ -7,10 +7,12 @@ import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+import ASB2.utils.UtilInventory;
 import ASB2.utils.UtilVector;
 import GU.GearUtilities;
 import GU.api.color.AbstractColorable.IColorableTile;
@@ -29,7 +31,7 @@ import UC.math.vector.Vector3i;
 
 public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IItemInterface, IInventory, IColorableTile {
     
-    Map<SlotHolder, IMultiBlock> inventorise = new HashMap<SlotHolder, IMultiBlock>();
+    Map<SlotHolder, IInventoryMultiBlock> inventorise = new HashMap<SlotHolder, IInventoryMultiBlock>();
     int maxSizeInventory = 0;
     Vector3i position;
     public EnumInputIcon[] sideState;
@@ -53,6 +55,42 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
         if (position == null) {
             
             position = UtilVector.createTileEntityVector(this);
+        }
+        
+        if (!inventorise.isEmpty() && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && !worldObj.isRemote) {
+            
+            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                
+                EnumInputIcon side = sideState[direction.ordinal()];
+                
+                if (side == EnumInputIcon.OUTPUT || side == EnumInputIcon.INPUT) {
+                    
+                    TileEntity tile = worldObj.getTileEntity(xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ);
+                    
+                    if (tile != null) {
+                        
+                        if (tile instanceof ISidedInventory) {
+                            
+                            if (side == EnumInputIcon.INPUT) {
+                                
+                                UtilInventory.moveEntireISidedInventory((ISidedInventory) tile, direction, this);
+                            }
+                            else
+                                UtilInventory.moveEntireISidedInventory(this, direction, (ISidedInventory) tile);
+                        }
+                        
+                        if (tile instanceof IInventory) {
+                            
+                            if (side == EnumInputIcon.INPUT) {
+                                
+                                UtilInventory.moveEntireInventory((IInventory) tile, this);
+                            }
+                            else
+                                UtilInventory.moveEntireInventory(this, (IInventory) tile);
+                        }
+                    }
+                }
+            }
         }
         packetTimer.update();
     }
@@ -190,7 +228,7 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                     
                     if (size > 0) {
                         
-                        this.inventorise.put(new SlotHolder(lastSlotMin, ((IInventoryMultiBlock) multi).getInventory(position).getSizeInventory() + lastSlotMin), multi);
+                        this.inventorise.put(new SlotHolder(lastSlotMin, ((IInventoryMultiBlock) multi).getInventory(position).getSizeInventory() + lastSlotMin), (IInventoryMultiBlock) multi);
                         lastSlotMin += ((IInventoryMultiBlock) multi).getInventory(position).getSizeInventory() + 1;
                     }
                 }
@@ -215,7 +253,7 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                         if (size > 0) {
                             
                             SlotHolder holder = new SlotHolder(minSlot, minSlot + size);
-                            this.inventorise.put(holder, multi);
+                            this.inventorise.put(holder, (IInventoryMultiBlock) multi);
                             minSlot += size + 1;
                             maxSizeInventory += size;
                         }
@@ -293,6 +331,15 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
     @Override
     public String getInventoryName() {
         
+        if (inventorise != null && inventorise.size() == 1) {
+            
+            IInventory inventory = inventorise.entrySet().iterator().next().getValue().getInventory(position);
+            
+            if (inventory != null) {
+                
+                return inventory.getInventoryName();
+            }
+        }
         return "Item Multi Interface";
     }
     
@@ -305,6 +352,15 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
     @Override
     public int getInventoryStackLimit() {
         
+        if (inventorise != null && inventorise.size() == 1) {
+            
+            IInventory inventory = inventorise.entrySet().iterator().next().getValue().getInventory(position);
+            
+            if (inventory != null) {
+                
+                return inventory.getInventoryStackLimit();
+            }
+        }
         return 64;
     }
     

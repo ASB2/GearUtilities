@@ -19,8 +19,13 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
     VanillaColor color;
     
     public BlockStructureCube(Material material, int ordinal) {
+        this(material, VanillaColor.values()[ordinal]);
+        
+    }
+    
+    public BlockStructureCube(Material material, VanillaColor ordinal) {
         super(material);
-        this.color = VanillaColor.values()[ordinal];
+        this.color = ordinal;
         this.setCreativeTab(GearUtilities.tabGUStructureCubes);
     }
     

@@ -12,7 +12,7 @@ import UC.math.vector.Vector3i;
 
 public enum EnumMultiBlockType {
     
-    STANDARD, CHEST, FURNACE, TANK;
+    STANDARD, CHEST, FURNACE, TANK, FLAME;
     
     public static final int MAX_DISTANCE = 16;
     
@@ -26,6 +26,8 @@ public enum EnumMultiBlockType {
                 return new MultiBlockFurnace(world, positionRelativeTo, size, updater);
             case TANK:
                 return new MultiBlockTank(world, positionRelativeTo, size, updater);
+            case FLAME:
+                return new MultiBlockFlame(world, positionRelativeTo, size, updater);
             default:
         }
         return null;
@@ -41,6 +43,8 @@ public enum EnumMultiBlockType {
                 return new MultiBlockFurnace(worldObj);
             case 3:
                 return new MultiBlockTank(worldObj);
+            case 4:
+                return new MultiBlockFlame(worldObj);
         }
         return null;
     }
