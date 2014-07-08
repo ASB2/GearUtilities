@@ -90,7 +90,7 @@ public final class ItemRegistry {
         METADATA_ITEM.addWrapper(new MetadataWrapper("Electis Controler").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new GearReaderWrapper("Gear Reader").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new TeleporterWrapper("Teleporter").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.addWrapper(new AdvancedStickWrapper("Advanced Stick").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.addWrapper(new AdvancedStickWrapper("Advanced Stick"));
         METADATA_ITEM.addWrapper(new DestructorWrapper("Destructor").setRenderer(GarnetRenderer.instance));
         // METADATA_ITEM.addWrapper(new
         // ColorModifierWrapper("Color Modifier").setRenderer(ColorModifierRenderer.instance));

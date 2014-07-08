@@ -53,6 +53,48 @@ public enum VanillaColor {
         }
     }
     
+    public ItemStack getVinillaDye() {
+        
+        switch (this) {
+        
+            case BLACK:
+                return new ItemStack(Items.dye, 1, 0);
+            case RED:
+                return new ItemStack(Items.dye, 1, 1);
+            case GREEN:
+                return new ItemStack(Items.dye, 2, 2);
+            case BROWN:
+                return new ItemStack(Items.dye, 1, 3);
+            case BLUE:
+                return new ItemStack(Items.dye, 2, 4);
+            case PURPLE:
+                return new ItemStack(Items.dye, 1, 5);
+            case CYAN:
+                return new ItemStack(Items.dye, 2, 6);
+            case LIGHT_GREY:
+                return new ItemStack(Items.dye, 1, 7);
+            case GREY:
+                return new ItemStack(Items.dye, 2, 8);
+            case PINK:
+                return new ItemStack(Items.dye, 1, 9);
+            case LIME:
+                return new ItemStack(Items.dye, 2, 10);
+            case YELLOW:
+                return new ItemStack(Items.dye, 1, 11);
+            case LIGHT_BLUE:
+                return new ItemStack(Items.dye, 2, 12);
+            case MAGENTA:
+                return new ItemStack(Items.dye, 1, 13);
+            case ORANGE:
+                return new ItemStack(Items.dye, 2, 14);
+            case WHITE:
+                return new ItemStack(Items.dye, 1, 15);
+                
+            default:
+                return null;
+        }
+    }
+    
     public static VanillaColor getItemColor4iValue(ItemStack item) {
         
         if (item != null) {

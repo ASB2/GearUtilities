@@ -14,4 +14,6 @@ public final class Reference {
     
     public static final int ANIMATION_SPEED = 17;
     public static final int BRIGHT_BLOCK = 15728864;
+    
+    public static final String STRUCTURE_CUBE_OREDIC = "ASB2_StructureCubes";
 }

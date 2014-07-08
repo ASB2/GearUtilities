@@ -1,6 +1,7 @@
 package GU.blocks;
 
 import java.util.List;
+import java.util.Map.Entry;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
 import GU.GearUtilities;
 import GU.api.color.VanillaColor;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockMarker;
@@ -43,6 +45,11 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
         }.addDrop(new ItemStack(this, 1, 4)).setDisplayName("Structure Cube 4"));
         this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube5" }).addDrop(new ItemStack(this, 1, 5)).setDisplayName("Structure Cube 5"));
         this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube6" }).addDrop(new ItemStack(this, 1, 6)).setDisplayName("Structure Cube 6"));
+        
+        for (Entry<Integer, MetadataWrapper> meta : wrappers.entrySet()) {
+            
+            OreDictionary.registerOre(GU.info.Reference.STRUCTURE_CUBE_OREDIC, new ItemStack(this, 1, meta.getKey()));
+        }
     }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
