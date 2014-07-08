@@ -17,6 +17,7 @@ import GU.blocks.BlockStructureCube;
 import GU.blocks.containers.BlockCreativeMetadata.BlockCreativeMetadata;
 import GU.blocks.containers.BlockCreativeMetadata.CreativeMetadataWrapper;
 import GU.blocks.containers.BlockElectisCrystal.BlockElectisCrystal;
+import GU.blocks.containers.BlockElectisPolyhedron.BlockElectisPolyhedron;
 import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
 import GU.blocks.containers.BlockMultiInterface.MultiInterfaceWrapper;
 import GU.blocks.containers.BlockMultiInterface.RedstoneMultiInterfaceWrapper;
@@ -104,13 +105,9 @@ public class BlockRegistry {
     
     public static final BlockMultiPartRender MULTI_BLOCK_PART_RENDER = new BlockMultiPartRender(Material.rock);
     
-    public static final BlockPhotonSender PHOTON_SENDER = new BlockPhotonSender(Material.rock) {
-        
-        public String getBlockDisplayName(ItemStack stack) {
-            
-            return "Photon Sender";
-        };
-    };
+    public static final BlockPhotonSender PHOTON_SENDER = new BlockPhotonSender(Material.rock);
+    
+    public static final BlockElectisPolyhedron ELECTIS_POLYHEDRON = new BlockElectisPolyhedron(Material.rock);
     
     static {
         
@@ -132,6 +129,7 @@ public class BlockRegistry {
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiBlockPartAir"), MULTI_BLOCK_PART_AIR.setBlockName("Multi Block Air"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiPartRender"), MULTI_BLOCK_PART_RENDER.setBlockName("Multi Block Render"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockPhotonSender"), PHOTON_SENDER.setBlockName("Photon Sender"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockElectisPolyhedron"), ELECTIS_POLYHEDRON.setBlockName("Electis Polyhedron"));
     }
     
     public static void init(Configuration config) {

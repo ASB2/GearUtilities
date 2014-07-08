@@ -60,9 +60,10 @@ public final class GearUtilities {
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
         
+        Variables.updateVariables(config);
+        
         proxy.register();
         
-        Variables.updateVariables(config);
         ItemRegistry.init(config);
         BlockRegistry.init(config);
         FluidRegistry.initFluids();

@@ -6,12 +6,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.inventory.Inventory;
+import GU.GearUtilities;
 import GU.api.color.VanillaColor;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
 import GU.api.multiblock.MultiBlockObject.FluidHandlerWrapper;
 import GU.multiblock.construction.ConstructionManager;
 import GU.multiblock.construction.FlameConstructionManager;
+import GU.packets.MultiBlockFlamePacket;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
@@ -84,6 +86,12 @@ public class MultiBlockFlame extends MultiBlockBase implements IFluidMultiBlock,
     public void logicUpdate() {
         // TODO Auto-generated method stub
         super.logicUpdate();
+    }
+    
+    @Override
+    public void sendPacket() {
+        
+        GearUtilities.getPipeline().sendToDimension(new MultiBlockFlamePacket(this.positionRelativeTo.subtract(1), size), world.provider.dimensionId);
     }
     
     @Override

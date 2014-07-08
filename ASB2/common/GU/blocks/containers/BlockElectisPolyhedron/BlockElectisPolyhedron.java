@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockPhotonSender;
+package GU.blocks.containers.BlockElectisPolyhedron;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -9,18 +9,18 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import GU.blocks.containers.BlockContainerBase;
 import cpw.mods.fml.client.registry.ClientRegistry;
 
-public class BlockPhotonSender extends BlockContainerBase {
+public class BlockElectisPolyhedron extends BlockContainerBase {
     
-    public BlockPhotonSender(Material material) {
+    public BlockElectisPolyhedron(Material material) {
         super(material);
-        this.registerTile(TilePhotonSender.class);
+        this.registerTile(TileElectisPolyhedron.class);
     }
     
     @Override
     public void postInit() {
         
-        ClientRegistry.bindTileEntitySpecialRenderer(TilePhotonSender.class, PhotonSenderRenderer.instance);
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(this), PhotonSenderRenderer.instance);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileElectisPolyhedron.class, ElectisPolyhedronRenderer.instance);
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(this), ElectisPolyhedronRenderer.instance);
     }
     
     @Override
@@ -35,14 +35,15 @@ public class BlockPhotonSender extends BlockContainerBase {
         return -1;
     }
     
+    @Override
     public String getBlockDisplayName(ItemStack stack) {
         
-        return "Photon Sender";
+        return "Electis Polyhedron";
     }
     
     @Override
     public TileEntity createNewTileEntity(World var1, int var2) {
         
-        return new TilePhotonSender();
+        return new TileElectisPolyhedron();
     }
 }
