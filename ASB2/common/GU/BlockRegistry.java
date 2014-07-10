@@ -16,8 +16,8 @@ import GU.blocks.BlockMetadata;
 import GU.blocks.BlockStructureCube;
 import GU.blocks.containers.BlockCreativeMetadata.BlockCreativeMetadata;
 import GU.blocks.containers.BlockCreativeMetadata.CreativeMetadataWrapper;
-import GU.blocks.containers.BlockElectisCrystal.BlockElectisCrystal;
 import GU.blocks.containers.BlockElectisPolyhedron.BlockElectisPolyhedron;
+import GU.blocks.containers.BlockItemElectisPolyhedron.BlockItemElectisPolyhedron;
 import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
 import GU.blocks.containers.BlockMultiInterface.MultiInterfaceWrapper;
 import GU.blocks.containers.BlockMultiInterface.RedstoneMultiInterfaceWrapper;
@@ -45,8 +45,6 @@ public class BlockRegistry {
     };
     
     public static final List<BlockStructureCube> STRUCTURE_CUBES = new ArrayList<BlockStructureCube>();
-    
-    public static final BlockElectisCrystal ELECTIS_CRYSTAL = new BlockElectisCrystal(Material.rock);
     
     public static final BlockCreativeMetadata CREATIVE_METADATA = new BlockCreativeMetadata(Material.rock) {
         
@@ -109,6 +107,8 @@ public class BlockRegistry {
     
     public static final BlockElectisPolyhedron ELECTIS_POLYHEDRON = new BlockElectisPolyhedron(Material.rock);
     
+    public static final BlockItemElectisPolyhedron ITEM_ELECTIS_POLYHEDRON = new BlockItemElectisPolyhedron(Material.rock);
+    
     static {
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMetadataOre"), METADATA_ORE.setBlockName("MetadataOre"));
@@ -120,7 +120,6 @@ public class BlockRegistry {
             customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor" + color.ordinal()), cube.setBlockName("StructureCubeColor" + color.ordinal()));
         }
         
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockElectisCrystal"), ELECTIS_CRYSTAL.setBlockName("Electis Crystal"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockCreativeMetadata"), CREATIVE_METADATA);
         customBlockMap.put(Reference.MOD_ID.concat(":BlockSpacialProvider"), SPACIAL_PROVIDER);
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiInterface"), MULTI_INTERFACE);
@@ -130,6 +129,7 @@ public class BlockRegistry {
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiPartRender"), MULTI_BLOCK_PART_RENDER.setBlockName("Multi Block Render"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockPhotonSender"), PHOTON_SENDER.setBlockName("Photon Sender"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockElectisPolyhedron"), ELECTIS_POLYHEDRON.setBlockName("Electis Polyhedron"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockItemElectisPolyhedron"), ITEM_ELECTIS_POLYHEDRON.setBlockName("Item Electis Polyhedron"));
     }
     
     public static void init(Configuration config) {

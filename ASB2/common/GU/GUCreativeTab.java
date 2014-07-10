@@ -60,7 +60,7 @@ public class GUCreativeTab extends CreativeTabs {
         
             case (Reference.NAME + ": Blocks"): {
                 
-                ItemStack stack = new ItemStack(BlockRegistry.ELECTIS_CRYSTAL, 1, 0);
+                ItemStack stack = new ItemStack(BlockRegistry.ELECTIS_POLYHEDRON, 1, 0);
                 EnumElectisCrystalType.setCrystalType(stack, EnumElectisCrystalType.TYPE3);
                 return stack;
             }
