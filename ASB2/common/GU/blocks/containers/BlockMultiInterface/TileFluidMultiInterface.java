@@ -1,24 +1,33 @@
 package GU.blocks.containers.BlockMultiInterface;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilVector;
+import GU.GearUtilities;
+import GU.api.IWrenchable;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.blocks.containers.TileMultiBase;
+import GU.packets.EnumInputIconPacket;
+import GU.render.EnumInputIcon;
+import GU.render.IEnumInputIcon;
 import UC.math.vector.Vector3i;
 
-public class TileFluidMultiInterface extends TileMultiBase implements IMultiBlockPart, IFluidHandler {
+public class TileFluidMultiInterface extends TileMultiBase implements IMultiBlockPart, IFluidHandler, IWrenchable, IEnumInputIcon {
     
     int fluidPerTick = 100;
     
     IFluidMultiBlock handler1 = null, handler2 = null;
     Vector3i position;
+    EnumInputIcon[] sideState;
     
     public TileFluidMultiInterface() {
         
@@ -64,8 +73,8 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
                                         
                                         if (handler1Info.capacity > 0 && handler2Info.capacity > 0) {
                                             
-                                            double precentFilled1 = handler1Info.fluid != null ? handler1Info.fluid.amount / (double)handler1Info.capacity : 0;
-                                            double precentFilled2 = handler2Info.fluid != null ? handler2Info.fluid.amount / (double)handler2Info.capacity : 0;
+                                            double precentFilled1 = handler1Info.fluid != null ? handler1Info.fluid.amount / (double) handler1Info.capacity : 0;
+                                            double precentFilled2 = handler2Info.fluid != null ? handler2Info.fluid.amount / (double) handler2Info.capacity : 0;
                                             
                                             if (precentFilled1 > precentFilled2) {
                                                 
@@ -255,5 +264,46 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
             return handler1.getTank(position).getTankInfo(from);
         }
         return null;
+    }
+    
+    @Override
+    public void setEnumInputIcon(EnumInputIcon[] newIcon) {
+        
+        sideState = newIcon;
+    }
+    
+    @Override
+    public boolean triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    
+    @Override
+    public void writeToNBT(NBTTagCompound tag) {
+        
+        int side = 0;
+        
+        for (EnumInputIcon state : sideState) {
+            
+            if (state != null) tag.setInteger("state" + side, state.ordinal());
+            side++;
+        }
+        super.writeToNBT(tag);
+    }
+    
+    @Override
+    public void readFromNBT(NBTTagCompound tag) {
+        
+        for (int index = 0; index < sideState.length; index++) {
+            
+            sideState[index] = EnumInputIcon.values()[tag.getInteger("state" + index)];
+        }
+        super.readFromNBT(tag);
+    }
+    
+    @Override
+    public void sendUpdatePacket() {
+        if (!worldObj.isRemote) GearUtilities.getPipeline().sendToDimension(new EnumInputIconPacket(xCoord, yCoord, zCoord, sideState), worldObj.provider.dimensionId);
+        super.sendUpdatePacket();
     }
 }

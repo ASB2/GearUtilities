@@ -68,6 +68,12 @@ public class BlockBase extends Block {
     }
     
     @Override
+    public boolean renderAsNormalBlock() {
+        
+        return this.getRenderType() != -1;
+    }
+    
+    @Override
     public boolean isOpaqueCube() {
         // TODO Auto-generated method stub
         return false;

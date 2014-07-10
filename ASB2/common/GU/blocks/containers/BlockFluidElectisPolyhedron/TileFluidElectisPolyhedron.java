@@ -1,29 +1,29 @@
-package GU.blocks.containers.BlockItemElectisPolyhedron;
+package GU.blocks.containers.BlockFluidElectisPolyhedron;
 
 import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilEntity;
-import ASB2.utils.UtilInventory;
+import ASB2.utils.UtilFluid;
 import GU.api.IWrenchable;
 import GU.blocks.containers.TileBase;
 import GU.render.EnumInputIcon;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
 
-public class TileItemElectisPolyhedron extends TileBase implements IWrenchable {
+public class TileFluidElectisPolyhedron extends TileBase implements IWrenchable {
     
     Wait movementTimer;
     public EnumInputIcon state;
     
     boolean directional;
     
-    public TileItemElectisPolyhedron() {
+    public TileFluidElectisPolyhedron() {
         
         movementTimer = new Wait(new MovementWait(), 10);
         state = EnumInputIcon.OUTPUT;
@@ -61,10 +61,11 @@ public class TileItemElectisPolyhedron extends TileBase implements IWrenchable {
                 
                 TileEntity modifyingTile = UtilDirection.translateDirectionToTile(worldObj, direction, xCoord, yCoord, zCoord);
                 
-                if (modifyingTile != null && modifyingTile instanceof IInventory) {
+                if (modifyingTile != null && modifyingTile instanceof IFluidHandler) {
                     
-                    IInventory found = null;
+                    IFluidHandler found = null;
                     final int maxDistance = 8;
+                    ForgeDirection directionFound = ForgeDirection.UNKNOWN;
                     
                     if (directional) {
                         
@@ -85,9 +86,10 @@ public class TileItemElectisPolyhedron extends TileBase implements IWrenchable {
                                     
                                     if (tile != null) {
                                         
-                                        if (tile instanceof IInventory) {
+                                        if (tile instanceof IFluidHandler) {
                                             
-                                            found = (IInventory) tile;
+                                            found = (IFluidHandler) tile;
+                                            directionFound = direction;
                                         }
                                         break;
                                     }
@@ -103,11 +105,11 @@ public class TileItemElectisPolyhedron extends TileBase implements IWrenchable {
                         
                         if (state != EnumInputIcon.INPUT) {
                             
-                            UtilInventory.moveEntireInventory((IInventory) modifyingTile, found);
+                            UtilFluid.moveFluid((IFluidHandler) modifyingTile, directionFound, found, directionFound.getOpposite(), 1000, true);
                         }
                         else {
                             
-                            UtilInventory.moveEntireInventory(found, (IInventory) modifyingTile);
+                            UtilFluid.moveFluid(found, directionFound, (IFluidHandler) modifyingTile, directionFound.getOpposite(), 1000, true);
                         }
                     }
                 }

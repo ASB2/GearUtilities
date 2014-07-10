@@ -11,10 +11,12 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilInventory;
 import ASB2.utils.UtilVector;
 import GU.GearUtilities;
+import GU.api.IWrenchable;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
@@ -22,20 +24,18 @@ import GU.api.multiblock.MultiBlockAbstract.IItemInterface;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.blocks.containers.TileMultiBase;
-import GU.packets.ItemMultiInterfacePacket;
+import GU.packets.EnumInputIconPacket;
 import GU.render.EnumInputIcon;
-import UC.Wait;
-import UC.Wait.IWaitTrigger;
+import GU.render.IEnumInputIcon;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IItemInterface, IInventory, IColorableTile {
+public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IItemInterface, IInventory, IColorableTile, IWrenchable, IEnumInputIcon {
     
     Map<SlotHolder, IInventoryMultiBlock> inventorise = new HashMap<SlotHolder, IInventoryMultiBlock>();
     int maxSizeInventory = 0;
     Vector3i position;
     public EnumInputIcon[] sideState;
-    Wait packetTimer;
     
     public TileItemMultiInterface() {
         
@@ -46,7 +46,6 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
             
             sideState[direction.ordinal()] = EnumInputIcon.NONE;
         }
-        packetTimer = new Wait(new PacketWait(), 100, 0);
     }
     
     @Override
@@ -92,7 +91,6 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                 }
             }
         }
-        packetTimer.update();
     }
     
     public void setSideState(EnumInputIcon[] sideState) {
@@ -139,6 +137,20 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
     }
     
     @Override
+    public boolean triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
+        
+        sideState[side] = sideState[side].increment();
+        world.markBlockForUpdate(x, y, z);
+        return true;
+    }
+    
+    @Override
+    public void setEnumInputIcon(EnumInputIcon[] newIcon) {
+        
+        sideState = newIcon;
+    }
+    
+    @Override
     public void writeToNBT(NBTTagCompound tag) {
         
         int side = 0;
@@ -161,19 +173,11 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
         super.readFromNBT(tag);
     }
     
-    private class PacketWait implements IWaitTrigger {
+    @Override
+    public void sendUpdatePacket() {
         
-        @Override
-        public void trigger(int id) {
-            
-            if (!worldObj.isRemote) GearUtilities.getPipeline().sendToDimension(new ItemMultiInterfacePacket(xCoord, yCoord, zCoord, sideState), worldObj.provider.dimensionId);
-        }
-        
-        @Override
-        public boolean shouldTick(int id) {
-            // TODO Auto-generated method stub
-            return true;
-        }
+        if (!worldObj.isRemote) GearUtilities.getPipeline().sendToDimension(new EnumInputIconPacket(xCoord, yCoord, zCoord, sideState), worldObj.provider.dimensionId);
+        super.sendUpdatePacket();
     }
     
     private class SlotHolder {

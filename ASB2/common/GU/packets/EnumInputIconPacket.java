@@ -4,22 +4,22 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import GU.blocks.containers.BlockMultiInterface.TileItemMultiInterface;
 import GU.render.EnumInputIcon;
+import GU.render.IEnumInputIcon;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class ItemMultiInterfacePacket implements IMessageHandler<ItemMultiInterfacePacket, ItemMultiInterfacePacket>, IMessage {
+public class EnumInputIconPacket implements IMessageHandler<EnumInputIconPacket, EnumInputIconPacket>, IMessage {
     
     int x, y, z;
     EnumInputIcon[] sideState;
     
-    public ItemMultiInterfacePacket() {
+    public EnumInputIconPacket() {
         // TODO Auto-ItemMultiInterfacePacket constructor stub
     }
     
-    public ItemMultiInterfacePacket(int x, int y, int z, EnumInputIcon[] sideState) {
+    public EnumInputIconPacket(int x, int y, int z, EnumInputIcon[] sideState) {
         
         this.x = x;
         this.y = y;
@@ -57,13 +57,13 @@ public class ItemMultiInterfacePacket implements IMessageHandler<ItemMultiInterf
     }
     
     @Override
-    public ItemMultiInterfacePacket onMessage(ItemMultiInterfacePacket message, MessageContext ctx) {
+    public EnumInputIconPacket onMessage(EnumInputIconPacket message, MessageContext ctx) {
         
         TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
         
-        if (tile != null && tile instanceof TileItemMultiInterface) {
+        if (tile != null && tile instanceof IEnumInputIcon) {
             
-            ((TileItemMultiInterface) tile).setSideState(message.sideState);
+            ((IEnumInputIcon) tile).setEnumInputIcon(message.sideState);
         }
         return null;
     }

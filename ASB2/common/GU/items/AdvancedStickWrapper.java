@@ -1,13 +1,16 @@
 package GU.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
 import GU.EventListener;
+import GU.api.IWrenchable;
 import GU.info.Models;
 import GU.items.ItemMetadata.MetadataWrapper;
 import GU.render.noise.NoiseManager;
@@ -22,7 +25,28 @@ public class AdvancedStickWrapper extends MetadataWrapper {
     
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-        // TODO Auto-generated method stub
+        
+        IWrenchable toWrench = null;
+        TileEntity tile = world.getTileEntity(x, y, z);
+        
+        if (tile != null && tile instanceof IWrenchable) {
+            
+            toWrench = (IWrenchable) tile;
+        }
+        else {
+            
+            Block block = world.getBlock(x, y, z);
+            
+            if (block != null && block instanceof IWrenchable) {
+                
+                toWrench = (IWrenchable) block;
+            }
+        }
+        
+        if (toWrench != null) {
+            
+            return toWrench.triggerBlock(world, player.isSneaking(), itemStack, x, y, z, side);
+        }
         return super.onItemUse(itemStack, player, world, x, y, z, side, hitX, hitY, hitZ);
     }
     

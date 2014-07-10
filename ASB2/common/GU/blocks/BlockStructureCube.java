@@ -87,12 +87,12 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
     @Override
     public boolean canRender(int metadata) {
         
-        return metadata != 4;
+        return true;
     }
     
     @Override
     public boolean canRender(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         
-        return world.getBlockMetadata(x, y, z) != 4;
+        return true;
     }
 }

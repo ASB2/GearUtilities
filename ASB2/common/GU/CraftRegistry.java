@@ -3,6 +3,7 @@ package GU;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import GU.api.color.VanillaColor;
@@ -12,6 +13,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class CraftRegistry {
     
     public static void init() {
+        
+        OreDictionary.registerOre(GU.info.Reference.STRUCTURE_CUBE_OREDIC, new ItemStack(BlockRegistry.METADATA_ORE, 1, 0));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()), 8, 0), new Object[] { "BBB", "BEB", "BBB",
         

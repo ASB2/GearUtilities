@@ -17,6 +17,7 @@ import GU.blocks.BlockStructureCube;
 import GU.blocks.containers.BlockCreativeMetadata.BlockCreativeMetadata;
 import GU.blocks.containers.BlockCreativeMetadata.CreativeMetadataWrapper;
 import GU.blocks.containers.BlockElectisPolyhedron.BlockElectisPolyhedron;
+import GU.blocks.containers.BlockFluidElectisPolyhedron.BlockFluidElectisPolyhedron;
 import GU.blocks.containers.BlockItemElectisPolyhedron.BlockItemElectisPolyhedron;
 import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
 import GU.blocks.containers.BlockMultiInterface.MultiInterfaceWrapper;
@@ -109,6 +110,8 @@ public class BlockRegistry {
     
     public static final BlockItemElectisPolyhedron ITEM_ELECTIS_POLYHEDRON = new BlockItemElectisPolyhedron(Material.rock);
     
+    public static final BlockFluidElectisPolyhedron FLUID_ELECTIS_POLYHEDRON = new BlockFluidElectisPolyhedron(Material.rock);
+    
     static {
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMetadataOre"), METADATA_ORE.setBlockName("MetadataOre"));
@@ -130,6 +133,7 @@ public class BlockRegistry {
         customBlockMap.put(Reference.MOD_ID.concat(":BlockPhotonSender"), PHOTON_SENDER.setBlockName("Photon Sender"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockElectisPolyhedron"), ELECTIS_POLYHEDRON.setBlockName("Electis Polyhedron"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockItemElectisPolyhedron"), ITEM_ELECTIS_POLYHEDRON.setBlockName("Item Electis Polyhedron"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockFluidElectisPolyhedron"), FLUID_ELECTIS_POLYHEDRON.setBlockName("Fluid Electis Polyhedron"));
     }
     
     public static void init(Configuration config) {

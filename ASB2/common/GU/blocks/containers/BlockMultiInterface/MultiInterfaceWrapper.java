@@ -15,7 +15,6 @@ import ASB2.utils.UtilInventory;
 import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.blocks.BlockMetadata.MetadataWrapper;
-import GU.utils.UtilGU;
 import UC.math.vector.Vector3i;
 
 public class MultiInterfaceWrapper extends MetadataWrapper {
@@ -29,18 +28,6 @@ public class MultiInterfaceWrapper extends MetadataWrapper {
         
         switch (world.getBlockMetadata(x, y, z)) {
         
-            case 0: {
-                
-                if (UtilGU.isWrench(entityplayer.getHeldItem())) {
-                    
-                    TileItemMultiInterface tile = (TileItemMultiInterface) world.getTileEntity(x, y, z);
-                    
-                    tile.sideState[side] = tile.sideState[side].increment();
-                    world.markBlockForUpdate(x, y, z);
-                    return true;
-                }
-                return false;
-            }
             case 1: {
                 
                 ItemStack current = entityplayer.inventory.getCurrentItem();
