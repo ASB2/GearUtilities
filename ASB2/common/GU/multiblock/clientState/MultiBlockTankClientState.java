@@ -90,7 +90,7 @@ public class MultiBlockTankClientState extends MultiBlockClientState {
             
             if (tank.getFluid().getFluid().isGaseous()) {
                 
-                double density = ((tank.getFluidAmount() / (double) tank.getCapacity()) * 1) + .1;
+                double density = ((tank.getFluidAmount() / (double) tank.getCapacity()) * 1) + .15;
                 scaledHeight = (ySize - 1) + .01;
                 GL11.glColor4d(1, 1, 1, density);
             }

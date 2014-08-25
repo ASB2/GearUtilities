@@ -27,7 +27,7 @@ import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartAir;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartGlass;
 import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender;
 import GU.blocks.containers.BlockPhotonSender.BlockPhotonSender;
-import GU.blocks.containers.BlockSpacialProvider.BlockSpacialProvider;
+import GU.blocks.containers.BlockSpacialProvider.BlockSpatialProvider;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -39,9 +39,9 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockElectisCatchingStone" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Electis Catching Stone"));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockElectisInfusedStone" }).addDrop(ItemRegistry.ELECTIS_CRYSTAL_SHARD).setDisplayName("Electis Infused Stone"));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockGarnetOre" }).addDrop(ItemRegistry.GARNET).setDisplayName("Garnet Infused Stone"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockElectisCatchingStone" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Electis Catching Stone"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockElectisInfusedStone" }).addDrop(ItemRegistry.ELECTIS_CRYSTAL_SHARD).setDisplayName("Electis Infused Stone"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockGarnetOre" }).addDrop(ItemRegistry.GARNET).setDisplayName("Garnet Infused Stone"));
         }
     };
     
@@ -57,15 +57,16 @@ public class BlockRegistry {
         }
     };
     
-    public static final BlockSpacialProvider SPACIAL_PROVIDER = new BlockSpacialProvider(Material.rock) {
+    public static final BlockSpatialProvider SPATIAL_PROVIDER = new BlockSpatialProvider(Material.rock) {
         
         public void postInit() {
             
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockSpacialProvider" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Standard Spacial Provider"));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockSpacialProvider" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Chest Spacial Provider"));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockSpacialProvider" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Furnace Spacial Provider"));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockSpacialProvider" }).addDrop(new ItemStack(this, 1, 3)).setDisplayName("Tank Spacial Provider"));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockSpacialProvider" }).addDrop(new ItemStack(this, 1, 4)).setDisplayName("Flame Spacial Provider"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockSpatialProvider" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Standard Spatial Provider"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockSpatialProvider" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Chest Spatial Provider"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockSpatialProvider" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Furnace Spatial Provider"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockSpatialProvider" }).addDrop(new ItemStack(this, 1, 3)).setDisplayName("Tank Spatial Provider"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockSpatialProvider" }).addDrop(new ItemStack(this, 1, 4)).setDisplayName("Flame Spatial Provider"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockSpatialProvider" }).addDrop(new ItemStack(this, 1, 5)).setDisplayName("Triturator Spatial Provider"));
         }
     };
     
@@ -86,9 +87,9 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockInner" }).setDisplayName("Multi Block Inner"));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockEdge" }).setDisplayName("Multi Block Edge"));
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockCorner" }).setDisplayName("Multi Block Corner"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockMultiBlockInner" }).setDisplayName("Multi Block Inner"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockMultiBlockEdge" }).setDisplayName("Multi Block Edge"));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockMultiBlockCorner" }).setDisplayName("Multi Block Corner"));
         }
     };
     
@@ -96,7 +97,7 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            this.addWrapper(new MetadataWrapper(new String[] { "BlockMultiBlockPartGlass" }).setDisplayName("Multi Block Glass").addDrop(new ItemStack(this, 1, 0)));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockMultiBlockPartGlass" }).setDisplayName("Multi Block Glass").addDrop(new ItemStack(this, 1, 0)));
         }
     };
     
@@ -124,7 +125,7 @@ public class BlockRegistry {
         }
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockCreativeMetadata"), CREATIVE_METADATA);
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockSpacialProvider"), SPACIAL_PROVIDER);
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockSpatialProvider"), SPATIAL_PROVIDER);
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiInterface"), MULTI_INTERFACE);
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiBlockPart"), MULTI_BLOCK_PART);
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiBlockPartGlass"), MULTI_BLOCK_PART_GLASS);

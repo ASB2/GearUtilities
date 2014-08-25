@@ -26,22 +26,22 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockMetadata extends BlockBase {
     
-    protected Map<Integer, MetadataWrapper> wrappers;
+    protected Map<Integer, BlockMetadataWrapper> wrappers;
     private int lastMetadata;
     
     public BlockMetadata(Material material) {
         super(material);
-        wrappers = new HashMap<Integer, MetadataWrapper>();
+        wrappers = new HashMap<Integer, BlockMetadataWrapper>();
     }
     
-    public BlockMetadata addWrapper(int metadata, MetadataWrapper wrapper) {
+    public BlockMetadata addWrapper(int metadata, BlockMetadataWrapper wrapper) {
         wrappers.put(metadata, wrapper);
         wrapper.setMetadata(metadata);
         wrapper.setBlock(this);
         return this;
     }
     
-    public BlockMetadata addWrapper(MetadataWrapper wrapper) {
+    public BlockMetadata addWrapper(BlockMetadataWrapper wrapper) {
         
         addWrapper(lastMetadata, wrapper);
         lastMetadata++;
@@ -57,7 +57,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public void registerBlockIcons(IIconRegister iconRegister) {
         
-        for (Entry<Integer, MetadataWrapper> wrapperEntry : wrappers.entrySet()) {
+        for (Entry<Integer, BlockMetadataWrapper> wrapperEntry : wrappers.entrySet()) {
             
             int currentSide = 0;
             
@@ -73,7 +73,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public IIcon getIcon(int p_149691_1_, int p_149691_2_) {
         
-        MetadataWrapper wrapper = wrappers.get(p_149691_2_);
+        BlockMetadataWrapper wrapper = wrappers.get(p_149691_2_);
         
         if (wrapper != null) {
             
@@ -85,7 +85,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
         
-        MetadataWrapper wrapper = wrappers.get(metadata);
+        BlockMetadataWrapper wrapper = wrappers.get(metadata);
         
         if (wrapper != null) {
             
@@ -98,7 +98,7 @@ public class BlockMetadata extends BlockBase {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void getSubBlocks(Item unknown, CreativeTabs tab, List subItems) {
         
-        for (Entry<Integer, MetadataWrapper> wrapperEntry : wrappers.entrySet()) {
+        for (Entry<Integer, BlockMetadataWrapper> wrapperEntry : wrappers.entrySet()) {
             
             subItems.add(new ItemStack(this, 1, wrapperEntry.getKey()));
             wrapperEntry.getValue().getSubBlocks(unknown, tab, subItems);
@@ -108,7 +108,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public float getBlockHardness(World world, int x, int y, int z) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -120,7 +120,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public int getHarvestLevel(int metadata) {
         
-        MetadataWrapper wrapper = wrappers.get(metadata);
+        BlockMetadataWrapper wrapper = wrappers.get(metadata);
         
         if (wrapper != null) {
             
@@ -132,7 +132,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -144,7 +144,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xHit, float yHit, float zHit) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -156,7 +156,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public void onBlockAdded(World world, int x, int y, int z) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -171,7 +171,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -186,7 +186,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public int getLightOpacity(IBlockAccess world, int x, int y, int z) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -198,7 +198,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -210,7 +210,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public float getEnchantPowerBonus(World world, int x, int y, int z) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -222,7 +222,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public boolean getBlocksMovement(IBlockAccess world, int x, int y, int z) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -234,7 +234,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -246,7 +246,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public int getExpDrop(IBlockAccess world, int metadata, int fortune) {
         
-        MetadataWrapper wrapper = wrappers.get(metadata);
+        BlockMetadataWrapper wrapper = wrappers.get(metadata);
         
         if (wrapper != null) {
             
@@ -258,7 +258,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -270,7 +270,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -282,7 +282,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -294,7 +294,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public int isProvidingStrongPower(IBlockAccess world, int x, int y, int z, int side) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -306,7 +306,7 @@ public class BlockMetadata extends BlockBase {
     @Override
     public int isProvidingWeakPower(IBlockAccess world, int x, int y, int z, int side) {
         
-        MetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
+        BlockMetadataWrapper wrapper = wrappers.get(world.getBlockMetadata(x, y, z));
         
         if (wrapper != null) {
             
@@ -321,7 +321,7 @@ public class BlockMetadata extends BlockBase {
 //        return super.shouldCheckWeakPower(world, x, y, z, side);
 //    }
     
-    public static class MetadataWrapper {
+    public static class BlockMetadataWrapper {
         
         protected String[] iconNames;
         protected IIcon[] icons;
@@ -334,17 +334,17 @@ public class BlockMetadata extends BlockBase {
         protected ItemStack pickBlock;
         BlockMetadata block;
         
-        public MetadataWrapper(String[] iconNames) {
+        public BlockMetadataWrapper(String[] iconNames) {
             this();
             this.iconNames = iconNames;
             this.icons = new IIcon[iconNames.length];
         }
         
-        public MetadataWrapper() {
+        public BlockMetadataWrapper() {
             
         }
         
-        public MetadataWrapper setBlock(BlockMetadata block) {
+        public BlockMetadataWrapper setBlock(BlockMetadata block) {
             this.block = block;
             return this;
         }
@@ -353,7 +353,7 @@ public class BlockMetadata extends BlockBase {
             return block;
         }
         
-        public MetadataWrapper setIconNames(String[] iconNames) {
+        public BlockMetadataWrapper setIconNames(String[] iconNames) {
             this.iconNames = iconNames;
             this.icons = new IIcon[iconNames.length];
             return this;
@@ -363,7 +363,7 @@ public class BlockMetadata extends BlockBase {
             return iconNames;
         }
         
-        public MetadataWrapper setIcons(IIcon icon, int side) {
+        public BlockMetadataWrapper setIcons(IIcon icon, int side) {
             this.icons[side] = icon;
             return this;
         }
@@ -377,7 +377,7 @@ public class BlockMetadata extends BlockBase {
             return icons[side];
         }
         
-        public MetadataWrapper addDrop(ItemStack stack) {
+        public BlockMetadataWrapper addDrop(ItemStack stack) {
             
             if (itemStacks == null) {
                 
@@ -410,7 +410,7 @@ public class BlockMetadata extends BlockBase {
         public void getSubBlocks(Item unknown, CreativeTabs tab, List subItems) {
         }
         
-        public MetadataWrapper setDisplayName(String name) {
+        public BlockMetadataWrapper setDisplayName(String name) {
             
             ign = name;
             return this;
@@ -421,7 +421,7 @@ public class BlockMetadata extends BlockBase {
             return ign;
         }
         
-        public MetadataWrapper setMetadata(int metadata) {
+        public BlockMetadataWrapper setMetadata(int metadata) {
             
             this.metadata = metadata;
             return this;
@@ -432,7 +432,7 @@ public class BlockMetadata extends BlockBase {
             return metadata;
         }
         
-        public MetadataWrapper setHardness(float hardness) {
+        public BlockMetadataWrapper setHardness(float hardness) {
             this.hardness = hardness;
             return this;
         }
@@ -452,7 +452,7 @@ public class BlockMetadata extends BlockBase {
             return harvestLevel;
         }
         
-        public MetadataWrapper setPickBlock(ItemStack pickBlock) {
+        public BlockMetadataWrapper setPickBlock(ItemStack pickBlock) {
             this.pickBlock = pickBlock;
             return this;
         }
@@ -501,7 +501,7 @@ public class BlockMetadata extends BlockBase {
         
         public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
             
-            return AxisAlignedBB.getAABBPool().getAABB((double) x + this.getBlock().minX, (double) y + this.getBlock().minY, (double) z + this.getBlock().minZ, (double) x + this.getBlock().maxX, (double) y + this.getBlock().maxY, (double) z + this.getBlock().maxZ);
+            return AxisAlignedBB.getBoundingBox((double) x + this.getBlock().minX, (double) y + this.getBlock().minY, (double) z + this.getBlock().minZ, (double) x + this.getBlock().maxX, (double) y + this.getBlock().maxY, (double) z + this.getBlock().maxZ);
         }
         
         public int getExpDrop(IBlockAccess world, int metadata, int fortune) {
@@ -553,7 +553,7 @@ public class BlockMetadata extends BlockBase {
             }
             else {
                 
-                throw new IllegalStateException("ItemBlockMetadataBlock on takes BlockMetadata as a paramater. Something else was passed");
+                throw new IllegalStateException("ItemBlockMetadataBlock takes BlockMetadata as a paramater. Something else was passed");
             }
             this.setHasSubtypes(true);
             this.setMaxDamage(0);
@@ -577,7 +577,7 @@ public class BlockMetadata extends BlockBase {
         @Override
         public String getItemStackDisplayName(ItemStack itemStack) {
             
-            MetadataWrapper wrapper = castedBlock.wrappers.get(new Integer(itemStack.getItemDamage()));
+            BlockMetadataWrapper wrapper = castedBlock.wrappers.get(new Integer(itemStack.getItemDamage()));
             
             return wrapper != null ? wrapper.getDisplayName() : "This metadata is broken contact ASB2";
         }

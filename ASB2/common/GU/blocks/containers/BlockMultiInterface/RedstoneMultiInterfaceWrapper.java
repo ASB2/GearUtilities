@@ -6,10 +6,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
-import GU.blocks.BlockMetadata.MetadataWrapper;
+import GU.blocks.BlockMetadata.BlockMetadataWrapper;
 import GU.blocks.containers.TileMultiBase;
 
-public class RedstoneMultiInterfaceWrapper extends MetadataWrapper {
+public class RedstoneMultiInterfaceWrapper extends BlockMetadataWrapper {
     
     public RedstoneMultiInterfaceWrapper(String[] iconNames) {
         super(iconNames);

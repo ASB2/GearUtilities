@@ -1,5 +1,6 @@
 package GU.blocks;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -8,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 import GU.GUItemBlock;
 import GU.GearUtilities;
 import GU.render.BlockSimpleRenderer;
@@ -77,6 +79,27 @@ public class BlockBase extends Block {
     public boolean isOpaqueCube() {
         // TODO Auto-generated method stub
         return false;
+    }
+    
+    @Override
+    public int getHarvestLevel(int metadata) {
+        
+        return 3;
+    }
+    
+    @Override
+    public float getBlockHardness(World world, int x, int y, int z) {
+        
+        return 1;
+    }
+    
+    @Override
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+        
+        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        
+        ret.add(new ItemStack(this, 1, 0));
+        return ret;
     }
     
     @Override

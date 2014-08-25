@@ -33,20 +33,20 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
     
     public void postInit() {
         
-        this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube0" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Structure Cube 0"));
-        this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube1" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Structure Cube 1"));
-        this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube2" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Structure Cube 2"));
-        this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube3" }).addDrop(new ItemStack(this, 1, 3)).setDisplayName("Structure Cube 3"));
-        this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube4" }) {
+        this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockStructureCube0" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Structure Cube 0"));
+        this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockStructureCube1" }).addDrop(new ItemStack(this, 1, 1)).setDisplayName("Structure Cube 1"));
+        this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockStructureCube2" }).addDrop(new ItemStack(this, 1, 2)).setDisplayName("Structure Cube 2"));
+        this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockStructureCube3" }).addDrop(new ItemStack(this, 1, 3)).setDisplayName("Structure Cube 3"));
+        this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockStructureCube4" }) {
             
             public int getLightOpacity(net.minecraft.world.IBlockAccess world, int x, int y, int z) {
                 return 2000;
             };
         }.addDrop(new ItemStack(this, 1, 4)).setDisplayName("Structure Cube 4"));
-        this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube5" }).addDrop(new ItemStack(this, 1, 5)).setDisplayName("Structure Cube 5"));
-        this.addWrapper(new MetadataWrapper(new String[] { "BlockStructureCube6" }).addDrop(new ItemStack(this, 1, 6)).setDisplayName("Structure Cube 6"));
+        this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockStructureCube5" }).addDrop(new ItemStack(this, 1, 5)).setDisplayName("Structure Cube 5"));
+        this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockStructureCube6" }).addDrop(new ItemStack(this, 1, 6)).setDisplayName("Structure Cube 6"));
         
-        for (Entry<Integer, MetadataWrapper> meta : wrappers.entrySet()) {
+        for (Entry<Integer, BlockMetadataWrapper> meta : wrappers.entrySet()) {
             
             OreDictionary.registerOre(GU.info.Reference.STRUCTURE_CUBE_OREDIC, new ItemStack(this, 1, meta.getKey()));
         }

@@ -10,12 +10,18 @@ import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilItemStack;
-import GU.items.ItemMetadata.MetadataWrapper;
+import GU.items.ItemMetadata.ItemMetadataWrapper;
 
-public class DestructorWrapper extends MetadataWrapper {
+public class DestructorWrapper extends ItemMetadataWrapper {
     
     public DestructorWrapper(String ign) {
         super(ign);
+    }
+    
+    @Override
+    public int getItemStackLimit(ItemStack stack) {
+        
+        return 1;
     }
     
     @Override

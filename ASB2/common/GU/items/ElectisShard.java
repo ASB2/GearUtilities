@@ -26,7 +26,7 @@ import GU.render.noise.NoiseManager;
 
 public class ElectisShard {
     
-    public static class ElectisShardWrapper extends GU.items.ItemMetadata.MetadataWrapper {
+    public static class ElectisShardWrapper extends GU.items.ItemMetadata.ItemMetadataWrapper {
         
         public ElectisShardWrapper(String ign) {
             super(ign);
@@ -86,19 +86,21 @@ public class ElectisShard {
         public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
             
             // if (false) {
-            
-            int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
-            
-            if (player.isSneaking()) {
+            if (player.capabilities.isCreativeMode) {
                 
-                powerSaved--;
-            }
-            else {
+                int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
                 
-                powerSaved++;
+                if (player.isSneaking()) {
+                    
+                    powerSaved--;
+                }
+                else {
+                    
+                    powerSaved++;
+                }
+                UtilItemStack.setNBTTagInt(itemStack, "inputPower", Math.max(powerSaved, 0));
+                UtilEntity.sendChatToPlayer(player, "Power To Move: " + Math.max(powerSaved, 0));
             }
-            UtilItemStack.setNBTTagInt(itemStack, "inputPower", Math.max(powerSaved, 0));
-            UtilEntity.sendChatToPlayer(player, "Power To Move: " + Math.max(powerSaved, 0));
             // }
             // else {
             //

@@ -20,43 +20,43 @@ public class CraftRegistry {
         
         'B', Blocks.stonebrick, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.SPACIAL_PROVIDER, 1, 0), new Object[] { "IEI", "EBE", "IEI",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.SPATIAL_PROVIDER, 1, 0), new Object[] { "EIE", "IBI", "EIE",
         
         'B', Reference.STRUCTURE_CUBE_OREDIC, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD, 'I', Items.iron_ingot }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.SPACIAL_PROVIDER, 1, 1), new Object[] { "ECE", "CSC", "ECE",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.SPATIAL_PROVIDER, 4, 1), new Object[] { "ECE", "CSC", "ECE",
         
-        'C', Blocks.chest, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD, 'S', new ItemStack(BlockRegistry.SPACIAL_PROVIDER, 1, 0) }));
+        'C', Blocks.chest, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD, 'S', new ItemStack(BlockRegistry.SPATIAL_PROVIDER, 1, 0) }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.SPACIAL_PROVIDER, 1, 2), new Object[] { "ECE", "CSC", "ECE",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.SPATIAL_PROVIDER, 4, 2), new Object[] { "ECE", "CSC", "ECE",
         
-        'C', Blocks.furnace, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD, 'S', new ItemStack(BlockRegistry.SPACIAL_PROVIDER, 1, 0) }));
+        'C', Blocks.furnace, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD, 'S', new ItemStack(BlockRegistry.SPATIAL_PROVIDER, 1, 0) }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.SPACIAL_PROVIDER, 1, 3), new Object[] { "ECE", "CSC", "ECE",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.SPATIAL_PROVIDER, 4, 3), new Object[] { "ECE", "CSC", "ECE",
         
-        'C', Items.bucket, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD, 'S', new ItemStack(BlockRegistry.SPACIAL_PROVIDER, 1, 0) }));
+        'C', Items.bucket, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD, 'S', new ItemStack(BlockRegistry.SPATIAL_PROVIDER, 1, 0) }));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.ITEM_FLUID, 8, 0), new Object[] { " B ", "BEB", " B ",
         
         'B', Items.bucket, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 1, 0), new Object[] { "ICI", "CSC", "ICI",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 4, 0), new Object[] { "ICI", "CSC", "ICI",
         
         'I', Items.iron_ingot, 'C', Blocks.chest, 'S', Reference.STRUCTURE_CUBE_OREDIC }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 1, 1), new Object[] { "ICI", "CSC", "ICI",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 4, 1), new Object[] { "ICI", "CSC", "ICI",
         
         'I', Items.iron_ingot, 'C', Items.bucket, 'S', Reference.STRUCTURE_CUBE_OREDIC }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 1, 2), new Object[] { "ICI", "CSC", "ICI",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 4, 2), new Object[] { "ICI", "CSC", "ICI",
         
         'I', Items.iron_ingot, 'C', BlockRegistry.ELECTIS_POLYHEDRON, 'S', Reference.STRUCTURE_CUBE_OREDIC }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 1, 4), new Object[] { "ICI", "CSC", "ICI",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 4, 4), new Object[] { "ICI", "CSC", "ICI",
         
         'I', Items.iron_ingot, 'C', Items.redstone, 'S', Reference.STRUCTURE_CUBE_OREDIC }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 1, 5), new Object[] { "ICI", "CSC", "ICI",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 4, 5), new Object[] { "ICI", "CSC", "ICI",
         
         'I', Items.iron_ingot, 'C', Items.stick, 'S', Reference.STRUCTURE_CUBE_OREDIC }));
         
@@ -64,9 +64,17 @@ public class CraftRegistry {
         
         'I', Items.iron_ingot, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.METADATA_ITEM, 2, 5), new Object[] { "EEE", "ESE", "EEE",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.METADATA_ITEM, 8, 5), new Object[] { "EEE", "ESE", "EEE",
         
         'S', Items.stick, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.ITEM_ELECTIS_POLYHEDRON, 8, 0), new Object[] { "III", "IEI", "III",
+        
+        'I', BlockRegistry.ELECTIS_POLYHEDRON, 'E', new ItemStack(BlockRegistry.MULTI_INTERFACE, 1, 0) }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.FLUID_ELECTIS_POLYHEDRON, 8, 0), new Object[] { "III", "IEI", "III",
+        
+        'I', BlockRegistry.ELECTIS_POLYHEDRON, 'E', new ItemStack(BlockRegistry.MULTI_INTERFACE, 1, 1) }));
         
         for (VanillaColor color : VanillaColor.values()) {
             

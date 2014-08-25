@@ -13,11 +13,11 @@ import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilRender;
 import GU.info.Models;
 import GU.info.Reference;
-import GU.items.ItemMetadata.MetadataWrapper;
+import GU.items.ItemMetadata.ItemMetadataWrapper;
 import GU.render.noise.NoiseManager;
 import GU.utils.UtilGU;
 
-public class ColorModifierWrapper extends MetadataWrapper {
+public class ColorModifierWrapper extends ItemMetadataWrapper {
     
     public ColorModifierWrapper(String ign) {
         super(ign);

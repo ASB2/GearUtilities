@@ -19,25 +19,25 @@ import GU.info.Reference;
 
 public class ItemMetadata extends ItemBase {
     
-    public Map<Integer, MetadataWrapper> wrappers;
+    public Map<Integer, ItemMetadataWrapper> wrappers;
     private int lastMetadata;
     
     public ItemMetadata() {
         
-        wrappers = new HashMap<Integer, MetadataWrapper>();
+        wrappers = new HashMap<Integer, ItemMetadataWrapper>();
         
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
     }
     
-    public ItemMetadata addWrapper(int metadata, MetadataWrapper wrapper) {
+    public ItemMetadata addWrapper(int metadata, ItemMetadataWrapper wrapper) {
         wrappers.put(metadata, wrapper);
         wrapper.setMetadata(metadata);
         wrapper.setItem(this);
         return this;
     }
     
-    public ItemMetadata addWrapper(MetadataWrapper wrapper) {
+    public ItemMetadata addWrapper(ItemMetadataWrapper wrapper) {
         
         addWrapper(lastMetadata, wrapper);
         lastMetadata++;
@@ -53,7 +53,7 @@ public class ItemMetadata extends ItemBase {
     @Override
     public void registerIcons(IIconRegister iconRegister) {
         
-        for (Entry<Integer, MetadataWrapper> wrapperEntry : wrappers.entrySet()) {
+        for (Entry<Integer, ItemMetadataWrapper> wrapperEntry : wrappers.entrySet()) {
             
             wrapperEntry.getValue().setIcon(iconRegister.registerIcon(Reference.MOD_ID.concat(":").concat(wrapperEntry.getValue().iconName)));
         }
@@ -64,7 +64,7 @@ public class ItemMetadata extends ItemBase {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void getSubItems(Item item, CreativeTabs tab, List subItems) {
         
-        for (Entry<Integer, MetadataWrapper> wrapperEntry : wrappers.entrySet()) {
+        for (Entry<Integer, ItemMetadataWrapper> wrapperEntry : wrappers.entrySet()) {
             
             subItems.add(new ItemStack(this, 1, wrapperEntry.getKey()));
             wrapperEntry.getValue().getSubItems(item, tab, subItems);
@@ -74,7 +74,7 @@ public class ItemMetadata extends ItemBase {
     @Override
     public String getItemStackDisplayName(ItemStack itemStack) {
         
-        MetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
+        ItemMetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
         
         if (wrapper != null) {
             
@@ -88,7 +88,7 @@ public class ItemMetadata extends ItemBase {
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add("Made just for you: ".concat(par2EntityPlayer.getDisplayName()));
         
-        MetadataWrapper wrapper = wrappers.get(par1ItemStack.getItemDamage());
+        ItemMetadataWrapper wrapper = wrappers.get(par1ItemStack.getItemDamage());
         
         if (wrapper != null) {
             
@@ -100,7 +100,7 @@ public class ItemMetadata extends ItemBase {
     @Override
     public boolean canHarvestBlock(Block par1Block, ItemStack itemStack) {
         
-        MetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
+        ItemMetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
         
         if (wrapper != null) {
             
@@ -112,7 +112,7 @@ public class ItemMetadata extends ItemBase {
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
         
-        MetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
+        ItemMetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
         
         if (wrapper != null) {
             
@@ -124,7 +124,7 @@ public class ItemMetadata extends ItemBase {
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
         
-        MetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
+        ItemMetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
         
         if (wrapper != null) {
             
@@ -136,7 +136,7 @@ public class ItemMetadata extends ItemBase {
     @Override
     public boolean doesContainerItemLeaveCraftingGrid(ItemStack itemStack) {
         
-        MetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
+        ItemMetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
         
         if (wrapper != null) {
             
@@ -148,7 +148,7 @@ public class ItemMetadata extends ItemBase {
     @Override
     public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player) {
         
-        MetadataWrapper wrapper = wrappers.get(player.getHeldItem().getItemDamage());
+        ItemMetadataWrapper wrapper = wrappers.get(player.getHeldItem().getItemDamage());
         
         if (wrapper != null) {
             
@@ -160,7 +160,7 @@ public class ItemMetadata extends ItemBase {
     @Override
     public int getItemStackLimit(ItemStack stack) {
         
-        MetadataWrapper wrapper = wrappers.get(stack.getItemDamage());
+        ItemMetadataWrapper wrapper = wrappers.get(stack.getItemDamage());
         
         if (wrapper != null) {
             
@@ -169,7 +169,19 @@ public class ItemMetadata extends ItemBase {
         return super.getItemStackLimit(stack);
     }
     
-    public static class MetadataWrapper {
+    @Override
+    public IIcon getIconIndex(ItemStack itemStack) {
+        
+        ItemMetadataWrapper wrapper = wrappers.get(itemStack.getItemDamage());
+        
+        if (wrapper != null) {
+            
+            return wrapper.getIconIndex(itemStack);
+        }
+        return super.getIconIndex(itemStack);
+    }
+    
+    public static class ItemMetadataWrapper {
         
         String iconName;
         IIcon icon;
@@ -178,16 +190,16 @@ public class ItemMetadata extends ItemBase {
         IItemRenderer renderer;
         ItemMetadata item;
         
-        public MetadataWrapper(String ign) {
+        public ItemMetadataWrapper(String ign) {
             this.ign = ign;
             iconName = "";
         }
         
-        public MetadataWrapper() {
+        public ItemMetadataWrapper() {
             // TODO Auto-generated constructor stub
         }
         
-        public MetadataWrapper setItem(ItemMetadata item) {
+        public ItemMetadataWrapper setItem(ItemMetadata item) {
             this.item = item;
             return this;
         }
@@ -196,7 +208,7 @@ public class ItemMetadata extends ItemBase {
             return item;
         }
         
-        public MetadataWrapper setIcon(IIcon icon) {
+        public ItemMetadataWrapper setIcon(IIcon icon) {
             this.icon = icon;
             return this;
         }
@@ -206,7 +218,7 @@ public class ItemMetadata extends ItemBase {
             return icon;
         }
         
-        public MetadataWrapper setDisplayName(String name) {
+        public ItemMetadataWrapper setDisplayName(String name) {
             
             ign = name;
             return this;
@@ -217,7 +229,7 @@ public class ItemMetadata extends ItemBase {
             return ign;
         }
         
-        public MetadataWrapper setMetadata(int metadata) {
+        public ItemMetadataWrapper setMetadata(int metadata) {
             
             this.metadata = metadata;
             return this;
@@ -228,7 +240,7 @@ public class ItemMetadata extends ItemBase {
             return metadata;
         }
         
-        public MetadataWrapper setRenderer(IItemRenderer renderer) {
+        public ItemMetadataWrapper setRenderer(IItemRenderer renderer) {
             this.renderer = renderer;
             return this;
         }
@@ -237,7 +249,7 @@ public class ItemMetadata extends ItemBase {
             return renderer;
         }
         
-        public MetadataWrapper setIconName(String iconName) {
+        public ItemMetadataWrapper setIconName(String iconName) {
             this.iconName = iconName;
             return this;
         }
@@ -283,6 +295,11 @@ public class ItemMetadata extends ItemBase {
         public int getItemStackLimit(ItemStack stack) {
             
             return 64;
+        }
+        
+        public IIcon getIconIndex(ItemStack itemStack) {
+            
+            return this.getIcon();
         }
     }
 }

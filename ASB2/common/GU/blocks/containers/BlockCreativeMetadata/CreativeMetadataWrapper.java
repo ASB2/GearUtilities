@@ -7,10 +7,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import GU.blocks.BlockMetadata.MetadataWrapper;
+import GU.blocks.BlockMetadata.BlockMetadataWrapper;
 import GU.blocks.containers.TileBase;
 
-public class CreativeMetadataWrapper extends MetadataWrapper {
+public class CreativeMetadataWrapper extends BlockMetadataWrapper {
     
     public CreativeMetadataWrapper(String[] iconNames) {
         super(iconNames);

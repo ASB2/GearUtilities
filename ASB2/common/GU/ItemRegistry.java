@@ -21,9 +21,11 @@ import GU.items.FluidCrystalArrayRenderer;
 import GU.items.GearReaderWrapper;
 import GU.items.ItemBase;
 import GU.items.ItemMetadata;
-import GU.items.ItemMetadata.MetadataWrapper;
+import GU.items.ItemMetadata.ItemMetadataWrapper;
 import GU.items.ItemRenderers.GarnetRenderer;
 import GU.items.TeleporterWrapper;
+import GU.items.UtilityTabletWrapper;
+import GU.items.UtilityTabletWrapper.UtilityTabletRenderer;
 import GU.utils.UtilGU;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -40,7 +42,7 @@ public final class ItemRegistry {
             setCreativeTab(GearUtilities.tabGUFluids);
         };
         
-        @SuppressWarnings({ "unchecked", "rawtypes" })
+        @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
         @Override
         public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
             
@@ -66,6 +68,7 @@ public final class ItemRegistry {
             }
         }
         
+        @SuppressWarnings("deprecation")
         public String getItemStackDisplayName(ItemStack itemStack) {
             
             Fluid saved = UtilGU.getFluid(itemStack);
@@ -86,12 +89,13 @@ public final class ItemRegistry {
         customItemMap.put(Reference.MOD_ID.concat(":ItemMetadataFluid"), ITEM_FLUID);
         
         METADATA_ITEM.addWrapper(new ElectisShardWrapper("Electis Crystal Shard").setRenderer(ElectisCrystalShardRenderer.instance));
-        METADATA_ITEM.addWrapper(new MetadataWrapper("Garnet").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.addWrapper(new MetadataWrapper("Electis Controler").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Garnet").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Electis Controler").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new GearReaderWrapper("Gear Reader").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new TeleporterWrapper("Teleporter").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new AdvancedStickWrapper("Advanced Stick"));
         METADATA_ITEM.addWrapper(new DestructorWrapper("Destructor").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.addWrapper(new UtilityTabletWrapper("Utility Tablet").setRenderer(UtilityTabletRenderer.instance));
         // METADATA_ITEM.addWrapper(new
         // ColorModifierWrapper("Color Modifier").setRenderer(ColorModifierRenderer.instance));
     }

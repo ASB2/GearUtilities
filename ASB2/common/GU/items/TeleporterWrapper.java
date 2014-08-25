@@ -6,13 +6,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import ASB2.utils.UtilItemStack;
-import GU.items.ItemMetadata.MetadataWrapper;
+import GU.items.ItemMetadata.ItemMetadataWrapper;
 
-public class TeleporterWrapper extends MetadataWrapper {
+public class TeleporterWrapper extends ItemMetadataWrapper {
     
     public TeleporterWrapper(String ign) {
         super(ign);
         // TODO Auto-generated constructor stub
+    }
+    
+    @Override
+    public int getItemStackLimit(ItemStack stack) {
+        
+        return 1;
     }
     
     @Override

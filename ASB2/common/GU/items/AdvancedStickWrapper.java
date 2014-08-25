@@ -12,11 +12,11 @@ import org.lwjgl.opengl.GL11;
 import GU.EventListener;
 import GU.api.IWrenchable;
 import GU.info.Models;
-import GU.items.ItemMetadata.MetadataWrapper;
+import GU.items.ItemMetadata.ItemMetadataWrapper;
 import GU.render.noise.NoiseManager;
 import UC.VariableIterator;
 
-public class AdvancedStickWrapper extends MetadataWrapper {
+public class AdvancedStickWrapper extends ItemMetadataWrapper {
     
     public AdvancedStickWrapper(String ign) {
         super(ign);

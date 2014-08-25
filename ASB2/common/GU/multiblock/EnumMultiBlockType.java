@@ -12,7 +12,7 @@ import UC.math.vector.Vector3i;
 
 public enum EnumMultiBlockType {
     
-    STANDARD, CHEST, FURNACE, TANK, FLAME;
+    STANDARD, CHEST, FURNACE, TANK, FLAME, GRINDER;
     
     public static final int MAX_DISTANCE = 16;
     
@@ -28,6 +28,8 @@ public enum EnumMultiBlockType {
                 return new MultiBlockTank(world, positionRelativeTo, size, updater);
             case FLAME:
                 return new MultiBlockFlame(world, positionRelativeTo, size, updater);
+            case GRINDER:
+                return new MultiBlockGrinder(world, positionRelativeTo, size, updater);
             default:
         }
         return null;
@@ -45,6 +47,8 @@ public enum EnumMultiBlockType {
                 return new MultiBlockTank(worldObj);
             case 4:
                 return new MultiBlockFlame(worldObj);
+            case 5:
+                return new MultiBlockGrinder(worldObj);
         }
         return null;
     }
@@ -70,7 +74,7 @@ public enum EnumMultiBlockType {
                 TileEntity tile = world.getTileEntity(x, y, z);
                 Block block = world.getBlock(x, y, z);
                 
-                if (block == BlockRegistry.SPACIAL_PROVIDER) {
+                if (block == BlockRegistry.SPATIAL_PROVIDER) {
                     
                     int meta = world.getBlockMetadata(x, y, z);
                     

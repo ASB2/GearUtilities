@@ -51,7 +51,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             }
         }
         
-        if (block == BlockRegistry.SPACIAL_PROVIDER) {
+        if (block == BlockRegistry.SPATIAL_PROVIDER) {
             
             renderer.setRenderBounds(.0001, .0001, .0001, 1 - .0001, 1 - .0001, 1 - .0001);
             UtilRender.renderStandardInvBlock(renderer, block, metadata);
@@ -90,7 +90,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             // return true;
         }
         
-        if (block == BlockRegistry.SPACIAL_PROVIDER) {
+        if (block == BlockRegistry.SPATIAL_PROVIDER) {
             
             renderer.setRenderBounds(-.0015, -.0015, -.0015, 1.0015, 1.0015, 1.0015);
             UtilRender.renderFakeBlock(renderer, block, x, y, z, EnumInputIcon.NONE.getStateIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);

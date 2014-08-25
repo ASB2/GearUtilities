@@ -19,6 +19,12 @@ public class BlockMultiBlockPartGlass extends BlockMultiMetadataContainerBase {
     }
     
     @Override
+    public boolean renderAsNormalBlock() {
+        
+        return false;
+    }
+    
+    @Override
     public TileEntity createNewTileEntity(World var1, int var2) {
         
         return new TileMultiPart();

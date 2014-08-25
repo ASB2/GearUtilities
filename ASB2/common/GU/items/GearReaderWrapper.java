@@ -24,10 +24,10 @@ import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
-import GU.items.ItemMetadata.MetadataWrapper;
+import GU.items.ItemMetadata.ItemMetadataWrapper;
 import UC.color.Color4i;
 
-public class GearReaderWrapper extends MetadataWrapper {
+public class GearReaderWrapper extends ItemMetadataWrapper {
     
     public GearReaderWrapper(String ign) {
         super(ign);
@@ -40,6 +40,7 @@ public class GearReaderWrapper extends MetadataWrapper {
         return 1;
     }
     
+    @SuppressWarnings("deprecation")
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
         

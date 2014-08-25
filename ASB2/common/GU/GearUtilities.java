@@ -9,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -103,6 +104,12 @@ public final class GearUtilities {
                 
                 new WorldGenMinable(BlockRegistry.METADATA_ORE, 0, 21, Blocks.stone).generate(world, random, x, y, z);
             }
+            
+            @Override
+            public int generationsPerChunk(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+                
+                return 7;
+            }
         }, 0);
         
         GameRegistry.registerWorldGenerator(new WorldGenBase() {
@@ -110,9 +117,15 @@ public final class GearUtilities {
             @Override
             public void generate(World world, Random random, int x, int y, int z) {
                 
-                new WorldGenMinable(BlockRegistry.METADATA_ORE, 1, 21, Blocks.stone).generate(world, random, x, y, z);
+                new WorldGenMinable(BlockRegistry.METADATA_ORE, 1, 21, BlockRegistry.METADATA_ORE).generate(world, random, x, y, z);
             }
-        }, 0);
+            
+            @Override
+            public int generationsPerChunk(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+                
+                return 4;
+            }
+        }, 10);
     }
     
     @EventHandler

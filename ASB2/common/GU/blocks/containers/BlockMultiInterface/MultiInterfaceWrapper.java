@@ -14,10 +14,10 @@ import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
 import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
-import GU.blocks.BlockMetadata.MetadataWrapper;
+import GU.blocks.BlockMetadata.BlockMetadataWrapper;
 import UC.math.vector.Vector3i;
 
-public class MultiInterfaceWrapper extends MetadataWrapper {
+public class MultiInterfaceWrapper extends BlockMetadataWrapper {
     
     public MultiInterfaceWrapper(String[] iconNames) {
         super(iconNames);

@@ -1,6 +1,9 @@
 package GU.multiblock;
 
+import java.util.Map.Entry;
+
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -84,8 +87,19 @@ public class MultiBlockFlame extends MultiBlockBase implements IFluidMultiBlock,
     
     @Override
     public void logicUpdate() {
-        // TODO Auto-generated method stub
-        super.logicUpdate();
+
+        if(!this.input.isEmpty()) {
+            
+            for(Entry<Integer, ItemStack> entry : input.getItemArray().entrySet()) {
+                
+                if(entry.getValue() != null) {
+                    
+//                    if() {
+//                        
+//                    }
+                }
+            }
+        }
     }
     
     @Override

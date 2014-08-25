@@ -28,7 +28,7 @@ public abstract class BlockMetadataContainerBase extends BlockMetadata implement
     @Override
     public TileEntity createNewTileEntity(World var1, int var2) {
         
-        MetadataWrapper wrapper = wrappers.get(var2);
+        BlockMetadataWrapper wrapper = wrappers.get(var2);
         
         if (wrapper != null) {
             
