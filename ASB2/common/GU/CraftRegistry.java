@@ -76,6 +76,14 @@ public class CraftRegistry {
         
         'I', BlockRegistry.ELECTIS_POLYHEDRON, 'E', new ItemStack(BlockRegistry.MULTI_INTERFACE, 1, 1) }));
         
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.CONDUIT, 4, 0), new Object[] { "SAS", "IEI", "SAS",
+        
+        'I', Items.iron_ingot, 'S', Reference.STRUCTURE_CUBE_OREDIC, 'A', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 4), 'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 0) }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_DIRECTIONAL_CONDUIT, 4, 0), new Object[] { "CIC", "ISI", "CIC",
+        
+        'I', Items.iron_ingot, 'S', Reference.STRUCTURE_CUBE_OREDIC, 'C', BlockRegistry.CONDUIT }));
+        
         for (VanillaColor color : VanillaColor.values()) {
             
             if (color != VanillaColor.NONE) {
