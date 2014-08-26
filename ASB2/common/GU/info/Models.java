@@ -21,6 +21,8 @@ public final class Models {
     public static WavefrontObject ModelRhombicuboctahedron;
     public static WavefrontObject ModelAdvancedStick;
     public static WavefrontObject ModelUtilityTablet;
+    public static WavefrontObject ModelConduit;
+    public static WavefrontObject ModelMultiDirectionalConduit;
     
     private static final ResourceLocation MULTI_PANEL = new ResourceLocation(Reference.MOD_ID + ":models/ModelMultiPanel.obj");
     private static final ResourceLocation CRYSTAL_1 = new ResourceLocation(Reference.MOD_ID + ":models/ModelCrystal1.obj");
@@ -37,6 +39,8 @@ public final class Models {
     public static final ResourceLocation RHOMBICUBOCTAHEDRON = new ResourceLocation(Reference.MOD_ID + ":models/ModelRhombicuboctahedron.obj");
     public static final ResourceLocation ADVANCED_STICK = new ResourceLocation(Reference.MOD_ID + ":models/ModelAdvancedStick.obj");
     public static final ResourceLocation UTILITIY_TABLET = new ResourceLocation(Reference.MOD_ID + ":models/ModelUtilityTablet.obj");
+    public static final ResourceLocation CONDUIT = new ResourceLocation(Reference.MOD_ID + ":models/ModelConduit.obj");
+    public static final ResourceLocation MULTI_DIRECTIONAL_CONDUIT = new ResourceLocation(Reference.MOD_ID + ":models/ModelMultiDirectionalConduit.obj");
     
     private Models() {
     }
@@ -58,5 +62,7 @@ public final class Models {
         ModelRhombicuboctahedron = (WavefrontObject) AdvancedModelLoader.loadModel(Models.RHOMBICUBOCTAHEDRON);
         ModelAdvancedStick = (WavefrontObject) AdvancedModelLoader.loadModel(Models.ADVANCED_STICK);
         ModelUtilityTablet = (WavefrontObject) AdvancedModelLoader.loadModel(Models.UTILITIY_TABLET);
+        ModelConduit = (WavefrontObject) AdvancedModelLoader.loadModel(Models.CONDUIT);
+        ModelMultiDirectionalConduit = (WavefrontObject) AdvancedModelLoader.loadModel(Models.MULTI_DIRECTIONAL_CONDUIT);
     }
 }

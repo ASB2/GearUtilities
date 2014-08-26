@@ -1,6 +1,7 @@
 package GU;
 
 import GU.packets.ColorPacket;
+import GU.packets.ConduitTypePacket;
 import GU.packets.CrystalTypePacket;
 import GU.packets.EnumInputIconPacket;
 import GU.packets.MultiBlockFlamePacket;
@@ -23,6 +24,7 @@ public final class PacketRegistry {
         GearUtilities.getPipeline().registerMessage(EnumInputIconPacket.class, EnumInputIconPacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(TankUpdatePacket.class, TankUpdatePacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(MultiBlockFlamePacket.class, MultiBlockFlamePacket.class, getNextID(), Side.CLIENT);
+        GearUtilities.getPipeline().registerMessage(ConduitTypePacket.class, ConduitTypePacket.class, getNextID(), Side.CLIENT);
     }
     
     static int ID = -1;

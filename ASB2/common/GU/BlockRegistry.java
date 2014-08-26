@@ -14,11 +14,13 @@ import GU.api.color.VanillaColor;
 import GU.blocks.BlockBase;
 import GU.blocks.BlockMetadata;
 import GU.blocks.BlockStructureCube;
+import GU.blocks.containers.BlockConduit.BlockConduit;
 import GU.blocks.containers.BlockCreativeMetadata.BlockCreativeMetadata;
 import GU.blocks.containers.BlockCreativeMetadata.CreativeMetadataWrapper;
 import GU.blocks.containers.BlockElectisPolyhedron.BlockElectisPolyhedron;
 import GU.blocks.containers.BlockFluidElectisPolyhedron.BlockFluidElectisPolyhedron;
 import GU.blocks.containers.BlockItemElectisPolyhedron.BlockItemElectisPolyhedron;
+import GU.blocks.containers.BlockMultiDirectionalConduit.BlockMultiDirectionalConduit;
 import GU.blocks.containers.BlockMultiInterface.BlockMultiInterface;
 import GU.blocks.containers.BlockMultiInterface.MultiInterfaceWrapper;
 import GU.blocks.containers.BlockMultiInterface.RedstoneMultiInterfaceWrapper;
@@ -113,6 +115,10 @@ public class BlockRegistry {
     
     public static final BlockFluidElectisPolyhedron FLUID_ELECTIS_POLYHEDRON = new BlockFluidElectisPolyhedron(Material.rock);
     
+    public static final BlockConduit CONDUIT = new BlockConduit(Material.rock);
+    
+    public static final BlockMultiDirectionalConduit MULTI_DIRECTIONAL_CONDUIT = new BlockMultiDirectionalConduit(Material.rock);
+    
     static {
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMetadataOre"), METADATA_ORE.setBlockName("MetadataOre"));
@@ -135,6 +141,8 @@ public class BlockRegistry {
         customBlockMap.put(Reference.MOD_ID.concat(":BlockElectisPolyhedron"), ELECTIS_POLYHEDRON.setBlockName("Electis Polyhedron"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockItemElectisPolyhedron"), ITEM_ELECTIS_POLYHEDRON.setBlockName("Item Electis Polyhedron"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockFluidElectisPolyhedron"), FLUID_ELECTIS_POLYHEDRON.setBlockName("Fluid Electis Polyhedron"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockConduit"), CONDUIT.setBlockName("Conduit"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiDirectionalConduit"), MULTI_DIRECTIONAL_CONDUIT.setBlockName("Multi Directional Conduit"));
     }
     
     public static void init(Configuration config) {
@@ -145,8 +153,7 @@ public class BlockRegistry {
                 
                 ((BlockBase) entry.getValue()).registerBlock(entry.getKey());
                 ((BlockBase) entry.getValue()).postInit();
-            }
-            else {
+            } else {
                 
                 GameRegistry.registerBlock(entry.getValue(), GUItemBlock.class, entry.getKey());
             }
