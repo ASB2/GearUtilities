@@ -38,8 +38,7 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
                     if (!player.isSneaking()) {
                         
                         return ((IColorableTile) tile).setColor(VanillaColor.getRGBValue(VanillaColor.getItemColor4iValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
-                    }
-                    else {
+                    } else {
                         
                         for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                             

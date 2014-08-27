@@ -38,7 +38,8 @@ public class MultiBlockChest extends MultiBlockInventory implements IRedstoneMul
     @Override
     public void onSetSize() {
         
-        if (inventory != null && inventory.getSizeInventory() == 0) inventory.setSizeInventory(8 * ((this.size.getX() + 1) * (this.size.getY() + 1) * (this.size.getZ() + 1)));
+        if (inventory != null && inventory.getSizeInventory() == 0)
+            inventory.setSizeInventory(8 * ((this.size.getX() + 1) * (this.size.getY() + 1) * (this.size.getZ() + 1)));
     }
     
     @Override

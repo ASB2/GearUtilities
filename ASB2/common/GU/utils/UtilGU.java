@@ -15,7 +15,8 @@ public class UtilGU {
     
     public static void setFluid(ItemStack stack, Fluid fluid) {
         
-        if (fluid != null) UtilItemStack.setNBTTagString(stack, "fluidStored", fluid.getName());
+        if (fluid != null)
+            UtilItemStack.setNBTTagString(stack, "fluidStored", fluid.getName());
     }
     
     public static Fluid getFluid(ItemStack stack) {

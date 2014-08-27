@@ -70,8 +70,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
                     isValid = true;
                 }
             }
-        }
-        else if (isDeconstructing) {
+        } else if (isDeconstructing) {
             
             if (constructionManager != null) {
                 
@@ -81,8 +80,7 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
                     isValid = false;
                 }
             }
-        }
-        else if (forceLoad) {
+        } else if (forceLoad) {
             
             if (constructionManager != null) {
                 
@@ -222,30 +220,41 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
     
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (!(obj instanceof MultiBlockBase)) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof MultiBlockBase))
+            return false;
         MultiBlockBase other = (MultiBlockBase) obj;
-        if (forceLoad != other.forceLoad) return false;
-        if (isConstructing != other.isConstructing) return false;
-        if (isDeconstructing != other.isDeconstructing) return false;
-        if (isValid != other.isValid) return false;
+        if (forceLoad != other.forceLoad)
+            return false;
+        if (isConstructing != other.isConstructing)
+            return false;
+        if (isDeconstructing != other.isDeconstructing)
+            return false;
+        if (isValid != other.isValid)
+            return false;
         if (positionRelativeTo == null) {
-            if (other.positionRelativeTo != null) return false;
-        }
-        else if (!positionRelativeTo.equals(other.positionRelativeTo)) return false;
+            if (other.positionRelativeTo != null)
+                return false;
+        } else if (!positionRelativeTo.equals(other.positionRelativeTo))
+            return false;
         if (size == null) {
-            if (other.size != null) return false;
-        }
-        else if (!size.equals(other.size)) return false;
+            if (other.size != null)
+                return false;
+        } else if (!size.equals(other.size))
+            return false;
         if (updater == null) {
-            if (other.updater != null) return false;
-        }
-        else if (!updater.equals(other.updater)) return false;
+            if (other.updater != null)
+                return false;
+        } else if (!updater.equals(other.updater))
+            return false;
         if (world == null) {
-            if (other.world != null) return false;
-        }
-        else if (!world.equals(other.world)) return false;
+            if (other.world != null)
+                return false;
+        } else if (!world.equals(other.world))
+            return false;
         return true;
     }
     

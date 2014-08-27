@@ -33,8 +33,7 @@ public class TileCreativeFluid extends TileBase implements IFluidHandler {
             if (fluidTank.getFluid() != null) {
                 
                 fluidTank.getFluid().amount = 1000000;
-            }
-            else {
+            } else {
                 
                 fluidTank.setFluid(fluidToSave.getFluid());
                 
@@ -43,8 +42,7 @@ public class TileCreativeFluid extends TileBase implements IFluidHandler {
                     fluidTank.getFluid().amount = 1000000;
                 }
             }
-        }
-        else {
+        } else {
             
             fluidTank.setFluid(null);
         }
@@ -58,8 +56,7 @@ public class TileCreativeFluid extends TileBase implements IFluidHandler {
                 if (!isPowered) {
                     
                     UtilFluid.moveFluid(this, direction, ((IFluidHandler) tile), direction.getOpposite(), 100, true);
-                }
-                else {
+                } else {
                     
                     UtilFluid.moveFluid(((IFluidHandler) tile), direction, this, direction.getOpposite(), 100, true);
                 }
@@ -88,7 +85,8 @@ public class TileCreativeFluid extends TileBase implements IFluidHandler {
     @Override
     public void sendUpdatePacket() {
         
-        if (!worldObj.isRemote && fluidToSave.getFluid() != null) GearUtilities.getPipeline().sendToDimension(new TankUpdatePacket(xCoord, yCoord, zCoord, fluidToSave, 0), worldObj.provider.dimensionId);
+        if (!worldObj.isRemote && fluidToSave.getFluid() != null)
+            GearUtilities.getPipeline().sendToDimension(new TankUpdatePacket(xCoord, yCoord, zCoord, fluidToSave, 0), worldObj.provider.dimensionId);
     }
     
     @Override

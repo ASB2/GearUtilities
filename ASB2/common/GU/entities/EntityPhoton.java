@@ -17,10 +17,10 @@ import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetObject.UtilPower;
 import GU.info.Models;
 import GU.info.Textures;
+import GU.render.noise.NoiseManager;
 import UC.math.vector.Vector3d;
 import UC.math.vector.Vector3i;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
-import GU.render.noise.NoiseManager;
 
 public class EntityPhoton extends EntityBase implements IEntityAdditionalSpawnData {
     
@@ -162,13 +162,13 @@ public class EntityPhoton extends EntityBase implements IEntityAdditionalSpawnDa
         // this.setPosition(additionalData.readDouble(),
         // additionalData.readDouble(), additionalData.readDouble());
     }
-
+    
     @Override
     protected void readEntityFromNBT(NBTTagCompound var1) {
         // TODO Auto-generated method stub
         
     }
-
+    
     @Override
     protected void writeEntityToNBT(NBTTagCompound var1) {
         // TODO Auto-generated method stub

@@ -1,9 +1,9 @@
 package GU.packets;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import ASB2.utils.UtilVector;
+import GU.GearUtilities;
 import GU.blocks.containers.BlockMultiPart.TileMultiPartRender;
 import GU.multiblock.clientState.MultiBlockFlameClientState;
 import UC.math.vector.Vector3i;
@@ -49,7 +49,7 @@ public class MultiBlockFlamePacket implements IMessageHandler<MultiBlockFlamePac
     @Override
     public MultiBlockFlamePacket onMessage(MultiBlockFlamePacket message, MessageContext ctx) {
         
-        TileEntity tile = UtilVector.getTileAtPostion(Minecraft.getMinecraft().theWorld, message.renderHandler);
+        TileEntity tile = UtilVector.getTileAtPostion(GearUtilities.proxy.getClientWorld(), message.renderHandler);
         
         if (tile != null && tile instanceof TileMultiPartRender) {
             

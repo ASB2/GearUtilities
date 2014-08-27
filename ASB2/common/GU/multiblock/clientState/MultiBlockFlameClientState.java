@@ -4,9 +4,9 @@ import net.minecraft.client.Minecraft;
 
 import org.lwjgl.opengl.GL11;
 
+import GU.info.Models;
+import GU.render.noise.NoiseManager;
 import UC.math.vector.Vector3i;
-import GU.info.*;
-import GU.render.noise.*;
 
 public class MultiBlockFlameClientState extends MultiBlockClientState {
     

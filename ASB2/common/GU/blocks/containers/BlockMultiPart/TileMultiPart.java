@@ -57,8 +57,7 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
             this.color.setRed((this.color.getRed() + color.getRed()) / 2);
             this.color.setGreen((this.color.getGreen() + color.getGreen()) / 2);
             this.color.setBlue((this.color.getBlue() + color.getBlue()) / 2);
-        }
-        else {
+        } else {
             
             this.color.setAll(color);
         }
@@ -69,7 +68,8 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
     @Override
     public void sendUpdatePacket() {
         
-        if (!worldObj.isRemote) GearUtilities.getPipeline().sendToAllAround(new ColorPacket(color, xCoord, yCoord, zCoord, ForgeDirection.UNKNOWN), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 200));
+        if (!worldObj.isRemote)
+            GearUtilities.getPipeline().sendToAllAround(new ColorPacket(color, xCoord, yCoord, zCoord, ForgeDirection.UNKNOWN), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 200));
     }
     
     @Override

@@ -9,21 +9,19 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilVector;
-import GU.GearUtilities;
 import GU.api.IWrenchable;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.blocks.containers.TileMultiBase;
-import GU.packets.EnumInputIconPacket;
 import GU.render.EnumInputIcon;
 import GU.render.IEnumInputIcon;
 import UC.math.vector.Vector3i;
 
 public class TileFluidMultiInterface extends TileMultiBase implements IMultiBlockPart, IFluidHandler, IWrenchable, IEnumInputIcon {
     
-    int fluidPerTick = 100;
+    int fluidPerTick = 200;
     
     IFluidMultiBlock handler1 = null, handler2 = null;
     Vector3i position;
@@ -32,75 +30,88 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     public TileFluidMultiInterface() {
         
         this.setMaxMultiBlocks(2);
+        sideState = new EnumInputIcon[7];
+        
+        for (int index = 0; index < sideState.length; index++) {
+            
+            sideState[index] = EnumInputIcon.NONE;
+        }
     }
+    
+    int wait = 0;
     
     @Override
     public void updateEntity() {
         
-        if (position == null) {
-            
-            position = UtilVector.createTileEntityVector(this);
-        }
+        wait++;
         
-        // if (Minecraft.getSystemTime() % 5 == 0) {
-        
-        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+        if (wait == 10) {
             
-            if (handler1 != null && handler2 != null) {
+            wait = 0;
+            if (position == null) {
                 
-                IFluidHandler handler1Handler = handler1.getTank(position);
+                position = UtilVector.createTileEntityVector(this);
+            }
+            
+            // if (Minecraft.getSystemTime() % 5 == 0) {
+            
+            if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
                 
-                IFluidHandler handler2Handler = handler2.getTank(position);
-                
-                if (handler1Handler != null && handler2Handler != null) {
+                if (handler1 != null && handler2 != null) {
                     
-                    FluidTankInfo[] handler1InfoArray = handler1Handler.getTankInfo(ForgeDirection.UNKNOWN);
-                    FluidTankInfo[] handler2InfoArray = handler2Handler.getTankInfo(ForgeDirection.UNKNOWN);
+                    IFluidHandler handler1Handler = handler1.getTank(position);
                     
-                    if (handler1InfoArray != null && handler2InfoArray != null) {
+                    IFluidHandler handler2Handler = handler2.getTank(position);
+                    
+                    if (handler1Handler != null && handler2Handler != null) {
                         
-                        for (int handler1Index = 0; handler1Index < handler1InfoArray.length; handler1Index++) {
+                        FluidTankInfo[] handler1InfoArray = handler1Handler.getTankInfo(ForgeDirection.UNKNOWN);
+                        FluidTankInfo[] handler2InfoArray = handler2Handler.getTankInfo(ForgeDirection.UNKNOWN);
+                        
+                        if (handler1InfoArray != null && handler2InfoArray != null) {
                             
-                            FluidTankInfo handler1Info = handler1InfoArray[handler1Index];
-                            
-                            if (handler1Info != null) {
+                            for (int handler1Index = 0; handler1Index < handler1InfoArray.length; handler1Index++) {
                                 
-                                for (int handler2Index = 0; handler2Index < handler2InfoArray.length; handler2Index++) {
+                                FluidTankInfo handler1Info = handler1InfoArray[handler1Index];
+                                
+                                if (handler1Info != null) {
                                     
-                                    FluidTankInfo handler2Info = handler2InfoArray[handler2Index];
-                                    
-                                    if (handler2Info != null) {
+                                    for (int handler2Index = 0; handler2Index < handler2InfoArray.length; handler2Index++) {
                                         
-                                        if (handler1Info.capacity > 0 && handler2Info.capacity > 0) {
+                                        FluidTankInfo handler2Info = handler2InfoArray[handler2Index];
+                                        
+                                        if (handler2Info != null) {
                                             
-                                            double precentFilled1 = handler1Info.fluid != null ? handler1Info.fluid.amount / (double) handler1Info.capacity : 0;
-                                            double precentFilled2 = handler2Info.fluid != null ? handler2Info.fluid.amount / (double) handler2Info.capacity : 0;
-                                            
-                                            if (precentFilled1 > precentFilled2) {
+                                            if (handler1Info.capacity > 0 && handler2Info.capacity > 0) {
                                                 
-                                                FluidStack handler1Drain = handler1Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, false);
+                                                double precentFilled1 = handler1Info.fluid != null ? handler1Info.fluid.amount / (double) handler1Info.capacity : 0;
+                                                double precentFilled2 = handler2Info.fluid != null ? handler2Info.fluid.amount / (double) handler2Info.capacity : 0;
                                                 
-                                                if (handler1Drain != null) {
+                                                if (precentFilled1 > precentFilled2) {
                                                     
-                                                    int handler2FillAmount = handler2Handler.fill(ForgeDirection.UNKNOWN, handler1Drain.copy(), false);
+                                                    FluidStack handler1Drain = handler1Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, false);
                                                     
-                                                    if (handler2FillAmount > 0) {
+                                                    if (handler1Drain != null) {
                                                         
-                                                        handler2Handler.fill(ForgeDirection.UNKNOWN, handler1Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, true), true);
+                                                        int handler2FillAmount = handler2Handler.fill(ForgeDirection.UNKNOWN, handler1Drain.copy(), false);
+                                                        
+                                                        if (handler2FillAmount > 0) {
+                                                            
+                                                            handler2Handler.fill(ForgeDirection.UNKNOWN, handler1Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, true), true);
+                                                        }
                                                     }
-                                                }
-                                            }
-                                            else if (precentFilled1 < precentFilled2) {
-                                                
-                                                FluidStack handler2Drain = handler2Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, false);
-                                                
-                                                if (handler2Drain != null) {
+                                                } else if (precentFilled1 < precentFilled2) {
                                                     
-                                                    int handler1FillAmount = handler1Handler.fill(ForgeDirection.UNKNOWN, handler2Drain.copy(), false);
+                                                    FluidStack handler2Drain = handler2Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, false);
                                                     
-                                                    if (handler1FillAmount > 0) {
+                                                    if (handler2Drain != null) {
                                                         
-                                                        handler1Handler.fill(ForgeDirection.UNKNOWN, handler2Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, true), true);
+                                                        int handler1FillAmount = handler1Handler.fill(ForgeDirection.UNKNOWN, handler2Drain.copy(), false);
+                                                        
+                                                        if (handler1FillAmount > 0) {
+                                                            
+                                                            handler1Handler.fill(ForgeDirection.UNKNOWN, handler2Handler.drain(ForgeDirection.UNKNOWN, fluidPerTick, true), true);
+                                                        }
                                                     }
                                                 }
                                             }
@@ -109,7 +120,6 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
                                 }
                             }
                         }
-                        
                         // if (handler1Tank != null && handler2Tank != null) {
                         //
                         // double precentFilled1 = handler1Tank.getFluidAmount()
@@ -169,8 +179,7 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
                 if (handler1 == null) {
                     
                     handler1 = (IFluidMultiBlock) multiBlock;
-                }
-                else if (handler2 == null) {
+                } else if (handler2 == null) {
                     
                     handler2 = (IFluidMultiBlock) multiBlock;
                 }
@@ -193,8 +202,7 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
                 handler1 = handler2;
                 handler2 = null;
             }
-        }
-        else if (handler2 == multiBlock) {
+        } else if (handler2 == multiBlock) {
             
             handler2 = null;
         }
@@ -274,7 +282,9 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     
     @Override
     public boolean triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
-        // TODO Auto-generated method stub
+        
+        sideState[side] = sideState[side].increment();
+        world.markBlockForUpdate(x, y, z);
         return false;
     }
     
@@ -285,7 +295,10 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
         
         for (EnumInputIcon state : sideState) {
             
-            if (state != null) tag.setInteger("state" + side, state.ordinal());
+            if (state != null) {
+                
+                tag.setInteger("state" + side, state.ordinal());
+            }
             side++;
         }
         super.writeToNBT(tag);
@@ -303,7 +316,10 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     
     @Override
     public void sendUpdatePacket() {
-        if (!worldObj.isRemote) GearUtilities.getPipeline().sendToDimension(new EnumInputIconPacket(xCoord, yCoord, zCoord, sideState), worldObj.provider.dimensionId);
-        super.sendUpdatePacket();
+        if (!worldObj.isRemote)
+            // GearUtilities.getPipeline().sendToDimension(new
+            // EnumInputIconPacket(xCoord, yCoord, zCoord, sideState),
+            // worldObj.provider.dimensionId);
+            super.sendUpdatePacket();
     }
 }

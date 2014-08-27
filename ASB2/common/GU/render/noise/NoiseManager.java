@@ -16,7 +16,10 @@ import UC.color.Color4i;
 import UC.noise.libnoiseforjava.module.Voronoi;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class NoiseManager {
     
     public static NoiseManager instance = new NoiseManager();
@@ -96,8 +99,7 @@ public class NoiseManager {
                 }
                 imageDataArray.add(imageData);
             }
-        }
-        else if (false) {
+        } else if (false) {
             
             for (float currentDensity = .1f; currentDensity <= .2; currentDensity += .0002) {
                 
@@ -126,8 +128,7 @@ public class NoiseManager {
                 }
                 imageDataArray.add(imageData);
             }
-        }
-        else if (true) {
+        } else if (true) {
             
             Voronoi noiseGen = new Voronoi();
             
@@ -203,20 +204,17 @@ public class NoiseManager {
                         
                         moveAnimationDown = false;
                         animationPosition = imageDataArray.size() - 1;
-                    }
-                    else /* if (Minecraft.getSystemTime() % 20 == 0) */{
+                    } else /* if (Minecraft.getSystemTime() % 20 == 0) */{
                         
                         animationPosition++;
                     }
                     
-                }
-                else {
+                } else {
                     
                     if (animationPosition <= 0) {
                         moveAnimationDown = true;
                         animationPosition = 0;
-                    }
-                    else /* if (Minecraft.getSystemTime() % 20 == 0) */{
+                    } else /* if (Minecraft.getSystemTime() % 20 == 0) */{
                         
                         animationPosition--;
                     }
@@ -236,19 +234,16 @@ public class NoiseManager {
                     if (red > 0) {
                         
                         red -= redModificationAmount;
-                    }
-                    else if (red == 0) {
+                    } else if (red == 0) {
                         
                         moveRedColorValueDown = false;
                     }
-                }
-                else {
+                } else {
                     
                     if (red < 255) {
                         
                         red += redModificationAmount;
-                    }
-                    else if (red == 255) {
+                    } else if (red == 255) {
                         
                         moveRedColorValueDown = true;
                     }
@@ -258,19 +253,16 @@ public class NoiseManager {
                     if (green > 0) {
                         
                         green -= greenModificationAmount;
-                    }
-                    else if (green == 0) {
+                    } else if (green == 0) {
                         
                         moveGreenColorValueDown = false;
                     }
-                }
-                else {
+                } else {
                     
                     if (green < 255) {
                         
                         green += greenModificationAmount;
-                    }
-                    else if (green == 255) {
+                    } else if (green == 255) {
                         
                         moveGreenColorValueDown = true;
                     }
@@ -280,19 +272,16 @@ public class NoiseManager {
                     if (blue > 0) {
                         
                         blue -= blueModificationAmount;
-                    }
-                    else if (blue == 0) {
+                    } else if (blue == 0) {
                         
                         moveBlueColorValueDown = false;
                     }
-                }
-                else {
+                } else {
                     
                     if (blue < 255) {
                         
                         blue += blueModificationAmount;
-                    }
-                    else if (blue == 255) {
+                    } else if (blue == 255) {
                         
                         moveBlueColorValueDown = true;
                     }
@@ -300,24 +289,21 @@ public class NoiseManager {
                 if (red > 255) {
                     
                     red = 255;
-                }
-                else if (red < 0) {
+                } else if (red < 0) {
                     
                     red = 0;
                 }
                 if (green > 255) {
                     
                     green = 255;
-                }
-                else if (green < 0) {
+                } else if (green < 0) {
                     
                     green = 0;
                 }
                 if (blue > 255) {
                     
                     blue = 255;
-                }
-                else if (blue < 0) {
+                } else if (blue < 0) {
                     
                     blue = 0;
                 }

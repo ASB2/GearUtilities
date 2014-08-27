@@ -3,8 +3,8 @@ package GU.api.power;
 import net.minecraft.nbt.NBTTagCompound;
 import GU.api.EnumSimulationType;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
+import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
-import GU.api.power.PowerNetAbstract.*;
 
 public class PowerNetObject {
     

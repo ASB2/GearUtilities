@@ -34,16 +34,14 @@ public class TileCreativeItem extends TileBase implements IInventory {
                         if (tile instanceof ISidedInventory) {
                             
                             UtilInventory.addItemStackToISidedInventory((ISidedInventory) tile, direction, toDuplicate, true);
-                        }
-                        else if (tile instanceof IInventory) {
+                        } else if (tile instanceof IInventory) {
                             
                             UtilInventory.addItemStackToInventory((IInventory) tile, toDuplicate, true);
                         }
                     }
                 }
             }
-        }
-        else {
+        } else {
             
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 
@@ -56,19 +54,16 @@ public class TileCreativeItem extends TileBase implements IInventory {
                         if (toDuplicate != null) {
                             
                             UtilInventory.removeItemStackFromISidedInventory((ISidedInventory) tile, direction, toDuplicate, toDuplicate.stackSize, true);
-                        }
-                        else {
+                        } else {
                             
                             UtilInventory.moveEntireISidedInventory((ISidedInventory) tile, direction, this);
                         }
-                    }
-                    else if (tile instanceof IInventory) {
+                    } else if (tile instanceof IInventory) {
                         
                         if (toDuplicate != null) {
                             
                             UtilInventory.removeItemStackFromInventory((IInventory) tile, toDuplicate, toDuplicate.stackSize, true);
-                        }
-                        else {
+                        } else {
                             
                             UtilInventory.moveEntireInventory((IInventory) tile, this);
                         }

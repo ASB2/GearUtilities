@@ -88,8 +88,7 @@ public enum EnumMultiBlockType {
                     
                     if (tile instanceof IMultiBlockPart) {
                         
-                    }
-                    else if (tile instanceof IMultiBlockMarker) {
+                    } else if (tile instanceof IMultiBlockMarker) {
                         
                         if (direction.offsetX > 0) {
                             
@@ -166,8 +165,7 @@ public enum EnumMultiBlockType {
                         // Math.abs(direction.offsetZ * distance));
                         // markers[direction.ordinal()] = new Vector3i(x, y, z);
                         break;
-                    }
-                    else if (!UtilBlock.isBlockAir(world, x, y, z)) {
+                    } else if (!UtilBlock.isBlockAir(world, x, y, z)) {
                         
                         break;
                     }

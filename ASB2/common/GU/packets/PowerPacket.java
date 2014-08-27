@@ -1,8 +1,8 @@
 package GU.packets;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
+import GU.GearUtilities;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
@@ -57,7 +57,7 @@ public class PowerPacket implements IMessageHandler<PowerPacket, PowerPacket>, I
     @Override
     public PowerPacket onMessage(PowerPacket message, MessageContext ctx) {
         
-        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
+        TileEntity tile = GearUtilities.proxy.getClientWorld().getTileEntity(message.x, message.y, message.z);
         
         if (tile != null && tile instanceof ITilePowerHandler) {
             

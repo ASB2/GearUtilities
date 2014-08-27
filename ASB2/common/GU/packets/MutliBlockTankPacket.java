@@ -1,12 +1,12 @@
 package GU.packets;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import ASB2.utils.UtilVector;
+import GU.GearUtilities;
 import GU.blocks.containers.BlockMultiPart.TileMultiPartRender;
 import GU.multiblock.clientState.MultiBlockClientState;
 import GU.multiblock.clientState.MultiBlockTankClientState;
@@ -51,8 +51,7 @@ public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacke
             buf.writeInt(tank.getFluidAmount());
             buf.writeInt(tank.getCapacity());
             ByteBufUtils.writeTag(buf, tank.getFluid().tag);
-        }
-        else {
+        } else {
             
             buf.writeInt(-1);
         }
@@ -80,7 +79,7 @@ public class MutliBlockTankPacket implements IMessageHandler<MutliBlockTankPacke
     @Override
     public MutliBlockTankPacket onMessage(MutliBlockTankPacket message, MessageContext ctx) {
         
-        TileEntity tile = UtilVector.getTileAtPostion(Minecraft.getMinecraft().theWorld, message.renderHandler);
+        TileEntity tile = UtilVector.getTileAtPostion(GearUtilities.proxy.getClientWorld(), message.renderHandler);
         
         if (tile != null && tile instanceof TileMultiPartRender) {
             

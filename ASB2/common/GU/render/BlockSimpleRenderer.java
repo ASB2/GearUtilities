@@ -45,8 +45,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
                 if (color != null) {
                     
                     UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon, color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-                }
-                else
+                } else
                     UtilRender.renderStandardInvBlock(renderer, block, NoiseManager.instance.blockNoiseIcon, 255, 255, 255, 255);
             }
         }

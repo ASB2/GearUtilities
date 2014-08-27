@@ -31,6 +31,7 @@ public class BlockBase extends Block {
         
     }
     
+    @SideOnly(Side.CLIENT)
     public void postInitRender() {
         
     }
@@ -108,7 +109,7 @@ public class BlockBase extends Block {
     
     @Override
     public IIcon getIcon(int p_149691_1_, int p_149691_2_) {
-        // TODO Auto-generated method stub
+        
         return NoiseManager.instance.blockNoiseIcon;
     }
 }

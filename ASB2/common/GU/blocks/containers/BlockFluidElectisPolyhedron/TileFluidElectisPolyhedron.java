@@ -33,7 +33,8 @@ public class TileFluidElectisPolyhedron extends TileBase implements IWrenchable 
     @Override
     public void updateEntity() {
         
-        if (!worldObj.isRemote) movementTimer.update();
+        if (!worldObj.isRemote)
+            movementTimer.update();
     }
     
     @Override
@@ -96,8 +97,7 @@ public class TileFluidElectisPolyhedron extends TileBase implements IWrenchable 
                                 }
                             }
                         }
-                    }
-                    else {
+                    } else {
                         
                     }
                     
@@ -106,8 +106,7 @@ public class TileFluidElectisPolyhedron extends TileBase implements IWrenchable 
                         if (state != EnumInputIcon.INPUT) {
                             
                             UtilFluid.moveFluid((IFluidHandler) modifyingTile, directionFound, found, directionFound.getOpposite(), 1000, true);
-                        }
-                        else {
+                        } else {
                             
                             UtilFluid.moveFluid(found, directionFound, (IFluidHandler) modifyingTile, directionFound.getOpposite(), 1000, true);
                         }

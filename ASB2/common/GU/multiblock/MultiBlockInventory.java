@@ -23,14 +23,16 @@ public abstract class MultiBlockInventory extends MultiBlockBase implements IInv
     @Override
     public NBTTagCompound save(NBTTagCompound tag) {
         
-        if (inventory != null) tag.setTag("Inventory", inventory.save(new NBTTagCompound()));
+        if (inventory != null)
+            tag.setTag("Inventory", inventory.save(new NBTTagCompound()));
         return super.save(tag);
     }
     
     @Override
     public void load(NBTTagCompound tag) {
         
-        if (inventory != null) inventory.load(tag.getCompoundTag("Inventory"));
+        if (inventory != null)
+            inventory.load(tag.getCompoundTag("Inventory"));
         super.load(tag);
     }
     

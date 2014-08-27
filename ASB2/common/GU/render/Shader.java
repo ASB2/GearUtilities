@@ -66,8 +66,7 @@ public class Shader {
         if (compiled) {
             
             GL20.glUseProgram(shaderPointer);
-        }
-        else {
+        } else {
             
             GearUtilities.log("Shader Error: ".concat(getShaderName()).concat(": Cannot Bind Uncompiled Shader"));
         }
@@ -96,8 +95,7 @@ public class Shader {
             GL20.glAttachShader(this.getShaderPointer(), subProgramID);
             this.subPrograms.add(new ShaderProgram(type).setID(subProgramID).setProgram(text));
             return true;
-        }
-        else {
+        } else {
             
             GearUtilities.log("Shader Error: ".concat(getShaderName()).concat(": Cannot add program to Uncompiled Shader"));
         }
@@ -132,13 +130,11 @@ public class Shader {
                 }
                 compiled = true;
                 return true;
-            }
-            else {
+            } else {
                 
                 GearUtilities.log("Shader Error: ".concat(getShaderName()).concat(": No SubPrograms Installed"));
             }
-        }
-        else {
+        } else {
             
             GearUtilities.log("Shader Error: ".concat(getShaderName()).concat(": Cannot Recompile Shader"));
         }
@@ -223,8 +219,7 @@ public class Shader {
             }
             
             shaderReader.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             
             e.printStackTrace();
             GearUtilities.log("Cannot Load Shader: ".concat(file.toString()));
@@ -250,8 +245,7 @@ public class Shader {
             }
             
             shaderReader.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             
             e.printStackTrace();
             GearUtilities.log("Cannot Load Shader: ".concat(file.toString()));

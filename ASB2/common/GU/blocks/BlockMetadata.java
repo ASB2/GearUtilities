@@ -161,8 +161,7 @@ public class BlockMetadata extends BlockBase {
         if (wrapper != null) {
             
             wrapper.onBlockAdded(world, x, y, z);
-        }
-        else {
+        } else {
             
             super.onBlockAdded(world, x, y, z);
         }
@@ -176,8 +175,7 @@ public class BlockMetadata extends BlockBase {
         if (wrapper != null) {
             
             wrapper.onBlockClicked(world, x, y, z, player);
-        }
-        else {
+        } else {
             
             super.onBlockClicked(world, x, y, z, player);
         }
@@ -315,11 +313,12 @@ public class BlockMetadata extends BlockBase {
         return super.isProvidingWeakPower(world, x, y, z, side);
     }
     
-//    @Override
-//    public boolean shouldCheckWeakPower(IBlockAccess world, int x, int y, int z, int side) {
-//        // TODO Auto-generated method stub
-//        return super.shouldCheckWeakPower(world, x, y, z, side);
-//    }
+    // @Override
+    // public boolean shouldCheckWeakPower(IBlockAccess world, int x, int y, int
+    // z, int side) {
+    // // TODO Auto-generated method stub
+    // return super.shouldCheckWeakPower(world, x, y, z, side);
+    // }
     
     public static class BlockMetadataWrapper {
         
@@ -534,10 +533,11 @@ public class BlockMetadata extends BlockBase {
             return 0;
         }
         
-//        public boolean shouldCheckWeakPower(IBlockAccess world, int x, int y, int z, int side) {
-//            
-//            return 
-//        }
+        // public boolean shouldCheckWeakPower(IBlockAccess world, int x, int y,
+        // int z, int side) {
+        //
+        // return
+        // }
     }
     
     public static class ItemBlockMetadataBlock extends GUItemBlock {
@@ -550,8 +550,7 @@ public class BlockMetadata extends BlockBase {
             if (block instanceof BlockMetadata) {
                 
                 castedBlock = (BlockMetadata) block;
-            }
-            else {
+            } else {
                 
                 throw new IllegalStateException("ItemBlockMetadataBlock takes BlockMetadata as a paramater. Something else was passed");
             }

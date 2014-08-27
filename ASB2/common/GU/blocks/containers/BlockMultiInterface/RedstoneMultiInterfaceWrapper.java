@@ -1,6 +1,5 @@
 package GU.blocks.containers.BlockMultiInterface;
 
-import UC.math.vector.Vector3i;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -8,6 +7,7 @@ import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
 import GU.blocks.BlockMetadata.BlockMetadataWrapper;
 import GU.blocks.containers.TileMultiBase;
+import UC.math.vector.Vector3i;
 
 public class RedstoneMultiInterfaceWrapper extends BlockMetadataWrapper {
     
@@ -22,7 +22,7 @@ public class RedstoneMultiInterfaceWrapper extends BlockMetadataWrapper {
     
     public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
         
-       TileMultiBase tile = (TileMultiBase) world.getTileEntity(x, y, z);
+        TileMultiBase tile = (TileMultiBase) world.getTileEntity(x, y, z);
         
         if (tile != null && !tile.getWorldObj().isRemote && !((TileMultiBase) tile).multiBlocks.isEmpty()) {
             

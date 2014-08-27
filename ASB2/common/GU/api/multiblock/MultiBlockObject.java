@@ -1,6 +1,5 @@
 package GU.api.multiblock;
 
-import UC.math.vector.Vector3i;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -9,6 +8,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
+import UC.math.vector.Vector3i;
 
 public class MultiBlockObject {
     
@@ -59,8 +59,7 @@ public class MultiBlockObject {
                             
                             return true;
                         }
-                    }
-                    else {
+                    } else {
                         
                         return true;
                     }

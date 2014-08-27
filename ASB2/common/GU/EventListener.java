@@ -15,6 +15,8 @@ import UC.VariableIterator;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EventListener {
     
@@ -32,6 +34,7 @@ public class EventListener {
     }
     
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void textureHook(TextureStitchEvent.Pre event) {
         
         if (event.map.getTextureType() == 0) {

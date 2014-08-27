@@ -49,14 +49,12 @@ public class MultiInterfaceWrapper extends BlockMetadataWrapper {
                                     UtilInventory.consumeItemStack(entityplayer.inventory, current, 1);
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             
                             UtilFluid.addFluidToTank(tile, ForgeDirection.getOrientation(side), fluid, true);
                         }
                         return true;
-                    }
-                    else if (FluidContainerRegistry.isEmptyContainer(current)) {
+                    } else if (FluidContainerRegistry.isEmptyContainer(current)) {
                         
                         FluidTankInfo[] infoArray = tile.getTankInfo(ForgeDirection.getOrientation(side));
                         
@@ -79,8 +77,7 @@ public class MultiInterfaceWrapper extends BlockMetadataWrapper {
                                                 UtilInventory.consumeItemStack(entityplayer.inventory, current, 1);
                                                 return true;
                                             }
-                                        }
-                                        else {
+                                        } else {
                                             
                                             UtilFluid.removeFluidFromHandler(tile, ForgeDirection.getOrientation(side), FluidContainerRegistry.getFluidForFilledItem(filled), true);
                                             return true;

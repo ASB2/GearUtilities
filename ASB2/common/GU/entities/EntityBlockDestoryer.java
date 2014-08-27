@@ -37,15 +37,15 @@ public class EntityBlockDestoryer extends EntityBase {
     @Override
     public void onUpdate() {
         
-//        if (!worldObj.isRemote) {
+        // if (!worldObj.isRemote) {
+        
+        if (worldObj.rand.nextInt(5) == 0) {
             
-            if (worldObj.rand.nextInt(5) == 0) {
-                
-                Vector3i positionFloor = position.toVector3iFloor();
-                
-                UtilBlock.breakBlock(worldObj, positionFloor.getX(), positionFloor.getY(), positionFloor.getZ());
-                this.setDead();
-//            }
+            Vector3i positionFloor = position.toVector3iFloor();
+            
+            UtilBlock.breakBlock(worldObj, positionFloor.getX(), positionFloor.getY(), positionFloor.getZ());
+            this.setDead();
+            // }
             
             // position.move(direction.offsetX, direction.offsetY,
             // direction.offsetZ);

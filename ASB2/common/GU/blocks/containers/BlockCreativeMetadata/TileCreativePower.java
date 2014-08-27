@@ -38,8 +38,7 @@ public class TileCreativePower extends TileBase implements ITilePowerHandler, IC
             
             manager.setPowerStored(manager.getMaxPower());
             attribute.setPowerStatus(EnumPowerStatus.SOURCE);
-        }
-        else {
+        } else {
             
             manager.setPowerStored(0);
             attribute.setPowerStatus(EnumPowerStatus.SINK);
@@ -62,12 +61,10 @@ public class TileCreativePower extends TileBase implements ITilePowerHandler, IC
                     if (tile instanceof ICrystalPowerHandler) {
                         
                         manager = ((ICrystalPowerHandler) tile).getPowerManager();
-                    }
-                    else if (tile instanceof ITilePowerHandler) {
+                    } else if (tile instanceof ITilePowerHandler) {
                         
                         manager = ((ITilePowerHandler) tile).getPowerManager();
-                    }
-                    else if (tile instanceof IBlockPowerHandler) {
+                    } else if (tile instanceof IBlockPowerHandler) {
                         
                         manager = ((IBlockPowerHandler) tile).getPowerManager(worldObj, xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ);
                     }
@@ -79,8 +76,7 @@ public class TileCreativePower extends TileBase implements ITilePowerHandler, IC
                         if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
                             
                             UtilPower.addPower(manager, powerToMove, EnumSimulationType.LIGITIMATE);
-                        }
-                        else {
+                        } else {
                             
                             UtilPower.removePower(manager, powerToMove, EnumSimulationType.LIGITIMATE);
                         }

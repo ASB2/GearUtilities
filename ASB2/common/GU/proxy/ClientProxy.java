@@ -3,7 +3,9 @@ package GU.proxy;
 import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
+import net.minecraft.world.World;
 import GU.BlockRegistry;
 import GU.ItemRegistry;
 import GU.blocks.BlockBase;
@@ -12,6 +14,7 @@ import GU.items.ItemBase;
 import GU.render.BlockSimpleRenderer;
 import GU.render.noise.NoiseManager;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 
 public class ClientProxy extends CommonProxy {
     
@@ -20,6 +23,11 @@ public class ClientProxy extends CommonProxy {
         
         Models.initModels();
         NoiseManager.instance.initImage();
+        FMLCommonHandler.instance().bus().register(NoiseManager.instance);
+        
+    }
+    
+    public void registerRendereres() {
         
         RenderingRegistry.registerBlockHandler(BlockSimpleRenderer.instance);
         
@@ -38,5 +46,10 @@ public class ClientProxy extends CommonProxy {
                 ((BlockBase) entry.getValue()).postInitRender();
             }
         }
+    }
+    
+    public World getClientWorld() {
+        
+        return Minecraft.getMinecraft().theWorld;
     }
 }

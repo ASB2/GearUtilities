@@ -48,8 +48,7 @@ public abstract class ConstructionManager {
         if (isConstructing && !isConstructionFinished) {
             
             updateDuringConstruction();
-        }
-        else if (isDeconstructing && !finishedDeconstructing) {
+        } else if (isDeconstructing && !finishedDeconstructing) {
             
             updateDuringDestruction();
         }

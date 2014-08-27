@@ -5,7 +5,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import GU.blocks.*;
+import GU.blocks.BlockBase;
 
 public abstract class BlockContainerBase extends BlockBase implements ITileEntityProvider {
     

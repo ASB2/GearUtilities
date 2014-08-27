@@ -87,16 +87,16 @@ public class MultiBlockFlame extends MultiBlockBase implements IFluidMultiBlock,
     
     @Override
     public void logicUpdate() {
-
-        if(!this.input.isEmpty()) {
+        
+        if (!this.input.isEmpty()) {
             
-            for(Entry<Integer, ItemStack> entry : input.getItemArray().entrySet()) {
+            for (Entry<Integer, ItemStack> entry : input.getItemArray().entrySet()) {
                 
-                if(entry.getValue() != null) {
+                if (entry.getValue() != null) {
                     
-//                    if() {
-//                        
-//                    }
+                    // if() {
+                    //
+                    // }
                 }
             }
         }
@@ -111,20 +111,28 @@ public class MultiBlockFlame extends MultiBlockBase implements IFluidMultiBlock,
     @Override
     public NBTTagCompound save(NBTTagCompound tag) {
         
-        if (fuelTank != null) tag.setTag("fuelTank", fuelTank.save(new NBTTagCompound()));
-        if (outputTank != null) tag.setTag("outputTank", outputTank.save(new NBTTagCompound()));
-        if (input != null) tag.setTag("input", input.save(new NBTTagCompound()));
-        if (output != null) tag.setTag("output", output.save(new NBTTagCompound()));
+        if (fuelTank != null)
+            tag.setTag("fuelTank", fuelTank.save(new NBTTagCompound()));
+        if (outputTank != null)
+            tag.setTag("outputTank", outputTank.save(new NBTTagCompound()));
+        if (input != null)
+            tag.setTag("input", input.save(new NBTTagCompound()));
+        if (output != null)
+            tag.setTag("output", output.save(new NBTTagCompound()));
         return super.save(tag);
     }
     
     @Override
     public void load(NBTTagCompound tag) {
         
-        if (fuelTank != null) fuelTank.load(tag.getCompoundTag("fuelTank"));
-        if (outputTank != null) outputTank.load(tag.getCompoundTag("outputTank"));
-        if (input != null) input.load(tag.getCompoundTag("input"));
-        if (output != null) output.load(tag.getCompoundTag("output"));
+        if (fuelTank != null)
+            fuelTank.load(tag.getCompoundTag("fuelTank"));
+        if (outputTank != null)
+            outputTank.load(tag.getCompoundTag("outputTank"));
+        if (input != null)
+            input.load(tag.getCompoundTag("input"));
+        if (output != null)
+            output.load(tag.getCompoundTag("output"));
         
         super.load(tag);
     }

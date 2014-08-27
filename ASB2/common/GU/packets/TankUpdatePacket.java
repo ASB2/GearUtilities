@@ -1,11 +1,11 @@
 package GU.packets;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import GU.GearUtilities;
 import GU.blocks.containers.TileBase;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -65,8 +65,7 @@ public class TankUpdatePacket implements IMessageHandler<TankUpdatePacket, TankU
             buf.writeInt(tank.getFluidAmount());
             buf.writeInt(tank.getCapacity());
             ByteBufUtils.writeTag(buf, tank.getFluid().tag);
-        }
-        else {
+        } else {
             
             buf.writeInt(-1);
         }
@@ -77,7 +76,7 @@ public class TankUpdatePacket implements IMessageHandler<TankUpdatePacket, TankU
     @Override
     public TankUpdatePacket onMessage(TankUpdatePacket message, MessageContext ctx) {
         
-        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
+        TileEntity tile = GearUtilities.proxy.getClientWorld().getTileEntity(message.x, message.y, message.z);
         
         if (tile != null && tile instanceof TileBase) {
             

@@ -73,8 +73,7 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                             if (side == EnumInputIcon.INPUT) {
                                 
                                 UtilInventory.moveEntireISidedInventory((ISidedInventory) tile, direction, this);
-                            }
-                            else
+                            } else
                                 UtilInventory.moveEntireISidedInventory(this, direction, (ISidedInventory) tile);
                         }
                         
@@ -83,8 +82,7 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                             if (side == EnumInputIcon.INPUT) {
                                 
                                 UtilInventory.moveEntireInventory((IInventory) tile, this);
-                            }
-                            else
+                            } else
                                 UtilInventory.moveEntireInventory(this, (IInventory) tile);
                         }
                     }
@@ -157,7 +155,8 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
         
         for (EnumInputIcon state : sideState) {
             
-            if (state != null) tag.setInteger("state" + side, state.ordinal());
+            if (state != null)
+                tag.setInteger("state" + side, state.ordinal());
             side++;
         }
         super.writeToNBT(tag);
@@ -176,7 +175,8 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
     @Override
     public void sendUpdatePacket() {
         
-        if (!worldObj.isRemote) GearUtilities.getPipeline().sendToDimension(new EnumInputIconPacket(xCoord, yCoord, zCoord, sideState), worldObj.provider.dimensionId);
+        if (!worldObj.isRemote)
+            GearUtilities.getPipeline().sendToDimension(new EnumInputIconPacket(xCoord, yCoord, zCoord, sideState), worldObj.provider.dimensionId);
         super.sendUpdatePacket();
     }
     
@@ -238,8 +238,7 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                 }
             }
             maxSizeInventory = lastSlotMin;
-        }
-        else {
+        } else {
             
             int minSlot = 0;
             maxSizeInventory = 0;

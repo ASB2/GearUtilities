@@ -1,9 +1,9 @@
 package GU.packets;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+import GU.GearUtilities;
 import GU.render.EnumInputIcon;
 import GU.render.IEnumInputIcon;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -59,7 +59,7 @@ public class EnumInputIconPacket implements IMessageHandler<EnumInputIconPacket,
     @Override
     public EnumInputIconPacket onMessage(EnumInputIconPacket message, MessageContext ctx) {
         
-        TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
+        TileEntity tile = GearUtilities.proxy.getClientWorld().getTileEntity(message.x, message.y, message.z);
         
         if (tile != null && tile instanceof IEnumInputIcon) {
             

@@ -5,6 +5,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import GU.GearUtilities;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBase extends Item {
     
@@ -18,6 +20,7 @@ public class ItemBase extends Item {
     public void postInit() {
     }
     
+    @SideOnly(Side.CLIENT)
     public void postInitRender() {
     }
     

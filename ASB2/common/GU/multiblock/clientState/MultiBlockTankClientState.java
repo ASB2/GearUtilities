@@ -93,8 +93,7 @@ public class MultiBlockTankClientState extends MultiBlockClientState {
                 double density = ((tank.getFluidAmount() / (double) tank.getCapacity()) * 1) + .15;
                 scaledHeight = (ySize - 1) + .01;
                 GL11.glColor4d(1, 1, 1, density);
-            }
-            else {
+            } else {
                 
                 GL11.glColor4d(1, 1, 1, .93);
             }

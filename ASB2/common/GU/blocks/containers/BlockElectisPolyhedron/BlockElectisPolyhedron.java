@@ -8,6 +8,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import GU.blocks.containers.BlockContainerBase;
 import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockElectisPolyhedron extends BlockContainerBase {
     
@@ -17,6 +19,7 @@ public class BlockElectisPolyhedron extends BlockContainerBase {
     }
     
     @Override
+    @SideOnly(Side.CLIENT)
     public void postInitRender() {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileElectisPolyhedron.class, ElectisPolyhedronRenderer.instance);

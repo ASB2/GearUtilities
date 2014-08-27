@@ -58,12 +58,10 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
             if (((int) size.getY() / 3) > relativeVector.getY()) {
                 
                 return outputInventory;
-            }
-            else if (((int) size.getY() / 3) < relativeVector.getY() && relativeVector.getY() > ((int) size.getY() / 3) * 2) {
+            } else if (((int) size.getY() / 3) < relativeVector.getY() && relativeVector.getY() > ((int) size.getY() / 3) * 2) {
                 
                 return fuelInventory;
-            }
-            else {
+            } else {
                 
                 return toBeSmelted;
             }
@@ -166,10 +164,14 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     @Override
     public NBTTagCompound save(NBTTagCompound tag) {
         
-        if (fuelTank != null) tag.setTag("fuelTank", fuelTank.save(new NBTTagCompound()));
-        if (fuelInventory != null) tag.setTag("fuelInventory", fuelInventory.save(new NBTTagCompound()));
-        if (toBeSmelted != null) tag.setTag("toBeSmelted", toBeSmelted.save(new NBTTagCompound()));
-        if (outputInventory != null) tag.setTag("outputInventory", outputInventory.save(new NBTTagCompound()));
+        if (fuelTank != null)
+            tag.setTag("fuelTank", fuelTank.save(new NBTTagCompound()));
+        if (fuelInventory != null)
+            tag.setTag("fuelInventory", fuelInventory.save(new NBTTagCompound()));
+        if (toBeSmelted != null)
+            tag.setTag("toBeSmelted", toBeSmelted.save(new NBTTagCompound()));
+        if (outputInventory != null)
+            tag.setTag("outputInventory", outputInventory.save(new NBTTagCompound()));
         
         tag.setInteger("currentFuel", currentFuel);
         tag.setInteger("cookTimer", cookTimer);
@@ -180,10 +182,14 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     @Override
     public void load(NBTTagCompound tag) {
         
-        if (fuelTank != null) fuelTank.load(tag.getCompoundTag("fuelTank"));
-        if (fuelInventory != null) fuelInventory.load(tag.getCompoundTag("fuelInventory"));
-        if (toBeSmelted != null) toBeSmelted.load(tag.getCompoundTag("toBeSmelted"));
-        if (outputInventory != null) outputInventory.load(tag.getCompoundTag("outputInventory"));
+        if (fuelTank != null)
+            fuelTank.load(tag.getCompoundTag("fuelTank"));
+        if (fuelInventory != null)
+            fuelInventory.load(tag.getCompoundTag("fuelInventory"));
+        if (toBeSmelted != null)
+            toBeSmelted.load(tag.getCompoundTag("toBeSmelted"));
+        if (outputInventory != null)
+            outputInventory.load(tag.getCompoundTag("outputInventory"));
         
         currentFuel = tag.getInteger("currentFuel");
         cookTimer = tag.getInteger("cookTimer");

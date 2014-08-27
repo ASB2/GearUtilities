@@ -16,7 +16,7 @@ public abstract class WorldGenBase implements IWorldGenerator {
             for (int index = 0; index < generationsPerChunk(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider); index++) {
                 
                 int x = (chunkX * 16) + random.nextInt(16);
-                int y = random.nextInt(1000);
+                int y = random.nextInt(100) + 1;
                 int z = (chunkZ * 16) + random.nextInt(16);
                 
                 generate(world, random, x, y, z);
