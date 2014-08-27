@@ -24,45 +24,27 @@ public final class Models {
     public static WavefrontObject ModelConduit;
     public static WavefrontObject ModelMultiDirectionalConduit;
     
-    private static final ResourceLocation MULTI_PANEL = new ResourceLocation(Reference.MOD_ID + ":models/ModelMultiPanel.obj");
-    private static final ResourceLocation CRYSTAL_1 = new ResourceLocation(Reference.MOD_ID + ":models/ModelCrystal1.obj");
-    private static final ResourceLocation ESSENCE_DIFFUSER = new ResourceLocation(Reference.MOD_ID + ":models/ModelEssenceDiffuser.obj");
-    private static final ResourceLocation CENTRIFUGE = new ResourceLocation(Reference.MOD_ID + ":models/ModelCentrifuge.obj");
-    private static final ResourceLocation ELEMENTAL_REFINERY = new ResourceLocation(Reference.MOD_ID + ":models/ModelElementalRefinery.obj");
-    private static final ResourceLocation FLAME_FOCUS = new ResourceLocation(Reference.MOD_ID + ":models/ModelFlameFocus.obj");
-    private static final ResourceLocation FLAME_ALTAR = new ResourceLocation(Reference.MOD_ID + ":models/ModelFlameAltar.obj");
-    public static final ResourceLocation GLASS_PIPE = new ResourceLocation(Reference.MOD_ID + ":models/ModelGlassPipe.obj");
-    public static final ResourceLocation GYRO = new ResourceLocation(Reference.MOD_ID + ":models/ModelGyro.obj");
-    public static final ResourceLocation FLAME_SHARD = new ResourceLocation(Reference.MOD_ID + ":models/ModelFlameShard.obj");
-    public static final ResourceLocation FLAME_CONDUIT = new ResourceLocation(Reference.MOD_ID + ":models/ModelFlameConduit.obj");
-    public static final ResourceLocation CRYSTAL_2 = new ResourceLocation(Reference.MOD_ID + ":models/ModelCrystal2.obj");
-    public static final ResourceLocation RHOMBICUBOCTAHEDRON = new ResourceLocation(Reference.MOD_ID + ":models/ModelRhombicuboctahedron.obj");
-    public static final ResourceLocation ADVANCED_STICK = new ResourceLocation(Reference.MOD_ID + ":models/ModelAdvancedStick.obj");
-    public static final ResourceLocation UTILITIY_TABLET = new ResourceLocation(Reference.MOD_ID + ":models/ModelUtilityTablet.obj");
-    public static final ResourceLocation CONDUIT = new ResourceLocation(Reference.MOD_ID + ":models/ModelConduit.obj");
-    public static final ResourceLocation MULTI_DIRECTIONAL_CONDUIT = new ResourceLocation(Reference.MOD_ID + ":models/ModelMultiDirectionalConduit.obj");
-    
     private Models() {
     }
     
     public static void initModels() {
         
-        ModelMultiPanel = (WavefrontObject) AdvancedModelLoader.loadModel(Models.MULTI_PANEL);
-        ModelCrystal1 = (WavefrontObject) AdvancedModelLoader.loadModel(Models.CRYSTAL_1);
-        ModelEssenceDiffuser = (WavefrontObject) AdvancedModelLoader.loadModel(Models.ESSENCE_DIFFUSER);
-        ModelCentrifgue = (WavefrontObject) AdvancedModelLoader.loadModel(Models.CENTRIFUGE);
-        ModelElementalRefinery = (WavefrontObject) AdvancedModelLoader.loadModel(Models.ELEMENTAL_REFINERY);
-        ModelFlameFocus = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_FOCUS);
-        ModelFlameAltar = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_ALTAR);
-        ModelGlassPipe = (WavefrontObject) AdvancedModelLoader.loadModel(Models.GLASS_PIPE);
-        ModelGyro = (WavefrontObject) AdvancedModelLoader.loadModel(Models.GYRO);
-        ModelElectisShard = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_SHARD);
-        ModelFlameConduit = (WavefrontObject) AdvancedModelLoader.loadModel(Models.FLAME_CONDUIT);
-        ModelCrystal2 = (WavefrontObject) AdvancedModelLoader.loadModel(Models.CRYSTAL_2);
-        ModelRhombicuboctahedron = (WavefrontObject) AdvancedModelLoader.loadModel(Models.RHOMBICUBOCTAHEDRON);
-        ModelAdvancedStick = (WavefrontObject) AdvancedModelLoader.loadModel(Models.ADVANCED_STICK);
-        ModelUtilityTablet = (WavefrontObject) AdvancedModelLoader.loadModel(Models.UTILITIY_TABLET);
-        ModelConduit = (WavefrontObject) AdvancedModelLoader.loadModel(Models.CONDUIT);
-        ModelMultiDirectionalConduit = (WavefrontObject) AdvancedModelLoader.loadModel(Models.MULTI_DIRECTIONAL_CONDUIT);
+        ModelMultiPanel = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelMultiPanel.obj"));
+        ModelCrystal1 = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelCrystal1.obj"));
+        ModelEssenceDiffuser = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelEssenceDiffuser.obj"));
+        ModelCentrifgue = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelCentrifuge.obj"));
+        ModelElementalRefinery = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelElementalRefinery.obj"));
+        ModelFlameFocus = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelFlameFocus.obj"));
+        ModelFlameAltar = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelFlameAltar.obj"));
+        ModelGlassPipe = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelGlassPipe.obj"));
+        ModelGyro = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelGyro.obj"));
+        ModelElectisShard = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelFlameShard.obj"));
+        ModelFlameConduit = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelFlameConduit.obj"));
+        ModelCrystal2 = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelCrystal2.obj"));
+        ModelRhombicuboctahedron = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelRhombicuboctahedron.obj"));
+        ModelAdvancedStick = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelAdvancedStick.obj"));
+        ModelUtilityTablet = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelUtilityTablet.obj"));
+        ModelConduit = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelConduit.obj"));
+        ModelMultiDirectionalConduit = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelMultiDirectionalConduit.obj"));
     }
 }

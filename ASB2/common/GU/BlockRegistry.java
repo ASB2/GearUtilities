@@ -17,6 +17,7 @@ import GU.blocks.BlockStructureCube;
 import GU.blocks.containers.BlockConduit.BlockConduit;
 import GU.blocks.containers.BlockCreativeMetadata.BlockCreativeMetadata;
 import GU.blocks.containers.BlockCreativeMetadata.CreativeMetadataWrapper;
+import GU.blocks.containers.BlockDrill.BlockDrill;
 import GU.blocks.containers.BlockElectisPolyhedron.BlockElectisPolyhedron;
 import GU.blocks.containers.BlockFluidElectisPolyhedron.BlockFluidElectisPolyhedron;
 import GU.blocks.containers.BlockItemElectisPolyhedron.BlockItemElectisPolyhedron;
@@ -30,6 +31,7 @@ import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartGlass;
 import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender;
 import GU.blocks.containers.BlockPhotonSender.BlockPhotonSender;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpatialProvider;
+import GU.blocks.containers.BlockTeleportAlter.BlockTeleportAlter;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -119,6 +121,10 @@ public class BlockRegistry {
     
     public static final BlockMultiDirectionalConduit MULTI_DIRECTIONAL_CONDUIT = new BlockMultiDirectionalConduit(Material.rock);
     
+    public static final BlockTeleportAlter TELEPORT_ALTER = new BlockTeleportAlter(Material.rock);
+    
+    public static final BlockDrill DRILL = new BlockDrill(Material.rock);
+    
     static {
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMetadataOre"), METADATA_ORE.setBlockName("MetadataOre"));
@@ -143,6 +149,8 @@ public class BlockRegistry {
         customBlockMap.put(Reference.MOD_ID.concat(":BlockFluidElectisPolyhedron"), FLUID_ELECTIS_POLYHEDRON.setBlockName("Fluid Electis Polyhedron"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockConduit"), CONDUIT.setBlockName("Conduit"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiDirectionalConduit"), MULTI_DIRECTIONAL_CONDUIT.setBlockName("Multi Directional Conduit"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockTeleportAlter"), TELEPORT_ALTER.setBlockName("Teleport Alter"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockDrill"), DRILL.setBlockName("Drill"));
     }
     
     public static void init(Configuration config) {

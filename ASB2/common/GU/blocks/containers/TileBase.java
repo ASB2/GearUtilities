@@ -5,6 +5,8 @@ import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
+import GU.GearUtilities;
+import GU.packets.NBTPacket;
 
 public class TileBase extends TileEntity {
     
@@ -13,6 +15,16 @@ public class TileBase extends TileEntity {
     public TileBase() {
         
         orientation = ForgeDirection.UP;
+    }
+    
+    public void readNBTPacket(NBTTagCompound tag, int id) {
+        
+    }
+    
+    public void sendNBTPacket(NBTTagCompound tag, int id) {
+        
+        if (!worldObj.isRemote)
+            GearUtilities.getPipeline().sendToDimension(new NBTPacket(xCoord, yCoord, zCoord, tag, id), worldObj.provider.dimensionId);
     }
     
     public ForgeDirection getOrientation() {

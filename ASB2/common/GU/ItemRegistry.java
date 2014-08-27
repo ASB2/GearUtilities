@@ -24,6 +24,7 @@ import GU.items.ItemMetadata;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
 import GU.items.ItemRenderers.GarnetRenderer;
 import GU.items.TeleporterWrapper;
+import GU.items.TeleporterWrapper.TeleporterRenderer;
 import GU.items.UtilityTabletWrapper;
 import GU.items.UtilityTabletWrapper.UtilityTabletRenderer;
 import GU.utils.UtilGU;
@@ -92,7 +93,7 @@ public final class ItemRegistry {
         METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Garnet").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Electis Controler").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new GearReaderWrapper("Gear Reader").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.addWrapper(new TeleporterWrapper("Teleporter").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.addWrapper(new TeleporterWrapper("Teleporter").setRenderer(TeleporterRenderer.instance));
         METADATA_ITEM.addWrapper(new AdvancedStickWrapper("Advanced Stick"));
         METADATA_ITEM.addWrapper(new DestructorWrapper("Destructor").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new UtilityTabletWrapper("Utility Tablet").setRenderer(UtilityTabletRenderer.instance));

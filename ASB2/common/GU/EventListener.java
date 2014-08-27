@@ -60,7 +60,7 @@ public class EventListener {
         
         if (event.target instanceof EntityPlayer) {
             
-            ItemStack stack = ((EntityPlayer) event.target).getCurrentEquippedItem();
+            ItemStack stack = ((EntityPlayer) event.target).inventory.getCurrentItem();
             
             if (stack != null && stack.getItem() == ItemRegistry.METADATA_ITEM && stack.getItemDamage() == 0) {
                 

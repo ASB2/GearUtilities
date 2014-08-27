@@ -76,14 +76,6 @@ public class CraftRegistry {
         
         'I', BlockRegistry.ELECTIS_POLYHEDRON, 'E', new ItemStack(BlockRegistry.MULTI_INTERFACE, 1, 1) }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.CONDUIT, 4, 0), new Object[] { "SAS", "IEI", "SAS",
-        
-        'I', Items.iron_ingot, 'S', Reference.STRUCTURE_CUBE_OREDIC, 'A', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 4), 'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 0) }));
-        
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_DIRECTIONAL_CONDUIT, 4, 0), new Object[] { "CIC", "ISI", "CIC",
-        
-        'I', Items.iron_ingot, 'S', Reference.STRUCTURE_CUBE_OREDIC, 'C', BlockRegistry.CONDUIT }));
-        
         for (VanillaColor color : VanillaColor.values()) {
             
             if (color != VanillaColor.NONE) {
@@ -91,5 +83,23 @@ public class CraftRegistry {
                 GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(color.ordinal()), 1), Reference.STRUCTURE_CUBE_OREDIC, color.getVinillaDye()));
             }
         }
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.CONDUIT, 4, 0), new Object[] { "SAS", "IEI", "SAS",
+        
+        'I', Items.iron_ingot, 'S', Reference.STRUCTURE_CUBE_OREDIC, 'A', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 5), 'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 0) }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_DIRECTIONAL_CONDUIT, 4, 0), new Object[] { "CIC", "ISI", "CIC",
+        
+        'I', Items.iron_ingot, 'S', Reference.STRUCTURE_CUBE_OREDIC, 'C', BlockRegistry.CONDUIT }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.METADATA_ITEM, 1, 4), new Object[] { "ISI", "SES", "ISI",
+        
+        'I', Items.iron_ingot, 'S', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 5), 'E', Items.ender_pearl }));
+        
+        GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.METADATA_ITEM, 1, 4), new ItemStack(ItemRegistry.METADATA_ITEM, 1, 4));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.TELEPORT_ALTER, new Object[] { "SES", "EPE", "SES",
+        
+        'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 0), 'S', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 5), 'P', Items.ender_pearl }));
     }
 }
