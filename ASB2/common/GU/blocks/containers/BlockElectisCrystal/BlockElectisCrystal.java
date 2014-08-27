@@ -53,7 +53,7 @@ public class BlockElectisCrystal extends BlockContainerBase {
     }
     
     @Override
-    public void postInit() {
+    public void postInitRender() {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileElectisCrystal.class, ElectisCrystalRenderer.instance);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(this), ElectisCrystalRenderer.instance);

@@ -47,7 +47,20 @@ public class ItemMetadata extends ItemBase {
     @Override
     public void postInit() {
         
+        for (Entry<Integer, ItemMetadataWrapper> entry : wrappers.entrySet()) {
+            
+            entry.getValue().postInit();
+        }
+    }
+    
+    public void postInitRender() {
+        
         MinecraftForgeClient.registerItemRenderer(this, ItemMetadataRenderer.instance);
+        
+        for (Entry<Integer, ItemMetadataWrapper> entry : wrappers.entrySet()) {
+            
+            entry.getValue().postInitRender();
+        }
     }
     
     @Override
@@ -197,6 +210,14 @@ public class ItemMetadata extends ItemBase {
         
         public ItemMetadataWrapper() {
             // TODO Auto-generated constructor stub
+        }
+        
+        public void postInit() {
+            
+        }
+        
+        public void postInitRender() {
+            
         }
         
         public ItemMetadataWrapper setItem(ItemMetadata item) {

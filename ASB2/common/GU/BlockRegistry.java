@@ -37,7 +37,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockRegistry {
     
-    private static final Map<String, Block> customBlockMap = new HashMap<String, Block>();
+    public static final Map<String, Block> customBlockMap = new HashMap<String, Block>();
     
     public static final BlockMetadata METADATA_ORE = new BlockMetadata(Material.rock) {
         

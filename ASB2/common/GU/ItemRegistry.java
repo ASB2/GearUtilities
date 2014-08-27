@@ -15,32 +15,32 @@ import net.minecraftforge.fluids.Fluid;
 import GU.info.Reference;
 import GU.items.AdvancedStickWrapper;
 import GU.items.DestructorWrapper;
-import GU.items.ElectisShard.ElectisCrystalShardRenderer;
-import GU.items.ElectisShard.ElectisShardWrapper;
-import GU.items.FluidCrystalArrayRenderer;
+import GU.items.ElectisShardWrapper;
 import GU.items.GearReaderWrapper;
 import GU.items.ItemBase;
 import GU.items.ItemMetadata;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
+import GU.items.ItemRenderers.FluidCrystalArrayRenderer;
 import GU.items.ItemRenderers.GarnetRenderer;
 import GU.items.TeleporterWrapper;
-import GU.items.TeleporterWrapper.TeleporterRenderer;
 import GU.items.UtilityTabletWrapper;
-import GU.items.UtilityTabletWrapper.UtilityTabletRenderer;
 import GU.utils.UtilGU;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public final class ItemRegistry {
     
-    private static final Map<String, Item> customItemMap = new HashMap<String, Item>();
+    public static final Map<String, Item> customItemMap = new HashMap<String, Item>();
     
     public static final ItemMetadata METADATA_ITEM = new ItemMetadata();
     public static final ItemBase ITEM_FLUID = new ItemBase() {
         
         public void postInit() {
+            setCreativeTab(GearUtilities.tabGUFluids);
+        };
+        
+        public void postInitRender() {
             
             MinecraftForgeClient.registerItemRenderer(this, FluidCrystalArrayRenderer.instance);
-            setCreativeTab(GearUtilities.tabGUFluids);
         };
         
         @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
@@ -89,14 +89,14 @@ public final class ItemRegistry {
         customItemMap.put(Reference.MOD_ID.concat(":ItemMetadata"), METADATA_ITEM);
         customItemMap.put(Reference.MOD_ID.concat(":ItemMetadataFluid"), ITEM_FLUID);
         
-        METADATA_ITEM.addWrapper(new ElectisShardWrapper("Electis Crystal Shard").setRenderer(ElectisCrystalShardRenderer.instance));
+        METADATA_ITEM.addWrapper(new ElectisShardWrapper("Electis Crystal Shard"));
         METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Garnet").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Electis Controler").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.addWrapper(new GearReaderWrapper("Gear Reader").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.addWrapper(new TeleporterWrapper("Teleporter").setRenderer(TeleporterRenderer.instance));
+        METADATA_ITEM.addWrapper(new GearReaderWrapper("Gear Reader"));
+        METADATA_ITEM.addWrapper(new TeleporterWrapper("Teleporter"));
         METADATA_ITEM.addWrapper(new AdvancedStickWrapper("Advanced Stick"));
-        METADATA_ITEM.addWrapper(new DestructorWrapper("Destructor").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.addWrapper(new UtilityTabletWrapper("Utility Tablet").setRenderer(UtilityTabletRenderer.instance));
+        METADATA_ITEM.addWrapper(new DestructorWrapper("Destructor"));
+        METADATA_ITEM.addWrapper(new UtilityTabletWrapper("Utility Tablet"));
         // METADATA_ITEM.addWrapper(new
         // ColorModifierWrapper("Color Modifier").setRenderer(ColorModifierRenderer.instance));
     }

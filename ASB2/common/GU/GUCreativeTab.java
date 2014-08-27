@@ -5,7 +5,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import GU.api.color.VanillaColor;
-import GU.blocks.containers.BlockElectisCrystal.EnumElectisCrystalType;
 import GU.info.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -60,9 +59,7 @@ public class GUCreativeTab extends CreativeTabs {
         
             case (Reference.NAME + ": Blocks"): {
                 
-                ItemStack stack = new ItemStack(BlockRegistry.ELECTIS_POLYHEDRON, 1, 0);
-                EnumElectisCrystalType.setCrystalType(stack, EnumElectisCrystalType.TYPE3);
-                return stack;
+                return new ItemStack(BlockRegistry.ELECTIS_POLYHEDRON, 1, 0);
             }
             case (Reference.NAME + ": Items"): {
                 

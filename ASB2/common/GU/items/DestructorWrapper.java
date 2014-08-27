@@ -11,11 +11,18 @@ import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilItemStack;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
+import GU.items.ItemRenderers.GarnetRenderer;
 
 public class DestructorWrapper extends ItemMetadataWrapper {
     
     public DestructorWrapper(String ign) {
         super(ign);
+    }
+    
+    @Override
+    public void postInitRender() {
+        
+        this.setRenderer(GarnetRenderer.instance);
     }
     
     @Override
@@ -57,8 +64,7 @@ public class DestructorWrapper extends ItemMetadataWrapper {
                                 if (direction.offsetZ != 0) {
                                     changedZ *= 0;
                                 }
-                            }
-                            else {
+                            } else {
                                 
                                 if (direction.offsetX != 0) {
                                     changedX += (direction.offsetX * distance);
@@ -103,13 +109,13 @@ public class DestructorWrapper extends ItemMetadataWrapper {
         if (player.isSneaking()) {
             
             distance--;
-        }
-        else {
+        } else {
             
             distance++;
         }
         UtilItemStack.setNBTTagInt(itemStack, "distance", Math.max(distance, 0));
-        if (!world.isRemote) UtilEntity.sendChatToPlayer(player, "Radius: " + Math.max(distance, 0));
+        if (!world.isRemote)
+            UtilEntity.sendChatToPlayer(player, "Radius: " + Math.max(distance, 0));
         return super.onItemRightClick(itemStack, world, player);
     }
     

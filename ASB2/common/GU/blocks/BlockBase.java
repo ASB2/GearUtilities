@@ -31,6 +31,10 @@ public class BlockBase extends Block {
         
     }
     
+    public void postInitRender() {
+        
+    }
+    
     public void registerBlock(String entry) {
         
         GameRegistry.registerBlock(this, GUItemBlock.class, entry);

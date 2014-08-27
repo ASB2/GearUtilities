@@ -17,7 +17,7 @@ public class BlockElectisPolyhedron extends BlockContainerBase {
     }
     
     @Override
-    public void postInit() {
+    public void postInitRender() {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TileElectisPolyhedron.class, ElectisPolyhedronRenderer.instance);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(this), ElectisPolyhedronRenderer.instance);

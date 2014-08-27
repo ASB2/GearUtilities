@@ -25,6 +25,7 @@ import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
+import GU.items.ItemRenderers.GarnetRenderer;
 import UC.color.Color4i;
 
 public class GearReaderWrapper extends ItemMetadataWrapper {
@@ -32,6 +33,12 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
     public GearReaderWrapper(String ign) {
         super(ign);
         // TODO Auto-generated constructor stub
+    }
+    
+    @Override
+    public void postInitRender() {
+        
+        this.setRenderer(GarnetRenderer.instance);
     }
     
     @Override
@@ -95,8 +102,7 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                         UtilEntity.sendChatToPlayer(player, "Power Stored: " + manager.getStoredPower());
                         UtilEntity.sendChatToPlayer(player, "Max Power: " + manager.getMaxPower());
                         UtilEntity.sendChatToPlayer(player, "Power Difference: " + (manager.getMaxPower() - manager.getStoredPower()));
-                    }
-                    else {
+                    } else {
                         
                         UtilEntity.sendChatToPlayer(player, "Power Manager: null");
                     }
@@ -104,8 +110,7 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                     if (attribute != null) {
                         
                         UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute.getPowerStatus());
-                    }
-                    else {
+                    } else {
                         
                         UtilEntity.sendChatToPlayer(player, "Power Attribute: null");
                     }
@@ -149,8 +154,7 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                                     UtilEntity.sendChatToPlayer(player, "Fluid Stored: " + info.fluid.amount + "/" + info.capacity);
                                     UtilEntity.sendChatToPlayer(player, "Fluid Conained: " + info.fluid.getFluid().getLocalizedName());
                                     UtilEntity.sendChatToPlayer(player, "Precent Filled: " + (((int) ((info.fluid.amount / (float) info.capacity) * 100000)) / 1000.0));
-                                }
-                                else {
+                                } else {
                                     
                                     UtilEntity.sendChatToPlayer(player, "Capasity: " + info.capacity);
                                 }

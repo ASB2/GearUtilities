@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import ASB2.utils.UtilVector;
-import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender.TileMultiPartRender;
+import GU.blocks.containers.BlockMultiPart.TileMultiPartRender;
 import GU.multiblock.clientState.MultiBlockFlameClientState;
 import UC.math.vector.Vector3i;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;

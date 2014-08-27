@@ -2,7 +2,6 @@ package GU.blocks.containers.BlockMultiPart;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender.TileMultiPartRender;
 
 public class MultiPartRenderer extends TileEntitySpecialRenderer {
     

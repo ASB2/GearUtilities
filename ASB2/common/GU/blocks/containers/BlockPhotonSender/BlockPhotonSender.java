@@ -17,7 +17,7 @@ public class BlockPhotonSender extends BlockContainerBase {
     }
     
     @Override
-    public void postInit() {
+    public void postInitRender() {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TilePhotonSender.class, PhotonSenderRenderer.instance);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(this), PhotonSenderRenderer.instance);

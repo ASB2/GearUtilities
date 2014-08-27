@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import GU.*;
+import GU.GearUtilities;
 
 public class ItemBase extends Item {
     
@@ -16,6 +16,9 @@ public class ItemBase extends Item {
     }
     
     public void postInit() {
+    }
+    
+    public void postInitRender() {
     }
     
     public ItemBase setDisplayName(String name) {
