@@ -1,6 +1,6 @@
 package GU.blocks.containers.BlockMultiInterface;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -9,7 +9,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilVector;
-import GU.api.IWrenchable;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
@@ -19,7 +18,7 @@ import GU.render.EnumInputIcon;
 import GU.render.IEnumInputIcon;
 import UC.math.vector.Vector3i;
 
-public class TileFluidMultiInterface extends TileMultiBase implements IMultiBlockPart, IFluidHandler, IWrenchable, IEnumInputIcon {
+public class TileFluidMultiInterface extends TileMultiBase implements IMultiBlockPart, IFluidHandler, IEnumInputIcon {
     
     int fluidPerTick = 200;
     
@@ -281,11 +280,11 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     }
     
     @Override
-    public boolean triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
+    public boolean triggerBlock(World world, EntityPlayer player, int x, int y, int z, ForgeDirection axis) {
         
-        sideState[side] = sideState[side].increment();
+        sideState[axis.ordinal()] = sideState[axis.ordinal()].increment();
         world.markBlockForUpdate(x, y, z);
-        return false;
+        return true;
     }
     
     @Override

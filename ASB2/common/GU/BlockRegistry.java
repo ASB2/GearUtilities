@@ -131,9 +131,12 @@ public class BlockRegistry {
         
         for (VanillaColor color : VanillaColor.values()) {
             
-            BlockStructureCube cube = new BlockStructureCube(Material.rock, color);
-            STRUCTURE_CUBES.add(cube);
-            customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor" + color.ordinal()), cube.setBlockName("StructureCubeColor" + color.ordinal()));
+            if (color != VanillaColor.NONE) {
+                
+                BlockStructureCube cube = new BlockStructureCube(Material.rock, color);
+                STRUCTURE_CUBES.add(cube);
+                customBlockMap.put(Reference.MOD_ID.concat(":BlockStructureCubeColor" + color.ordinal()), cube.setBlockName("StructureCubeColor" + color.ordinal()));
+            }
         }
         
         customBlockMap.put(Reference.MOD_ID.concat(":BlockCreativeMetadata"), CREATIVE_METADATA);

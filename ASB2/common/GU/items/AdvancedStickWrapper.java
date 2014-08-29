@@ -1,11 +1,11 @@
 package GU.items;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import GU.api.IWrenchable;
+import net.minecraftforge.common.util.ForgeDirection;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
 import GU.items.ItemRenderers.AdvancedStickRenderer;
 
@@ -24,26 +24,12 @@ public class AdvancedStickWrapper extends ItemMetadataWrapper {
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
         
-        IWrenchable toWrench = null;
-        TileEntity tile = world.getTileEntity(x, y, z);
+        Block block = world.getBlock(x, y, z);
         
-        if (tile != null && tile instanceof IWrenchable) {
+        if (block != null && block instanceof BlockAir) {
             
-            toWrench = (IWrenchable) tile;
-        } else {
-            
-            Block block = world.getBlock(x, y, z);
-            
-            if (block != null && block instanceof IWrenchable) {
-                
-                toWrench = (IWrenchable) block;
-            }
+            return block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(side));
         }
-        
-        if (toWrench != null) {
-            
-            return toWrench.triggerBlock(world, player.isSneaking(), itemStack, x, y, z, side);
-        }
-        return super.onItemUse(itemStack, player, world, x, y, z, side, hitX, hitY, hitZ);
+        return false;
     }
 }

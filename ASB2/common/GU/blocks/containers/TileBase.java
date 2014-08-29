@@ -1,8 +1,10 @@
 package GU.blocks.containers;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidTank;
 import GU.GearUtilities;
@@ -40,6 +42,16 @@ public class TileBase extends TileEntity {
     public FluidTank getTank() {
         
         return null;
+    }
+    
+    public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection axis) {
+        
+        return false;
+    }
+    
+    public boolean triggerBlock(World world, EntityPlayer player, int x, int y, int z, ForgeDirection axis) {
+        
+        return rotateBlock(world, x, y, z, axis);
     }
     
     @Override

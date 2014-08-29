@@ -16,7 +16,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilInventory;
 import ASB2.utils.UtilVector;
 import GU.GearUtilities;
-import GU.api.IWrenchable;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
@@ -30,7 +29,7 @@ import GU.render.IEnumInputIcon;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IItemInterface, IInventory, IColorableTile, IWrenchable, IEnumInputIcon {
+public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IItemInterface, IInventory, IColorableTile, IEnumInputIcon {
     
     Map<SlotHolder, IInventoryMultiBlock> inventorise = new HashMap<SlotHolder, IInventoryMultiBlock>();
     int maxSizeInventory = 0;
@@ -48,6 +47,8 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
         }
     }
     
+    int wait = 0;
+    
     @Override
     public void updateEntity() {
         
@@ -56,7 +57,11 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
             position = UtilVector.createTileEntityVector(this);
         }
         
+        wait++;
+        
         if (!inventorise.isEmpty() && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && !worldObj.isRemote) {
+            
+            wait = 0;
             
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 
@@ -72,18 +77,29 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                             
                             if (side == EnumInputIcon.INPUT) {
                                 
-                                UtilInventory.moveEntireISidedInventory((ISidedInventory) tile, direction, this);
-                            } else
-                                UtilInventory.moveEntireISidedInventory(this, direction, (ISidedInventory) tile);
+                                UtilInventory.moveItems((ISidedInventory) tile, direction, 1, this);
+                                // UtilInventory.moveEntireISidedInventory((ISidedInventory)
+                                // tile, direction, this);
+                            } else {
+                                
+                                UtilInventory.moveItems(this, 1, (ISidedInventory) tile, direction);
+                                // UtilInventory.moveEntireISidedInventory(this,
+                                // direction, (ISidedInventory) tile);
+                            }
                         }
                         
                         if (tile instanceof IInventory) {
                             
                             if (side == EnumInputIcon.INPUT) {
                                 
-                                UtilInventory.moveEntireInventory((IInventory) tile, this);
-                            } else
-                                UtilInventory.moveEntireInventory(this, (IInventory) tile);
+                                UtilInventory.moveItems((IInventory) tile, 1, this);
+                                // UtilInventory.moveEntireInventory((IInventory)
+                                // tile, this);
+                            } else {
+                                UtilInventory.moveItems(this, 1, (IInventory) tile);
+                                // UtilInventory.moveEntireInventory(this,
+                                // (IInventory) tile);
+                            }
                         }
                     }
                 }
@@ -135,9 +151,9 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
     }
     
     @Override
-    public boolean triggerBlock(World world, boolean isSneaking, ItemStack itemStack, int x, int y, int z, int side) {
+    public boolean triggerBlock(World world, EntityPlayer player, int x, int y, int z, ForgeDirection axis) {
         
-        sideState[side] = sideState[side].increment();
+        sideState[axis.ordinal()] = sideState[axis.ordinal()].increment();
         world.markBlockForUpdate(x, y, z);
         return true;
     }

@@ -91,10 +91,10 @@ public class MultiInterfaceWrapper extends BlockMetadataWrapper {
                 return false;
             }
             case 2: {
-                break;
+                return false;
             }
             case 3: {
-                break;
+                return false;
             }
             // case 4: {
             // break;
@@ -119,8 +119,11 @@ public class MultiInterfaceWrapper extends BlockMetadataWrapper {
                 }
                 return true;
             }
+            default: {
+                
+                return getBlock().triggerBlock(world, x, y, z, entityplayer, side, xHit, yHit, zHit);
+            }
         }
-        return super.onBlockActivated(world, x, y, z, entityplayer, side, xHit, yHit, zHit);
     }
     
     @Override
