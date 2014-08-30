@@ -101,7 +101,7 @@ public class BlockRegistry {
         
         public void postInit() {
             
-            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockMultiBlockPartGlass" }).setDisplayName("Multi Block Glass").addDrop(new ItemStack(this, 1, 0)));
+            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockMultiBlockPartGlass" }).setDisplayName("Multi Block Glass"));
         }
     };
     

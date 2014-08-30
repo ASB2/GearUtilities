@@ -9,6 +9,8 @@ public class Variables {
     
     public static int NOISE_TEXTURE_SIZE = 64;
     
+    // public static boolean CANT_BREAK_WOOD_WITH_HAND = false;
+    
     public static void updateVariables(Configuration config) {
         
         DO_RETROGEN = config.get("Misc", "Do Retrogen", false, "Set to true to enable retrogen").getBoolean(false);

@@ -10,6 +10,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
+import GU.BlockRegistry;
 import GU.GearUtilities;
 import GU.api.color.VanillaColor;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockMarker;
@@ -58,6 +59,18 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
         super.addInformation(stack, player, par3List, par4);
         par3List.add("Color: " + color.name());
         
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xHit, float yHit, float zHit) {
+        
+        VanillaColor color = VanillaColor.getItemColor4iValue(player.inventory.getCurrentItem());
+        
+        if (color != VanillaColor.NONE) {
+            
+            world.setBlock(x, y, z, BlockRegistry.STRUCTURE_CUBES.get(color.ordinal()), world.getBlockMetadata(x, y, z), 3);
+        }
+        return false;
     }
     
     @Override

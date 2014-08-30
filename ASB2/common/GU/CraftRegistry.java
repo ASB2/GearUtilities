@@ -80,7 +80,7 @@ public class CraftRegistry {
             
             if (color != VanillaColor.NONE) {
                 
-                GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(color.ordinal()), 1), Reference.STRUCTURE_CUBE_OREDIC, color.getVinillaDye()));
+                GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(color.ordinal()), 1), Reference.STRUCTURE_CUBE_COLOR_OREDIC, color.getVinillaDye()));
             }
         }
         

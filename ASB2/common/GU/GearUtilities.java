@@ -12,6 +12,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import GU.commands.BreakBlockCommand;
 import GU.info.Reference;
 import GU.info.Variables;
 import GU.proxy.CommonProxy;
@@ -23,8 +24,13 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartedEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.event.FMLServerStoppedEvent;
+import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -137,6 +143,31 @@ public final class GearUtilities {
         
         // WhiteLists.getInstance().addWrench(new
         // ItemStack(ItemRegistry.ItemAdvancedStick));
+    }
+    
+    @EventHandler
+    public void serverStarting(FMLServerStartingEvent event) {
+        
+        event.registerServerCommand(new BreakBlockCommand());
+    }
+    
+    @EventHandler
+    public void serverStarted(FMLServerStartedEvent event) {
+        
+        // DimensionManager.initDimension(Reference.GHOST_DIMENSION_ID);
+    }
+    
+    @EventHandler
+    public void serverStopping(FMLServerStoppingEvent event) {
+    }
+    
+    @EventHandler
+    public void serverStopped(FMLServerStoppedEvent event) {
+    }
+    
+    @EventHandler
+    public void processIMCRequests(FMLInterModComms.IMCEvent event) {
+        
     }
     
     public static SimpleNetworkWrapper getPipeline() {

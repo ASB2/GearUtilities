@@ -4,7 +4,7 @@ public final class Reference {
     
     public static final String MOD_ID = "GearUtilities";
     public static final String NAME = "Gear Utilities";
-    public static final String VERSION = "0.0.1 Alpha";
+    public static final String VERSION = "0.005";
     public static final String UNIQUE_ID = "ASB2_GearUtilities_";
     public static final String MOD_CHANNEL = "ASB2_".concat(MOD_ID);
     public static final String CLIENT_PROXY = "GU.proxy.ClientProxy";
@@ -16,4 +16,5 @@ public final class Reference {
     public static final int BRIGHT_BLOCK = 15728864;
     
     public static final String STRUCTURE_CUBE_OREDIC = "ASB2_StructureCubes";
+    public static final String STRUCTURE_CUBE_COLOR_OREDIC = "ASB2_StructureCubes_Color";
 }

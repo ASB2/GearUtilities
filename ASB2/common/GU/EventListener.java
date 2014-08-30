@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import GU.info.MiscIcons;
 import GU.info.Reference;
 import GU.render.EnumInputIcon;
@@ -70,5 +71,10 @@ public class EventListener {
                 event.setResult(Result.DENY);
             }
         }
+    }
+    
+    @SubscribeEvent
+    public void noDrops(HarvestDropsEvent event) {
+        
     }
 }
