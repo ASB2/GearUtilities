@@ -117,7 +117,7 @@ public class MultiInterfaceWrapper extends BlockMetadataWrapper {
                         }
                     }
                 }
-                return true;
+                return false;
             }
             default: {
                 

@@ -1,30 +1,24 @@
 package GU;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.Fluid;
 import GU.info.Reference;
 import GU.items.AdvancedStickWrapper;
 import GU.items.DestructorWrapper;
 import GU.items.ElectisShardWrapper;
 import GU.items.GearReaderWrapper;
 import GU.items.ItemBase;
+import GU.items.ItemFluidCrystalArray;
 import GU.items.ItemMetadata;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
-import GU.items.ItemRenderers.FluidCrystalArrayRenderer;
 import GU.items.ItemRenderers.GarnetRenderer;
 import GU.items.TeleporterWrapper;
 import GU.items.UtilityTabletWrapper;
-import GU.utils.UtilGU;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public final class ItemRegistry {
@@ -32,55 +26,7 @@ public final class ItemRegistry {
     public static final Map<String, Item> customItemMap = new HashMap<String, Item>();
     
     public static final ItemMetadata METADATA_ITEM = new ItemMetadata();
-    public static final ItemBase ITEM_FLUID = new ItemBase() {
-        
-        public void postInit() {
-            setCreativeTab(GearUtilities.tabGUFluids);
-        };
-        
-        public void postInitRender() {
-            
-            MinecraftForgeClient.registerItemRenderer(this, FluidCrystalArrayRenderer.instance);
-        };
-        
-        @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
-        @Override
-        public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-            
-            Fluid saved = UtilGU.getFluid(itemStack);
-            
-            if (saved != null) {
-                
-                par3List.add("Fluid: ".concat(saved.getLocalizedName()));
-                par3List.add("Fluid ID: " + saved.getID());
-            }
-            // else
-            // par3List.add("Fluid: ".concat("Empty"));
-        }
-        
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        @Override
-        public void getSubItems(Item item, CreativeTabs tab, List subItems) {
-            
-            subItems.add(new ItemStack(this));
-            for (ItemStack itemStack : GU.FluidRegistry.FluidCrystalArrayList) {
-                
-                subItems.add(itemStack.copy());
-            }
-        }
-        
-        @SuppressWarnings("deprecation")
-        public String getItemStackDisplayName(ItemStack itemStack) {
-            
-            Fluid saved = UtilGU.getFluid(itemStack);
-            
-            if (saved != null) {
-                
-                return "Fluid Crystal Array: ".concat(saved.getLocalizedName());
-            }
-            return "Fluid Crystal Array: Empty";
-        };
-    };
+    public static final ItemFluidCrystalArray ITEM_FLUID = new ItemFluidCrystalArray();
     public static final ItemStack ELECTIS_CRYSTAL_SHARD = new ItemStack(METADATA_ITEM, 1, 0);
     public static final ItemStack GARNET = new ItemStack(METADATA_ITEM, 1, 1);
     

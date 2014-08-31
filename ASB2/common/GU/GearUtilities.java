@@ -31,6 +31,7 @@ import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppedEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -78,6 +79,7 @@ public final class GearUtilities {
         
         MinecraftForge.EVENT_BUS.register(EventListener.instance);
         FMLCommonHandler.instance().bus().register(EventListener.instance);
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GUGuiHandler());
         
         // GameRegistry.registerFuelHandler(new IFuelHandler() {
         //

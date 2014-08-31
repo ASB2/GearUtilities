@@ -37,12 +37,12 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
                     
                     if (!player.isSneaking()) {
                         
-                        return ((IColorableTile) tile).setColor(VanillaColor.getRGBValue(VanillaColor.getItemColor4iValue(player.getHeldItem())), ForgeDirection.getOrientation(side));
+                        return ((IColorableTile) tile).setColor(VanillaColor.getItemColorValue(player.getHeldItem()).getRGBValue(), ForgeDirection.getOrientation(side));
                     } else {
                         
                         for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                             
-                            ((IColorableTile) tile).setColor(VanillaColor.getRGBValue(VanillaColor.getItemColor4iValue(player.getHeldItem())), direction);
+                            ((IColorableTile) tile).setColor(VanillaColor.getItemColorValue(player.getHeldItem()).getRGBValue(), direction);
                         }
                         return true;
                     }

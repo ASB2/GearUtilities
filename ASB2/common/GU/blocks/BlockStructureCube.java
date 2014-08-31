@@ -64,7 +64,7 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xHit, float yHit, float zHit) {
         
-        VanillaColor color = VanillaColor.getItemColor4iValue(player.inventory.getCurrentItem());
+        VanillaColor color = VanillaColor.getItemColorValue(player.inventory.getCurrentItem());
         
         if (color != VanillaColor.NONE) {
             

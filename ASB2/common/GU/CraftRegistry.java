@@ -5,7 +5,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 import GU.api.color.VanillaColor;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -15,10 +14,35 @@ public class CraftRegistry {
     public static void init() {
         
         OreDictionary.registerOre(GU.info.Reference.STRUCTURE_CUBE_OREDIC, new ItemStack(BlockRegistry.METADATA_ORE, 1, 0));
+        OreDictionary.registerOre("dyeBlack", Items.bone);
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()), 8, 0), new Object[] { "BBB", "BEB", "BBB",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()), 16, 0), new Object[] { "BBB", "BEB", "BBB",
         
-        'B', Blocks.stonebrick, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
+        'B', new ItemStack(Blocks.stone_slab, 1, 3), 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()), 16, 1), new Object[] { "BBB", "BEB", "BBB",
+        
+        'B', Blocks.cobblestone, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()), 16, 2), new Object[] { "BBB", "BEB", "BBB",
+        
+        'B', Blocks.stone, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()), 16, 3), new Object[] { "BBB", "BEB", "BBB",
+        
+        'B', new ItemStack(Blocks.stone_slab, 1, 0), 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()), 16, 4), new Object[] { "BBB", "BEB", "BBB",
+        
+        'B', new ItemStack(Blocks.stonebrick, 1, 3), 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()), 16, 5), new Object[] { "BBB", "BEB", "BBB",
+        
+        'B', new ItemStack(Blocks.stone_slab, 1, 5), 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()), 16, 6), new Object[] { "BBB", "BEB", "BBB",
+        
+        'B', new ItemStack(Blocks.stonebrick, 1, 0), 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.SPATIAL_PROVIDER, 1, 0), new Object[] { "EIE", "IBI", "EIE",
         
@@ -75,14 +99,6 @@ public class CraftRegistry {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.FLUID_ELECTIS_POLYHEDRON, 8, 0), new Object[] { "III", "IEI", "III",
         
         'I', BlockRegistry.ELECTIS_POLYHEDRON, 'E', new ItemStack(BlockRegistry.MULTI_INTERFACE, 1, 1) }));
-        
-        for (VanillaColor color : VanillaColor.values()) {
-            
-            if (color != VanillaColor.NONE) {
-                
-                GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(color.ordinal()), 1), Reference.STRUCTURE_CUBE_COLOR_OREDIC, color.getVinillaDye()));
-            }
-        }
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.CONDUIT, 4, 0), new Object[] { "SAS", "IEI", "SAS",
         

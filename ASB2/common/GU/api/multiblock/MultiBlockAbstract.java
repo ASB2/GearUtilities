@@ -57,7 +57,7 @@ public class MultiBlockAbstract {
     
     public static interface IRedstoneMultiBlock extends IMultiBlock {
         
-        int getLevel(Vector3i tilePosition);
+        int getRedstoneLevel(Vector3i tilePosition);
     }
     
     public static interface IGuiMultiBlock extends IMultiBlock {

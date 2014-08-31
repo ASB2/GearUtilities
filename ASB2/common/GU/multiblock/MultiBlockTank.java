@@ -1,10 +1,12 @@
 package GU.multiblock;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import ASB2.utils.UtilEntity;
+import GU.GUGuiHandler;
 import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
@@ -37,8 +39,9 @@ public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiB
     }
     
     @Override
-    public void logicUpdate() {
-        
+    public void load(NBTTagCompound tag) {
+        super.load(tag);
+        this.sendPacket();
     }
     
     @Override
@@ -81,21 +84,37 @@ public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiB
                 return;
             }
             
-            GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank.getFluidTank()), world.provider.dimensionId);
-            lastStack = fluidTank.getFluidTank().getFluid() != null ? fluidTank.getFluidTank().getFluid().copy() : null;
-            lastCapacity = fluidTank.getFluidTank().getCapacity();
+            actuallySendPacket();
         }
+    }
+    
+    public void actuallySendPacket() {
+        
+        GearUtilities.getPipeline().sendToDimension(new MutliBlockTankPacket(this.positionRelativeTo.subtract(1), size, fluidTank.getFluidTank()), world.provider.dimensionId);
+        lastStack = fluidTank.getFluidTank().getFluid() != null ? fluidTank.getFluidTank().getFluid().copy() : null;
+        lastCapacity = fluidTank.getFluidTank().getCapacity();
     }
     
     @Override
     public boolean openGui(Vector3i position, EntityPlayer player, int side) {
         
-        UtilEntity.sendChatToPlayer(player, "Tank: Gui Would Have Opened If It Exzited");
-        return true;
+        if (!world.isRemote) {
+            
+            if (!player.isSneaking()) {
+                
+                player.openGui(GearUtilities.instance, GUGuiHandler.MULTI_BLOCK_TANK, world, position.getX(), position.getY(), position.getZ());
+                return true;
+            } else {
+                
+                UtilEntity.sendChatToPlayer(player, "Tank: Gui Would Have Opened If It Exzited");
+                return false;
+            }
+        }
+        return false;
     }
     
     @Override
-    public int getLevel(Vector3i tilePosition) {
+    public int getRedstoneLevel(Vector3i tilePosition) {
         
         // return (int) (Math.floor(15 *
         // (fluidTank.getFluidTank().getFluidAmount() / (float)

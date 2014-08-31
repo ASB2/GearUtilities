@@ -3,8 +3,6 @@ package GU;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
@@ -13,7 +11,6 @@ import GU.info.Reference;
 import GU.render.EnumInputIcon;
 import GU.render.noise.NoiseManager;
 import UC.VariableIterator;
-import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -62,15 +59,15 @@ public class EventListener {
     @SubscribeEvent
     public void noAttack(LivingSetAttackTargetEvent event) {
         
-        if (event.target instanceof EntityPlayer) {
-            
-            ItemStack stack = ((EntityPlayer) event.target).inventory.getCurrentItem();
-            
-            if (stack != null && stack.getItem() == ItemRegistry.METADATA_ITEM && stack.getItemDamage() == 0) {
-                
-                event.setResult(Result.DENY);
-            }
-        }
+//        if (event.target instanceof EntityPlayer) {
+//            
+//            ItemStack stack = ((EntityPlayer) event.target).inventory.getCurrentItem();
+//            
+//            if (stack != null && stack.getItem() == ItemRegistry.METADATA_ITEM && stack.getItemDamage() == 0) {
+//                
+//                event.setResult(Result.DENY);
+//            }
+//        }
     }
     
     @SubscribeEvent

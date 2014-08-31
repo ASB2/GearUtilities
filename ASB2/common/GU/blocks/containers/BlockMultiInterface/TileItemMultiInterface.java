@@ -77,12 +77,12 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                             
                             if (side == EnumInputIcon.INPUT) {
                                 
-                                UtilInventory.moveItems((ISidedInventory) tile, direction, 1, this);
+                                UtilInventory.moveItems((ISidedInventory) tile, direction, 1, 1, this);
                                 // UtilInventory.moveEntireISidedInventory((ISidedInventory)
                                 // tile, direction, this);
                             } else {
                                 
-                                UtilInventory.moveItems(this, 1, (ISidedInventory) tile, direction);
+                                UtilInventory.moveItems(this, 1, 1, (ISidedInventory) tile, direction);
                                 // UtilInventory.moveEntireISidedInventory(this,
                                 // direction, (ISidedInventory) tile);
                             }
@@ -92,11 +92,11 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                             
                             if (side == EnumInputIcon.INPUT) {
                                 
-                                UtilInventory.moveItems((IInventory) tile, 1, this);
+                                UtilInventory.moveItems((IInventory) tile, 1, 1, this);
                                 // UtilInventory.moveEntireInventory((IInventory)
                                 // tile, this);
                             } else {
-                                UtilInventory.moveItems(this, 1, (IInventory) tile);
+                                UtilInventory.moveItems(this, 1, 1, (IInventory) tile);
                                 // UtilInventory.moveEntireInventory(this,
                                 // (IInventory) tile);
                             }

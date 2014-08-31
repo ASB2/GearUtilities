@@ -30,7 +30,7 @@ public class RedstoneMultiInterfaceWrapper extends BlockMetadataWrapper {
             
             if (multi != null && multi instanceof IRedstoneMultiBlock) {
                 
-                return ((IRedstoneMultiBlock) multi).getLevel(new Vector3i(x, y, z));
+                return ((IRedstoneMultiBlock) multi).getRedstoneLevel(new Vector3i(x, y, z));
             }
         }
         return 0;
@@ -46,7 +46,7 @@ public class RedstoneMultiInterfaceWrapper extends BlockMetadataWrapper {
             
             if (multi != null && multi instanceof IRedstoneMultiBlock) {
                 
-                return ((IRedstoneMultiBlock) multi).getLevel(new Vector3i(x, y, z));
+                return ((IRedstoneMultiBlock) multi).getRedstoneLevel(new Vector3i(x, y, z));
             }
         }
         return 0;
@@ -62,7 +62,7 @@ public class RedstoneMultiInterfaceWrapper extends BlockMetadataWrapper {
             
             if (multi != null && multi instanceof IRedstoneMultiBlock) {
                 
-                return ((IRedstoneMultiBlock) multi).getLevel(new Vector3i(x, y, z));
+                return ((IRedstoneMultiBlock) multi).getRedstoneLevel(new Vector3i(x, y, z));
             }
         }
         return 0;

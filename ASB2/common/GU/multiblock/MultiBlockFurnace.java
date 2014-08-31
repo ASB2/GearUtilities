@@ -156,7 +156,7 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     }
     
     @Override
-    public int getLevel(Vector3i tilePosition) {
+    public int getRedstoneLevel(Vector3i tilePosition) {
         // TODO Auto-generated method stub
         return 0;
     }

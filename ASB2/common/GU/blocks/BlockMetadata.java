@@ -48,6 +48,10 @@ public class BlockMetadata extends BlockBase {
         return this;
     }
     
+    public Map<Integer, BlockMetadataWrapper> getWrappers() {
+        return wrappers;
+    }
+    
     @Override
     public void registerBlock(String entry) {
         

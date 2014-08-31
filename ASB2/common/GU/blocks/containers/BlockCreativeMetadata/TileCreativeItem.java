@@ -158,6 +158,6 @@ public class TileCreativeItem extends TileBase implements IInventory {
     @Override
     public boolean isItemValidForSlot(int var1, ItemStack var2) {
         
-        return false;
+        return true;
     }
 }
