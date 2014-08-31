@@ -101,6 +101,7 @@ public enum VanillaColor {
         
         if (item != null) {
             
+            
             int[] thingsRegisteredTo = OreDictionary.getOreIDs(item);
             
             for (int index = 0; index < thingsRegisteredTo.length; index++) {
