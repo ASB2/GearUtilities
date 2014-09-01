@@ -3,6 +3,9 @@ package GU.multiblock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import ASB2.inventory.Inventory;
+import ASB2.utils.UtilEntity;
+import GU.GUGuiHandler;
+import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
 import GU.multiblock.construction.ChestConstructionManager;
@@ -50,7 +53,19 @@ public class MultiBlockChest extends MultiBlockInventory implements IRedstoneMul
     
     @Override
     public boolean openGui(Vector3i position, EntityPlayer player, int side) {
-        // TODO Auto-generated method stub
+        
+        if (!world.isRemote) {
+            
+            if (!player.isSneaking()) {
+                
+                player.openGui(GearUtilities.instance, GUGuiHandler.MULTI_BLOCK_CHEST, world, position.getX(), position.getY(), position.getZ());
+                return true;
+            } else {
+                
+                UtilEntity.sendChatToPlayer(player, "Chest: Stop Shifitng");
+                return false;
+            }
+        }
         return false;
     }
     

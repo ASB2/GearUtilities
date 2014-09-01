@@ -62,7 +62,38 @@ public class TileDrill extends TileBase {
             
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 
-                if (direction == oppositeOrientation) {
+                if (direction == orientation) {
+                    
+                    if (direction.offsetX < 0) {
+                        
+                        xMin += 1;
+                    }
+                    
+                    if (direction.offsetX > 0) {
+                        
+                        xMax += 1;
+                    }
+                    
+                    if (direction.offsetY < 0) {
+                        
+                        yMin += 1;
+                    }
+                    
+                    if (direction.offsetY > 0) {
+                        
+                        yMax += 1;
+                    }
+                    
+                    if (direction.offsetZ < 0) {
+                        
+                        zMin += 1;
+                    }
+                    
+                    if (direction.offsetZ > 0) {
+                        
+                        zMax += 1;
+                    }
+                } else if (direction == oppositeOrientation) {
                     
                     continue;
                 }
@@ -116,7 +147,7 @@ public class TileDrill extends TileBase {
             if (xMax + xMin != 0 || yMax + yMin != 0 || zMax + zMin != 0) {
                 
                 corner.setXYZ(xMax + orientation.offsetX, yMax + orientation.offsetY, zMax + orientation.offsetZ);
-                size.setXYZ(xMax + xMin, yMax + yMin, zMax + zMin);
+                size.setXYZ(xMax + xMin, corner.getY() - (yMax + yMin) < 0 ? yMax + yMin - (corner.getY() - (yMax + yMin)) : yMax + yMin, zMax + zMin);
                 
                 coordsSet = true;
                 
@@ -175,30 +206,74 @@ public class TileDrill extends TileBase {
             if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && coordsSet) {
                 
                 UtilBlock.breakBlockNoDrop(worldObj, xCoord + (corner.getX() - position.getX()), yCoord + (corner.getY() - position.getY()), zCoord + (corner.getZ() - position.getZ()));
-                
-                if (position.getX() < size.getX()) {
-                    
-                    position.move(1, 0, 0);
-                } else if (position.getY() < size.getY()) {
-                    
-                    position.move(0, 1, 0);
-                    
-                    if (position.getX() == size.getX()) {
-                        
-                        position.setX(0);
+                position.move(1, 0, 0);
+                if (position.getX() == size.getX()) {
+                    if (position.getZ() == size.getZ()) {
+                        position.move(0, 0, 1); // change y coord because x and
+                                                // z
+                                                // have been done
+                    } else {
+                        position.setX(0); // change x coord
+                                          // because x has been
+                                          // done but z has not
+                        position.move(0, 1, 0); // change z coord because z has
+                                                // not been done
                     }
-                } else if (position.getZ() < size.getZ()) {
-                    
-                    position.move(0, 0, 1);
-                    
-                    if (position.getY() == size.getY()) {
-                        
-                        position.setY(0);
-                    }
-                } else {
-                    
-                    position.setXYZ(0, 0, 0);
                 }
+                
+                // for (int x = 0; x <= 1; x++) {
+                //
+                // for (int y = 0; y <= 1; y++) {
+                //
+                // for (int z = 0; z <= 1; z++) {
+                //
+                // UtilBlock.breakBlockNoDrop(worldObj, xCoord + (corner.getX()
+                // - position.getX()), yCoord + (corner.getY() -
+                // position.getY()), zCoord + (corner.getZ() -
+                // position.getZ()));
+                //
+                // position.move(x, y, z);
+                //
+                // if (position.getX() >= size.getX()) {
+                //
+                // position.setX(0);
+                // }
+                //
+                // if (position.getY() >= size.getY()) {
+                //
+                // position.setY(0);
+                // }
+                //
+                // if (position.getZ() >= size.getZ()) {
+                //
+                // position.setZ(0);
+                // }
+                // }
+                // }
+                // }
+                
+                // if (position.getX() < size.getX()) {
+                //
+                // } else if (position.getY() < size.getY()) {
+                //
+                // position.move(0, 1, 0);
+                //
+                // if (position.getX() == size.getX()) {
+                //
+                // position.setX(0);
+                // }
+                // } else if (position.getZ() < size.getZ()) {
+                //
+                // position.move(0, 0, 1);
+                //
+                // if (position.getY() == size.getY()) {
+                //
+                // position.setY(0);
+                // }
+                // } else {
+                //
+                // position.setXYZ(0, 0, 0);
+                // }
             }
         }
         

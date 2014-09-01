@@ -1,5 +1,6 @@
 package GU.multiblock;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -9,8 +10,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.inventory.Inventory;
+import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilInventory;
+import GU.GUGuiHandler;
+import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
+import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
 import GU.api.multiblock.MultiBlockObject.FluidHandlerWrapper;
@@ -19,7 +24,7 @@ import GU.multiblock.construction.FurnaceConstructionManager;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBlock, IInventoryMultiBlock, IRedstoneMultiBlock {
+public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBlock, IInventoryMultiBlock, IRedstoneMultiBlock, IGuiMultiBlock {
     
     FluidHandlerWrapper fuelTank = new FluidHandlerWrapper(0);
     Inventory fuelInventory = new Inventory("MultiBlockFurnace: Fuel"), toBeSmelted = new Inventory("MultiBlockFurnace: Smelting"), outputInventory = new Inventory("MultiBlockFurnace: Output");
@@ -153,6 +158,24 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     public boolean startCreation() {
         
         return size.getX() >= 2 && size.getY() >= 6 && size.getY() % 3 == 0 && size.getZ() >= 2 && super.startCreation();
+    }
+    
+    @Override
+    public boolean openGui(Vector3i position, EntityPlayer player, int side) {
+        
+        if (!world.isRemote) {
+            
+            if (!player.isSneaking()) {
+                
+                player.openGui(GearUtilities.instance, GUGuiHandler.MULTI_BLOCK_FURNACE, world, position.getX(), position.getY(), position.getZ());
+                return true;
+            } else {
+                
+                UtilEntity.sendChatToPlayer(player, "Furnace: Stop Shifitng");
+                return false;
+            }
+        }
+        return false;
     }
     
     @Override
