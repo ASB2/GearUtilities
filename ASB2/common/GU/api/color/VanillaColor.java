@@ -1,9 +1,6 @@
 package GU.api.color;
 
-import java.util.List;
-
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import UC.color.Color4i;
@@ -49,7 +46,6 @@ public enum VanillaColor {
                 return new ItemStack(Items.dye, 2, 14);
             case WHITE:
                 return new ItemStack(Items.dye, 1, 15);
-                
             default:
                 return null;
         }
@@ -90,8 +86,7 @@ public enum VanillaColor {
             case ORANGE:
                 return new ItemStack(Items.dye, 2, 14);
             case WHITE:
-                return new ItemStack(Items.dye, 1, 15);
-                
+                return new ItemStack(Items.dye, 1, 15);                
             default:
                 return null;
         }
@@ -101,7 +96,6 @@ public enum VanillaColor {
         
         if (item != null) {
             
-            
             int[] thingsRegisteredTo = OreDictionary.getOreIDs(item);
             
             for (int index = 0; index < thingsRegisteredTo.length; index++) {
@@ -110,7 +104,7 @@ public enum VanillaColor {
                 
                 for (int i = 0; i < dyesOreDictionary.length; i++) {
                     
-                    if (regesteredTo == dyesOreDictionary[i]) {
+                    if (regesteredTo.equalsIgnoreCase(dyesOreDictionary[i])) {
                         
                         return VanillaColor.values()[i];
                     }

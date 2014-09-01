@@ -59,15 +59,17 @@ public class EventListener {
     @SubscribeEvent
     public void noAttack(LivingSetAttackTargetEvent event) {
         
-//        if (event.target instanceof EntityPlayer) {
-//            
-//            ItemStack stack = ((EntityPlayer) event.target).inventory.getCurrentItem();
-//            
-//            if (stack != null && stack.getItem() == ItemRegistry.METADATA_ITEM && stack.getItemDamage() == 0) {
-//                
-//                event.setResult(Result.DENY);
-//            }
-//        }
+        // if (event.target instanceof EntityPlayer) {
+        //
+        // ItemStack stack = ((EntityPlayer)
+        // event.target).inventory.getCurrentItem();
+        //
+        // if (stack != null && stack.getItem() == ItemRegistry.METADATA_ITEM &&
+        // stack.getItemDamage() == 0) {
+        //
+        // event.setResult(Result.DENY);
+        // }
+        // }
     }
     
     @SubscribeEvent

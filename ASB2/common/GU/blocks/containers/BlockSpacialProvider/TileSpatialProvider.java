@@ -37,8 +37,10 @@ public class TileSpatialProvider extends TileMultiBase implements IMultiBlockCor
                     updating.load(multiBlockTag);
                     multiBlockTag = null;
                 }
-            } else
+            } else {
+                
                 waitTimer++;
+            }
             
         } else {
             

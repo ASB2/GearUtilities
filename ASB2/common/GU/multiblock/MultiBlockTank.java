@@ -41,7 +41,6 @@ public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiB
     @Override
     public void load(NBTTagCompound tag) {
         super.load(tag);
-        this.sendPacket();
     }
     
     @Override
@@ -72,19 +71,19 @@ public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiB
         
         if (!world.isRemote) {
             
-            boolean firstWorked = false;
-            
-            if (fluidTank.getFluidTank().getFluid() == null && lastStack == null || fluidTank.getFluidTank().getFluid() != null && lastStack != null && fluidTank.getFluidTank().getFluid().isFluidEqual(lastStack) && lastStack.amount == fluidTank.getFluidTank().getFluidAmount()) {
+            if (lastStack == null && lastCapacity == 0) {
                 
-                firstWorked = true;
+                actuallySendPacket();
+            } else {
+                
+                FluidStack current = fluidTank.getFluidTank().getFluid();
+                
+                if ((current == null && lastStack == null || current != null && current.isFluidEqual(current) || current == null && lastStack != null) || fluidTank.getFluidTank().getCapacity() != lastCapacity) {
+                    
+                    actuallySendPacket();
+                }
             }
             
-            if (fluidTank.getFluidTank().getCapacity() == lastCapacity && firstWorked) {
-                
-                return;
-            }
-            
-            actuallySendPacket();
         }
     }
     
@@ -106,11 +105,18 @@ public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiB
                 return true;
             } else {
                 
-                UtilEntity.sendChatToPlayer(player, "Tank: Gui Would Have Opened If It Exzited");
+                UtilEntity.sendChatToPlayer(player, "Tank: Stop Shifitng");
                 return false;
             }
         }
         return false;
+    }
+    
+    @Override
+    public void onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+        
+        FluidStack current = fluidTank.getFluidTank().getFluid();        
+        UtilEntity.sendChatToPlayer(player, "Tank: " + current + " / " + fluidTank.getFluidTank().getCapacity());
     }
     
     @Override

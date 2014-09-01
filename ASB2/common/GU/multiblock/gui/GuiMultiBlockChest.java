@@ -12,7 +12,7 @@ public class GuiMultiBlockChest extends GuiBase {
     }
     
     @Override
-    protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+    protected void drawGuiContainerBackgroundLayer(float fps, int p_146976_2_, int p_146976_3_) {
 
    
     }
