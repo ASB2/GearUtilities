@@ -56,7 +56,7 @@ public class TileMultiDirectionalConduit extends TileBase {
         
         for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
             
-            for (int distance = 1; distance <= 7; distance++) {
+            for (int distance = 1; distance <= 17; distance++) {
                 
                 int x = xCoord + (distance * direction.offsetX), y = yCoord + (distance * direction.offsetY), z = zCoord + (distance * direction.offsetZ);
                 

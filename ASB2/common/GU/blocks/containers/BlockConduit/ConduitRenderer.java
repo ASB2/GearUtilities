@@ -104,6 +104,12 @@ public class ConduitRenderer extends TileEntitySpecialRenderer implements IItemR
         
         Models.ModelConduit.renderPart("Base");
         
+        GL11.glPushMatrix();
+        NoiseManager.bindImage();
+        GL11.glScaled(.8, .8, .8);
+        Models.ModelConduit.renderPart("Base");
+        GL11.glPopMatrix();
+        
         GL11.glPopMatrix();
     }
     

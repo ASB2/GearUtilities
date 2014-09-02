@@ -29,7 +29,7 @@ public class TileConduit extends TileBase {
     
     public TileConduit() {
         
-        waitTimer = new Wait(new MoveWait(), 20);
+        waitTimer = new Wait(new MoveWait(), 10);
         conduitType = EnumConduitType.NONE;
     }
     
@@ -140,7 +140,7 @@ public class TileConduit extends TileBase {
             
             if (originalTile != null && getConduitType().checkObject(originalTile)) {
                 
-                for (int distance = 1; distance <= 7; distance++) {
+                for (int distance = 1; distance <= 17; distance++) {
                     
                     int x = xCoord + (distance * direction.offsetX), y = yCoord + (distance * direction.offsetY), z = zCoord + (distance * direction.offsetZ);
                     

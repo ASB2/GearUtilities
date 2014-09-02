@@ -8,10 +8,4 @@ public class TilePowerMultiInterface extends TileMultiBase implements IMultiBloc
     public TilePowerMultiInterface() {
         
     }
-    
-    @Override
-    public void updateEntity() {
-        // TODO Auto-generated method stub
-        super.updateEntity();
-    }
 }

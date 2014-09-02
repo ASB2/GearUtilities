@@ -90,7 +90,7 @@ public class CraftRegistry {
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.METADATA_ITEM, 8, 5), new Object[] { "EEE", "ESE", "EEE",
         
-        'S', Items.stick, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
+        'E', Items.stick, 'S', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.ITEM_ELECTIS_POLYHEDRON, 8, 0), new Object[] { "III", "IEI", "III",
         

@@ -18,6 +18,8 @@ public class MultiBlockAbstract {
     public static interface IMultiBlock {
         
         void onBlockBreak(int x, int y, int z);
+        
+        boolean isValid();
     }
     
     public static interface IMultiBlockPart {

@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
@@ -35,5 +36,11 @@ public abstract class BlockMultiMetadataContainerBase extends BlockMetadataConta
             }
         }
         super.breakBlock(world, x, y, z, block, metadata);
+    }
+    
+    @Override
+    public void onBlockExploded(World world, int x, int y, int z, Explosion explosion) {
+//        super.onBlockExploded(world, x, y, z, explosion);
+        this.breakBlock(world, x, y, z, this, world.getBlockMetadata(x, y, z));
     }
 }

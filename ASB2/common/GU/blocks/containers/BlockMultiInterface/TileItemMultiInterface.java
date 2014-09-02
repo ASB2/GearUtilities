@@ -105,6 +105,8 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                 }
             }
         }
+        
+        super.updateEntity();
     }
     
     public void setSideState(EnumInputIcon[] sideState) {

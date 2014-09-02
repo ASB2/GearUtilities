@@ -84,11 +84,12 @@ public enum EnumMultiBlockType {
                     }
                 }
                 
-                if (tile != null) {
+                if (UtilBlock.isBlockAir(world, x, y, z)) {
                     
-                    if (tile instanceof IMultiBlockPart) {
-                        
-                    } else if (tile instanceof IMultiBlockMarker) {
+                    continue;
+                } else if (tile != null) {
+                    
+                    if (tile instanceof IMultiBlockMarker && ((IMultiBlockMarker) tile).isValid(world, x, y, z)) {
                         
                         if (direction.offsetX > 0) {
                             
@@ -120,20 +121,17 @@ public enum EnumMultiBlockType {
                         // markers[direction.ordinal()] = spacialPosition.add(x,
                         // y, z);
                         break;
+                    } else if (tile instanceof IMultiBlockPart) {
+                        
+                        continue;
+                    } else {
+                        
+                        break;
                     }
                 }
                 if (block != null) {
                     
-                    // int meta = world.getBlockMetadata(spacialPosition.getX(),
-                    // spacialPosition.getY(), spacialPosition.getZ());
-                    //
-                    // if (block == BlockRegistry.SPACIAL_PROVIDER && meta != 0
-                    // && meta != this.ordinal()) {
-                    //
-                    // break;
-                    // }
-                    
-                    if (block instanceof IMultiBlockMarker) {
+                    if (block instanceof IMultiBlockMarker && ((IMultiBlockMarker) block).isValid(world, x, y, z)) {
                         
                         if (direction.offsetX > 0) {
                             
@@ -165,7 +163,7 @@ public enum EnumMultiBlockType {
                         // Math.abs(direction.offsetZ * distance));
                         // markers[direction.ordinal()] = new Vector3i(x, y, z);
                         break;
-                    } else if (!UtilBlock.isBlockAir(world, x, y, z)) {
+                    } else {
                         
                         break;
                     }

@@ -185,10 +185,10 @@ public abstract class ConstructionManager {
     public boolean placeBlockAndColor(Vector3i position, Block block, int meta, Color4i color) {
         
         if (placeBlock(position, block, meta)) {
-            
             this.setBlockColor(position, color);
             return true;
         }
+        this.setBlockColor(position, color);
         return false;
     }
     

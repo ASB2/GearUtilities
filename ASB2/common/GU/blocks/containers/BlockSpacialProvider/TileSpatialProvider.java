@@ -1,8 +1,10 @@
 package GU.blocks.containers.BlockSpacialProvider;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockCore;
+import GU.api.multiblock.MultiBlockAbstract.IMultiBlockMarker;
 import GU.blocks.containers.TileMultiBase;
 import GU.multiblock.EnumMultiBlockType;
 import GU.multiblock.MultiBlockBase;
@@ -10,7 +12,7 @@ import UC.Wait;
 import UC.Wait.IWaitTrigger;
 import UC.math.vector.Vector3i;
 
-public class TileSpatialProvider extends TileMultiBase implements IMultiBlockCore {
+public class TileSpatialProvider extends TileMultiBase implements IMultiBlockCore, IMultiBlockMarker {
     
     MultiBlockBase updating;
     boolean shouldConstructMultiBlock = false;
@@ -83,6 +85,12 @@ public class TileSpatialProvider extends TileMultiBase implements IMultiBlockCor
             
             updating = null;
         }
+    }
+    
+    @Override
+    public boolean isValid(World world, int x, int y, int z) {
+        
+        return true;
     }
     
     @Override

@@ -3,13 +3,10 @@ package GU.blocks.containers.BlockMultiPart;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilBlock;
-import GU.GearUtilities;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.blocks.containers.TileMultiBase;
-import GU.packets.ColorPacket;
 import UC.color.Color4i;
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class TileMultiPart extends TileMultiBase implements IColorableTile {
     
@@ -28,6 +25,8 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
     
     @Override
     public void updateEntity() {
+        
+        this.checkInvalidMultiBlocks();
     }
     
     @Override
@@ -50,26 +49,55 @@ public class TileMultiPart extends TileMultiBase implements IColorableTile {
     @Override
     public boolean setColor(Color4i color, ForgeDirection direction) {
         
+        if (!worldObj.isRemote) {
+            
+            if ( !Color4i.WHITE.equals(this.color) && direction == ForgeDirection.UNKNOWN) {
+                
+                this.color.setRed((this.color.getRed() + color.getRed()) / 2);
+                this.color.setGreen((this.color.getGreen() + color.getGreen()) / 2);
+                this.color.setBlue((this.color.getBlue() + color.getBlue()) / 2);
+            } else if (direction == ForgeDirection.UNKNOWN) {
+                
+                this.color.setAll(color);
+            } else {
+                
+                this.color.setAll(color);
+            }
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        }
         // colors[direction.ordinal()].setAll(color);
         
-        if (this.multiBlocks.size() >= 1 && direction == ForgeDirection.UNKNOWN) {
-            
-            this.color.setRed((this.color.getRed() + color.getRed()) / 2);
-            this.color.setGreen((this.color.getGreen() + color.getGreen()) / 2);
-            this.color.setBlue((this.color.getBlue() + color.getBlue()) / 2);
-        } else {
-            
-            this.color.setAll(color);
-        }
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        // if (Color4i.WHITE.equals(this.color)) {
+        //
+        // this.color.setAll(color);
+        // } else if (direction.ordinal() == 6) {
+        //
+        // this.color.setRed((this.color.getRed() + color.getRed()) / 2);
+        // this.color.setGreen((this.color.getGreen() + color.getGreen()) / 2);
+        // this.color.setBlue((this.color.getBlue() + color.getBlue()) / 2);
+        // }
         return true;
     }
     
     @Override
     public void sendUpdatePacket() {
         
-        if (!worldObj.isRemote)
-            GearUtilities.getPipeline().sendToAllAround(new ColorPacket(color, xCoord, yCoord, zCoord, ForgeDirection.UNKNOWN), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 200));
+        if (!worldObj.isRemote) {
+            
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setInteger("red", color.getRed());
+            tag.setInteger("green", color.getGreen());
+            tag.setInteger("blue", color.getBlue());
+            tag.setInteger("alpha", color.getAlpha());
+            this.sendNBTPacket(tag, 0);
+        }
+    }
+    
+    @Override
+    public void readNBTPacket(NBTTagCompound tag, int id) {
+        
+        color = new Color4i(tag.getInteger("red"), tag.getInteger("green"), tag.getInteger("blue"), tag.getInteger("alpha"));
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
     
     @Override

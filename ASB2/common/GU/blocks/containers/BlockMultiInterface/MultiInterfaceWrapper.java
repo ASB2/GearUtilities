@@ -24,13 +24,13 @@ public class MultiInterfaceWrapper extends BlockMetadataWrapper {
     }
     
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityplayer, int side, float xHit, float yHit, float zHit) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xHit, float yHit, float zHit) {
         
         switch (world.getBlockMetadata(x, y, z)) {
         
             case 1: {
                 
-                ItemStack current = entityplayer.inventory.getCurrentItem();
+                ItemStack current = player.inventory.getCurrentItem();
                 
                 TileFluidMultiInterface tile = (TileFluidMultiInterface) world.getTileEntity(x, y, z);
                 
@@ -40,13 +40,15 @@ public class MultiInterfaceWrapper extends BlockMetadataWrapper {
                     
                     if (fluid != null) {
                         
-                        if (!entityplayer.capabilities.isCreativeMode) {
+                        if (!player.capabilities.isCreativeMode) {
                             
                             if (UtilFluid.addFluidToTank(tile, ForgeDirection.getOrientation(side), fluid, false)) {
                                 
                                 if (UtilFluid.addFluidToTank(tile, ForgeDirection.getOrientation(side), fluid, true)) {
                                     
-                                    UtilInventory.consumeItemStack(entityplayer.inventory, current, 1);
+                                    UtilInventory.consumeItemStack(player.inventory, current, 1);
+                                    UtilInventory.addItemStackToInventoryAndSpawnExcess(world, player.inventory, FluidContainerRegistry.drainFluidContainer(current), player.posX, player.posY, player.posZ);
+//                                    player.inventory.markDirty();
                                 }
                             }
                         } else {
@@ -68,13 +70,13 @@ public class MultiInterfaceWrapper extends BlockMetadataWrapper {
                                     
                                     if (filled != null) {
                                         
-                                        if (!entityplayer.capabilities.isCreativeMode) {
+                                        if (!player.capabilities.isCreativeMode) {
                                             
                                             if (UtilFluid.removeFluidFromHandler(tile, ForgeDirection.getOrientation(side), FluidContainerRegistry.getFluidForFilledItem(filled), true)) {
                                                 
-                                                UtilInventory.addItemStackToInventoryAndSpawnExcess(world, entityplayer.inventory, filled, entityplayer.posX, entityplayer.posY, entityplayer.posZ);
+                                                UtilInventory.addItemStackToInventoryAndSpawnExcess(world, player.inventory, filled, player.posX, player.posY, player.posZ);
                                                 
-                                                UtilInventory.consumeItemStack(entityplayer.inventory, current, 1);
+                                                UtilInventory.consumeItemStack(player.inventory, current, 1);
                                                 return true;
                                             }
                                         } else {
@@ -113,7 +115,7 @@ public class MultiInterfaceWrapper extends BlockMetadataWrapper {
                         
                         if (multi instanceof IGuiMultiBlock) {
                             
-                            return ((IGuiMultiBlock) multi).openGui(new Vector3i(x, y, z), entityplayer, side);
+                            return ((IGuiMultiBlock) multi).openGui(new Vector3i(x, y, z), player, side);
                         }
                     }
                 }
@@ -121,7 +123,7 @@ public class MultiInterfaceWrapper extends BlockMetadataWrapper {
             }
             default: {
                 
-                return getBlock().triggerBlock(world, x, y, z, entityplayer, side, xHit, yHit, zHit);
+                return getBlock().triggerBlock(world, x, y, z, player, side, xHit, yHit, zHit);
             }
         }
     }

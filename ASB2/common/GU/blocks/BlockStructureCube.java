@@ -76,7 +76,7 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
     @Override
     public boolean isValid(World world, int x, int y, int z) {
         
-        return true;
+        return world.isBlockIndirectlyGettingPowered(x, y, z);
     }
     
     @Override

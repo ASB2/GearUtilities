@@ -166,6 +166,7 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
             }
             // }
         }
+        super.updateEntity();
     }
     
     @Override

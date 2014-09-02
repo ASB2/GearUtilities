@@ -9,10 +9,4 @@ public class TileDataMultiInterface extends TileMultiBase implements IMultiBlock
         
         this.setMaxMultiBlocks(1);
     }
-    
-    @Override
-    public void updateEntity() {
-        // TODO Auto-generated method stub
-        super.updateEntity();
-    }
 }

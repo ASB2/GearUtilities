@@ -14,6 +14,26 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
     public List<IMultiBlock> multiBlocks = new ArrayList<IMultiBlock>(), unchangable = new ArrayList<IMultiBlock>();
     protected int maxMultiBlocks = -1;
     
+    private int wait = 0;
+    
+    protected void checkInvalidMultiBlocks() {
+        
+        wait++;
+        
+        if (wait == 5) {
+            wait = 0;
+            for (int index = 0; index < multiBlocks.size(); index++) {
+                
+                IMultiBlock block = multiBlocks.get(index);
+                
+                if (!block.isValid()) {
+                    
+                    this.removeMultiBlock(block);
+                }
+            }
+        }
+    }
+    
     @Override
     public void updateEntity() {
         
@@ -25,6 +45,8 @@ public class TileMultiBase extends TileBase implements IMultiBlockPart {
                 worldObj.setBlockToAir(xCoord, yCoord, zCoord);
             }
         }
+        
+        checkInvalidMultiBlocks();
     }
     
     public TileMultiBase setMaxMultiBlocks(int maxMultiBlocks) {

@@ -12,7 +12,6 @@ import ASB2.utils.UtilEntity;
 import GU.api.color.AbstractColorable.IColorableBlock;
 import GU.api.color.VanillaColor;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
-import GU.api.multiblock.MultiBlockAbstract.IMultiBlockMarker;
 import GU.blocks.containers.BlockMultiMetadataContainerBase;
 import GU.blocks.containers.TileMultiBase;
 import GU.multiblock.EnumMultiBlockType;
@@ -21,7 +20,7 @@ import GU.render.BlockSimpleRenderer.INoiseBlockRender;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class BlockSpatialProvider extends BlockMultiMetadataContainerBase implements INoiseBlockRender, IMultiBlockMarker, IColorableBlock {
+public class BlockSpatialProvider extends BlockMultiMetadataContainerBase implements INoiseBlockRender, IColorableBlock {
     
     public BlockSpatialProvider(Material material) {
         super(material);
@@ -91,12 +90,6 @@ public class BlockSpatialProvider extends BlockMultiMetadataContainerBase implem
     public Color4i getColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         
         return getColor(world.getBlockMetadata(x, y, z));
-    }
-    
-    @Override
-    public boolean isValid(World world, int x, int y, int z) {
-        
-        return true;
     }
     
     @Override

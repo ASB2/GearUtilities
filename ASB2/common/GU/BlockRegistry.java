@@ -31,7 +31,7 @@ import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartGlass;
 import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender;
 import GU.blocks.containers.BlockPhotonSender.BlockPhotonSender;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpatialProvider;
-import GU.blocks.containers.BlockTeleportAlter.BlockTeleportAlter;
+import GU.blocks.containers.BlockTeleportAltar.BlockTeleportAlter;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
 
