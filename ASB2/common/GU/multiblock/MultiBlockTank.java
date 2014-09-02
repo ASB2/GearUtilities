@@ -10,6 +10,7 @@ import GU.GUGuiHandler;
 import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
+import GU.info.Variables;
 import GU.multiblock.construction.ConstructionManager;
 import GU.multiblock.construction.TankConstructionManager;
 import GU.packets.MutliBlockTankPacket;
@@ -47,7 +48,7 @@ public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiB
     public void onSetSize() {
         
         if (fluidTank != null && fluidTank.getFluidTank() != null && fluidTank.getFluidTank().getCapacity() == 0)
-            fluidTank.getFluidTank().setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
+            fluidTank.getFluidTank().setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * Variables.BUCKETS_PER_TANK_BLOCK * FluidContainerRegistry.BUCKET_VOLUME);
     }
     
     public boolean startCreation() {
@@ -56,7 +57,7 @@ public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiB
             
             if (super.startCreation()) {
                 
-                fluidTank.getFluidTank().setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * 16 * FluidContainerRegistry.BUCKET_VOLUME);
+                fluidTank.getFluidTank().setCapacity((size.getX() - 1) * (size.getY() - 1) * (size.getZ() - 1) * Variables.BUCKETS_PER_TANK_BLOCK * FluidContainerRegistry.BUCKET_VOLUME);
                 return true;
             }
         }

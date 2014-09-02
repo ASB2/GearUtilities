@@ -41,7 +41,7 @@ public class BlockMultiBlockPartAir extends BlockMultiContainerBase {
     @Override
     public boolean isAir(IBlockAccess world, int x, int y, int z) {
         // TODO Auto-generated method stub
-        return true;
+        return false;
     }
     
     @Override

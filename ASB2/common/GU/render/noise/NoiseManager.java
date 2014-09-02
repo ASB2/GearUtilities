@@ -11,7 +11,6 @@ import org.lwjgl.opengl.GL11;
 import GU.GearUtilities;
 import GU.info.Reference;
 import GU.info.Variables;
-import UC.FastNoise;
 import UC.color.Color4i;
 import UC.noise.libnoiseforjava.module.Voronoi;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -35,7 +34,8 @@ public class NoiseManager {
     public int GL_TEXTURE_ID;
     
     public List<int[]> imageDataArray = new ArrayList<int[]>(20000);
-    public static final float maxDensity = .35f, minDensity = .1f, changePerTick = .0002f;
+    public static final float maxDensity = .2f, minDensity = .1f, changePerTick = .0002f;
+    Voronoi noiseGen = new Voronoi();
     
     boolean moveAnimationDown = true;
     int animationPosition = 0;
@@ -56,6 +56,11 @@ public class NoiseManager {
         GearUtilities.log("Elapsed Time of Noise Gen: " + (endTime - startTime));
         
         TextureUtil.allocateTexture(GL_TEXTURE_ID, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
+        
+        if (Variables.ANIMATE_NOISE_TEXTURE) {
+            
+            TextureUtil.uploadTexture(NoiseManager.instance.GL_TEXTURE_ID, imageDataArray.get(animationPosition), Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
+        }
     }
     
     public static void bindImage() {
@@ -63,130 +68,69 @@ public class NoiseManager {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, instance.GL_TEXTURE_ID);
     }
     
-    @SuppressWarnings("unused")
     public void generateNoiseImage() {
         
         imageDataArray.clear();
         
-        if (false) {
+        for (float currentDensity = minDensity; currentDensity <= maxDensity; currentDensity += changePerTick) {
             
-            final double imHungry = Math.PI / 4;
-            
-            for (float currentDensity = minDensity; currentDensity <= maxDensity; currentDensity += changePerTick) {
+            if (Variables.ANIMATE_NOISE_TEXTURE && currentDensity != minDensity) {
                 
-                int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
-                
-                for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x++) {
-                    
-                    for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
-                        
-                        int col = FastNoise.noise(x * currentDensity * imHungry, y * currentDensity * imHungry, 7);
-                        
-                        // int col = FastNoise.noise((x + shift) * .1, (y +
-                        // shift) *
-                        // .1, 7);
-                        
-                        int red = col;
-                        int green = col;
-                        int blue = col;
-                        
-                        int RGB = red;
-                        RGB = (RGB << 8) + green;
-                        RGB = (RGB << 8) + blue;
-                        RGB |= 0xFF000000;
-                        imageData[x + y * Variables.NOISE_TEXTURE_SIZE] = RGB;
-                    }
-                }
-                imageDataArray.add(imageData);
+                break;
             }
-        } else if (false) {
             
-            for (float currentDensity = .1f; currentDensity <= .2; currentDensity += .0002) {
+            double voroni2 = (noiseGen.getValue(currentDensity, currentDensity, currentDensity) * 255);
+            
+            int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
+            
+            for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x++) {
                 
-                int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
-                
-                for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x++) {
+                for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
                     
-                    for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
-                        
-                        int col = FastNoise.noise(x * currentDensity, y * currentDensity, 7);
-                        
-                        // int col = FastNoise.noise((x + shift) * .1, (y +
-                        // shift) *
-                        // .1, 7);
-                        
-                        int red = col;
-                        int green = col;
-                        int blue = col;
-                        
-                        int RGB = red;
-                        RGB = (RGB << 8) + green;
-                        RGB = (RGB << 8) + blue;
-                        RGB |= 0xFF000000;
-                        imageData[x + y * Variables.NOISE_TEXTURE_SIZE] = RGB;
-                    }
-                }
-                imageDataArray.add(imageData);
-            }
-        } else if (true) {
-            
-            Voronoi noiseGen = new Voronoi();
-            
-            for (float currentDensity = .1f; currentDensity <= .2; currentDensity += .0002) {
-                
-                double voroni2 = (noiseGen.getValue(currentDensity, currentDensity, currentDensity) * 255);
-                
-                int[] imageData = new int[Variables.NOISE_TEXTURE_SIZE * Variables.NOISE_TEXTURE_SIZE];
-                
-                for (int x = 0; x < Variables.NOISE_TEXTURE_SIZE; x++) {
+                    double voroni = (noiseGen.getValue(x * currentDensity, y * currentDensity, currentDensity) * 255);
                     
-                    for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
-                        
-                        double voroni = (noiseGen.getValue(x * currentDensity, y * currentDensity, currentDensity) * 255);
-                        
-                        // int perlin = FastNoise.noise(x * currentDensity, y *
-                        // currentDensity, 7);
-                        //
-                        // int col = (int) ((voroni + voroni2 + perlin + perlin)
-                        // / 3);
-                        
-                        int col = (int) (((voroni + voroni2 + (currentDensity * currentDensity)) / 4));
-                        
-                        // int col = (int) (((noiseGen.getValue(x *
-                        // currentDensity, y * currentDensity, currentDensity) *
-                        // 255) + (noiseGen.getValue(currentDensity,
-                        // currentDensity, currentDensity) * 255) +
-                        // FastNoise.noise(x * currentDensity, y *
-                        // currentDensity, 7) + FastNoise.noise(x *
-                        // currentDensity, y * currentDensity, 7)) / 4);
-                        
-                        // int col = (int) (((noiseGen.getValue(x *
-                        // currentDensity, y * currentDensity, currentDensity) *
-                        // 255) + FastNoise.noise(x * currentDensity, y *
-                        // currentDensity, 5) + FastNoise.noise(x *
-                        // currentDensity, y * currentDensity, 9)) / 3);
-                        
-                        // int col = (int) (noiseGen.getValue(x *
-                        // currentDensity, y * currentDensity, currentDensity) *
-                        // 255);
-                        
-                        // int col = FastNoise.noise((x + shift) * .1, (y +
-                        // shift) *
-                        // .1, 7);
-                        
-                        int red = col;
-                        int green = col;
-                        int blue = col;
-                        
-                        int RGB = red;
-                        RGB = (RGB << 8) + green;
-                        RGB = (RGB << 8) + blue;
-                        RGB |= 0xFF000000;
-                        imageData[x + y * Variables.NOISE_TEXTURE_SIZE] = RGB;
-                    }
+                    // int perlin = FastNoise.noise(x * currentDensity, y *
+                    // currentDensity, 7);
+                    //
+                    // int col = (int) ((voroni + voroni2 + perlin + perlin)
+                    // / 3);
+                    
+                    int col = (int) (((voroni + voroni2 + (currentDensity * currentDensity)) / 4));
+                    
+                    // int col = (int) (((noiseGen.getValue(x *
+                    // currentDensity, y * currentDensity, currentDensity) *
+                    // 255) + (noiseGen.getValue(currentDensity,
+                    // currentDensity, currentDensity) * 255) +
+                    // FastNoise.noise(x * currentDensity, y *
+                    // currentDensity, 7) + FastNoise.noise(x *
+                    // currentDensity, y * currentDensity, 7)) / 4);
+                    
+                    // int col = (int) (((noiseGen.getValue(x *
+                    // currentDensity, y * currentDensity, currentDensity) *
+                    // 255) + FastNoise.noise(x * currentDensity, y *
+                    // currentDensity, 5) + FastNoise.noise(x *
+                    // currentDensity, y * currentDensity, 9)) / 3);
+                    
+                    // int col = (int) (noiseGen.getValue(x *
+                    // currentDensity, y * currentDensity, currentDensity) *
+                    // 255);
+                    
+                    // int col = FastNoise.noise((x + shift) * .1, (y +
+                    // shift) *
+                    // .1, 7);
+                    
+                    int red = col;
+                    int green = col;
+                    int blue = col;
+                    
+                    int RGB = red;
+                    RGB = (RGB << 8) + green;
+                    RGB = (RGB << 8) + blue;
+                    RGB |= 0xFF000000;
+                    imageData[x + y * Variables.NOISE_TEXTURE_SIZE] = RGB;
                 }
-                imageDataArray.add(imageData);
             }
+            imageDataArray.add(imageData);
         }
     }
     
@@ -194,29 +138,32 @@ public class NoiseManager {
     public void updateNoise(RenderTickEvent event) {
         
         {
-            TextureUtil.uploadTexture(NoiseManager.instance.GL_TEXTURE_ID, imageDataArray.get(animationPosition), Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
-            
-            if (Minecraft.getSystemTime() % 20 == 0) {
+            if (!Variables.ANIMATE_NOISE_TEXTURE) {
                 
-                if (moveAnimationDown) {
+                TextureUtil.uploadTexture(NoiseManager.instance.GL_TEXTURE_ID, imageDataArray.get(animationPosition), Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
+                
+                if (Minecraft.getSystemTime() % 20 == 0) {
                     
-                    if (animationPosition >= imageDataArray.size() - 1) {
+                    if (moveAnimationDown) {
                         
-                        moveAnimationDown = false;
-                        animationPosition = imageDataArray.size() - 1;
-                    } else /* if (Minecraft.getSystemTime() % 20 == 0) */{
+                        if (animationPosition >= imageDataArray.size() - 1) {
+                            
+                            moveAnimationDown = false;
+                            animationPosition = imageDataArray.size() - 1;
+                        } else /* if (Minecraft.getSystemTime() % 20 == 0) */{
+                            
+                            animationPosition++;
+                        }
                         
-                        animationPosition++;
-                    }
-                    
-                } else {
-                    
-                    if (animationPosition <= 0) {
-                        moveAnimationDown = true;
-                        animationPosition = 0;
-                    } else /* if (Minecraft.getSystemTime() % 20 == 0) */{
+                    } else {
                         
-                        animationPosition--;
+                        if (animationPosition <= 0) {
+                            moveAnimationDown = true;
+                            animationPosition = 0;
+                        } else /* if (Minecraft.getSystemTime() % 20 == 0) */{
+                            
+                            animationPosition--;
+                        }
                     }
                 }
             }

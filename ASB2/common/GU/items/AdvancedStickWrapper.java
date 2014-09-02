@@ -1,7 +1,6 @@
 package GU.items;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -26,7 +25,7 @@ public class AdvancedStickWrapper extends ItemMetadataWrapper {
         
         Block block = world.getBlock(x, y, z);
         
-        if (block != null && block instanceof BlockAir) {
+        if (block != null && block.isAir(world, x, y, z)) {
             
             return block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(side));
         }

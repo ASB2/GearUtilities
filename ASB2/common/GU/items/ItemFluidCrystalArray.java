@@ -3,7 +3,6 @@ package GU.items;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -44,7 +43,13 @@ public class ItemFluidCrystalArray extends ItemBase {
         
         FluidStack pickupFluid = null;
         
-        if (block instanceof IFluidBlock) {
+        if (block == Blocks.lava && block != Blocks.flowing_lava) {
+            
+            pickupFluid = new FluidStack(FluidRegistry.LAVA, 1000);
+        } else if (block == Blocks.water && block != Blocks.flowing_water) {
+            
+            pickupFluid = new FluidStack(FluidRegistry.WATER, 1000);
+        } else if (block instanceof IFluidBlock) {
             
             if (((IFluidBlock) block).canDrain(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ)) {
                 
@@ -57,21 +62,11 @@ public class ItemFluidCrystalArray extends ItemBase {
             }
         }
         
-        if (block == Blocks.lava) {
-            
-            pickupFluid = new FluidStack(FluidRegistry.LAVA, 1000);
-        }
-        
-        if (block == Blocks.water) {
-            
-            pickupFluid = new FluidStack(FluidRegistry.WATER, 1000);
-        }
-        
         if (pickupFluid != null) {
             
             ItemStack toAdd = FluidContainerRegistry.fillFluidContainer(new FluidStack(pickupFluid, 1000), new ItemStack(this));
             
-            if (toAdd != null && UtilInventory.removeItemStackFromInventory(player.inventory, itemStack, 1, true)) {
+            if (toAdd != null && (player.capabilities.isCreativeMode || UtilInventory.removeItemStackFromInventory(player.inventory, itemStack, 1, true))) {
                 
                 if (!UtilInventory.addItemStackToInventory(player.inventory, toAdd, true)) {
                     
@@ -82,7 +77,7 @@ public class ItemFluidCrystalArray extends ItemBase {
             }
         } else {
             
-            if (block instanceof BlockAir) {
+            if (block.isAir(world, x, y, z)) {
                 
                 if (itemStack.getItemDamage() != 0) {
                     
@@ -92,7 +87,7 @@ public class ItemFluidCrystalArray extends ItemBase {
                         
                         Block fluidBlock = fluid.getBlock();
                         
-                        if (fluidBlock != null && UtilInventory.removeItemStackFromInventory(player.inventory, itemStack, 1, true)) {
+                        if (fluidBlock != null && (player.capabilities.isCreativeMode || UtilInventory.removeItemStackFromInventory(player.inventory, itemStack, 1, true))) {
                             
                             UtilBlock.placeBlockInAir(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, fluidBlock, 0);
                             
