@@ -40,64 +40,62 @@ public class ItemFluidCrystalArray extends ItemBase {
         ForgeDirection direction = ForgeDirection.getOrientation(side);
         
         Block block = world.getBlock(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ);
+        int meta = world.getBlockMetadata(x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ);
         
-        FluidStack pickupFluid = null;
-        
-        if (block == Blocks.lava && block != Blocks.flowing_lava) {
+        if (UtilBlock.isBlockAir(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ)) {
             
-            pickupFluid = new FluidStack(FluidRegistry.LAVA, 1000);
-        } else if (block == Blocks.water && block != Blocks.flowing_water) {
-            
-            pickupFluid = new FluidStack(FluidRegistry.WATER, 1000);
-        } else if (block instanceof IFluidBlock) {
-            
-            if (((IFluidBlock) block).canDrain(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ)) {
+            if (itemStack.getItemDamage() != 0) {
                 
-                FluidStack test = ((IFluidBlock) block).drain(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, false);
+                Fluid fluid = FluidRegistry.getFluid(itemStack.getItemDamage());
                 
-                if (test != null && test.amount == 1000) {
+                if (fluid != null) {
                     
-                    pickupFluid = ((IFluidBlock) block).drain(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, true);
-                }
-            }
-        }
-        
-        if (pickupFluid != null) {
-            
-            ItemStack toAdd = FluidContainerRegistry.fillFluidContainer(new FluidStack(pickupFluid, 1000), new ItemStack(this));
-            
-            if (toAdd != null && (player.capabilities.isCreativeMode || UtilInventory.removeItemStackFromInventory(player.inventory, itemStack, 1, true))) {
-                
-                if (!UtilInventory.addItemStackToInventory(player.inventory, toAdd, true)) {
+                    Block fluidBlock = fluid.getBlock();
                     
-                    UtilBlock.spawnItemStackEntity(world, player.posX, player.posY, player.posZ, toAdd, 1);
+                    if (fluidBlock != null && (player.capabilities.isCreativeMode || UtilInventory.removeItemStackFromInventory(player.inventory, itemStack, 1, true))) {
+                        
+                        UtilBlock.placeBlockInAir(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, fluidBlock, 0);
+                        
+                        UtilInventory.addItemStackToInventoryAndSpawnExcess(world, player.inventory, new ItemStack(this, 1, 0), player.posX, player.posY, player.posZ);
+                        return true;
+                    }
                 }
-                UtilBlock.breakBlockNoDrop(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ);
-                return true;
             }
         } else {
             
-            if (block.isAir(world, x, y, z)) {
+            FluidStack pickupFluid = null;
+            
+            if (block == Blocks.lava && meta == 0) {
                 
-                if (itemStack.getItemDamage() != 0) {
+                pickupFluid = new FluidStack(FluidRegistry.LAVA, 1000);
+            } else if (block == Blocks.water && meta == 0) {
+                
+                pickupFluid = new FluidStack(FluidRegistry.WATER, 1000);
+            } else if (block instanceof IFluidBlock) {
+                
+                if (((IFluidBlock) block).canDrain(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ)) {
                     
-                    Fluid fluid = FluidRegistry.getFluid(itemStack.getItemDamage());
+                    FluidStack test = ((IFluidBlock) block).drain(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, false);
                     
-                    if (fluid != null) {
+                    if (test != null && test.amount == 1000) {
                         
-                        Block fluidBlock = fluid.getBlock();
-                        
-                        if (fluidBlock != null && (player.capabilities.isCreativeMode || UtilInventory.removeItemStackFromInventory(player.inventory, itemStack, 1, true))) {
-                            
-                            UtilBlock.placeBlockInAir(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, fluidBlock, 0);
-                            
-                            if (!UtilInventory.addItemStackToInventory(player.inventory, new ItemStack(this, 1, 0), true)) {
-                                
-                                UtilBlock.spawnItemStackEntity(world, player.posX, player.posY, player.posZ, new ItemStack(this, 1, 0), 1);
-                            }
-                            return true;
-                        }
+                        pickupFluid = ((IFluidBlock) block).drain(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ, true);
                     }
+                }
+            }
+            
+            if (pickupFluid != null) {
+                
+                ItemStack toAdd = FluidContainerRegistry.fillFluidContainer(new FluidStack(pickupFluid, 1000), new ItemStack(this));
+                
+                if (toAdd != null && (player.capabilities.isCreativeMode || UtilInventory.removeItemStackFromInventory(player.inventory, itemStack, 1, true))) {
+                    
+                    if (!UtilInventory.addItemStackToInventory(player.inventory, toAdd, true)) {
+                        
+                        UtilBlock.spawnItemStackEntity(world, player.posX, player.posY, player.posZ, toAdd, 1);
+                    }
+                    UtilBlock.breakBlockNoDrop(world, x + direction.offsetX, y + direction.offsetY, z + direction.offsetZ);
+                    return true;
                 }
             }
         }

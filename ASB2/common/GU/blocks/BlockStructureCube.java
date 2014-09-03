@@ -58,7 +58,7 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
     public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4) {
         super.addInformation(stack, player, par3List, par4);
         par3List.add("Color: " + color.name());
-        
+        par3List.add("To see crafting recipes look at the white structure cube");
     }
     
     @Override
