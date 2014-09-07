@@ -114,7 +114,7 @@ public class CraftRegistry {
         
         GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.METADATA_ITEM, 1, 4), new ItemStack(ItemRegistry.METADATA_ITEM, 1, 4));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.TELEPORT_ALTER, new Object[] { "SES", "EPE", "SES",
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.TELEPORT_ALTAR, new Object[] { "SES", "EPE", "SES",
         
         'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 0), 'S', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 5), 'P', Items.ender_pearl }));
     }

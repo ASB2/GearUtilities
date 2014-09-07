@@ -52,6 +52,7 @@ public class TileSpatialProvider extends TileMultiBase implements IMultiBlockCor
                 multiBlockPacket.update();
             }
         }
+        super.updateEntity();
     }
     
     @Override

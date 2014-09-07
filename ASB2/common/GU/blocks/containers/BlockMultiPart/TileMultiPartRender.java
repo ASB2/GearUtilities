@@ -22,6 +22,7 @@ public class TileMultiPartRender extends TileMultiBase {
             multiBlocks.size();
             // UtilEntity.sendClientChat(worldObj.isRemote + "");
         }
+        super.updateEntity();
     }
     
     @Override

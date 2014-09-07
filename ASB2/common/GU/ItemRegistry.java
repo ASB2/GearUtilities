@@ -17,7 +17,7 @@ import GU.items.ItemFluidCrystalArray;
 import GU.items.ItemMetadata;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
 import GU.items.ItemRenderers.GarnetRenderer;
-import GU.items.TeleporterWrapper;
+import GU.items.HandheldTeleporterWrapper;
 import GU.items.UtilityTabletWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -39,7 +39,7 @@ public final class ItemRegistry {
         METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Garnet").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Electis Controler").setRenderer(GarnetRenderer.instance));
         METADATA_ITEM.addWrapper(new GearReaderWrapper("Gear Reader"));
-        METADATA_ITEM.addWrapper(new TeleporterWrapper("Teleporter"));
+        METADATA_ITEM.addWrapper(new HandheldTeleporterWrapper("Handheld Teleporter"));
         METADATA_ITEM.addWrapper(new AdvancedStickWrapper("Advanced Stick"));
         METADATA_ITEM.addWrapper(new DestructorWrapper("Destructor"));
         METADATA_ITEM.addWrapper(new UtilityTabletWrapper("Utility Tablet"));

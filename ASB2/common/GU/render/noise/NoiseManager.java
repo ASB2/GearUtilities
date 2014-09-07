@@ -57,7 +57,7 @@ public class NoiseManager {
         
         TextureUtil.allocateTexture(GL_TEXTURE_ID, Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
         
-        if (Variables.ANIMATE_NOISE_TEXTURE) {
+        if (!Variables.ANIMATE_NOISE_TEXTURE) {
             
             TextureUtil.uploadTexture(NoiseManager.instance.GL_TEXTURE_ID, imageDataArray.get(animationPosition), Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
         }
@@ -74,7 +74,7 @@ public class NoiseManager {
         
         for (float currentDensity = minDensity; currentDensity <= maxDensity; currentDensity += changePerTick) {
             
-            if (Variables.ANIMATE_NOISE_TEXTURE && currentDensity != minDensity) {
+            if (!Variables.ANIMATE_NOISE_TEXTURE && currentDensity != minDensity) {
                 
                 break;
             }
@@ -138,7 +138,7 @@ public class NoiseManager {
     public void updateNoise(RenderTickEvent event) {
         
         {
-            if (!Variables.ANIMATE_NOISE_TEXTURE) {
+            if (Variables.ANIMATE_NOISE_TEXTURE) {
                 
                 TextureUtil.uploadTexture(NoiseManager.instance.GL_TEXTURE_ID, imageDataArray.get(animationPosition), Variables.NOISE_TEXTURE_SIZE, Variables.NOISE_TEXTURE_SIZE);
                 

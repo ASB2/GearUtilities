@@ -89,17 +89,18 @@ public class BlockBase extends Block {
             return true;
         }
         
-        if (stack.getItem() == Items.stick) {
-            
-            return true;
-        }
-        
         if (stack.getItem() == ItemRegistry.METADATA_ITEM) {
             
             if (stack.getItemDamage() == 5) {
                 
                 return true;
             }
+        }
+        
+        
+        if (stack.getItem() == Items.stick) {
+            
+            return true;
         }
         return false;
     }

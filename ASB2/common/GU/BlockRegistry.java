@@ -31,7 +31,7 @@ import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartGlass;
 import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender;
 import GU.blocks.containers.BlockPhotonSender.BlockPhotonSender;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpatialProvider;
-import GU.blocks.containers.BlockTeleportAltar.BlockTeleportAlter;
+import GU.blocks.containers.BlockTeleportAltar.BlockTeleportAltar;
 import GU.info.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -121,7 +121,7 @@ public class BlockRegistry {
     
     public static final BlockMultiDirectionalConduit MULTI_DIRECTIONAL_CONDUIT = new BlockMultiDirectionalConduit(Material.rock);
     
-    public static final BlockTeleportAlter TELEPORT_ALTER = new BlockTeleportAlter(Material.rock);
+    public static final BlockTeleportAltar TELEPORT_ALTAR = new BlockTeleportAltar(Material.rock);
     
     public static final BlockDrill DRILL = new BlockDrill(Material.rock);
     
@@ -152,7 +152,7 @@ public class BlockRegistry {
         customBlockMap.put(Reference.MOD_ID.concat(":BlockFluidElectisPolyhedron"), FLUID_ELECTIS_POLYHEDRON.setBlockName("Fluid Electis Polyhedron"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockConduit"), CONDUIT.setBlockName("Conduit"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiDirectionalConduit"), MULTI_DIRECTIONAL_CONDUIT.setBlockName("Multi Directional Conduit"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockTeleportAlter"), TELEPORT_ALTER.setBlockName("Teleport Alter"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockTeleportAltar"), TELEPORT_ALTAR.setBlockName("Teleport Altar"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockDrill"), DRILL.setBlockName("Drill"));
     }
     
