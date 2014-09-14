@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import GU.api.color.VanillaColor;
 import GU.blocks.BlockBase;
-import GU.blocks.BlockMetadata;
+import GU.blocks.BlockMetadataOre;
 import GU.blocks.BlockStructureCube;
 import GU.blocks.containers.BlockConduit.BlockConduit;
 import GU.blocks.containers.BlockCreativeMetadata.BlockCreativeMetadata;
@@ -39,15 +39,7 @@ public class BlockRegistry {
     
     public static final Map<String, Block> customBlockMap = new HashMap<String, Block>();
     
-    public static final BlockMetadata METADATA_ORE = new BlockMetadata(Material.rock) {
-        
-        public void postInit() {
-            
-            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockElectisCatchingStone" }).addDrop(new ItemStack(this, 1, 0)).setDisplayName("Electis Catching Stone"));
-            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockElectisInfusedStone" }).addDrop(ItemRegistry.ELECTIS_CRYSTAL_SHARD).setDisplayName("Electis Infused Stone"));
-            this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockGarnetOre" }).addDrop(ItemRegistry.GARNET).setDisplayName("Garnet Infused Stone"));
-        }
-    };
+    public static final BlockMetadataOre METADATA_ORE = new BlockMetadataOre(Material.rock);
     
     public static final List<BlockStructureCube> STRUCTURE_CUBES = new ArrayList<BlockStructureCube>();
     

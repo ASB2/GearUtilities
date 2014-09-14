@@ -22,7 +22,7 @@ public class BlockMultiInterface extends BlockMultiMetadataContainerBase impleme
     }
     
     @Override
-    public Color4i getColor(int metadata) {
+    public Color4i getNoiseColor(int metadata) {
         
         switch (metadata) {
         
@@ -43,22 +43,22 @@ public class BlockMultiInterface extends BlockMultiMetadataContainerBase impleme
     }
     
     @Override
-    public Color4i getColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
+    public Color4i getNoiseColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         
         TileEntity tile = world.getTileEntity(x, y, z);
         
-        return tile != null && tile instanceof IColorableTile ? ((IColorableTile) tile).getColor(direction) : getColor(world.getBlockMetadata(x, y, z));
+        return tile != null && tile instanceof IColorableTile ? ((IColorableTile) tile).getColor(direction) : getNoiseColor(world.getBlockMetadata(x, y, z));
         // return getColor(world.getBlockMetadata(x, y, z));
     }
     
     @Override
-    public boolean canRender(int metadata) {
+    public boolean canRenderNoise(int metadata) {
         // TODO Auto-generated method stub
         return true;
     }
     
     @Override
-    public boolean canRender(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
+    public boolean canRenderNoise(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         // TODO Auto-generated method stub
         return true;
     }

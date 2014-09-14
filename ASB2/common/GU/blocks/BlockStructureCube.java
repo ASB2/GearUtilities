@@ -87,25 +87,25 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
     }
     
     @Override
-    public Color4i getColor(int metadata) {
+    public Color4i getNoiseColor(int metadata) {
         
         return color.getRGBValue();
     }
     
     @Override
-    public Color4i getColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
+    public Color4i getNoiseColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         
-        return getColor(world.getBlockMetadata(x, y, z));
+        return getNoiseColor(world.getBlockMetadata(x, y, z));
     }
     
     @Override
-    public boolean canRender(int metadata) {
+    public boolean canRenderNoise(int metadata) {
         
         return true;
     }
     
     @Override
-    public boolean canRender(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
+    public boolean canRenderNoise(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         
         return true;
     }

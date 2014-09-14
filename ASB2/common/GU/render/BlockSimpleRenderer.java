@@ -36,11 +36,11 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
         
         if (block instanceof INoiseBlockRender) {
             
-            if (((INoiseBlockRender) block).canRender(metadata)) {
+            if (((INoiseBlockRender) block).canRenderNoise(metadata)) {
                 
                 renderer.setRenderBounds(.01, .01, .01, 1 - .01, 1 - .01, 1 - .01);
                 
-                Color4i color = ((INoiseBlockRender) block).getColor(metadata);
+                Color4i color = ((INoiseBlockRender) block).getNoiseColor(metadata);
                 
                 if (color != null) {
                     
@@ -75,9 +75,9 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 
-                if (((INoiseBlockRender) block).canRender(world, x, y, z, direction)) {
+                if (((INoiseBlockRender) block).canRenderNoise(world, x, y, z, direction)) {
                     
-                    Color4i color = ((INoiseBlockRender) block).getColor(world, x, y, z, direction);
+                    Color4i color = ((INoiseBlockRender) block).getNoiseColor(world, x, y, z, direction);
                     
                     if (color == null) {
                         
@@ -149,12 +149,12 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     
     public static interface INoiseBlockRender {
         
-        Color4i getColor(int metadata);
+        Color4i getNoiseColor(int metadata);
         
-        Color4i getColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction);
+        Color4i getNoiseColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction);
         
-        boolean canRender(int metadata);
+        boolean canRenderNoise(int metadata);
         
-        boolean canRender(IBlockAccess world, int x, int y, int z, ForgeDirection direction);
+        boolean canRenderNoise(IBlockAccess world, int x, int y, int z, ForgeDirection direction);
     }
 }

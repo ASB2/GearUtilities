@@ -1,14 +1,22 @@
 package GU.blocks.containers.BlockDrill;
 
-import net.minecraft.block.BlockAir;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import ASB2.inventory.Inventory;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
+import ASB2.utils.UtilInventory;
 import GU.blocks.containers.TileBase;
 import GU.blocks.containers.BlockElectisPolyhedron.TileElectisPolyhedron;
 import UC.Wait;
@@ -20,14 +28,18 @@ public class TileDrill extends TileBase {
     Wait breakBlockWait;
     boolean coordsSet = false;
     
-    Vector3i size, corner, position;
+    Vector3i size, corner;
+    List<Vector3i> lastBrokenBlocks;
+    
+    Inventory blackListInventory;
     
     public TileDrill() {
         
-        breakBlockWait = new Wait(new BreakWait(), 2);
+        breakBlockWait = new Wait(new BreakWait(), 20);
         size = new Vector3i();
         corner = new Vector3i();
-        position = new Vector3i();
+        lastBrokenBlocks = new ArrayList<Vector3i>();
+        blackListInventory = new Inventory(-1, "Blacklist");
     }
     
     @Override
@@ -38,7 +50,81 @@ public class TileDrill extends TileBase {
     
     public boolean breakBlock(int x, int y, int z, IInventory inventory) {
         
+        Block block = worldObj.getBlock(x, y, z);
+        
+        if (!worldObj.isRemote) {
+            
+            if (!block.isAir(worldObj, x, y, z)) {
+                
+                if (block.getBlockHardness(worldObj, x, y, z) != -1) {
+                    
+                    if (!UtilInventory.hasItemStack(blackListInventory, new ItemStack(block, 1, worldObj.getBlockMetadata(x, y, z)))) {
+                        
+                        if (inventory instanceof ISidedInventory) {
+                            
+                            return UtilBlock.breakAndAddToISidedInventory((ISidedInventory) inventory, this.getOrientation(), worldObj, x, y, z, true);
+                        } else {
+                            
+                            return UtilBlock.breakAndAddToInventory(inventory, worldObj, x, y, z, true);
+                        }
+                    }
+                }
+            }
+            return true;
+        }
         return false;
+    }
+    
+    public void populateBlackList() {
+        
+        ForgeDirection oppositeOrientation = this.getOrientation(), orientation = oppositeOrientation.getOpposite();
+        
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+            
+            if (direction == oppositeOrientation || direction == orientation) {
+                
+                continue;
+            }
+            
+            TileEntity tile = worldObj.getTileEntity(xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ);
+            
+            if (tile != null) {
+                
+                if (tile instanceof IInventory) {
+                    
+                    if (tile instanceof ISidedInventory) {
+                        
+                        int[] slots = ((ISidedInventory) tile).getAccessibleSlotsFromSide(direction.getOpposite().ordinal());
+                        
+                        if (slots != null) {
+                            
+                            for (int index = 0; index < slots.length; index++) {
+                                
+                                int slot = slots[index];
+                                
+                                ItemStack stack = ((ISidedInventory) tile).getStackInSlot(slot);
+                                
+                                if (stack != null && stack.getItem() instanceof ItemBlock) {
+                                    
+                                    UtilInventory.addItemStackToInventory(blackListInventory, stack, true);
+                                }
+                            }
+                        }
+                    } else {
+                        
+                        for (int index = 0; index < ((IInventory) tile).getSizeInventory(); index++) {
+                            
+                            ItemStack stack = ((IInventory) tile).getStackInSlot(index);
+                            
+                            if (stack != null && stack.getItem() instanceof ItemBlock) {
+                                
+                                UtilInventory.addItemStackToInventory(blackListInventory, stack, true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @Override
@@ -46,13 +132,24 @@ public class TileDrill extends TileBase {
         
         if (player.isSneaking()) {
             
-            if (!world.isRemote)
+            if (!world.isRemote) {
+                
+                if (!coordsSet) {
+                    this.rotateBlock(world, x, y, z, axis);
+                    return true;
+                }
                 UtilEntity.sendChatToPlayer(player, "Size Cleared");
+            }
             
             this.coordsSet = false;
             size.setXYZ(0, 0, 0);
             corner.setXYZ(0, 0, 0);
-            position.setXYZ(0, 0, 0);
+            lastBrokenBlocks.clear();
+            
+            if (blackListInventory != null) {
+                
+                blackListInventory.clear();
+            }
         } else if (!coordsSet) {
             
             int xMin = 0, yMin = 0, zMin = 0;
@@ -62,38 +159,7 @@ public class TileDrill extends TileBase {
             
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 
-                if (direction == orientation) {
-                    
-                    if (direction.offsetX < 0) {
-                        
-                        xMin += 1;
-                    }
-                    
-                    if (direction.offsetX > 0) {
-                        
-                        xMax += 1;
-                    }
-                    
-                    if (direction.offsetY < 0) {
-                        
-                        yMin += 1;
-                    }
-                    
-                    if (direction.offsetY > 0) {
-                        
-                        yMax += 1;
-                    }
-                    
-                    if (direction.offsetZ < 0) {
-                        
-                        zMin += 1;
-                    }
-                    
-                    if (direction.offsetZ > 0) {
-                        
-                        zMax += 1;
-                    }
-                } else if (direction == oppositeOrientation) {
+                if (direction == oppositeOrientation) {
                     
                     continue;
                 }
@@ -106,65 +172,75 @@ public class TileDrill extends TileBase {
                         
                         if (tile instanceof TileElectisPolyhedron) {
                             
-                            if (direction.offsetX > 0) {
+                            if (world.isBlockIndirectlyGettingPowered(x + (distance * direction.offsetX), y + (distance * direction.offsetY), z + (distance * direction.offsetZ))) {
                                 
-                                xMax += distance;
-                            }
-                            if (direction.offsetX < 0) {
+                                if (direction.offsetX > 0) {
+                                    
+                                    xMax += distance;
+                                }
+                                if (direction.offsetX < 0) {
+                                    
+                                    xMin += distance;
+                                }
+                                if (direction.offsetY > 0) {
+                                    
+                                    yMax += distance;
+                                }
+                                if (direction.offsetY < 0) {
+                                    
+                                    yMin += distance;
+                                }
+                                if (direction.offsetZ > 0) {
+                                    
+                                    zMax += distance;
+                                }
+                                if (direction.offsetZ < 0) {
+                                    
+                                    zMin += distance;
+                                }
+                                continue;
+                            } else {
                                 
-                                xMin += distance;
-                            }
-                            if (direction.offsetY > 0) {
+                                UtilEntity.sendChatToPlayer(player, "The Electis Polyhedron must have a redstone signal to be used. Size detection has stopped to prevent unwanted quarry sizes.");
                                 
-                                yMax += distance;
+                                return false;
                             }
-                            if (direction.offsetY < 0) {
-                                
-                                yMin += distance;
-                            }
-                            if (direction.offsetZ > 0) {
-                                
-                                zMax += distance;
-                            }
-                            if (direction.offsetZ < 0) {
-                                
-                                zMin += distance;
-                            }
-                            continue;
                         }
                     }
                     
-                    if (world.getBlock(x + (distance * direction.offsetX), y + (distance * direction.offsetY), z + (distance * direction.offsetZ)) instanceof BlockAir) {
-                        
-                        continue;
-                    } else {
-                        
-                        break;
-                    }
+                    // if (UtilBlock.isBlockAir(world, x + (distance *
+                    // direction.offsetX), y + (distance * direction.offsetY), z
+                    // + (distance * direction.offsetZ))) {
+                    //
+                    // continue;
+                    // } else {
+                    //
+                    // break;
+                    // }
                 }
             }
             
-            if (xMax + xMin != 0 || yMax + yMin != 0 || zMax + zMin != 0) {
+            // if (xMax + xMin != 0 || yMax + yMin != 0 || zMax + zMin != 0) {
+            
+            corner.setXYZ(xMax + orientation.offsetX, yMax + orientation.offsetY, zMax + orientation.offsetZ);
+            size.setXYZ((xMax + xMin), (yMax + yMin), (zMax + zMin));
+            
+            coordsSet = true;
+            
+            this.populateBlackList();
+            
+            if (!world.isRemote) {
                 
-                corner.setXYZ(xMax + orientation.offsetX, yMax + orientation.offsetY, zMax + orientation.offsetZ);
-                size.setXYZ(xMax + xMin, corner.getY() - (yMax + yMin) < 0 ? yMax + yMin - (corner.getY() - (yMax + yMin)) : yMax + yMin, zMax + zMin);
-                
-                coordsSet = true;
-                
-                if (!world.isRemote) {
-                    
-                    UtilEntity.sendChatToPlayer(player, "Size set: ");
-                    UtilEntity.sendChatToPlayer(player, size);
-                    UtilEntity.sendChatToPlayer(player, "Beginning Digging");
-                }
+                UtilEntity.sendChatToPlayer(player, "Size set: ");
+                UtilEntity.sendChatToPlayer(player, size);
+                UtilEntity.sendChatToPlayer(player, "Beginning Digging");
             }
+            // }
         } else {
             
             if (!world.isRemote) {
                 
-                ForgeDirection direction = this.getOrientation().getOpposite();
-                
-                UtilEntity.sendChatToPlayer(player, "Currently Digging: " + this.corner.subtract(position).add(xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ));
+                UtilEntity.sendChatToPlayer(player, "Layer Size: " + lastBrokenBlocks.size());
             }
         }
         return true;
@@ -198,83 +274,40 @@ public class TileDrill extends TileBase {
     
     private class BreakWait implements IWaitTrigger {
         
-        boolean changeX, changeY, changeZ;
-        
         @Override
         public void trigger(int id) {
             
             if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && coordsSet) {
                 
-                UtilBlock.breakBlockNoDrop(worldObj, xCoord + (corner.getX() - position.getX()), yCoord + (corner.getY() - position.getY()), zCoord + (corner.getZ() - position.getZ()));
+                ForgeDirection direction = getOrientation().getOpposite();
                 
-                // position.move(1, 0, 0);
-                // if (position.getX() == size.getX()) {
-                // if (position.getZ() == size.getZ()) {
-                // position.move(0, 0, 1); // change y coord because x and
-                // // z
-                // // have been done
-                // } else {
-                // position.setX(0); // change x coord
-                // // because x has been
-                // // done but z has not
-                // position.move(0, 1, 0); // change z coord because z has
-                // // not been done
-                // }
-                // } else {
-                // position.move(1, 0, 0); // change the x coord to continue
-                // // mining
-                // }
+                if (lastBrokenBlocks.size() == 0) {
+                    
+                    for (int x = 0; x <= size.getX(); x++) {
+                        
+                        for (int y = 0; y <= size.getY(); y++) {
+                            
+                            for (int z = 0; z <= size.getZ(); z++) {
+                                
+                                int finalPosX = x, finalPosY = y, finalPosZ = z;
+                                lastBrokenBlocks.add(new Vector3i(finalPosX, finalPosY, finalPosZ));
+                            }
+                        }
+                    }
+                }
                 
-//                for (int x = 0; x <= 1; x++) {
-//                    
-//                    for (int y = 0; y <= 1; y++) {
-//                        
-//                        for (int z = 0; z <= 1; z++) {
-//                            
-//                            UtilBlock.breakBlockNoDrop(worldObj, xCoord + ((corner.getX() - position.getX()) - x), yCoord + ((corner.getY() - position.getY()) - y), zCoord + ((corner.getZ() - position.getZ()) - z));
-//                            
-//                        }
-//                    }
-//                }
-//                position.move(1, 1, 1);
-//                
-//                if (position.getX() >= size.getX()) {
-//                    
-//                    position.setX(0);
-//                }
-//                
-//                if (position.getY() >= size.getY()) {
-//                    
-//                    position.setY(0);
-//                }
-//                
-//                if (position.getZ() >= size.getZ()) {
-//                    
-//                    position.setZ(0);
-//                }
+                TileEntity tile = worldObj.getTileEntity(xCoord - direction.offsetX, yCoord - direction.offsetY, zCoord - direction.offsetZ);
                 
-                // if (position.getX() < size.getX()) {
-                //
-                // } else if (position.getY() < size.getY()) {
-                //
-                // position.move(0, 1, 0);
-                //
-                // if (position.getX() == size.getX()) {
-                //
-                // position.setX(0);
-                // }
-                // } else if (position.getZ() < size.getZ()) {
-                //
-                // position.move(0, 0, 1);
-                //
-                // if (position.getY() == size.getY()) {
-                //
-                // position.setY(0);
-                // }
-                // } else {
-                //
-                // position.setXYZ(0, 0, 0);
-                // }
+                if (tile != null && tile instanceof IInventory) {
+                    
+                    for (Vector3i block : lastBrokenBlocks) {
+                        
+                        int x = xCoord + (corner.getX() - block.getX()), y = yCoord + (corner.getY() - block.getY()), z = zCoord + (corner.getZ() - block.getZ());
+                        
+                        if (breakBlock(x, y, z, ((IInventory) tile)))
+                            block.move(-direction.offsetX, -direction.offsetY, -direction.offsetZ);
+                    }
+                }
             }
         }
         

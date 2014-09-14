@@ -74,7 +74,7 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
     }
     
     @Override
-    public Color4i getColor(int metadata) {
+    public Color4i getNoiseColor(int metadata) {
         
         // return Minecraft.getSystemTime() % 2 == 0 ?
         // NoiseManager.instance.ITERATED_COLOR :
@@ -84,19 +84,19 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
     }
     
     @Override
-    public Color4i getColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
+    public Color4i getNoiseColor(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         
         return ((TileMultiPart) world.getTileEntity(x, y, z)).getColor(direction);
     }
     
     @Override
-    public boolean canRender(int metadata) {
+    public boolean canRenderNoise(int metadata) {
         // TODO Auto-generated method stub
         return true;
     }
     
     @Override
-    public boolean canRender(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
+    public boolean canRenderNoise(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
         // TODO Auto-generated method stub
         return true;
     }
