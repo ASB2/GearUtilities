@@ -239,7 +239,8 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                     UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute.getPowerStatus());
                 }
             }
-            UtilEntity.sendChatToPlayer(player, "Block FixBlockName: " + block);
+            
+            UtilEntity.sendChatToPlayer(player, "Block Object: " + block);
             UtilEntity.sendChatToPlayer(player, "Block Metadata: " + world.getBlockMetadata(x, y, z));
             UtilEntity.sendChatToPlayer(player, "Block Direction: " + ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)));
             // UtilEntity.sendChatToPlayer(player, "Block Mixed Brightness: " +
@@ -249,6 +250,7 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
             UtilEntity.sendChatToPlayer(player, "Tile Entity: " + tile);
             UtilEntity.sendChatToPlayer(player, "Block Opaque: " + block.isOpaqueCube());
             UtilEntity.sendChatToPlayer(player, "Normal Cube: " + block.isNormalCube(world, x, y, z));
+            UtilEntity.sendChatToPlayer(player, "Position: " + "[" + x + ", " + y + ", " + z + "]");
             UtilEntity.sendChatToPlayer(player, "---------");
             return true;
         }
