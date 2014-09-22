@@ -15,13 +15,10 @@ import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilEntity;
 import GU.api.color.AbstractColorable.IColorableBlock;
 import GU.api.color.AbstractColorable.IColorableTile;
-import GU.api.crystals.CrystalNetwork;
-import GU.api.crystals.ICrystalNetworkPart;
-import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
+import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
-import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
@@ -63,6 +60,7 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
             
             TileEntity tile = world.getTileEntity(x, y, z);
             Block block = world.getBlock(x, y, z);
+            ForgeDirection direction = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z));
             
             if (tile != null) {
                 
@@ -70,8 +68,8 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                     
                     ITilePowerHandler mTile = (ITilePowerHandler) tile;
                     
-                    IPowerManager manager = mTile.getPowerManager();
-                    IPowerAttribute attribute = mTile.getPowerAttribute();
+                    IPowerManager manager = mTile.getPowerManager(direction);
+                    EnumPowerStatus attribute = mTile.getPowerStatus(direction);
                     
                     UtilEntity.sendChatToPlayer(player, "---Tile Power Handler---");
                     
@@ -80,43 +78,18 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                         UtilEntity.sendChatToPlayer(player, "Power Stored: " + manager.getStoredPower());
                         UtilEntity.sendChatToPlayer(player, "Max Power: " + manager.getMaxPower());
                         UtilEntity.sendChatToPlayer(player, "Power Difference: " + (manager.getMaxPower() - manager.getStoredPower()));
+                        UtilEntity.sendChatToPlayer(player, "Precent Filled: " + (manager.getStoredPower() / (float) manager.getMaxPower()));
                     }
                     
                     if (attribute != null) {
                         
-                        UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute.getPowerStatus());
-                    }
-                }
-                
-                if (tile instanceof ICrystalPowerHandler) {
-                    
-                    ICrystalPowerHandler mTile = (ICrystalPowerHandler) tile;
-                    
-                    IPowerManager manager = mTile.getPowerManager();
-                    IPowerAttribute attribute = mTile.getPowerAttribute();
-                    
-                    UtilEntity.sendChatToPlayer(player, "---Crystal Power Handler---");
-                    
-                    if (manager != null) {
-                        
-                        UtilEntity.sendChatToPlayer(player, "Power Stored: " + manager.getStoredPower());
-                        UtilEntity.sendChatToPlayer(player, "Max Power: " + manager.getMaxPower());
-                        UtilEntity.sendChatToPlayer(player, "Power Difference: " + (manager.getMaxPower() - manager.getStoredPower()));
-                    } else {
-                        
-                        UtilEntity.sendChatToPlayer(player, "Power Manager: null");
-                    }
-                    
-                    if (attribute != null) {
-                        
-                        UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute.getPowerStatus());
-                    } else {
-                        
-                        UtilEntity.sendChatToPlayer(player, "Power Attribute: null");
+                        UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute);
                     }
                 }
                 
                 if (tile instanceof ISidedInventory) {
+                    
+                    UtilEntity.sendChatToPlayer(player, "---ISidedInventory---");
                     
                     ISidedInventory mTile = (ISidedInventory) tile;
                     
@@ -128,6 +101,8 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                 
                 else if (tile instanceof IInventory) {
                     
+                    UtilEntity.sendChatToPlayer(player, "---IInventory---");
+                    
                     IInventory mTile = (IInventory) tile;
                     
                     UtilEntity.sendChatToPlayer(player, "Inventory name is: " + mTile.getInventoryName());
@@ -136,6 +111,8 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                 }
                 
                 if (tile instanceof IFluidHandler) {
+                    
+                    UtilEntity.sendChatToPlayer(player, "---IFluidHandler---");
                     
                     IFluidHandler mTile = (IFluidHandler) tile;
                     
@@ -167,6 +144,8 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                 
                 if (tile instanceof IColorableTile) {
                     
+                    UtilEntity.sendChatToPlayer(player, "---IColorableTile---");
+                    
                     IColorableTile mTile = (IColorableTile) tile;
                     
                     Color4i color = mTile.getColor(ForgeDirection.getOrientation(side));
@@ -180,19 +159,9 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                     }
                 }
                 
-                if (tile instanceof ICrystalNetworkPart) {
-                    
-                    ICrystalNetworkPart mTile = (ICrystalNetworkPart) tile;
-                    
-                    CrystalNetwork network = mTile.getNetwork();
-                    
-                    if (network != null) {
-                        
-                        UtilEntity.sendChatToPlayer(player, "Network Size: " + network.getNetworkSize());
-                        UtilEntity.sendChatToPlayer(player, "Network Core: " + network.getCorePosition().toString());
-                    }
-                }
                 if (tile instanceof IMultiBlockPart) {
+                    
+                    UtilEntity.sendChatToPlayer(player, "---IMultiBlockPart---");
                     
                     IMultiBlockPart mTile = (IMultiBlockPart) tile;
                     
@@ -206,6 +175,8 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
             }
             
             if (block instanceof IColorableBlock) {
+                
+                UtilEntity.sendChatToPlayer(player, "---IColorableBlock---");
                 
                 IColorableBlock mTile = (IColorableBlock) block;
                 
@@ -222,10 +193,12 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
             
             if (block instanceof IBlockPowerHandler) {
                 
+                UtilEntity.sendChatToPlayer(player, "---IBlockPowerHandler---");
+                
                 IBlockPowerHandler mTile = (IBlockPowerHandler) block;
                 
-                IPowerManager manager = mTile.getPowerManager(world, x, y, z);
-                IPowerAttribute attribute = mTile.getPowerAttribute(world, x, y, z);
+                IPowerManager manager = mTile.getPowerManager(world, x, y, z, direction);
+                EnumPowerStatus attribute = mTile.getPowerStatus(world, x, y, z, direction);
                 
                 if (manager != null) {
                     
@@ -236,13 +209,15 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                 
                 if (attribute != null) {
                     
-                    UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute.getPowerStatus());
+                    UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute);
                 }
             }
             
+            UtilEntity.sendChatToPlayer(player, "---GeneralData---");
+            
             UtilEntity.sendChatToPlayer(player, "Block Object: " + block);
             UtilEntity.sendChatToPlayer(player, "Block Metadata: " + world.getBlockMetadata(x, y, z));
-            UtilEntity.sendChatToPlayer(player, "Block Direction: " + ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z)));
+            UtilEntity.sendChatToPlayer(player, "Block Direction: " + direction);
             // UtilEntity.sendChatToPlayer(player, "Block Mixed Brightness: " +
             // block.getMixedBrightnessForBlock(world, x, y, z));
             // UtilEntity.sendChatToPlayer(player, "Block Ambient Acclusion: " +

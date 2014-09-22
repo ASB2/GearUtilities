@@ -2,8 +2,6 @@ package GU.api.power;
 
 import net.minecraft.nbt.NBTTagCompound;
 import GU.api.EnumSimulationType;
-import GU.api.power.PowerNetAbstract.EnumPowerStatus;
-import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 
 public class PowerNetObject {
@@ -14,6 +12,10 @@ public class PowerNetObject {
         
         public DefaultPowerManager() {
             this(0, 0);
+        }
+        
+        public DefaultPowerManager(int powerMax) {
+            this(0, powerMax);
         }
         
         public DefaultPowerManager(int powerStored, int powerMax) {
@@ -98,43 +100,6 @@ public class PowerNetObject {
             
             powerStored = tag.getInteger("powerStored");
             powerMax = tag.getInteger("powerMax");
-            powerStored = tag.getInteger("powerStored");
-        }
-    }
-    
-    public static class DefaultPowerAttribute implements IPowerAttribute {
-        
-        EnumPowerStatus powerStatus;
-        
-        public DefaultPowerAttribute() {
-            this(EnumPowerStatus.NONE);
-        }
-        
-        public DefaultPowerAttribute(EnumPowerStatus status) {
-            
-            powerStatus = status;
-        }
-        
-        public DefaultPowerAttribute setPowerStatus(EnumPowerStatus powerStatus) {
-            this.powerStatus = powerStatus;
-            return this;
-        }
-        
-        @Override
-        public EnumPowerStatus getPowerStatus() {
-            
-            return powerStatus;
-        }
-        
-        public NBTTagCompound save(NBTTagCompound tag) {
-            
-            tag.setInteger("powerStatus", powerStatus.ordinal());
-            return tag;
-        }
-        
-        public void load(NBTTagCompound tag) {
-            
-            powerStatus = EnumPowerStatus.values()[tag.getInteger("powerStatus")];
         }
     }
     

@@ -2,29 +2,30 @@ package GU.api.power;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import GU.api.EnumSimulationType;
 
 public class PowerNetAbstract {
     
     public static interface ITilePowerHandler {
         
-        IPowerManager getPowerManager();
+        IPowerManager getPowerManager(ForgeDirection direction);
         
-        IPowerAttribute getPowerAttribute();
+        EnumPowerStatus getPowerStatus(ForgeDirection direction);
     }
     
     public static interface IBlockPowerHandler {
         
-        IPowerManager getPowerManager(World world, int x, int y, int z);
+        IPowerManager getPowerManager(World world, int x, int y, int z, ForgeDirection direction);
         
-        IPowerAttribute getPowerAttribute(World world, int x, int y, int z);
+        EnumPowerStatus getPowerStatus(World world, int x, int y, int z, ForgeDirection direction);
     }
     
     public static interface IItemPowerHandler {
         
-        IPowerManager getPowerManager(ItemStack item);
+        IPowerManager getPowerManager(ItemStack item, ForgeDirection direction);
         
-        IPowerAttribute getPowerAttribute(ItemStack item);
+        EnumPowerStatus getPowerAttribute(ItemStack item, ForgeDirection direction);
     }
     
     public static interface IPowerManager {
@@ -36,11 +37,6 @@ public class PowerNetAbstract {
         boolean increasePower(int powerAmount, EnumSimulationType type);
         
         boolean decreasePower(int powerAmount, EnumSimulationType type);
-    }
-    
-    public interface IPowerAttribute {
-        
-        EnumPowerStatus getPowerStatus();
     }
     
     public enum EnumPowerStatus {

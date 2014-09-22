@@ -60,7 +60,7 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
         par3List.add("Color: " + color.name());
         par3List.add("To see crafting recipes, ");
         par3List.add("look at the white structure cube");
-         }
+    }
     
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xHit, float yHit, float zHit) {
@@ -83,7 +83,13 @@ public class BlockStructureCube extends BlockMetadata implements IMultiBlockMark
     @Override
     public boolean isOpaqueCube() {
         
-        return false;
+        return true;
+    }
+    
+    @Override
+    public int getLightOpacity(IBlockAccess world, int x, int y, int z) {
+
+        return 16;
     }
     
     @Override

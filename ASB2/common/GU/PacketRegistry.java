@@ -6,7 +6,6 @@ import GU.packets.EnumInputIconPacket;
 import GU.packets.MultiBlockFlamePacket;
 import GU.packets.MutliBlockTankPacket;
 import GU.packets.NBTPacket;
-import GU.packets.PowerPacket;
 import GU.packets.TankUpdatePacket;
 import cpw.mods.fml.relauncher.Side;
 
@@ -17,7 +16,6 @@ public final class PacketRegistry {
     
     public static void init() {
         
-        GearUtilities.getPipeline().registerMessage(PowerPacket.class, PowerPacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(ColorPacket.class, ColorPacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(MutliBlockTankPacket.class, MutliBlockTankPacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(EnumInputIconPacket.class, EnumInputIconPacket.class, getNextID(), Side.CLIENT);

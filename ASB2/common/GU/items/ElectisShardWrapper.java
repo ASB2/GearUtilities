@@ -5,10 +5,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilItemStack;
 import GU.api.EnumSimulationType;
-import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
@@ -31,21 +31,19 @@ public class ElectisShardWrapper extends GU.items.ItemMetadata.ItemMetadataWrapp
     @Override
     public boolean onItemUse(ItemStack itemStack, net.minecraft.entity.player.EntityPlayer player, net.minecraft.world.World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
         
-        if (player.capabilities.isCreativeMode) {
+        if (player.capabilities.isCreativeMode && !world.isRemote) {
             
             TileEntity tile = world.getTileEntity(x, y, z);
             
             IPowerManager powerHandler = null;
             
+            ForgeDirection direction = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z));
+            
             if (tile != null) {
                 
                 if (tile instanceof ITilePowerHandler) {
                     
-                    powerHandler = ((ITilePowerHandler) tile).getPowerManager();
-                }
-                if (tile instanceof ICrystalPowerHandler) {
-                    
-                    powerHandler = ((ICrystalPowerHandler) tile).getPowerManager();
+                    powerHandler = ((ITilePowerHandler) tile).getPowerManager(direction);
                 }
             } else {
                 
@@ -53,7 +51,7 @@ public class ElectisShardWrapper extends GU.items.ItemMetadata.ItemMetadataWrapp
                 
                 if (block != null && block instanceof IBlockPowerHandler) {
                     
-                    powerHandler = ((IBlockPowerHandler) block).getPowerManager(world, x, y, z);
+                    powerHandler = ((IBlockPowerHandler) block).getPowerManager(world, x, y, z, direction);
                 }
             }
             

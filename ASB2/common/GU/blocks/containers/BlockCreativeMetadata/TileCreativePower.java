@@ -3,30 +3,27 @@ package GU.blocks.containers.BlockCreativeMetadata;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import GU.api.EnumSimulationType;
-import GU.api.crystals.ICrystalPowerHandler;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
-import GU.api.power.PowerNetAbstract.IPowerAttribute;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
-import GU.api.power.PowerNetObject.DefaultPowerAttribute;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.api.power.PowerNetObject.UtilPower;
 import GU.blocks.containers.TileBase;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
 
-public class TileCreativePower extends TileBase implements ITilePowerHandler, ICrystalPowerHandler {
+public class TileCreativePower extends TileBase implements ITilePowerHandler {
     
     Wait sendEnergyValidNodes;
     DefaultPowerManager manager;
-    DefaultPowerAttribute attribute;
+    EnumPowerStatus attribute;
     
     public TileCreativePower() {
         
         sendEnergyValidNodes = new Wait(new SendEnergyPacketWait(), 10, 0);
         manager = new DefaultPowerManager().setPowerMax(1000000);
-        attribute = new DefaultPowerAttribute();
+        attribute = EnumPowerStatus.NONE;
     }
     
     @Override
@@ -37,11 +34,11 @@ public class TileCreativePower extends TileBase implements ITilePowerHandler, IC
         if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
             
             manager.setPowerStored(manager.getMaxPower());
-            attribute.setPowerStatus(EnumPowerStatus.SOURCE);
+            attribute = EnumPowerStatus.SOURCE;
         } else {
             
             manager.setPowerStored(0);
-            attribute.setPowerStatus(EnumPowerStatus.SINK);
+            attribute = EnumPowerStatus.SINK;
         }
     }
     
@@ -58,15 +55,12 @@ public class TileCreativePower extends TileBase implements ITilePowerHandler, IC
                     
                     IPowerManager manager = null;
                     
-                    if (tile instanceof ICrystalPowerHandler) {
+                    if (tile instanceof ITilePowerHandler) {
                         
-                        manager = ((ICrystalPowerHandler) tile).getPowerManager();
-                    } else if (tile instanceof ITilePowerHandler) {
-                        
-                        manager = ((ITilePowerHandler) tile).getPowerManager();
+                        manager = ((ITilePowerHandler) tile).getPowerManager(direction);
                     } else if (tile instanceof IBlockPowerHandler) {
                         
-                        manager = ((IBlockPowerHandler) tile).getPowerManager(worldObj, xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ);
+                        manager = ((IBlockPowerHandler) tile).getPowerManager(worldObj, xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ, direction);
                     }
                     
                     if (manager != null) {
@@ -93,13 +87,13 @@ public class TileCreativePower extends TileBase implements ITilePowerHandler, IC
     }
     
     @Override
-    public IPowerManager getPowerManager() {
+    public IPowerManager getPowerManager(ForgeDirection direction) {
         
         return manager;
     }
     
     @Override
-    public IPowerAttribute getPowerAttribute() {
+    public EnumPowerStatus getPowerStatus(ForgeDirection direction) {
         
         return attribute;
     }

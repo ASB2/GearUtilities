@@ -18,12 +18,12 @@ public class MultiBlockChest extends MultiBlockInventory implements IRedstoneMul
     public MultiBlockChest(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         super(world, positionRelativeTo, size, updater);
         
-        inventory = new Inventory(8 * ((this.size.getX() + 1) * (this.size.getY() + 1) * (this.size.getZ() + 1)), "Inventory Base", true);
+        inventory = new Inventory("Inventory Base");
     }
     
     public MultiBlockChest(World world) {
         super(world);
-        inventory = new Inventory(0, "Inventory Base", true);
+        inventory = new Inventory("Inventory Base");
     }
     
     @Override
@@ -42,7 +42,7 @@ public class MultiBlockChest extends MultiBlockInventory implements IRedstoneMul
     public void onSetSize() {
         
         if (inventory != null && inventory.getSizeInventory() == 0)
-            inventory.setSizeInventory(8 * ((this.size.getX() + 1) * (this.size.getY() + 1) * (this.size.getZ() + 1)));
+            inventory.setSizeInventory(16 * ((this.size.getX() - 1) * (this.size.getY() - 1) * (this.size.getZ() - 1)));
     }
     
     @Override

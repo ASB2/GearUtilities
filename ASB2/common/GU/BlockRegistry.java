@@ -29,7 +29,7 @@ import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPart;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartAir;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartGlass;
 import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender;
-import GU.blocks.containers.BlockPhotonSender.BlockPhotonSender;
+import GU.blocks.containers.BlockPhotonicConverter.BlockPhotonicConverter;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpatialProvider;
 import GU.blocks.containers.BlockTeleportAltar.BlockTeleportAltar;
 import GU.info.Reference;
@@ -101,7 +101,7 @@ public class BlockRegistry {
     
     public static final BlockMultiPartRender MULTI_BLOCK_PART_RENDER = new BlockMultiPartRender(Material.rock);
     
-    public static final BlockPhotonSender PHOTON_SENDER = new BlockPhotonSender(Material.rock);
+    public static final BlockPhotonicConverter PHOTONIC_CONVERTER = new BlockPhotonicConverter(Material.rock);
     
     public static final BlockElectisPolyhedron ELECTIS_POLYHEDRON = new BlockElectisPolyhedron(Material.rock);
     
@@ -138,7 +138,7 @@ public class BlockRegistry {
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiBlockPartGlass"), MULTI_BLOCK_PART_GLASS);
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiBlockPartAir"), MULTI_BLOCK_PART_AIR.setBlockName("Multi Block Air"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiPartRender"), MULTI_BLOCK_PART_RENDER.setBlockName("Multi Block Render"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockPhotonSender"), PHOTON_SENDER.setBlockName("Photon Sender"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockPhotonicConverter"), PHOTONIC_CONVERTER.setBlockName("Photonic Converter"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockElectisPolyhedron"), ELECTIS_POLYHEDRON.setBlockName("Electis Polyhedron"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockItemElectisPolyhedron"), ITEM_ELECTIS_POLYHEDRON.setBlockName("Item Electis Polyhedron"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockFluidElectisPolyhedron"), FLUID_ELECTIS_POLYHEDRON.setBlockName("Fluid Electis Polyhedron"));

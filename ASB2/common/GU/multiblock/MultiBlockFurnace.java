@@ -29,9 +29,9 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     FluidHandlerWrapper fuelTank = new FluidHandlerWrapper(0);
     Inventory fuelInventory = new Inventory("MultiBlockFurnace: Fuel"), toBeSmelted = new Inventory("MultiBlockFurnace: Smelting"), outputInventory = new Inventory("MultiBlockFurnace: Output");
     
-    int currentFuel;
     int cookTimer = 0;
-    int maxFuel;
+    int currentFuelTime = 0;
+    int maxHeat, currentHeat;
     
     public MultiBlockFurnace(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         super(world, positionRelativeTo, size, updater);
@@ -108,50 +108,75 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
             
             outputInventory.setSizeInventory((size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1) * 4);
         }
+        
+        maxHeat = (size.getY() - 1) * 64;
     }
     
     @Override
     public void logicUpdate() {
         
-        for (int index = 0; index < this.fuelInventory.getSizeInventory(); index++) {
+        if (currentHeat < maxHeat) {
             
-            ItemStack stack = fuelInventory.getStackInSlot(index);
-            
-            if (stack != null) {
+            if (currentFuelTime <= 0) {
                 
-                int itemFuelValue = TileEntityFurnace.getItemBurnTime(stack);
+                currentHeat = Math.max(0, currentHeat - 1);
                 
-                if (itemFuelValue > 0) {
+                for (int index = 0; index < this.fuelInventory.getSizeInventory(); index++) {
                     
-                    if (UtilInventory.removeItemStackFromSlot(fuelInventory, stack, index, 1, true)) {
+                    ItemStack stack = fuelInventory.getStackInSlot(index);
+                    
+                    if (stack != null) {
                         
-                        currentFuel += itemFuelValue;
+                        int itemFuelValue = TileEntityFurnace.getItemBurnTime(stack);
+                        
+                        if (itemFuelValue > 0) {
+                            
+                            if (UtilInventory.removeItemStackFromSlot(fuelInventory, stack, index, 1, true)) {
+                                
+                                currentFuelTime = itemFuelValue;
+                                break;
+                            }
+                        }
                     }
                 }
+            } else {
+                
+                currentFuelTime--;
+                currentHeat++;
             }
         }
         
-        if (currentFuel >= 100) {
+        if (currentHeat > 0) {
             
-            for (int index = 0; index < this.toBeSmelted.getSizeInventory(); index++) {
+            cookTimer++;
+            
+            if (cookTimer >= 5) {
                 
-                ItemStack stack = toBeSmelted.getStackInSlot(index);
+                cookTimer = 0;
                 
-                if (stack != null) {
+                for (int index = 0; index < this.toBeSmelted.getSizeInventory(); index++) {
                     
-                    ItemStack result = FurnaceRecipes.smelting().getSmeltingResult(stack);
+                    ItemStack stack = toBeSmelted.getStackInSlot(index);
                     
-                    if (result != null) {
+                    if (stack != null) {
                         
-                        if (UtilInventory.removeItemStackFromSlot(toBeSmelted, stack, index, 1, false) && UtilInventory.addItemStackToInventory(outputInventory, result, false)) {
+                        ItemStack result = FurnaceRecipes.smelting().getSmeltingResult(stack);
+                        
+                        if (result != null) {
                             
-                            currentFuel -= 100;
-                            UtilInventory.addItemStackToInventory(outputInventory, result, true);
-                            UtilInventory.removeItemStackFromSlot(toBeSmelted, stack, index, 1, true);
+                            if (UtilInventory.removeItemStackFromSlot(toBeSmelted, stack, index, 1, false) && UtilInventory.addItemStackToInventory(outputInventory, result, false)) {
+                                
+                                UtilInventory.addItemStackToInventory(outputInventory, result, true);
+                                UtilInventory.removeItemStackFromSlot(toBeSmelted, stack, index, 1, true);
+                                break;
+                            }
                         }
                     }
                 }
             }
+        } else {
+            
+            cookTimer = 0;
         }
     }
     
@@ -164,6 +189,9 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     public boolean openGui(Vector3i position, EntityPlayer player, int side) {
         
         if (!world.isRemote) {
+            
+            // UtilEntity.sendChatToPlayer(player, "Furnace: " + currentHeat +
+            // " / " + maxHeat);
             
             if (!player.isSneaking()) {
                 
@@ -196,9 +224,10 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
         if (outputInventory != null)
             tag.setTag("outputInventory", outputInventory.save(new NBTTagCompound()));
         
-        tag.setInteger("currentFuel", currentFuel);
         tag.setInteger("cookTimer", cookTimer);
-        tag.setInteger("maxFuel", maxFuel);
+        tag.setInteger("maxHeat", maxHeat);
+        tag.setInteger("currentHeat", currentHeat);
+        tag.setInteger("fuelInputTimer", currentFuelTime);
         return super.save(tag);
     }
     
@@ -214,9 +243,10 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
         if (outputInventory != null)
             outputInventory.load(tag.getCompoundTag("outputInventory"));
         
-        currentFuel = tag.getInteger("currentFuel");
         cookTimer = tag.getInteger("cookTimer");
-        maxFuel = tag.getInteger("maxFuel");
+        maxHeat = tag.getInteger("maxHeat");
+        currentHeat = tag.getInteger("currentHeat");
+        currentFuelTime = tag.getInteger("fuelInputTimer");
         
         super.load(tag);
     }
