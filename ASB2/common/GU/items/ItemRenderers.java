@@ -14,6 +14,7 @@ import org.lwjgl.opengl.GL11;
 import ASB2.utils.UtilItemStack;
 import ASB2.utils.UtilRender;
 import GU.EventListener;
+import GU.PlayerRegistry;
 import GU.info.Models;
 import GU.info.Reference;
 import GU.render.noise.NoiseManager;
@@ -542,8 +543,6 @@ public class ItemRenderers {
         
         public static final ElectisCrystalShardRenderer instance = new ElectisCrystalShardRenderer();
         
-        Color color = Color.WHITE;
-        
         @Override
         public boolean handleRenderType(ItemStack item, ItemRenderType type) {
             
@@ -592,7 +591,7 @@ public class ItemRenderers {
         
         private void renderItemSwitched(ItemStack item, ItemRenderType type, float x, float y, float z, float scale) {
             
-            color = Color.WHITE;
+            Color color = Color.WHITE;
             
             NoiseManager.bindImage();
             
@@ -682,6 +681,12 @@ public class ItemRenderers {
             
             Color color = Color.GREEN;
             
+            boolean colorful = PlayerRegistry.isPlayerValid("colorfulTeleporter", (Minecraft.getMinecraft().thePlayer.getDisplayName().toLowerCase()));
+            if (colorful) {
+                
+                color = NoiseManager.instance.ITERATED_COLOR.toColor();
+            }
+            
             GL11.glPushMatrix();
             GL11.glDisable(GL11.GL_LIGHTING);
             
@@ -697,14 +702,26 @@ public class ItemRenderers {
             Models.ModelFlameFocus.renderPart("Cube");
             GL11.glPopMatrix();
             
-            if (UtilItemStack.getNBTTagBoolean(item, "coordsSet")) {
+            if (!colorful) {
                 
-                color = Color.DARK_GRAY.darker();
+                if (UtilItemStack.getNBTTagBoolean(item, "coordsSet")) {
+                    
+                    color = Color.DARK_GRAY.darker();
+                } else {
+                    
+                    color = Color.WHITE.darker();
+                }
             } else {
                 
-                color = Color.WHITE.darker();
+                if (!UtilItemStack.getNBTTagBoolean(item, "coordsSet")) {
+                    
+                    color = NoiseManager.instance.ITERATED_COLOR.toColor().darker().darker().darker();
+                    
+                } else {
+                    
+                    color = NoiseManager.instance.ITERATED_COLOR_INVERTED.toColor().darker().darker().darker();
+                }
             }
-            
             GL11.glColor3d(1, 1, 1);
             GL11.glPushMatrix();
             GL11.glRotatef(-Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 1F, 1F, 1F);

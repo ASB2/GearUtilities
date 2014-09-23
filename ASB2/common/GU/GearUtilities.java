@@ -74,6 +74,7 @@ public final class GearUtilities {
         RetroGenManager.init();
         EntityRegistry.init();
         MultiRegistry.init();
+        PlayerRegistry.init();
         
         proxy.registerRendereres();
         
