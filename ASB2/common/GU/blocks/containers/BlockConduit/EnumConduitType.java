@@ -2,6 +2,8 @@ package GU.blocks.containers.BlockConduit;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.fluids.IFluidHandler;
+import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
+import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 
 public enum EnumConduitType {
     
@@ -24,7 +26,7 @@ public enum EnumConduitType {
             }
             case GU_POWER: {
                 
-                return false;
+                return object instanceof ITilePowerHandler || object instanceof IBlockPowerHandler;
             }
         }
         return false;

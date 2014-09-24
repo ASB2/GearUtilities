@@ -15,6 +15,10 @@ import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
 import GU.GearUtilities;
+import GU.api.EnumSimulationType;
+import GU.api.power.PowerNetAbstract.IPowerManager;
+import GU.api.power.PowerNetAbstract.ITilePowerHandler;
+import GU.api.power.PowerNetObject;
 import GU.blocks.containers.TileBase;
 import GU.blocks.containers.BlockMultiDirectionalConduit.TileMultiDirectionalConduit;
 import GU.packets.ConduitTypePacket;
@@ -213,7 +217,19 @@ public class TileConduit extends TileBase {
                     
                     case GU_POWER: {
                         
-                        UtilFluid.moveFluid((IFluidHandler) beginTile, direction1, (IFluidHandler) endTile, direction2, 1000, true);
+                        ITilePowerHandler handler1 = (ITilePowerHandler) beginTile;
+                        ITilePowerHandler handler2 = (ITilePowerHandler) endTile;
+                        
+                        if (handler2 != null) {
+                            
+                            IPowerManager manager1 = handler1.getPowerManager(direction1);
+                            IPowerManager manager2 = handler2.getPowerManager(direction2);
+                            
+                            if (manager1 != null && manager2 != null) {
+                                
+                                PowerNetObject.UtilPower.movePower(manager1, manager2, 10, EnumSimulationType.LIGITIMATE);
+                            }
+                        }
                         break;
                     }
                     default: {
