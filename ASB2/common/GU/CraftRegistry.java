@@ -15,6 +15,8 @@ public class CraftRegistry {
         
         OreDictionary.registerOre(GU.info.Reference.STRUCTURE_CUBE_OREDIC, new ItemStack(BlockRegistry.METADATA_ORE, 1, 0));
         OreDictionary.registerOre("dyeBlack", Items.bone);
+        OreDictionary.registerOre("oreElectisCrystal", new ItemStack(BlockRegistry.CREATIVE_METADATA, 0, 0));
+        OreDictionary.registerOre("blockElectisStone", new ItemStack(BlockRegistry.CREATIVE_METADATA, 0, 1));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()), 16, 0), new Object[] { "BBB", "BEB", "BBB",
         

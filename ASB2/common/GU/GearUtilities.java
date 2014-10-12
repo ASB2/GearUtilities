@@ -135,6 +135,9 @@ public final class GearUtilities {
                 return 1;
             }
         }, 10);
+        
+        // DimensionManager.registerProviderType(373,
+        // ElectisVoidWorldProvider.class, true);
     }
     
     @EventHandler

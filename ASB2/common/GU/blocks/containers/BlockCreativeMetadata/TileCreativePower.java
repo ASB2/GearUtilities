@@ -17,13 +17,11 @@ public class TileCreativePower extends TileBase implements ITilePowerHandler {
     
     Wait sendEnergyValidNodes;
     DefaultPowerManager manager;
-    EnumPowerStatus attribute;
     
     public TileCreativePower() {
         
         sendEnergyValidNodes = new Wait(new SendEnergyPacketWait(), 10, 0);
         manager = new DefaultPowerManager().setPowerMax(1000000);
-        attribute = EnumPowerStatus.NONE;
     }
     
     @Override
@@ -34,11 +32,11 @@ public class TileCreativePower extends TileBase implements ITilePowerHandler {
         if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
             
             manager.setPowerStored(manager.getMaxPower());
-            attribute = EnumPowerStatus.SOURCE;
+            manager.setPowerStatus(EnumPowerStatus.SOURCE);
         } else {
             
             manager.setPowerStored(0);
-            attribute = EnumPowerStatus.SINK;
+            manager.setPowerStatus(EnumPowerStatus.SINK);
         }
     }
     
@@ -90,11 +88,5 @@ public class TileCreativePower extends TileBase implements ITilePowerHandler {
     public IPowerManager getPowerManager(ForgeDirection direction) {
         
         return manager;
-    }
-    
-    @Override
-    public EnumPowerStatus getPowerStatus(ForgeDirection direction) {
-        
-        return attribute;
     }
 }

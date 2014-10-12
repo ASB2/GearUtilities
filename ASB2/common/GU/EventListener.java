@@ -8,7 +8,6 @@ import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import GU.info.MiscIcons;
 import GU.info.Reference;
-import GU.render.EnumInputIcon;
 import GU.render.noise.NoiseManager;
 import UC.VariableIterator;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -36,11 +35,6 @@ public class EventListener {
     public void textureHook(TextureStitchEvent.Pre event) {
         
         if (event.map.getTextureType() == 0) {
-            
-            EnumInputIcon.INPUT.setStateIcon(event.map.registerIcon(Reference.MOD_ID.concat(":sides/BlockInput")));
-            EnumInputIcon.OUTPUT.setStateIcon(event.map.registerIcon(Reference.MOD_ID.concat(":sides/BlockOutput")));
-            EnumInputIcon.BOTH.setStateIcon(event.map.registerIcon(Reference.MOD_ID.concat(":sides/BlockBoth")));
-            EnumInputIcon.NONE.setStateIcon(event.map.registerIcon(Reference.MOD_ID.concat(":sides/BlockNone")));
             
             for (MiscIcons icon : MiscIcons.values()) {
                 

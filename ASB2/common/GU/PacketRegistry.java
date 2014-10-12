@@ -1,12 +1,9 @@
 package GU;
 
 import GU.packets.ColorPacket;
-import GU.packets.ConduitTypePacket;
-import GU.packets.EnumInputIconPacket;
 import GU.packets.MultiBlockFlamePacket;
 import GU.packets.MutliBlockTankPacket;
 import GU.packets.NBTPacket;
-import GU.packets.TankUpdatePacket;
 import cpw.mods.fml.relauncher.Side;
 
 public final class PacketRegistry {
@@ -18,10 +15,7 @@ public final class PacketRegistry {
         
         GearUtilities.getPipeline().registerMessage(ColorPacket.class, ColorPacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(MutliBlockTankPacket.class, MutliBlockTankPacket.class, getNextID(), Side.CLIENT);
-        GearUtilities.getPipeline().registerMessage(EnumInputIconPacket.class, EnumInputIconPacket.class, getNextID(), Side.CLIENT);
-        GearUtilities.getPipeline().registerMessage(TankUpdatePacket.class, TankUpdatePacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(MultiBlockFlamePacket.class, MultiBlockFlamePacket.class, getNextID(), Side.CLIENT);
-        GearUtilities.getPipeline().registerMessage(ConduitTypePacket.class, ConduitTypePacket.class, getNextID(), Side.CLIENT);
         GearUtilities.getPipeline().registerMessage(NBTPacket.class, NBTPacket.class, getNextID(), Side.CLIENT);
     }
     

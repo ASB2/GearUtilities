@@ -14,14 +14,12 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
-import GU.GearUtilities;
 import GU.api.EnumSimulationType;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.api.power.PowerNetObject;
 import GU.blocks.containers.TileBase;
 import GU.blocks.containers.BlockMultiDirectionalConduit.TileMultiDirectionalConduit;
-import GU.packets.ConduitTypePacket;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;
 
@@ -41,22 +39,6 @@ public class TileConduit extends TileBase {
     public void updateEntity() {
         
         waitTimer.update();
-    }
-    
-    @Override
-    public void sendUpdatePacket() {
-        
-        if (!worldObj.isRemote)
-            GearUtilities.getPipeline().sendToDimension(new ConduitTypePacket(xCoord, yCoord, zCoord, conduitType.ordinal()), worldObj.provider.dimensionId);
-        super.sendUpdatePacket();
-    }
-    
-    public void setConduitType(EnumConduitType conduitType) {
-        this.conduitType = conduitType;
-    }
-    
-    public EnumConduitType getConduitType() {
-        return conduitType;
     }
     
     @Override
@@ -113,6 +95,23 @@ public class TileConduit extends TileBase {
     }
     
     @Override
+    public void sendUpdatePacket() {
+        
+        NBTTagCompound tag = new NBTTagCompound();
+        
+        tag.setInteger("conduitType", conduitType.ordinal());
+        this.sendNBTPacket(tag, 0);
+        super.sendUpdatePacket();
+    }
+    
+    @Override
+    public void readNBTPacket(NBTTagCompound tag, int id) {
+        
+        conduitType = EnumConduitType.values()[tag.getInteger("conduitType")];
+        super.readNBTPacket(tag, id);
+    }
+    
+    @Override
     public void readFromNBT(NBTTagCompound tag) {
         
         conduitType = EnumConduitType.values()[tag.getInteger("conduitType")];
@@ -124,6 +123,11 @@ public class TileConduit extends TileBase {
         
         tag.setInteger("conduitType", conduitType.ordinal());
         super.writeToNBT(tag);
+    }
+    
+    public EnumConduitType getConduitType() {
+        
+        return conduitType;
     }
     
     private class MoveWait implements IWaitTrigger {

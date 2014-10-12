@@ -7,6 +7,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
 import GU.blocks.containers.BlockCreativeMetadata.TileCreativeFluid;
+import GU.info.MiscIcons;
 import GU.info.Reference;
 import GU.render.noise.NoiseManager;
 import UC.color.Color4i;
@@ -56,7 +57,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
             UtilRender.renderStandardInvBlock(renderer, block, metadata);
             
             renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
-            UtilRender.renderStandardInvBlock(renderer, block, EnumInputIcon.NONE.getStateIcon());
+            UtilRender.renderStandardInvBlock(renderer, block, MiscIcons.NONE.getIcon());
             return;
         }
         
@@ -92,7 +93,7 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
         if (block == BlockRegistry.SPATIAL_PROVIDER) {
             
             renderer.setRenderBounds(-.0015, -.0015, -.0015, 1.0015, 1.0015, 1.0015);
-            UtilRender.renderFakeBlock(renderer, block, x, y, z, EnumInputIcon.NONE.getStateIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
+            UtilRender.renderFakeBlock(renderer, block, x, y, z, MiscIcons.NONE.getIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
         }
         
         if (block == BlockRegistry.CREATIVE_METADATA && world.getBlockMetadata(x, y, z) == 1) {
@@ -103,9 +104,9 @@ public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
                 
                 renderer.setRenderBounds(.005, .005, .005, 1 - .005, 1 - .005, 1 - .005);
                 
-                if (tile.fluidToSave.getFluid() != null && tile.fluidToSave.getFluid().getFluid().getStillIcon() != null) {
+                if (tile.fluidTank.getFluid() != null && tile.fluidTank.getFluid().getFluid().getStillIcon() != null) {
                     
-                    UtilRender.renderFakeBlock(renderer, block, x, y, z, tile.fluidToSave.getFluid().getFluid().getStillIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
+                    UtilRender.renderFakeBlock(renderer, block, x, y, z, tile.fluidTank.getFluid().getFluid().getStillIcon(), 255, 255, 255, 255, Reference.BRIGHT_BLOCK);
                 }
             }
         }

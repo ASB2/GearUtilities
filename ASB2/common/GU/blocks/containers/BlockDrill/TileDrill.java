@@ -304,7 +304,7 @@ public class TileDrill extends TileBase {
                         
                         int x = xCoord + (corner.getX() - block.getX()), y = yCoord + (corner.getY() - block.getY()), z = zCoord + (corner.getZ() - block.getZ());
                         
-                        if (breakBlock(x, y, z, ((IInventory) tile)))
+                        if (y >= 0 && breakBlock(x, y, z, ((IInventory) tile)))
                             block.move(-direction.offsetX, -direction.offsetY, -direction.offsetZ);
                     }
                 }

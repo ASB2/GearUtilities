@@ -7,6 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidHandler;
+import GU.api.power.PowerNetAbstract.IPowerManager;
 import UC.math.vector.Vector3i;
 
 public class MultiBlockAbstract {
@@ -65,6 +66,11 @@ public class MultiBlockAbstract {
     public static interface IGuiMultiBlock extends IMultiBlock {
         
         boolean openGui(Vector3i position, EntityPlayer player, int side);
+    }
+    
+    public static interface IPowerMultiBlock extends IMultiBlock {
+        
+        IPowerManager getPowerManager(Vector3i tilePosition);
     }
     
     public static interface IItemInterface extends IMultiBlockPart {

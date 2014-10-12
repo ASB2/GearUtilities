@@ -17,7 +17,6 @@ import GU.api.color.AbstractColorable.IColorableBlock;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
-import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
@@ -69,7 +68,6 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                     ITilePowerHandler mTile = (ITilePowerHandler) tile;
                     
                     IPowerManager manager = mTile.getPowerManager(direction);
-                    EnumPowerStatus attribute = mTile.getPowerStatus(direction);
                     
                     UtilEntity.sendChatToPlayer(player, "---Tile Power Handler---");
                     
@@ -79,11 +77,7 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                         UtilEntity.sendChatToPlayer(player, "Max Power: " + manager.getMaxPower());
                         UtilEntity.sendChatToPlayer(player, "Power Difference: " + (manager.getMaxPower() - manager.getStoredPower()));
                         UtilEntity.sendChatToPlayer(player, "Precent Filled: " + (manager.getStoredPower() / (float) manager.getMaxPower()));
-                    }
-                    
-                    if (attribute != null) {
-                        
-                        UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute);
+                        UtilEntity.sendChatToPlayer(player, "Power Status: " + manager.getPowerStatus());
                     }
                 }
                 
@@ -116,13 +110,11 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                     
                     IFluidHandler mTile = (IFluidHandler) tile;
                     
-                    int loop = 0;
+                    FluidTankInfo[] infoArray = mTile.getTankInfo(direction.getOpposite());
                     
-                    if (mTile.getTankInfo(ForgeDirection.getOrientation(side).getOpposite()) != null) {
+                    if (infoArray != null) {
                         
-                        for (FluidTankInfo info : mTile.getTankInfo(ForgeDirection.getOrientation(side).getOpposite())) {
-                            
-                            loop++;
+                        for (FluidTankInfo info : infoArray) {
                             
                             if (info != null) {
                                 
@@ -138,7 +130,7 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                             }
                         }
                         
-                        UtilEntity.sendChatToPlayer(player, "Tanks For Side: " + loop);
+                        UtilEntity.sendChatToPlayer(player, "Tanks For Side: " + infoArray.length);
                     }
                 }
                 
@@ -198,18 +190,13 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                 IBlockPowerHandler mTile = (IBlockPowerHandler) block;
                 
                 IPowerManager manager = mTile.getPowerManager(world, x, y, z, direction);
-                EnumPowerStatus attribute = mTile.getPowerStatus(world, x, y, z, direction);
                 
                 if (manager != null) {
                     
                     UtilEntity.sendChatToPlayer(player, "Power Stored: " + manager.getStoredPower());
                     UtilEntity.sendChatToPlayer(player, "Max Power: " + manager.getMaxPower());
                     UtilEntity.sendChatToPlayer(player, "Power Difference: " + (manager.getMaxPower() - manager.getStoredPower()));
-                }
-                
-                if (attribute != null) {
-                    
-                    UtilEntity.sendChatToPlayer(player, "Power Status: " + attribute);
+                    UtilEntity.sendChatToPlayer(player, "Power Status: " + manager.getPowerStatus());
                 }
             }
             

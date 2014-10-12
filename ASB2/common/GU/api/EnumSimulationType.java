@@ -5,11 +5,16 @@ public enum EnumSimulationType {
     SIMULATE, /** This is a test */
     FORCED_SIMULATE/** This is a test */
     , LIGITIMATE, /** This is ligitimate */
-    FORCED/** This ignores packet size */
+    FORCED_LIGITIMATE/** This ignores packet size */
     ;
     
-    public boolean getBooleanValue() {
+    public boolean isForced() {
         
-        return this == SIMULATE || this == FORCED_SIMULATE ? false : true;
+        return this == FORCED_LIGITIMATE || this == FORCED_SIMULATE;
+    }
+    
+    public boolean isLigitimate() {
+        
+        return !this.isForced();
     }
 }

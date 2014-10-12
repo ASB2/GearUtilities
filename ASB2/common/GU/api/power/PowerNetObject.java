@@ -2,6 +2,7 @@ package GU.api.power;
 
 import net.minecraft.nbt.NBTTagCompound;
 import GU.api.EnumSimulationType;
+import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 
 public class PowerNetObject {
@@ -9,6 +10,7 @@ public class PowerNetObject {
     public static class DefaultPowerManager implements IPowerManager {
         
         int powerStored = 0, powerMax = 0;
+        EnumPowerStatus powerStatus;
         
         public DefaultPowerManager() {
             this(0, 0);
@@ -22,6 +24,7 @@ public class PowerNetObject {
             
             this.powerStored = powerStored;
             this.powerMax = powerMax;
+            powerStatus = EnumPowerStatus.BOTH;
         }
         
         @Override
@@ -39,13 +42,16 @@ public class PowerNetObject {
         @Override
         public boolean increasePower(int powerAmount, EnumSimulationType type) {
             
-            if (powerStored + powerAmount <= powerMax) {
+            if (powerStatus.canInput() || type.isForced()) {
                 
-                if (type.getBooleanValue()) {
+                if (powerStored + powerAmount <= powerMax) {
                     
-                    powerStored += powerAmount;
+                    if (type.isLigitimate()) {
+                        
+                        powerStored += powerAmount;
+                    }
+                    return true;
                 }
-                return true;
             }
             return false;
         }
@@ -53,13 +59,16 @@ public class PowerNetObject {
         @Override
         public boolean decreasePower(int powerAmount, EnumSimulationType type) {
             
-            if (powerStored - powerAmount >= 0) {
+            if (powerStatus.canOutput() || type.isForced()) {
                 
-                if (type.getBooleanValue()) {
+                if (powerStored - powerAmount >= 0) {
                     
-                    powerStored -= powerAmount;
+                    if (type.isLigitimate()) {
+                        
+                        powerStored -= powerAmount;
+                    }
+                    return true;
                 }
-                return true;
             }
             return false;
         }
@@ -84,6 +93,17 @@ public class PowerNetObject {
             return this;
         }
         
+        public DefaultPowerManager setPowerStatus(EnumPowerStatus powerStatus) {
+            this.powerStatus = powerStatus;
+            return this;
+        }
+        
+        @Override
+        public EnumPowerStatus getPowerStatus() {
+            // TODO Auto-generated method stub
+            return powerStatus;
+        }
+        
         public DefaultPowerManager clone() {
             
             return new DefaultPowerManager().setPowerMax(this.getMaxPower()).setPowerStored(this.getStoredPower());
@@ -93,6 +113,7 @@ public class PowerNetObject {
             
             tag.setInteger("powerStored", powerStored);
             tag.setInteger("powerMax", powerMax);
+            tag.setInteger("powerStatus", powerStatus.ordinal());
             return tag;
         }
         
@@ -100,6 +121,7 @@ public class PowerNetObject {
             
             powerStored = tag.getInteger("powerStored");
             powerMax = tag.getInteger("powerMax");
+            powerStatus = EnumPowerStatus.values()[tag.getInteger("powerStatus")];
         }
     }
     

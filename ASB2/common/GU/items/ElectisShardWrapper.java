@@ -61,10 +61,10 @@ public class ElectisShardWrapper extends GU.items.ItemMetadata.ItemMetadataWrapp
                 
                 if (player.isSneaking()) {
                     
-                    UtilPower.removePower(powerHandler, powerSaved, EnumSimulationType.FORCED);
+                    UtilPower.removePower(powerHandler, powerSaved, EnumSimulationType.FORCED_LIGITIMATE);
                 } else {
                     
-                    UtilPower.addPower(powerHandler, powerSaved, EnumSimulationType.FORCED);
+                    UtilPower.addPower(powerHandler, powerSaved, EnumSimulationType.FORCED_LIGITIMATE);
                 }
                 
                 UtilEntity.sendChatToPlayer(player, "Power Stored: " + powerHandler.getStoredPower());
@@ -89,7 +89,9 @@ public class ElectisShardWrapper extends GU.items.ItemMetadata.ItemMetadataWrapp
                 powerSaved++;
             }
             UtilItemStack.setNBTTagInt(itemStack, "inputPower", Math.max(powerSaved, 0));
-            UtilEntity.sendChatToPlayer(player, "Power To Move: " + Math.max(powerSaved, 0));
+            
+            if (!world.isRemote)
+                UtilEntity.sendChatToPlayer(player, "Power To Move: " + Math.max(powerSaved, 0));
         }
         // }
         // else {

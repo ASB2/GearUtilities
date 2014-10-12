@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilInventory;
 import ASB2.utils.UtilVector;
-import GU.GearUtilities;
+import GU.api.EnumSideState;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
@@ -23,27 +23,24 @@ import GU.api.multiblock.MultiBlockAbstract.IItemInterface;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.blocks.containers.TileMultiBase;
-import GU.packets.EnumInputIconPacket;
-import GU.render.EnumInputIcon;
-import GU.render.IEnumInputIcon;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IItemInterface, IInventory, IColorableTile, IEnumInputIcon {
+public class TileItemMultiInterface extends TileMultiBase implements IMultiBlockPart, IItemInterface, IInventory, IColorableTile {
     
     Map<SlotHolder, IInventoryMultiBlock> inventorise = new HashMap<SlotHolder, IInventoryMultiBlock>();
     int maxSizeInventory = 0;
     Vector3i position;
-    public EnumInputIcon[] sideState;
+    public EnumSideState[] sideState;
     
     public TileItemMultiInterface() {
         
         this.setMaxMultiBlocks(2);
-        sideState = new EnumInputIcon[ForgeDirection.values().length];
+        sideState = new EnumSideState[ForgeDirection.values().length];
         
         for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
             
-            sideState[direction.ordinal()] = EnumInputIcon.NONE;
+            sideState[direction.ordinal()] = EnumSideState.NONE;
         }
     }
     
@@ -65,9 +62,9 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
             
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 
-                EnumInputIcon side = sideState[direction.ordinal()];
+                EnumSideState side = sideState[direction.ordinal()];
                 
-                if (side == EnumInputIcon.OUTPUT || side == EnumInputIcon.INPUT) {
+                if (side == EnumSideState.OUTPUT || side == EnumSideState.INPUT) {
                     
                     TileEntity tile = worldObj.getTileEntity(xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ);
                     
@@ -75,7 +72,7 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                         
                         if (tile instanceof ISidedInventory) {
                             
-                            if (side == EnumInputIcon.INPUT) {
+                            if (side == EnumSideState.INPUT) {
                                 
                                 UtilInventory.moveItems((ISidedInventory) tile, direction, 1, 1, this);
                                 // UtilInventory.moveEntireISidedInventory((ISidedInventory)
@@ -90,7 +87,7 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
                         
                         if (tile instanceof IInventory) {
                             
-                            if (side == EnumInputIcon.INPUT) {
+                            if (side == EnumSideState.INPUT) {
                                 
                                 UtilInventory.moveItems((IInventory) tile, 1, 1, this);
                                 // UtilInventory.moveEntireInventory((IInventory)
@@ -107,15 +104,6 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
         }
         
         super.updateEntity();
-    }
-    
-    public void setSideState(EnumInputIcon[] sideState) {
-        this.sideState = sideState;
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-    }
-    
-    public EnumInputIcon[] getSideState() {
-        return sideState;
     }
     
     @Override
@@ -156,26 +144,39 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
     public boolean triggerBlock(World world, EntityPlayer player, int x, int y, int z, ForgeDirection axis) {
         
         sideState[axis.ordinal()] = sideState[axis.ordinal()].increment();
+        
+        if (sideState[axis.ordinal()] == EnumSideState.BOTH) {
+            
+            sideState[axis.ordinal()] = sideState[axis.ordinal()].increment();
+        }
+        
         world.markBlockForUpdate(x, y, z);
         return true;
     }
     
     @Override
-    public void setEnumInputIcon(EnumInputIcon[] newIcon) {
+    public void sendUpdatePacket() {
         
-        sideState = newIcon;
+        NBTTagCompound tag = new NBTTagCompound();
+        
+        this.writeToNBT(tag);
+        this.sendNBTPacket(tag, 0);
+        super.sendUpdatePacket();
+    }
+    
+    @Override
+    public void readNBTPacket(NBTTagCompound tag, int id) {
+        
+        this.readFromNBT(tag);
+        super.readNBTPacket(tag, id);
     }
     
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         
-        int side = 0;
-        
-        for (EnumInputIcon state : sideState) {
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
             
-            if (state != null)
-                tag.setInteger("state" + side, state.ordinal());
-            side++;
+            tag.setInteger("sideState" + direction.ordinal(), sideState[direction.ordinal()].ordinal());
         }
         super.writeToNBT(tag);
     }
@@ -183,19 +184,11 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         
-        for (int index = 0; index < sideState.length; index++) {
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
             
-            sideState[index] = EnumInputIcon.values()[tag.getInteger("state" + index)];
+            sideState[direction.ordinal()] = EnumSideState.values()[tag.getInteger("sideState" + direction.ordinal())];
         }
         super.readFromNBT(tag);
-    }
-    
-    @Override
-    public void sendUpdatePacket() {
-        
-        if (!worldObj.isRemote)
-            GearUtilities.getPipeline().sendToDimension(new EnumInputIconPacket(xCoord, yCoord, zCoord, sideState), worldObj.provider.dimensionId);
-        super.sendUpdatePacket();
     }
     
     private class SlotHolder {
@@ -422,7 +415,7 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
         
         for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
             
-            if (sideState[direction.ordinal()] == EnumInputIcon.OUTPUT) {
+            if (sideState[direction.ordinal()] == EnumSideState.OUTPUT) {
                 
                 TileEntity tile = worldObj.getTileEntity(xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ);
                 

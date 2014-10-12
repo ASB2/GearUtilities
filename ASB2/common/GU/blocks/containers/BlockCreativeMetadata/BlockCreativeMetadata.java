@@ -51,6 +51,6 @@ public class BlockCreativeMetadata extends BlockMetadataContainerBase implements
         
         TileBase tile = (TileBase) world.getTileEntity(x, y, z);
         int metadata = world.getBlockMetadata(x, y, z);
-        return metadata != 1 || (tile != null && tile instanceof TileCreativeFluid && ((TileCreativeFluid) tile).fluidToSave.getFluidAmount() == 0);
+        return metadata != 1 || (tile != null && tile instanceof TileCreativeFluid && ((TileCreativeFluid) tile).fluidTank.getFluidAmount() == 0);
     }
 }

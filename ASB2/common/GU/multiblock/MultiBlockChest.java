@@ -43,6 +43,7 @@ public class MultiBlockChest extends MultiBlockInventory implements IRedstoneMul
         
         if (inventory != null && inventory.getSizeInventory() == 0)
             inventory.setSizeInventory(16 * ((this.size.getX() - 1) * (this.size.getY() - 1) * (this.size.getZ() - 1)));
+        inventory.setInventoryStackLimit(Math.max(64, 16 * ((this.size.getX() - 1) * (this.size.getY() - 1) * (this.size.getZ() - 1))));
     }
     
     @Override

@@ -9,31 +9,30 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilVector;
+import GU.api.EnumSideState;
 import GU.api.multiblock.MultiBlockAbstract.EnumMultiBlockPartPosition;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.blocks.containers.TileMultiBase;
-import GU.render.EnumInputIcon;
-import GU.render.IEnumInputIcon;
 import UC.math.vector.Vector3i;
 
-public class TileFluidMultiInterface extends TileMultiBase implements IMultiBlockPart, IFluidHandler, IEnumInputIcon {
+public class TileFluidMultiInterface extends TileMultiBase implements IMultiBlockPart, IFluidHandler {
     
     int fluidPerTick = 200;
     
     IFluidMultiBlock handler1 = null, handler2 = null;
     Vector3i position;
-    EnumInputIcon[] sideState;
+    EnumSideState[] sideState;
     
     public TileFluidMultiInterface() {
         
         this.setMaxMultiBlocks(2);
-        sideState = new EnumInputIcon[7];
+        sideState = new EnumSideState[6];
         
         for (int index = 0; index < sideState.length; index++) {
             
-            sideState[index] = EnumInputIcon.NONE;
+            sideState[index] = EnumSideState.NONE;
         }
     }
     
@@ -51,8 +50,6 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
                 
                 position = UtilVector.createTileEntityVector(this);
             }
-            
-            // if (Minecraft.getSystemTime() % 5 == 0) {
             
             if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
                 
@@ -119,52 +116,15 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
                                 }
                             }
                         }
-                        // if (handler1Tank != null && handler2Tank != null) {
-                        //
-                        // double precentFilled1 = handler1Tank.getFluidAmount()
-                        // / handler1Tank.getCapacity();
-                        // double precentFilled2 = handler2Tank.getFluidAmount()
-                        // / handler2Tank.getCapacity();
-                        //
-                        // if (precentFilled1 > precentFilled2) {
-                        //
-                        // FluidStack handler1Drain =
-                        // handler1Tank.drain(fluidPerTick, false);
-                        //
-                        // if (handler1Drain != null) {
-                        //
-                        // int handler2FillAmount =
-                        // handler2Tank.fill(handler1Drain.copy(), false);
-                        //
-                        // if (handler2FillAmount > 0) {
-                        //
-                        // handler2Tank.fill(handler1Tank.drain(fluidPerTick,
-                        // true), true);
-                        // }
-                        // }
-                        // }
-                        // else if (precentFilled1 < precentFilled2) {
-                        //
-                        // FluidStack handler2Drain =
-                        // handler2Tank.drain(fluidPerTick, false);
-                        //
-                        // if (handler2Drain != null) {
-                        //
-                        // int handler1FillAmount =
-                        // handler1Tank.fill(handler2Drain.copy(), false);
-                        //
-                        // if (handler1FillAmount > 0) {
-                        //
-                        // handler1Tank.fill(handler2Tank.drain(fluidPerTick,
-                        // true), true);
-                        // }
-                        // }
-                        // }
-                        // }
                     }
+                } else {
+                    
+                    // for (ForgeDirection direction :
+                    // ForgeDirection.VALID_DIRECTIONS) {
+                    //
+                    // }
                 }
             }
-            // }
         }
         super.updateEntity();
     }
@@ -275,31 +235,41 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     }
     
     @Override
-    public void setEnumInputIcon(EnumInputIcon[] newIcon) {
-        
-        sideState = newIcon;
-    }
-    
-    @Override
     public boolean triggerBlock(World world, EntityPlayer player, int x, int y, int z, ForgeDirection axis) {
         
         sideState[axis.ordinal()] = sideState[axis.ordinal()].increment();
+        
+        if (sideState[axis.ordinal()] == EnumSideState.BOTH) {
+            sideState[axis.ordinal()] = sideState[axis.ordinal()].increment();
+        }
+        
         world.markBlockForUpdate(x, y, z);
         return true;
     }
     
     @Override
+    public void sendUpdatePacket() {
+        
+        NBTTagCompound tag = new NBTTagCompound();
+        
+        this.writeToNBT(tag);
+        this.sendNBTPacket(tag, 0);
+        super.sendUpdatePacket();
+    }
+    
+    @Override
+    public void readNBTPacket(NBTTagCompound tag, int id) {
+        
+        this.readFromNBT(tag);
+        super.readNBTPacket(tag, id);
+    }
+    
+    @Override
     public void writeToNBT(NBTTagCompound tag) {
         
-        int side = 0;
-        
-        for (EnumInputIcon state : sideState) {
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
             
-            if (state != null) {
-                
-                tag.setInteger("state" + side, state.ordinal());
-            }
-            side++;
+            tag.setInteger("sideState" + direction.ordinal(), sideState[direction.ordinal()].ordinal());
         }
         super.writeToNBT(tag);
     }
@@ -307,19 +277,10 @@ public class TileFluidMultiInterface extends TileMultiBase implements IMultiBloc
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         
-        for (int index = 0; index < sideState.length; index++) {
+        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
             
-            sideState[index] = EnumInputIcon.values()[tag.getInteger("state" + index)];
+            sideState[direction.ordinal()] = EnumSideState.values()[tag.getInteger("sideState" + direction.ordinal())];
         }
         super.readFromNBT(tag);
-    }
-    
-    @Override
-    public void sendUpdatePacket() {
-        if (!worldObj.isRemote)
-            // GearUtilities.getPipeline().sendToDimension(new
-            // EnumInputIconPacket(xCoord, yCoord, zCoord, sideState),
-            // worldObj.provider.dimensionId);
-            super.sendUpdatePacket();
     }
 }

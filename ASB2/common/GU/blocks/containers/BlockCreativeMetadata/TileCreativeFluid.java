@@ -9,17 +9,14 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import ASB2.utils.UtilFluid;
-import GU.GearUtilities;
 import GU.blocks.containers.TileBase;
-import GU.packets.TankUpdatePacket;
 
 public class TileCreativeFluid extends TileBase implements IFluidHandler {
     
-    public FluidTank fluidToSave, fluidTank;
+    public FluidTank fluidTank;
     
     public TileCreativeFluid() {
         
-        fluidToSave = new FluidTank(1000);
         fluidTank = new FluidTank(1000000);
     }
     
@@ -34,8 +31,6 @@ public class TileCreativeFluid extends TileBase implements IFluidHandler {
                 
                 fluidTank.getFluid().amount = 1000000;
             } else {
-                
-                fluidTank.setFluid(fluidToSave.getFluid());
                 
                 if (fluidTank.getFluid() != null) {
                     
@@ -65,42 +60,31 @@ public class TileCreativeFluid extends TileBase implements IFluidHandler {
     }
     
     @Override
-    public TileBase setTank(FluidTank tank, int id) {
+    public void sendUpdatePacket() {
         
-        switch (id) {
+        NBTTagCompound tag = new NBTTagCompound();
         
-            case 0:
-                fluidToSave = tank;
-                fluidTank.setFluid(tank.getFluid() != null ? tank.getFluid().copy() : null);
-                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                break;
-            
-            case 1:
-                fluidTank = tank;
-                break;
-        }
-        return super.setTank(tank, id);
+        tag.setTag("fluidTank", fluidTank.writeToNBT(new NBTTagCompound()));
+        this.sendNBTPacket(tag, 0);
     }
     
     @Override
-    public void sendUpdatePacket() {
-        
-        if (!worldObj.isRemote && fluidToSave.getFluid() != null)
-            GearUtilities.getPipeline().sendToDimension(new TankUpdatePacket(xCoord, yCoord, zCoord, fluidToSave, 0), worldObj.provider.dimensionId);
+    public void readNBTPacket(NBTTagCompound tag, int id) {
+
+        fluidTank.readFromNBT(tag.getCompoundTag("fluidTank"));
+        super.readNBTPacket(tag, id);
     }
     
     @Override
     public void readFromNBT(NBTTagCompound tag) {
-        
-        fluidToSave.readFromNBT(tag.getCompoundTag("fluidToSave"));
+
         fluidTank.readFromNBT(tag.getCompoundTag("fluidTank"));
         super.readFromNBT(tag);
     }
     
     @Override
     public void writeToNBT(NBTTagCompound tag) {
-        
-        tag.setTag("fluidToSave", fluidToSave.writeToNBT(new NBTTagCompound()));
+
         tag.setTag("fluidTank", fluidTank.writeToNBT(new NBTTagCompound()));
         super.writeToNBT(tag);
     }

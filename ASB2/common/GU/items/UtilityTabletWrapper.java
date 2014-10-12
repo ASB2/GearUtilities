@@ -28,6 +28,9 @@ public class UtilityTabletWrapper extends ItemMetadataWrapper {
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
         
+//        player.setPositionAndUpdate(0, 100, 0);
+//        player.travelToDimension(373);
+        
         return false;
     }
 }

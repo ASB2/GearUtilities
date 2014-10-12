@@ -14,20 +14,26 @@ import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilInventory;
 import GU.GUGuiHandler;
 import GU.GearUtilities;
+import GU.api.EnumSimulationType;
 import GU.api.multiblock.MultiBlockAbstract.IFluidMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IGuiMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IInventoryMultiBlock;
+import GU.api.multiblock.MultiBlockAbstract.IPowerMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IRedstoneMultiBlock;
 import GU.api.multiblock.MultiBlockObject.FluidHandlerWrapper;
+import GU.api.power.PowerNetAbstract.EnumPowerStatus;
+import GU.api.power.PowerNetAbstract.IPowerManager;
+import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.multiblock.construction.ConstructionManager;
 import GU.multiblock.construction.FurnaceConstructionManager;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
-public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBlock, IInventoryMultiBlock, IRedstoneMultiBlock, IGuiMultiBlock {
+public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBlock, IInventoryMultiBlock, IRedstoneMultiBlock, IGuiMultiBlock, IPowerMultiBlock {
     
     FluidHandlerWrapper fuelTank = new FluidHandlerWrapper(0);
     Inventory fuelInventory = new Inventory("MultiBlockFurnace: Fuel"), toBeSmelted = new Inventory("MultiBlockFurnace: Smelting"), outputInventory = new Inventory("MultiBlockFurnace: Output");
+    DefaultPowerManager manager = new DefaultPowerManager().setPowerStatus(EnumPowerStatus.SINK);
     
     int cookTimer = 0;
     int currentFuelTime = 0;
@@ -54,62 +60,27 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     }
     
     @Override
-    public IInventory getInventory(Vector3i tilePosition) {
-        
-        if (tilePosition != null) {
-            
-            Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
-            
-            if (((int) size.getY() / 3) > relativeVector.getY()) {
-                
-                return outputInventory;
-            } else if (((int) size.getY() / 3) < relativeVector.getY() && relativeVector.getY() > ((int) size.getY() / 3) * 2) {
-                
-                return fuelInventory;
-            } else {
-                
-                return toBeSmelted;
-            }
-        }
-        return null;
-    }
-    
-    @Override
-    public IFluidHandler getTank(Vector3i tilePosition) {
-        
-        if (tilePosition != null) {
-            
-            Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
-            
-            if (size.getY() / 3 < relativeVector.getY()) {
-                
-                return fuelTank;
-            }
-        }
-        return null;
-    }
-    
-    @Override
     public void onSetSize() {
         
         if (fuelTank != null && fuelTank.getFluidTank() != null && fuelTank.getFluidTank().getCapacity() == 0) {
             
-            fuelTank.getFluidTank().setCapacity((size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1) * 8 * FluidContainerRegistry.BUCKET_VOLUME);
+            fuelTank.getFluidTank().setCapacity(16 * FluidContainerRegistry.BUCKET_VOLUME * (size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1));
         }
         if (fuelInventory != null && fuelInventory.getSizeInventory() == 0) {
             
-            fuelInventory.setSizeInventory(((size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1)) * 4);
+            fuelInventory.setSizeInventory(16 * ((size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1)));
         }
         if (toBeSmelted != null && toBeSmelted.getSizeInventory() == 0) {
             
-            toBeSmelted.setSizeInventory(((size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1)) * 4);
+            toBeSmelted.setSizeInventory(16 * ((size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1)));
         }
         if (outputInventory != null && outputInventory.getSizeInventory() == 0) {
             
-            outputInventory.setSizeInventory((size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1) * 4);
+            outputInventory.setSizeInventory(16 * (size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1));
         }
         
         maxHeat = (size.getY() - 1) * 64;
+        manager.setPowerMax(1000 * (size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1));
     }
     
     @Override
@@ -117,7 +88,13 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
         
         if (currentHeat < maxHeat) {
             
-            if (currentFuelTime <= 0) {
+            if (manager.getStoredPower() >= 10) {
+                
+                if (manager.decreasePower(10, EnumSimulationType.FORCED_LIGITIMATE)) {
+                    
+                    currentHeat += 1;
+                }
+            } else if (currentFuelTime <= 0) {
                 
                 currentHeat = Math.max(0, currentHeat - 1);
                 
@@ -186,6 +163,42 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     }
     
     @Override
+    public IInventory getInventory(Vector3i tilePosition) {
+        
+        if (tilePosition != null) {
+            
+            Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
+            
+            if (((int) size.getY() / 3) > relativeVector.getY()) {
+                
+                return outputInventory;
+            } else if (((int) size.getY() / 3) < relativeVector.getY() && relativeVector.getY() > ((int) size.getY() / 3) * 2) {
+                
+                return fuelInventory;
+            } else {
+                
+                return toBeSmelted;
+            }
+        }
+        return null;
+    }
+    
+    @Override
+    public IFluidHandler getTank(Vector3i tilePosition) {
+        
+        if (tilePosition != null) {
+            
+            Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
+            
+            if (size.getY() / 3 < relativeVector.getY()) {
+                
+                return fuelTank;
+            }
+        }
+        return null;
+    }
+    
+    @Override
     public boolean openGui(Vector3i position, EntityPlayer player, int side) {
         
         if (!world.isRemote) {
@@ -213,6 +226,27 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
     }
     
     @Override
+    public IPowerManager getPowerManager(Vector3i tilePosition) {
+        
+        if (tilePosition != null) {
+            
+            Vector3i relativeVector = positionRelativeTo.subtract(tilePosition);
+            
+            if (((int) size.getY() / 3) > relativeVector.getY()) {
+                
+                return null;
+            } else if (((int) size.getY() / 3) < relativeVector.getY() && relativeVector.getY() > ((int) size.getY() / 3) * 2) {
+                
+                return manager;
+            } else {
+                
+                return null;
+            }
+        }
+        return null;
+    }
+    
+    @Override
     public NBTTagCompound save(NBTTagCompound tag) {
         
         if (fuelTank != null)
@@ -223,6 +257,8 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
             tag.setTag("toBeSmelted", toBeSmelted.save(new NBTTagCompound()));
         if (outputInventory != null)
             tag.setTag("outputInventory", outputInventory.save(new NBTTagCompound()));
+        
+        manager.save(tag);
         
         tag.setInteger("cookTimer", cookTimer);
         tag.setInteger("maxHeat", maxHeat);
@@ -242,6 +278,8 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
             toBeSmelted.load(tag.getCompoundTag("toBeSmelted"));
         if (outputInventory != null)
             outputInventory.load(tag.getCompoundTag("outputInventory"));
+        
+        manager.load(tag);
         
         cookTimer = tag.getInteger("cookTimer");
         maxHeat = tag.getInteger("maxHeat");

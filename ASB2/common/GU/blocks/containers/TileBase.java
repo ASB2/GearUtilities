@@ -6,7 +6,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidTank;
 import GU.GearUtilities;
 import GU.packets.NBTPacket;
 
@@ -32,16 +31,6 @@ public class TileBase extends TileEntity {
     public ForgeDirection getOrientation() {
         
         return ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
-    }
-    
-    public TileBase setTank(FluidTank tank, int id) {
-        
-        return this;
-    }
-    
-    public FluidTank getTank() {
-        
-        return null;
     }
     
     public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection axis) {
