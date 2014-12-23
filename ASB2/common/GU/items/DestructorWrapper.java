@@ -11,7 +11,7 @@ import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilItemStack;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
-import GU.items.ItemRenderers.GarnetRenderer;
+import GU.items.ItemRenderers.PlaceHolderRenderer;
 
 public class DestructorWrapper extends ItemMetadataWrapper {
     
@@ -22,7 +22,7 @@ public class DestructorWrapper extends ItemMetadataWrapper {
     @Override
     public void postInitRender() {
         
-        this.setRenderer(GarnetRenderer.instance);
+        this.setRenderer(PlaceHolderRenderer.instance);
     }
     
     @Override

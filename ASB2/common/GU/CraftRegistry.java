@@ -15,8 +15,8 @@ public class CraftRegistry {
         
         OreDictionary.registerOre(GU.info.Reference.STRUCTURE_CUBE_OREDIC, new ItemStack(BlockRegistry.METADATA_ORE, 1, 0));
         OreDictionary.registerOre("dyeBlack", Items.bone);
-        OreDictionary.registerOre("oreElectisCrystal", new ItemStack(BlockRegistry.CREATIVE_METADATA, 0, 0));
-        OreDictionary.registerOre("blockElectisStone", new ItemStack(BlockRegistry.CREATIVE_METADATA, 0, 1));
+        OreDictionary.registerOre("oreElectisCrystal", new ItemStack(BlockRegistry.METADATA_ORE, 1, 0));
+        OreDictionary.registerOre("blockElectisStone", new ItemStack(BlockRegistry.METADATA_ORE, 1, 1));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.STRUCTURE_CUBES.get(VanillaColor.WHITE.ordinal()), 16, 0), new Object[] { "BBB", "BEB", "BBB",
         
@@ -76,7 +76,7 @@ public class CraftRegistry {
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 4, 2), new Object[] { "ICI", "CSC", "ICI",
         
-        'I', Items.iron_ingot, 'C', BlockRegistry.ELECTIS_POLYHEDRON, 'S', Reference.STRUCTURE_CUBE_OREDIC }));
+        'I', Items.iron_ingot, 'C', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 1), 'S', Reference.STRUCTURE_CUBE_OREDIC }));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_INTERFACE, 4, 4), new Object[] { "ICI", "CSC", "ICI",
         
@@ -86,7 +86,7 @@ public class CraftRegistry {
         
         'I', Items.iron_ingot, 'C', Items.stick, 'S', Reference.STRUCTURE_CUBE_OREDIC }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.ELECTIS_POLYHEDRON, 1, 0), new Object[] { "III", "IEI", "III",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.ELECTIS_POLYHEDRON, 4, 0), new Object[] { "III", "IEI", "III",
         
         'I', Items.iron_ingot, 'E', ItemRegistry.ELECTIS_CRYSTAL_SHARD }));
         
@@ -102,9 +102,9 @@ public class CraftRegistry {
         
         'I', BlockRegistry.ELECTIS_POLYHEDRON, 'E', new ItemStack(BlockRegistry.MULTI_INTERFACE, 1, 1) }));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.CONDUIT, 4, 0), new Object[] { "SAS", "IEI", "SAS",
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.CONDUIT, 4, 0), new Object[] { "SAS", "IGI", "SAS",
         
-        'I', Items.iron_ingot, 'S', Reference.STRUCTURE_CUBE_OREDIC, 'A', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 5), 'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 0) }));
+        'I', Items.iron_ingot, 'S', Reference.STRUCTURE_CUBE_OREDIC, 'A', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 5), 'G', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 1) }));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockRegistry.MULTI_DIRECTIONAL_CONDUIT, 4, 0), new Object[] { "CIC", "ISI", "CIC",
         
@@ -119,5 +119,25 @@ public class CraftRegistry {
         GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.TELEPORT_ALTAR, new Object[] { "SES", "EPE", "SES",
         
         'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 0), 'S', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 5), 'P', Items.ender_pearl }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.ELECTIS_ENERGY_CUBE, new Object[] { "GEG", "EPE", "GEG",
+        
+        'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 0), 'G', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 1), 'P', BlockRegistry.ELECTIS_POLYHEDRON }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.ELECTIS_DRILL, new Object[] { "PEP", "ECE", "PEP",
+        
+        'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 0), 'C', BlockRegistry.ELECTIS_ENERGY_CUBE, 'P', BlockRegistry.ELECTIS_POLYHEDRON }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(BlockRegistry.PHOTONIC_CONVERTER, new Object[] { "S S", "SGS", "CEC",
+        
+        'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 0), 'S', new ItemStack(BlockRegistry.METADATA_ORE, 1, 0), 'G', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 1), 'C', Reference.STRUCTURE_CUBE_OREDIC }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.METADATA_ITEM, 7, 1), new Object[] { "EEE", "YDY", "EEE",
+        
+        'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 0), 'D', "gemDiamond", 'Y', "dyeYellow" }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.METADATA_ITEM, 7, 0), new Object[] { "EEE", "YDY", "EEE",
+        
+        'E', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 1), 'D', "gemDiamond", 'Y', "dyeWhite" }));
     }
 }

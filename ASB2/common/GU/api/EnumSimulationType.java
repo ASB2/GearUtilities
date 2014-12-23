@@ -15,6 +15,6 @@ public enum EnumSimulationType {
     
     public boolean isLigitimate() {
         
-        return !this.isForced();
+        return this == LIGITIMATE || this == FORCED_LIGITIMATE;
     }
 }

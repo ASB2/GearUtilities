@@ -11,7 +11,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.color.VanillaColor;
+import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.blocks.containers.BlockMultiMetadataContainerBase;
+import GU.multiblock.MultiBlockBase;
 import GU.render.BlockSimpleRenderer.INoiseBlockRender;
 import GU.render.noise.NoiseManager;
 import UC.color.Color4i;
@@ -21,7 +23,6 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
     public BlockMultiBlockPart(Material material) {
         super(material);
         
-        this.registerTile(TileMultiPart.class);
     }
     
     @Override
@@ -29,32 +30,34 @@ public class BlockMultiBlockPart extends BlockMultiMetadataContainerBase impleme
         
         TileEntity tile = world.getTileEntity(x, y, z);
         
-        if (tile != null && tile instanceof IColorableTile) {
+        if (tile != null && tile instanceof TileMultiPart) {
             
-            if (player.getHeldItem() != null) {
+            if (tile instanceof IColorableTile && player.getHeldItem() != null && VanillaColor.isItemDye(player.getHeldItem())) {
                 
-                if (VanillaColor.isItemDye(player.getHeldItem())) {
+                if (!player.isSneaking()) {
                     
-                    if (!player.isSneaking()) {
+                    return ((IColorableTile) tile).setColor(VanillaColor.getItemColorValue(player.getHeldItem()).getRGBValue(), ForgeDirection.getOrientation(side));
+                } else {
+                    
+                    for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                         
-                        return ((IColorableTile) tile).setColor(VanillaColor.getItemColorValue(player.getHeldItem()).getRGBValue(), ForgeDirection.getOrientation(side));
-                    } else {
+                        ((IColorableTile) tile).setColor(VanillaColor.getItemColorValue(player.getHeldItem()).getRGBValue(), direction);
+                    }
+                    return true;
+                }
+            } else {
+                
+                List<IMultiBlock> multiList = ((TileMultiPart) tile).getMultiBlocks();
+                
+                if (multiList.size() == 1) {
+                    
+                    IMultiBlock block = multiList.get(0);
+                    
+                    if (block instanceof MultiBlockBase) {
                         
-                        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
-                            
-                            ((IColorableTile) tile).setColor(VanillaColor.getItemColorValue(player.getHeldItem()).getRGBValue(), direction);
-                        }
-                        return true;
+                        ((MultiBlockBase) block).onBlockActivated(world, x, y, z, player, side, xHit, yHit, zHit);
                     }
                 }
-                // else {
-                //
-                // Color color = ((IColorable)
-                // tile).getColor(ForgeDirection.getOrientation(side));
-                // ((IColorable) tile).setColor(UtilMisc.changeRed(color, -1),
-                // ForgeDirection.getOrientation(side));
-                // }
-                
             }
         }
         return false;

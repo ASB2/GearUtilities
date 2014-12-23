@@ -37,7 +37,7 @@ public class BlockMetadataOre extends BlockMetadata implements INoiseBlockRender
     @Override
     public boolean canRenderNoise(int metadata) {
         
-        return metadata == 1;
+        return metadata == 1 || metadata == 2;
     }
     
     @Override

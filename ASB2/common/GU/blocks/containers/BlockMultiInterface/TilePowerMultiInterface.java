@@ -24,6 +24,7 @@ public class TilePowerMultiInterface extends TileMultiBase implements IMultiBloc
     public TilePowerMultiInterface() {
         
         sideState = new EnumSideState[] { EnumSideState.NONE, EnumSideState.NONE, EnumSideState.NONE, EnumSideState.NONE, EnumSideState.NONE, EnumSideState.NONE };
+        this.setMaxMultiBlocks(2);
     }
     
     @Override
@@ -81,7 +82,8 @@ public class TilePowerMultiInterface extends TileMultiBase implements IMultiBloc
                 handler1 = handler2;
                 handler2 = null;
             }
-        } else if (handler2 == multiBlock) {
+        }
+        if (handler2 == multiBlock) {
             
             handler2 = null;
         }

@@ -24,6 +24,7 @@ public final class Models {
     public static WavefrontObject ModelConduit;
     public static WavefrontObject ModelMultiDirectionalConduit;
     public static WavefrontObject ModelElectisEnergyCube;
+    public static WavefrontObject ModelCrystal4;
     
     private Models() {
     }
@@ -48,5 +49,6 @@ public final class Models {
         ModelConduit = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelConduit.obj"));
         ModelMultiDirectionalConduit = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelMultiDirectionalConduit.obj"));
         ModelElectisEnergyCube = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelElectisEnergyCube.obj"));
+        ModelCrystal4 = (WavefrontObject) AdvancedModelLoader.loadModel(new ResourceLocation(Reference.MOD_ID + ":models/ModelCrystal4.obj"));
     }
 }

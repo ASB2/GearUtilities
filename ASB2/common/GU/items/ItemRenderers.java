@@ -17,6 +17,7 @@ import GU.EventListener;
 import GU.PlayerRegistry;
 import GU.info.Models;
 import GU.info.Reference;
+import GU.info.Textures;
 import GU.render.noise.NoiseManager;
 import GU.utils.UtilGU;
 import UC.VariableIterator;
@@ -725,7 +726,6 @@ public class ItemRenderers {
             GL11.glColor3d(1, 1, 1);
             GL11.glPushMatrix();
             GL11.glRotatef(-Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 1F, 1F, 1F);
-            // UtilRender.renderTexture(Textures.FLAME_FOCUS_HEXAGON);
             GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
             NoiseManager.bindImage();
             Models.ModelFlameFocus.renderPart("Hexagon");
@@ -899,11 +899,9 @@ public class ItemRenderers {
         }
     }
     
-    public static final class GarnetRenderer implements IItemRenderer {
+    public static final class PlaceHolderRenderer implements IItemRenderer {
         
-        public static final GarnetRenderer instance = new GarnetRenderer();
-        
-        Color color = Color.YELLOW;
+        public static final PlaceHolderRenderer instance = new PlaceHolderRenderer();
         
         @Override
         public boolean handleRenderType(ItemStack item, ItemRenderType type) {
@@ -959,10 +957,97 @@ public class ItemRenderers {
             GL11.glTranslatef(x, y, z);
             GL11.glScalef(scale, scale, scale);
             
-            GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
+            GL11.glColor3f(255.0f, 255.0f, 255.0f);
             
             NoiseManager.bindImage();
             Models.ModelCrystal1.renderAll();
+            
+            GL11.glEnable(GL11.GL_LIGHTING);
+            GL11.glPopMatrix();
+        }
+    }
+    
+    public static final class GarnetRenderer implements IItemRenderer {
+        
+        public static final GarnetRenderer instance = new GarnetRenderer();
+        
+        Color YELLOW = Color.YELLOW, YELLOW_DARKER = Color.YELLOW.darker().darker();
+        
+        @Override
+        public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+            
+            return true;
+        }
+        
+        @Override
+        public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+            
+            return true;
+        }
+        
+        @Override
+        public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+            
+            switch (type) {
+            
+                case ENTITY: {
+                    
+                    renderItemSwitched(item, type, 0f, 0f, 0f, .25F);
+                    return;
+                }
+                
+                case EQUIPPED: {
+                    
+                    renderItemSwitched(item, type, 0f, 1f, 0f, .7F);
+                    return;
+                }
+                
+                case INVENTORY: {
+                    
+                    renderItemSwitched(item, type, 0f, 0, 0f, .45F);
+                    return;
+                }
+                
+                case EQUIPPED_FIRST_PERSON: {
+                    
+                    renderItemSwitched(item, type, -.7f, 1.1f, 0f, .25F);
+                    return;
+                }
+                
+                default:
+                    return;
+            }
+        }
+        
+        private void renderItemSwitched(ItemStack item, ItemRenderType type, float x, float y, float z, float scale) {
+            
+            GL11.glPushMatrix();
+            GL11.glDisable(GL11.GL_LIGHTING);
+            
+            if (type == ItemRenderType.ENTITY) {
+                
+                GL11.glRotated(90, 0, 1, 0);
+            }
+            
+            if (type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
+                
+                GL11.glRotated(90, 0, 1, 0);
+            }
+            
+            GL11.glTranslatef(x, y, z);
+            GL11.glScalef(scale, scale, scale);
+            
+            NoiseManager.bindImage();
+            GL11.glColor3f(YELLOW_DARKER.getRed() / 255.0f, YELLOW_DARKER.getGreen() / 255.0f, YELLOW_DARKER.getBlue() / 255.0f);
+            Models.ModelCrystal4.renderPart("Outer");
+            
+            GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
+            
+            GL11.glScalef(.9f, .9f, .9f);
+            
+            GL11.glColor3f(YELLOW.getRed() / 255.0f, YELLOW.getGreen() / 255.0f, YELLOW.getBlue() / 255.0f);
+            
+            Models.ModelCrystal4.renderPart("Inner");
             
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();

@@ -70,4 +70,13 @@ public class EventListener {
     public void noDrops(HarvestDropsEvent event) {
         
     }
+    
+//    @SubscribeEvent
+//    public void onTooltip(ItemTooltipEvent event) {
+//      if (event.itemStack != null && Block.getBlockFromItem(event.itemStack.getItem()) == Blocks.glowstone && event.itemStack.stackTagCompound != null) {
+//        if (event.itemStack.stackTagCompound.getBoolean("wasPainted")) {
+//          event.toolTip.add(Lang.localize("painter.tooltip.wasPainted"));
+//        }
+//      }
+//    }
 }

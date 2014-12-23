@@ -21,6 +21,8 @@ public class Variables {
     
     public static boolean CAN_HANDHELD_TELEPORTER_GO_IN_SAME_DIMENTIONS = true;
     
+    public static boolean STRANGE_NOISE = false;
+    
     // public static boolean CANT_BREAK_WOOD_WITH_HAND = false;
     
     public static void updateVariables(Configuration config) {
@@ -34,5 +36,6 @@ public class Variables {
         HANDHELD_TELEPORTER_USES = config.get("Items", "Number of uses for a teleporter before it gets used up", HANDHELD_TELEPORTER_USES, "Change the value to change number of uses for a teleporter. Less than one means unlimited uses").getInt(HANDHELD_TELEPORTER_USES);
         CAN_HANDHELD_TELEPORTER_GO_BETWEEN_DIMENTIONS = config.get("Items", "Can Handheld Teleporter teleport between dimetions", CAN_HANDHELD_TELEPORTER_GO_BETWEEN_DIMENTIONS, "Set to false to not allow teleporting between dimentions with teleporter").getBoolean(CAN_HANDHELD_TELEPORTER_GO_BETWEEN_DIMENTIONS);
         CAN_HANDHELD_TELEPORTER_GO_IN_SAME_DIMENTIONS = config.get("Items", "Can Handheld Teleporter teleport in same dimetions", CAN_HANDHELD_TELEPORTER_GO_IN_SAME_DIMENTIONS, "Set to false to not allow teleporting in the dimention with teleporter").getBoolean(CAN_HANDHELD_TELEPORTER_GO_IN_SAME_DIMENTIONS);
-    }
+        STRANGE_NOISE = config.get("Misc", "What noise texture will the blocks and items use", STRANGE_NOISE, "Set to true to use the currently unused new noise texture").getBoolean(STRANGE_NOISE);
+         }
 }

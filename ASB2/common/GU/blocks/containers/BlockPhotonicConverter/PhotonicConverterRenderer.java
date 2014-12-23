@@ -166,11 +166,15 @@ public class PhotonicConverterRenderer extends TileEntitySpecialRenderer impleme
         GL11.glScaled(scale, scale, scale);
         NoiseManager.bindImage();
         
+        FuelType.NONE.bindTextureBase();
         Models.ModelGyro.renderPart("Base");
+        
+        FuelType.NONE.bindTextureCenter();
         Models.ModelGyro.renderPart("Center");
         
         GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
         
+        FuelType.NONE.bindTexturePanel();
         for (int i = 0; i < 4; i++) {
             
             GL11.glPushMatrix();
@@ -179,7 +183,6 @@ public class PhotonicConverterRenderer extends TileEntitySpecialRenderer impleme
             Models.ModelGyro.renderPart("Outer");
             GL11.glPopMatrix();
         }
-        
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
     }

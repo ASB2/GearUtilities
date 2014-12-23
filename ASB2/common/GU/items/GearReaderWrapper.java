@@ -21,7 +21,7 @@ import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
-import GU.items.ItemRenderers.GarnetRenderer;
+import GU.items.ItemRenderers.PlaceHolderRenderer;
 import UC.color.Color4i;
 
 public class GearReaderWrapper extends ItemMetadataWrapper {
@@ -34,7 +34,7 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
     @Override
     public void postInitRender() {
         
-        this.setRenderer(GarnetRenderer.instance);
+        this.setRenderer(PlaceHolderRenderer.instance);
     }
     
     @Override

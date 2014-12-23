@@ -34,7 +34,7 @@ public class TilePhotonicConverter extends TileBase implements ITilePowerHandler
     public TilePhotonicConverter() {
         
         manager = new DefaultPowerManager(1000);
-        manager.setPowerStatus(EnumPowerStatus.SOURCE);
+//        manager.setPowerStatus(EnumPowerStatus.SOURCE);
         fuelType = FuelType.NONE;
     }
     
@@ -71,10 +71,12 @@ public class TilePhotonicConverter extends TileBase implements ITilePowerHandler
                                         
                                         if (itemFuelValue > 0) {
                                             
-                                            if (UtilInventory.removeItemStackFromSlot(((ISidedInventory) tile), stack, index, 1, false) && manager.increasePower(itemFuelValue / 100, EnumSimulationType.SIMULATE)) {
+                                            int itemDivideFuel = itemFuelValue / 10;
+                                            
+                                            if (UtilInventory.removeItemStackFromSlot(((ISidedInventory) tile), stack, index, 1, false) && manager.increasePower(itemDivideFuel, EnumSimulationType.FORCED_SIMULATE)) {
                                                 
                                                 UtilInventory.removeItemStackFromSlot(((ISidedInventory) tile), stack, index, 1, true);
-                                                manager.increasePower(itemFuelValue / 100, EnumSimulationType.LIGITIMATE);
+                                                manager.increasePower(itemDivideFuel, EnumSimulationType.FORCED_LIGITIMATE);
                                                 break;
                                             }
                                         }
@@ -93,10 +95,12 @@ public class TilePhotonicConverter extends TileBase implements ITilePowerHandler
                                     
                                     if (itemFuelValue > 0) {
                                         
-                                        if (UtilInventory.removeItemStackFromSlot(((IInventory) tile), stack, index, 1, false) && manager.increasePower(itemFuelValue / 10, EnumSimulationType.SIMULATE)) {
+                                        int itemDivideFuel = itemFuelValue / 10;
+                                        
+                                        if (UtilInventory.removeItemStackFromSlot(((IInventory) tile), stack, index, 1, false) && manager.increasePower(itemDivideFuel, EnumSimulationType.FORCED_SIMULATE)) {
                                             
                                             UtilInventory.removeItemStackFromSlot(((IInventory) tile), stack, index, 1, true);
-                                            manager.increasePower(itemFuelValue / 100, EnumSimulationType.LIGITIMATE);
+                                            manager.increasePower(itemDivideFuel, EnumSimulationType.FORCED_LIGITIMATE);
                                             break;
                                         }
                                     }
@@ -117,10 +121,10 @@ public class TilePhotonicConverter extends TileBase implements ITilePowerHandler
                             
                             if (UtilFluid.removeFluidFromTank(((IFluidHandler) tile), direction, FluidRegistry.LAVA, 100, false)) {
                                 
-                                if (this.manager.increasePower(10, EnumSimulationType.SIMULATE)) {
+                                if (this.manager.increasePower(10, EnumSimulationType.FORCED_SIMULATE)) {
                                     
                                     UtilFluid.removeFluidFromTank(((IFluidHandler) tile), direction, FluidRegistry.LAVA, 100, true);
-                                    this.manager.increasePower(10, EnumSimulationType.LIGITIMATE);
+                                    this.manager.increasePower(10, EnumSimulationType.FORCED_LIGITIMATE);
                                     break;
                                 }
                             }
@@ -131,12 +135,9 @@ public class TilePhotonicConverter extends TileBase implements ITilePowerHandler
                 
                 case SOLAR: {
                     
-                    if (direction == ForgeDirection.UP) {
+                    if (worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord)) {
                         
-                        if (worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord)) {
-                            
-                            this.manager.increasePower(1, EnumSimulationType.LIGITIMATE);
-                        }
+                        this.manager.increasePower(1, EnumSimulationType.FORCED_LIGITIMATE);
                     }
                     break;
                 }

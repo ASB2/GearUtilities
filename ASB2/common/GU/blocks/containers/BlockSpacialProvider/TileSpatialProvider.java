@@ -56,6 +56,16 @@ public class TileSpatialProvider extends TileMultiBase implements IMultiBlockCor
     }
     
     @Override
+    public void onChunkUnload() {
+        
+        if (updating != null) {
+            
+            updating.onChunkUnload();
+        }
+        super.onChunkUnload();
+    }
+    
+    @Override
     public boolean addMultiBlock(IMultiBlock multiBlock) {
         
         boolean worked = super.addMultiBlock(multiBlock);

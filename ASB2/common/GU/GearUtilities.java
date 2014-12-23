@@ -10,6 +10,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import GU.commands.BreakBlockCommand;
@@ -81,7 +82,7 @@ public final class GearUtilities {
         MinecraftForge.EVENT_BUS.register(EventListener.instance);
         FMLCommonHandler.instance().bus().register(EventListener.instance);
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GUGuiHandler());
-        
+        ForgeChunkManager.setForcedChunkLoadingCallback(this, new GUChunkLoadingCallback());
         // GameRegistry.registerFuelHandler(new IFuelHandler() {
         //
         // @Override
@@ -117,7 +118,7 @@ public final class GearUtilities {
             @Override
             public int generationsPerChunk(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
                 
-                return 1;
+                return 5;
             }
         }, 0);
         
@@ -126,7 +127,7 @@ public final class GearUtilities {
             @Override
             public void generate(World world, Random random, int x, int y, int z) {
                 
-                new WorldGenMinable(BlockRegistry.METADATA_ORE, 1, 15, BlockRegistry.METADATA_ORE).generate(world, random, x, y, z);
+                new WorldGenMinable(BlockRegistry.METADATA_ORE, 1, 20, BlockRegistry.METADATA_ORE).generate(world, random, x, y, z);
             }
             
             @Override
@@ -134,7 +135,22 @@ public final class GearUtilities {
                 
                 return 1;
             }
-        }, 10);
+        }, 1);
+        
+        GameRegistry.registerWorldGenerator(new WorldGenBase() {
+            
+            @Override
+            public void generate(World world, Random random, int x, int y, int z) {
+                
+                new WorldGenMinable(BlockRegistry.METADATA_ORE, 2, 15, BlockRegistry.METADATA_ORE).generate(world, random, x, y, z);
+            }
+            
+            @Override
+            public int generationsPerChunk(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+                
+                return 1;
+            }
+        }, 1);
         
         // DimensionManager.registerProviderType(373,
         // ElectisVoidWorldProvider.class, true);

@@ -12,12 +12,13 @@ import GU.items.AdvancedStickWrapper;
 import GU.items.DestructorWrapper;
 import GU.items.ElectisShardWrapper;
 import GU.items.GearReaderWrapper;
+import GU.items.HandheldTeleporterWrapper;
 import GU.items.ItemBase;
 import GU.items.ItemFluidCrystalArray;
 import GU.items.ItemMetadata;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
 import GU.items.ItemRenderers.GarnetRenderer;
-import GU.items.HandheldTeleporterWrapper;
+import GU.items.ItemRenderers.PlaceHolderRenderer;
 import GU.items.UtilityTabletWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -36,8 +37,8 @@ public final class ItemRegistry {
         customItemMap.put(Reference.MOD_ID.concat(":ItemMetadataFluid"), ITEM_FLUID);
         
         METADATA_ITEM.addWrapper(new ElectisShardWrapper("Electis Crystal Shard"));
-        METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Garnet").setRenderer(GarnetRenderer.instance));
-        METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Electis Controler").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Electis Infued Garnet").setRenderer(GarnetRenderer.instance));
+        METADATA_ITEM.addWrapper(new ItemMetadataWrapper("Electis Controler").setRenderer(PlaceHolderRenderer.instance));
         METADATA_ITEM.addWrapper(new GearReaderWrapper("Gear Reader"));
         METADATA_ITEM.addWrapper(new HandheldTeleporterWrapper("Handheld Teleporter"));
         METADATA_ITEM.addWrapper(new AdvancedStickWrapper("Advanced Stick"));

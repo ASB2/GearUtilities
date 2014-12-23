@@ -14,6 +14,7 @@ import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.api.power.PowerNetObject.UtilPower;
 import GU.items.ItemRenderers.ElectisCrystalShardRenderer;
+import GU.render.noise.NoiseManager;
 
 public class ElectisShardWrapper extends GU.items.ItemMetadata.ItemMetadataWrapper {
     
@@ -76,28 +77,27 @@ public class ElectisShardWrapper extends GU.items.ItemMetadata.ItemMetadataWrapp
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
         
-        // if (false) {
-        if (player.capabilities.isCreativeMode) {
-            
-            int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
-            
-            if (player.isSneaking()) {
+        if (false) {
+            if (player.capabilities.isCreativeMode) {
                 
-                powerSaved--;
-            } else {
+                int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
                 
-                powerSaved++;
+                if (player.isSneaking()) {
+                    
+                    powerSaved--;
+                } else {
+                    
+                    powerSaved++;
+                }
+                UtilItemStack.setNBTTagInt(itemStack, "inputPower", Math.max(powerSaved, 0));
+                
+                if (!world.isRemote)
+                    UtilEntity.sendChatToPlayer(player, "Power To Move: " + Math.max(powerSaved, 0));
             }
-            UtilItemStack.setNBTTagInt(itemStack, "inputPower", Math.max(powerSaved, 0));
+        } else {
             
-            if (!world.isRemote)
-                UtilEntity.sendChatToPlayer(player, "Power To Move: " + Math.max(powerSaved, 0));
+            NoiseManager.instance.generateNoiseImage();
         }
-        // }
-        // else {
-        //
-        // NoiseManager.instance.generateNoiseImage();
-        // }
         return super.onItemRightClick(itemStack, world, player);
     }
 }

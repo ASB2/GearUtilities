@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockDrill;
+package GU.blocks.containers.BlockElectisDrill;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -71,11 +71,16 @@ public class DrillRenderer extends TileEntitySpecialRenderer implements IItemRen
         
         GL11.glScaled(1.5, 1.5, 1.5);
         NoiseManager.bindImage();
+        boolean dark = ((TileElectisDrill) tileentity).darkCystal;
         
         {
             final float secondCrystalScale = .25f, distanceFromCenter = .3f;
             
             GL11.glPushMatrix();
+            
+            if (dark)
+                GL11.glColor3d(.2, .2, .2);
+            
             GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
             GL11.glTranslated(0, -.3, 0);
             
@@ -141,6 +146,8 @@ public class DrillRenderer extends TileEntitySpecialRenderer implements IItemRen
         }
         
         GL11.glScaled(.25, .25, .25);
+        
+        GL11.glColor3d(1, 1, 1);
         
         Models.ModelCrystal1.renderAll();
         

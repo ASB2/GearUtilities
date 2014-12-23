@@ -14,7 +14,8 @@ public class PlayerRegistry {
         List<String> list = new ArrayList<String>();
         list.add("Dr_DooManiC".toLowerCase());
         list.add("Dark_Raven87".toLowerCase());
-        playerMap.put("colorfulTeleporter", list);
+        list.add("ASB2".toLowerCase());
+        playerMap.put("colorfulTeleporter".toLowerCase(), list);
     }
     
     public static boolean isPlayerValid(String tag, String name) {

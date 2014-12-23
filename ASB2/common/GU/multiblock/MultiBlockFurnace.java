@@ -127,7 +127,7 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
             
             cookTimer++;
             
-            if (cookTimer >= 5) {
+            if (cookTimer >= 10 * ((currentHeat / (double) maxHeat) + 1)) {
                 
                 cookTimer = 0;
                 
@@ -244,6 +244,23 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
             }
         }
         return null;
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+        
+        if (super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ)) {
+            
+            if (!world.isRemote) {
+                
+                UtilEntity.sendChatToPlayer(player, "-------");
+                UtilEntity.sendChatToPlayer(player, "Furnace: Current Heat, " + currentHeat);
+                UtilEntity.sendChatToPlayer(player, "Furnace: Max Heat, " + maxHeat);
+                UtilEntity.sendChatToPlayer(player, "Furnace: Heat Precent, " + Math.round((currentHeat / (double) maxHeat) * 10) / 10.0);
+                UtilEntity.sendChatToPlayer(player, "-------");
+            }
+        }
+        return false;
     }
     
     @Override

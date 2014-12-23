@@ -1,11 +1,14 @@
 package GU.blocks.containers.BlockMultiPart;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import GU.blocks.containers.BlockMultiMetadataContainerBase;
+import java.util.List;
 
-public class BlockMultiBlockPartGlass extends BlockMultiMetadataContainerBase {
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.util.ForgeDirection;
+
+public class BlockMultiBlockPartGlass extends BlockMultiBlockPart {
     
     public BlockMultiBlockPartGlass(Material material) {
         super(material);
@@ -25,8 +28,20 @@ public class BlockMultiBlockPartGlass extends BlockMultiMetadataContainerBase {
     }
     
     @Override
-    public TileEntity createNewTileEntity(World var1, int var2) {
-        
-        return new TileMultiPart();
+    public boolean canRenderNoise(int metadata) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    
+    @Override
+    public boolean canRenderNoise(IBlockAccess world, int x, int y, int z, ForgeDirection direction) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4) {
+        par3List.add("Made just for you: ".concat(player.getDisplayName()));
     }
 }

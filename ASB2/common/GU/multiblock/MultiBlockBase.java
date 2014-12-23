@@ -1,15 +1,23 @@
 package GU.multiblock;
 
+import java.util.Iterator;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
+import net.minecraftforge.common.ForgeChunkManager.Type;
 import ASB2.utils.UtilVector;
+import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.multiblock.construction.ConstructionManager;
 import UC.IAbstractUpdateable;
 import UC.color.Color4i;
+import UC.math.vector.Vector2i;
 import UC.math.vector.Vector3i;
 
 public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable {
@@ -18,8 +26,9 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
     protected Vector3i positionRelativeTo;
     protected Vector3i size;
     protected Vector3i updater;
+    protected Ticket ticket;
     
-    protected boolean isValid = false, isConstructing = false, isDeconstructing = false, forceLoad = false, hasTriedConstructionManagerCreation = false, calledSize = false;
+    protected boolean isValid = false, isConstructing = false, isDeconstructing = false, forceLoad = false, hasTriedConstructionManagerCreation = false, calledSize = false, triedTicketCreation = false;
     
     protected ConstructionManager constructionManager;
     
@@ -78,6 +87,8 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
                     
                     isConstructing = false;
                     isValid = false;
+                    
+                    finalizeDeconstruction();
                 }
             }
         } else if (forceLoad) {
@@ -92,6 +103,19 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
             }
         }
         
+        if (!triedTicketCreation) {
+            
+            ticket = ForgeChunkManager.requestTicket(GearUtilities.instance, world, Type.NORMAL);
+            
+            if (ticket == null) {
+                
+                GearUtilities.log("Chunk Loading Ticket Request Failed");
+            } else {
+                
+                this.forceLoadChunks();
+            }
+            triedTicketCreation = true;
+        }
         if (isValid) {
             
             logicUpdate();
@@ -135,6 +159,10 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
         }
     }
     
+    public void finalizeDeconstruction() {
+        this.unForceLoadChunks();
+    }
+    
     public Color4i getDefaultBlockColor() {
         
         return Color4i.WHITE;
@@ -171,19 +199,53 @@ public abstract class MultiBlockBase implements IMultiBlock, IAbstractUpdateable
         }
     }
     
-    public void onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         
         if (!isValid) {
             
             if (constructionManager != null) {
                 
                 constructionManager.deconstructBlock(new Vector3i(x, y, z));
+                return false;
             }
         }
+        return true;
     }
     
     public void sendPacket() {
         
+    }
+    
+    public void forceLoadChunks() {
+        
+        if (ticket != null) {
+            
+            Iterator<Vector2i> iter = constructionManager.getComprisedChunks().iterator();
+            
+            while (iter.hasNext()) {
+                
+                Vector2i vector = iter.next();
+                ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(vector.getX(), vector.getY()));
+            }
+        }
+    }
+    
+    public void unForceLoadChunks() {
+        
+        if (ticket != null) {
+            
+            Iterator<Vector2i> iter = constructionManager.getComprisedChunks().iterator();
+            
+            while (iter.hasNext()) {
+                
+                Vector2i vector = iter.next();
+                ForgeChunkManager.unforceChunk(ticket, new ChunkCoordIntPair(vector.getX(), vector.getY()));
+            }
+        }
+    }
+    
+    public void onChunkUnload() {
+        this.unForceLoadChunks();
     }
     
     public NBTTagCompound save(NBTTagCompound tag) {

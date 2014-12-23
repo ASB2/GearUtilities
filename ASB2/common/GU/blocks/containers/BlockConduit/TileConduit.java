@@ -3,7 +3,6 @@ package GU.blocks.containers.BlockConduit;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.block.BlockAir;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -11,7 +10,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilFluid;
 import ASB2.utils.UtilInventory;
 import GU.api.EnumSimulationType;
@@ -31,7 +33,35 @@ public class TileConduit extends TileBase {
     
     public TileConduit() {
         
-        waitTimer = new Wait(new MoveWait(), 10);
+        waitTimer = new Wait(new MoveWait(), 10) {
+            
+            @Override
+            public void update() {
+                
+                if (thingToTrigger != null) {
+                    
+                    if (thingToTrigger.shouldTick(id)) {
+                        
+                        if (conduitType == EnumConduitType.FLUID) {
+                            
+                            timeKeeper += getRemainingTime();
+                        } else {
+                            
+                            timeKeeper++;
+                        }
+                    }
+                }
+                
+                if (timeKeeper >= timeToWait) {
+                    
+                    if (thingToTrigger != null) {
+                        
+                        thingToTrigger.trigger(id);
+                        timeKeeper = 0;
+                    }
+                }
+            }
+        };
         conduitType = EnumConduitType.NONE;
     }
     
@@ -172,7 +202,7 @@ public class TileConduit extends TileBase {
                         }
                     }
                     
-                    if (worldObj.getBlock(x, y, z) instanceof BlockAir) {
+                    if (UtilBlock.isBlockAir(worldObj, x, y, z)) {
                         
                         continue;
                     } else {
@@ -195,16 +225,16 @@ public class TileConduit extends TileBase {
                             
                             if (endTile instanceof ISidedInventory) {
                                 
-                                UtilInventory.moveItems((ISidedInventory) beginTile, 1, 1, (ISidedInventory) endTile);
+                                UtilInventory.moveItems((ISidedInventory) beginTile, direction1, 1, 1, (ISidedInventory) endTile, direction2);
                             } else {
                                 
-                                UtilInventory.moveItems((ISidedInventory) beginTile, 1, 1, (IInventory) endTile);
+                                UtilInventory.moveItems((ISidedInventory) beginTile, direction1, 1, 1, (IInventory) endTile);
                             }
                         } else {
                             
                             if (endTile instanceof ISidedInventory) {
                                 
-                                UtilInventory.moveItems((IInventory) beginTile, 1, 1, (ISidedInventory) endTile);
+                                UtilInventory.moveItems((IInventory) beginTile, 1, 1, (ISidedInventory) endTile, direction2);
                             } else {
                                 
                                 UtilInventory.moveItems((IInventory) beginTile, 1, 1, (IInventory) endTile);
@@ -215,7 +245,61 @@ public class TileConduit extends TileBase {
                     
                     case FLUID: {
                         
-                        UtilFluid.moveFluid((IFluidHandler) beginTile, direction1, (IFluidHandler) endTile, direction2, 1000, true);
+                        for (int index = 0; index < 17; index++) {
+                            
+                            // TODO Rewrite the fluid transfer method to move
+                            // what
+                            // the tank tells it to
+                            int amount = 10;
+                            IFluidHandler source = (IFluidHandler) beginTile;
+                            ForgeDirection from = direction1;
+                            IFluidHandler destination = (IFluidHandler) endTile;
+                            ForgeDirection to = direction2;
+                            FluidStack fluidToMove = null;
+                            
+                            if (source != null) {
+                                
+                                if (source.getTankInfo(from) != null) {
+                                    
+                                    for (FluidTankInfo info : source.getTankInfo(from)) {
+                                        
+                                        if (info != null) {
+                                            
+                                            if (info.fluid != null) {
+                                                
+                                                if (source.canDrain(from, info.fluid.getFluid())) {
+                                                    
+                                                    FluidStack temp = info.fluid.copy();
+                                                    temp.amount = amount;
+                                                    fluidToMove = source.drain(from, temp, false);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            if (fluidToMove != null) {
+                                
+                                fluidToMove = fluidToMove.copy();
+                                
+                                if (destination.canFill(from, fluidToMove.getFluid())) {
+                                    
+                                    amount = destination.fill(from, fluidToMove, false);
+                                    
+                                    if (fluidToMove.amount > 0) {
+                                        
+                                        UtilFluid.addFluidToTank(destination, from, fluidToMove, true);
+                                        UtilFluid.removeFluidFromHandler(source, to, fluidToMove, true);
+                                    }
+                                }
+                            }
+                            
+                            // UtilFluid.moveFluid((IFluidHandler) beginTile,
+                            // direction1, (IFluidHandler) endTile, direction2,
+                            // 1000, true);
+                        }
                         break;
                     }
                     

@@ -228,49 +228,28 @@ public class TileItemMultiInterface extends TileMultiBase implements IMultiBlock
         recalculate();
     }
     
-    @SuppressWarnings("unused")
     public void recalculate() {
         
-        if (false) {
+        int minSlot = 0;
+        maxSizeInventory = 0;
+        inventorise.clear();
+        
+        for (IMultiBlock multi : this.getMultiBlocks()) {
             
-            int lastSlotMin = 0;
-            
-            for (IMultiBlock multi : this.getMultiBlocks()) {
+            if (multi instanceof IInventoryMultiBlock) {
                 
-                if (multi instanceof IInventoryMultiBlock) {
+                IInventory inventory = ((IInventoryMultiBlock) multi).getInventory(position);
+                
+                if (inventory != null) {
                     
-                    int size = ((IInventoryMultiBlock) multi).getInventory(position).getSizeInventory();
+                    int size = inventory.getSizeInventory();
                     
                     if (size > 0) {
                         
-                        this.inventorise.put(new SlotHolder(lastSlotMin, ((IInventoryMultiBlock) multi).getInventory(position).getSizeInventory() + lastSlotMin), (IInventoryMultiBlock) multi);
-                        lastSlotMin += ((IInventoryMultiBlock) multi).getInventory(position).getSizeInventory() + 1;
-                    }
-                }
-            }
-            maxSizeInventory = lastSlotMin;
-        } else {
-            
-            int minSlot = 0;
-            maxSizeInventory = 0;
-            
-            for (IMultiBlock multi : this.getMultiBlocks()) {
-                
-                if (multi instanceof IInventoryMultiBlock) {
-                    
-                    IInventory inventory = ((IInventoryMultiBlock) multi).getInventory(position);
-                    
-                    if (inventory != null) {
-                        
-                        int size = inventory.getSizeInventory();
-                        
-                        if (size > 0) {
-                            
-                            SlotHolder holder = new SlotHolder(minSlot, minSlot + size);
-                            this.inventorise.put(holder, (IInventoryMultiBlock) multi);
-                            minSlot += size + 1;
-                            maxSizeInventory += size;
-                        }
+                        SlotHolder holder = new SlotHolder(minSlot, minSlot + size);
+                        this.inventorise.put(holder, (IInventoryMultiBlock) multi);
+                        minSlot += size + 1;
+                        maxSizeInventory += size;
                     }
                 }
             }

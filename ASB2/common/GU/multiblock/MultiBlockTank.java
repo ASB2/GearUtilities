@@ -114,12 +114,18 @@ public class MultiBlockTank extends MultiBlockFluidHandler implements IGuiMultiB
     }
     
     @Override
-    public void onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         
-        if (!world.isRemote) {
-            FluidStack current = fluidTank.getFluidTank().getFluid();
-            UtilEntity.sendChatToPlayer(player, "Tank: " + (current == null ? "0" : current.amount) + " / " + fluidTank.getFluidTank().getCapacity());
+        if (super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ)) {
+            
+            if (!world.isRemote) {
+                
+                FluidStack current = fluidTank.getFluidTank().getFluid();
+                UtilEntity.sendChatToPlayer(player, "Tank: " + (current == null ? "0" : current.amount) + " / " + fluidTank.getFluidTank().getCapacity());
+            }            
+            return true;
         }
+        return false;
     }
     
     @Override

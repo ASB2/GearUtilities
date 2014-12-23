@@ -87,8 +87,14 @@ public class NoiseManager {
                 
                 for (int y = 0; y < Variables.NOISE_TEXTURE_SIZE; y++) {
                     
-                    double voroni = (noiseGen.getValue(x * currentDensity, y * currentDensity, currentDensity) * 255);
-                    
+                    double voroni = 0;
+                    if (Variables.STRANGE_NOISE) {
+                        
+                        voroni = (noiseGen.getValue(Math.pow(x, 2 + (maxDensity - currentDensity)) * currentDensity, y * currentDensity, currentDensity) * 255);
+                    } else {
+                        
+                        voroni = (noiseGen.getValue(x * currentDensity, y * currentDensity, currentDensity) * 255);
+                    }
                     // int perlin = FastNoise.noise(x * currentDensity, y *
                     // currentDensity, 7);
                     //

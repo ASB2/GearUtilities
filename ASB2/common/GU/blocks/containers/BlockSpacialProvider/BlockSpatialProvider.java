@@ -15,7 +15,6 @@ import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;
 import GU.blocks.containers.BlockMultiMetadataContainerBase;
 import GU.blocks.containers.TileMultiBase;
 import GU.multiblock.EnumMultiBlockType;
-import GU.multiblock.MultiBlockBase;
 import GU.render.BlockSimpleRenderer.INoiseBlockRender;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
@@ -51,15 +50,17 @@ public class BlockSpatialProvider extends BlockMultiMetadataContainerBase implem
                     return true;
                 }
             } else {
-                for (int index = 0; index < multiList.size(); index++) {
-                    
-                    IMultiBlock multi = multiList.get(index);
-                    
-                    if (multi instanceof MultiBlockBase) {
-                        
-                        ((MultiBlockBase) multi).onBlockActivated(world, x, y, z, player, side, xHit, yHit, zHit);
-                    }
-                }
+                
+                // for (int index = 0; index < multiList.size(); index++) {
+                //
+                // IMultiBlock multi = multiList.get(index);
+                //
+                // if (multi instanceof MultiBlockBase) {
+                //
+                // ((MultiBlockBase) multi).onBlockActivated(world, x, y, z,
+                // player, side, xHit, yHit, zHit);
+                // }
+                // }
             }
         }
         return false;

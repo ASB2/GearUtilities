@@ -1,11 +1,14 @@
 package GU.multiblock.construction;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilVector;
@@ -16,6 +19,7 @@ import GU.api.multiblock.MultiBlockAbstract.IItemInterface;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockPart;
 import GU.multiblock.MultiBlockBase;
 import UC.color.Color4i;
+import UC.math.vector.Vector2i;
 import UC.math.vector.Vector3i;
 
 public abstract class ConstructionManager {
@@ -26,7 +30,7 @@ public abstract class ConstructionManager {
     
     protected Map<Vector3i, IItemInterface> itemInterfaceList = new HashMap<Vector3i, IItemInterface>();
     protected Map<Vector3i, IFluidInterface> fluidInterfaceList = new HashMap<Vector3i, IFluidInterface>();
-    
+    protected Set<Vector2i> chunks = new HashSet<Vector2i>();
     protected MultiBlockBase multiBlockStructure;
     
     public ConstructionManager(World world, MultiBlockBase multiBlock) {
@@ -109,6 +113,10 @@ public abstract class ConstructionManager {
     public abstract boolean checkStructure();
     
     public boolean addMultiBlockToBlock(Vector3i position, EnumMultiBlockPartPosition part) {
+        
+        Chunk chunk = world.getChunkFromBlockCoords(position.getX(), position.getZ());
+        
+        chunks.add(new Vector2i(chunk.xPosition, chunk.zPosition));
         
         TileEntity tile = UtilVector.getTileAtPostion(world, position);
         
@@ -245,5 +253,9 @@ public abstract class ConstructionManager {
     
     public Map<Vector3i, IFluidInterface> getFluidInterfaceList() {
         return fluidInterfaceList;
+    }
+    
+    public Set<Vector2i> getComprisedChunks() {
+        return chunks;
     }
 }

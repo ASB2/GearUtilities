@@ -1,4 +1,4 @@
-package GU.blocks.containers.BlockDrill;
+package GU.blocks.containers.BlockElectisDrill;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -11,18 +11,18 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockDrill extends BlockContainerBase {
+public class BlockElectisDrill extends BlockContainerBase {
     
-    public BlockDrill(Material material) {
+    public BlockElectisDrill(Material material) {
         super(material);
-        this.registerTile(TileDrill.class);
+        this.registerTile(TileElectisDrill.class);
     }
     
     @Override
     @SideOnly(Side.CLIENT)
     public void postInitRender() {
         
-        ClientRegistry.bindTileEntitySpecialRenderer(TileDrill.class, DrillRenderer.instance);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileElectisDrill.class, DrillRenderer.instance);
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(this), DrillRenderer.instance);
     }
     
@@ -41,12 +41,12 @@ public class BlockDrill extends BlockContainerBase {
     @Override
     public String getBlockDisplayName(ItemStack stack) {
         
-        return "Drill";
+        return "Electis Drill";
     }
     
     @Override
     public TileEntity createNewTileEntity(World var1, int var2) {
         
-        return new TileDrill();
+        return new TileElectisDrill();
     }
 }

@@ -17,7 +17,7 @@ import GU.blocks.BlockStructureCube;
 import GU.blocks.containers.BlockConduit.BlockConduit;
 import GU.blocks.containers.BlockCreativeMetadata.BlockCreativeMetadata;
 import GU.blocks.containers.BlockCreativeMetadata.CreativeMetadataWrapper;
-import GU.blocks.containers.BlockDrill.BlockDrill;
+import GU.blocks.containers.BlockElectisDrill.BlockElectisDrill;
 import GU.blocks.containers.BlockElectisEnergyCube.BlockElectisEnergyCube;
 import GU.blocks.containers.BlockElectisPolyhedron.BlockElectisPolyhedron;
 import GU.blocks.containers.BlockFluidElectisPolyhedron.BlockFluidElectisPolyhedron;
@@ -30,6 +30,7 @@ import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPart;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartAir;
 import GU.blocks.containers.BlockMultiPart.BlockMultiBlockPartGlass;
 import GU.blocks.containers.BlockMultiPart.BlockMultiPartRender;
+import GU.blocks.containers.BlockMultiPart.TileMultiPart;
 import GU.blocks.containers.BlockPhotonicConverter.BlockPhotonicConverter;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpatialProvider;
 import GU.blocks.containers.BlockTeleportAltar.BlockTeleportAltar;
@@ -84,6 +85,7 @@ public class BlockRegistry {
         
         public void postInit() {
             
+            this.registerTile(TileMultiPart.class);
             this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockMultiBlockInner" }).setDisplayName("Multi Block Inner"));
             this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockMultiBlockEdge" }).setDisplayName("Multi Block Edge"));
             this.addWrapper(new BlockMetadataWrapper(new String[] { "BlockMultiBlockCorner" }).setDisplayName("Multi Block Corner"));
@@ -116,7 +118,7 @@ public class BlockRegistry {
     
     public static final BlockTeleportAltar TELEPORT_ALTAR = new BlockTeleportAltar(Material.rock);
     
-    public static final BlockDrill DRILL = new BlockDrill(Material.rock);
+    public static final BlockElectisDrill ELECTIS_DRILL = new BlockElectisDrill(Material.rock);
     
     public static final BlockElectisEnergyCube ELECTIS_ENERGY_CUBE = new BlockElectisEnergyCube(Material.rock);
     
@@ -148,7 +150,7 @@ public class BlockRegistry {
         customBlockMap.put(Reference.MOD_ID.concat(":BlockConduit"), CONDUIT.setBlockName("Conduit"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockMultiDirectionalConduit"), MULTI_DIRECTIONAL_CONDUIT.setBlockName("Multi Directional Conduit"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockTeleportAltar"), TELEPORT_ALTAR.setBlockName("Teleport Altar"));
-        customBlockMap.put(Reference.MOD_ID.concat(":BlockDrill"), DRILL.setBlockName("Drill"));
+        customBlockMap.put(Reference.MOD_ID.concat(":BlockElectisDrill"), ELECTIS_DRILL.setBlockName("Electis Drill"));
         customBlockMap.put(Reference.MOD_ID.concat(":BlockElectisEnergyCube"), ELECTIS_ENERGY_CUBE.setBlockName("Electis Energy Cube"));
     }
     

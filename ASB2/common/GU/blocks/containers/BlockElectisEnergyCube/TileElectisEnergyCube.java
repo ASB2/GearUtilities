@@ -61,7 +61,7 @@ public class TileElectisEnergyCube extends TileBase implements ITilePowerHandler
                             if (sideState[direction.ordinal()] == EnumSideState.OUTPUT) {
                                 
                                 UtilPower.movePower(manager, otherManager, toMove, EnumSimulationType.LIGITIMATE);
-                            } else if (sideState[direction.ordinal()] == EnumSideState.INPUT){
+                            } else if (sideState[direction.ordinal()] == EnumSideState.INPUT) {
                                 
                                 UtilPower.movePower(otherManager, manager, toMove, EnumSimulationType.LIGITIMATE);
                             }
@@ -78,18 +78,19 @@ public class TileElectisEnergyCube extends TileBase implements ITilePowerHandler
     @Override
     public boolean triggerBlock(World world, EntityPlayer player, int x, int y, int z, ForgeDirection axis) {
         
-        if (!player.isSneaking()) {
+        if (player.getCurrentEquippedItem() != null) {
             
-            sideState[axis.ordinal()] = sideState[axis.ordinal()].increment();
+            ForgeDirection direction = player.isSneaking() ? axis.getOpposite() : axis;
             
-            if (sideState[axis.ordinal()] == EnumSideState.BOTH) {
+            sideState[direction.ordinal()] = sideState[direction.ordinal()].increment();
+            
+            if (sideState[direction.ordinal()] == EnumSideState.BOTH) {
                 
-                sideState[axis.ordinal()] = sideState[axis.ordinal()].increment();
+                sideState[direction.ordinal()] = sideState[direction.ordinal()].increment();
             }
             if (!world.isRemote)
-                UtilEntity.sendChatToPlayer(player, "Side State: " + sideState[axis.ordinal()]);
+                UtilEntity.sendChatToPlayer(player, "Side State: " + sideState[direction.ordinal()]);
             
-            world.markBlockForUpdate(x, y, z);
         } else {
             
             if (!world.isRemote)
