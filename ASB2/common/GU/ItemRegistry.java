@@ -19,6 +19,7 @@ import GU.items.ItemMetadata;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
 import GU.items.ItemRenderers.GarnetRenderer;
 import GU.items.ItemRenderers.PlaceHolderRenderer;
+import GU.items.TwoWayHandheldTeleporter;
 import GU.items.UtilityTabletWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -44,6 +45,9 @@ public final class ItemRegistry {
         METADATA_ITEM.addWrapper(new AdvancedStickWrapper("Advanced Stick"));
         METADATA_ITEM.addWrapper(new DestructorWrapper("Destructor"));
         METADATA_ITEM.addWrapper(new UtilityTabletWrapper("Utility Tablet"));
+        METADATA_ITEM.addWrapper(new TwoWayHandheldTeleporter("Two Way Handheld Teleporter"));
+        
+        
         // METADATA_ITEM.addWrapper(new
         // ColorModifierWrapper("Color Modifier").setRenderer(ColorModifierRenderer.instance));
     }

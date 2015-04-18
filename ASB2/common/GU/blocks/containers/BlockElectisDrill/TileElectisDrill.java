@@ -23,6 +23,7 @@ import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
+import GU.api.power.PowerNetVariables;
 import GU.blocks.containers.TileBase;
 import GU.blocks.containers.BlockElectisPolyhedron.TileElectisPolyhedron;
 import UC.Wait;
@@ -49,7 +50,7 @@ public class TileElectisDrill extends TileBase implements ITilePowerHandler {
         corner = new Vector3i();
         lastBrokenBlocks = new ArrayList<Vector3i>();
         blackListInventory = new Inventory(-1, "Blacklist");
-        powerManager = new DefaultPowerManager(4000).setPowerStatus(EnumPowerStatus.SINK);
+        powerManager = new DefaultPowerManager((int)PowerNetVariables.ONE_GARNET_ENERGY_VALUE*4).setPowerStatus(EnumPowerStatus.SINK);
     }
     
     @Override

@@ -81,7 +81,7 @@ public class DrillRenderer extends TileEntitySpecialRenderer implements IItemRen
             if (dark)
                 GL11.glColor3d(.2, .2, .2);
             
-            GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
+            GL11.glRotated(Minecraft.getSystemTime() / 17.0, 0, 1, 0);
             GL11.glTranslated(0, -.3, 0);
             
             {
@@ -214,7 +214,7 @@ public class DrillRenderer extends TileEntitySpecialRenderer implements IItemRen
             final float secondCrystalScale = .25f, distanceFromCenter = .3f;
             
             GL11.glPushMatrix();
-            GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
+            GL11.glRotated(Minecraft.getSystemTime() / 17.0, 0, 1, 0);
             GL11.glTranslated(0, -.3, 0);
             
             {

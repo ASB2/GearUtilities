@@ -20,6 +20,7 @@ import GU.api.EnumSimulationType;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.api.power.PowerNetObject;
+import GU.api.power.PowerNetVariables;
 import GU.blocks.containers.TileBase;
 import GU.blocks.containers.BlockMultiDirectionalConduit.TileMultiDirectionalConduit;
 import UC.Wait;
@@ -248,8 +249,7 @@ public class TileConduit extends TileBase {
                         for (int index = 0; index < 17; index++) {
                             
                             // TODO Rewrite the fluid transfer method to move
-                            // what
-                            // the tank tells it to
+                            // what the tank tells it to
                             int amount = 10;
                             IFluidHandler source = (IFluidHandler) beginTile;
                             ForgeDirection from = direction1;
@@ -315,7 +315,8 @@ public class TileConduit extends TileBase {
                             
                             if (manager1 != null && manager2 != null) {
                                 
-                                PowerNetObject.UtilPower.movePower(manager1, manager2, 10, EnumSimulationType.LIGITIMATE);
+                                for (int index = 0; index < PowerNetVariables.ONE_GARNET_ENERGY_VALUE; index++)
+                                    PowerNetObject.UtilPower.movePower(manager1, manager2, 1, EnumSimulationType.LIGITIMATE);
                             }
                         }
                         break;

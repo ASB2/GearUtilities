@@ -3,6 +3,7 @@ package GU.blocks.containers.BlockCreativeMetadata;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import GU.api.EnumSimulationType;
+import GU.api.power.PowerNetVariables;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerManager;
@@ -63,14 +64,14 @@ public class TileCreativePower extends TileBase implements ITilePowerHandler {
                     
                     if (manager != null) {
                         
-                        final int powerToMove = 5;
-                        
                         if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
                             
-                            UtilPower.addPower(manager, powerToMove, EnumSimulationType.LIGITIMATE);
+                            for (int index = 0; index < PowerNetVariables.ONE_GARNET_ENERGY_VALUE; index++)
+                                UtilPower.addPower(manager, 1, EnumSimulationType.LIGITIMATE);
                         } else {
                             
-                            UtilPower.removePower(manager, powerToMove, EnumSimulationType.LIGITIMATE);
+                            for (int index = 0; index < PowerNetVariables.ONE_GARNET_ENERGY_VALUE; index++)
+                                UtilPower.removePower(manager, 1, EnumSimulationType.LIGITIMATE);
                         }
                     }
                 }

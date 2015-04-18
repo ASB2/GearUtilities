@@ -193,7 +193,7 @@ public class TileMultiDirectionalConduit extends TileBase {
                 continue;
             }
             
-if (sideFilter[direction.ordinal()] != null) {
+            if (sideFilter[direction.ordinal()] != null) {
                 
                 EnumConduitType fType = sideFilter[direction.ordinal()];
                 

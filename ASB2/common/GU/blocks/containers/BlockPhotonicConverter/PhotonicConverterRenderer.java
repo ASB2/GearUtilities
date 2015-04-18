@@ -96,7 +96,7 @@ public class PhotonicConverterRenderer extends TileEntitySpecialRenderer impleme
         GL11.glPopMatrix();
         
         ((TilePhotonicConverter) tileentity).fuelType.bindTexturePanel();
-        GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
+        GL11.glRotated(Minecraft.getSystemTime() / 17.0, 0, 1, 0);
         Color4i colorOuter = ((TilePhotonicConverter) tileentity).fuelType.getPanelColor();
         GL11.glColor4d(colorOuter.getRed() / 255.0, colorOuter.getGreen() / 255.0, colorOuter.getBlue() / 255.0, colorOuter.getAlpha() / 255.0);
         
@@ -172,7 +172,7 @@ public class PhotonicConverterRenderer extends TileEntitySpecialRenderer impleme
         FuelType.NONE.bindTextureCenter();
         Models.ModelGyro.renderPart("Center");
         
-        GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
+        GL11.glRotated(Minecraft.getSystemTime() / 17.0, 0, 1, 0);
         
         FuelType.NONE.bindTexturePanel();
         for (int i = 0; i < 4; i++) {

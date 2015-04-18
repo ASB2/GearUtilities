@@ -39,7 +39,7 @@ public class TeleportAltarRenderer extends TileEntitySpecialRenderer implements 
             if (((TileTeleportAltar) tileentity).coordsSet)
                 GL11.glColor3d(.2, .2, .2);
             
-            GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
+            GL11.glRotated(Minecraft.getSystemTime() / 17.0, 0, 1, 0);
             GL11.glTranslated(0, .1, 0);
             
             {
@@ -175,7 +175,7 @@ public class TeleportAltarRenderer extends TileEntitySpecialRenderer implements 
             final float secondCrystalScale = .25f, distanceFromCenter = .4f;
             
             GL11.glPushMatrix();
-            GL11.glRotated(Minecraft.getSystemTime() / 17, 0, 1, 0);
+            GL11.glRotated(Minecraft.getSystemTime() / 17.0, 0, 1, 0);
             GL11.glTranslated(0, .1, 0);
             
             {

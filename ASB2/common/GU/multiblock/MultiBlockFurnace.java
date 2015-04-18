@@ -24,20 +24,42 @@ import GU.api.multiblock.MultiBlockObject.FluidHandlerWrapper;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
+import GU.api.power.PowerNetVariables;
 import GU.multiblock.construction.ConstructionManager;
 import GU.multiblock.construction.FurnaceConstructionManager;
+import UC.Wait;
+import UC.Wait.IWaitTrigger;
 import UC.color.Color4i;
 import UC.math.vector.Vector3i;
 
 public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBlock, IInventoryMultiBlock, IRedstoneMultiBlock, IGuiMultiBlock, IPowerMultiBlock {
     
     FluidHandlerWrapper fuelTank = new FluidHandlerWrapper(0);
-    Inventory fuelInventory = new Inventory("MultiBlockFurnace: Fuel"), toBeSmelted = new Inventory("MultiBlockFurnace: Smelting"), outputInventory = new Inventory("MultiBlockFurnace: Output");
+    Inventory fuelInventory = new Inventory("MultiBlockFurnace: Fuel") {
+        
+        public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+            
+            return TileEntityFurnace.getItemBurnTime(itemstack) > 0;
+        };
+    }, toBeSmelted = new Inventory("MultiBlockFurnace: Smelting") {
+        
+        public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+            
+            return FurnaceRecipes.smelting().getSmeltingResult(itemstack) != null;
+        };
+    }, outputInventory = new Inventory("MultiBlockFurnace: Output");
+    
     DefaultPowerManager manager = new DefaultPowerManager().setPowerStatus(EnumPowerStatus.SINK);
     
-    int cookTimer = 0;
-    int currentFuelTime = 0;
     int maxHeat, currentHeat;
+    
+    Wait trigger = new Wait(new CookWait());
+    
+    // Conversion from fuel to power
+    public static final double FUEL_POWER_EFFICENCY = .5;
+    
+    // Conversion from power to burntime
+    public static final double POWER_BURN_EFFICENCY = .9;
     
     public MultiBlockFurnace(World world, Vector3i positionRelativeTo, Vector3i size, Vector3i updater) {
         super(world, positionRelativeTo, size, updater);
@@ -81,80 +103,13 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
         
         maxHeat = (size.getY() - 1) * 64;
         manager.setPowerMax(1000 * (size.getX() - 1) * (((int) (size.getY() / 3)) - 1) * (size.getZ() - 1));
+        trigger.setWaitTime((int) (5000.0 / Math.pow((size.getX() + 1) * (size.getY() + 1) * (size.getZ() + 1), 1.1)));
     }
     
     @Override
     public void logicUpdate() {
         
-        if (currentHeat < maxHeat) {
-            
-            if (manager.getStoredPower() >= 10) {
-                
-                if (manager.decreasePower(10, EnumSimulationType.FORCED_LIGITIMATE)) {
-                    
-                    currentHeat += 1;
-                }
-            } else if (currentFuelTime <= 0) {
-                
-                currentHeat = Math.max(0, currentHeat - 1);
-                
-                for (int index = 0; index < this.fuelInventory.getSizeInventory(); index++) {
-                    
-                    ItemStack stack = fuelInventory.getStackInSlot(index);
-                    
-                    if (stack != null) {
-                        
-                        int itemFuelValue = TileEntityFurnace.getItemBurnTime(stack);
-                        
-                        if (itemFuelValue > 0) {
-                            
-                            if (UtilInventory.removeItemStackFromSlot(fuelInventory, stack, index, 1, true)) {
-                                
-                                currentFuelTime = itemFuelValue;
-                                break;
-                            }
-                        }
-                    }
-                }
-            } else {
-                
-                currentFuelTime--;
-                currentHeat++;
-            }
-        }
-        
-        if (currentHeat > 0) {
-            
-            cookTimer++;
-            
-            if (cookTimer >= 10 * ((currentHeat / (double) maxHeat) + 1)) {
-                
-                cookTimer = 0;
-                
-                for (int index = 0; index < this.toBeSmelted.getSizeInventory(); index++) {
-                    
-                    ItemStack stack = toBeSmelted.getStackInSlot(index);
-                    
-                    if (stack != null) {
-                        
-                        ItemStack result = FurnaceRecipes.smelting().getSmeltingResult(stack);
-                        
-                        if (result != null) {
-                            
-                            if (UtilInventory.removeItemStackFromSlot(toBeSmelted, stack, index, 1, false) && UtilInventory.addItemStackToInventory(outputInventory, result, false)) {
-                                
-                                UtilInventory.addItemStackToInventory(outputInventory, result, true);
-                                UtilInventory.removeItemStackFromSlot(toBeSmelted, stack, index, 1, true);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            
-            cookTimer = 0;
-        }
+        trigger.update();
     }
     
     public boolean startCreation() {
@@ -254,9 +209,14 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
             if (!world.isRemote) {
                 
                 UtilEntity.sendChatToPlayer(player, "-------");
-                UtilEntity.sendChatToPlayer(player, "Furnace: Current Heat, " + currentHeat);
-                UtilEntity.sendChatToPlayer(player, "Furnace: Max Heat, " + maxHeat);
-                UtilEntity.sendChatToPlayer(player, "Furnace: Heat Precent, " + Math.round((currentHeat / (double) maxHeat) * 10) / 10.0);
+                // UtilEntity.sendChatToPlayer(player, "Furnace: Current Heat: "
+                // + currentHeat);
+                // UtilEntity.sendChatToPlayer(player, "Furnace: Max Heat: " +
+                // maxHeat);
+                // UtilEntity.sendChatToPlayer(player, "Furnace: Heat Precent: "
+                // + (Math.round((currentHeat / (double) maxHeat) * 10) / 10.0)
+                // * 100);
+                UtilEntity.sendChatToPlayer(player, "Furnace: Wait Time: " + trigger.getTime());
                 UtilEntity.sendChatToPlayer(player, "-------");
             }
         }
@@ -277,10 +237,8 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
         
         manager.save(tag);
         
-        tag.setInteger("cookTimer", cookTimer);
         tag.setInteger("maxHeat", maxHeat);
         tag.setInteger("currentHeat", currentHeat);
-        tag.setInteger("fuelInputTimer", currentFuelTime);
         return super.save(tag);
     }
     
@@ -298,11 +256,67 @@ public class MultiBlockFurnace extends MultiBlockBase implements IFluidMultiBloc
         
         manager.load(tag);
         
-        cookTimer = tag.getInteger("cookTimer");
         maxHeat = tag.getInteger("maxHeat");
         currentHeat = tag.getInteger("currentHeat");
-        currentFuelTime = tag.getInteger("fuelInputTimer");
         
         super.load(tag);
+    }
+    
+    private class CookWait implements IWaitTrigger {
+        
+        @Override
+        public void trigger(int id) {
+            
+            for (int index = 0; index < fuelInventory.getSizeInventory(); index++) {
+                
+                ItemStack stack = fuelInventory.getStackInSlot(index);
+                
+                if (stack != null) {
+                    
+                    int itemFuelValue = TileEntityFurnace.getItemBurnTime(stack);
+                    
+                    if (itemFuelValue > 0) {
+                        
+                        int scaledFuelValue = (int) (itemFuelValue * PowerNetVariables.ONE_TICK_ENERGY_VALUE * MultiBlockFurnace.FUEL_POWER_EFFICENCY);
+                        
+                        if (UtilInventory.removeItemStackFromSlot(fuelInventory, stack, index, 1, false) && manager.increasePower(scaledFuelValue, EnumSimulationType.FORCED_SIMULATE)) {
+                            
+                            manager.increasePower(scaledFuelValue, EnumSimulationType.FORCED_LIGITIMATE);
+                            UtilInventory.removeItemStackFromSlot(fuelInventory, stack, index, 1, true);
+                        }
+                    }
+                }
+            }
+            
+            for (int index = 0; index < toBeSmelted.getSizeInventory(); index++) {
+                
+                if (manager.getStoredPower() >= (int) (PowerNetVariables.ONE_ITEM_BURN_ENERGY_VALUE * MultiBlockFurnace.POWER_BURN_EFFICENCY)) {
+                    
+                    ItemStack stack = toBeSmelted.getStackInSlot(index);
+                    
+                    if (stack != null) {
+                        
+                        ItemStack result = FurnaceRecipes.smelting().getSmeltingResult(stack);
+                        
+                        if (result != null) {
+                            
+                            if (UtilInventory.removeItemStackFromSlot(toBeSmelted, stack, index, 1, false) && UtilInventory.addItemStackToInventory(outputInventory, result, false) && manager.decreasePower((int) (PowerNetVariables.ONE_ITEM_BURN_ENERGY_VALUE * MultiBlockFurnace.POWER_BURN_EFFICENCY), EnumSimulationType.FORCED_SIMULATE)) {
+                                
+                                UtilInventory.addItemStackToInventory(outputInventory, result, true);
+                                UtilInventory.removeItemStackFromSlot(toBeSmelted, stack, index, 1, true);
+                                manager.decreasePower((int) (PowerNetVariables.ONE_ITEM_BURN_ENERGY_VALUE * MultiBlockFurnace.POWER_BURN_EFFICENCY), EnumSimulationType.FORCED_LIGITIMATE);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        @Override
+        public boolean shouldTick(int id) {
+            
+            return true;
+        }
     }
 }

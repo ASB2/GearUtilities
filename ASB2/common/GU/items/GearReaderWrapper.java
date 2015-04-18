@@ -69,9 +69,9 @@ public class GearReaderWrapper extends ItemMetadataWrapper {
                     
                     IPowerManager manager = mTile.getPowerManager(direction);
                     
-                    UtilEntity.sendChatToPlayer(player, "---Tile Power Handler---");
-                    
                     if (manager != null) {
+                        
+                        UtilEntity.sendChatToPlayer(player, "---Tile Power Handler---");
                         
                         UtilEntity.sendChatToPlayer(player, "Power Stored: " + manager.getStoredPower());
                         UtilEntity.sendChatToPlayer(player, "Max Power: " + manager.getMaxPower());

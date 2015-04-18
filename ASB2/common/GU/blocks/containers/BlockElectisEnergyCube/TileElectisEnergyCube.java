@@ -9,11 +9,13 @@ import ASB2.utils.UtilDirection;
 import ASB2.utils.UtilEntity;
 import GU.api.EnumSideState;
 import GU.api.EnumSimulationType;
+import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.api.power.PowerNetObject.UtilPower;
+import GU.api.power.PowerNetVariables;
 import GU.blocks.containers.TileBase;
 
 public class TileElectisEnergyCube extends TileBase implements ITilePowerHandler {
@@ -24,54 +26,44 @@ public class TileElectisEnergyCube extends TileBase implements ITilePowerHandler
     public TileElectisEnergyCube() {
         
         sideState = new EnumSideState[] { EnumSideState.NONE, EnumSideState.NONE, EnumSideState.NONE, EnumSideState.NONE, EnumSideState.NONE, EnumSideState.NONE };
-        manager = new DefaultPowerManager(1000);
+        manager = new DefaultPowerManager((int) (PowerNetVariables.ONE_GARNET_ENERGY_VALUE * 4)).setPowerStatus(EnumPowerStatus.BOTH);
     }
-    
-    int wait = 0;
     
     @Override
     public void updateEntity() {
         
-        if (wait >= 5) {
+        if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
             
-            wait = 0;
-            
-            if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
                 
-                final int toMove = 5;
+                TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
                 
-                for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
+                if (tile != null) {
                     
-                    TileEntity tile = UtilDirection.translateDirectionToTile(this, worldObj, direction);
+                    IPowerManager otherManager = null;
                     
-                    if (tile != null) {
+                    if (tile instanceof ITilePowerHandler) {
                         
-                        IPowerManager otherManager = null;
+                        otherManager = ((ITilePowerHandler) tile).getPowerManager(direction.getOpposite());
+                    } else if (tile instanceof IBlockPowerHandler) {
                         
-                        if (tile instanceof ITilePowerHandler) {
-                            
-                            otherManager = ((ITilePowerHandler) tile).getPowerManager(direction.getOpposite());
-                        } else if (tile instanceof IBlockPowerHandler) {
-                            
-                            otherManager = ((IBlockPowerHandler) tile).getPowerManager(worldObj, xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ, direction.getOpposite());
-                        }
+                        otherManager = ((IBlockPowerHandler) tile).getPowerManager(worldObj, xCoord + direction.offsetX, yCoord + direction.offsetY, zCoord + direction.offsetZ, direction.getOpposite());
+                    }
+                    
+                    if (otherManager != null) {
                         
-                        if (otherManager != null) {
+                        if (sideState[direction.ordinal()] == EnumSideState.OUTPUT) {
                             
-                            if (sideState[direction.ordinal()] == EnumSideState.OUTPUT) {
-                                
-                                UtilPower.movePower(manager, otherManager, toMove, EnumSimulationType.LIGITIMATE);
-                            } else if (sideState[direction.ordinal()] == EnumSideState.INPUT) {
-                                
-                                UtilPower.movePower(otherManager, manager, toMove, EnumSimulationType.LIGITIMATE);
-                            }
+                            for (int index = 0; index < 20; index++)
+                                UtilPower.movePower(manager, otherManager, 1, EnumSimulationType.LIGITIMATE);
+                        } else if (sideState[direction.ordinal()] == EnumSideState.INPUT) {
+                            
+                            for (int index = 0; index < 20; index++)
+                                UtilPower.movePower(otherManager, manager, 1, EnumSimulationType.LIGITIMATE);
                         }
                     }
                 }
             }
-        } else {
-            
-            wait++;
         }
     }
     
