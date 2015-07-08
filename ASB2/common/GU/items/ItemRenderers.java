@@ -20,6 +20,7 @@ import GU.info.Reference;
 import GU.render.noise.NoiseManager;
 import GU.utils.UtilGU;
 import UC.VariableIterator;
+import UC.color.Color4i;
 
 public class ItemRenderers {
     
@@ -542,6 +543,12 @@ public class ItemRenderers {
     public static class ElectisCrystalShardRenderer implements IItemRenderer {
         
         public static final ElectisCrystalShardRenderer instance = new ElectisCrystalShardRenderer();
+        Color color = Color.WHITE;
+        
+        public ElectisCrystalShardRenderer() {
+            
+            color = color.darker().darker().darker();
+        }
         
         @Override
         public boolean handleRenderType(ItemStack item, ItemRenderType type) {
@@ -591,8 +598,6 @@ public class ItemRenderers {
         
         private void renderItemSwitched(ItemStack item, ItemRenderType type, float x, float y, float z, float scale) {
             
-            Color color = Color.WHITE;
-            
             NoiseManager.bindImage();
             
             GL11.glPushMatrix();
@@ -604,14 +609,12 @@ public class ItemRenderers {
             
             GL11.glPushMatrix();
             GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 0F, 1F);
-            GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
+            GL11.glColor3f(1, 1, 1);
             
             GL11.glScalef(.97f, .97f, .97f);
             
             Models.ModelElectisShard.renderPart("Center");
             GL11.glPopMatrix();
-            
-            color = color.darker().darker().darker();
             
             GL11.glPushMatrix();
             GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
@@ -886,7 +889,9 @@ public class ItemRenderers {
             
             Models.ModelAdvancedStick.renderPart("Shaft");
             
-            GL11.glColor4f(1, 1, 1, .8f);
+            GL11.glColor4f(1 - (float) (var.getCurrentAmount()), 1 - (float) (var.getCurrentAmount()), 1 - (float) (var.getCurrentAmount()), .8f - (float) (var.getCurrentAmount()));
+            
+            GL11.glTranslatef(0, (float) (var.getCurrentAmount()), 0);
             
             Models.ModelAdvancedStick.renderPart("Top_Cap");
             Models.ModelAdvancedStick.renderPart("Bottom_Cap");
@@ -1123,22 +1128,22 @@ public class ItemRenderers {
             GL11.glTranslatef(x, y, z);
             GL11.glScalef(scale, scale, scale);
             
-            GL11.glPushMatrix();            
+            GL11.glPushMatrix();
             GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 1F, 1, 1F);
-            GL11.glPushMatrix();            
+            GL11.glPushMatrix();
             GL11.glTranslatef(0, 0, -.5f);
             GL11.glScalef(.5f, .5f, .5f);
             GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
             NoiseManager.bindImage();
             Models.ModelFlameFocus.renderPart("Cube");
-            GL11.glPopMatrix();            
-            GL11.glPushMatrix();            
+            GL11.glPopMatrix();
+            GL11.glPushMatrix();
             GL11.glTranslatef(0, 0, .5f);
             GL11.glScalef(.5f, .5f, .5f);
             GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
             NoiseManager.bindImage();
             Models.ModelFlameFocus.renderPart("Cube");
-            GL11.glPopMatrix();            
+            GL11.glPopMatrix();
             GL11.glPopMatrix();
             
             if (!colorful) {
@@ -1170,6 +1175,116 @@ public class ItemRenderers {
             GL11.glPopMatrix();
             
             GL11.glEnable(GL11.GL_LIGHTING);
+            GL11.glPopMatrix();
+        }
+    }
+    
+    public static class GearReaderRenderer implements IItemRenderer {
+        
+        public static final GearReaderRenderer instance = new GearReaderRenderer();
+        VariableIterator var = new VariableIterator(.0003, 0, .25);
+        Color color = Color.WHITE;
+        
+        public GearReaderRenderer() {
+            
+            EventListener.instance.VARIABLES.add(var);
+            color = color.darker().darker().darker();
+        }
+        
+        @Override
+        public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+            
+            return true;
+        }
+        
+        @Override
+        public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+            
+            return true;
+        }
+        
+        @Override
+        public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+            
+            switch (type) {
+            
+                case ENTITY: {
+                    
+                    renderItemSwitched(item, type, 0f, 0.034f, 0f, .39F);
+                    return;
+                }
+                
+                case EQUIPPED: {
+                    
+                    renderItemSwitched(item, type, .5f, 1f, .5f, 1F);
+                    return;
+                }
+                
+                case INVENTORY: {
+                    
+                    renderItemSwitched(item, type, 0f, 0.1f, 0f, .5F);
+                    return;
+                }
+                
+                case EQUIPPED_FIRST_PERSON: {
+                    
+                    renderItemSwitched(item, type, -.5F, 1.2f, 0.5f, .5F);
+                    return;
+                }
+                
+                default:
+                    return;
+            }
+        }
+        
+        private void renderItemSwitched(ItemStack item, ItemRenderType type, float x, float y, float z, float scale) {
+            
+            GL11.glPushMatrix();
+            
+            GL11.glTranslatef(x, y, z);
+            
+            GL11.glScaled(scale, scale, scale);
+            
+            NoiseManager.bindImage();
+            
+            GL11.glDisable(GL11.GL_LIGHTING);
+            
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            
+            Models.ModelAdvancedStick.renderPart("Shaft");
+            
+            GL11.glPushMatrix();
+            GL11.glColor3f(Color4i.GOLD.getRed() / 255.0f, Color4i.GOLD.getGreen() / 255.0f, Color4i.GOLD.getBlue() / 255.0f);
+            GL11.glTranslatef(0, 1.35f, 0);
+            GL11.glRotated(90, 0, 1, 0);
+            GL11.glScaled(.25f, .25f, .25f);
+            Models.ModelCrystal4.renderPart("Outer");
+            GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 1F, 0F);
+            GL11.glScalef(.85f, .85f, .85f);
+            Models.ModelCrystal4.renderPart("Inner");
+            GL11.glPopMatrix();
+            
+            GL11.glPushMatrix();
+            GL11.glTranslatef(0, -1.5f, 0);
+            GL11.glRotated(90, 1, 0, 0);
+            GL11.glRotated(90, 0, 0, 1);
+            GL11.glScaled(.8f, .8f, .8f);
+            GL11.glColor3f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f);
+            Models.ModelElectisShard.renderPart("Outside");
+            GL11.glRotatef(Minecraft.getSystemTime() / Reference.ANIMATION_SPEED, 0F, 0F, 1F);
+            GL11.glColor3f(1, 1, 1);
+            GL11.glScalef(.97f, .97f, .97f);
+            Models.ModelElectisShard.renderPart("Center");
+            
+            GL11.glPopMatrix();
+            
+            // GL11.glColor4f(1 - (float) (var.getCurrentAmount()), (float)
+            // var.getCurrentAmount(), 1, .8f);
+            
+            GL11.glDisable(GL11.GL_BLEND);
+            GL11.glEnable(GL11.GL_LIGHTING);
+            
             GL11.glPopMatrix();
         }
     }

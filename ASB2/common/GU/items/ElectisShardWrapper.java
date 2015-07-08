@@ -77,27 +77,29 @@ public class ElectisShardWrapper extends GU.items.ItemMetadata.ItemMetadataWrapp
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
         
-        if (false) {
-            if (player.capabilities.isCreativeMode) {
-                
-                int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
-                
-                if (player.isSneaking()) {
-                    
-                    powerSaved--;
-                } else {
-                    
-                    powerSaved++;
-                }
-                UtilItemStack.setNBTTagInt(itemStack, "inputPower", Math.max(powerSaved, 0));
-                
-                if (!world.isRemote)
-                    UtilEntity.sendChatToPlayer(player, "Power To Move: " + Math.max(powerSaved, 0));
-            }
-        } else {
-            
-            NoiseManager.instance.generateNoiseImage();
-        }
+        // if (false) {
+        // if (player.capabilities.isCreativeMode) {
+        //
+        // int powerSaved = UtilItemStack.getNBTTagInt(itemStack, "inputPower");
+        //
+        // if (player.isSneaking()) {
+        //
+        // powerSaved--;
+        // } else {
+        //
+        // powerSaved++;
+        // }
+        // UtilItemStack.setNBTTagInt(itemStack, "inputPower",
+        // Math.max(powerSaved, 0));
+        //
+        // if (!world.isRemote)
+        // UtilEntity.sendChatToPlayer(player, "Power To Move: " +
+        // Math.max(powerSaved, 0));
+        // }
+        // } else {
+        
+        NoiseManager.instance.generateNoiseImage();
+        // }
         return super.onItemRightClick(itemStack, world, player);
     }
 }

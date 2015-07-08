@@ -22,10 +22,30 @@ public class GrinderRecipeManager {
         registeredRecipies.put(input, output);
     }
     
+    public void addRecipe(String input, int multiplyOutput, String... output) {
+        
+        String[] changed = new String[multiplyOutput * output.length];
+        
+        for (int index = 0; index < multiplyOutput; index++) {
+            
+            for (int position = 0; position < output.length; position++) {
+                
+                changed[(index * output.length) + position] = output[position];
+            }
+        }
+        registeredRecipies.put(input, changed);
+    }
+    
     public void addRecipeOreDustIngot(String input) {
         
         registeredRecipies.put("ore" + input, new String[] { "dust" + input, "dust" + input });
         registeredRecipies.put("ingot" + input, new String[] { "dust" + input });
+    }
+    
+    public void addRecipeOreDustGem(String input) {
+        
+        registeredRecipies.put("ore" + input, new String[] { "dust" + input, "dust" + input });
+        registeredRecipies.put("gem" + input, new String[] { "dust" + input });
     }
     
     public String[] removeRecipe(String input) {

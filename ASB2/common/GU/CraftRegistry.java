@@ -26,43 +26,38 @@ public class CraftRegistry {
         OreDictionary.registerOre("oreElectisCrystal", new ItemStack(BlockRegistry.METADATA_ORE, 1, 0));
         OreDictionary.registerOre("blockElectisStone", new ItemStack(BlockRegistry.METADATA_ORE, 1, 1));
         OreDictionary.registerOre("itemBucket", new ItemStack(ItemRegistry.ITEM_FLUID, 1, 0));
+        OreDictionary.registerOre("itemBucket", new ItemStack(Items.bucket, 1, 0));
         OreDictionary.registerOre("blockSand", new ItemStack(Blocks.sand, 1, 0));
         OreDictionary.registerOre("gemElectisShard", ItemRegistry.ELECTIS_CRYSTAL_SHARD.copy());
         OreDictionary.registerOre("gemElectisGarnet", ItemRegistry.GARNET.copy());
         OreDictionary.registerOre("itemElectisStick", new ItemStack(ItemRegistry.METADATA_ITEM, 1, 5));
         OreDictionary.registerOre("blockSnow", new ItemStack(Blocks.snow, 1, 0));
+        OreDictionary.registerOre("itemEnderPearl", new ItemStack(Items.ender_pearl, 1, 0));
     }
     
     private static void initGrinder() {
         
-        GrinderRecipeManager.getInstance().addRecipe("oreIron", "dustIron", "dustIron");
-        GrinderRecipeManager.getInstance().addRecipe("oreGold", "dustGold", "dustGold");
-        GrinderRecipeManager.getInstance().addRecipe("oreCoal", "dustCoal", "dustCoal");
-        GrinderRecipeManager.getInstance().addRecipe("oreQuartz", "gemQuartz", "gemQuartz");        
-        GrinderRecipeManager.getInstance().addRecipe("oreCopper", "dustCopper", "dustCopper");
-        GrinderRecipeManager.getInstance().addRecipe("oreTin", "dustTin", "dustTin");
-        GrinderRecipeManager.getInstance().addRecipe("oreLead", "dustLead", "dustLead");
-        GrinderRecipeManager.getInstance().addRecipe("oreSilver", "dustSilver", "dustSilver");
-        GrinderRecipeManager.getInstance().addRecipe("oreCobalt", "dustCobalt", "dustCobalt");
-        GrinderRecipeManager.getInstance().addRecipe("oreUranium", "dustUranium", "dustUranium");
-//        GrinderRecipeManager.getInstance().addRecipe("oreArdite", "dustArdite", "dustUranium");
-        
-        GrinderRecipeManager.getInstance().addRecipe("ingotIron", "dustIron");
-        GrinderRecipeManager.getInstance().addRecipe("ingotGold", "dustGold");
-        GrinderRecipeManager.getInstance().addRecipe("ingotCoal", "dustCoal");        
-        GrinderRecipeManager.getInstance().addRecipe("ingotCopper", "dustCopper");
-        GrinderRecipeManager.getInstance().addRecipe("ingotTin", "dustTin");
-        GrinderRecipeManager.getInstance().addRecipe("ingotLead", "dustLead");
-        GrinderRecipeManager.getInstance().addRecipe("ingotSilver", "dustSilver");
-        GrinderRecipeManager.getInstance().addRecipe("ingotCobalt", "dustCobalt");
-        GrinderRecipeManager.getInstance().addRecipe("ingotUranium", "ingotUranium");
+        GrinderRecipeManager.getInstance().addRecipeOreDustIngot("Iron");
+        GrinderRecipeManager.getInstance().addRecipeOreDustIngot("Gold");
+        GrinderRecipeManager.getInstance().addRecipeOreDustIngot("Coal");
+        GrinderRecipeManager.getInstance().addRecipeOreDustIngot("Copper");
+        GrinderRecipeManager.getInstance().addRecipeOreDustIngot("Tin");
+        GrinderRecipeManager.getInstance().addRecipeOreDustIngot("Lead");
+        GrinderRecipeManager.getInstance().addRecipeOreDustIngot("Silver");
+        GrinderRecipeManager.getInstance().addRecipeOreDustIngot("Cobalt");
+        GrinderRecipeManager.getInstance().addRecipeOreDustIngot("Uranium");
+        GrinderRecipeManager.getInstance().addRecipeOreDustIngot("Ardite");
+        GrinderRecipeManager.getInstance().addRecipeOreDustIngot("Ferrous");
+        GrinderRecipeManager.getInstance().addRecipeOreDustGem("Diamond");
+        GrinderRecipeManager.getInstance().addRecipeOreDustGem("Emerald");
+        GrinderRecipeManager.getInstance().addRecipeOreDustGem("Quartz");
         
         GrinderRecipeManager.getInstance().addRecipe("stone", "cobblestone");
         GrinderRecipeManager.getInstance().addRecipe("cobblestone", "blockSand");
         GrinderRecipeManager.getInstance().addRecipe("glass", "blockSand");
-        GrinderRecipeManager.getInstance().addRecipe("oreRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone");
-        
-        GrinderRecipeManager.getInstance().addRecipe("blockSnow", "itemSnow", "itemSnow", "itemSnow", "itemSnow");
+        GrinderRecipeManager.getInstance().addRecipe("oreRedstone", 8, "dustRedstone");
+        GrinderRecipeManager.getInstance().addRecipe("oreLapis", 8, "gemLapis");
+        GrinderRecipeManager.getInstance().addRecipe("blockSnow", 4, "itemSnow");
     }
     
     private static void initCrafting() {
@@ -196,5 +191,9 @@ public class CraftRegistry {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.METADATA_ITEM, 1, 3), new Object[] { " G ", " S ", " E ",
         
         'E', "gemElectisShard", 'S', "itemElectisStick", 'G', "gemElectisGarnet" }));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemRegistry.METADATA_ITEM, 1, 8), new Object[] { " P ", "TET", " P ",
+        
+        'E', "gemElectisShard", 'P', "itemEnderPearl", 'T', new ItemStack(ItemRegistry.METADATA_ITEM, 1, 4) }));
     }
 }
