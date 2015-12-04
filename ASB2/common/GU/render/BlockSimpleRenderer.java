@@ -1,9 +1,7 @@
 package GU.render;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import ASB2.utils.UtilRender;
 import GU.BlockRegistry;
 import GU.blocks.containers.BlockCreativeMetadata.TileCreativeFluid;
@@ -11,8 +9,6 @@ import GU.info.MiscIcons;
 import GU.info.Reference;
 import GU.render.noise.NoiseManager;
 import UC.color.Color4i;
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class BlockSimpleRenderer implements ISimpleBlockRenderingHandler {
     

@@ -1,7 +1,6 @@
 package GU.items;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.IItemRenderer;
 import GU.items.ItemMetadata.ItemMetadataWrapper;
 
 public class ItemMetadataRenderer implements IItemRenderer {

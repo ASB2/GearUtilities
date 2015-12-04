@@ -3,6 +3,7 @@ package GU.blocks.containers.BlockMultiPart;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 
+
 public class MultiPartRenderer extends TileEntitySpecialRenderer {
     
     public static MultiPartRenderer instance = new MultiPartRenderer();

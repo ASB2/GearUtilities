@@ -1,7 +1,6 @@
 package GU.multiblock.clientState;
 
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidTank;
 
 import org.lwjgl.opengl.GL11;

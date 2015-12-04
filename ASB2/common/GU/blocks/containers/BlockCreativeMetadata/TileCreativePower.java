@@ -1,15 +1,14 @@
 package GU.blocks.containers.BlockCreativeMetadata;
 
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
 import GU.api.EnumSimulationType;
-import GU.api.power.PowerNetVariables;
 import GU.api.power.PowerNetAbstract.EnumPowerStatus;
 import GU.api.power.PowerNetAbstract.IBlockPowerHandler;
 import GU.api.power.PowerNetAbstract.IPowerManager;
 import GU.api.power.PowerNetAbstract.ITilePowerHandler;
 import GU.api.power.PowerNetObject.DefaultPowerManager;
 import GU.api.power.PowerNetObject.UtilPower;
+import GU.api.power.PowerNetVariables;
 import GU.blocks.containers.TileBase;
 import UC.Wait;
 import UC.Wait.IWaitTrigger;

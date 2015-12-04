@@ -2,8 +2,6 @@ package GU.blocks.containers;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;

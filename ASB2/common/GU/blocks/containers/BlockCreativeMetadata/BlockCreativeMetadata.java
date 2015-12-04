@@ -1,8 +1,6 @@
 package GU.blocks.containers.BlockCreativeMetadata;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
 import GU.api.color.VanillaColor;
 import GU.blocks.containers.BlockMetadataContainerBase;
 import GU.blocks.containers.TileBase;

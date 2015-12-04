@@ -6,7 +6,6 @@ import java.util.List;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.world.World;
-import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilEntity;
 
 public class TPG extends CommandBase {

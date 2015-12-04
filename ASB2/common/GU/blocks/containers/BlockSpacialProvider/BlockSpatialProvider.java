@@ -2,12 +2,10 @@ package GU.blocks.containers.BlockSpacialProvider;
 
 import java.util.List;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilEntity;
 import GU.api.color.AbstractColorable.IColorableBlock;
 import GU.api.color.VanillaColor;

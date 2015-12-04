@@ -2,7 +2,6 @@ package GU.api.color;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import UC.color.Color4i;
 
 public final class AbstractColorable {

@@ -3,7 +3,6 @@ package GU.blocks.containers.BlockMultiDirectionalConduit;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 

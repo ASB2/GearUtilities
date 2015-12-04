@@ -1,11 +1,9 @@
 package GU.items;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilEntity;
 import ASB2.utils.UtilItemStack;
 import GU.api.EnumSimulationType;

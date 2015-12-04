@@ -5,24 +5,25 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLiving.SpawnPlacementType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import GU.GUItemBlock;
 import GU.GearUtilities;
 import GU.ItemRegistry;
 import GU.blocks.containers.TileBase;
 import GU.render.BlockSimpleRenderer;
 import GU.render.noise.NoiseManager;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockBase extends Block {
     
@@ -47,20 +48,22 @@ public class BlockBase extends Block {
         GameRegistry.registerBlock(this, GUItemBlock.class, entry);
     }
     
+    @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4) {
         
         par3List.add("Made just for you: ".concat(player.getDisplayName()));
     }
     
+    @Override
     public String getBlockDisplayName(ItemStack stack) {
         
         return null;
     }
     
     @Override
-    public boolean canCreatureSpawn(EnumCreatureType type, IBlockAccess world, int x, int y, int z) {
-        // TODO Auto-generated method stub
+    public boolean canCreatureSpawn(IBlockAccess world, BlockPos pos, SpawnPlacementType type) {
+        
         return false;
     }
     
@@ -113,13 +116,13 @@ public class BlockBase extends Block {
     }
     
     @Override
-    public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection axis) {
+    public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
         
-        TileBase tile = (TileBase) world.getTileEntity(x, y, z);
+        TileBase tile = (TileBase) world.getTileEntity(pos);
         
         if (tile != null) {
             
-            return tile.rotateBlock(world, x, y, z, axis);
+            return tile.rotateBlock(world, pos, axis);
         }
         return false;
     }
@@ -149,19 +152,19 @@ public class BlockBase extends Block {
     }
     
     @Override
-    public int getHarvestLevel(int metadata) {
+    public int getHarvestLevel(IBlockState state) {
         
         return 3;
     }
     
     @Override
-    public float getBlockHardness(World world, int x, int y, int z) {
-        
+    public float getBlockHardness(World worldIn, BlockPos pos) {
+        // TODO Auto-generated method stub
         return 1;
     }
     
     @Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         
         ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
         

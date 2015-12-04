@@ -1,8 +1,8 @@
 package GU.entities;
 
-import net.minecraft.entity.Entity;
+import javax.swing.text.html.parser.Entity;
+
 import net.minecraft.world.World;
-import UC.math.vector.Vector3d;
 
 public abstract class EntityBase extends Entity {
     

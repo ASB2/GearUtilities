@@ -9,7 +9,6 @@ import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
-import net.minecraftforge.common.ForgeChunkManager.Type;
 import ASB2.utils.UtilVector;
 import GU.GearUtilities;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;

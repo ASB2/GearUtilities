@@ -1,14 +1,15 @@
 package GU.packets;
 
 import io.netty.buffer.ByteBuf;
+
+import javax.xml.ws.handler.MessageContext;
+
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import GU.GearUtilities;
 import GU.api.color.AbstractColorable.IColorableTile;
 import UC.color.Color4i;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class ColorPacket implements IMessageHandler<ColorPacket, ColorPacket>, IMessage {
     

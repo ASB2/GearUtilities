@@ -5,6 +5,7 @@ import net.minecraft.world.WorldProviderSurface;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 
+
 public class ElectisVoidWorldProvider extends WorldProviderSurface {
     /**
      * creates a new world chunk manager for WorldProvider

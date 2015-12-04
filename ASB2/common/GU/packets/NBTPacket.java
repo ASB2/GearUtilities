@@ -3,16 +3,17 @@ package GU.packets;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import GU.GearUtilities;
 import GU.blocks.containers.TileBase;
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class NBTPacket implements IMessageHandler<NBTPacket, NBTPacket>, IMessage {
     
-    int x, y, z;
+    BlockPos pos;
     NBTTagCompound tag;
     int id;
     
@@ -21,10 +22,12 @@ public class NBTPacket implements IMessageHandler<NBTPacket, NBTPacket>, IMessag
     }
     
     public NBTPacket(int x, int y, int z, NBTTagCompound tag, int id) {
+        this(new BlockPos(x, y, z), tag, id);
+    }
+    
+    public NBTPacket(BlockPos pos, NBTTagCompound tag, int id) {
         
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.pos = pos;
         this.tag = tag;
         this.id = id;
     }
@@ -32,9 +35,7 @@ public class NBTPacket implements IMessageHandler<NBTPacket, NBTPacket>, IMessag
     @Override
     public void fromBytes(ByteBuf buf) {
         
-        x = buf.readInt();
-        y = buf.readInt();
-        z = buf.readInt();
+        pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
         tag = ByteBufUtils.readTag(buf);
         id = buf.readInt();
     }
@@ -42,9 +43,9 @@ public class NBTPacket implements IMessageHandler<NBTPacket, NBTPacket>, IMessag
     @Override
     public void toBytes(ByteBuf buf) {
         
-        buf.writeInt(x);
-        buf.writeInt(y);
-        buf.writeInt(z);
+        buf.writeInt(pos.getX());
+        buf.writeInt(pos.getY());
+        buf.writeInt(pos.getZ());
         ByteBufUtils.writeTag(buf, tag);
         buf.writeInt(id);
     }
@@ -52,7 +53,7 @@ public class NBTPacket implements IMessageHandler<NBTPacket, NBTPacket>, IMessag
     @Override
     public NBTPacket onMessage(NBTPacket message, MessageContext ctx) {
         
-        TileEntity tile = GearUtilities.proxy.getClientWorld().getTileEntity(message.x, message.y, message.z);
+        TileEntity tile = GearUtilities.proxy.getClientWorld().getTileEntity(message.pos);
         
         if (tile != null && tile instanceof TileBase) {
             

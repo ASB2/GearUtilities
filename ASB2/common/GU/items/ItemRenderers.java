@@ -5,8 +5,6 @@ import java.awt.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.fluids.Fluid;
 
 import org.lwjgl.opengl.GL11;

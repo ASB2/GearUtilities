@@ -2,6 +2,7 @@ package GU.proxy;
 
 import net.minecraft.world.World;
 
+
 public class CommonProxy {
     
     public void register() {

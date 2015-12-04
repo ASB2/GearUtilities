@@ -2,22 +2,19 @@ package GU.items;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilInventory;
+import GU.FluidRegistry;
 import GU.GearUtilities;
 import GU.items.ItemRenderers.FluidCrystalArrayRenderer;
 import GU.utils.UtilGU;

@@ -5,11 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilBlock;
 import ASB2.utils.UtilVector;
 import GU.api.color.AbstractColorable.IColorableTile;

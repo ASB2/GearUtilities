@@ -1,7 +1,8 @@
 package GU.gui;
 
+import java.awt.Container;
+
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import GU.blocks.containers.TileBase;
 
 public class ContainerBase extends Container {

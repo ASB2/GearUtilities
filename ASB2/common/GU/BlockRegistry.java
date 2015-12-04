@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.security.auth.login.Configuration;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import GU.api.color.VanillaColor;
 import GU.blocks.BlockBase;
 import GU.blocks.BlockMetadataOre;
@@ -35,7 +37,6 @@ import GU.blocks.containers.BlockPhotonicConverter.BlockPhotonicConverter;
 import GU.blocks.containers.BlockSpacialProvider.BlockSpatialProvider;
 import GU.blocks.containers.BlockTeleportAltar.BlockTeleportAltar;
 import GU.info.Reference;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockRegistry {
     

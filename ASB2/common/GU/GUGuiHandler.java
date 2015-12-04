@@ -2,12 +2,12 @@ package GU;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 import GU.blocks.containers.TileBase;
 import GU.multiblock.gui.ContainerMultiBlockChest;
 import GU.multiblock.gui.ContainerMultiBlockTank;
 import GU.multiblock.gui.GuiMultiBlockChest;
 import GU.multiblock.gui.GuiMultiBlockTank;
-import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GUGuiHandler implements IGuiHandler {
     

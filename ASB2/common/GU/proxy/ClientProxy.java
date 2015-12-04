@@ -2,10 +2,10 @@ package GU.proxy;
 
 import java.util.Map.Entry;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.Item;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import GU.BlockRegistry;
 import GU.ItemRegistry;
 import GU.blocks.BlockBase;
@@ -13,8 +13,6 @@ import GU.info.Models;
 import GU.items.ItemBase;
 import GU.render.BlockSimpleRenderer;
 import GU.render.noise.NoiseManager;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
 
 public class ClientProxy extends CommonProxy {
     

@@ -2,6 +2,7 @@ package GU.info;
 
 import net.minecraft.util.ResourceLocation;
 
+
 public final class Textures {
     
     public static final ResourceLocation BLANK = new ResourceLocation(Reference.MOD_ID + ":textures/blocks/GearBlock.png");

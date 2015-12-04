@@ -2,6 +2,7 @@ package GU.api;
 
 import UC.color.Color4i;
 
+
 public enum EnumSideState {
     
     INPUT(Color4i.BLUE), OUTPUT(Color4i.ORANGE), BOTH(Color4i.RED), NONE(Color4i.WHITE);

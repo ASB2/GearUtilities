@@ -1,7 +1,6 @@
 package GU.blocks.containers.BlockMultiPart;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilBlock;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlock;

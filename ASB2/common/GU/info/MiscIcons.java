@@ -1,6 +1,5 @@
 package GU.info;
 
-import net.minecraft.util.IIcon;
 
 public enum MiscIcons {
     

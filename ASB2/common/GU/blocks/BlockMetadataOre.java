@@ -1,9 +1,7 @@
 package GU.blocks;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
 import GU.ItemRegistry;
 import GU.render.BlockSimpleRenderer.INoiseBlockRender;
 import UC.color.Color4i;

@@ -3,12 +3,9 @@ package GU.blocks.containers.BlockTeleportAltar;
 import java.awt.Color;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
@@ -29,110 +26,107 @@ public class TeleportAltarRenderer extends TileEntitySpecialRenderer implements 
         
         GL11.glTranslated(x + 0.5F, y + .5, z + .5F);
         
+        // {
+        // GL11.glPushMatrix();
+        // GL11.glDisable(GL11.GL_CULL_FACE);
+        //
+        // NoiseManager.bindImage();
+        // Tessellator tess = Tessellator.instance;
+        //
+        // double distance = 5.5, size = .5;
+        // ForgeDirection direction = ForgeDirection.NORTH;
+        //
+        // tess.startDrawingQuads();
+        //
+        // tess.addVertexWithUV(0, 0, 0, 0, 0);
+        // tess.addVertexWithUV(0, 0, distance, 0, 1);
+        // tess.addVertexWithUV(size, 0, distance, 1, 1);
+        // tess.addVertexWithUV(size, 0, 0, 1, 0);
+        //
+        // tess.draw();
+        //
+        // GL11.glEnable(GL11.GL_CULL_FACE);
+        // GL11.glPopMatrix();
+        // }
+        
+        NoiseManager.bindImage();
+        
+        GL11.glScaled(1.5, 1.5, 1.5);
+        
         {
+            final float secondCrystalScale = .25f, distanceFromCenter = .3f;
+            
             GL11.glPushMatrix();
-            GL11.glDisable(GL11.GL_CULL_FACE);
             
-            NoiseManager.bindImage();
-            Tessellator tess = Tessellator.instance;
+            if (((TileTeleportAltar) tileentity).coordsSet)
+                GL11.glColor3d(.2, .2, .2);
             
-            double distance = 5.5, size = .5;
-            ForgeDirection direction = ForgeDirection.NORTH;
+            GL11.glRotated(Minecraft.getSystemTime() / 17.0, 0, 1, 0);
+            GL11.glTranslated(0, .1, 0);
             
-            tess.startDrawingQuads();
+            {
+                GL11.glPushMatrix();
+                
+                GL11.glTranslated(0, -0.1, distanceFromCenter);
+                
+                GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                
+                GL11.glRotatef(90F, 1F, 0F, 0F);
+                
+                Models.ModelElectisShard.renderAll();
+                GL11.glPopMatrix();
+            }
             
-            tess.addVertexWithUV(0, 0, 0, 0, 0);
-            tess.addVertexWithUV(0, 0, distance, 0, 1);
-            tess.addVertexWithUV(size, 0, distance, 1, 1);
-            tess.addVertexWithUV(size, 0, 0, 1, 0);
+            {
+                GL11.glPushMatrix();
+                
+                GL11.glTranslated(distanceFromCenter, -0.1, 0);
+                
+                GL11.glRotatef(90F, 0F, 1F, 0F);
+                
+                GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                
+                GL11.glRotatef(90F, 1F, 0F, 0F);
+                
+                Models.ModelElectisShard.renderAll();
+                GL11.glPopMatrix();
+            }
             
-            tess.draw();
+            {
+                GL11.glPushMatrix();
+                
+                GL11.glTranslated(0, -0.1, -distanceFromCenter);
+                
+                GL11.glRotatef(180F, 0F, 1F, 0F);
+                
+                GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                
+                GL11.glRotatef(90F, 1F, 0F, 0F);
+                
+                Models.ModelElectisShard.renderAll();
+                GL11.glPopMatrix();
+            }
             
-            GL11.glEnable(GL11.GL_CULL_FACE);
+            {
+                GL11.glPushMatrix();
+                
+                GL11.glTranslated(-distanceFromCenter, -0.1, 0);
+                
+                GL11.glRotatef(270F, 0F, 1F, 0F);
+                
+                GL11.glScalef(secondCrystalScale, secondCrystalScale, secondCrystalScale);
+                
+                GL11.glRotatef(90F, 1F, 0F, 0F);
+                
+                Models.ModelElectisShard.renderAll();
+                GL11.glPopMatrix();
+            }
             GL11.glPopMatrix();
         }
-        // NoiseManager.bindImage();
-        //
-        // GL11.glScaled(1.5, 1.5, 1.5);
-        //
-        // {
-        // final float secondCrystalScale = .25f, distanceFromCenter = .3f;
-        //
-        // GL11.glPushMatrix();
-        //
-        // if (((TileTeleportAltar) tileentity).coordsSet)
-        // GL11.glColor3d(.2, .2, .2);
-        //
-        // GL11.glRotated(Minecraft.getSystemTime() / 17.0, 0, 1, 0);
-        // GL11.glTranslated(0, .1, 0);
-        //
-        // {
-        // GL11.glPushMatrix();
-        //
-        // GL11.glTranslated(0, -0.1, distanceFromCenter);
-        //
-        // GL11.glScalef(secondCrystalScale, secondCrystalScale,
-        // secondCrystalScale);
-        //
-        // GL11.glRotatef(90F, 1F, 0F, 0F);
-        //
-        // Models.ModelElectisShard.renderAll();
-        // GL11.glPopMatrix();
-        // }
-        //
-        // {
-        // GL11.glPushMatrix();
-        //
-        // GL11.glTranslated(distanceFromCenter, -0.1, 0);
-        //
-        // GL11.glRotatef(90F, 0F, 1F, 0F);
-        //
-        // GL11.glScalef(secondCrystalScale, secondCrystalScale,
-        // secondCrystalScale);
-        //
-        // GL11.glRotatef(90F, 1F, 0F, 0F);
-        //
-        // Models.ModelElectisShard.renderAll();
-        // GL11.glPopMatrix();
-        // }
-        //
-        // {
-        // GL11.glPushMatrix();
-        //
-        // GL11.glTranslated(0, -0.1, -distanceFromCenter);
-        //
-        // GL11.glRotatef(180F, 0F, 1F, 0F);
-        //
-        // GL11.glScalef(secondCrystalScale, secondCrystalScale,
-        // secondCrystalScale);
-        //
-        // GL11.glRotatef(90F, 1F, 0F, 0F);
-        //
-        // Models.ModelElectisShard.renderAll();
-        // GL11.glPopMatrix();
-        // }
-        //
-        // {
-        // GL11.glPushMatrix();
-        //
-        // GL11.glTranslated(-distanceFromCenter, -0.1, 0);
-        //
-        // GL11.glRotatef(270F, 0F, 1F, 0F);
-        //
-        // GL11.glScalef(secondCrystalScale, secondCrystalScale,
-        // secondCrystalScale);
-        //
-        // GL11.glRotatef(90F, 1F, 0F, 0F);
-        //
-        // Models.ModelElectisShard.renderAll();
-        // GL11.glPopMatrix();
-        // }
-        // GL11.glPopMatrix();
-        // }
-        //
-        // GL11.glColor3d(1, 1, 1);
-        // GL11.glScaled(.125, .125, .125);
-        // Models.ModelCrystal2.renderAll();
+        
+        GL11.glColor3d(1, 1, 1);
+        GL11.glScaled(.125, .125, .125);
+        Models.ModelCrystal1.renderAll();
         
         GL11.glPopMatrix();
     }

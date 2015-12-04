@@ -5,16 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import UC.utils.UCUtil;
 import net.minecraft.block.BlockAir;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilEntity;
 import GU.blocks.containers.TileBase;
 import GU.blocks.containers.BlockConduit.EnumConduitType;
+import UC.utils.UCUtil;
 
 public class TileMultiDirectionalConduit extends TileBase {
     

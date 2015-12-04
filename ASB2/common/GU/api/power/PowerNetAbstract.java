@@ -2,7 +2,6 @@ package GU.api.power;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import GU.api.EnumSimulationType;
 
 public class PowerNetAbstract {

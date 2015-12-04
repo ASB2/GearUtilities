@@ -1,10 +1,10 @@
 package GU;
 
+import net.minecraftforge.fml.relauncher.Side;
 import GU.packets.ColorPacket;
 import GU.packets.MultiBlockFlamePacket;
 import GU.packets.MutliBlockTankPacket;
 import GU.packets.NBTPacket;
-import cpw.mods.fml.relauncher.Side;
 
 public final class PacketRegistry {
     

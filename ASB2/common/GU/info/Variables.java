@@ -1,6 +1,6 @@
 package GU.info;
 
-import net.minecraftforge.common.config.Configuration;
+import javax.security.auth.login.Configuration;
 
 public class Variables {
     

@@ -1,9 +1,5 @@
 package GU.render;
 
-import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
-import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
-import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -16,12 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.vecmath.Matrix4d;
+
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL32;
 
 import GU.GearUtilities;
-import UC.math.Matrix4d;
-import UC.math.vector.Vector3d;
 
 /**
  * 

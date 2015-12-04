@@ -4,18 +4,18 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import GU.GearUtilities;
 import GU.packets.NBTPacket;
 
 public class TileBase extends TileEntity {
     
-    ForgeDirection orientation;
+    EnumFacing orientation;
     
     public TileBase() {
         
-        orientation = ForgeDirection.UP;
+        orientation = EnumFacing.UP;
     }
     
     public void readNBTPacket(NBTTagCompound tag, int id) {
@@ -25,12 +25,12 @@ public class TileBase extends TileEntity {
     public void sendNBTPacket(NBTTagCompound tag, int id) {
         
         if (!worldObj.isRemote)
-            GearUtilities.getPipeline().sendToDimension(new NBTPacket(xCoord, yCoord, zCoord, tag, id), worldObj.provider.dimensionId);
+            GearUtilities.getPipeline().sendToDimension(new NBTPacket(pos, tag, id), worldObj.provider.getDimensionId());
     }
     
-    public ForgeDirection getOrientation() {
+    public EnumFacing getOrientation() {
         
-        return ForgeDirection.getOrientation(worldObj.getBlockMetadata(xCoord, yCoord, zCoord));
+        return EnumFacing.getOrientation(worldObj.getBlockMetadata(pos));
     }
     
     public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection axis) {

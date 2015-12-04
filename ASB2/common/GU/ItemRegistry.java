@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.item.Item;
+import javax.security.auth.login.Configuration;
+
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import GU.info.Reference;
 import GU.items.AdvancedStickWrapper;
 import GU.items.DestructorWrapper;
@@ -21,7 +22,6 @@ import GU.items.ItemRenderers.GarnetRenderer;
 import GU.items.ItemRenderers.PlaceHolderRenderer;
 import GU.items.TwoWayHandheldTeleporter;
 import GU.items.UtilityTabletWrapper;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public final class ItemRegistry {
     

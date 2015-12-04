@@ -1,9 +1,7 @@
 package GU.multiblock;
 
-import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import ASB2.utils.UtilBlock;
 import GU.BlockRegistry;
 import GU.api.multiblock.MultiBlockAbstract.IMultiBlockMarker;

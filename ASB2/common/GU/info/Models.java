@@ -1,8 +1,7 @@
 package GU.info;
 
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.AdvancedModelLoader;
-import net.minecraftforge.client.model.obj.WavefrontObject;
+
 
 public final class Models {
     

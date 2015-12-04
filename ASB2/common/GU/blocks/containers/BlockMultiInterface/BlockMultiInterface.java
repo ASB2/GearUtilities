@@ -1,9 +1,7 @@
 package GU.blocks.containers.BlockMultiInterface;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
 import GU.api.color.AbstractColorable.IColorableTile;
 import GU.blocks.containers.BlockMultiMetadataContainerBase;
 import GU.render.BlockSimpleRenderer.INoiseBlockRender;

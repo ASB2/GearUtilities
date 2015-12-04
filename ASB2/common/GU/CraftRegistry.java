@@ -3,12 +3,12 @@ package GU;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import GU.api.color.VanillaColor;
 import GU.api.recipe.GrinderRecipeManager;
 import GU.info.Reference;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftRegistry {
     

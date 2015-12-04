@@ -5,15 +5,13 @@ import java.awt.Color;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
-import UC.color.Color4i;
 import GU.api.EnumSideState;
 import GU.info.Models;
 import GU.render.noise.NoiseManager;
+import UC.color.Color4i;
 
 public class ElectisEnergyCubeRenderer extends TileEntitySpecialRenderer implements IItemRenderer {
     

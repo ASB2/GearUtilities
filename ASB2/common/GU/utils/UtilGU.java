@@ -2,8 +2,8 @@ package GU.utils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import ASB2.utils.UtilItemStack;
+import GU.FluidRegistry;
 import GU.ItemRegistry;
 
 public class UtilGU {
